@@ -1,0 +1,225 @@
+<?php
+$title = 'Editar Cliente';
+$this->headTitle($title);
+$id = $cliente->getId();
+
+$apellido = $cliente->getApellido();
+$nombre = $cliente->getNombre();
+$telefono = $cliente->getTelefono();
+$email = $cliente->getEmail();
+
+//$pais = $cliente->getNombrePaisCliente();
+//$provincia = $cliente->getNombreProvinciaCliente();
+$pais = $cliente->getPais();
+$provincia = $cliente->getProvincia();
+$ciudad = $cliente->getCiudad();
+$empresa = $cliente->getEmpresa();
+
+//$categoria = $cliente->getNombreCategoriaCliente();
+//$licencia = $cliente->getNombreLicenciaCliente();
+$categoria = $cliente->getCategoria();
+$licencia = $cliente->getLicencia();
+
+//$profesion = $cliente->getNombreProfesionCliente();
+$profesion = $cliente->getProfesion();
+$actividad = $cliente->getActividad();
+$animales = $cliente->getAnimales();
+$establecimientos = $cliente->getEstablecimientos();
+?>
+
+<!-- Inicio: Cliente Nuevo -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Modificar datos de Cliente</div>
+        </div>   
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">  
+            <div class="row">
+                <form method="post">
+                    <!-- Inicio: Datos del Cliente -->
+                    <div class="row form-row">
+                        <input type="hidden" name="id" value="<?= $id ?>">
+                        <div class="form-group col-md-4">
+                            <label>Apellido</label>
+                            <input type="text" class="form-control" name="apellido" value="<?php echo($apellido); ?>" placeholder="Ingresar Apellido">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>País</label>
+                            <select class="form-control" id="pais" name="pais">
+                                <option value="<?php if(isset($pais)){ echo ($pais->getId()); }?>" hidden="">  
+                                    <?php if(isset($pais)){ echo($pais->getNombre()); } else {echo ("Seleccionar País");}?>
+                                </option>
+                                <?php foreach ($paises as $pais) : ?>
+                                    <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Categoría</label>
+                            <select class="form-control" id="categoria" name="categoria">
+                                <option value="<?php if(isset($categoria)){ echo ($categoria->getId()); }?>" hidden="">  
+                                    <?php if(isset($categoria)){ echo($categoria->getNombre()); } else {echo ("Seleccionar Categoría");}?>
+                                </option>                           
+                                <?php foreach ($categorias as $categoria) : ?>
+                                    <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-4">
+                            <label>Nombre</label>
+                            <input type="text" class="form-control" name="nombre" value="<?php echo($nombre); ?>" placeholder="Ingresar Nombre">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Provincia</label>
+                            <select class="form-control" id="provincia" name="provincia">
+                                <option value="<?php if(isset($provincia)){ echo ($provincia->getId_provincia()); }?>" hidden="">  
+                                    <?php if(isset($provincia)){ echo($categoria->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
+                                </option>                             
+                                <?php foreach ($provincias as $provincia) : ?>
+                                    <option value="<?php echo ($provincia->getId_provincia()); ?>"><?php echo ($provincia->getNombre_provincia()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Licencia</label>
+                            <select class="form-control" id="licencia" name="licencia">
+                                <option value="<?php if(isset($licencia)) { echo ($licencia); }?>" hidden="">  
+                                    <?php if(isset($licencia)) { echo($licencia); } else {echo ("Seleccionar Licencia");}?>
+                                </option>
+                                <option value="<?php echo ($licencia); ?>" hidden="">
+                                    <?php echo($licencia); ?>
+                                </option>
+                                <?php foreach ($licencias as $licencia) : ?>
+                                    <option value="<?php echo ($licencia->getNombre()); ?>"><?php echo ($licencia->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-4">
+                            <label>Teléfono</label>
+                            <input type="text" class="form-control" name="telefono" value="<?php echo($telefono); ?>" placeholder="Ingresar Teléfono">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Ciudad</label>
+                            <input type="text" class="form-control" name="ciudad" value="<?php echo($telefono); ?>" placeholder="Ingresar Ciudad">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-4">
+                            <label>Email</label>
+                            <input type="text" class="form-control" name="email" value="<?php echo($email); ?>" placeholder="Ingresar Email">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Empresa</label>
+                            <input type="text" class="form-control" name="empresa" value="<?php echo($empresa); ?>" placeholder="Ingresar Empresa">
+                        </div>
+                    </div>
+                    <!-- Fin: Datos del Cliente -->
+
+                    <!-- Inicio: Caracteristicas de trabajo -->
+                    <div class="container margen">
+                        <div class="row">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Caracteristicas de trabajo</div>
+                            </div>   
+                        </div>
+                    </div>
+
+                    <div class="row form-row">
+                        <div class="form-group col-md-4">
+                            <label>Profesión</label>
+                            <select class="form-control" id="profesion" name="profesion">
+                                
+                                <option value="<?php if(isset($profesion)){ echo ($profesion->getId()); }?>" hidden="">  
+                                    <?php if(isset($profesion)){ echo($profesion->getNombre()); } else {echo ("Seleccionar Profesión");}?>
+                                </option>
+                                
+                                <?php foreach ($profesiones as $profesion) : ?>
+                                    <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Nro. de Animales</label>
+                            <input type="text" class="form-control" name="animales" value="<?php echo($animales); ?>" placeholder="Ingresar Nro. Animales">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-4">
+                            <label>Actividad</label>
+                            <input type="text" class="form-control" name="actividad" value="<?php echo($actividad); ?>" placeholder="Ingresar Actividad">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Nro. de Establecimientos</label>
+                            <input type="text" class="form-control" name="establecimientos" value="<?php echo($establecimientos); ?>" placeholder="Ingresar Nro. Establecimientos">
+                        </div>
+                    </div>
+                    <!-- Fin: Caracteristicas de trabajo -->
+
+                    <!-- Modal -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Modificar cliente</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>¿Está seguro que desea modificar los datos este cliente?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-default">Aceptar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Cliente Nuevo -->
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row img-centrar">
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a data-toggle="modal" data-target="#myModal"><img src="<?= $this->basePath('img/crm/Aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha" role="button"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Guardar</label>
+                        </div>
+                    </div>
+
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href="<?= $this->url('clientes') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->
+

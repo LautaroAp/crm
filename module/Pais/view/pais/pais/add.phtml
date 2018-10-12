@@ -1,0 +1,47 @@
+<?php
+$this->headTitle('Agregar Pais');
+
+$form->get('nombre_pais')->setAttributes([
+    'class' => 'form-control',
+    'value' => ''
+]);
+
+
+$form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
+
+$form->prepare();
+?>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h1>Agregar Pais</h1>
+
+            <h4>
+                Por favor ingrese los datos del nuevo pais
+            </h4>
+            <div class="row">
+                <div class="col-md-8">
+                    <?= $this->form()->openTag($form); ?>
+
+                    <div class="form-group">
+                        <?= $this->formLabel($form->get('nombre_pais')); ?>
+                        <?= $this->formElement($form->get('nombre_pais')); ?>
+                        <?= $this->formElementErrors($form->get('nombre_pais')); ?>                  
+                    </div>
+
+
+                    <?= $this->formElement($form->get('submit')); ?>
+
+                    <?= $this->form()->closeTag(); ?>
+                </div>    
+            </div> 
+
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,34 @@
+
+
+<?php
+$this->headTitle('Editar Pais');
+
+$form->get('nombre_provincia')->setAttributes([
+    'class'=>'form-control'
+    ]);
+
+$form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
+
+$form->prepare();
+?>
+
+<h1>Editar Pais <?= $this->escapeHtml($provincia->getId_provincia()) ?></h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+        
+            
+        <div class="form-group">
+            <?= $this->formLabel($form->get('nombre_provincia')); ?>
+            <?= $this->formElement($form->get('nombre_provincia')); ?>
+            <?= $this->formElementErrors($form->get('nombre_provincia')); ?>                  
+        </div>
+
+        
+        <?= $this->formElement($form->get('submit')); ?>
+        
+        <?= $this->form()->closeTag(); ?>
+    </div>    
+</div>   
+

@@ -1,0 +1,144 @@
+
+<?php
+$this->headTitle('Agregar Licencia');
+
+$form->get('nombre_licencia')->setAttributes([
+    'class' => 'form-control',
+    
+    
+]);
+
+$form->get('version_licencia')->setAttributes([
+    'class' => 'form-control',
+    
+]);
+
+$form->get('precio_local')->setAttributes([
+    'class' => 'form-control',
+
+]);
+
+$form->get('precio_extranjero')->setAttributes([
+    'class' => 'form-control',
+
+]);
+
+$form->get('descuento')->setAttributes([
+    'class' => 'form-control',
+
+]);
+
+$form->get('iva')->setAttributes([
+    'class' => 'form-control',
+
+]);
+$form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
+
+$form->prepare();
+?>
+
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Producto Nuevo</div>
+        </div>
+    </div>
+</div>
+
+<?= $this->form()->openTag($form); ?>
+<div class="container"> 
+    <div class="row">
+        <div class="row form-row">
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('nombre_licencia')); ?>
+                <?= $this->formElement($form->get('nombre_licencia')); ?>
+                <?= $this->formElementErrors($form->get('nombre_licencia')); ?> 
+            </div>
+            
+             <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('version_licencia')); ?>
+                <?= $this->formElement($form->get('version_licencia')); ?>
+                <?= $this->formElementErrors($form->get('version_licencia')); ?> 
+            </div>
+            
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('iva')); ?>
+                <?= $this->formElement($form->get('iva')); ?>
+                <?= $this->formElementErrors($form->get('iva')); ?> 
+            </div>
+            
+             <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('precio_local')); ?>
+                <?= $this->formElement($form->get('precio_local')); ?>
+                <?= $this->formElementErrors($form->get('precio_local')); ?> 
+            </div>
+            
+             <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('precio_extranjero')); ?>
+                <?= $this->formElement($form->get('precio_extranjero')); ?>
+                <?= $this->formElementErrors($form->get('precio_extranjero')); ?> 
+            </div>
+            
+            
+             <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('descuento')); ?>
+                <?= $this->formElement($form->get('descuento')); ?>
+                <?= $this->formElementErrors($form->get('descuento')); ?> 
+            </div>
+           
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Borrar cliente</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        ¿Estas seguro de que quieres agregar el producto?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-defaul">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row img-centrar">
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a data-toggle="modal" data-target="#myModal"><img src="<?= $this->basePath('img/crm/Aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Guardar</label>
+                        </div>
+                    </div>
+
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href="<?= $this->url('licencia') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->
+
+<?= $this->form()->closeTag(); ?>

@@ -1,0 +1,93 @@
+<script src="js/functions.js"></script>
+<!-- Inicio: Tabla Productos -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">Listado de ventas</div>
+        </div>
+        <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
+            <thead>
+                <tr>
+                    <th class="th-sm">Licencia</th>
+                    <th class="th-sm">Cliente</th>
+                    <th class="th-sm">Fecha</th>
+                    <th class="th-sm">Monto total/th>
+                    <th class="th-sm">Moneda</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($productos as $producto) : ?>
+                    <tr>
+                        <td><?php echo ($producto->getNombre()); ?></td>
+                        <td><?php echo($producto->getCliente()); ?></td>
+                        <td><?php echo($producto->getFecha()); ?></td>
+                        <td><?php echo($producto->getPrecio_total()); ?></td>
+                        <td><?php echo($producto->getMoneda()); ?></td>
+                        <td> <a class="btn btn-default" href="<?= $this->url('producto', ['action' => 'edit', 'id' => $producto->getId()]); ?>">
+                                <span class="glyphicon glyphicon-pencil" ></span> 
+                            </a>
+                            <button name="<?= $producto->getId() ?>" id="<?= $producto->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $producto->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
+                        <!-- Modal -->
+                <div id="myModal<?= $producto->getId() ?>" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Borrar cliente</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Estas seguro de borrar la producto?
+                                    "<?= $this->escapeHtml($producto->getNombre()) ?>"
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="<?= $this->url('producto', ['action' => 'remove', 'id' => $producto->getId()]); ?>" class="btn btn-primary">Borrar</a>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Fin: Tabla Productos -->
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row img-centrar">
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href="<?= $this->url('producto', ['action' => 'add']); ?>">
+                                <img src="<?= $this->basePath('img/crm/ProductoAgregar.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                            </a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Agregar</label><br>
+                            <label>Producto</label>
+                        </div>
+                    </div>
+                    
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->

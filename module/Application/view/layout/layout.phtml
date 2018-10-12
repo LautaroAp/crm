@@ -1,0 +1,41 @@
+
+<?= $this->doctype() ?>
+
+<html lang="es">
+    <head>
+        <title>HUELLA CRM</title>
+        <meta http-equiv="Content-Type" content="text/html" charset=utf-8"/> 
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <!-- Le styles -->
+        <?=
+                $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/VetIcon.png'])
+                ->prependStylesheet($this->basePath('css/style.css'))
+                ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+                ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+                ->prependStylesheet($this->basePath('css/crm.css'))
+        ?>
+
+        <!-- Scripts -->
+        <?=
+                $this->headScript()
+                ->prependFile($this->basePath('js/bootstrap.min.js'))
+                ->prependFile($this->basePath('js/jquery-2.2.4.min.js'))
+        ?>
+    </head>
+    <body class="homepage">
+
+        <!-- Header -->
+        <div id="header" >
+            <div class="container" >
+                <!-- Logo -->
+                <h2><a href="<?= $this->url('application', ['action' => 'index']); ?>" id="logo">Huella CRM</a></h2>
+                <span class="byline">Sistema de Administración de Clientes, Stock y Ventas </span>
+            </div>
+        </div>
+
+        <!--Cuerpo-->
+        <?= $this->content; ?>
+    </body>
+</html>

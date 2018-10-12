@@ -1,0 +1,55 @@
+.img-centrar{
+    display:flex;
+    align-items: center;
+    margin: auto;
+}
+
+.img-tamaño{
+    height: 90%;
+    width: 90%;
+}
+
+.margen{
+    padding: 5px;
+}
+
+.ficha-cliente-p{
+    line-height: 1px;
+}
+
+.btn-centrar{
+    margin:1px auto;
+    display:block;
+}
+
+.img-texto-derecha{
+    float:left;
+    margin:10px;
+}
+
+.ficha-cliente-label{
+    line-height: 15px;
+}
+
+.table-scroll{
+    display: block;
+    max-height:500px;
+    overflow-y:auto;    
+}
+
+.table-zebra>tbody>tr:nth-child(odd)>td, 
+.table-zebra>tbody>tr:nth-child(odd)>th {
+    background-color: #F2F2F2;
+}
+.table-zebra>tbody>tr:nth-child(even)>td, 
+.table-zebra>tbody>tr:nth-child(even)>th {
+    background-color: #E6E6E6;
+}
+.table-zebra>thead>tr>th {
+    background-color: #D8D8D8;
+}
+
+.table-seleccion{
+    font-weight: bold;    
+    border: 5px solid #ccc;
+}

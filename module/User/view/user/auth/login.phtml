@@ -1,0 +1,58 @@
+<?php
+$this->headTitle('Sign in');
+
+$form->get('email')->setAttributes([
+            'class' => 'form-control',
+            'placeholder' => 'Usuario',
+            'required' => true,
+            'autofocus' => true
+        ])
+        ->setLabelAttributes([
+            'class' => 'sr-only'
+        ]);
+
+$form->get('password')->setAttributes([
+            'class' => 'form-control',
+            'placeholder' => 'Clave',
+            'required' => true,
+        ])
+        ->setLabelAttributes([
+            'class' => 'sr-only'
+        ]);
+?>
+
+<div class="container">
+    <div class="row img-centrar">
+        <div class="col-md-offset-2 col-md-2">
+            <img src="<?= $this->basePath('img/crm/Usuarioslock.png') ?>" class="img-rounded img-responsive img-tamaño">
+        </div>
+
+        <div class="col-md-4">
+            <form class="form-signin" method="post">
+                <h2 class="form-signin-heading text-center">Formulario de Ingreso</h2>
+                <?php if ($isLoginError): ?>
+                    <div class="alert alert-warning" role="alert">
+                        Nombre de Usuario y/o Clave incorrecto. 
+                        <a href="<?= $this->url('home') ?>">Olvidó su Clave?</a>
+                    </div>
+                <?php endif; ?>
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('email')); ?>
+                    <?= $this->formElement($form->get('email')); ?> 
+                </div>
+                <div class="form-group">
+                    <?= $this->formLabel($form->get('password')); ?>
+                    <?= $this->formElement($form->get('password')); ?>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <?= $this->formElement($form->get('remember_me')); ?> Recuérdame
+                    </label>
+                </div>
+                <?= $this->formElement($form->get('redirect_url')); ?>
+                <?= $this->formElement($form->get('csrf')) ?>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+            </form>
+        </div>
+    </div>
+</div>

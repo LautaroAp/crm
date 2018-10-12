@@ -1,0 +1,46 @@
+
+
+
+<?php
+$this->headTitle('Agregar Licencia');
+
+
+
+
+
+$form->get('nombre_provincia')->setAttributes([
+    'class'=>'form-control',
+    'value'=>''
+    ]);
+
+
+$form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
+
+$form->prepare();
+?>
+
+<h1>Agregar Licencia</h1>
+
+<p>
+    Por favor ingrese los datos de la nueva provincia
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+       
+        <div class="form-group">
+            <?= $this->formLabel($form->get('nombre_provincia')); ?>
+            <?= $this->formElement($form->get('nombre_provincia')); ?>
+            <?= $this->formElementErrors($form->get('nombre_provincia')); ?>                  
+        </div>
+        
+        
+        <?= $this->formElement($form->get('submit')); ?>
+        
+        <?= $this->form()->closeTag(); ?>
+    </div>    
+</div>   
+
+
+

@@ -1,0 +1,131 @@
+<?php
+$this->headTitle('Edit Ejecutivo');
+
+$form->get('apellido')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Ingresar Apellido'
+]);
+
+$form->get('nombre')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Ingresar Nombre'
+]);
+
+$form->get('mail')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'nombre@ejemplo.com'
+]);
+
+$form->get('usuario')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Ingresar Usuario'
+]);
+
+$form->get('clave')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Ingresar Clave'
+]);
+
+$form->get('submit')
+        ->setAttributes(['class' => 'btn btn-info'])
+        ->setValue('Guardar');
+
+$form->prepare();
+?>
+
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Editar ejecutivo</div>
+        </div>
+    </div>
+</div>
+
+<?= $this->form()->openTag($form); ?>
+<div class="container">   
+    <div class="row">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('apellido')); ?>
+                <?= $this->formElement($form->get('apellido')); ?>
+                <?= $this->formElementErrors($form->get('apellido')); ?> 
+            </div>
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('nombre')); ?>
+                <?= $this->formElement($form->get('nombre')); ?>
+                <?= $this->formElementErrors($form->get('nombre')); ?>
+            </div>
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('mail')); ?>
+                <?= $this->formElement($form->get('mail')); ?>
+                <?= $this->formElementErrors($form->get('mail')); ?> 
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('usuario')); ?>
+                <?= $this->formElement($form->get('usuario')); ?>
+                <?= $this->formElementErrors($form->get('usuario')); ?> 
+            </div>
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('clave')); ?>
+                <?= $this->formElement($form->get('clave')); ?>
+                <?= $this->formElementErrors($form->get('clave')); ?> 
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Editar ejecutivo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro que desea editar los datos de este ejecutivo de forma permanente?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">Aceptar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row img-centrar">
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a data-toggle="modal" data-target="#myModal"><img src="<?= $this->basePath('img/crm/Aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Guardar</label>
+                        </div>
+                    </div>
+
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href="<?= $this->url('ejecutivos') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->
+
+<?= $this->form()->closeTag(); ?> 

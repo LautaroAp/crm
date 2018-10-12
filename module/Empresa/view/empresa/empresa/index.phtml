@@ -1,0 +1,70 @@
+<?php
+$this->headTitle('Detalles de la empresa');
+?>
+
+<!-- Inicio: Datos de Cliente -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">Datos Empresa</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6 ficha-empresa-p">
+                        <p><label>Nombre:</label> <?php echo ($empresa->getNombre()); ?></p>
+                        <p><label>Dirección:</label> <?php echo ($empresa->getDireccion()); ?></p>
+                        <p><label>Teléfono:</label> <?php echo ($empresa->getTelefono()); ?></p>
+                        <p><label>Email:</label> <?php echo ($empresa->getMail()); ?></p>
+                        <p><label>Movil:</label> <?php echo ($empresa->getMovil()); ?></p> 
+                        <p><label>Fax:</label> <?php echo ($empresa->getFax()); ?></p>
+                        <p><label>Página web:</label> <?php echo ($empresa->getWeb()); ?></p>
+                        <p><label>CUIT/CUIL:</label> <?php echo ($empresa->getCuit_cuil()); ?></p>
+                    </div>
+                    <div class="col-md-6 ficha-empresa-p">
+                        <p><label>Vencimiento CAI:</label> <?php echo ($empresa->getVencimiento_cai()); ?></p>
+                        <p><label>Razón social</label> <?php echo ($empresa->getRazon_social()); ?></p>
+                        <p><label>Tipo IVA:</label> <?php echo ($empresa->getTipo_iva()); ?></p>
+                        <p><label>Localidad:</label> <?php echo ($empresa->getLocalidad()); ?></p>
+                        <p><label>Provincia:</label> <?php echo ($empresa->getProvincia()); ?></p>
+                        <p><label>Pais:</label> <?php echo ($empresa->getPais()); ?></p>
+                        <p><label>Código postal:</label> <?php echo ($empresa->getCP()); ?></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<!-- Fin: Datos de la empresa -->
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row img-centrar">
+                    <div class="col ficha-cliente-p img-centrar">
+
+                        <div>
+                            <a href="<?= $this->url('empresa', ['action' => 'edit', 'id' => $empresa->getId()]) ?>"><img src="<?= $this->basePath('img/crm/ClienteModificar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Modificar</label><br>
+                            <label>Datos</label>
+                        </div>
+                    </div>
+                   
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->

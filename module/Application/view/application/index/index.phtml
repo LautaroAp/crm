@@ -1,0 +1,57 @@
+<!-- MODULE APPLICATION -->
+<div id="header" >
+    <div class="container" >
+
+        <!-- Logo -->
+        <h1><a href="<?= $this->url('application', ['action' => 'index']); ?>" id="logo">Huella CRM</a></h1>
+        <header class="major">
+            <span class="byline">Sistema de Administración de Clientes, Stock y Ventas </span>
+        </header>                 
+
+        <!-- Nav -->        
+        <nav id="nav">
+            <ul>
+                <li>
+                    <a href="<?= $this->url('clientes'); ?>">
+                        <img src="<?= $this->basePath('img/crm/BotonClientes.png') ?>" class="img-rounded img-responsive">
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= $this->url('licencia', ['action' => 'index']); ?>">
+                        <img src="<?= $this->basePath('img/crm/BotonLicencias.png') ?>" class="img-rounded img-responsive">
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= $this->url('application', ['action' => 'utilidades']); ?>">
+                        <img src="<?= $this->basePath('img/crm/BotonUtilidades.png') ?>" class="img-rounded img-responsive">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <nav id="nav">
+            <ul> 
+                <li>
+                    <a href="<?= $this->url('ventas'); ?>">
+                        <img src="<?= $this->basePath('img/crm/BotonVentas.png') ?>" class="img-rounded img-responsive">
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= $this->url('servicio'); ?>">
+                        <img src="<?= $this->basePath('img/crm/BotonServicios.png') ?>" class="img-rounded img-responsive">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <nav id="nav">
+            <ul> 
+                <li>
+                    <a href="<?= $this->url('logout') ?>" role="button">
+                        <img src="<?= $this->basePath('img/crm/Cancelar.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                    </a> Salir
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

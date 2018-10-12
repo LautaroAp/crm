@@ -1,0 +1,251 @@
+
+<?php
+$this->headTitle('Editar datos de la empresa');
+
+$form->get('nombre')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getNombre()
+]);
+
+$form->get('direccion')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getDireccion()
+
+]);
+
+$form->get('telefono')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getTelefono()
+
+]);
+
+$form->get('mail')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getMail()
+
+]);
+
+$form->get('movil')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getMovil()
+
+]);
+
+
+$form->get('fax')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getFax()
+
+]);
+
+
+$form->get('web')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getWeb()
+
+]);
+
+$form->get('cuit_cuil')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getCuit_cuil()
+
+]);
+
+
+$form->get('vencimiento_cai')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getVencimiento_cai()
+
+]);
+
+
+$form->get('razon_social')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getRazon_social()
+
+]);
+
+$form->get('tipo_iva')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getTipo_iva()
+
+]);
+
+$form->get('localidad')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getLocalidad()
+
+]);
+
+$form->get('provincia')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getProvincia()
+
+]);
+
+$form->get('pais')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getPais()
+
+]);
+
+
+$form->get('CP')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getCP()
+
+]);
+
+
+$form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
+
+$form->prepare();
+?>
+
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">Editar los datos de la empresa</div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="row form-row">
+            <?= $this->form()->openTag($form); ?>
+
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('nombre')); ?>
+                <?= $this->formElement($form->get('nombre')); ?>
+                <?= $this->formElementErrors($form->get('nombre')); ?> 
+            </div>
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('direccion')); ?>
+                <?= $this->formElement($form->get('direccion')); ?>
+                <?= $this->formElementErrors($form->get('direccion')); ?> 
+            </div>
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('telefono')); ?>
+                <?= $this->formElement($form->get('telefono')); ?>
+                <?= $this->formElementErrors($form->get('telefono')); ?> 
+            </div>
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('mail')); ?>
+                <?= $this->formElement($form->get('mail')); ?>
+                <?= $this->formElementErrors($form->get('mail')); ?> 
+            </div>
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('movil')); ?>
+                <?= $this->formElement($form->get('movil')); ?>
+                <?= $this->formElementErrors($form->get('movil')); ?> 
+            </div>
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('fax')); ?>
+                <?= $this->formElement($form->get('fax')); ?>
+                <?= $this->formElementErrors($form->get('fax')); ?> 
+            </div>
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('web')); ?>
+                <?= $this->formElement($form->get('web')); ?>
+                <?= $this->formElementErrors($form->get('web')); ?> 
+            </div>
+            
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('cuit_cuil')); ?>
+                <?= $this->formElement($form->get('cuit_cuil')); ?>
+                <?= $this->formElementErrors($form->get('cuit_cuil')); ?> 
+            </div>
+            
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('vencimiento_cai')); ?>
+                <?= $this->formElement($form->get('vencimiento_cai')); ?>
+                <?= $this->formElementErrors($form->get('vencimiento_cai')); ?> 
+            </div>
+            
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('razon_social')); ?>
+                <?= $this->formElement($form->get('razon_social')); ?>
+                <?= $this->formElementErrors($form->get('razon_social')); ?> 
+            </div>
+             <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('tipo_iva')); ?>
+                <?= $this->formElement($form->get('tipo_iva')); ?>
+                <?= $this->formElementErrors($form->get('tipo_iva')); ?> 
+            </div>
+             <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('localidad')); ?>
+                <?= $this->formElement($form->get('localidad')); ?>
+                <?= $this->formElementErrors($form->get('localidad')); ?> 
+            </div>
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('provincia')); ?>
+                <?= $this->formElement($form->get('provincia')); ?>
+                <?= $this->formElementErrors($form->get('provincia')); ?> 
+            </div>
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('pais')); ?>
+                <?= $this->formElement($form->get('pais')); ?>
+                <?= $this->formElementErrors($form->get('pais')); ?> 
+            </div>
+            <div class="form-group col-md-4">
+                <?= $this->formLabel($form->get('CP')); ?>
+                <?= $this->formElement($form->get('CP')); ?>
+                <?= $this->formElementErrors($form->get('CP')); ?> 
+            </div>
+            
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+             Modal content
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Editar datos de la empresa</h4>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro que desea guardar los cambios?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row img-centrar">
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a data-toggle="modal" data-target="#myModal"><img src="<?= $this->basePath('img/crm/Aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Guardar</label>
+                        </div>
+                    </div>
+
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href="<?= $this->url('empresa', ['action' => 'index']) ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->
+
+<?= $this->form()->closeTag(); ?>
+
