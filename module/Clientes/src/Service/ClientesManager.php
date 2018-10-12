@@ -243,5 +243,19 @@ class ClientesManager{
         return $this->entityManager
                 ->getRepository(Licencia::class)
                 ->findAll();
-    }     
+    }   
+    
+        public function eliminarEventos($eventos_array) {
+
+        $entityManager = $this->entityManager;
+        
+        $eventos = $this->entityManager
+                ->getRepository(Cliente::class)
+                ->findOneBy(['Id' => $id]);
+
+        $this->borrarUsuariosFromCliente($cliente);
+
+        $entityManager->remove($cliente);
+        $entityManager->flush();
+    }
 }

@@ -2,6 +2,12 @@
 namespace Evento\Service;
 
 use DBAL\Entity\Evento;
+use DBAL\Entity\Cliente;
+use DBAL\Entity\Ejecutivo;
+use DBAL\Entity\TipoEvento;
+
+
+
 use Evento\Form\EventoForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
@@ -42,27 +48,8 @@ class EventoVentaManager extends EventoManager
         $this->config = $config;
     }
     
-
-   
-//    public function getEventos(){
-//        $entityManager = $this->entityManager;
-//        $queryBuilder = $entityManager->createQueryBuilder();
-//       
-//        $queryBuilder-> select('E')
-//                       ->from(Evento::class, 'E');
-//        $queryBuilder->where('E.tipo = :tipo') ->setParameter('tipo', 2);     
-//        $queryBuilder->orWhere('E.tipo = :tipo') ->setParameter('tipo', 8); 
-//        $queryBuilder->orWhere('E.tipo = :tipo') ->setParameter('tipo', 5); 
-//              
-//        $query = $queryBuilder->getQuery();
-//        $adapter = new DoctrineAdapter(new ORMPaginator($query));
-//        
-//        $paginator = new Paginator($adapter);
-//        return $paginator;        
-//    }
     
-    
-    public function getEventos($parametros) {
+    public function getEventosFiltrados($parametros) {
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros($filtros);
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
@@ -75,19 +62,31 @@ class EventoVentaManager extends EventoManager
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('E')
-                ->from(Evento::class, 'E'); 
-        $queryBuilder->orWhere('E.tipo = :tipo')->setParameter('tipo', 2);
-        $queryBuilder->orWhere('E.tipo = :tipo')->setParameter('tipo', 8);
-        $queryBuilder->orWhere('E.tipo = :tipo')->setParameter('tipo', 5);
+                ->from(Evento::class, 'E');
+        $queryBuilder->where('E.tipo = :tipo1')->setParameter('tipo1', 2);
+        $queryBuilder->orWhere('E.tipo = :tipo2')->setParameter('tipo2', 8);
+        $queryBuilder->orWhere('E.tipo = :tipo3')->setParameter('tipo3', 5);
         $indices = array_keys($parametros);
         for ($i = 0; $i < count($indices); $i++) {
             $p = $i + 1;
             $nombreCampo = $indices[$i];
-            $valorCampo = $parametros[$nombreCampo];
-            if ($i == 0) {
-                $queryBuilder->andWhere("E.$nombreCampo = ?$p");
-            }           
+        
+            if ($nombreCampo == "ejecutivo") {
+                $valorCampo = $this->entityManager->getRepository(Ejecutivo::class)->findOneBy(array('usuario' => $parametros[$nombreCampo]));
+            }
 
+            if ($nombreCampo == "apellido_cliente") {
+                $nombreCampo = "cliente";
+                $valorCampo = $this->entityManager->getRepository(Cliente::class)->findOneBy(array('apellido' => $parametros["apellido_cliente"]));
+            }
+
+            if ($nombreCampo == "fecha") {
+                $valorCampo = $parametros[$nombreCampo];
+            }
+            if ($nombreCampo == "tipo") {
+                $valorCampo = $this->entityManager->getRepository(TipoEvento::class)->findOneBy(array('id_tipo_evento' => $parametros[$nombreCampo]));
+            }
+            $queryBuilder->andWhere("E.$nombreCampo = ?$p");
             $queryBuilder->setParameter("$p", $valorCampo);
         }
         return $queryBuilder->getQuery();
@@ -104,5 +103,50 @@ class EventoVentaManager extends EventoManager
         return ($param);
     }
     
+    private function getValor($parametros, $nombreCampo){
+        if ($nombreCampo=="ejecutivo"){
+                print_r("el ejecutivo es " . $parametros[$nombreCampo]);
+               
+               return $this->entityManager->getRepository(Ejecutivo::class)->findOneBy(array('nomusr' => $parametros[$nombreCampo]));
+        }
+        
+        if ($nombreCampo == "apellido_cliente"){
+            $valor= $parametros[$nombreCampo];
 
+            print_r("el apellido_cliente es " . $valor );
+            $nombreCampo= "cliente";           
+
+            return $this->entityManager->getRepository(Cliente::class)->findOneBy(array('apellido' => $parametros["apellido_cliente"]));
+        }
+        if ($nombreCampo == "nombre_cliente"){
+            $nombreCampo="cliente";
+            print_r("el nombre_cliente es " . $parametros[$nombreCampo]);
+
+            return $this->entityManager->getRepository(Cliente::class)->findOneBy(array('nombre' => $parametros[$nombreCampo]));
+        }
+        if ($nombreCampo == "fecha"){
+                print_r("fecha es " . $parametros[$nombreCampo]);
+
+            return $parametros[$nombreCampo];
+        }
+        if ($nombreCampo=="tipo"){
+            print_r("el tipo es " . $parametros[$nombreCampo]);
+
+             return $this->entityManager->getRepository(TipoEvento::class)->findOneBy(array('nombre' => $parametros[$nombreCampo]));
+        }
+        
+    }
+    
+    
+    public function getTipoEvento($id=null){
+        if (isset ($id)) {
+            return $this->entityManager
+                ->getRepository(TipoEvento::class)
+                ->findOneBy(['id_tipo_evento'=>$id]);
+        }
+        return $this->entityManager
+                ->getRepository(TipoEvento::class)
+                ->findAll();
+    }
+ 
 } 

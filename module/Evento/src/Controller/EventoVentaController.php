@@ -5,6 +5,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
+
 namespace Evento\Controller;
 
 
@@ -74,10 +75,15 @@ class EventoVentaController extends EventoController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
+            
         }
-        // Tiene que listar
-        $parametros = $this->params()->fromPost();
-        $paginator = $this->eventoManager->getEventos($parametros);
+        else{
+            $parametros = array('apellido_cliente'=>'', 'ejecutivo'=>'', 'fecha'=>'');
+        }
+        $apellido_cliente=$parametros['apellido_cliente'];
+       // print_r($parametros);
+       // $parametros = $this->params()->fromPost();
+        $paginator = $this->eventoManager->getEventosFiltrados($parametros);
         $mensaje = "";
         $page = 1;
         if ($this->params()->fromRoute('id')) {
@@ -85,10 +91,12 @@ class EventoVentaController extends EventoController
         }
         $paginator->setCurrentPageNumber((int) $page)
                 ->setItemCountPerPage(10);
-
+       
         return new ViewModel([
             'eventos' => $paginator,
-            'mensaje' => $mensaje
+            'mensaje' => $mensaje,
+            'parametros' =>$parametros
+
         ]);
     }
     

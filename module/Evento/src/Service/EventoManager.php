@@ -48,10 +48,12 @@ class EventoManager {
         $eventos = $this->entityManager->getRepository(Evento::class)->findAll();
         return $eventos;
     }
+    
+     public function getTabla() {
 
-    public function getTabla() {
         $adapter = new SelectableAdapter($this->entityManager->getRepository(Evento::class)); // An object repository implements Selectable
         $paginator = new Paginator($adapter);
+
         return ($paginator);
     }
 
@@ -74,34 +76,41 @@ class EventoManager {
      */
     public function addEvento($data) {
         $evento = new Evento();
+       
         $fecha_str = date("Y-m-d");
         $evento->setFecha($fecha_str);
+
         $tipo_evento = $this->entityManager->getRepository(TipoEvento::class)
                 ->findOneBy(['id_tipo_evento' => $data['tipo_evento']]);
         $evento->setTipo($tipo_evento);
+        
         $cliente = $this->entityManager->getRepository(Cliente::class)
                 ->findOneBy(['Id' => $data['id_cliente']]);
         $evento->setId_cliente($cliente);
+                        
         $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
                 ->findOneBy(['usuario' => $data['ejecutivo']]);
         $evento->setId_ejecutivo($ejecutivo);
+        
         $evento->setDescripcion($data['detalle']);
+        
         $this->entityManager->persist($evento);
         $this->entityManager->flush();
         return $evento;
     }
+     
+    public function getEventosFiltrados($parametros) {
 
-    public function getEventosFiltros($parametros) {
-        if (size($parametros) == 0) {
-            $eventos = $this->entityManager->getRepository(Evento::class)->findAll();
+        if (size($parametros) ==0){
+            $eventos=$this->entityManager->getRepository(Evento::class)->findAll();
             return $eventos;
         }
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros($filtros);
-
+       
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
         $paginator = new Paginator($adapter);
-
+       
         return $paginator;
     }
 
@@ -135,9 +144,9 @@ class EventoManager {
         }
         return ($param);
     }
-
-    public function createForm($tipos) {
-        return new EventoForm('create', $this->entityManager, null, $tipos);
+    
+    public function createForm($tipos){
+        return new EventoForm('create', $this->entityManager,null,$tipos);
     }
 
     public function formValid($form, $data) {
@@ -177,11 +186,19 @@ class EventoManager {
         return true;
     }
 
+    
+    
     public function removeEvento($id) {
         $evento = $this->entityManager->getRepository(Evento::class)
                 ->findOneBy(['id_evento' => $id]);
         $this->entityManager->remove($evento);
         $this->entityManager->flush();
+    }
+
+    public function eliminarEventos($eventos_array) {
+        foreach ($eventos_array as $eve) {
+            removeEvento($eve);
+        }
     }
 
 }
