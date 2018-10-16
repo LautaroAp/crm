@@ -4,7 +4,7 @@
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">Listado Clientes</div>
+            <div class="panel-heading text-center">Listado Clientes (<?php echo(count($clientes,COUNT_RECURSIVE)); ?>)</div>
             <div class="panel-body">
                 <form method="post">
                     <div class="form-row">
@@ -18,9 +18,8 @@
                             <button type="submit" class="btn btn-default"> 
                                 <i class="glyphicon glyphicon-search"></i> Buscar
                             </button>                      
-                        </div>
-
-                        </div>
+                        </div>                        
+                    </div>
                    
                     <div class="form-row">
                         <div class="form-group col-md-4">
@@ -46,18 +45,15 @@
                     </th>
                     <th class="th-sm">Nombre</th>
                     <th class="th-sm">Categoria</th>
-                    <th class="th-sm">Licencia</th>
-                    <th class="th-sm">Cantidad de clientes <?php echo(count($clientes,COUNT_RECURSIVE)); ?></th>    
+                    <th class="th-sm">Licencia</th>   
                     <th></th>
-
                 </tr>
             </thead>
             <tbody>
                 <?php
                 if (isset($clientes)) {
                     foreach ($clientes as $cliente) {
-                        if ($cliente->getEstado()!='N'){
-                        
+                        if ($cliente->getEstado()!='N'){  
                             echo('<tr>');
                             echo ('<td>');
                             echo ($cliente->getApellido());
@@ -70,11 +66,8 @@
                             echo ('</td>');
                             echo ('<td>');
                             echo ($cliente->getLicencia());
-                            echo ('</td>');
-                        
-                        ?>
-               <td></td>
-                
+                            echo ('</td>');               
+                ?>
                     <td>
                         <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $cliente->getId()]); ?>">
                             <span class="glyphicon glyphicon-share-alt" ></span>
