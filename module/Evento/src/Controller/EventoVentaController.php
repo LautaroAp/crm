@@ -100,5 +100,34 @@ class EventoVentaController extends EventoController
         ]);
     }
     
+    
+     public function editAction() {
+        $view = $this->procesarEditAction();
+        return $view;
+    }
+
+    public function procesarEditAction() {
+        $id = (int) $this->params()->fromRoute('id', -1);
+        $evento = $this->eventoManager->getEventoId($id);
+        $form = $this->eventoManager->getFormForEvento($evento);
+        if ($form == null) {
+            $this->reportarError();
+        } else {
+            if ($this->getRequest()->isPost()) {
+                $data = $this->params()->fromPost();
+                if ($this->eventoManager->formValid($form, $data)) {
+                    $this->eventoManager->updateEvento($evento, $form);
+                    return $this->redirect()->toRoute('application', ['action' => 'view']);
+                }
+            } else {
+                $this->eventoManager->getFormEdited($form, $evento);
+            }
+            return new ViewModel(array(
+                'evento' => $evento,
+                'form' => $form
+            ));
+        }
+    }
+    
   
 }

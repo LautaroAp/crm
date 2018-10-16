@@ -155,11 +155,11 @@ class EventoManager {
     }
 
     public function getFormForEvento($evento) {
-
+        $tipos = $this->entityManager->getRepository(TipoEvento::class)->findAll(); 
         if ($evento == null) {
             return null;
         }
-        $form = new EventoForm('update', $this->entityManager, $evento);
+        $form = new EventoForm('update', $this->entityManager, $evento, $tipos);
         return $form;
     }
 
@@ -199,6 +199,10 @@ class EventoManager {
         foreach ($eventos_array as $eve) {
             removeEvento($eve);
         }
+    }
+    
+    public function getTipoEventos(){
+        
     }
 
 }

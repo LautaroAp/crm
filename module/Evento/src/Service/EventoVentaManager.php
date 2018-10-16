@@ -63,31 +63,40 @@ class EventoVentaManager extends EventoManager
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('E')
                 ->from(Evento::class, 'E');
-        $queryBuilder->where('E.tipo = :tipo1')->setParameter('tipo1', 2);
-        $queryBuilder->orWhere('E.tipo = :tipo2')->setParameter('tipo2', 8);
-        $queryBuilder->orWhere('E.tipo = :tipo3')->setParameter('tipo3', 5);
+//        $queryBuilder->where('E.tipo = :tipo1')->setParameter('tipo1', 2);
+//        $queryBuilder->orWhere('E.tipo = :tipo2')->setParameter('tipo2', 8);
+//        $queryBuilder->orWhere('E.tipo = :tipo3')->setParameter('tipo3', 5);
         $indices = array_keys($parametros);
         for ($i = 0; $i < count($indices); $i++) {
             $p = $i + 1;
             $nombreCampo = $indices[$i];
         
-            if ($nombreCampo == "ejecutivo") {
-                $valorCampo = $this->entityManager->getRepository(Ejecutivo::class)->findOneBy(array('usuario' => $parametros[$nombreCampo]));
-            }
-
-            if ($nombreCampo == "apellido_cliente") {
-                $nombreCampo = "cliente";
-                $valorCampo = $this->entityManager->getRepository(Cliente::class)->findOneBy(array('apellido' => $parametros["apellido_cliente"]));
-            }
+//            if ($nombreCampo == "ejecutivo") {
+//                $valorCampo = $this->entityManager->getRepository(Ejecutivo::class)->findOneBy(array('usuario' => $parametros[$nombreCampo]));
+//            }
+//
+//            if ($nombreCampo == "apellido_cliente") {
+//                $nombreCampo = "cliente";
+//                $valorCampo = $this->entityManager->getRepository(Cliente::class)->findOneBy(array('apellido' => $parametros["apellido_cliente"]));
+//            }
 
             if ($nombreCampo == "fecha") {
                 $valorCampo = $parametros[$nombreCampo];
             }
             if ($nombreCampo == "tipo") {
+                $valorCampo=$parametros['tipo'];
+                if ($valorCampo=="Ventas"){   
+                    $queryBuilder->where('E.tipo = :tipo1')->setParameter('tipo1', 2);
+
+                    $queryBuilder->orWhere('E.tipo = :tipo2')->setParameter('tipo2', 5);
+                }
+                elseif ($valorCampo=="Cotizaciones"){
+                    $queryBuilder->where('E.tipo = :tipo3')->setParameter('tipo3', 8);
+                }
                 $valorCampo = $this->entityManager->getRepository(TipoEvento::class)->findOneBy(array('id_tipo_evento' => $parametros[$nombreCampo]));
             }
-            $queryBuilder->andWhere("E.$nombreCampo = ?$p");
-            $queryBuilder->setParameter("$p", $valorCampo);
+//            $queryBuilder->andWhere("E.$nombreCampo = ?$p");
+            //$queryBuilder->setParameter("$p", $valorCampo);
         }
         $queryBuilder ->orderBy('E.fecha', 'DESC');
         return $queryBuilder->getQuery();

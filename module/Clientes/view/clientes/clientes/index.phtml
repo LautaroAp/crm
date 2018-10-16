@@ -7,7 +7,7 @@
             <div class="panel-heading text-center">Listado Clientes</div>
             <div class="panel-body">
                 <form method="post">
-                    <div class="form-row">
+                    <div class="row form-row">
                         <div class="form-group col-md-4">
                             <input type="text" class="form-control" name="apellido" placeholder="Apellido" value="<?php if (count($parametros)>0){echo($parametros['apellido']);} ?>">
                         </div>
@@ -22,7 +22,7 @@
 
                         </div>
                    
-                    <div class="form-row">
+                    <div class="row form-row">
                         <div class="form-group col-md-4">
                             <input type="text" class="form-control" name="pais" placeholder="País" value="<?php if (count($parametros)>0){echo($parametros['pais']);} ?>">
                         </div>
@@ -41,13 +41,10 @@
         <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
             <thead>
                 <tr> 
-                    <th class="th-sm" onclick="sortTableString(1, 'tabla_evento')">
-                        <i class="fa fa-sort float-right" aria-hidden="true"></i> Apellido
-                    </th>
+                    <th class="th-sm">Apellido</th>
                     <th class="th-sm">Nombre</th>
                     <th class="th-sm">Categoria</th>
                     <th class="th-sm">Licencia</th>
-                    <th class="th-sm">Cantidad de clientes <?php echo(count($clientes,COUNT_RECURSIVE)); ?></th>    
                     <th></th>
 
                 </tr>

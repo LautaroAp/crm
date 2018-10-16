@@ -125,7 +125,10 @@ class EventoController extends AbstractActionController {
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $evento = $this->eventoManager->getEventoId($id);
-        $form = $this->eventoManager->getFormForEvento($evento);
+        
+        $form = $this->eventoManager->createForm($this->tipos);
+        
+       // $form = $this->eventoManager->getFormForEvento($evento);
         if ($form == null) {
             $this->reportarError();
         } else {
@@ -140,7 +143,8 @@ class EventoController extends AbstractActionController {
             }
             return new ViewModel(array(
                 'evento' => $evento,
-                'form' => $form
+                'form' => $form,
+                'tipos' => $this->tipos
             ));
         }
     }

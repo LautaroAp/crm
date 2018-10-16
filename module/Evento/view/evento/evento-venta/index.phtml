@@ -1,111 +1,66 @@
 <script src="js/functions.js"></script>
-
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-
-
             <div class="panel panel-default">
                 <div class="panel-heading text-center">Listado de ventas</div>
                 <div class="panel-body">
                     <form method="post">
-                        <div class="form-row">
+                        <div class="row form-row">
                             <div class="form-group col-md-4">
-                                <input type="text" class="form-control" name="apellido_cliente" placeholder="Apellido cliente" value="<?php if (count($parametros)>0){echo($parametros['apellido_cliente']);} ?>">
-                            </div>
-                       
-                            <div class="form-group col-md-2">
-                                <input type="text" class="form-control" name="fecha" placeholder="Fecha evento" value="<?php if (count($parametros)>0){echo($parametros['fecha']);} ?>">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <input type="text" class="form-control" name="ejecutivo" placeholder="Usuario ejecutivo" value="<?php if (count($parametros)>0){echo($parametros['ejecutivo']);} ?>">
-                            </div>
-<!--                            <div class="form-group col-md-2">
-                                <label>Tipo de evento</label>
                                 <select class="form-control" id="tipo" name="tipo" placeholder="Tipo de evento">
-                                    <?php// foreach ($tipos as $tipo) : ?>
-                                        <?php// if(($tipo->getId()== 2 ) || ($tipo->getId()==5) || ($tipo->getId()==8)) { ?>
-                                            <option value="<?php //echo ($tipo->getId()); ?>"><?php //echo ($tipo->getNombre()); ?></option>
-                                    <?php// }
-                                    //endforeach; ?>
+                                    <option value="Cotizaciones" selected="">Cotizaciones</option>
+                                    <option value="Ventas" >Ventas</option>
                                 </select>
-                            </div> -->
+                            </div>                           
+                            <div class="form-group col-md-4">
+                                <input type="text" class="form-control" name="fecha" placeholder="Fecha evento" value="<?php
+                                if (count($parametros) > 0) {
+                                    echo($parametros['fecha']);
+                                }
+                                ?>">                            
+                            </div>
                             <div class="form-group col-md-2">
-                            <button type="submit" class="btn btn-default"> 
+                                <button type="submit" class="btn btn-default"> 
                                     <i class="glyphicon glyphicon-search"></i> Buscar
-                        </button>  
+                                </button>  
                             </div>
                         </div>
-
-                        <div class="form-row">
-                        
-                        </div>
+                    </form>
                 </div>
-                </form>
             </div>
-
-
-
-            <table id="tabla_evento" class="table table-bordred table-striped">
-
+           <table id="tabla_evento" class="table table-bordred table-striped">
                 <thead>
                     <tr>
-                        <th class="th-sm"  onclick="sortTableNumeric(0, 'tabla_evento')">Id
+                        <th class="th-sm"  onclick="sortTableNumeric(0, 'tabla_evento')">Fecha
                             <i class="fa fa-sort float-right" aria-hidden="true"></i>
                         </th>
-                        <th class="th-sm" onclick="sortTableString(1, 'tabla_evento')">Fecha
+                        <th class="th-sm" onclick="sortTableString(1, 'tabla_evento')">Tipo
                             <i class="fa fa-sort float-right" aria-hidden="true"></i>
                         </th>
-                        <th class="th-sm"  onclick="sortTableString(2, 'tabla_evento')">Tipo
+                        <th class="th-sm"  onclick="sortTableString(2, 'tabla_evento')">Cliente
                             <i class="fa fa-sort float-right" aria-hidden="true"></i>
                         </th>
-                        <th class="th-sm"  onclick="sortTableString(3, 'tabla_evento')">Cliente
+                        <th class="th-sm"  onclick="sortTableString(3, 'tabla_evento')">Categoria
                             <i class="fa fa-sort float-right" aria-hidden="true"></i>
                         </th>
-                        <th class="th-sm"  onclick="sortTableString(4, 'tabla_evento')">Ejecutivo
-                            <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                        </th>
-                        <th></th>      
+                        <th></th>
                     </tr>
-
                 </thead>
-                <?php foreach ($eventos as $evento) : ?>
+                    <?php foreach ($eventos as $evento) : ?>
                     <tr>
-                        <td><?php echo($evento->getId()); ?></td>
                         <td><?php echo ($evento->getFecha()); ?></td>
                         <td><?php echo ($evento->getTipo()); ?></td>
                         <td><?php echo ($evento->getNombreCliente()); ?></td>
-                        <td><?php echo ($evento->getUsuarioEjecutivo()); ?></td>
+                        <td><?php echo ($evento->getId_cliente()->getNombreCategoriaCliente()); ?> </td>
 
-                        <td> <a class="btn btn-default" href="<?= $this->url('evento', ['action' => 'edit', 'id' => $evento->getId()]); ?>"><span class="glyphicon glyphicon-pencil" ></span></a>
-
-                            <button name="<?= $evento->getId() ?>" id="<?= $evento->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $evento->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
-                        <!-- Modal -->
-                    <div id="myModal<?= $evento->getId() ?>" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Borrar Ejecutivo</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>
-                                        Estas seguro de borrar el evento?
-                                        "<?= $this->escapeHtml($evento->getId()) ?>"
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="<?= $this->url('evento', ['action' => 'remove', 'id' => $evento->getId()]); ?>" class="btn btn-primary">Borrar</a>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <td>
+                            <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getId_cliente()->getId()]); ?>">
+                                <span class="glyphicon glyphicon-share-alt" ></span>
+                            </a>
+                        </td>
                     </tr>
-
-                <?php endforeach; ?>
+            <?php endforeach; ?>
             </table>
             <?php
             echo $this->paginationControl($eventos, 'Sliding', // All, Elastic, Jumping, Sliding
@@ -114,3 +69,25 @@
         </div>
     </div>  
 </div>
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row img-centrar">
+
+
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->

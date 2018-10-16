@@ -138,7 +138,7 @@ class Evento {
     public function getUsuarioEjecutivo() {
        
         if (is_null($this->ejecutivo)) {
-            return "holiwis";
+            return "No definido";
         } else {
             return $this->ejecutivo->getUsuario();
         }

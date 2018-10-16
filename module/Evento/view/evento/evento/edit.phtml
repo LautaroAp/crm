@@ -1,73 +1,170 @@
+<?php
+//$this->headTitle('Editar Evento');
+//
+//$form->get('fecha_evento')->setAttributes([
+//    'class' => 'form-control',
+//    'value' => ''
+//]);
+//
+//$form->get('tipo_evento')->setAttributes([
+//    'class' => 'form-control',
+//    'value' => ''
+//]);
+//
+//$form->get('id_cliente')->setAttributes([
+//    'class' => 'form-control',
+//    'value' => ''
+//]);
+//
+//$form->get('id_ejecutivo')->setAttributes([
+//    'class' => 'form-control',
+//    'value' => ''
+//]);
+//
+//$form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
+//
+//$form->prepare();
+?>
+
+
 
 <?php
-$this->headTitle('Editar Evento');
+$this->headTitle('Agregar Evento');
+$id_cliente = $this->cliente->getId();
+
+date_default_timezone_set('America/Argentina/Buenos_Aires');
+
+$date = date('d-m-Y');
 
 $form->get('fecha_evento')->setAttributes([
     'class' => 'form-control',
-    'value' => ''
+    'disabled' => 'disabled',
+    'value' => $date,
 ]);
 
 $form->get('tipo_evento')->setAttributes([
     'class' => 'form-control',
-    'value' => ''
+    'value' => '',
 ]);
+
 
 $form->get('id_cliente')->setAttributes([
     'class' => 'form-control',
-    'value' => ''
+    'value' => $id_cliente,
+    'placeholder' => $id_cliente
 ]);
 
 $form->get('id_ejecutivo')->setAttributes([
     'class' => 'form-control',
-    'value' => ''
+    'disabled' => 'disabled',
+    'value' => $this->identity(),
 ]);
 
-$form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
+$form->get('submit')->setAttributes(['class' => 'btn btn-danger']);
 
 $form->prepare();
 ?>
 
+
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Agregar Actividad</div>
+        </div>   
+    </div>
+</div>
+
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <h1>Editar Evento <?= $this->escapeHtml($evento->getId()) ?></h1>
-
+        <div class="col-md-12">  
             <div class="row">
-                <div class="col-md-8">
-                    <?= $this->form()->openTag($form); ?>
-
-                    <div class="form-group">
+                <!-- Inicio: Datos del Cliente -->
+                <?= $this->form()->openTag($form); ?>
+                <input hidden="" name="id_cliente" value="<?= $id_cliente ?>">
+                <input hidden="" name="ejecutivo" value="<?= $this->identity() ?>">
+                <div class="row form-row">
+                    <div class="form-group col-md-2">
                         <?= $this->formLabel($form->get('fecha_evento')); ?>
                         <?= $this->formElement($form->get('fecha_evento')); ?>
-                        <?= $this->formElementErrors($form->get('fecha_evento')); ?>                  
+                        <?= $this->formElementErrors($form->get('fecha_evento')); ?> 
                     </div>
-
-                    <div class="form-group">
-                        <?= $this->formLabel($form->get('tipo_evento')); ?>
-                        <?= $this->formElement($form->get('tipo_evento')); ?>
-                        <?= $this->formElementErrors($form->get('tipo_evento')); ?>                  
-                    </div>
-
-
-                    <div class="form-group">
-                        <?= $this->formLabel($form->get('id_cliente')); ?>
-                        <?= $this->formElement($form->get('id_cliente')); ?>
-                        <?= $this->formElementErrors($form->get('id_cliente')); ?>                  
-                    </div>
-
-                    <div class="form-group">
+                    <div class="form-group col-md-2">
                         <?= $this->formLabel($form->get('id_ejecutivo')); ?>
                         <?= $this->formElement($form->get('id_ejecutivo')); ?>
-                        <?= $this->formElementErrors($form->get('id_ejecutivo')); ?>                  
+                        <?= $this->formElementErrors($form->get('id_ejecutivo')); ?> 
                     </div>
+                    <div class="form-group col-md-2">
+                        <?= $this->formLabel($form->get('tipo_evento')); ?>
+                        <?= $this->formElement($form->get('tipo_evento')); ?>
+                        <?= $this->formElementErrors($form->get('tipo_evento')); ?> 
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Detalle</label>
+                        <textarea name="detalle" class="form-control detalle" rows="4" placeholder="Ingresar detalle de actividad" required=""></textarea>
+                    </div>
+                </div>
+                <!-- Fin: Caracteristicas de trabajo -->
 
-                    <?= $this->formElement($form->get('submit')); ?>
-
-                    <?= $this->form()->closeTag(); ?>
-                </div>    
-            </div>  
+                <!-- Modal -->
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Agregar actividad</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    ¿Estas seguro de que quieres agregar la actividad?
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-default">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?= $this->form()->closeTag(); ?> 
+            </div>
         </div>
     </div>
 </div>
+<!-- Fin: Cliente Nuevo -->
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row img-centrar">
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a data-toggle="modal" data-target="#myModal"><img src="<?= $this->basePath('img/crm/Aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha" role="button"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Guardar</label>
+                        </div>
+                    </div>
+
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $id_cliente]) ?>">
+                                <img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                            </a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->
 
 
