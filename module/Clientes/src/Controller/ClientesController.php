@@ -49,11 +49,13 @@ class ClientesController extends AbstractActionController {
         else{
             $parametros=array();
         }
-        $paginator = $this->clientesManager->getTablaFiltrado($parametros); 
+        $paginator = $this->clientesManager->getTablaFiltrado($parametros);
+        $lista_clientes = $this->clientesManager->getListaClientes(); 
         $pag = $this->getPaginator($paginator);
         return new ViewModel([
             'clientes' => $pag,
-            'parametros' =>$parametros
+            'parametros' =>$parametros,
+            'lista_clientes' => $lista_clientes,
          ]);
     }
 
