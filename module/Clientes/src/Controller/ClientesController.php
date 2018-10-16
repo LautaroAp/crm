@@ -41,13 +41,19 @@ class ClientesController extends AbstractActionController {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
+            $_SESSION['PARAMETROS_CLIENTE'] = $parametros;
         }
-        // Tiene que listar
-        $parametros = $this->params()->fromPost();
+        if (!is_null($_SESSION['PARAMETROS_CLIENTE'])){
+          $parametros = $_SESSION['PARAMETROS_CLIENTE'];
+        }
+        else{
+            $parametros=array();
+        }
         $paginator = $this->clientesManager->getTablaFiltrado($parametros); 
         $pag = $this->getPaginator($paginator);
         return new ViewModel([
             'clientes' => $pag,
+            'parametros' =>$parametros
          ]);
     }
 

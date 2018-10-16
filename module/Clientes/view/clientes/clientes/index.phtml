@@ -9,10 +9,10 @@
                 <form method="post">
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <input type="text" class="form-control" name="apellido" placeholder="Apellido">
+                            <input type="text" class="form-control" name="apellido" placeholder="Apellido" value="<?php if (count($parametros)>0){echo($parametros['apellido']);} ?>">
                         </div>
                         <div class="form-group col-md-4">
-                            <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+                            <input type="text" class="form-control" name="nombre" placeholder="Nombre" value="<?php if (count($parametros)>0){echo($parametros['nombre']);} ?>">
                         </div>
                         <div class="form-group col-md-2">
                             <button type="submit" class="btn btn-default"> 
@@ -24,13 +24,13 @@
                    
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <input type="text" class="form-control" name="pais" placeholder="País">
+                            <input type="text" class="form-control" name="pais" placeholder="País" value="<?php if (count($parametros)>0){echo($parametros['pais']);} ?>">
                         </div>
                         <div class="form-group col-md-4">
-                            <input type="text" class="form-control" name="provincia" placeholder="Provincia">
+                            <input type="text" class="form-control" name="provincia" placeholder="Provincia" value="<?php if (count($parametros)>0){echo($parametros['provincia']);} ?>">
                         </div>
                         <div class="form-group col-md-4">
-                            <input type="text" class="form-control" name="email" placeholder="Email">
+                            <input type="text" class="form-control" name="email" placeholder="Email" value="<?php if (count($parametros)>0){echo($parametros['email']);} ?>">
                         </div>
                       </div>   
                          

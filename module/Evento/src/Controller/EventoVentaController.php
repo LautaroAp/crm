@@ -75,14 +75,14 @@ class EventoVentaController extends EventoController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
-            
+            $_SESSION['PARAMETROS_VENTA'] = $parametros;
+        }
+        if (!is_null($_SESSION['PARAMETROS_VENTA'])){
+          $parametros = $_SESSION['PARAMETROS_VENTA'];
         }
         else{
-            $parametros = array('apellido_cliente'=>'', 'ejecutivo'=>'', 'fecha'=>'');
+            $parametros=array();
         }
-        $apellido_cliente=$parametros['apellido_cliente'];
-       // print_r($parametros);
-       // $parametros = $this->params()->fromPost();
         $paginator = $this->eventoManager->getEventosFiltrados($parametros);
         $mensaje = "";
         $page = 1;
@@ -91,7 +91,7 @@ class EventoVentaController extends EventoController
         }
         $paginator->setCurrentPageNumber((int) $page)
                 ->setItemCountPerPage(10);
-       
+
         return new ViewModel([
             'eventos' => $paginator,
             'mensaje' => $mensaje,

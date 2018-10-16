@@ -2,6 +2,7 @@
 namespace User\Service;
 
 use Zend\Authentication\Result;
+use Zend\Session\Container;
 
 /**
  * The AuthManager service is responsible for user's login/logout and simple access 
@@ -63,7 +64,9 @@ class AuthManager
             // Session cookie will expire in 1 month (30 days).
             $this->sessionManager->rememberMe(60*60*24*30);
         }
-        
+        $_SESSION['PARAMETROS_VENTA']=NULL;
+        $_SESSION['PARAMETROS_CLIENTE']=NULL;
+
         return $result;
     }
     
