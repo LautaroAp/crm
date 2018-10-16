@@ -11,14 +11,14 @@
                     <form method="post">
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <input type="text" class="form-control" name="apellido_cliente" placeholder="Apellido cliente" value="<?php echo $parametros['apellido_cliente']; ?>">
+                                <input type="text" class="form-control" name="apellido_cliente" placeholder="Apellido cliente" value="<?php if (count($parametros)>0){echo($parametros['apellido_cliente']);} ?>">
                             </div>
                        
                             <div class="form-group col-md-2">
-                                <input type="text" class="form-control" name="fecha" placeholder="Fecha evento" value="<?php echo $parametros['fecha']; ?>">
+                                <input type="text" class="form-control" name="fecha" placeholder="Fecha evento" value="<?php if (count($parametros)>0){echo($parametros['fecha']);} ?>">
                             </div>
                             <div class="form-group col-md-4">
-                                <input type="text" class="form-control" name="ejecutivo" placeholder="Usuario ejecutivo" value="<?php echo $parametros['ejecutivo']; ?>">
+                                <input type="text" class="form-control" name="ejecutivo" placeholder="Usuario ejecutivo" value="<?php if (count($parametros)>0){echo($parametros['ejecutivo']);} ?>">
                             </div>
 <!--                            <div class="form-group col-md-2">
                                 <label>Tipo de evento</label>

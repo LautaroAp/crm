@@ -89,6 +89,7 @@ class EventoVentaManager extends EventoManager
             $queryBuilder->andWhere("E.$nombreCampo = ?$p");
             $queryBuilder->setParameter("$p", $valorCampo);
         }
+        $queryBuilder ->orderBy('E.fecha', 'DESC');
         return $queryBuilder->getQuery();
     }
 
