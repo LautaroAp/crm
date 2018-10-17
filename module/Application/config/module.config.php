@@ -152,6 +152,16 @@ return [
                         'controller' => \Evento\Controller\EventoVentaController::class,
                         'action' => 'index',
                     ],
+                ], 
+             ],
+            'gestion' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/gestion',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'gestion',
+                    ],
                 ],
                 
              ],

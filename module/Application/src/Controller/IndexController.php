@@ -26,10 +26,11 @@ class IndexController extends AbstractActionController
     
     
     public function utilidadesAction(){
-        
-        // $this->layout()->setTemplate('layout/simple');
         return new ViewModel();
-        
+    }
+    
+    public function gestionAction(){
+        return new ViewModel();
     }
 }
 

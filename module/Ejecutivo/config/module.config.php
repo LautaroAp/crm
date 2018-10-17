@@ -16,16 +16,12 @@ return [
     'router' => [
         'routes' => [
             'ejecutivos' => [
-                'type'    => Segment::class,
+                'type' => Segment::class,
                 'options' => [
-                    'route'    => '/ejecutivos[/:action[/:id]]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
-                    ],
+                    'route' => '/ejecutivos',
                     'defaults' => [
-                        'controller'    => Controller\EjecutivoController::class,
-                        'action'        => 'index',
+                        'controller' => Controller\EjecutivoController::class,
+                        'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
@@ -41,10 +37,10 @@ return [
                         ],
                     ],
 
-                    'page' => [
+                        'page' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/page[/:id]',
+                            'route' => '/page[/:id[/:estado]]',
                             'defaults' => [
                                 'action' => 'index',
                             ],

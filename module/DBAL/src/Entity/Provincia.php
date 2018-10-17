@@ -34,11 +34,11 @@ class Provincia {
     protected $nombre_provincia;
     
     
-    function getId_pais() {
+    function getPais() {
         return $this->id_pais;
     }
 
-    function getId_provincia() {
+    function getId() {
         return $this->id_provincia;
     }
 

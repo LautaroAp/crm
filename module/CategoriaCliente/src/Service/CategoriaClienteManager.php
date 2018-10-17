@@ -92,8 +92,7 @@ class CategoriaClienteManager
     
     public function getFormEdited($form, $categoriacliente){
         $form->setData(array(
-                    'nombre_categoriacliente'=>$categoriacliente->getNombre(),
-                    'version_categoriacliente'=>$categoriacliente->getDescripcion(),                    
+                    'nombre'=>$categoriacliente->getNombre(),
                 ));
     }
 

@@ -5,6 +5,7 @@
         <group>
             <file>file:/home/paula/NetBeansProjects/crm/module/Evento/src/Service/EventoVentaManager.php</file>
             <file>file:/home/paula/NetBeansProjects/crm/module/DBAL/src/Entity/Evento.php</file>
+            <file>file:/home/paula/NetBeansProjects/crm/module/Clientes/view/clientes/clientes/index.phtml</file>
             <file>file:/home/paula/NetBeansProjects/crm/module/Evento/src/Controller/EventoVentaController.php</file>
             <file>file:/home/paula/NetBeansProjects/crm/module/Evento/view/evento/evento-venta/index.phtml</file>
         </group>

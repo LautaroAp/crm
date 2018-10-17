@@ -88,8 +88,7 @@ class ProfesionClienteManager
     
     public function getFormEdited($form, $profesioncliente){
         $form->setData(array(
-                    'nombre_profesioncliente'=>$profesioncliente->getNombre(),
-                    'version_profesioncliente'=>$profesioncliente->getDescripcion(),                    
+                    'nombre'=>$profesioncliente->getNombre()                  
                 ));
     }
 

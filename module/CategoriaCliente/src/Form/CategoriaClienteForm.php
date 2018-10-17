@@ -1,5 +1,5 @@
 <?php
-namespace ProfesionCliente\Form;
+namespace CategoriaCliente\Form;
 
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
@@ -7,7 +7,7 @@ use Zend\InputFilter\InputFilter;
 
 
 
-class ProfesionClienteForm extends Form
+class CategoriaClienteForm extends Form
 {
     /**
      * Scenario ('create' or 'update').
@@ -22,20 +22,20 @@ class ProfesionClienteForm extends Form
     private $entityManager = null;
     
     /**
-     * Current profesioncliente.
-     * @var ProfesionCliente\Entity\ProfesionCliente 
+     * Current categoriacliente.
+     * @var CategoriaCliente\Entity\CategoriaCliente 
      */
-    private $profesioncliente = null;
+    private $categoriacliente = null;
     
     
     
     /**
      * Constructor.     
      */
-    public function __construct($scenario = 'create', $entityManager = null, $profesioncliente = null)
+    public function __construct($scenario = 'create', $entityManager = null, $categoriacliente = null)
     {
         // Define form name
-        parent::__construct('profesioncliente-form');
+        parent::__construct('categoriacliente-form');
      
         // Set POST method for this form
         $this->setAttribute('method', 'post');
@@ -43,7 +43,7 @@ class ProfesionClienteForm extends Form
         // Save parameters for internal use.
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
-        $this->profesioncliente = $profesioncliente;
+        $this->categoriacliente = $categoriacliente;
         
         $this->addElements();
         $this->addInputFilter();          
@@ -62,7 +62,7 @@ class ProfesionClienteForm extends Form
             'name' => 'nombre',
             'value' => '',
             'options' => [
-                'label' => 'Nombre Tipo Evento',
+                'label' => 'Nombre',
             ],
         ]);
 
