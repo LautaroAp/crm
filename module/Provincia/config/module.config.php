@@ -19,7 +19,7 @@ return [
            'provincia' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/provincia[/:action[/:id]]',
+                    'route'    => '/provincia',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-zA-Z0-9_-]*',

@@ -6,7 +6,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
         <div class="paginationControl">
             <!-- Previous page link -->
             <?php if (isset($this->previous)): ?>
-                <a href="<?php echo $this->url($this->route, array('page' => $this->previous)); ?>">
+                <a href="<?php echo $this->url('ejecutivos/page', array('page' => $this->previous)); ?>">
                     &lt; Previous
                 </a> |
             <?php else: ?>

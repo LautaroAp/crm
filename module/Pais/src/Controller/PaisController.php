@@ -35,9 +35,7 @@ class PaisController extends AbstractActionController
    
     public function indexAction()
     {
-        print("index");
         return $this->procesarIndexAction();
-             
     }
     
     private function procesarIndexAction(){

@@ -16,9 +16,7 @@
                             <th class="th-sm" onclick="sortTableString(1,'tabla_tipoevento')">Nombre
                                 <i class="fa fa-sort float-right" aria-hidden="true"></i>
                             </th>
-                            <th class="th-sm" onclick="sortTableNumeric(2,'tabla_tipoevento')">Version
-                                <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                            </th>
+                           
                             <th></th>
                             
                         </tr>
@@ -27,12 +25,11 @@
                         <tr>
                             <td><?php echo($tipoevento->getId()); ?></td>
                                 <td><?php echo ($tipoevento->getNombre()); ?></td>
-                                <td><?php echo ($tipoevento->getVersion()); ?></td>
-                                <td> <a class="btn btn-info" href="<?= $this->url('tipoevento', ['action' => 'edit', 'id' => $tipoevento->getId()]); ?>">
+                                <td> <a class="btn btn-default" href="<?= $this->url('tipoevento', ['action' => 'edit', 'id' => $tipoevento->getId()]); ?>">
                                         <span class="glyphicon glyphicon-pencil" ></span> 
                                 </a>
 
-                                  <button name="<?= $tipoevento->getId() ?>" id="<?= $tipoevento->getId() ?>" type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal<?= $tipoevento->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
+                                  <button name="<?= $tipoevento->getId() ?>" id="<?= $tipoevento->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $tipoevento->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
                                 <!-- Modal -->
                         <div id="myModal<?= $tipoevento->getId() ?>" class="modal fade" role="dialog">
                             <div class="modal-dialog">
@@ -64,7 +61,7 @@
             <p>
                 <a class="btn btn-default" href="
                    <?= $this->url('tipoevento', ['action' => 'add']); ?>">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Licencia
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Tipo
                 </a>
             </p>
 

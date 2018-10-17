@@ -93,8 +93,7 @@ class TipoEventoManager
     
     public function getFormEdited($form, $tipoevento){
         $form->setData(array(
-                    'nombre_tipoevento'=>$tipoevento->getNombre(),
-                    'version_tipoevento'=>$tipoevento->getDescripcion(),                    
+                    'noombre'=>$tipoevento->getNombre(),
                 ));
     }
 

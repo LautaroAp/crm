@@ -5,7 +5,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace CategoriaCliente\Controller;
+namespace ProfesionCliente\Controller;
 
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -14,11 +14,11 @@ use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use Zend\Paginator\Paginator;
 use Application\Entity\Post;
-use DBAL\Entity\CategoriaCliente;
-use CategoriaCliente\Form\CategoriaClienteForm;
+use DBAL\Entity\ProfesionCliente;
+use ProfesionCliente\Form\ProfesionClienteForm;
 
 
-class CategoriaClienteController extends AbstractActionController
+class ProfesionClienteController extends AbstractActionController
 {
     /**
      * @var DoctrineORMEntityManager
@@ -26,22 +26,22 @@ class CategoriaClienteController extends AbstractActionController
     protected $entityManager;
     
      /**
-     * CategoriaCliente manager.
-     * @var User\Service\CategoriaClienteManager 
+     * ProfesionCliente manager.
+     * @var User\Service\ProfesionClienteManager 
      */
     
-    protected $categoriaclienteManager;
+    protected $profesionclienteManager;
 
-    /*public function __construct($entityManager, $categoriaclienteManager)
+    /*public function __construct($entityManager, $profesionclienteManager)
     {
         $this->entityManager = $entityManager;
-        $this->categoriaclienteManager = $categoriaclienteManager;
+        $this->profesionclienteManager = $profesionclienteManager;
     }
     */
-    public function __construct($entityManager, $categoriaclienteManager)
+    public function __construct($entityManager, $profesionclienteManager)
     {
         $this->entityManager = $entityManager;
-        $this->categoriaclienteManager = $categoriaclienteManager;
+        $this->profesionclienteManager = $profesionclienteManager;
     }
     
    
@@ -52,11 +52,9 @@ class CategoriaClienteController extends AbstractActionController
     }
     
     private function procesarIndexAction(){
-        $categoriaclientes = $this->categoriaclienteManager->getCategoriaClientes();  
-        
-        
+        $profesionclientes = $this->profesionclienteManager->getProfesionClientes();      
         return new ViewModel([
-            'categoriaclientes' => $categoriaclientes
+            'profesionclientes' => $profesionclientes
         ]);
     }
     
@@ -64,14 +62,13 @@ class CategoriaClienteController extends AbstractActionController
     {
         $view = $this->procesarAddAction();
         return $view;
-       
     }
     
     private function procesarAddAction(){
-       $form = $this->categoriaclienteManager->createForm();
+       $form = $this->profesionclienteManager->createForm();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $categoriacliente = $this->categoriaclienteManager->getCategoriaClienteFromForm($form, $data);
+            $profesioncliente = $this->profesionclienteManager->getProfesionClienteFromForm($form, $data);
             return $this->redirect()->toRoute('application', ['action' => 'view']);
         }
         return new ViewModel([
@@ -88,24 +85,24 @@ class CategoriaClienteController extends AbstractActionController
   
     public function procesarEditAction(){
         $id = (int)$this->params()->fromRoute('id', -1);
-        $categoriacliente = $this->categoriaclienteManager->getCategoriaClienteId($id);
-        $form =$this->categoriaclienteManager->getFormForCategoriaCliente($categoriacliente);
+        $profesioncliente = $this->profesionclienteManager->getProfesionClienteId($id);
+        $form =$this->profesionclienteManager->getFormForProfesionCliente($profesioncliente);
         if ($form == null){
             $this->reportarError();
         }
         else{
             if ($this->getRequest()->isPost()) {
                $data = $this->params()->fromPost();
-               if ($this->categoriaclienteManager->formValid($form,$data)){
-                    $this->categoriaclienteManager->updateCategoriaCliente($categoriacliente,$form);
+               if ($this->profesionclienteManager->formValid($form,$data)){
+                    $this->profesionclienteManager->updateProfesionCliente($profesioncliente,$form);
                     return $this->redirect()->toRoute('application', ['action' => 'view']);
                }
             }               
          else {
-            $this->categoriaclienteManager->getFormEdited($form, $categoriacliente);
+            $this->profesionclienteManager->getFormEdited($form, $profesioncliente);
          }
         return new ViewModel(array(
-            'categoriacliente' => $categoriacliente,
+            'profesioncliente' => $profesioncliente,
             'form' => $form
         ));
         }
@@ -121,13 +118,13 @@ class CategoriaClienteController extends AbstractActionController
     
     public function procesarRemoveAction(){
         $id = (int)$this->params()->fromRoute('id', -1);
-        $categoriacliente = $this->categoriaclienteManager->getCategoriaClienteId($id);
+        $profesioncliente = $this->profesionclienteManager->getProfesionClienteId($id);
          
-        if ($categoriacliente == null) {
+        if ($profesioncliente == null) {
             $this->reportarError();
         }
         else{
-            $this->categoriaclienteManager->removeCategoriaCliente($categoriacliente);
+            $this->profesionclienteManager->removeProfesionCliente($profesioncliente);
             return $this->redirect()->toRoute('application', ['action' => 'view']);   
         }
     }
@@ -143,16 +140,16 @@ class CategoriaClienteController extends AbstractActionController
         }
         
         // Find a user with such ID.
-        $categoriacliente = $this->entityManager->getRepository(CategoriaCliente::class)
-                ->find($id_categoriacliente);
+        $profesioncliente = $this->entityManager->getRepository(ProfesionCliente::class)
+                ->find($id_profesioncliente);
         
-        if ($categoriacliente == null) {
+        if ($profesioncliente == null) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
                 
         return new ViewModel([
-            'categoriacliente' => $categoriacliente
+            'profesioncliente' => $profesioncliente
         ]);*/
           
           

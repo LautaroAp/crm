@@ -176,27 +176,23 @@ class Provincia extends \DBAL\Entity\Provincia implements \Doctrine\ORM\Proxy\Pr
     /**
      * {@inheritDoc}
      */
-    public function getId_pais()
+    public function getPais()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId_pais', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPais', []);
 
-        return parent::getId_pais();
+        return parent::getPais();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getId_provincia()
+    public function getId()
     {
-        if ($this->__isInitialized__ === false) {
-            return (int)  parent::getId_provincia();
-        }
 
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId_provincia', []);
-
-        return parent::getId_provincia();
+        return parent::getId();
     }
 
     /**
