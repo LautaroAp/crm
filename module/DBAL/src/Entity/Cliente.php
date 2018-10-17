@@ -391,7 +391,8 @@ class Cliente {
         return $this->usuarios;
     }
 
-    public function getEventos(){
+    public function getEventos() {
         return $this->eventos;
     }
+
 }

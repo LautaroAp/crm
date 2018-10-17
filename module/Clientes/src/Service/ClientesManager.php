@@ -79,6 +79,8 @@ class ClientesManager{
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
         $paginator = new Paginator($adapter);
        
+        
+        
         return $paginator;
     }
 
