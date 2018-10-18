@@ -31,7 +31,8 @@
         "zendframework/zend-crypt": "^3.3",
         "zendframework/zend-captcha": "^2.8",
         "zendframework/zend-mime": "^2.7",
-        "zendframework/zend-mail": "^2.10"
+        "zendframework/zend-mail": "^2.10",
+        "beberlei/DoctrineExtensions": "^1.1"
     },
     "autoload": {
         "psr-4": {

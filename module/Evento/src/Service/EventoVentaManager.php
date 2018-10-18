@@ -60,6 +60,10 @@ class EventoVentaManager extends EventoManager
 
     public function busquedaPorFiltros($parametros) {
         $entityManager = $this->entityManager;
+        $emConfig = $this->entityManager->getConfiguration();
+        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
+        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('E')
                 ->from(Evento::class, 'E');
@@ -79,21 +83,24 @@ class EventoVentaManager extends EventoManager
 //                $nombreCampo = "cliente";
 //                $valorCampo = $this->entityManager->getRepository(Cliente::class)->findOneBy(array('apellido' => $parametros["apellido_cliente"]));
 //            }
-
-            if ($nombreCampo == "fecha") {
-                $valorCampo = $parametros[$nombreCampo];
-            }
             if ($nombreCampo == "tipo") {
                 $valorCampo=$parametros['tipo'];
                 if ($valorCampo=="Ventas"){   
                     $queryBuilder->where('E.tipo = :tipo1')->setParameter('tipo1', 2);
-
                     $queryBuilder->orWhere('E.tipo = :tipo2')->setParameter('tipo2', 5);
                 }
                 elseif ($valorCampo=="Cotizaciones"){
                     $queryBuilder->where('E.tipo = :tipo3')->setParameter('tipo3', 8);
                 }
                 $valorCampo = $this->entityManager->getRepository(TipoEvento::class)->findOneBy(array('id_tipo_evento' => $parametros[$nombreCampo]));
+            }
+            if($nombreCampo=="ventas_m"){
+                $valorCampo=$parametros['ventas_m'];
+                $queryBuilder->andWhere('MONTH(E.fecha) = :month')->setParameter('month',$valorCampo);
+            }
+            if($nombreCampo=="ventas_y"){
+                $valorCampo=$parametros['ventas_y'];
+                $queryBuilder->andWhere('YEAR(E.fecha) = :year')->setParameter('year',$valorCampo);
             }
 //            $queryBuilder->andWhere("E.$nombreCampo = ?$p");
             //$queryBuilder->setParameter("$p", $valorCampo);
