@@ -57,6 +57,8 @@ class Provincia {
     function setNombre_provincia($nombre_provincia) {
         $this->nombre_provincia = $nombre_provincia;
     }
+    
+
 
 
     

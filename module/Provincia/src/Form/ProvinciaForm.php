@@ -4,6 +4,7 @@ namespace Provincia\Form;
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
+use DBAL\Entity\Pais;
 
 
 
@@ -27,10 +28,12 @@ class ProvinciaForm extends Form
      */
     private $provincia = null;
     
+    private $paises = array();
+    
     /**
      * Constructor.     
      */
-    public function __construct($scenario = 'create', $entityManager = null, $provincia = null)
+    public function __construct($scenario = 'create', $entityManager = null, $provincia = null, $paises)
     {
         // Define form name
         parent::__construct('provincia-form');
@@ -42,7 +45,7 @@ class ProvinciaForm extends Form
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
         $this->provincia = $provincia;
-        
+    $this->paises= $paises;
         $this->addElements();
         $this->addInputFilter();          
     }
@@ -52,23 +55,8 @@ class ProvinciaForm extends Form
      */
     protected function addElements() 
     {
-       
-        $this->add([
-            'type' => 'text',
-            'name' => 'id_pais',
-            'value' => '',
-            'options' => [
-                'label' => 'id_pais',
-            ],
-        ]);
-        $this->add([
-            'type' => 'text',
-            'name' => '$id_provincia',
-            'value' => '',
-            'options' => [
-                'label' => 'id_provincia',
-            ],
-        ]);
+      
+        
         // Add "full_name" field
         $this->add([
             'type' => 'text',
@@ -76,6 +64,16 @@ class ProvinciaForm extends Form
             'value' => '',
             'options' => [
                 'label' => 'Nombre provincia',
+            ],
+        ]);
+        
+         $this->add([
+            'type' => 'select',
+            'name' => 'pais',
+            'value' => '',
+            'options' => [
+                'label' => 'Pais',
+                'value_options' => $this->paises,
             ],
         ]);
 

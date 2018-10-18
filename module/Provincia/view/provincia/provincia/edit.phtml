@@ -1,34 +1,40 @@
-
-
 <?php
-$this->headTitle('Editar Pais');
-
+$this->headTitle('Editar provincia');
 $form->get('nombre_provincia')->setAttributes([
-    'class'=>'form-control'
-    ]);
+    'class' => 'form-control'
+]);
+$form->get('pais')->setAttributes([
+    'class' => 'form-control'
+]);
 
-$form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
 
+$form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
 $form->prepare();
 ?>
-
-<h1>Editar Pais <?= $this->escapeHtml($provincia->getId()) ?></h1>
-
-<div class="row">
-    <div class="col-md-6">
-        <?= $this->form()->openTag($form); ?>
-        
-            
-        <div class="form-group">
-            <?= $this->formLabel($form->get('nombre_provincia')); ?>
-            <?= $this->formElement($form->get('nombre_provincia')); ?>
-            <?= $this->formElementErrors($form->get('nombre_provincia')); ?>                  
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Editar País</div>
         </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-8">
+                    <?= $this->form()->openTag($form); ?>
+                    <div class="form-group">
+                        <?= $this->formLabel($form->get('nombre_provincia')); ?>
+                        <?= $this->formElement($form->get('nombre_provincia')); ?>
+                        <?= $this->formElementErrors($form->get('nombre_provincia')); ?>                  
+                    </div>
 
-        
-        <?= $this->formElement($form->get('submit')); ?>
-        
-        <?= $this->form()->closeTag(); ?>
-    </div>    
-</div>   
-
+                    <button type="submit" class="btn btn-default">Aceptar</button>
+                    <button type="submit" class="btn btn-default">Cancelar</button>
+                    <?= $this->form()->closeTag(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

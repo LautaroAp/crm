@@ -35,13 +35,7 @@ class ProvinciaController extends AbstractActionController {
         $this->provinciaManager = $provinciaManager;
     }
 
-    private function buscarProvincia() {
-        $id_provincia = (int) $this->params()->fromRoute('id_provincia', -1);
-        $id_pais = (int) $this->params()->fromRoute('id_pais', -1);
-        $provincia = $this->provinciaManager->getProvinciaId($id_pais, $id_provincia);
-        return $provincia;
-    }
-
+    
     public function indexAction() {
 //        return $this->procesarIndexAction();
         $view = $this->procesarAddAction();
@@ -83,7 +77,8 @@ class ProvinciaController extends AbstractActionController {
     }
 
     public function procesarEditAction() {
-        $provincia = $this->buscarProvincia();
+        $id = $this->params()->fromRoute('id', -1);
+        $provincia = $this->provinciaManager->getProvinciaId($id);
         $form = $this->provinciaManager->getFormForProvincia($provincia);
         if ($form == null) {
             $this->getResponse()->setStatusCode(404);

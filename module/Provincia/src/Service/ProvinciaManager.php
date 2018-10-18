@@ -44,11 +44,15 @@ class ProvinciaManager
         return $provincias;
     }
     
-    public function getProvinciaId($id_pais, $id_provincia){
+    public function getProvinciaId($id_provincia){
        return $this->entityManager->getRepository(Provincia::class)
-                ->find($id_pais, $id_provincia);
+                ->find($id_provincia);
     }
-  
+    public function createForm(){
+        $paises=$this->entityManager->getRepository(Pais::class)->findAll();
+
+        return new ProvinciaForm('create', $this->entityManager,null,$paises);
+    }
     public function getProvinciaFromForm($form, $data){
         $form->setData($data);
             if($form->isValid()) {
@@ -63,16 +67,15 @@ class ProvinciaManager
     public function addProvincia($data) 
     {
         $provincia = new Provincia();
-        $provincia->setVersion_provincia($data['version_provincia']);
-        $provincia->setNombre_provincia($data['nombre_provincia']);        
+        $provincia->setNombre_provincia($data['nombre_provincia']); 
+        $pais = $this->entityManager->getRepository(Pais::class)
+                ->findOneBy(['id_pais' => $data['pais']]);
+        $provincia->setId_pais();
         $this->entityManager->persist($provincia);
         $this->entityManager->flush();
         return $provincia;
     }
-    
-    public function createForm(){
-        return new ProvinciaForm('create', $this->entityManager,null);
-    }
+
     
    public function formValid($form, $data){
        $form->setData($data);
@@ -84,7 +87,9 @@ class ProvinciaManager
         if ($provincia == null) {
             return null;
         }
-        $form = new ProvinciaForm('update', $this->entityManager, $provincia);
+        $paises=$this->entityManager->getRepository(Pais::class)->findAll();
+
+        $form = new ProvinciaForm('update', $this->entityManager, $provincia, $paises);
         return $form;
     }
     
@@ -92,6 +97,7 @@ class ProvinciaManager
     public function getFormEdited($form, $provincia){
         $form->setData(array(
                     'nombre_provincia'=>$provincia->getNombre_provincia(),
+                     'pais' =>$provincia->getPais(),
                 ));
     }
 
