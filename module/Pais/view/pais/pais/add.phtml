@@ -11,37 +11,54 @@ $form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
 
 $form->prepare();
 ?>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-
-            <h1>Agregar Pais</h1>
-
-            <h4>
-                Por favor ingrese los datos del nuevo pais
-            </h4>
-            <div class="row">
-                <div class="col-md-8">
-                    <?= $this->form()->openTag($form); ?>
-
-                    <div class="form-group">
-                        <?= $this->formLabel($form->get('nombre_pais')); ?>
-                        <?= $this->formElement($form->get('nombre_pais')); ?>
-                        <?= $this->formElementErrors($form->get('nombre_pais')); ?>                  
-                    </div>
-
-
-                    <?= $this->formElement($form->get('submit')); ?>
-
-                    <?= $this->form()->closeTag(); ?>
-                </div>    
-            </div> 
-
-        </div>
+            <div class="table-responsive">
+                <table id="tabla_pais" class="table table-bordred table-striped">
+                    <thead>
+                        <tr>
+                            <th class="th-sm" onclick="sortTableString(1, 'tabla_pais')">Nombre
+                                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <?php foreach ($paises as $pais) : ?>
+                        <tr>
+                            <td><?php echo ($pais->getNombre()); ?></td>
+                            <td> <a class="btn btn-default" href="<?= $this->url('pais', ['action' => 'edit', 'id' => $pais->getId()]); ?>"> <span class="glyphicon glyphicon-pencil" ></span> </a>                            
+                                <button name="<?= $pais->getId() ?>" id="<?= $pais->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $pais->getId() ?>">
+                                    <span class="glyphicon glyphicon-remove" ></span>
+                                </button>
+                            </td>
+                            <!-- Modal -->
+                        <div id="myModal<?= $pais->getId() ?>" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Borrar cliente</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            Estas seguro de borrar el pais?
+                                            "<?= $this->escapeHtml($pais->getNombre()) ?>"
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="<?= $this->url('pais', ['action' => 'remove', 'id' => $pais->getId()]); ?>" class="btn btn-primary">Borrar</a>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        </div>  
     </div>
 </div>
-
-
-
-
-

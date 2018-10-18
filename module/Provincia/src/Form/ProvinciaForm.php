@@ -54,7 +54,7 @@ class ProvinciaForm extends Form
     {
        
         $this->add([
-            'type' => 'integer',
+            'type' => 'text',
             'name' => 'id_pais',
             'value' => '',
             'options' => [
@@ -62,7 +62,7 @@ class ProvinciaForm extends Form
             ],
         ]);
         $this->add([
-            'type' => 'integer',
+            'type' => 'text',
             'name' => '$id_provincia',
             'value' => '',
             'options' => [

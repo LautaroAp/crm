@@ -48,10 +48,10 @@ class ClientesController extends AbstractActionController {
         }
         else{
             $parametros=array();
-        }
-        $paginator = $this->clientesManager->getTablaFiltrado($parametros);
+        }        
+        $paginator = $this->clientesManager->getTablaFiltrado($parametros);        
         $lista_clientes = $this->clientesManager->getListaClientes(); 
-        $pag = $this->getPaginator($paginator);
+        $pag = $this->getPaginator($paginator);                
         return new ViewModel([
             'clientes' => $pag,
             'parametros' =>$parametros,
@@ -65,7 +65,7 @@ class ClientesController extends AbstractActionController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
+                ->setItemCountPerPage(10);        
         return $paginator;
     }
 

@@ -97,7 +97,7 @@ class LicenciaForm extends Form
             'name' => 'iva',
             'value' => '',
             'options' => [
-                'label' => 'IVA',
+                'label' => '% IVA',
             ],
         ]);
            
@@ -106,7 +106,7 @@ class LicenciaForm extends Form
             'name' => 'descuento',
             'value' => '',
             'options' => [
-                'label' => 'Descuento',
+                'label' => '% Dto.',
             ],
         ]);
 

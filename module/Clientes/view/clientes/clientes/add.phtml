@@ -49,7 +49,7 @@ $this->headTitle($title);
                             <label>Provincia</label>
                             <select class="form-control" id="provincia" name="provincia">
                                 <?php foreach ($provincias as $provincia) : ?>
-                                    <option value="<?php echo ($provincia->getId_provincia()); ?>"><?php echo ($provincia->getNombre_provincia()); ?></option>
+                                    <option value="<?php echo ($provincia->getId()); ?>"><?php echo ($provincia->getNombre_provincia()); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

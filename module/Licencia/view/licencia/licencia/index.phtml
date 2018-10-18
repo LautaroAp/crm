@@ -11,8 +11,8 @@
                     <th class="th-sm"> Licencia</th>
                     <th class="">Precio Local</th>
                     <th class="">Precio Extranjero</th>
-                    <th class="">IVA</th>
-                    <th class="">Desc</th>
+                    <th class="">% IVA</th>
+                    <th class="">% Dto</th>
                     <th class="">Total Local</th>
                     <th class="">Total Extranjero</th>
 
@@ -21,7 +21,7 @@
             </thead>
             <tbody>
                 <?php foreach ($licencias as $licencia) : ?>
-                <tr>
+                    <tr>
                         <td><?php echo ($licencia->getNombre()); ?></td>
                         <td><?php echo($licencia->getPrecio_local()); ?></td>
                         <td><?php echo($licencia->getPrecio_extranjero()); ?></td>
@@ -35,30 +35,30 @@
                                 <span class="glyphicon glyphicon-pencil" ></span> 
                             </a>
                             <button name="<?= $licencia->getId() ?>" id="<?= $licencia->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $licencia->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
-                        <!-- Modal -->
-                <div id="myModal<?= $licencia->getId() ?>" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
+                    <!-- Modal -->
+                    <div id="myModal<?= $licencia->getId() ?>" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
 
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Eliminar licencia</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>
-                                    Está seguro que desea eliminar la licencia: 
-                                    "<?= $this->escapeHtml($licencia->getNombre()) ?>"
-                                    de forma permanente?
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="<?= $this->url('licencia', ['action' => 'remove', 'id' => $licencia->getId()]); ?>" class="btn btn-default">Aceptar</a>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Eliminar licencia</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Está seguro que desea eliminar la licencia: 
+                                        "<?= $this->escapeHtml($licencia->getNombre()) ?>"
+                                        de forma permanente?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="<?= $this->url('licencia', ['action' => 'remove', 'id' => $licencia->getId()]); ?>" class="btn btn-default">Aceptar</a>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </tr>
             <?php endforeach; ?>
             </tbody>
@@ -84,7 +84,7 @@
                             <label>Licencia</label>
                         </div>
                     </div>
-                    
+
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
                             <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
