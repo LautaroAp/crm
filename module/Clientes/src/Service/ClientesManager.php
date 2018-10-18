@@ -68,19 +68,14 @@ class ClientesManager{
         $adapter = new SelectableAdapter($this->entityManager->getRepository(Cliente::class)); // An object repository implements Selectable
         // Create the paginator itself
         $paginator = new Paginator($adapter);
-
         return ($paginator);
     }
 
     public function getTablaFiltrado($parametros) {
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros($filtros);
-       
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
         $paginator = new Paginator($adapter);
-       
-        
-        
         return $paginator;
     }
 

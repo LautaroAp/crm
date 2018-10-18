@@ -1,34 +1,103 @@
-<script src="js/functions.js"> </script>
+<script src="js/functions.js"></script>
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Listado Provincias</div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <form method="post">
+        <div class="row form-row">
+            <div class="form-group col-md-4">
+                <input type="text" class="form-control" name="nombre_provincia" placeholder="Ingresar Provincia">
+            </div>
+            <div class="form-group col-md-4">
+                <select class="form-control" id="pais" name="pais">
+                    <?php foreach ($paises as $pais) : ?>
+                        <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-plus" ></span> Agregar Provincia
+                </button>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Agregar provincia</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Está seguro que desea agregar esta provincia?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default">Aceptar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                    <table id="mytable" class="table table-bordred table-striped">
-                        <thead>
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                        <tr>
+                            <th>Provincia</th>
+                            <th>Pais</th>
+                            <th></th>
+                        </tr>
+                        <?php foreach ($provincias as $provincia) : ?>
                             <tr>
-                                <th>Provincia</th>
-                                <th>Pais</th>
-                                <th>Eliminar</th>
-                            </tr>
-                            <?php foreach ($provincias as $provincia) : ?>
-                                <tr>
-                                        <td><?php echo($provincia->getNombre_provincia()); ?></td>
-                                        <td><?php echo($provincia->getPais()->getNombre()); ?></td>
-<td> <a class="btn btn-default" href="<?= $this->url('provincia', ['action' => 'edit', 'id' => $provincia->getId()]); ?>"> <span class="glyphicon glyphicon-pencil" ></span> </a>                            
-                             <button name="<?= $provincia->getId() ?>" id="<?= $provincia->getId() ?>" type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" ></span</button></td>
-                                 <?php //   <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> 
-                                   // <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                                <td><?php echo($provincia->getNombre_provincia()); ?></td>
+                                <td><?php echo($provincia->getPais()->getNombre()); ?></td>
+                                <td> <a class="btn btn-default" href="<?= $this->url('provincia', ['action' => 'edit', 'id' => $provincia->getId()]); ?>"> <span class="glyphicon glyphicon-pencil" ></span> </a>                            
+                                    <button name="<?= $provincia->getId() ?>" id="<?= $provincia->getId() ?>" type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" ></span</button></td>
+                                <?php
+                                //   <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> 
+                                // <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
                                 ?>
-                                 </tr>
-                            <?php endforeach; ?>
-                    </table>
-                </div>
-            </div>  
-        </div>
+                            </tr>
+                        <?php endforeach; ?>
+                </table>
+            </div>
+        </div>  
+    </div>
     <p>
         <a class="btn btn-default" href="
            <?= $this->url('provincia', ['action' => 'add']); ?>">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Licencia
         </a>
     </p>
+</div>
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row img-centrar">
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href="<?= $this->url('gestion') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+<!-- Fin: Panel Botones -->

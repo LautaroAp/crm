@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
@@ -6,7 +7,6 @@
  */
 
 namespace Provincia\Controller;
-
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -17,142 +17,133 @@ use Application\Entity\Post;
 use DBAL\Entity\Provincia;
 use Provincia\Form\ProvinciaForm;
 
+class ProvinciaController extends AbstractActionController {
 
-class ProvinciaController extends AbstractActionController
-{
     /**
      * @var DoctrineORMEntityManager
      */
     protected $entityManager;
-    
-     /**
+
+    /**
      * Provincia manager.
      * @var User\Service\ProvinciaManager 
      */
-    
     protected $provinciaManager;
 
- 
-    public function __construct($entityManager, $provinciaManager)
-    {
+    public function __construct($entityManager, $provinciaManager) {
         $this->entityManager = $entityManager;
         $this->provinciaManager = $provinciaManager;
     }
-    
-    private function buscarProvincia(){
-        $id_provincia = (int)$this->params()->fromRoute('id_provincia', -1);
-        $id_pais =(int)$this->params()->fromRoute('id_pais', -1);
+
+    private function buscarProvincia() {
+        $id_provincia = (int) $this->params()->fromRoute('id_provincia', -1);
+        $id_pais = (int) $this->params()->fromRoute('id_pais', -1);
         $provincia = $this->provinciaManager->getProvinciaId($id_pais, $id_provincia);
         return $provincia;
     }
-    
-    public function indexAction()
-    {
-        return $this->procesarIndexAction();
-             
+
+    public function indexAction() {
+//        return $this->procesarIndexAction();
+        $view = $this->procesarAddAction();
+        return $view;
     }
-    
-    private function procesarIndexAction(){
-        $provincias = $this->provinciaManager->getProvincias();   
+
+    private function procesarIndexAction() {
+        $provincias = $this->provinciaManager->getProvincias();
         return new ViewModel([
             'provincias' => $provincias
         ]);
     }
-    
-    public function addAction()
-    {
+
+    public function addAction() {
         $view = $this->procesarAddAction();
         return $view;
-       
     }
-    
-    private function procesarAddAction(){
-       $form = $this->provinciaManager->createForm();
+
+    private function procesarAddAction() {
+        $form = $this->provinciaManager->createForm();
+        $provincias = $this->provinciaManager->getProvincias();
+        $paises = $this->provinciaManager->getPais();
         if ($this->getRequest()->isPost()) {
-            // Fill in the form with POST data
             $data = $this->params()->fromPost();
+                        
             $provincia = $this->provinciaManager->getProvinciaFromForm($form, $data);
-            return $this->redirect()->toRoute('application', ['action' => 'view']);
+            return $this->redirect()->toRoute('provincia');
         }
         return new ViewModel([
-            'form' => $form
+            'form' => $form,
+            'provincias' => $provincias,
+            'paises' => $paises,
         ]);
     }
 
-    public function editAction() 
-    {
+    public function editAction() {
         $view = $this->procesarEditAction();
         return $view;
-       
     }
-  
-    public function procesarEditAction(){
+
+    public function procesarEditAction() {
         $provincia = $this->buscarProvincia();
-        $form =$this->provinciaManager->getFormForProvincia($provincia);
-        if ($form == null){
+        $form = $this->provinciaManager->getFormForProvincia($provincia);
+        if ($form == null) {
             $this->getResponse()->setStatusCode(404);
             return;
-        }
-        else{
+        } else {
             if ($this->getRequest()->isPost()) {
-               $data = $this->params()->fromPost();
-               if ($this->provinciaManager->formValid($form,$data)){
-                    $this->provinciaManager->updateProvincia($provincia,$form);
-                    return $this->redirect()->toRoute('application',['action'=>'view']);    
-               }
-            }               
-            else {
-               $this->provinciaManager->getFormEdited($form, $provincia);
+                $data = $this->params()->fromPost();
+                if ($this->provinciaManager->formValid($form, $data)) {
+                    $this->provinciaManager->updateProvincia($provincia, $form);
+                    return $this->redirect()->toRoute('application', ['action' => 'view']);
+                }
+            } else {
+                $this->provinciaManager->getFormEdited($form, $provincia);
             }
             return new ViewModel(array(
                 'provincia' => $provincia,
                 'form' => $form
             ));
-        }        
+        }
     }
 
-    public function removeAction() 
-    {
-       
-       $view = $this->procesarRemoveAction();
-       return $view;
+    public function removeAction() {
+
+        $view = $this->procesarRemoveAction();
+        return $view;
     }
-    
-   
-    public function procesarRemoveAction(){
+
+    public function procesarRemoveAction() {
         $provincia = $this->buscarProvincia();
         if ($provincia == null) {
             $this->getResponse()->setStatusCode(404);
             return;
-        }
-        else{
+        } else {
             $this->provinciaManager->removeProvincia($provincia);
-            return $this->redirect()->toRoute('application', ['action'=>'view']);   
+            return $this->redirect()->toRoute('application', ['action' => 'view']);
         }
     }
-  
-      public function viewAction() 
-    {
-       /* $id = (int)$this->params()->fromRoute('id', -1);
-        if ($id<1) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        
-        // Find a user with such ID.
-        $provincia = $this->entityManager->getRepository(Provincia::class)
-                ->find($id_provincia);
-        
-        if ($provincia == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-                
-        return new ViewModel([
-            'provincia' => $provincia
-        ]);*/
-          
-          
-          return new ViewModel();
+
+    public function viewAction() {
+        /* $id = (int)$this->params()->fromRoute('id', -1);
+          if ($id<1) {
+          $this->getResponse()->setStatusCode(404);
+          return;
+          }
+
+          // Find a user with such ID.
+          $provincia = $this->entityManager->getRepository(Provincia::class)
+          ->find($id_provincia);
+
+          if ($provincia == null) {
+          $this->getResponse()->setStatusCode(404);
+          return;
+          }
+
+          return new ViewModel([
+          'provincia' => $provincia
+          ]); */
+
+
+        return new ViewModel();
     }
+
 }

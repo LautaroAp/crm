@@ -2,9 +2,8 @@
 namespace Provincia\Service;
 
 use DBAL\Entity\Provincia;
+use DBAL\Entity\Pais;
 use Provincia\Form\ProvinciaForm;
-
-
 
 /**
  * This service is responsible for adding/editing provincias
@@ -82,7 +81,6 @@ class ProvinciaManager
        
    
    public function getFormForProvincia($provincia) {
-
         if ($provincia == null) {
             return null;
         }
@@ -114,5 +112,16 @@ class ProvinciaManager
             $this->entityManager->remove($provincia);
             $this->entityManager->flush();
            
+    }
+    
+    public function getPais($id=null){
+        if (isset ($id)) {
+            return $this->entityManager
+                ->getRepository(Pais::class)
+                ->findOneBy(['id_pais'=>$id]);
+        }
+        return $this->entityManager
+                ->getRepository(Pais::class)
+                ->findAll();
     }
 } 
