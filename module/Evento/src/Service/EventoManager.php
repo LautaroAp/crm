@@ -48,8 +48,8 @@ class EventoManager {
         $eventos = $this->entityManager->getRepository(Evento::class)->findAll();
         return $eventos;
     }
-    
-     public function getTabla() {
+
+    public function getTabla() {
 
         $adapter = new SelectableAdapter($this->entityManager->getRepository(Evento::class)); // An object repository implements Selectable
         $paginator = new Paginator($adapter);
@@ -76,41 +76,47 @@ class EventoManager {
      */
     public function addEvento($data) {
         $evento = new Evento();
-       
+
         $fecha_str = date("Y-m-d");
         $evento->setFecha($fecha_str);
-
         $tipo_evento = $this->entityManager->getRepository(TipoEvento::class)
                 ->findOneBy(['id_tipo_evento' => $data['tipo_evento']]);
         $evento->setTipo($tipo_evento);
-        
         $cliente = $this->entityManager->getRepository(Cliente::class)
                 ->findOneBy(['Id' => $data['id_cliente']]);
         $evento->setId_cliente($cliente);
-                        
         $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
                 ->findOneBy(['usuario' => $data['ejecutivo']]);
         $evento->setId_ejecutivo($ejecutivo);
-        
         $evento->setDescripcion($data['detalle']);
-        
+        // Fecha Compra & Ultimo Cobro & Vencimiento
+        if (($tipo_evento->getId() == 2) or ( $tipo_evento->getId() == 5)) {
+            if ($cliente->isPrimeraVenta()) {
+                $cliente->setFechaCompra($fecha_str);
+            }
+            $cliente->setFechaUltimoContacto($fecha_str);
+            $vencimiento = strtotime('+90 day', strtotime($fecha_str));
+            $vencimiento = date('Y-m-d', $vencimiento);
+            $cliente->setVencimiento($vencimiento);
+        }
+
         $this->entityManager->persist($evento);
         $this->entityManager->flush();
         return $evento;
     }
-     
+
     public function getEventosFiltrados($parametros) {
 
-        if (size($parametros) ==0){
-            $eventos=$this->entityManager->getRepository(Evento::class)->findAll();
+        if (size($parametros) == 0) {
+            $eventos = $this->entityManager->getRepository(Evento::class)->findAll();
             return $eventos;
         }
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros($filtros);
-       
+
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
         $paginator = new Paginator($adapter);
-       
+
         return $paginator;
     }
 
@@ -144,9 +150,9 @@ class EventoManager {
         }
         return ($param);
     }
-    
-    public function createForm($tipos){
-        return new EventoForm('create', $this->entityManager,null,$tipos);
+
+    public function createForm($tipos) {
+        return new EventoForm('create', $this->entityManager, null, $tipos);
     }
 
     public function formValid($form, $data) {
@@ -155,7 +161,7 @@ class EventoManager {
     }
 
     public function getFormForEvento($evento) {
-        $tipos = $this->entityManager->getRepository(TipoEvento::class)->findAll(); 
+        $tipos = $this->entityManager->getRepository(TipoEvento::class)->findAll();
         if ($evento == null) {
             return null;
         }
@@ -186,8 +192,6 @@ class EventoManager {
         return true;
     }
 
-    
-    
     public function removeEvento($id) {
         $evento = $this->entityManager->getRepository(Evento::class)
                 ->findOneBy(['id_evento' => $id]);
@@ -200,8 +204,8 @@ class EventoManager {
             removeEvento($eve);
         }
     }
-    
-    public function getTipoEventos(){
+
+    public function getTipoEventos() {
         
     }
 

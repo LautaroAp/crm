@@ -85,12 +85,9 @@ class EventoController extends AbstractActionController {
     }
 
     private function procesarAddAction() {
-//       $this->layout()->setTemplate('layout/simple');
         $Id = (int) $this->params()->fromRoute('id', -1);
         $cliente = $this->entityManager->getRepository(Cliente::class)->findOneBy(['Id' => $Id]);
-
         $form = $this->eventoManager->createForm($this->tipos);
-
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->eventoManager->addEvento($data);
@@ -104,14 +101,8 @@ class EventoController extends AbstractActionController {
     }
 
     public function getTablaFiltrado($filtro) {
-        // Create the adapter
-//        $adapter = new SelectableAdapter($this->entityManager->getRepository(Cliente::class)); // An object repository implements Selectable
         $listaEventos = $this->getSearch($filtro);
-//        $criteria = new \Doctrine\Common\Collections\Criteria();
-//        $criteria->where($criteria->expr()->gt($listaClientes));
-//        $adapter = new DoctrineAdapter(new ORMPaginator($this->entityManager->getRepository(Cliente::class)));
-        $adapter = new SelectableAdapter($this->entityManager->getRepository(Evento::class)); // An object repository implements Selectable
-        // Create the paginator itself
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(Evento::class));
         $paginator = new Paginator($adapter);
 
         return ($listaEventos);
@@ -168,26 +159,6 @@ class EventoController extends AbstractActionController {
     }
 
     public function viewAction() {
-        /* $id = (int)$this->params()->fromRoute('id', -1);
-          if ($id<1) {
-          $this->getResponse()->setStatusCode(404);
-          return;
-          }
-
-          // Find a user with such ID.
-          $evento = $this->entityManager->getRepository(Evento::class)
-          ->find($id_evento);
-
-          if ($evento == null) {
-          $this->getResponse()->setStatusCode(404);
-          return;
-          }
-
-          return new ViewModel([
-          'evento' => $evento
-          ]); */
-
-
         return new ViewModel();
     }
 

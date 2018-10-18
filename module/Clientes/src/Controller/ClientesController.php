@@ -120,7 +120,11 @@ class ClientesController extends AbstractActionController {
             $data = $this->params()->fromPost();
             // Graba y recupera la misma entidad
             $cliente = $this->clientesManager->updateCliente($data);
-            $this->redirect()->toRoute('clientes');
+            
+            $id = $this->params()->fromRoute('id');
+            $cliente_ficha = $this->clientesManager->getCliente($id);
+            
+            $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $cliente_ficha->getId()]);
         } else {// Tiene que mostrar
             $id = $this->params()->fromRoute('id');
             $cliente = $this->clientesManager->getCliente($id);
