@@ -45,7 +45,6 @@ class ClientesInactivosManager extends ClientesManager{
     
     public function getFiltrados($parametros){
         $filtros = $this->limpiarParametros($parametros);
-        $estado = 'N';
         $query = $this->busquedaPorFiltros($filtros);
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
         $paginator = new Paginator($adapter);
@@ -74,9 +73,10 @@ class ClientesInactivosManager extends ClientesManager{
             } else {
                 $queryBuilder->andWhere("C.$nombreCampo = ?$p");
             }
-            $queryBuilder->andWhere('C.estado = :state') ->setParameter('state', 'N'); 
             $queryBuilder->setParameter("$p", $valorCampo);
         }
+        $queryBuilder->andWhere('C.estado = :state') ->setParameter('state', 'N'); 
+
         return $queryBuilder->getQuery();
     }
 }
