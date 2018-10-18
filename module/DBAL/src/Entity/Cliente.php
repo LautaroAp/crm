@@ -1,7 +1,9 @@
 <?php
 
 namespace DBAL\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
+use DBAL\Entity\Evento;
 
 /**
  * Description of Cliente
@@ -93,17 +95,17 @@ class Cliente {
     private $categoria;
 
     /**
-     * @ORM\Column(name="FECHA_COMPRA", nullable=true, type="date")
+     * @ORM\Column(name="FECHA_COMPRA")
      */
     private $fecha_compra;
 
     /**
-     * @ORM\Column(name="FECHA_VTO_ACT", nullable=true, type="date")
+     * @ORM\Column(name="FECHA_VTO_ACT")
      */
     private $vencimiento;
 
     /**
-     * @ORM\Column(name="FECHA_ULTIMO_CONTACTO", nullable=true, type="date")
+     * @ORM\Column(name="FECHA_ULTIMO_CONTACTO")
      */
     private $fecha_ultimo_contacto;
 
@@ -128,7 +130,7 @@ class Cliente {
      * @ORM\OneToMany(targetEntity="\DBAL\Entity\Evento", mappedBy="cliente")
      */
     private $eventos;
-    
+
 //    public function __construct() {
 //        $this->usuario = new ArrayCollection();
 //    }
@@ -139,7 +141,7 @@ class Cliente {
 
     public function getNombre() {
         if (is_null($this->nombre)) {
-            return "-";
+            return "NO DEFINIDO";
         } else {
             return $this->nombre;
         }
@@ -151,7 +153,7 @@ class Cliente {
 
     public function getApellido() {
         if (is_null($this->apellido)) {
-            return "-";
+            return "NO DEFINIDO";
         } else {
             return $this->apellido;
         }
@@ -172,7 +174,7 @@ class Cliente {
     public function getNombrePaisCliente() {
         $pais = $this->getPais();
         if (is_null($pais)) {
-            return "-";
+            return "NO DEFINIDO";
         } else {
             return $this->getPais()->getNombre();
         }
@@ -189,7 +191,7 @@ class Cliente {
     public function getNombreProvinciaCliente() {
         $provincia = $this->getProvincia();
         if (is_null($provincia)) {
-            return "-";
+            return "NO DEFINIDA";
         } else {
             return $this->getProvincia()->getNombre_provincia();
         }
@@ -197,7 +199,7 @@ class Cliente {
 
     public function getCiudad() {
         if (is_null($this->ciudad)) {
-            return "-";
+            return "NO DEFINIDA";
         } else {
             return $this->ciudad;
         }
@@ -218,7 +220,7 @@ class Cliente {
     public function getNombreProfesionCliente() {
         $profesion = $this->getProfesion();
         if (is_null($profesion)) {
-            return "-";
+            return "NO DEFINIDA";
         } else {
             return $this->getProfesion()->getNombre();
         }
@@ -226,7 +228,7 @@ class Cliente {
 
     public function getEmpresa() {
         if (is_null($this->empresa)) {
-            return "-";
+            return "NO DEFINIDA";
         } else {
             return $this->empresa;
         }
@@ -238,7 +240,7 @@ class Cliente {
 
     public function getActividad() {
         if (is_null($this->actividad)) {
-            return "-";
+            return "NO DEFINIDA";
         } else {
             return $this->actividad;
         }
@@ -250,7 +252,7 @@ class Cliente {
 
     public function getAnimales() {
         if (is_null($this->animales)) {
-            return "-";
+            return "NO DEFINIDO";
         } else {
             return $this->animales;
         }
@@ -262,7 +264,7 @@ class Cliente {
 
     public function getEstablecimientos() {
         if (is_null($this->establecimientos)) {
-            return "-";
+            return "NO DEFINIDO";
         } else {
             return $this->establecimientos;
         }
@@ -274,7 +276,7 @@ class Cliente {
 
     public function getTelefono() {
         if (is_null($this->telefono)) {
-            return "-";
+            return "NO DEFINIDO";
         } else {
             return $this->telefono;
         }
@@ -286,7 +288,7 @@ class Cliente {
 
     public function getEmail() {
         if (is_null($this->email)) {
-            return "-";
+            return "NO DEFINIDO";
         } else {
             return $this->email;
         }
@@ -307,7 +309,7 @@ class Cliente {
     public function getNombreCategoriaCliente() {
         $categoria = $this->getCategoria();
         if (is_null($categoria)) {
-            return "-";
+            return "NO DEFINIDA";
         } else {
             return $categoria->getNombre();
         }
@@ -315,9 +317,16 @@ class Cliente {
 
     public function getFechaCompra() {
         if (is_null($this->fecha_compra)) {
-            return "-";
+            $array_eventos = $this->getEventos();
+            foreach ($array_eventos as $eve) {
+                if (($eve->getTipoId() == 2) or ( $eve->getTipoId() == 5)) {
+                    return $eve->getFecha();
+                    break;
+                }
+            }
+            return "NO DEFINIDA";
         } else {
-            return $this->fecha_compra->format('Y-m-d');
+            return $this->fecha_compra;
         }
     }
 
@@ -327,9 +336,9 @@ class Cliente {
 
     public function getVencimiento() {
         if (is_null($this->vencimiento)) {
-            return "-";
+            return "NO DEFINIDO";
         } else {
-            return $this->vencimiento->format('Y-m-d');
+            return $this->vencimiento;
         }
     }
 
@@ -339,9 +348,9 @@ class Cliente {
 
     function getFechaUltimoContacto() {
         if (is_null($this->fecha_ultimo_contacto)) {
-            return "-";
+            return "NO DEFINIDO";
         } else {
-            return $this->fecha_ultimo_contacto->format('Y-m-d');
+            return $this->fecha_ultimo_contacto;
         }
     }
 
@@ -360,16 +369,16 @@ class Cliente {
     public function getNombreLicenciaCliente() {
         $licencia = $this->getLicencia();
         if (is_null($licencia)) {
-            return "-";
+            return "NO DEFINIDA";
         } else {
             return $licencia->getNombre();
         }
     }
-    
+
     public function getEstado() {
         return $this->estado;
     }
-    
+
     public function getEstadoNombre() {
         if ($this->estado == "S") {
             return "Activo";
@@ -383,8 +392,6 @@ class Cliente {
 
     public function addUsuario($usuario) {
         $this->usuarios[] = $usuario;
-        //$persona->setIdLocalidad($this->getId());
-        //$persona->setLocalidad($this);
     }
 
     public function getUsuarios() {
@@ -393,6 +400,17 @@ class Cliente {
 
     public function getEventos() {
         return $this->eventos;
+    }
+
+    public function isPrimeraVenta() {
+        $array_eventos = $this->getEventos();
+        foreach ($array_eventos as $eve) {
+            if ($eve->getTipoId() == 2) {
+                return false;
+                break;
+            }
+        }
+        return true;
     }
 
 }

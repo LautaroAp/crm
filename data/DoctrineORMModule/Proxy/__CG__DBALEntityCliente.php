@@ -679,4 +679,15 @@ class Cliente extends \DBAL\Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
         return parent::getEventos();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function isPrimeraVenta()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isPrimeraVenta', []);
+
+        return parent::isPrimeraVenta();
+    }
+
 }
