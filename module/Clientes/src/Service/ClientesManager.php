@@ -31,6 +31,8 @@ class ClientesManager{
     /**
      * Constructs the service.
      */
+    
+    protected $total;
     public function __construct($entityManager) {
         $this->entityManager = $entityManager;
     }
@@ -75,8 +77,13 @@ class ClientesManager{
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros($filtros);
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
+        $this->total = COUNT($adapter);
         $paginator = new Paginator($adapter);
         return $paginator;
+    }
+    
+    public function getTotal(){
+        return $this->total;
     }
 
     public function busquedaPorFiltros($parametros) {
@@ -94,9 +101,9 @@ class ClientesManager{
             } else {
                 $queryBuilder->andWhere("C.$nombreCampo = ?$p");
             }
-            $queryBuilder->andWhere('C.estado = :state') ->setParameter('state', 'S'); 
             $queryBuilder->setParameter("$p", $valorCampo);
         }
+        $queryBuilder->andWhere('C.estado = :state') ->setParameter('state', 'S');
         return $queryBuilder->getQuery();
     }
 

@@ -4,7 +4,7 @@
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">Listado Clientes</div>
+            <div class="panel-heading text-center">Listado Clientes Inactivos (<?php echo($total_inactivos); ?>)</div>
             <div class="panel-body">
                 <form method="post">
                     <div class="row form-row">
@@ -41,13 +41,10 @@
     <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
         <thead>
             <tr> 
-                <th class="th-sm" onclick="sortTableString(1, 'tabla_evento')">
-                    <i class="fa fa-sort float-right" aria-hidden="true"></i> Apellido
-                </th>
+                <th class="th-sm">Apellido</th>
                 <th class="th-sm">Nombre</th>
                 <th class="th-sm">Categoria</th>
                 <th class="th-sm">Licencia</th>
-                <th class="th-sm">Cantidad de clientes <?php echo(count($clientes)); ?></th>   
                 <th></th>
             </tr>
         </thead>
@@ -70,7 +67,6 @@
                     echo ($cliente->getLicencia());
                     echo ('</td>');
                     ?>
-                <td></td>
                 <td>
                     <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $cliente->getId()]); ?>">
                         <span class="glyphicon glyphicon-share-alt" ></span>

@@ -31,32 +31,28 @@ class ClientesInactivosManager extends ClientesManager{
         $this->entityManager = $entityManager;
     }
     
-    public function getInactivos(){
-        $entityManager = $this->entityManager;
-        $queryBuilder = $entityManager->createQueryBuilder();
-        $queryBuilder-> select('C')
-                       ->from(Cliente::class, 'C');
-        $queryBuilder->where('C.estado = :state') ->setParameter('state', 'N');                 
-        $query = $queryBuilder->getQuery();
-        $adapter = new DoctrineAdapter(new ORMPaginator($query));
-        $paginator = new Paginator($adapter);
-        return $paginator;        
-    }
+//    public function getInactivos(){
+//        $entityManager = $this->entityManager;
+//        $queryBuilder = $entityManager->createQueryBuilder();
+//        $queryBuilder-> select('C')
+//                       ->from(Cliente::class, 'C');
+//        $queryBuilder->where('C.estado = :state') ->setParameter('state', 'N');           
+//        $query = $queryBuilder->getQuery();
+//        $adapter = new DoctrineAdapter(new ORMPaginator($query));
+//        $paginator = new Paginator($adapter);
+//        return $paginator;        
+//    }
     
     public function getFiltrados($parametros){
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros($filtros);
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
+        $this->total = COUNT($adapter);
         $paginator = new Paginator($adapter);
         return $paginator;
     }
     
-    public function getTablaFiltrado($parametros) {
-        $filtros = $this->limpiarParametros($parametros);
-        $query = $this->busquedaPorFiltros($filtros); 
-        $paginator = new Paginator($adapter);
-        return $paginator;
-    }
+    
 
     public function busquedaPorFiltros($parametros) {
         $entityManager = $this->entityManager;
@@ -76,7 +72,6 @@ class ClientesInactivosManager extends ClientesManager{
             $queryBuilder->setParameter("$p", $valorCampo);
         }
         $queryBuilder->andWhere('C.estado = :state') ->setParameter('state', 'N'); 
-
         return $queryBuilder->getQuery();
     }
 }

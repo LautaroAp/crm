@@ -31,9 +31,11 @@ class ClientesInactivosController extends ClientesController {
         } 
         $parametros = $this->params()->fromPost();
         $paginator = $this->clientesInactivosManager->getFiltrados($parametros);
+        $total_inactivos = $this->clientesInactivosManager->getTotal();
         $pag = $this->getPaginator($paginator);
         return new ViewModel([
             'clientes' => $pag,
+            'total_inactivos'=>$total_inactivos,
         ]);
     }
 
