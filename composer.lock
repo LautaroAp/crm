@@ -465,16 +465,16 @@
         },
         {
             "name": "doctrine/doctrine-module",
-            "version": "2.1.5",
+            "version": "2.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineModule.git",
-                "reference": "57cf4bbcb8a92fc502b752c7e82962caa5968dd2"
+                "reference": "b983286ed11d5a6c77d3908bd54473c4a53578aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/57cf4bbcb8a92fc502b752c7e82962caa5968dd2",
-                "reference": "57cf4bbcb8a92fc502b752c7e82962caa5968dd2",
+                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/b983286ed11d5a6c77d3908bd54473c4a53578aa",
+                "reference": "b983286ed11d5a6c77d3908bd54473c4a53578aa",
                 "shasum": ""
             },
             "require": {
@@ -561,7 +561,7 @@
                 "module",
                 "zf"
             ],
-            "time": "2018-10-08T21:22:22+00:00"
+            "time": "2018-10-17T19:27:00+00:00"
         },
         {
             "name": "doctrine/doctrine-orm-module",
