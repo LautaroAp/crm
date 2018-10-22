@@ -19,7 +19,7 @@ class Provincia {
      * @ORM\ManyToOne(targetEntity="Pais")
      * @ORM\JoinColumn(name="ID_PAIS", referencedColumnName="ID_PAIS")
      */ 
-    protected $id_pais;   
+    protected $pais;   
   
     /**
      * @ORM\Id
@@ -35,9 +35,17 @@ class Provincia {
     
     
     function getPais() {
-        return $this->id_pais;
+        return $this->pais;
     }
 
+    function getNombre_pais(){
+        if (is_null($this->pais)){
+            return 'NO DEFINIDO';
+        }
+        else{
+            return $this->pais->getNombre();
+        }
+    }
     function getId() {
         return $this->id_provincia;
     }

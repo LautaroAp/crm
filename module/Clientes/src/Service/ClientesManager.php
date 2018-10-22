@@ -262,4 +262,21 @@ class ClientesManager{
         $entityManager->remove($cliente);
         $entityManager->flush();
     }
+    
+    public function getId_pais($nombre_pais){
+        $id=$this->entityManager
+                ->getRepository(Pais::class)
+                ->findOneBy(['' => $id]);
+    }
+    
+    
+    
+    public function getProvincias($id_pais){
+        $provincias1= array(array('id'=>1, 'desc'=>'Buenos Aires'), array('id'=>2, 'desc'=>'La Pampa'), ['id'=>3,'desc'=>'San Juan'] , ['id'=>4, 'desc'=>'San Luis']);
+        $provincias2= array(['id'=>1, 'desc'=>'prov5'], ['id'=>2,'desc'=>'prov6'],['id'=>3,'desc'=>'prov7'], ['id'=>4, 'desc'=>'prov8']);
+        if ($id_pais==1){
+            return $provincias1;
+        }
+        return $provincias2;
+    }
 }

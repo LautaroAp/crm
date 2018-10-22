@@ -172,15 +172,26 @@ class Cliente {
     }
 
     public function getNombrePaisCliente() {
-        $pais = $this->getPais();
-        if (is_null($pais)) {
-            return "NO DEFINIDO";
-        } else {
-            return $this->getPais()->getNombre();
+        if (is_null($this->provincia)){
+            if (!is_null($this->pais)){
+                return $this->pais->getNombre();
+            }
+            else {
+                return 'NO DEFINIDO';
+            }
+        }
+        else{
+            if (is_null($this->provincia->getPais())) {
+                return 'NO DEFINIDO';
+            }
+
+            else {
+                return $this->provincia->getPais()->getNombre();
+            }
         }
     }
 
-    public function getProvincia() {
+public function getProvincia() {
         return $this->provincia;
     }
 

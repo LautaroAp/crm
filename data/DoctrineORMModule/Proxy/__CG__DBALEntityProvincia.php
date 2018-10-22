@@ -64,10 +64,10 @@ class Provincia extends \DBAL\Entity\Provincia implements \Doctrine\ORM\Proxy\Pr
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id_pais', 'id_provincia', 'nombre_provincia'];
+            return ['__isInitialized__', 'pais', 'id_provincia', 'nombre_provincia'];
         }
 
-        return ['__isInitialized__', 'id_pais', 'id_provincia', 'nombre_provincia'];
+        return ['__isInitialized__', 'pais', 'id_provincia', 'nombre_provincia'];
     }
 
     /**
@@ -182,6 +182,17 @@ class Provincia extends \DBAL\Entity\Provincia implements \Doctrine\ORM\Proxy\Pr
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPais', []);
 
         return parent::getPais();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getNombre_pais()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNombre_pais', []);
+
+        return parent::getNombre_pais();
     }
 
     /**

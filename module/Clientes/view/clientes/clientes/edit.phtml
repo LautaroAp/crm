@@ -25,7 +25,43 @@ $profesion = $cliente->getProfesion();
 $actividad = $cliente->getActividad();
 $animales = $cliente->getAnimales();
 $establecimientos = $cliente->getEstablecimientos();
+
+
+
 ?>
+
+<script>
+    function actualizarDatosProvincias(id_pais)
+    {
+        alert(id_pais);
+        $.post('/crm/clientes/ajax/getProvincias/'+id_pais, function( data ) {
+                $('#div_provincias').html(data);
+            });    
+       
+    }
+
+
+    
+    
+    
+function selectProv(str) {
+  var xhttp;    
+  if (str == "") {
+    $provincia=array();
+    return;
+  }
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("txtHint").innerHTML = this.responseText;
+    }
+  };
+
+  xhttp.open("GET", "filtrarProv.php?q="+str, true);
+  xhttp.send();
+}
+</script>
+
 
 <!-- Inicio: Cliente Nuevo -->
 <div class="container margen">
@@ -50,7 +86,7 @@ $establecimientos = $cliente->getEstablecimientos();
                         </div>
                         <div class="form-group col-md-4">
                             <label>País</label>
-                            <select class="form-control" id="pais" name="pais">
+                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
                                 <option value="<?php if(isset($pais)){ echo ($pais->getId()); }?>" hidden="">  
                                     <?php if(isset($pais)){ echo($pais->getNombre()); } else {echo ("Seleccionar País");}?>
                                 </option>
@@ -76,17 +112,10 @@ $establecimientos = $cliente->getEstablecimientos();
                             <label>Nombre</label>
                             <input type="text" class="form-control" name="nombre" value="<?php echo($nombre); ?>" placeholder="Ingresar Nombre">
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>Provincia</label>
-                            <select class="form-control" id="provincia" name="provincia">
-                                <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); }?>" hidden="">  
-                                    <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
-                                </option>                             
-                                <?php foreach ($provincias as $provincia) : ?>
-                                    <option value="<?php echo ($provincia->getId()); ?>"><?php echo ($provincia->getNombre_provincia()); ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                       <div class="form-group col-md-4" id="div_provincias">
+   
                         </div>
+
                         <div class="form-group col-md-4">
                             <label>Licencia</label>
                             <select class="form-control" id="licencia" name="licencia">

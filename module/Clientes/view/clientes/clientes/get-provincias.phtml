@@ -1,0 +1,8 @@
+<div class="form-group col-md-4" id="div_provincias">
+    <label>Provincia</label>
+    <select class="form-control">
+    <?php foreach ($provincias as $provincia ) : ?>
+        <option value="<?php echo ($provincia['id']); ?>"><?php echo ($provincia['desc']); ?></option>
+    <?php endforeach; ?>
+    </select>
+</div>
