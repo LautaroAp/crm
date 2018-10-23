@@ -52,10 +52,22 @@ protected $licenciaManager;
     }
     
     private function procesarIndexAction(){
-        $licencias = $this->licenciaManager->getLicencias();  
+//        $licencias = $this->licenciaManager->getLicencias();  
+        
+        $paginator = $this->licenciaManager->getTabla();
+        $mensaje ="";
+        
+        $page = 1;
+        if ($this->params()->fromRoute('id')) {
+            $page = $this->params()->fromRoute('id');
+        }
+        $paginator->setCurrentPageNumber((int) $page)
+                ->setItemCountPerPage(10);
         
         return new ViewModel([
-            'licencias' => $licencias
+//            'licencias' => $licencias
+            'licencias' => $paginator,
+            'mensaje' => $mensaje
         ]);
     }
     

@@ -21,6 +21,7 @@
             </thead>
             <tbody>
                 <?php
+                    if (isset($licencias)) {
                     foreach ($licencias as $licencia) : ?>
                     <tr>
                         <td><?php echo ($licencia->getNombre()); ?></td>
@@ -32,7 +33,7 @@
                         <td><?php echo money_format("USD %i", $licencia->getTotal_extranjero()); ?></td>
 
 
-                        <td> <a class="btn btn-default" href="<?= $this->url('licencia', ['action' => 'edit', 'id' => $licencia->getId()]); ?>">
+                        <td> <a class="btn btn-default" href="<?= $this->url('licencia/editar', ['action' => 'edit', 'id' => $licencia->getId()]); ?>">
                                 <span class="glyphicon glyphicon-pencil" ></span> 
                             </a>
                             <button name="<?= $licencia->getId() ?>" id="<?= $licencia->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $licencia->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
@@ -54,7 +55,7 @@
                                     </p>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="<?= $this->url('licencia', ['action' => 'remove', 'id' => $licencia->getId()]); ?>" class="btn btn-default">Aceptar</a>
+                                    <a href="<?= $this->url('licencia/borrar', ['action' => 'remove', 'id' => $licencia->getId()]); ?>" class="btn btn-default">Aceptar</a>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>
@@ -64,6 +65,11 @@
             <?php endforeach; ?>
             </tbody>
         </table>
+            <?php
+                echo $this->paginationControl($licencias, 'Sliding', // All, Elastic, Jumping, Sliding
+                            'search_pagination5.phtml', $this->url('licencia/page', ['action' => 'index', 'id' => 1]));
+                }
+                ?>
     </div>
 </div>
 <!-- Fin: Tabla Licencias -->
@@ -76,7 +82,7 @@
                 <div class="row img-centrar">
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
-                            <a href="<?= $this->url('licencia', ['action' => 'add']); ?>">
+                            <a href="<?= $this->url('licencia/agregar', ['action' => 'add']); ?>">
                                 <img src="<?= $this->basePath('img/crm/LicenciaAgregar.png') ?>" class="img-rounded img-responsive img-texto-derecha">
                             </a>
                         </div>

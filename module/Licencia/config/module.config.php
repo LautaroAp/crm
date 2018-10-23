@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
@@ -12,43 +13,83 @@ use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Application;
 
-
 return [
-   
-   'router' => [
+    'router' => [
         'routes' => [
             'licencia' => [
-                'type'    => Segment::class,
+                'type' => Segment::class,
                 'options' => [
-                    'route'    => '/licencia[/:action[/:id]]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
-                    ],
+                    'route' => '/licencia',
                     'defaults' => [
-                        'controller'    => Controller\LicenciaController::class,
-                        'action'        => 'index',
+                        'controller' => Controller\LicenciaController::class,
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'editar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/edit[/:id]',
+                            'defaults' => [
+                                'action' => 'edit',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'agregar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/add',
+                            'defaults' => [
+                                'action' => 'add',
+                            ],
+                        ],
+                    ],
+                    'borrar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/remove[/:id]',
+                            'defaults' => [
+                                'action' => 'remove',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'page' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/page[/:id[/:estado]]',
+                            'defaults' => [
+                                'action' => 'index',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
                     ],
                 ],
             ],
         ],
-    ],       
-    
-    
- 'controllers' => array(
+    ],
+    'controllers' => array(
         'factories' => [
             Controller\LicenciaController::class => Controller\Factory\LicenciaControllerFactory::class,
         ],
-     ),
-     'view_manager' => array(
-         'template_path_stack' => array(
-             'licencia' => __DIR__ . '/../view',
-         ),
-     ),
+    ),
+    'view_manager' => array(
+        'template_path_stack' => array(
+            'licencia' => __DIR__ . '/../view',
+        ),
+    ),
     'service_manager' => array(
         'factories' => array(
             Service\LicenciaManager::class => Service\Factory\LicenciaManagerFactory::class,
         ),
     )
- ];
+];
 

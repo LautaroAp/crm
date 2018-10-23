@@ -3,7 +3,8 @@ namespace Licencia\Service;
 
 use DBAL\Entity\Licencia;
 use Licencia\Form\LicenciaForm;
-
+use Zend\Paginator\Paginator;
+use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
 
 /**
@@ -127,5 +128,13 @@ class LicenciaManager
             $this->entityManager->flush();
            
     }
-    //ver de borrar las licencias 
+    
+    public function getTabla() {
+        // Create the adapter
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(Licencia::class)); // An object repository implements Selectable
+        // Create the paginator itself
+        $paginator = new Paginator($adapter);
+
+        return ($paginator);
+    }
 } 
