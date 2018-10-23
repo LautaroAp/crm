@@ -20,15 +20,16 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($licencias as $licencia) : ?>
+                <?php
+                    foreach ($licencias as $licencia) : ?>
                     <tr>
                         <td><?php echo ($licencia->getNombre()); ?></td>
-                        <td><?php echo($licencia->getPrecio_local()); ?></td>
-                        <td><?php echo($licencia->getPrecio_extranjero()); ?></td>
-                        <td><?php echo($licencia->getIva()); ?></td>
-                        <td><?php echo($licencia->getDescuento()); ?></td>
-                        <td><?php echo($licencia->getTotal_local()); ?></td>
-                        <td><?php echo($licencia->getTotal_extranjero()); ?></td>
+                        <td><?php echo money_format("$ %n", $licencia->getPrecio_local()); ?></td>
+                        <td><?php echo money_format("USD %i", $licencia->getPrecio_extranjero()); ?></td>
+                        <td><?php echo ($licencia->getIva()); ?> %</td>
+                        <td><?php echo ($licencia->getDescuento()); ?> %</td>
+                        <td><?php echo money_format("$ %n", $licencia->getTotal_local()); ?></td>
+                        <td><?php echo money_format("USD %i", $licencia->getTotal_extranjero()); ?></td>
 
 
                         <td> <a class="btn btn-default" href="<?= $this->url('licencia', ['action' => 'edit', 'id' => $licencia->getId()]); ?>">
