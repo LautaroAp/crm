@@ -31,35 +31,15 @@ $establecimientos = $cliente->getEstablecimientos();
 ?>
 
 <script>
+    
+    //toma el pais al cambiar la opcion, lo envia a la accion getPovincias que devuelve la lista de provincias para elegir
     function actualizarDatosProvincias(id_pais)
     {
-        alert(id_pais);
         $.post('/crm/clientes/ajax/getProvincias/'+id_pais, function( data ) {
-                $('#div_provincias').html(data);
+                $('#ops_provincias').html(data);
             });    
-       
     }
 
-
-    
-    
-    
-function selectProv(str) {
-  var xhttp;    
-  if (str == "") {
-    $provincia=array();
-    return;
-  }
-  xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("txtHint").innerHTML = this.responseText;
-    }
-  };
-
-  xhttp.open("GET", "filtrarProv.php?q="+str, true);
-  xhttp.send();
-}
 </script>
 
 
@@ -112,10 +92,11 @@ function selectProv(str) {
                             <label>Nombre</label>
                             <input type="text" class="form-control" name="nombre" value="<?php echo($nombre); ?>" placeholder="Ingresar Nombre">
                         </div>
-                       <div class="form-group col-md-4" id="div_provincias">
-   
+                        <div class="form-group col-md-4" id="div_provincias">
+                            <label>Provincia</label>
+                            <select class="form-control" id="ops_provincias">
+                            </select>
                         </div>
-
                         <div class="form-group col-md-4">
                             <label>Licencia</label>
                             <select class="form-control" id="licencia" name="licencia">
