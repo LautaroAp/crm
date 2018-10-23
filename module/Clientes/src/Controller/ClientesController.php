@@ -201,7 +201,6 @@ class ClientesController extends AbstractActionController {
 
     function getProvinciasAction(){
         $this->layout()->setTemplate('layout/nulo');
-
         $id_pais =$this->params()->fromRoute('id');
         $provs = $this->clientesManager->getProvincias($id_pais);
         $view = new ViewModel([
