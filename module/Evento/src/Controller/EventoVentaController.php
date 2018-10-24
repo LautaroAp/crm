@@ -84,6 +84,7 @@ class EventoVentaController extends EventoController
             $parametros=array();
         }
         $paginator = $this->eventoManager->getEventosFiltrados($parametros);
+        $total = $this->eventoManager->getTotalFiltrados($parametros);
         $mensaje = "";
         $page = 1;
         if ($this->params()->fromRoute('id')) {
@@ -95,7 +96,8 @@ class EventoVentaController extends EventoController
         return new ViewModel([
             'eventos' => $paginator,
             'mensaje' => $mensaje,
-            'parametros' =>$parametros
+            'parametros' =>$parametros,
+            'total' => $total,
 
         ]);
     }

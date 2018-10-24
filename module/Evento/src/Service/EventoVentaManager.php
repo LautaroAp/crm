@@ -57,6 +57,14 @@ class EventoVentaManager extends EventoManager
        
         return $paginator;
     }
+    
+    public function getTotalFiltrados($parametros) {
+        $filtros = $this->limpiarParametros($parametros);
+        $query = $this->busquedaPorFiltros($filtros);
+        $adapter = new DoctrineAdapter(new ORMPaginator($query));
+       
+        return $adapter;
+    }
 
     public function busquedaPorFiltros($parametros) {
         $entityManager = $this->entityManager;

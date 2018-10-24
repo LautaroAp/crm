@@ -1,4 +1,8 @@
 <script src="js/functions.js"></script>
+<?php
+$meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+        'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+?>
 <div class="container margen">
     <div class="row">
         <div class="col-md-12">
@@ -9,8 +13,9 @@
                         <div class="row form-row">
                             <div class="form-group col-md-4">
                                 <select class="form-control" id="tipo" name="tipo" placeholder="Tipo de evento" value="<?php if (count($parametros)>0){echo($parametros['tipo']);} ?>">
-                                    <option value="Cotizaciones" selected="">Cotizaciones</option>
-                                    <option value="Ventas" >Ventas</option>
+                                    <option value="" hidden="">-Seleccionar-</option>
+                                    <option value="Cotizaciones">Cotizaciones</option>
+                                    <option value="Ventas">Ventas</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
@@ -26,6 +31,20 @@
                             </div>
                         </div>
                     </form>
+                    <div class="container row">
+                            Total
+                            <?php
+                                if(isset($parametros['tipo'])){
+                                    echo($parametros['tipo']);}
+                                if(isset($parametros['ventas_m'])){
+                                    if(($parametros['ventas_m']) != 0){
+                                        echo(' ' . $meses[$parametros['ventas_m']]);}
+                                }
+                                if(isset($parametros['ventas_y'])){
+                                    echo(' ' . $parametros['ventas_y'] . ' ');}
+                                echo(': ' . count($total));
+                            ?>
+                    </div>
                 </div>
             </div>
            <table id="tabla_evento" class="table table-bordred table-striped">
