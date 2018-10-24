@@ -48,8 +48,8 @@ class ClientesController extends AbstractActionController {
         }
         else{
             $parametros=array();
-        }        
-        $paginator = $this->clientesManager->getTablaFiltrado($parametros); 
+        }               
+        $paginator = $this->clientesManager->getTablaFiltrado($parametros);
         $total_clientes = $this->clientesManager->getTotal(); 
         $pag = $this->getPaginator($paginator);                
         return new ViewModel([
@@ -82,6 +82,7 @@ class ClientesController extends AbstractActionController {
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
         $licencia = $this->clientesManager->getLicencia();
+        
 
         if ($request->isPost()) {
             // Tiene que grabar
@@ -114,7 +115,7 @@ class ClientesController extends AbstractActionController {
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
         $licencia = $this->clientesManager->getLicencia();
-
+        
         if ($request->isPost()) {
             // Tiene que grabar
             $data = $this->params()->fromPost();

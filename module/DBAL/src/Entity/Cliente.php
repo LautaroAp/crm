@@ -93,6 +93,18 @@ class Cliente {
      * @ORM\JoinColumn(name="ID_CATEGORIA_CLIENTE", referencedColumnName="ID_CATEGORIA_CLIENTE")
      */
     private $categoria;
+    
+    /**
+     * Many Clientes have One Categoria.
+     * @ORM\ManyToOne(targetEntity="Licencia")
+     * @ORM\JoinColumn(name="ID_LICENCIA", referencedColumnName="ID_LICENCIA")
+     */
+    private $licencia;
+    
+     /**
+     * @ORM\Column(name="VERSION_LICENCIA", nullable=true, type="string", length=255)
+     */
+    private $version;
 
     /**
      * @ORM\Column(name="FECHA_COMPRA")
@@ -112,7 +124,7 @@ class Cliente {
     /**
      * @ORM\Column(name="LICENCIA_ACTUAL", nullable=true, type="string", length=255)
      */
-    private $licencia;
+    private $licencia_actual;
 
     /**
      * @ORM\Column(name="ACTIVO", nullable=true, type="string", length=1)
@@ -191,6 +203,7 @@ class Cliente {
         }
     }
 
+    
 public function getProvincia() {
         return $this->provincia;
     }
@@ -369,23 +382,35 @@ public function getProvincia() {
         $this->fecha_ultimo_contacto = $fecha_ultimo_contacto;
     }
 
-    function getLicencia() {
-        return $this->licencia;
+    function getNombreLicenciaCliente() {
+       if (is_null($this->licencia)){
+           return "NO DEFINIDO";
+       }
+       else{
+           return $this->licencia->getNombre();
+       }
     }
 
+    function getLicencia() {
+      return $this->licencia;
+    }
     function setLicencia($licencia) {
         $this->licencia = $licencia;
     }
-
-    public function getNombreLicenciaCliente() {
-        $licencia = $this->getLicencia();
-        if (is_null($licencia)) {
-            return "NO DEFINIDA";
-        } else {
-            return $licencia->getNombre();
+    
+    public function getVersion(){
+        if (is_null($this->version)){
+            return "NO DEFINIDO";
+        }
+        else{
+            return $this->version;
         }
     }
-
+    
+    public function setVersion($version){
+        $this->version=$version;
+    }
+ 
     public function getEstado() {
         return $this->estado;
     }
@@ -393,8 +418,9 @@ public function getProvincia() {
     public function getEstadoNombre() {
         if ($this->estado == "S") {
             return "Activo";
-        } else
+        } else{
             return "Inactivo";
+        }
     }
 
     public function setEstado($estado) {

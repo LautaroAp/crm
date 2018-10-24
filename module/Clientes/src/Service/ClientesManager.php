@@ -76,8 +76,13 @@ class ClientesManager{
     public function getTablaFiltrado($parametros) {
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros($filtros);
+        
+
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
-        $this->total = COUNT($adapter);
+
+//        $this->total = COUNT($adapter);
+                
+
         $paginator = new Paginator($adapter);
         return $paginator;
     }
@@ -87,6 +92,7 @@ class ClientesManager{
     }
 
     public function busquedaPorFiltros($parametros) {
+       
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('C')
@@ -133,13 +139,14 @@ class ClientesManager{
         $categoria = $this->getCategoriaCliente($data['categoria']);
         $cliente->setCategoria($categoria);
         $licencia = $this->getLicencia($data['licencia']);
-        $cliente->setLicencia($licencia->getNombre());
+        $cliente->setLicencia($licencia);
         $profesion = $this->getProfesionCliente($data['profesion']);
         $cliente->setProfesion($profesion);
         $cliente->setActividad($data['actividad']);
         $cliente->setAnimales($data['animales']);
         $cliente->setEstablecimientos($data['establecimientos']);
         $cliente->setEstado("S");
+        $cliente->setVersion($data['version']);
         $this->entityManager->persist($cliente);
         // Apply changes to database.
         $this->entityManager->flush();
@@ -160,7 +167,8 @@ class ClientesManager{
         $cliente->setEmpresa($data['empresa']);
         $categoria = $this->getCategoriaCliente($data['categoria']);
         $cliente->setCategoria($categoria);
-        $cliente->setLicencia($data['licencia']);
+        $licencia = $this->getLicencia($data['licencia']);
+        $cliente->setLicencia($licencia); 
         $profesion = $this->getProfesionCliente($data['profesion']);
         $cliente->setProfesion($profesion);
         $cliente->setActividad($data['actividad']);

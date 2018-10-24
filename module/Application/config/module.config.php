@@ -35,6 +35,17 @@ return [
                     ],
                 ],
             ],
+            'backup' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/backup',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'backup',
+                    ],
+                ],
+                
+             ],
             'clientes' => [
                 'type' => Literal::class,
                 'options' => [

@@ -97,20 +97,19 @@ $establecimientos = $cliente->getEstablecimientos();
                             <select class="form-control" id="ops_provincias">
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+
+                         <div class="form-group col-md-4">
                             <label>Licencia</label>
                             <select class="form-control" id="licencia" name="licencia">
-                                <option value="<?php if(isset($licencia)) { echo ($licencia); }?>" hidden="">  
-                                    <?php if(isset($licencia)) { echo($licencia); } else {echo ("Seleccionar Licencia");}?>
-                                </option>
-                                <option value="<?php echo ($licencia); ?>" hidden="">
-                                    <?php echo($licencia); ?>
-                                </option>
+                                <option value="<?php if(isset($licencia)){ echo ($licencia->getId()); }?>" hidden="">  
+                                    <?php if(isset($licencia)){ echo($licencia->getNombre()); } else {echo ("Seleccionar Categoría");}?>
+                                </option>                           
                                 <?php foreach ($licencias as $licencia) : ?>
-                                    <option value="<?php echo ($licencia->getNombre()); ?>"><?php echo ($licencia->getNombre()); ?></option>
+                                    <option value="<?php echo ($licencia->getId()); ?>"><?php echo ($licencia->getNombre()); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        
                     </div>
                     <div class="row form-row">
                         <div class="form-group col-md-4">
@@ -124,7 +123,7 @@ $establecimientos = $cliente->getEstablecimientos();
                         <div class="form-group col-md-4">
                             <label>Versión</label>
                             <select class="form-control" id="licencia" name="licencia">
-                                <option value="PHP" selected="" hidden="">PHP *RECUPERAR* PHP</option>
+                                <option value="PHP" selected="" hidden=""><?php echo ($cliente->getVersion()); ?></option>
                                 <option value="Productores">Productores</option>
                                 <option value="Veterinarios">Veterinarios</option>
                                 <option value="NO DEFINIDO">NO DEFINIDO</option>

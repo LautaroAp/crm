@@ -1,0 +1,44 @@
+<!-- MODULE APPLICATION -->
+<div class="container margen" >         
+        
+            <table id="tablas" class="table table-bordred table-hover table-condensed">            
+            <thead>
+                <tr>
+                    <th class="th-sm"> Tabla </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+                <tbody>
+                <?php
+                    foreach ($tablas as $tabla) : ?>
+                    <tr>
+                        <td><?php echo ($tabla['nombre']); ?></td>
+                    
+                        <td>
+                            <a  href="<?= $this->url('application', ['action' => 'backup']) ?>">Generar Backup</a>
+                        </td>
+                    </tr>
+                <?php endforeach;?>
+                </tbody>
+            </table>
+            </div>
+        
+        
+    </nav>
+    <nav id="nav" >
+        <ul>
+            <li>
+                <div class="img-centrar">
+                    <div>
+                        <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                    </div>
+                    <div class="ficha-cliente-label">
+                        <label>Volver</label>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </nav>
+</div>
