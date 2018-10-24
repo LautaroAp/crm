@@ -3,8 +3,6 @@ $title = 'Agregar Cliente';
 $this->headTitle($title);
 ?>
 
-
-
 <script>
     
     //toma el pais al cambiar la opcion, lo envia a la accion getPovincias que devuelve la lista de provincias para elegir
@@ -16,7 +14,6 @@ $this->headTitle($title);
     }
 
 </script>
-
 
 <!-- Inicio: Cliente Nuevo -->
 <div class="container margen">
@@ -82,6 +79,14 @@ $this->headTitle($title);
                         <div class="form-group col-md-4">
                             <label>Ciudad</label>
                             <input type="text" class="form-control" name="ciudad" placeholder="Ingresar Ciudad">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Versión</label>
+                            <select class="form-control" id="licencia" name="licencia">
+                                <option value="Productores">Productores</option>
+                                <option value="Veterinarios">Veterinarios</option>
+                                <option value="NO DEFINIDO" selected="">NO DEFINIDO</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row form-row">
