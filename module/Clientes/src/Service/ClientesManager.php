@@ -10,7 +10,6 @@ use DBAL\Entity\Provincia;
 use DBAL\Entity\ProfesionCliente;
 use DBAL\Entity\CategoriaCliente;
 use DBAL\Entity\TipoEvento;
-
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
@@ -20,19 +19,19 @@ use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
  * This service is responsible for adding/editing users
  * and changing user password.
  */
-class ClientesManager{
+class ClientesManager {
 
     /**
      * Doctrine entity manager.
      * @var Doctrine\ORM\EntityManager
      */
     private $entityManager;
-    
+
     /**
      * Constructs the service.
      */
-    
     protected $total;
+
     public function __construct($entityManager) {
         $this->entityManager = $entityManager;
     }
@@ -76,23 +75,19 @@ class ClientesManager{
     public function getTablaFiltrado($parametros) {
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros($filtros);
-        
-
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
-
-//        $this->total = COUNT($adapter);
-                
+        $this->total = COUNT($adapter);
 
         $paginator = new Paginator($adapter);
         return $paginator;
     }
-    
-    public function getTotal(){
+
+    public function getTotal() {
         return $this->total;
     }
 
     public function busquedaPorFiltros($parametros) {
-       
+
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('C')
@@ -109,7 +104,7 @@ class ClientesManager{
             }
             $queryBuilder->setParameter("$p", $valorCampo);
         }
-        $queryBuilder->andWhere('C.estado = :state') ->setParameter('state', 'S');
+        $queryBuilder->andWhere('C.estado = :state')->setParameter('state', 'S');
         return $queryBuilder->getQuery();
     }
 
@@ -123,7 +118,7 @@ class ClientesManager{
         }
         return ($param);
     }
-       
+
     public function addCliente($data) {
         $cliente = new Cliente();
         $cliente->setApellido($data['apellido']);
@@ -138,15 +133,27 @@ class ClientesManager{
         $cliente->setEmpresa($data['empresa']);
         $categoria = $this->getCategoriaCliente($data['categoria']);
         $cliente->setCategoria($categoria);
-        $licencia = $this->getLicencia($data['licencia']);
-        $cliente->setLicencia($licencia);
-        $profesion = $this->getProfesionCliente($data['profesion']);
-        $cliente->setProfesion($profesion);
+        if($data['licencia'] == "-1"){
+            $cliente->setLicencia(null);
+        } else {
+            $licencia = $this->getLicencia($data['licencia']);
+            $cliente->setLicencia($licencia);
+        }
+        if($data['profesion'] == "-1"){
+            $cliente->setProfesion(null);
+        } else {
+            $profesion = $this->getProfesionCliente($data['profesion']);
+            $cliente->setProfesion($profesion);
+        }
         $cliente->setActividad($data['actividad']);
         $cliente->setAnimales($data['animales']);
         $cliente->setEstablecimientos($data['establecimientos']);
         $cliente->setEstado("S");
-        $cliente->setVersion($data['version']);
+        if($data['version'] == "-1"){
+            $cliente->setVersion(null);
+        } else {
+            $cliente->setVersion($data['version']);
+        }
         $this->entityManager->persist($cliente);
         // Apply changes to database.
         $this->entityManager->flush();
@@ -167,13 +174,26 @@ class ClientesManager{
         $cliente->setEmpresa($data['empresa']);
         $categoria = $this->getCategoriaCliente($data['categoria']);
         $cliente->setCategoria($categoria);
-        $licencia = $this->getLicencia($data['licencia']);
-        $cliente->setLicencia($licencia); 
-        $profesion = $this->getProfesionCliente($data['profesion']);
-        $cliente->setProfesion($profesion);
+        if($data['licencia'] == "-1"){
+            $cliente->setLicencia(null);
+        } else {
+            $licencia = $this->getLicencia($data['licencia']);
+            $cliente->setLicencia($licencia);
+        }
+        if($data['profesion'] == "-1"){
+            $cliente->setProfesion(null);
+        } else {
+            $profesion = $this->getProfesionCliente($data['profesion']);
+            $cliente->setProfesion($profesion);
+        }
         $cliente->setActividad($data['actividad']);
         $cliente->setAnimales($data['animales']);
-        $cliente->setEstablecimientos($data['establecimientos']);
+        $cliente->setEstablecimientos($data['establecimientos']);   
+        if($data['version'] == "-1"){
+            $cliente->setVersion(null);
+        } else {
+            $cliente->setVersion($data['version']);
+        }
         // Apply changes to database.
         $this->entityManager->flush();
         return true;
@@ -188,106 +208,90 @@ class ClientesManager{
         $entityManager->remove($cliente);
         $entityManager->flush();
     }
-    
+
     public function modificarEstado($id) {
         $entityManager = $this->entityManager;
         $cliente = $this->entityManager
                 ->getRepository(Cliente::class)
                 ->findOneBy(['Id' => $id]);
-        if($cliente->getEstado() == "S"){
+        if ($cliente->getEstado() == "S") {
             $cliente->setEstado("N");
-        } else if($cliente->getEstado() == "N"){
+        } else if ($cliente->getEstado() == "N") {
             $cliente->setEstado("S");
         }
         $entityManager->flush();
     }
-    
-    public function getCategoriaCliente($id=null) {
-        if (isset ($id)) {
+
+    public function getCategoriaCliente($id = null) {
+        if (isset($id)) {
             return $this->entityManager
-                ->getRepository(CategoriaCliente::class)
-                ->findOneBy(['id_categoria_cliente'=>$id]);
+                            ->getRepository(CategoriaCliente::class)
+                            ->findOneBy(['id_categoria_cliente' => $id]);
         }
         return $this->entityManager
-                ->getRepository(CategoriaCliente::class)
-                ->findAll();
+                        ->getRepository(CategoriaCliente::class)
+                        ->findAll();
     }
 
-    public function getProfesionCliente($id=null){
-        if (isset ($id)) {
+    public function getProfesionCliente($id = null) {
+        if (isset($id)) {
             return $this->entityManager
-                ->getRepository(ProfesionCliente::class)
-                ->findOneBy(['id_profesion'=>$id]);
+                            ->getRepository(ProfesionCliente::class)
+                            ->findOneBy(['id_profesion' => $id]);
         }
         return $this->entityManager
-                ->getRepository(ProfesionCliente::class)
-                ->findAll();
+                        ->getRepository(ProfesionCliente::class)
+                        ->findAll();
     }
-    
-    public function getPais($id=null){
-        if (isset ($id)) {
-            return $this->entityManager
-                ->getRepository(Pais::class)
-                ->findOneBy(['id_pais'=>$id]);
-        }
-        return $this->entityManager
-                ->getRepository(Pais::class)
-                ->findAll();
-    }
-    
-    public function getProvincia($id=null){
-        if (isset ($id)) {
-            return $this->entityManager
-                ->getRepository(Provincia::class)
-                ->findOneBy(['id_provincia'=>$id]);
-        }
-        return $this->entityManager
-                ->getRepository(Provincia::class)
-                ->findAll();
-    }
-    
-    public function getLicencia($id=null){
-        if (isset ($id)) {
-            return $this->entityManager
-                ->getRepository(Licencia::class)
-                ->findOneBy(['id_licencia'=>$id]);
-        }
-        return $this->entityManager
-                ->getRepository(Licencia::class)
-                ->findAll();
-    }   
-    
-        public function eliminarEventos($eventos_array) {
 
+    public function getPais($id = null) {
+        if (isset($id)) {
+            return $this->entityManager
+                            ->getRepository(Pais::class)
+                            ->findOneBy(['id_pais' => $id]);
+        }
+        return $this->entityManager
+                        ->getRepository(Pais::class)
+                        ->findAll();
+    }
+
+    public function getProvincia($id = null) {
+        if (isset($id)) {
+            return $this->entityManager
+                            ->getRepository(Provincia::class)
+                            ->findOneBy(['id_provincia' => $id]);
+        }
+        return $this->entityManager
+                        ->getRepository(Provincia::class)
+                        ->findAll();
+    }
+
+    public function getLicencia($id = null) {
+        if (isset($id)) {
+            return $this->entityManager
+                            ->getRepository(Licencia::class)
+                            ->findOneBy(['id_licencia' => $id]);
+        }
+        return $this->entityManager
+                        ->getRepository(Licencia::class)
+                        ->findAll();
+    }
+
+    public function eliminarEventos($eventos_array) {
         $entityManager = $this->entityManager;
-        
         $eventos = $this->entityManager
                 ->getRepository(Cliente::class)
                 ->findOneBy(['Id' => $id]);
-
         $this->borrarUsuariosFromCliente($cliente);
-
         $entityManager->remove($cliente);
         $entityManager->flush();
     }
-    
 
-    
-    
-    public function getProvincias($id_pais){
- 
+    public function getProvincias($id_pais) {
         $provincias = $this->entityManager
                 ->getRepository(Provincia::class)
                 ->findBy(['pais' => $id_pais]);
-        
-        
-//        $provincias1= array(array('id'=>1, 'desc'=>'Buenos Aires'), array('id'=>2, 'desc'=>'La Pampa'), ['id'=>3,'desc'=>'San Juan'] , ['id'=>4, 'desc'=>'San Luis']);
-//        $provincias2= array(['id'=>1, 'desc'=>'prov5'], ['id'=>2,'desc'=>'prov6'],['id'=>3,'desc'=>'prov7'], ['id'=>4, 'desc'=>'prov8']);
-//
-//        if ($id_pais==1){
-//            return $provincias1;
-//        }
-        
         return $provincias;
     }
+
 }

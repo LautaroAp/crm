@@ -9,7 +9,7 @@ $this->headTitle($title);
     function actualizarDatosProvincias(id_pais)
     {
         $.post('/crm/clientes/ajax/getProvincias/'+id_pais, function( data ) {
-                $('#ops_provincias').html(data);
+                $('#div_provincias').html(data);
             });    
     }
 
@@ -37,7 +37,8 @@ $this->headTitle($title);
                         </div>
                         <div class="form-group col-md-4">
                             <label>País</label>
-                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
+                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)" required="">
+                                <option value="" hidden="">Seleccionar País</option>
                                 <?php foreach ($paises as $pais) : ?>
                                     <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
                                 <?php endforeach; ?>
@@ -46,6 +47,7 @@ $this->headTitle($title);
                         <div class="form-group col-md-4">
                             <label>Categoría</label>
                             <select class="form-control" id="categoria" name="categoria" required="">
+                                <option value="" hidden="">Seleccionar Categoría</option>
                                 <?php foreach ($categorias as $categoria) : ?>
                                 <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
                                 <?php endforeach; ?>
@@ -59,12 +61,14 @@ $this->headTitle($title);
                         </div>
                         <div class="form-group col-md-4" id="div_provincias">
                             <label>Provincia</label>
-                            <select class="form-control" id="ops_provincias">
+                            <select class="form-control" id="ops_provincias" name="provincia" required="">
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Licencia</label>
-                            <select class="form-control" id="licencia" name="licencia">
+                            <select class="form-control" id="licencia" name="licencia" required="">
+                                <option value="" hidden="">Seleccionar Licencia</option>
+                                <option value="-1">NO DEFINIDO</option>
                                 <?php foreach ($licencias as $licencia) : ?>
                                     <option value="<?php echo ($licencia->getId()); ?>"><?php echo ($licencia->getNombre()); ?></option>
                                 <?php endforeach; ?>
@@ -82,10 +86,11 @@ $this->headTitle($title);
                         </div>
                         <div class="form-group col-md-4">
                             <label>Versión</label>
-                            <select class="form-control" id="licencia" name="licencia">
+                            <select class="form-control" id="version" name="version">
+                                <option value="" hidden="">Seleccionar Versión</option>
                                 <option value="Productores">Productores</option>
                                 <option value="Veterinarios">Veterinarios</option>
-                                <option value="NO DEFINIDO" selected="">NO DEFINIDO</option>
+                                <option value="-1">NO DEFINIDO</option>
                             </select>
                         </div>
                     </div>
@@ -114,6 +119,8 @@ $this->headTitle($title);
                         <div class="form-group col-md-4">
                             <label>Profesión</label>
                             <select class="form-control" id="profesion" name="profesion">
+                                <option value="" hidden="">Seleccionar Profesión</option>
+                                <option value="-1">NO DEFINIDO</option>
                                 <?php foreach ($profesiones as $profesion) : ?>
                                     <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
                                 <?php endforeach; ?>
