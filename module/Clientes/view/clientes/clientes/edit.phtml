@@ -19,6 +19,7 @@ $empresa = $cliente->getEmpresa();
 //$licencia = $cliente->getNombreLicenciaCliente();
 $categoria = $cliente->getCategoria();
 $licencia = $cliente->getLicencia();
+$version = $cliente->getVersion();
 
 //$profesion = $cliente->getNombreProfesionCliente();
 $profesion = $cliente->getProfesion();
@@ -36,7 +37,7 @@ $establecimientos = $cliente->getEstablecimientos();
     function actualizarDatosProvincias(id_pais)
     {
         $.post('/crm/clientes/ajax/getProvincias/'+id_pais, function( data ) {
-                $('#ops_provincias').html(data);
+                $('#div_provincias').html(data);
             });    
     }
 
@@ -94,7 +95,10 @@ $establecimientos = $cliente->getEstablecimientos();
                         </div>
                         <div class="form-group col-md-4" id="div_provincias">
                             <label>Provincia</label>
-                            <select class="form-control" id="ops_provincias">
+                            <select class="form-control" id="ops_provincias" name="provincia" required="">
+                                <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); }?>" hidden="">  
+                                    <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
+                                </option>
                             </select>
                         </div>
 
@@ -102,8 +106,9 @@ $establecimientos = $cliente->getEstablecimientos();
                             <label>Licencia</label>
                             <select class="form-control" id="licencia" name="licencia">
                                 <option value="<?php if(isset($licencia)){ echo ($licencia->getId()); }?>" hidden="">  
-                                    <?php if(isset($licencia)){ echo($licencia->getNombre()); } else {echo ("Seleccionar Categoría");}?>
-                                </option>                           
+                                    <?php if(isset($licencia)){ echo($licencia->getNombre()); } else {echo ("Seleccionar Licencia");}?>
+                                </option>
+                                <option value="-1">NO DEFINIDO</option>
                                 <?php foreach ($licencias as $licencia) : ?>
                                     <option value="<?php echo ($licencia->getId()); ?>"><?php echo ($licencia->getNombre()); ?></option>
                                 <?php endforeach; ?>
@@ -122,11 +127,13 @@ $establecimientos = $cliente->getEstablecimientos();
                         </div>
                         <div class="form-group col-md-4">
                             <label>Versión</label>
-                            <select class="form-control" id="licencia" name="licencia">
-                                <option value="PHP" selected="" hidden=""><?php echo ($cliente->getVersion()); ?></option>
+                            <select class="form-control" id="version" name="version">
+                                <option value="<?php if(isset($version)){ echo ($version); }?>" hidden="">  
+                                    <?php if(isset($version)){ echo($version); } else {echo ("Seleccionar Versión");}?>
+                                </option>
                                 <option value="Productores">Productores</option>
                                 <option value="Veterinarios">Veterinarios</option>
-                                <option value="NO DEFINIDO">NO DEFINIDO</option>
+                                <option value="-1">NO DEFINIDO</option>
                             </select>
                         </div>
                     </div>
@@ -155,11 +162,10 @@ $establecimientos = $cliente->getEstablecimientos();
                         <div class="form-group col-md-4">
                             <label>Profesión</label>
                             <select class="form-control" id="profesion" name="profesion">
-                                
                                 <option value="<?php if(isset($profesion)){ echo ($profesion->getId()); }?>" hidden="">  
                                     <?php if(isset($profesion)){ echo($profesion->getNombre()); } else {echo ("Seleccionar Profesión");}?>
                                 </option>
-                                
+                                <option value="-1">NO DEFINIDO</option>
                                 <?php foreach ($profesiones as $profesion) : ?>
                                     <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
                                 <?php endforeach; ?>

@@ -153,7 +153,7 @@ class Cliente {
 
     public function getNombre() {
         if (is_null($this->nombre)) {
-            return "NO DEFINIDO";
+            return "-";
         } else {
             return $this->nombre;
         }
@@ -165,7 +165,7 @@ class Cliente {
 
     public function getApellido() {
         if (is_null($this->apellido)) {
-            return "NO DEFINIDO";
+            return "-";
         } else {
             return $this->apellido;
         }
@@ -189,12 +189,12 @@ class Cliente {
                 return $this->pais->getNombre();
             }
             else {
-                return 'NO DEFINIDO';
+                return '-';
             }
         }
         else{
             if (is_null($this->provincia->getPais())) {
-                return 'NO DEFINIDO';
+                return '-';
             }
 
             else {
@@ -215,7 +215,7 @@ public function getProvincia() {
     public function getNombreProvinciaCliente() {
         $provincia = $this->getProvincia();
         if (is_null($provincia)) {
-            return "NO DEFINIDA";
+            return "-";
         } else {
             return $this->getProvincia()->getNombre_provincia();
         }
@@ -223,7 +223,7 @@ public function getProvincia() {
 
     public function getCiudad() {
         if (is_null($this->ciudad)) {
-            return "NO DEFINIDA";
+            return "-";
         } else {
             return $this->ciudad;
         }
@@ -244,7 +244,7 @@ public function getProvincia() {
     public function getNombreProfesionCliente() {
         $profesion = $this->getProfesion();
         if (is_null($profesion)) {
-            return "NO DEFINIDA";
+            return "-";
         } else {
             return $this->getProfesion()->getNombre();
         }
@@ -252,7 +252,7 @@ public function getProvincia() {
 
     public function getEmpresa() {
         if (is_null($this->empresa)) {
-            return "NO DEFINIDA";
+            return "-";
         } else {
             return $this->empresa;
         }
@@ -264,7 +264,7 @@ public function getProvincia() {
 
     public function getActividad() {
         if (is_null($this->actividad)) {
-            return "NO DEFINIDA";
+            return "-";
         } else {
             return $this->actividad;
         }
@@ -276,7 +276,7 @@ public function getProvincia() {
 
     public function getAnimales() {
         if (is_null($this->animales)) {
-            return "NO DEFINIDO";
+            return "-";
         } else {
             return $this->animales;
         }
@@ -288,7 +288,7 @@ public function getProvincia() {
 
     public function getEstablecimientos() {
         if (is_null($this->establecimientos)) {
-            return "NO DEFINIDO";
+            return "-";
         } else {
             return $this->establecimientos;
         }
@@ -300,7 +300,7 @@ public function getProvincia() {
 
     public function getTelefono() {
         if (is_null($this->telefono)) {
-            return "NO DEFINIDO";
+            return "-";
         } else {
             return $this->telefono;
         }
@@ -312,7 +312,7 @@ public function getProvincia() {
 
     public function getEmail() {
         if (is_null($this->email)) {
-            return "NO DEFINIDO";
+            return "-";
         } else {
             return $this->email;
         }
@@ -333,7 +333,7 @@ public function getProvincia() {
     public function getNombreCategoriaCliente() {
         $categoria = $this->getCategoria();
         if (is_null($categoria)) {
-            return "NO DEFINIDA";
+            return "-";
         } else {
             return $categoria->getNombre();
         }
@@ -348,7 +348,7 @@ public function getProvincia() {
                     break;
                 }
             }
-            return "NO DEFINIDA";
+            return "-";
         } else {
             return $this->fecha_compra;
         }
@@ -360,7 +360,7 @@ public function getProvincia() {
 
     public function getVencimiento() {
         if (is_null($this->vencimiento)) {
-            return "NO DEFINIDO";
+            return "-";
         } else {
             return $this->vencimiento;
         }
@@ -372,7 +372,7 @@ public function getProvincia() {
 
     function getFechaUltimoContacto() {
         if (is_null($this->fecha_ultimo_contacto)) {
-            return "NO DEFINIDO";
+            return "-";
         } else {
             return $this->fecha_ultimo_contacto;
         }
@@ -384,7 +384,7 @@ public function getProvincia() {
 
     function getNombreLicenciaCliente() {
        if (is_null($this->licencia)){
-           return "NO DEFINIDO";
+           return "-";
        }
        else{
            return $this->licencia->getNombre();
@@ -399,12 +399,7 @@ public function getProvincia() {
     }
     
     public function getVersion(){
-        if (is_null($this->version)){
-            return "NO DEFINIDO";
-        }
-        else{
-            return $this->version;
-        }
+        return $this->version;
     }
     
     public function setVersion($version){

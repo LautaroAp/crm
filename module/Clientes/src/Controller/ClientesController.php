@@ -87,6 +87,10 @@ class ClientesController extends AbstractActionController {
         if ($request->isPost()) {
             // Tiene que grabar
             $data = $this->params()->fromPost();
+            
+            print_r($data);
+            die();
+            
             // Graba y recupera la misma entidad
             $this->clientesManager->addCliente($data);            
             $this->redirect()->toRoute('clientes');
@@ -119,6 +123,9 @@ class ClientesController extends AbstractActionController {
         if ($request->isPost()) {
             // Tiene que grabar
             $data = $this->params()->fromPost();
+            
+           
+            
             // Graba y recupera la misma entidad
             $cliente = $this->clientesManager->updateCliente($data);
             
