@@ -41,35 +41,21 @@ class IndexController extends AbstractActionController
     
     
     public function backupmenuAction(){
-        //VER DE CONSEGUIR OBTENER TODAS LAS TABLAS DESDE SCHEMA MANAGER
-        $tablas = [
-                    ['id'=>1,'nombre'=>'CategoriaCliente'],
-                    ['id'=>2,'nombre'=>'Cliente'],
-                    ['id'=>3,'nombre'=>'Ejecutivo'],
-                    ['id'=>4,'nombre'=>'Empresa'],
-                    ['id'=>5,'nombre'=>'Evento'],
-                    ['id'=>6,'nombre'=>'Licencia'],
-                    ['id'=>7,'nombre'=>'Pais'],
-                    ['id'=>8,'nombre'=>'Producto'],
-                    ['id'=>9,'nombre'=>'ProfesionCliente'],
-                    ['id'=>10,'nombre'=>'Provincia'],
-                    ['id'=>11,'nombre'=>'Servicio'],
-                    ['id'=>12,'nombre'=>'TipoEvento'],
-                    ['id'=>13,'nombre'=>'Usuario']
-                    ];
-         return new ViewModel([
-            'tablas' => $tablas,
-         ]);
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $data = $this->params()->fromPost();
+            $result = $this->entityManager->getResult($data);
+            hacerBackup($result);
+        }
+        return new ViewModel();
     }
 
-    public function backupAction() {
+    public function hacerBackup($result) {
         $filename = "Backup_" . $nombre_tabla . ".xls"; // File Name
-        $filename = "webreport.csv";
         header("Content-Type: application/xls");
         header("Content-Disposition: attachment; filename=$filename");
         header("Pragma: no-cache");
         header("Expires: 0");
-        $results = $this->entityManager->getRepository(Ejecutivo::class)->findAll();
         foreach ($results as $x => $x_value) {
             echo '"' . $x . '",' . '"' . $x_value . '"' . "\r\n";
         }

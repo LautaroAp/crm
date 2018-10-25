@@ -150,9 +150,9 @@ $id_cliente = $this->cliente->getId();
         <?php endforeach; ?>
         <tr>
             <td>
-                <a class="btn btn-default" href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $cliente->getId()]); ?>">
-                    <span class="glyphicon glyphicon-plus" ></span> Agregar
-                </a>
+
+                <a  href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $cliente->getId()]); ?>" type="button"><span class="btn btn-default">
+                        <span class="glyphicon glyphicon-plus" ></span> Agregar</span></a> 
             </td>
         </tr>
         </tbody>

@@ -1,44 +1,38 @@
 <!-- MODULE APPLICATION -->
 <div class="container margen" >         
-        
-            <table id="tablas" class="table table-bordred table-hover table-condensed">            
+    <form action="/action_page.php">
+        <table id="tablas" class="table table-bordred table-hover table-condensed">            
             <thead>
                 <tr>
-                    <th class="th-sm"> Tabla </th>
+                    <th class="th-sm"> Seleccione los campos de interés </th>
                     <th></th>
                 </tr>
             </thead>
-
-                <tbody>
-                <?php
-                    foreach ($tablas as $tabla) : ?>
-                    <tr>
-                        <td><?php echo ($tabla['nombre']); ?></td>
-                    
-                        <td>
-                            <a  href="<?= $this->url('application', ['action' => 'backup']) ?>">Generar Backup</a>
-                        </td>
-                    </tr>
-                <?php endforeach;?>
-                </tbody>
-            </table>
-            </div>
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="mail" value="mail" checked> Mail<br> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="apellido" value="apellido"> Apellido<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="nombre" value="nombre"> Nombre<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="telefono" value="telefono" checked> Teléfono<br> 
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-default">Generar backup</button>
         
-        
-    </nav>
-    <nav id="nav" >
-        <ul>
-            <li>
-                <div class="img-centrar">
-                    <div>
-                        <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
-                    </div>
-                    <div class="ficha-cliente-label">
-                        <label>Volver</label>
-                    </div>
-                </div>
-            </li>
-
-        </ul>
-    </nav>
+        <a href="<?= $this->url('home') ?>" type="button"><span class="btn btn-default">Cancelar</span></a> 
+    </form>
 </div>
