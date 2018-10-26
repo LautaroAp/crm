@@ -180,8 +180,13 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
+            Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
         ]
+    ],
+    'service_manager' => [
+        'factories' => [
+            Service\IndexManager::class => Service\Factory\IndexManagerFactory::class,
+        ],
     ],
     'view_manager' => [
         'display_not_found_reason' => true,

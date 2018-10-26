@@ -1,6 +1,6 @@
 <!-- MODULE APPLICATION -->
 <div class="container margen" >         
-    <form action="/action_page.php">
+    <form method="post">
         <table id="tablas" class="table table-bordred table-hover table-condensed">            
             <thead>
                 <tr>
@@ -11,28 +11,39 @@
             <tbody>
                 <tr>
                     <td>
-                        <input type="checkbox" name="mail" value="mail" checked> Mail<br> 
+                        <input type="checkbox" name="C.email" value="C.email" checked> Mail<br> 
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="checkbox" name="apellido" value="apellido"> Apellido<br>
+                        <input type="checkbox" name="C.apellido" value="C.apellido"> Apellido<br>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="checkbox" name="nombre" value="nombre"> Nombre<br>
+                        <input type="checkbox" name="C.nombre" value="C.nombre"> Nombre<br>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="checkbox" name="telefono" value="telefono" checked> Teléfono<br> 
+                        <input type="checkbox" name="C.telefono" value="C.telefono"> Teléfono<br> 
                     </td>
                 </tr>
             </tbody>
-        </table>
-        <button type="submit" class="btn btn-default">Generar backup</button>
-        
-        <a href="<?= $this->url('home') ?>" type="button"><span class="btn btn-default">Cancelar</span></a> 
+        </table> 
+
+    <div class="container margen">
+        <div class="row">
+            <div class="row img-centrar">
+                <div class="col ficha-cliente-p img-centrar">
+                    <button type="submit" class="btn btn-default">Generar backup</button> 
+                </div>
+                <div class="col ficha-cliente-p img-centrar">
+                    <a href="<?= $this->url('home') ?>" type="button"><span class="btn btn-default">Cancelar</span></a> 
+                </div>
+            </div>
+        </div>
+    </div>
     </form>
+
 </div>

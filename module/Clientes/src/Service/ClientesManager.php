@@ -77,7 +77,6 @@ class ClientesManager {
         $query = $this->busquedaPorFiltros($filtros);
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
         $this->total = COUNT($adapter);
-
         $paginator = new Paginator($adapter);
         return $paginator;
     }
@@ -294,4 +293,11 @@ class ClientesManager {
         return $provincias;
     }
 
+    public function getDatosClientes($data){
+        $entityManager = $this->entityManager;
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select($data)
+                ->from(Cliente::class, 'C');
+        return $queryBuilder->getQuery();
+    }
 }
