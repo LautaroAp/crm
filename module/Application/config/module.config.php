@@ -36,7 +36,7 @@ return [
                 ],
             ],
             'backup' => [
-                'type' => Segment::class,
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/backup',
                     'defaults' => [

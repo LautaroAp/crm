@@ -1,0 +1,26 @@
+<?php 
+header("Pragma: public");
+header("Expires: 0");
+$filename = "Backup_Clientes.xls";
+header("Content-type: application/x-msdownload; charset=utf8");
+header("Content-Disposition: attachment; filename=$filename");
+header("Pragma: no-cache");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+?>
+
+<table>
+    <tbody>
+        <?php foreach ($resultado as $cliente): ?>
+        <tr>
+            <td><?php echo($cliente->getNombre()); ?></td>
+            <td><?php echo($cliente->getApellido());?></td>
+            <td><?php echo($cliente->getEmail());?></td>
+            <td><?php echo($cliente->getNombreCategoriaCliente());?></td>
+
+
+        </tr>
+        <?php endforeach;?>
+    </tbody>
+</table>
+

@@ -106,6 +106,16 @@ class ClientesManager {
         $queryBuilder->andWhere('C.estado = :state')->setParameter('state', 'S');
         return $queryBuilder->getQuery();
     }
+    
+    public function getActivos() {
+
+        $entityManager = $this->entityManager;
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('C')
+                ->from(Cliente::class, 'C');
+        $queryBuilder->where('C.estado = :state')->setParameter('state', 'S');
+        return $queryBuilder->getQuery();
+    }
 
     public function limpiarParametros($param) {
         foreach ($param as $filtro => $valor) {
@@ -297,7 +307,8 @@ class ClientesManager {
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select($data)
-                ->from(Cliente::class, 'C');
+                ->from(Cliente::class, 'C')
+                ->where('C.estado = :state')->setParameter('state', 'S');
         return $queryBuilder->getQuery();
     }
 }

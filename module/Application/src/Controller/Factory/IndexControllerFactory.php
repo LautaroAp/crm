@@ -5,8 +5,6 @@ use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Application\Controller\IndexController;
 use Clientes\Service\ClientesManager;
-
-
 /**
  * Description of LocalidadControllerFactory
  *
@@ -19,9 +17,6 @@ class IndexControllerFactory implements FactoryInterface {
     {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $clientesManager = $container->get(ClientesManager::class);
-
-       
-        // Instantiate the service and inject dependencies
         return new IndexController($entityManager,$clientesManager);
     }    
 }
