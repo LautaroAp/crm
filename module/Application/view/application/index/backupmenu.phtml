@@ -6,10 +6,20 @@
         <div class="row">
             <div class="row img-centrar">
                 <div class="col ficha-cliente-p img-centrar">
-                    <button type="submit" class="btn btn-default">Exportar como xls</button> 
+                  <a href="<?= $this->url('backup'); ?>" type="button">
+                    <span class="btn btn-default">
+                        <span class="glyphicon glyphicon-plus" ></span> Exportar como xls
+                    </span>
+                </a> 
                 </div>
                 <div class="col ficha-cliente-p img-centrar">
-                    <button type="" class="btn btn-default">Exportar como csv</button> 
+                    <div class="col ficha-cliente-p img-centrar">
+                  <a href="<?= $this->url('backup2'); ?>" type="button">
+                    <span class="btn btn-default">
+                        <span class="glyphicon glyphicon-plus" ></span> Exportar como csv
+                    </span>
+                </a> 
+                </div>
                 </div>
                 <div class="col ficha-cliente-p img-centrar">
                     <a href="backup.php" type="button"><span class="btn btn-default">Cancelar Backup</span></a> 

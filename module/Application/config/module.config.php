@@ -46,6 +46,17 @@ return [
                 ],
                 
              ],
+            'backup2' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/backup2',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'backup2',
+                    ],
+                ],
+                
+             ],
             'clientes' => [
                 'type' => Literal::class,
                 'options' => [
