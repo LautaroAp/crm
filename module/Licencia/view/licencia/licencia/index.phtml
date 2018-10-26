@@ -33,10 +33,11 @@
                         <td><?php echo money_format("USD %i", $licencia->getTotal_extranjero()); ?></td>
 
 
-                        <td> <a class="btn btn-default" href="<?= $this->url('licencia/editar', ['action' => 'edit', 'id' => $licencia->getId()]); ?>">
+                        <td> 
+                            <a class="btn btn-default" href="<?= $this->url('licencia/editar', ['action' => 'edit', 'id' => $licencia->getId()]); ?>">
                                 <span class="glyphicon glyphicon-pencil" ></span> 
                             </a>
-                            <button name="<?= $licencia->getId() ?>" id="<?= $licencia->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $licencia->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
+                        </td>
                     <!-- Modal -->
                     <div id="myModal<?= $licencia->getId() ?>" class="modal fade" role="dialog">
                         <div class="modal-dialog">

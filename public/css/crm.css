@@ -56,3 +56,11 @@
 .margen {
     margin-top: 10px;
 }
+
+.licencia-sm{
+    width: 40% !important;
+}
+
+.licencia-md{
+    width: 60% !important;
+}
