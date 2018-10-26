@@ -2,15 +2,12 @@
 <?php
 $this->headTitle('Editar Licencia');
 
+$nombre_licencia = $form->get('nombre_licencia');
+
 $form->get('nombre_licencia')->setAttributes([
     'class' => 'form-control',
     'value' => $licencia->getNombre(),
-    
-]);
-
-$form->get('version_licencia')->setAttributes([
-    'class' => 'form-control',
-    'value' => $licencia->getVersion(),
+    'required' => '',
     
 ]);
 
@@ -22,7 +19,7 @@ $form->get('precio_local')->setAttributes([
 
 $form->get('precio_extranjero')->setAttributes([
     'class' => 'form-control',
-    'value' => $licencia->getPRecio_extranjero(),
+    'value' => $licencia->getPrecio_extranjero(),
 
 ]);
 
@@ -52,50 +49,45 @@ $form->prepare();
 
 <?= $this->form()->openTag($form); ?>
 <div class="container">
-    <div class="row">
-        <div class="row form-row">
-            <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('nombre_licencia')); ?>
-                <?= $this->formElement($form->get('nombre_licencia')); ?>
-                <?= $this->formElementErrors($form->get('nombre_licencia')); ?> 
+    <div class="row form-row">
+        <div class="form-group col-md-4">
+            <label>Nombre de Licencia</label>
+            <input type="text" class="form-control" value="<?= $licencia->getNombre() ?>" name="nombre_licencia" placeholder="Ingresar Licencia" required="">
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="form-group col-md-3">
+            <label>Precio Local</label>
+            <div class="form-inline">
+                <input type="text" class="form-control licencia-md" value="<?= $licencia->getPrecio_local(); ?>" name="precio_local" placeholder="Ingresar precio" required=""> ARG
             </div>
-            
-             <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('version_licencia')); ?>
-                <?= $this->formElement($form->get('version_licencia')); ?>
-                <?= $this->formElementErrors($form->get('version_licencia')); ?> 
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="form-group col-md-3">
+            <label>Precio Extranjero</label>
+            <div class="form-inline">
+                <input type="text" class="form-control licencia-md" value="<?= $licencia->getPrecio_extranjero(); ?>" name="precio_extranjero" placeholder="Ingresar precio" required=""> USD
             </div>
-            
-            <div class="form-group col-md-1">
-                <?= $this->formLabel($form->get('iva')); ?>
-                <?= $this->formElement($form->get('iva')); ?>
-                <?= $this->formElementErrors($form->get('iva')); ?> 
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="form-group col-md-2">
+            <label>IVA</label>
+            <div class="form-inline">
+                <input type="text" class="form-control licencia-sm" value="<?= $licencia->getIva(); ?>" name="iva" placeholder="IVA" required=""> %
             </div>
-            
-             <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('precio_local')); ?>
-                <?= $this->formElement($form->get('precio_local')); ?>
-                <?= $this->formElementErrors($form->get('precio_local')); ?> 
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="form-group col-md-2">
+            <label>Dto.</label>
+            <div class="form-inline">
+                <input type="text" class="form-control licencia-sm" value="<?= $licencia->getDescuento(); ?>" name="descuento" placeholder="Dto." required=""> %
             </div>
-            
-             <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('precio_extranjero')); ?>
-                <?= $this->formElement($form->get('precio_extranjero')); ?>
-                <?= $this->formElementErrors($form->get('precio_extranjero')); ?> 
-            </div>
-            
-            
-             <div class="form-group col-md-1">
-                <?= $this->formLabel($form->get('descuento')); ?>
-                <?= $this->formElement($form->get('descuento')); ?>
-                <?= $this->formElementErrors($form->get('descuento')); ?> 
-            </div>
-            
-             
-            
-             
-
-
+        </div>
+    </div>
+                     
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
