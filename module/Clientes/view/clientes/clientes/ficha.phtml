@@ -54,13 +54,13 @@ $id_cliente = $this->cliente->getId();
             <div class="panel-heading text-center">Ficha de Cliente</div>
             <div class="panel-body">
                 <!-- Header -->
-                <div class="row">
-                    <div class="form-group col-md-4">
+                <div class="row ficha-cliente-titulo">
+                    <div class="form-group col-md-5">
                         <h3>
                             <?php echo($cliente->getApellido() . ", " . $cliente->getNombre()); ?>
                         </h3>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <h3>
                             <?php echo ($cliente->getNombreCategoriaCliente()); ?>
                         </h3>
@@ -76,14 +76,14 @@ $id_cliente = $this->cliente->getId();
                 </div>
                 <!-- Datos de Cliente -->
                 <div class="row">
-                    <div class="col-md-4 ficha-cliente-p">
+                    <div class="col-md-5 ficha-cliente-p">
                         <p><label>País:</label> <?php echo ($cliente->getNombrePaisCliente()); ?></p>
                         <p><label>Provincia:</label> <?php echo ($cliente->getNombreProvinciaCliente()); ?></p>
                         <p><label>Ciudad:</label> <?php echo ($cliente->getCiudad()); ?></p>
                         <p><label>Teléfono:</label> <?php echo ($cliente->getTelefono()); ?></p>
                         <p><label>Email:</label> <?php echo ($cliente->getEmail()); ?></p>
                     </div>
-                    <div class="col-md-4 ficha-cliente-p">
+                    <div class="col-md-3 ficha-cliente-p">
                         <p><label>Profresíon:</label> <?php echo ($cliente->getNombreProfesionCliente()); ?></p>
                         <p><label>Actividad:</label> <?php echo ($cliente->getActividad()); ?></p>
                         <p><label>Empresa:</label> <?php echo ($cliente->getEmpresa()); ?></p>
