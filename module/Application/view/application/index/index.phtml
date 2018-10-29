@@ -1,7 +1,6 @@
 <!-- MODULE APPLICATION -->
 <div id="header" >
     <div class="container" >
-
         <!-- Logo -->
         <h1><a href="<?= $this->url('application', ['action' => 'index']); ?>" id="logo">Huella CRM</a></h1>
         <header class="major">
@@ -21,18 +20,15 @@
                         <img src="<?= $this->basePath('img/crm/BotonLicencias.png') ?>" class="img-rounded img-responsive">
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="<?= $this->url('ventas'); ?>">
                         <img src="<?= $this->basePath('img/crm/BotonVentas.png') ?>" class="img-rounded img-responsive">
                     </a>
                 </li>
-                
+
             </ul>
-        </nav>
-        <nav id="nav">
             <ul> 
-                
                 <li>
                     <a href="<?= $this->url('gestion'); ?>">
                         <img src="<?= $this->basePath('img/crm/BotonGestion.png') ?>" class="img-rounded img-responsive">
@@ -44,9 +40,6 @@
                     </a>
                 </li>
             </ul>
-        </nav>
-
-        <nav id="nav">
             <ul> 
                 <li>
                     <a href="<?= $this->url('logout') ?>" role="button">
@@ -56,4 +49,5 @@
             </ul>
         </nav>
     </div>
+
 </div>
