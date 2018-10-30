@@ -13,8 +13,12 @@
     padding: 5px;
 }
 
+.ficha-cliente-titulo{
+    font-size: 17px;
+}
+
 .ficha-cliente-p{
-    line-height: 1px;
+    line-height: 10px;
 }
 
 .btn-centrar{
