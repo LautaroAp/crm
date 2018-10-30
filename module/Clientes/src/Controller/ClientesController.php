@@ -82,15 +82,10 @@ class ClientesController extends AbstractActionController {
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
         $licencia = $this->clientesManager->getLicencia();
-        
-
         if ($request->isPost()) {
             // Tiene que grabar
             $data = $this->params()->fromPost();
-            
-            print_r($data);
-            die();
-            
+      
             // Graba y recupera la misma entidad
             $this->clientesManager->addCliente($data);            
             $this->redirect()->toRoute('clientes');
@@ -123,15 +118,10 @@ class ClientesController extends AbstractActionController {
         if ($request->isPost()) {
             // Tiene que grabar
             $data = $this->params()->fromPost();
-            
-           
-            
-            // Graba y recupera la misma entidad
-            $cliente = $this->clientesManager->updateCliente($data);
-            
+        // Graba y recupera la misma entidad
+            $cliente = $this->clientesManager->updateCliente($data);       
             $id = $this->params()->fromRoute('id');
             $cliente_ficha = $this->clientesManager->getCliente($id);
-            
             $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $cliente_ficha->getId()]);
         } else {// Tiene que mostrar
             $id = $this->params()->fromRoute('id');
@@ -175,8 +165,13 @@ class ClientesController extends AbstractActionController {
         if (!$request->isPost()) {
             // Tiene que grabar
             $id = $this->params()->fromRoute('id');
-            $this->clientesManager->modificarEstado($id);
-            $this->redirect()->toRoute('clientes');
+            $estado_nuevo = $this->clientesManager->modificarEstado($id);
+            if($estado_nuevo == "S"){
+                $this->redirect()->toRoute('clientes');
+            }
+            else{
+                $this->redirect()->toRoute('clientes/inactivos');
+            }
         } else {
             return new ViewModel();
         }

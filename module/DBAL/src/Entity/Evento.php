@@ -19,7 +19,7 @@ class Evento {
      * @ORM\Column(name="ID_EVENTO", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id_evento;
+    protected $id;
 
     /**
      * @ORM\Column(name="FECHA_EVE")
@@ -79,7 +79,7 @@ class Evento {
     }
     
     function getId() {
-        return $this->id_evento;
+        return $this->id;
     }
 
     function getFecha() {

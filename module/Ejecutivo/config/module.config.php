@@ -26,22 +26,107 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    
                     'buscar' => [
                         'type' => Segment::class,
                         'options' => [
                             'route' => '/seach',
                             'defaults' => [
+                                'controller' => Controller\EjecutivoController::class,
                                 'action' => 'search',
                             ],
                         ],
                     ],
-
-                        'page' => [
+                    'page' => [
                         'type' => Segment::class,
                         'options' => [
                             'route' => '/page[/:id[/:estado]]',
                             'defaults' => [
+                                'controller' => Controller\EjecutivoController::class,
+                                'action' => 'index',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'agregar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/add[/:id]',
+                            'defaults' => [
+                                'controller' => Controller\EjecutivoController::class,
+                                'action' => 'add',
+                            ],
+                        ],
+                    ],
+                    'borrar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/delete[/:id]',
+                            'defaults' => [
+                                'controller' => Controller\EjecutivoController::class,
+                                'action' => 'delete',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                     'editar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/edit[/:id]',
+                            'defaults' => [
+                                'controller' => Controller\EjecutivoController::class,
+                                'action' => 'edit',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'buscar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/seach',
+                            'defaults' => [
+                                'controller' => Controller\EjecutivoController::class,
+                                'action' => 'search',
+                            ],
+                        ],
+                    ],
+                    'inactivos' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/inactivos[/:id]',
+                            'defaults' => [
+                                'controller' => Controller\EjecutivoInactivoController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                        'constraints' => [
+                            'id' => '[0-9]\d*',
+                        ],
+                    ],
+                    'activar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/activar[/:id]',
+                            'defaults' => [
+                                'controller' => Controller\EjecutivoInactivoController::class,
+                                'action' => 'activar',
+                            ],
+                        ],
+                        'constraints' => [
+                            'id' => '[0-9]\d*',
+                        ],
+                    ],
+                    'pageinactivos' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/pageinactivos[/:id[/:estado]]',
+                            'defaults' => [
+                                'controller' => Controller\EjecutivoInactivoController::class,
                                 'action' => 'index',
                             ],
                             'constraints' => [
@@ -50,14 +135,20 @@ return [
                         ],
                     ],
                 ],
-            
             ],
         ],
     ],
-    'controllers' => [
+   'controllers' => [
         'factories' => [
             Controller\EjecutivoController::class => Controller\Factory\EjecutivoControllerFactory::class,
-            
+            Controller\EjecutivoInactivoController::class => Controller\Factory\EjecutivoInactivoControllerFactory::class,
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            Service\EjecutivoManager::class => Service\Factory\EjecutivoManagerFactory::class,
+            Service\EjecutivoInactivoManager::class => Service\Factory\EjecutivoInactivoManagerFactory::class,
+            \Zend\Authentication\AuthenticationService::class => Service\Factory\AuthenticationServiceFactory::class,
         ],
     ],
     'view_manager' => [
@@ -90,12 +181,4 @@ return [
             ]
         ]
     ]*/
-    
-    'service_manager' => [
-        'factories' => [
-            \Zend\Authentication\AuthenticationService::class => Service\Factory\AuthenticationServiceFactory::class,
-
-            Service\EjecutivoManager::class => Service\Factory\EjecutivoManagerFactory::class,
-        ],
-    ],
 ];

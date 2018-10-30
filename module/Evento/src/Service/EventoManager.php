@@ -194,7 +194,7 @@ class EventoManager {
 
     public function removeEvento($id) {
         $evento = $this->entityManager->getRepository(Evento::class)
-                ->findOneBy(['id_evento' => $id]);
+                ->findOneById($id);
         $this->entityManager->remove($evento);
         $this->entityManager->flush();
     }

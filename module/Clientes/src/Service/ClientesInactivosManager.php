@@ -31,18 +31,7 @@ class ClientesInactivosManager extends ClientesManager{
         $this->entityManager = $entityManager;
     }
     
-//    public function getInactivos(){
-//        $entityManager = $this->entityManager;
-//        $queryBuilder = $entityManager->createQueryBuilder();
-//        $queryBuilder-> select('C')
-//                       ->from(Cliente::class, 'C');
-//        $queryBuilder->where('C.estado = :state') ->setParameter('state', 'N');           
-//        $query = $queryBuilder->getQuery();
-//        $adapter = new DoctrineAdapter(new ORMPaginator($query));
-//        $paginator = new Paginator($adapter);
-//        return $paginator;        
-//    }
-    
+
     public function getFiltrados($parametros){
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros($filtros);

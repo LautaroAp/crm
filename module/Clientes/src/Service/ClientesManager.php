@@ -223,12 +223,16 @@ class ClientesManager {
         $cliente = $this->entityManager
                 ->getRepository(Cliente::class)
                 ->findOneBy(['Id' => $id]);
+        $estado_nuevo="";
         if ($cliente->getEstado() == "S") {
             $cliente->setEstado("N");
+            $estado_nuevo="N";
         } else if ($cliente->getEstado() == "N") {
             $cliente->setEstado("S");
+            $estado_nuevo="S";
         }
         $entityManager->flush();
+        return $estado_nuevo;
     }
 
     public function getCategoriaCliente($id = null) {

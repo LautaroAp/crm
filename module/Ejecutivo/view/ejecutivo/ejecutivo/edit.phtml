@@ -3,28 +3,36 @@ $this->headTitle('Edit Ejecutivo');
 
 $form->get('apellido')->setAttributes([
     'class' => 'form-control',
-    'placeholder' => 'Ingresar Apellido'
+    'placeholder' => 'Ingresar Apellido',
+    'value' => $ejecutivo->getApellido()
+
 ]);
 
 $form->get('nombre')->setAttributes([
     'class' => 'form-control',
-    'placeholder' => 'Ingresar Nombre'
+    'placeholder' => 'Ingresar Nombre',
+    'value' => $ejecutivo->getNombre()
+
 ]);
 
 $form->get('mail')->setAttributes([
     'class' => 'form-control',
-    'placeholder' => 'nombre@ejemplo.com'
+    'placeholder' => 'nombre@ejemplo.com',
+    'value' => $ejecutivo->getMail()
+
 ]);
 
 $form->get('usuario')->setAttributes([
     'class' => 'form-control',
-    'placeholder' => 'Ingresar Usuario'
+    'placeholder' => 'Ingresar Usuario',
+    'value' => $ejecutivo->getUsuario()
+
 ]);
 
 $form->get('clave')->setAttributes([
     'class' => 'form-control',
-    'placeholder' => 'Ingresar Clave'
-]);
+    'value' => $ejecutivo->getClave()
+    ]);
 
 $form->get('submit')
         ->setAttributes(['class' => 'btn btn-info'])
@@ -87,7 +95,7 @@ $form->prepare();
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>¿Está seguro que desea editar los datos de este ejecutivo de forma permanente?</p>
+                    <p>¿Está seguro que desea editar los datos de este ejecutivo?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-default">Aceptar</button>

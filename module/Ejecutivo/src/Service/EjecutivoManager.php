@@ -50,14 +50,32 @@ class EjecutivoManager
     
     
     //La funcion getTabla() devuelve tabla de clientes sin filtro    
-    public function getTabla() {
-        // Create the adapter
-        $adapter = new SelectableAdapter($this->entityManager->getRepository(Ejecutivo::class)); // An object repository implements Selectable
-        // Create the paginator itself
+//    public function getTabla() {
+//        // Create the adapter
+//        $adapter = new SelectableAdapter($this->entityManager->getRepository(Ejecutivo::class)); // An object repository implements Selectable
+//        // Create the paginator itself
+//        $paginator = new Paginator($adapter);
+//
+//        return ($paginator);
+//    }
+    
+        public function getTabla() {
+        $query = $this->busquedaActivos();
+        $adapter = new DoctrineAdapter(new ORMPaginator($query));
         $paginator = new Paginator($adapter);
-
-        return ($paginator);
+        return $paginator;
     }
+      
+
+    public function busquedaActivos() {
+        $entityManager = $this->entityManager;
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('E')
+                ->from(Ejecutivo::class, 'E')
+                ->where('E.activo = :state') ->setParameter('state', 'S'); 
+        return $queryBuilder->getQuery();
+    }
+    
     
     /**
      * This method adds a new ejecutivo.
@@ -65,7 +83,6 @@ class EjecutivoManager
     
     public function addEjecutivo($data) 
     {
-        
         // Create new Ejecutivo entity.
         $ejecutivo = new Ejecutivo();
         $ejecutivo->setApellido($data['apellido']);
@@ -73,10 +90,8 @@ class EjecutivoManager
         $ejecutivo->setMail($data['mail']);
         $ejecutivo->setUsuario($data['usuario']);
         $ejecutivo->setClave($data['clave']);        
-                 
         // Add the entity to the entity manager.
         $this->entityManager->persist($ejecutivo);
-        
         // Apply changes to database.
         $this->entityManager->flush();
         
@@ -90,7 +105,6 @@ class EjecutivoManager
         if($user->getEmail()!=$data['email'] && $this->checkUserExists($data['email'])) {
             throw new \Exception("Another user with email address " . $data['email'] . " already exists");
         }*/
-        
         $ejecutivo->setApellido($data['apellido']);
         $ejecutivo->setNombre($data['nombre']);
         $ejecutivo->setMail($data['mail']);
@@ -105,17 +119,18 @@ class EjecutivoManager
     
     public function removeEjecutivo($ejecutivo) 
     {
-        
-        $this->entityManager->remove($ejecutivo);
-        
-        $this->entityManager->flush();
+       $ejecutivo->inactivar();
+       $this->entityManager->flush();
+
     }
     
-    public function recuperarEjecutivo($id_ejecutivo)
-    {
-        $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
-                    ->findOneBy(['id_ejecutivo' => $id_ejecutivo]);
-        
+    public function recuperarEjecutivo($id){
+        if (is_null($this->entityManager)){
+            print_r("no hay entityManager");die();
+        }
+        $ejecutivo= $this->entityManager
+                        ->getRepository(Ejecutivo::class)
+                        ->findOneById($id);
         return $ejecutivo;
     }
     

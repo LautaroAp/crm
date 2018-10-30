@@ -18,7 +18,7 @@ class Ejecutivo {
      * @ORM\Column(name="ID_EJECUTIVO", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id_ejecutivo;   
+    protected $id;   
     
     /**
      * @ORM\Column(name="APELLIDO_EJECUTIVO", nullable=true, type="string", length=255)
@@ -45,11 +45,15 @@ class Ejecutivo {
      */
     protected $clave;
     
+     /**
+     * @ORM\Column(name="ACTIVO", nullable=true, type="string", length=1)
+     */
+    protected $activo;
     
   
     
-    function getId_ejecutivo() {
-        return $this->id_ejecutivo;
+    function getId() {
+        return $this->id;
     }
 
     function getApellido() {
@@ -96,5 +100,17 @@ class Ejecutivo {
         $this->clave = $clave;
     }
 
+    function setActivo($activo){
+        $this->activo=$activo;
+    }
+    function inactivar(){
+        $this->activo="N";
+    }
+    function activar(){
+        $this->activo="S";
+    }
+    function isActivo(){
+        return $this->activo=="S";
+    }
 
 }

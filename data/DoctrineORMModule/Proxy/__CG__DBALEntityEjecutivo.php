@@ -64,10 +64,10 @@ class Ejecutivo extends \DBAL\Entity\Ejecutivo implements \Doctrine\ORM\Proxy\Pr
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id_ejecutivo', 'apellido', 'nombre', 'mail', 'usuario', 'clave'];
+            return ['__isInitialized__', 'id', 'apellido', 'nombre', 'mail', 'usuario', 'clave', 'activo'];
         }
 
-        return ['__isInitialized__', 'id_ejecutivo', 'apellido', 'nombre', 'mail', 'usuario', 'clave'];
+        return ['__isInitialized__', 'id', 'apellido', 'nombre', 'mail', 'usuario', 'clave', 'activo'];
     }
 
     /**
@@ -176,16 +176,16 @@ class Ejecutivo extends \DBAL\Entity\Ejecutivo implements \Doctrine\ORM\Proxy\Pr
     /**
      * {@inheritDoc}
      */
-    public function getId_ejecutivo()
+    public function getId()
     {
         if ($this->__isInitialized__ === false) {
-            return (int)  parent::getId_ejecutivo();
+            return (int)  parent::getId();
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId_ejecutivo', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
-        return parent::getId_ejecutivo();
+        return parent::getId();
     }
 
     /**
@@ -307,6 +307,50 @@ class Ejecutivo extends \DBAL\Entity\Ejecutivo implements \Doctrine\ORM\Proxy\Pr
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setClave', [$clave]);
 
         return parent::setClave($clave);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setActivo($activo)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setActivo', [$activo]);
+
+        return parent::setActivo($activo);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function inactivar()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'inactivar', []);
+
+        return parent::inactivar();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function activar()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'activar', []);
+
+        return parent::activar();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isActivo()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isActivo', []);
+
+        return parent::isActivo();
     }
 
 }

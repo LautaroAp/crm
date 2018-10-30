@@ -266,7 +266,17 @@ $id_cliente = $this->cliente->getId();
                     </div>
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
-                            <a href="<?= $this->url('clientes') ?>" role="button">
+                            
+                            <?php
+                                $ruta="";
+                                if ($cliente->getEstado() == "S") {
+                                    $ruta='clientes';
+                                }
+                                else {
+                                    $ruta='clientes/inactivos';    
+                                }
+                            ?>
+                            <a href="<?= $this->url($ruta) ?>" role="button">
                                 <img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha">
                             </a>
                         </div>

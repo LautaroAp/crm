@@ -96,7 +96,7 @@ class EjecutivoForm extends Form
         
         // Add "clave" field
         $this->add([            
-            'type'  => 'password',
+            'type'  => 'text',
             'name' => 'clave',
             'options' => [
                 'label' => 'Clave',
@@ -167,7 +167,7 @@ class EjecutivoForm extends Form
         // Add input for "mail" field
         $inputFilter->add([
                 'name'     => 'mail',
-                'required' => true,
+                'required' => false,
                 'filters'  => [                    
                     ['name' => 'StringTrim'],
                 ],                

@@ -64,3 +64,14 @@
 .licencia-md{
     width: 60% !important;
 }
+
+.titulo{
+   font-family: "Arial Helvetica sans-serif"; 
+   font-size: 72px;
+    font-weight: 500;
+}
+
+
+.th-sm{
+    min-width: 120px !important;
+}

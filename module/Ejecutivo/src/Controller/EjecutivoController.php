@@ -130,50 +130,34 @@ class EjecutivoController extends AbstractActionController
             'ejecutivo' => $ejecutivo
         ]);
     }
-    
+     public function editAction() 
+    {
+        $view = $this->procesarEditAction();
+        
+        return $view;
+    }
     private function procesarEditAction()
     {
         $id = (int)$this->params()->fromRoute('id', -1);  
-        
-        if ($id<1) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        
         $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
                 ->find($id);
-        
         if ($ejecutivo == null) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
-        
-        // Create user form
         $form = new EjecutivoForm('update', $this->entityManager, $ejecutivo);
-        
-        // Check if user has submitted the form
-        if ($this->getRequest()->isPost()) {
-            
-            // Fill in the form with POST data
+        if ($this->getRequest()->isPost()) {    
             $data = $this->params()->fromPost();            
-            
             $form->setData($data);
-            
-            // Validate form
             if($form->isValid()) {
-                
-                // Get filtered and validated data
                 $data = $form->getData();
-                
-                // Update the user.
                 $this->ejecutivoManager->updateEjecutivo($ejecutivo, $data);
-                
                 return $this->redirect()->toRoute('ejecutivos');
                                               
             }               
         } else {
             $form->setData(array(
-                    'id_ejecutivo'=>$ejecutivo->getId_ejecutivo(),
+                    'id_ejecutivo'=>$ejecutivo->getId(),
                     'apellido'=>$ejecutivo->getApellido(),
                     'nombre'=>$ejecutivo->getNombre(),
                     'mail'=>$ejecutivo->getMail(),
@@ -181,56 +165,30 @@ class EjecutivoController extends AbstractActionController
                     'clave'=>$ejecutivo->getClave(),                   
                 ));
         }
-        
         return new ViewModel(array(
             'ejecutivo' => $ejecutivo,
             'form' => $form
         ));
-        
     }
     
-    public function editAction() 
-    {
-        $view = $this->procesarEditAction();
-        
-        return $view;
-    }
+   
     
     private function procesarDeleteAction()
     {
         if (!$this->getRequest()->isPost()) {
-            
             $id = $this->params()->fromRoute('id');
-            if ($id<1) {
-                $this->getResponse()->setStatusCode(404);
-                return;
-            }
-
             $ejecutivo = $this->ejecutivoManager->recuperarEjecutivo($id);
             if ($ejecutivo == null) {
                 $this->getResponse()->setStatusCode(404);
                 return;
             }   
-            
-            // Recupero todos los eventos del ejecutivo
-            $eventos = $this->entityManager->getRepository(Evento::class)
-                    ->findBy(['id_ejecutivo'=>$id]);
-            // Recorro array de eventos eliminando
-            foreach($eventos as $evento)
-            {
-                $this->entityManager->remove($evento);
-                $this->entityManager->flush();
-            }
-            
             $this->ejecutivoManager->removeEjecutivo($ejecutivo);
-            // Redirect the user to "admin" page.
             $this->redirect()->toRoute('ejecutivos');        
         }
         else {
             $view = new ViewModel();
             return $view;
         }
-        
     }
     
     public function deleteAction()

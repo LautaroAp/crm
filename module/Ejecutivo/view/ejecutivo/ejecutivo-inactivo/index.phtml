@@ -54,7 +54,7 @@
                                     <span class="glyphicon glyphicon-pencil" ></span> 
                                 </a>
                                 <button name="<?= $ejecutivo->getId() ?>" id="<?= $ejecutivo->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $ejecutivo->getId() ?>">
-                                    <span class="glyphicon glyphicon-remove" ></span
+                                    <span class="glyphicon glyphicon-ok" ></span
                                 </button>
                             </td>
                             <!-- Modal -->
@@ -68,14 +68,14 @@
                                         </div>
                                         <div class="modal-body">
                                             <p>
-                                                ¿Está seguro que desea desactivar el ejecutivo
+                                                ¿Está seguro que desea activar el ejecutivo 
                                                 <?= $this->escapeHtml($ejecutivo->getNombre()) ?>
                                                 <?= $this->escapeHtml($ejecutivo->getApellido()) ?>
                                                 ?
                                             </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <a class="btn btn-default" href="<?= $this->url('ejecutivos/borrar', ['action' => 'delete', 'id' => $ejecutivo->getId()]); ?>">
+                                            <a class="btn btn-default" href="<?= $this->url('ejecutivos/activar', ['action' => 'activar', 'id' => $ejecutivo->getId()]); ?>">
                                                 Aceptar
                                             </a>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -92,7 +92,7 @@
                     </table>
                     <?php
                     echo $this->paginationControl($ejecutivos, 'Sliding', // All, Elastic, Jumping, Sliding
-                            'search_pagination4.phtml', $this->url('ejecutivos/page', ['action' => 'index', 'id' => 1]));
+                            'search_pagination5.phtml', $this->url('ejecutivos/page', ['action' => 'index', 'id' => 1]));
                 }
                 ?>
             </div>
@@ -106,32 +106,24 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row img-centrar">
-                        <div class="col ficha-cliente-p img-centrar">
-                            <div>
-                                <a href="<?= $this->url('ejecutivos', ['action' => 'add']); ?>"><img src="<?= $this->basePath('img/crm/ActividadAgregar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
-                            </div>
-                            <div class="ficha-cliente-label">
-                                <label>Ejecutivo</label><br>
-                                <label>Nuevo</label>
-                            </div>
+                         <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href='<?= $this->url("ejecutivos") ?>'><img src="<?= $this->basePath('img/crm/ClienteAgregar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
                         </div>
-                        <div class="col ficha-cliente-p img-centrar">
-                            <div>
-                                <a href='<?= $this->url("ejecutivos/inactivos") ?>'><img src="<?= $this->basePath('img/crm/ClienteEliminar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
-                            </div>
-                            <div class="ficha-cliente-label">
-                                <label>Ejecutivos</label><br>
-                                <label>Inactivos</label>
-                            </div>
+                        <div class="ficha-cliente-label">
+                            <label>Ejecutivos</label><br>
+                            <label>Activos</label>
                         </div>
-                        <div class="col ficha-cliente-p img-centrar">
-                            <div>
-                                <a href="<?= $this->url('utilidades') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
-                            </div>
-                            <div class="ficha-cliente-label">
-                                <label>Volver</label>
-                            </div>
+                    </div>
+
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href="<?= $this->url('utilidades') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
                         </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
