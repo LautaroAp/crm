@@ -91,10 +91,13 @@ class EventoManager {
         $evento->setDescripcion($data['detalle']);
         // Fecha Compra & Ultimo Cobro & Vencimiento
         if (($tipo_evento->getId() == 2) or ( $tipo_evento->getId() == 5)) {
-            if ($cliente->isPrimeraVenta()) {
-                $cliente->setFechaCompra($fecha_evento);
-            }
+//            if ($cliente->isPrimeraVenta()) {
+//                $cliente->setFechaCompra($fecha_evento);
+//            }
+           
+            $cliente->setFechaCompra($fecha_evento);
             $cliente->setFechaUltimoContacto($fecha_evento);
+            
 //            $vencimiento = strtotime('+90 day', strtotime($fecha_str));
 //            $vencimiento = date('Y-m-d', $vencimiento);
 //            $cliente->setVencimiento($vencimiento);
@@ -119,13 +122,18 @@ class EventoManager {
            
             //NO FUNCIONA
             
-            date_add($fecha_evento, date_interval_create_from_date_string('90 days'));
-            $cliente->setVencimiento($fecha_evento);
+            //$vencimiento = date_add($fecha_evento, date_interval_create_from_date_string('90 days'));
+            //$cliente->setVencimiento($vencimiento);
             
         }
-
+        
         $this->entityManager->persist($evento);
         $this->entityManager->flush();
+        print_r($fecha_evento);
+        print_r($cliente->getFechaCompra());
+        print_r($cliente->getFechaUltimoContacto());
+        print_r($evento->getFecha());
+        die();
         return $evento;
     }
 

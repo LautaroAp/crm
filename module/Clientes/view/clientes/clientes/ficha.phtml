@@ -187,14 +187,14 @@ $id_cliente = $this->cliente->getId();
             </thead>
             <tbody role="button">
                 <?php               
-                for ($i = count($eventos) -1; $i > 0; $i--) { ?>
-                    <tr id="<?= $eventos[$i]->getId() ?>" onclick="seleccionarFila(event)">
-                        <td id="<?= $eventos[$i]->getId() ?>"><?php if(!is_null($eventos[$i]->getFecha())){echo($eventos[$i]->getFecha()->format('d/m/Y'));}  ?></td>
-                        <td id="<?= $eventos[$i]->getId() ?>"><?php echo($eventos[$i]->getUsuarioEjecutivo()); ?></td>
-                        <td id="<?= $eventos[$i]->getId() ?>"><?php echo($eventos[$i]->getTipo()); ?></td>
-                        <td id="<?= $eventos[$i]->getId() ?>"><?php echo($eventos[$i]->getDescripcion()); ?></td>
+                foreach ($eventos as $evento): ?>
+                    <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
+                        <td id="<?= $evento->getId() ?>"><?php if(!is_null($evento->getFecha())){echo($evento->getFecha()->format('d/m/Y'));}  ?></td>
+                        <td id="<?= $evento->getId() ?>"><?php echo($evento->getUsuarioEjecutivo()); ?></td>
+                        <td id="<?= $evento->getId() ?>"><?php echo($evento->getTipo()); ?></td>
+                        <td id="<?= $evento->getId() ?>"><?php echo($evento->getDescripcion()); ?></td>
                     </tr>
-                <?php } ?>    
+                <?php endforeach; ?>    
             </tbody>
         </table>
     </div>
