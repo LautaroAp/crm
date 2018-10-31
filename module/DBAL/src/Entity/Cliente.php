@@ -93,31 +93,31 @@ class Cliente {
      * @ORM\JoinColumn(name="ID_CATEGORIA_CLIENTE", referencedColumnName="ID_CATEGORIA_CLIENTE")
      */
     private $categoria;
-    
+
     /**
      * Many Clientes have One Categoria.
      * @ORM\ManyToOne(targetEntity="Licencia")
      * @ORM\JoinColumn(name="ID_LICENCIA", referencedColumnName="ID_LICENCIA")
      */
     private $licencia;
-    
-     /**
+
+    /**
      * @ORM\Column(name="VERSION_LICENCIA", nullable=true, type="string", length=255)
      */
     private $version;
 
     /**
-     * @ORM\Column(name="FECHA_COMPRA")
+     * @ORM\Column(name="FECHA_COMPRA", type="datetime")
      */
     private $fecha_compra;
 
     /**
-     * @ORM\Column(name="FECHA_VTO_ACT")
+     * @ORM\Column(name="FECHA_VTO_ACT", type="datetime")
      */
     private $vencimiento;
 
     /**
-     * @ORM\Column(name="FECHA_ULTIMO_CONTACTO")
+     * @ORM\Column(name="FECHA_ULTIMO_CONTACTO", type="datetime")
      */
     private $fecha_ultimo_contacto;
 
@@ -140,6 +140,7 @@ class Cliente {
     /**
      * 
      * @ORM\OneToMany(targetEntity="\DBAL\Entity\Evento", mappedBy="cliente")
+     * @ORM\OrderBy({"fecha" = "asc"})
      */
     private $eventos;
 
@@ -184,27 +185,22 @@ class Cliente {
     }
 
     public function getNombrePaisCliente() {
-        if (is_null($this->provincia)){
-            if (!is_null($this->pais)){
+        if (is_null($this->provincia)) {
+            if (!is_null($this->pais)) {
                 return $this->pais->getNombre();
-            }
-            else {
+            } else {
                 return '-';
             }
-        }
-        else{
+        } else {
             if (is_null($this->provincia->getPais())) {
                 return '-';
-            }
-
-            else {
+            } else {
                 return $this->provincia->getPais()->getNombre();
             }
         }
     }
 
-    
-public function getProvincia() {
+    public function getProvincia() {
         return $this->provincia;
     }
 
@@ -340,18 +336,7 @@ public function getProvincia() {
     }
 
     public function getFechaCompra() {
-        if (is_null($this->fecha_compra)) {
-            $array_eventos = $this->getEventos();
-            foreach ($array_eventos as $eve) {
-                if (($eve->getTipoId() == 2) or ( $eve->getTipoId() == 5)) {
-                    return $eve->getFecha();
-                    break;
-                }
-            }
-            return "-";
-        } else {
-            return $this->fecha_compra;
-        }
+        return $this->fecha_compra;
     }
 
     public function setFechaCompra($fecha_compra) {
@@ -359,11 +344,7 @@ public function getProvincia() {
     }
 
     public function getVencimiento() {
-        if (is_null($this->vencimiento)) {
-            return "-";
-        } else {
-            return $this->vencimiento;
-        }
+        return $this->vencimiento;
     }
 
     public function setVencimiento($vencimiento) {
@@ -371,11 +352,7 @@ public function getProvincia() {
     }
 
     function getFechaUltimoContacto() {
-        if (is_null($this->fecha_ultimo_contacto)) {
-            return "-";
-        } else {
-            return $this->fecha_ultimo_contacto;
-        }
+        return $this->fecha_ultimo_contacto;
     }
 
     function setFechaUltimoContacto($fecha_ultimo_contacto) {
@@ -383,29 +360,29 @@ public function getProvincia() {
     }
 
     function getNombreLicenciaCliente() {
-       if (is_null($this->licencia)){
-           return "-";
-       }
-       else{
-           return $this->licencia->getNombre();
-       }
+        if (is_null($this->licencia)) {
+            return "-";
+        } else {
+            return $this->licencia->getNombre();
+        }
     }
 
     function getLicencia() {
-      return $this->licencia;
+        return $this->licencia;
     }
+
     function setLicencia($licencia) {
         $this->licencia = $licencia;
     }
-    
-    public function getVersion(){
+
+    public function getVersion() {
         return $this->version;
     }
-    
-    public function setVersion($version){
-        $this->version=$version;
+
+    public function setVersion($version) {
+        $this->version = $version;
     }
- 
+
     public function getEstado() {
         return $this->estado;
     }
@@ -413,7 +390,7 @@ public function getProvincia() {
     public function getEstadoNombre() {
         if ($this->estado == "S") {
             return "Activo";
-        } else{
+        } else {
             return "Inactivo";
         }
     }

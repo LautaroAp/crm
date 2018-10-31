@@ -91,9 +91,9 @@ $id_cliente = $this->cliente->getId();
                         <p><label>Nro. Establecimientos:</label> <?php echo ($cliente->getEstablecimientos()); ?></p>
                     </div>
                     <div class="col-md-4 ficha-cliente-p">
-                        <p><label>Fecha de Compra:</label> <?php echo ($cliente->getFechaCompra()); ?></p>
-                        <p><label>Último Pago:</label> <?php echo ($cliente->getFechaUltimoContacto()); ?></p>
-                        <p><label>Fecha Vencimiento:</label> <?php echo ($cliente->getVencimiento()); ?></p>
+                        <p><label>Fecha de Compra:</label> <?php if(!is_null($cliente->getFechaCompra())) {echo ($cliente->getFechaCompra()->format('d/m/Y'));} ?></p>
+                        <p><label>Último Pago:</label> <?php if(!is_null($cliente->getFechaUltimoContacto())) {echo ($cliente->getFechaUltimoContacto()->format('d/m/Y'));} ?></p>
+                        <p><label>Fecha Vencimiento:</label> <?php if(!is_null($cliente->getVencimiento())) {echo ($cliente->getVencimiento()->format('d/m/Y'));} ?></p>
                         <p><label>Estado:</label> <?php echo ($cliente->getEstadoNombre()); ?></p>
                     </div>
                 </div>
@@ -189,7 +189,7 @@ $id_cliente = $this->cliente->getId();
                 <?php               
                 for ($i = count($eventos) -1; $i > 0; $i--) { ?>
                     <tr id="<?= $eventos[$i]->getId() ?>" onclick="seleccionarFila(event)">
-                        <td id="<?= $eventos[$i]->getId() ?>"><?php echo($eventos[$i]->getFecha()); ?></td>
+                        <td id="<?= $eventos[$i]->getId() ?>"><?php if(!is_null($eventos[$i]->getFecha())){echo($eventos[$i]->getFecha()->format('d/m/Y'));}  ?></td>
                         <td id="<?= $eventos[$i]->getId() ?>"><?php echo($eventos[$i]->getUsuarioEjecutivo()); ?></td>
                         <td id="<?= $eventos[$i]->getId() ?>"><?php echo($eventos[$i]->getTipo()); ?></td>
                         <td id="<?= $eventos[$i]->getId() ?>"><?php echo($eventos[$i]->getDescripcion()); ?></td>

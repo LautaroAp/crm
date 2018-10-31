@@ -76,9 +76,9 @@ class EventoManager {
      */
     public function addEvento($data) {
         $evento = new Evento();
+        $fecha_evento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
+        $evento->setFecha($fecha_evento);
 
-        $fecha_str = date("Y-m-d");
-        $evento->setFecha($fecha_str);
         $tipo_evento = $this->entityManager->getRepository(TipoEvento::class)
                 ->findOneBy(['id_tipo_evento' => $data['tipo_evento']]);
         $evento->setTipo($tipo_evento);
@@ -92,12 +92,36 @@ class EventoManager {
         // Fecha Compra & Ultimo Cobro & Vencimiento
         if (($tipo_evento->getId() == 2) or ( $tipo_evento->getId() == 5)) {
             if ($cliente->isPrimeraVenta()) {
-                $cliente->setFechaCompra($fecha_str);
+                $cliente->setFechaCompra($fecha_evento);
             }
-            $cliente->setFechaUltimoContacto($fecha_str);
-            $vencimiento = strtotime('+90 day', strtotime($fecha_str));
-            $vencimiento = date('Y-m-d', $vencimiento);
-            $cliente->setVencimiento($vencimiento);
+            $cliente->setFechaUltimoContacto($fecha_evento);
+//            $vencimiento = strtotime('+90 day', strtotime($fecha_str));
+//            $vencimiento = date('Y-m-d', $vencimiento);
+//            $cliente->setVencimiento($vencimiento);
+
+
+
+//            Estilo orientado a objetos
+//
+//            $fecha = new DateTime('2000-01-01');
+//            $fecha->add(new DateInterval('P10D'));
+//            echo $fecha->format('Y-m-d') . "\n";
+//
+//
+//            Estilo por procedimientos
+//
+//            $fecha = date_create('2000-01-01');
+//            date_add($fecha, date_interval_create_from_date_string('10 days'));
+//            echo date_format($fecha, 'Y-m-d');
+
+
+
+           
+            //NO FUNCIONA
+            
+            date_add($fecha_evento, date_interval_create_from_date_string('90 days'));
+            $cliente->setVencimiento($fecha_evento);
+            
         }
 
         $this->entityManager->persist($evento);

@@ -59,7 +59,7 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                 </thead>
                     <?php foreach ($eventos as $evento) : ?>
                     <tr>
-                        <td><?php echo ($evento->getFecha()); ?></td>
+                        <td><?php if(!is_null($evento->getFecha())) {echo ($evento->getFecha()->format('d/m/Y'));} ?></td>
                         <td><?php echo ($evento->getTipo()); ?></td>
                         <td><?php echo ($evento->getNombreCliente()); ?></td>
                         <td><?php echo ($evento->getId_cliente()->getNombreCategoriaCliente()); ?> </td>

@@ -22,7 +22,7 @@ class Evento {
     protected $id;
 
     /**
-     * @ORM\Column(name="FECHA_EVE")
+     * @ORM\Column(name="FECHA_EVE", type="datetime")
      */
     protected $fecha;
 
@@ -51,54 +51,45 @@ class Evento {
      * @ORM\Column(name="DESCRIPCION", nullable=true, type="string")
      */
     protected $descripcion;
-
-    
     protected $nombre_cliente;
     protected $apellido_cliente;
     protected $usuario_ejecutivo;
-    
+
     public function __construct() {
         $cliente = $this->cliente;
-        if (!is_null($cliente)){
-            $this->nombre_cliente= $cliente->getNombre();
-            $this->apellido_cliente=$cliente->getApellido();
+        if (!is_null($cliente)) {
+            $this->nombre_cliente = $cliente->getNombre();
+            $this->apellido_cliente = $cliente->getApellido();
+        } else {
+            $this->nombre_cliente = "NO DEFINIDO";
+            $this->apellido_cliente = "NO DEFINIDO";
         }
-        else {
-            $this->nombre_cliente="NO DEFINIDO";
-            $this->apellido_cliente="NO DEFINIDO";
-        }
-        
-        $ejecutivo = $this->ejecutivo;
-        if (!is_null($ejecutivo)){
-            $this->usuario_ejecutivo=$ejecutivo->getUsuario();
-        }
-        else {
-            $this->usuario_ejecutivo="NO DEFINIDO";
 
+        $ejecutivo = $this->ejecutivo;
+        if (!is_null($ejecutivo)) {
+            $this->usuario_ejecutivo = $ejecutivo->getUsuario();
+        } else {
+            $this->usuario_ejecutivo = "NO DEFINIDO";
         }
     }
-    
+
     function getId() {
         return $this->id;
     }
 
     function getFecha() {
-        if (is_null($this->fecha)) {
-            return "NO DEFINIDA";
-        } else {
-//            return $this->fecha->format('Y-m-d');
-            return $this->fecha;
-        }
+
+        return $this->fecha;
     }
 
     function getTipo() {
         return $this->tipo->getNombre();
     }
-    
+
     function getTipoId() {
         return $this->tipo->getId();
     }
-    
+
     function getId_cliente() {
         return $this->cliente;
     }
@@ -140,7 +131,7 @@ class Evento {
     }
 
     public function getUsuarioEjecutivo() {
-       
+
         if (is_null($this->ejecutivo)) {
             return "NO DEFINIDO";
         } else {
@@ -155,5 +146,5 @@ class Evento {
     function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
     }
-    
+
 }
