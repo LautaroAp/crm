@@ -140,7 +140,7 @@ class Cliente {
     /**
      * 
      * @ORM\OneToMany(targetEntity="\DBAL\Entity\Evento", mappedBy="cliente")
-     * @ORM\OrderBy({"fecha" = "asc"})
+     * @ORM\OrderBy({"fecha" = "desc"})
      */
     private $eventos;
 
@@ -421,5 +421,5 @@ class Cliente {
         }
         return true;
     }
-
+    
 }
