@@ -82,6 +82,7 @@ $id_cliente = $this->cliente->getId();
                         <p><label>Ciudad:</label> <?php echo ($cliente->getCiudad()); ?></p>
                         <p><label>Teléfono:</label> <?php echo ($cliente->getTelefono()); ?></p>
                         <p><label>Email:</label> <?php echo ($cliente->getEmail()); ?></p>
+                        <p><label>Skype:</label> <?php echo ($cliente->getSkype()); ?></p>
                     </div>
                     <div class="col-md-3 ficha-cliente-p">
                         <p><label>Profresíon:</label> <?php echo ($cliente->getNombreProfesionCliente()); ?></p>
@@ -89,6 +90,7 @@ $id_cliente = $this->cliente->getId();
                         <p><label>Empresa:</label> <?php echo ($cliente->getEmpresa()); ?></p>
                         <p><label>Nro. Animales:</label> <?php echo ($cliente->getAnimales()); ?></p>
                         <p><label>Nro. Establecimientos:</label> <?php echo ($cliente->getEstablecimientos()); ?></p>
+                        <p><label>Raza de Manejo:</label> <?php echo ($cliente->getRazaManejo()); ?></p>
                     </div>
                     <div class="col-md-4 ficha-cliente-p">
                         <p><label>Fecha de Compra:</label> <?php if(!is_null($cliente->getFechaCompra())) {echo ($cliente->getFechaCompra()->format('d/m/Y'));} ?></p>

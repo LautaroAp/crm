@@ -61,6 +61,11 @@ class Cliente {
     private $email;
 
     /**
+     * @ORM\Column(name="CUENTA_SKYPE_CLIENTE", nullable=true, type="string", length=255)
+     */
+    private $skype;
+
+    /**
      * Many Features have One Product.
      * @ORM\ManyToOne(targetEntity="ProfesionCliente")
      * @ORM\JoinColumn(name="ID_PROFESION_CLIENTE", referencedColumnName="ID_TIPO_CLIENTE")
@@ -86,6 +91,11 @@ class Cliente {
      * @ORM\Column(name="ESTABLE_CLIENTE", nullable=true, type="string", length=255)
      */
     private $establecimientos;
+
+    /**
+     * @ORM\Column(name="RAZA_CLIENTE", nullable=true, type="string", length=255)
+     */
+    private $raza_manejo;
 
     /**
      * Many Clientes have One Categoria.
@@ -153,11 +163,7 @@ class Cliente {
     }
 
     public function getNombre() {
-        if (is_null($this->nombre)) {
-            return "-";
-        } else {
             return $this->nombre;
-        }
     }
 
     public function setNombre($nombre) {
@@ -165,11 +171,7 @@ class Cliente {
     }
 
     public function getApellido() {
-        if (is_null($this->apellido)) {
-            return "-";
-        } else {
             return $this->apellido;
-        }
     }
 
     public function setApellido($apellido) {
@@ -189,11 +191,11 @@ class Cliente {
             if (!is_null($this->pais)) {
                 return $this->pais->getNombre();
             } else {
-                return '-';
+                return null;
             }
         } else {
             if (is_null($this->provincia->getPais())) {
-                return '-';
+                return null;
             } else {
                 return $this->provincia->getPais()->getNombre();
             }
@@ -211,18 +213,14 @@ class Cliente {
     public function getNombreProvinciaCliente() {
         $provincia = $this->getProvincia();
         if (is_null($provincia)) {
-            return "-";
+            return null;
         } else {
             return $this->getProvincia()->getNombre_provincia();
         }
     }
 
     public function getCiudad() {
-        if (is_null($this->ciudad)) {
-            return "-";
-        } else {
             return $this->ciudad;
-        }
     }
 
     public function setCiudad($ciudad) {
@@ -240,18 +238,14 @@ class Cliente {
     public function getNombreProfesionCliente() {
         $profesion = $this->getProfesion();
         if (is_null($profesion)) {
-            return "-";
+            return null;
         } else {
             return $this->getProfesion()->getNombre();
         }
     }
 
     public function getEmpresa() {
-        if (is_null($this->empresa)) {
-            return "-";
-        } else {
-            return $this->empresa;
-        }
+        return $this->empresa;
     }
 
     public function setEmpresa($empresa) {
@@ -259,11 +253,7 @@ class Cliente {
     }
 
     public function getActividad() {
-        if (is_null($this->actividad)) {
-            return "-";
-        } else {
-            return $this->actividad;
-        }
+        return $this->actividad;
     }
 
     public function setActividad($actividad) {
@@ -271,11 +261,7 @@ class Cliente {
     }
 
     public function getAnimales() {
-        if (is_null($this->animales)) {
-            return "-";
-        } else {
-            return $this->animales;
-        }
+        return $this->animales;
     }
 
     public function setAnimales($animales) {
@@ -283,35 +269,39 @@ class Cliente {
     }
 
     public function getEstablecimientos() {
-        if (is_null($this->establecimientos)) {
-            return "-";
-        } else {
-            return $this->establecimientos;
-        }
+        return $this->establecimientos;
     }
 
     public function setEstablecimientos($establecimientos) {
         $this->establecimientos = $establecimientos;
     }
 
+    public function getRazaManejo() {
+        return $this->raza_manejo;
+    }
+
+    public function setRazaManejo($raza_manejo) {
+        $this->raza_manejo = $raza_manejo;
+    }
+
     public function getTelefono() {
-        if (is_null($this->telefono)) {
-            return "-";
-        } else {
             return $this->telefono;
-        }
     }
 
     public function setTelefono($telefono) {
         $this->telefono = $telefono;
     }
 
+    public function getSkype() {
+            return $this->skype;
+    }
+
+    public function setSkype($skype) {
+        $this->skype = $skype;
+    }
+
     public function getEmail() {
-        if (is_null($this->email)) {
-            return "-";
-        } else {
             return $this->email;
-        }
     }
 
     public function setEmail($email) {
@@ -329,7 +319,7 @@ class Cliente {
     public function getNombreCategoriaCliente() {
         $categoria = $this->getCategoria();
         if (is_null($categoria)) {
-            return "-";
+            return null;
         } else {
             return $categoria->getNombre();
         }
@@ -361,7 +351,7 @@ class Cliente {
 
     function getNombreLicenciaCliente() {
         if (is_null($this->licencia)) {
-            return "-";
+            return null;
         } else {
             return $this->licencia->getNombre();
         }
@@ -421,5 +411,5 @@ class Cliente {
         }
         return true;
     }
-    
+
 }
