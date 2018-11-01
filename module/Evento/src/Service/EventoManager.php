@@ -123,6 +123,7 @@ class EventoManager {
             //NO FUNCIONA
             
             //$vencimiento = date_add($fecha_evento, date_interval_create_from_date_string('90 days'));
+            //
             //$cliente->setVencimiento($vencimiento);
             
         }
