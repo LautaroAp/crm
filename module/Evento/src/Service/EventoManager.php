@@ -10,6 +10,7 @@ use DBAL\Entity\Ejecutivo;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use DateInterval;
 
 /**
  * This service is responsible for adding/editing eventos
@@ -76,65 +77,48 @@ class EventoManager {
      */
     public function addEvento($data) {
         $evento = new Evento();
+
         $fecha_evento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
+        $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
+
         $evento->setFecha($fecha_evento);
 
         $tipo_evento = $this->entityManager->getRepository(TipoEvento::class)
                 ->findOneBy(['id_tipo_evento' => $data['tipo_evento']]);
         $evento->setTipo($tipo_evento);
+
         $cliente = $this->entityManager->getRepository(Cliente::class)
                 ->findOneBy(['Id' => $data['id_cliente']]);
+
         $evento->setId_cliente($cliente);
+
         $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
                 ->findOneBy(['usuario' => $data['ejecutivo']]);
         $evento->setId_ejecutivo($ejecutivo);
+
         $evento->setDescripcion($data['detalle']);
-        // Fecha Compra & Ultimo Cobro & Vencimiento
-        if (($tipo_evento->getId() == 2) or ( $tipo_evento->getId() == 5)) {
-//            if ($cliente->isPrimeraVenta()) {
-//                $cliente->setFechaCompra($fecha_evento);
-//            }
-           
-            $cliente->setFechaCompra($fecha_evento);
-            $cliente->setFechaUltimoContacto($fecha_evento);
-            
-//            $vencimiento = strtotime('+90 day', strtotime($fecha_str));
-//            $vencimiento = date('Y-m-d', $vencimiento);
-//            $cliente->setVencimiento($vencimiento);
 
-
-
-//            Estilo orientado a objetos
-//
-//            $fecha = new DateTime('2000-01-01');
-//            $fecha->add(new DateInterval('P10D'));
-//            echo $fecha->format('Y-m-d') . "\n";
-//
-//
-//            Estilo por procedimientos
-//
-//            $fecha = date_create('2000-01-01');
-//            date_add($fecha, date_interval_create_from_date_string('10 days'));
-//            echo date_format($fecha, 'Y-m-d');
-
-
-
-           
-            //NO FUNCIONA
-            
-            //$vencimiento = date_add($fecha_evento, date_interval_create_from_date_string('90 days'));
-            //
-            //$cliente->setVencimiento($vencimiento);
-            
+        // Fecha Compra
+        if ($tipo_evento->getId() == 2) {
+            if ($cliente->isPrimeraVenta()) {
+                $cliente->setFechaCompra($fecha_evento);
+            }
         }
-        
+        // Ultimo Pago & Vencimiento
+        if (($tipo_evento->getId() == 2) or ( $tipo_evento->getId() == 5)) {
+            // Ultimo Pago
+            if ($fecha_evento > $cliente->getFechaUltimoContacto()) {
+                $cliente->setFechaUltimoContacto($fecha_evento);
+            }
+            // Vencimiento
+            $fecha_vencimiento->add(new DateInterval('P3M'));
+            if ($fecha_vencimiento > $cliente->getVencimiento()) {
+                $cliente->setVencimiento($fecha_vencimiento);
+            }
+        }
+
         $this->entityManager->persist($evento);
         $this->entityManager->flush();
-        print_r($fecha_evento);
-        print_r($cliente->getFechaCompra());
-        print_r($cliente->getFechaUltimoContacto());
-        print_r($evento->getFecha());
-        die();
         return $evento;
     }
 

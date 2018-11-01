@@ -2,11 +2,11 @@
 $this->headTitle('Detalles de la empresa');
 ?>
 
-<!-- Inicio: Datos de Cliente -->
+<!-- Inicio: Datos de Empresa -->
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">Datos Empresa</div>
+            <div class="panel-heading text-center">Datos de Empresa</div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6 ficha-empresa-p">
@@ -27,15 +27,41 @@ $this->headTitle('Detalles de la empresa');
                         <p><label>Provincia:</label> <?php echo ($empresa->getProvincia()); ?></p>
                         <p><label>Pais:</label> <?php echo ($empresa->getPais()); ?></p>
                         <p><label>Código postal:</label> <?php echo ($empresa->getCP()); ?></p>
-
                     </div>
                 </div>
             </div>
         </div>
-        
     </div>
 </div>
-<!-- Fin: Datos de la empresa -->
+<!-- Fin: Datos de Empresa -->
+
+<!-- Inicio: Parametros Empresa -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">Parámetros de Empresa</div>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="form-group col-md-4">
+            <label>Intervalo Vencimiento</label>
+            <select class="form-control" id="vencimiento" name="vencimiento">
+                <option value="" hidden="">Seleccionar</option>
+                <option value="3">3 meses</option>
+                <option value="6">6 meses</option>
+                <option value="9">9 meses</option>
+            </select>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="form-group col-md-4">
+            <label>Otros</label>
+            <input type="text" class="form-control" name="actividad" placeholder="Ingresar Parámetro">
+        </div>
+    </div>
+
+</div>
+<!-- Fin: Parametros Empresa -->
 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
@@ -44,19 +70,16 @@ $this->headTitle('Detalles de la empresa');
             <div class="panel-heading">
                 <div class="row img-centrar">
                     <div class="col ficha-cliente-p img-centrar">
-
                         <div>
-                            <a href="<?= $this->url('empresa', ['action' => 'edit', 'id' => $empresa->getId()]) ?>"><img src="<?= $this->basePath('img/crm/ClienteModificar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                            <a href="<?= $this->url('empresa', ['action' => 'edit', 'id' => $empresa->getId()]) ?>"><img src="<?= $this->basePath('img/crm/Aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
                         </div>
                         <div class="ficha-cliente-label">
-                            <label>Modificar</label><br>
-                            <label>Datos</label>
+                            <label>Guardar</label>
                         </div>
                     </div>
-                   
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
-                            <a href="<?= $this->url('utilidades') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                            <a href="<?= $this->url('gestion') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
                         </div>
                         <div class="ficha-cliente-label">
                             <label>Volver</label>
