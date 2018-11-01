@@ -134,6 +134,7 @@ class ClientesManager {
         $cliente->setNombre($data['nombre']);
         $cliente->setTelefono($data['telefono']);
         $cliente->setEmail($data['email']);
+        $cliente->setSkype($data['skype']);
         $pais = $this->getPais($data['pais']);
         $cliente->setPais($pais);
         $provincia = $this->getProvincia($data['provincia']);
@@ -157,6 +158,7 @@ class ClientesManager {
         $cliente->setActividad($data['actividad']);
         $cliente->setAnimales($data['animales']);
         $cliente->setEstablecimientos($data['establecimientos']);
+        $cliente->setRazaManejo($data['raza_manejo']);
         $cliente->setEstado("S");
         if($data['version'] == "-1"){
             $cliente->setVersion(null);
@@ -175,6 +177,7 @@ class ClientesManager {
         $cliente->setNombre($data['nombre']);
         $cliente->setTelefono($data['telefono']);
         $cliente->setEmail($data['email']);
+        $cliente->setSkype($data['skype']);
         $pais = $this->getPais($data['pais']);
         $cliente->setPais($pais);
         $provincia = $this->getProvincia($data['provincia']);
@@ -197,7 +200,8 @@ class ClientesManager {
         }
         $cliente->setActividad($data['actividad']);
         $cliente->setAnimales($data['animales']);
-        $cliente->setEstablecimientos($data['establecimientos']);   
+        $cliente->setEstablecimientos($data['establecimientos']);
+        $cliente->setRazaManejo($data['raza_manejo']);
         if($data['version'] == "-1"){
             $cliente->setVersion(null);
         } else {
