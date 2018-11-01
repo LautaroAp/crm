@@ -68,7 +68,7 @@ class UsuarioManager {
         $usuario->setNombre($data['nombre']);
         $usuario->setTelefono($data['telefono']);
         $usuario->setMail($data['mail']);
-
+        $usuario->setSkype($data['skype']);
         $idCliente = $data['id'];
         
         $entityManager = $this->entityManager;
@@ -77,10 +77,8 @@ class UsuarioManager {
                 ->findOneBy(['Id' => $idCliente]);
         
         $usuario->setId_cliente($cliente);
-
         // Add the entity to the entity manager.
         $this->entityManager->persist($usuario);
-
         // Apply changes to database.
         $this->entityManager->flush();
 
@@ -92,7 +90,7 @@ class UsuarioManager {
         $usuario->setNombre($data['nombre']);
         $usuario->setTelefono($data['telefono']);
         $usuario->setMail($data['mail']);
-        
+        $usuario->setSkype($data['skype']);
         // Apply changes to database.
         $this->entityManager->flush();
 
@@ -102,7 +100,6 @@ class UsuarioManager {
     public function removeUsuario($usuario) {
 
         $this->entityManager->remove($usuario);
-
         $this->entityManager->flush();
     }
 
