@@ -52,18 +52,22 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <?php foreach ($tipoeventos as $tipoevento) : ?>
-                        <tr>
-                            <td><?php echo ($tipoevento->getNombre()); ?></td>
-                            <td class="table-items-right">
-                                <a class="btn btn-default" href="<?= $this->url('tipoevento', ['action' => 'edit', 'id' => $tipoevento->getId()]); ?>">
-                                    <span class="glyphicon glyphicon-pencil" ></span> 
-                                </a>
-                                <button name="<?= $tipoevento->getId() ?>" id="<?= $tipoevento->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $tipoevento->getId() ?>">
-                                    <span class="glyphicon glyphicon-remove" ></span>
-                                </button>
-                            </td>
-                            <!-- Modal -->
+                    <tbody>
+                        <?php
+                        if (isset($tipoeventos_pag)) {
+                            foreach ($tipoeventos_pag as $tipoevento) :
+                                ?>
+                                <tr>
+                                    <td><?php echo ($tipoevento->getNombre()); ?></td>
+                                    <td class="table-items-right">
+                                        <a class="btn btn-default" href="<?= $this->url('tipoevento/editar', ['action' => 'edit', 'id' => $tipoevento->getId()]); ?>">
+                                            <span class="glyphicon glyphicon-pencil" ></span> 
+                                        </a>
+                                        <button name="<?= $tipoevento->getId() ?>" id="<?= $tipoevento->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $tipoevento->getId() ?>">
+                                            <span class="glyphicon glyphicon-remove" ></span>
+                                        </button>
+                                    </td>
+                                    <!-- Modal -->
                             <div id="myModal<?= $tipoevento->getId() ?>" class="modal fade" role="dialog">
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
@@ -79,15 +83,21 @@
                                             </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="<?= $this->url('tipoevento', ['action' => 'remove', 'id' => $tipoevento->getId()]); ?>" class="btn btn-default">Aceptar</a>
+                                            <a href="<?= $this->url('tipoevento/borrar', ['action' => 'remove', 'id' => $tipoevento->getId()]); ?>" class="btn btn-default">Aceptar</a>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <?php
+                    echo $this->paginationControl($tipoeventos_pag, 'Sliding', // All, Elastic, Jumping, Sliding
+                            'search_pagination_tipo.phtml', $this->url('tipoevento/page', ['action' => 'index', 'id' => 1]));
+                }
+                ?>
             </div>
         </div>  
     </div>

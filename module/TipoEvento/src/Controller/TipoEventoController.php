@@ -35,7 +35,7 @@ class TipoEventoController extends AbstractActionController {
      * @var Doctrine\ORM\EntityManager
      */
     private $eventoManager;
-    
+
     /* public function __construct($entityManager, $tipoeventoManager)
       {
       $this->entityManager = $entityManager;
@@ -50,7 +50,6 @@ class TipoEventoController extends AbstractActionController {
     }
 
     public function indexAction() {
-//        return $this->procesarIndexAction();
         $view = $this->procesarAddAction();
         return $view;
     }
@@ -70,6 +69,17 @@ class TipoEventoController extends AbstractActionController {
     private function procesarAddAction() {
         $form = $this->tipoeventoManager->createForm();
         $tipoeventos = $this->tipoeventoManager->getTipoEventos();
+
+        $paginator = $this->tipoeventoManager->getTabla();
+        $mensaje = "";
+
+        $page = 1;
+        if ($this->params()->fromRoute('id')) {
+            $page = $this->params()->fromRoute('id');
+        }
+        $paginator->setCurrentPageNumber((int) $page)
+                ->setItemCountPerPage(10);
+
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $tipoevento = $this->tipoeventoManager->getTipoEventoFromForm($form, $data);
@@ -78,6 +88,8 @@ class TipoEventoController extends AbstractActionController {
         return new ViewModel([
             'form' => $form,
             'tipoeventos' => $tipoeventos,
+            'tipoeventos_pag' => $paginator,
+            'mensaje' => $mensaje
         ]);
     }
 
@@ -120,7 +132,7 @@ class TipoEventoController extends AbstractActionController {
 
         if ($tipoevento == null) {
             $this->reportarError();
-        } else {            
+        } else {
             $this->eventoManager->eliminarTipoEventos($tipoevento->getId());
             $this->tipoeventoManager->removeTipoEvento($tipoevento);
             return $this->redirect()->toRoute('tipoevento');
@@ -135,4 +147,5 @@ class TipoEventoController extends AbstractActionController {
         $this->getResponse()->setStatusCode(404);
         return;
     }
+
 }

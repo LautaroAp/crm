@@ -56,9 +56,21 @@ class CategoriaClienteController extends AbstractActionController {
     }
 
     private function procesarIndexAction() {
+        $paginator = $this->categoriaclienteManager->getTabla();
+        $mensaje = "";
+        
+        $page = 1;
+        if ($this->params()->fromRoute('id')) {
+            $page = $this->params()->fromRoute('id');
+        }
+        $paginator->setCurrentPageNumber((int) $page)
+                ->setItemCountPerPage(3);
+                
         $categoriaclientes = $this->categoriaclienteManager->getCategoriaClientes();
         return new ViewModel([
-            'categoriaclientes' => $categoriaclientes
+            'categoriaclientes' => $categoriaclientes,
+            'categorias_pag' => $paginator,
+            'mensaje' => $mensaje
         ]);
     }
 
@@ -70,6 +82,17 @@ class CategoriaClienteController extends AbstractActionController {
     private function procesarAddAction() {
         $form = $this->categoriaclienteManager->createForm();
         $categoriaclientes = $this->categoriaclienteManager->getCategoriaClientes();
+        
+        $paginator = $this->categoriaclienteManager->getTabla();
+        $mensaje = "";
+        
+        $page = 1;
+        if ($this->params()->fromRoute('id')) {
+            $page = $this->params()->fromRoute('id');
+        }
+        $paginator->setCurrentPageNumber((int) $page)
+                ->setItemCountPerPage(10);
+        
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $categoriacliente = $this->categoriaclienteManager->getCategoriaClienteFromForm($form, $data);
@@ -78,6 +101,8 @@ class CategoriaClienteController extends AbstractActionController {
         return new ViewModel([
             'form' => $form,
             'categoriaclientes' => $categoriaclientes,
+            'categorias_pag' => $paginator,
+            'mensaje' => $mensaje
         ]);
     }
 

@@ -12,28 +12,69 @@ use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Application;
 
-
-return [
-   
+return [ 
    'router' => [
         'routes' => [
             'tipoevento' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/tipoevento[/:action[/:id]]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
-                    ],
+                    'route'    => '/tipoevento',
                     'defaults' => [
                         'controller'    => Controller\TipoEventoController::class,
                         'action'        => 'index',
                     ],
                 ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'editar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/edit[/:id]',
+                            'defaults' => [
+                                'action' => 'edit',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'agregar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/add',
+                            'defaults' => [
+                                'action' => 'add',
+                            ],
+                        ],
+                    ],
+                    'borrar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/remove[/:id]',
+                            'defaults' => [
+                                'action' => 'remove',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'page' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/page[/:id[/:estado]]',
+                            'defaults' => [
+                                'action' => 'index',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ],
     ],       
-    
     
  'controllers' => array(
         'factories' => [

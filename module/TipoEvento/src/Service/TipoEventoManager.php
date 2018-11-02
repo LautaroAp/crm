@@ -3,8 +3,8 @@ namespace TipoEvento\Service;
 
 use DBAL\Entity\TipoEvento;
 use TipoEvento\Form\TipoEventoForm;
-
-
+use Zend\Paginator\Paginator;
+use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
 /**
  * This service is responsible for adding/editing tipoeventos
@@ -110,13 +110,17 @@ class TipoEventoManager
     }
     
     public function removeTipoEvento($tipoevento){
-       
-
             $this->entityManager->remove($tipoevento);
             $this->entityManager->flush();
-           
     }
-    //ver de borrar las tipoeventos 
     
+    public function getTabla() {
+        // Create the adapter
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(TipoEvento::class)); // An object repository implements Selectable
+        // Create the paginator itself
+        $paginator = new Paginator($adapter);
+
+        return ($paginator);
+    }
     
 } 

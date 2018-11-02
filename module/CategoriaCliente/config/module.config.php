@@ -14,20 +14,54 @@ use Application;
 
 
 return [
-   
    'router' => [
         'routes' => [
             'categoriacliente' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/categoriacliente[/:action[/:id]]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
-                    ],
+                    'route'    => '/categoriacliente',
                     'defaults' => [
                         'controller'    => Controller\CategoriaClienteController::class,
                         'action'        => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'editar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/edit[/:id]',
+                            'defaults' => [
+                                'action' => 'edit',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'borrar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/remove[/:id]',
+                            'defaults' => [
+                                'action' => 'remove',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'page' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/page[/:id[/:estado]]',
+                            'defaults' => [
+                                'action' => 'index',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
                     ],
                 ],
             ],

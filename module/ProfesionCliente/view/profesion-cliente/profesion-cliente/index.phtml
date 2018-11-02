@@ -52,18 +52,22 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <?php foreach ($profesionclientes as $profesioncliente): ?>
-                        <tr>
-                            <td><?php echo ($profesioncliente->getNombre()); ?></td>
-                            <td class="table-items-right">
-                                <a class="btn btn-default" href="<?= $this->url('profesioncliente', ['action' => 'edit', 'id' => $profesioncliente->getId()]); ?>">
-                                    <span class="glyphicon glyphicon-pencil" ></span> 
-                                </a>
-                                <button name="<?= $profesioncliente->getId() ?>" id="<?= $profesioncliente->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $profesioncliente->getId() ?>">
-                                    <span class="glyphicon glyphicon-remove" ></span>
-                                </button>
-                            </td>
-                            <!-- Modal -->
+                    <tbody>
+                        <?php
+                        if (isset($profesiones_pag)) {
+                            foreach ($profesiones_pag as $profesioncliente):
+                                ?>
+                                <tr>
+                                    <td><?php echo ($profesioncliente->getNombre()); ?></td>
+                                    <td class="table-items-right">
+                                        <a class="btn btn-default" href="<?= $this->url('profesioncliente/editar', ['action' => 'edit', 'id' => $profesioncliente->getId()]); ?>">
+                                            <span class="glyphicon glyphicon-pencil" ></span> 
+                                        </a>
+                                        <button name="<?= $profesioncliente->getId() ?>" id="<?= $profesioncliente->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $profesioncliente->getId() ?>">
+                                            <span class="glyphicon glyphicon-remove" ></span>
+                                        </button>
+                                    </td>
+                                    <!-- Modal -->
                             <div id="myModal<?= $profesioncliente->getId() ?>" class="modal fade" role="dialog">
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
@@ -79,15 +83,21 @@
                                             </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="<?= $this->url('profesioncliente', ['action' => 'remove', 'id' => $profesioncliente->getId()]); ?>" class="btn btn-default">Aceptar</a>
+                                            <a href="<?= $this->url('profesioncliente/borrar', ['action' => 'remove', 'id' => $profesioncliente->getId()]); ?>" class="btn btn-default">Aceptar</a>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <?php
+                    echo $this->paginationControl($profesiones_pag, 'Sliding', // All, Elastic, Jumping, Sliding
+                            'search_pagination_prof.phtml', $this->url('profesioncliente/page', ['action' => 'index', 'id' => 1]));
+                }
+                ?>
             </div>
         </div>  
     </div>
