@@ -95,7 +95,16 @@ class ClientesManager {
         for ($i = 0; $i < count($indices); $i++) {
             $p = $i + 1;
             $nombreCampo = $indices[$i];
-            $valorCampo = $parametros[$nombreCampo];
+//            if($nombreCampo=='pais'){
+//                $valorCampo = $this->getPais($parametros[$nombreCampo]);
+//            }
+//            elseif($nombreCampo=='provincia'){
+//                $valorCampo = $this->getProvincia($parametros[$nombreCampo]);
+//            }
+//            else
+            
+                 $valorCampo = $parametros[$nombreCampo];
+            
             if ($i == 0) {
                 $queryBuilder->where("C.$nombreCampo = ?$p");
             } else {

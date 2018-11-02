@@ -32,7 +32,7 @@ return [
                     'host'     => '127.0.0.1',
                     'user'     => 'root',
                     'password' => 'root',
-                    'dbname'   => 'crm',
+                    'dbname'   => 'bd_crm',
                     'charset' => 'utf8', 
                 ]
             ],
