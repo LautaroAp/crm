@@ -79,7 +79,10 @@
     font-weight: 500;
 }
 
-
 .th-sm{
     min-width: 120px !important;
+}
+
+.table-items-right{
+    text-align: right;
 }

@@ -50,7 +50,8 @@
                                 echo ($ejecutivo->getClave());
                                 echo ('</td>');
                                 ?>    
-                            <td> <a class="btn btn-default" href="<?= $this->url('ejecutivos/editar', ['action' => 'edit', 'id' => $ejecutivo->getId()]); ?>">
+                            <td class="table-items-right">
+                                <a class="btn btn-default" href="<?= $this->url('ejecutivos/editar', ['action' => 'edit', 'id' => $ejecutivo->getId()]); ?>">
                                     <span class="glyphicon glyphicon-pencil" ></span> 
                                 </a>
                                 <button name="<?= $ejecutivo->getId() ?>" id="<?= $ejecutivo->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $ejecutivo->getId() ?>">

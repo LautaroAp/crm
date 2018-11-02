@@ -5,6 +5,7 @@ use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use ProfesionCliente\Controller\ProfesionClienteController;
 use ProfesionCliente\Service\ProfesionClienteManager;
+use Clientes\Service\ClientesManager;
 
 /**
  * Description of ProfesionClienteControllerFactory
@@ -19,7 +20,8 @@ class ProfesionClienteControllerFactory implements FactoryInterface {
        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $profesionclienteManager = $container->get(ProfesionClienteManager::class);
+        $clientesManager = $container->get(ClientesManager::class);
         // Instantiate the service and inject dependencies
-        return new ProfesionClienteController($entityManager, $profesionclienteManager);
+        return new ProfesionClienteController($entityManager, $profesionclienteManager, $clientesManager);
     }    
 }

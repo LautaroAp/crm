@@ -31,14 +31,6 @@ class EventoController extends AbstractActionController {
      * @var User\Service\EventoManager 
      */
     protected $eventoManager;
-
-
-    /* public function __construct($entityManager, $eventoManager)
-      {
-      $this->entityManager = $entityManager;
-      $this->eventoManager = $eventoManager;
-      }
-     */
     private $tipos;
 
     public function __construct($entityManager, $eventoManager) {

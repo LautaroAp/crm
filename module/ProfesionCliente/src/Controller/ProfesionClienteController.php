@@ -30,6 +30,12 @@ class ProfesionClienteController extends AbstractActionController {
      */
     protected $profesionclienteManager;
 
+    /**
+     * Doctrine entity manager.
+     * @var Doctrine\ORM\EntityManager
+     */
+    protected $clientesManager;
+    
     /* public function __construct($entityManager, $profesionclienteManager)
       {
       $this->entityManager = $entityManager;
@@ -37,9 +43,10 @@ class ProfesionClienteController extends AbstractActionController {
       }
      */
 
-    public function __construct($entityManager, $profesionclienteManager) {
+    public function __construct($entityManager, $profesionclienteManager, $clientesManager) {
         $this->entityManager = $entityManager;
         $this->profesionclienteManager = $profesionclienteManager;
+        $this->clientesManager = $clientesManager;
     }
 
     public function indexAction() {
@@ -113,6 +120,7 @@ class ProfesionClienteController extends AbstractActionController {
         if ($profesioncliente == null) {
             $this->reportarError();
         } else {
+            $this->clientesManager->eliminarProfesionClientes($profesioncliente->getId());
             $this->profesionclienteManager->removeProfesionCliente($profesioncliente);
             return $this->redirect()->toRoute('profesioncliente');
         }

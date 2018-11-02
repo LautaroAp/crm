@@ -319,4 +319,43 @@ class ClientesManager {
                 ->where('C.estado = :state')->setParameter('state', 'S');
         return $queryBuilder->getQuery();
     }
+    
+    public function eliminarLicenciaClientes($id) {
+        $entityManager = $this->entityManager;     
+        $clientes = $this->entityManager->getRepository(Cliente::class)->findAll();
+        foreach ($clientes as $cliente) {
+            if(!is_null($cliente->getLicencia())){
+                if($cliente->getLicencia()->getId() == $id){
+                    $cliente->setLicencia(null);
+                }
+            }
+        }
+        $entityManager->flush();
+    }
+    
+    public function eliminarCategoriaClientes($id) {
+        $entityManager = $this->entityManager;     
+        $clientes = $this->entityManager->getRepository(Cliente::class)->findAll();
+        foreach ($clientes as $cliente) {
+            if(!is_null($cliente->getCategoria())){
+                if($cliente->getCategoria()->getId() == $id){
+                    $cliente->setCategoria(null);
+                }
+            }
+        }
+        $entityManager->flush();
+    }
+    
+    public function eliminarProfesionClientes($id) {
+        $entityManager = $this->entityManager;     
+        $clientes = $this->entityManager->getRepository(Cliente::class)->findAll();
+        foreach ($clientes as $cliente) {
+            if(!is_null($cliente->getProfesion())){
+                if($cliente->getProfesion()->getId() == $id){
+                    $cliente->setProfesion(null);
+                }
+            }
+        }
+        $entityManager->flush();
+    }
 }

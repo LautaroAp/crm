@@ -30,6 +30,12 @@ class CategoriaClienteController extends AbstractActionController {
      */
     protected $categoriaclienteManager;
 
+    /**
+     * Doctrine entity manager.
+     * @var Doctrine\ORM\EntityManager
+     */
+    protected $clientesManager;
+    
     /* public function __construct($entityManager, $categoriaclienteManager)
       {
       $this->entityManager = $entityManager;
@@ -37,9 +43,10 @@ class CategoriaClienteController extends AbstractActionController {
       }
      */
 
-    public function __construct($entityManager, $categoriaclienteManager) {
+    public function __construct($entityManager, $categoriaclienteManager, $clientesManager) {
         $this->entityManager = $entityManager;
         $this->categoriaclienteManager = $categoriaclienteManager;
+        $this->clientesManager = $clientesManager;
     }
 
     public function indexAction() {
@@ -113,6 +120,7 @@ class CategoriaClienteController extends AbstractActionController {
         if ($categoriacliente == null) {
             $this->reportarError();
         } else {
+            $this->clientesManager->eliminarCategoriaClientes($categoriacliente->getId());
             $this->categoriaclienteManager->removeCategoriaCliente($categoriacliente);
             return $this->redirect()->toRoute('categoriacliente');
         }
