@@ -30,6 +30,12 @@ class TipoEventoController extends AbstractActionController {
      */
     protected $tipoeventoManager;
 
+    /**
+     * Doctrine entity manager.
+     * @var Doctrine\ORM\EntityManager
+     */
+    private $eventoManager;
+    
     /* public function __construct($entityManager, $tipoeventoManager)
       {
       $this->entityManager = $entityManager;
@@ -37,9 +43,10 @@ class TipoEventoController extends AbstractActionController {
       }
      */
 
-    public function __construct($entityManager, $tipoeventoManager) {
+    public function __construct($entityManager, $tipoeventoManager, $eventoManager) {
         $this->entityManager = $entityManager;
         $this->tipoeventoManager = $tipoeventoManager;
+        $this->eventoManager = $eventoManager;
     }
 
     public function indexAction() {
@@ -113,7 +120,8 @@ class TipoEventoController extends AbstractActionController {
 
         if ($tipoevento == null) {
             $this->reportarError();
-        } else {
+        } else {            
+            $this->eventoManager->eliminarTipoEventos($tipoevento->getId());
             $this->tipoeventoManager->removeTipoEvento($tipoevento);
             return $this->redirect()->toRoute('tipoevento');
         }

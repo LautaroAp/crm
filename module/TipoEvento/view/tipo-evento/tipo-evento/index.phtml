@@ -55,10 +55,13 @@
                     <?php foreach ($tipoeventos as $tipoevento) : ?>
                         <tr>
                             <td><?php echo ($tipoevento->getNombre()); ?></td>
-                            <td>
+                            <td class="table-items-right">
                                 <a class="btn btn-default" href="<?= $this->url('tipoevento', ['action' => 'edit', 'id' => $tipoevento->getId()]); ?>">
                                     <span class="glyphicon glyphicon-pencil" ></span> 
                                 </a>
+                                <button name="<?= $tipoevento->getId() ?>" id="<?= $tipoevento->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $tipoevento->getId() ?>">
+                                    <span class="glyphicon glyphicon-remove" ></span>
+                                </button>
                             </td>
                             <!-- Modal -->
                             <div id="myModal<?= $tipoevento->getId() ?>" class="modal fade" role="dialog">

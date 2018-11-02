@@ -137,4 +137,30 @@ class LicenciaManager
 
         return ($paginator);
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    private function getClientes() {
+        $clientes = $this->entityManager
+                ->getRepository(Cliente::class)
+                ->findAll;
+        return $clientes;
+    }
+
+    private function borrarLicenciaCliente($cliente) {
+        foreach ($clientes as $cliente) {
+            $cliente->setLicencia(null);
+        }
+        $this->entityManager->flush();
+    }
+    
+    
+    
+    
 } 

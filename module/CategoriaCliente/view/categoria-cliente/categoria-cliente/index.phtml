@@ -53,11 +53,15 @@
                         </tr>
                     </thead>
                     <?php foreach ($categoriaclientes as $categoriacliente) : ?>
-                        <tr>
+                    <tr>
                             <td><?php echo ($categoriacliente->getNombre()); ?></td>
-                            <td> <a class="btn btn-default" href="<?= $this->url('categoriacliente', ['action' => 'edit', 'id' => $categoriacliente->getId()]); ?>">
+                            <td class="table-items-right">
+                                <a class="btn btn-default" href="<?= $this->url('categoriacliente', ['action' => 'edit', 'id' => $categoriacliente->getId()]); ?>">
                                     <span class="glyphicon glyphicon-pencil" ></span> 
                                 </a>
+                                <button name="<?= $categoriacliente->getId() ?>" id="<?= $categoriacliente->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $categoriacliente->getId() ?>">
+                                    <span class="glyphicon glyphicon-remove" ></span>
+                                </button>
                             </td>
                             <!-- Modal -->
                             <div id="myModal<?= $categoriacliente->getId() ?>" class="modal fade" role="dialog">

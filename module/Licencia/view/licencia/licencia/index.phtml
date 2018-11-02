@@ -15,7 +15,6 @@
                     <th class="">% Dto</th>
                     <th class="">Total Local</th>
                     <th class="">Total Extranjero</th>
-
                     <th></th>
                 </tr>
             </thead>
@@ -31,12 +30,11 @@
                         <td><?php echo ($licencia->getDescuento()); ?> %</td>
                         <td><?php echo money_format("$ %n", $licencia->getTotal_local()); ?></td>
                         <td><?php echo money_format("USD %i", $licencia->getTotal_extranjero()); ?></td>
-
-
-                        <td> 
+                        <td class="table-items-right"> 
                             <a class="btn btn-default" href="<?= $this->url('licencia/editar', ['action' => 'edit', 'id' => $licencia->getId()]); ?>">
                                 <span class="glyphicon glyphicon-pencil" ></span> 
                             </a>
+                            <button name="<?= $licencia->getId() ?>" id="<?= $licencia->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $licencia->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
                         </td>
                     <!-- Modal -->
                     <div id="myModal<?= $licencia->getId() ?>" class="modal fade" role="dialog">

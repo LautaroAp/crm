@@ -222,8 +222,20 @@ class EventoManager {
         }
     }
 
-    public function getTipoEventos() {
-        
+    public function eliminarTipoEventos($id) {
+        $entityManager = $this->entityManager;
+        $eventos = $this->entityManager->getRepository(Evento::class)->findAll();
+        // CAMBIAR POR NO_DEFINIDO        
+        foreach ($eventos as $evento) {
+            if (!is_null($evento->getTipoId())) {
+                if ($evento->getTipoId() == $id) {
+                    $tipo_evento = $this->entityManager->getRepository(TipoEvento::class)
+                            ->findOneBy(['id_tipo_evento' => 1]);
+                    $evento->setTipo($tipo_evento);
+                }
+            }
+        }
+        $entityManager->flush();
     }
 
 }

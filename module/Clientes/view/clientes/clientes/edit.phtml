@@ -244,7 +244,9 @@ $establecimientos = $cliente->getEstablecimientos();
 
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
-                            <a href="<?= $this->url('clientes') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                            <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $id]) ?>">
+                                <img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                            </a>
                         </div>
                         <div class="ficha-cliente-label">
                             <label>Volver</label>

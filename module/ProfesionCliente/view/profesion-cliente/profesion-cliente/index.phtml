@@ -55,10 +55,13 @@
                     <?php foreach ($profesionclientes as $profesioncliente): ?>
                         <tr>
                             <td><?php echo ($profesioncliente->getNombre()); ?></td>
-                            <td>
+                            <td class="table-items-right">
                                 <a class="btn btn-default" href="<?= $this->url('profesioncliente', ['action' => 'edit', 'id' => $profesioncliente->getId()]); ?>">
                                     <span class="glyphicon glyphicon-pencil" ></span> 
                                 </a>
+                                <button name="<?= $profesioncliente->getId() ?>" id="<?= $profesioncliente->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $profesioncliente->getId() ?>">
+                                    <span class="glyphicon glyphicon-remove" ></span>
+                                </button>
                             </td>
                             <!-- Modal -->
                             <div id="myModal<?= $profesioncliente->getId() ?>" class="modal fade" role="dialog">
