@@ -1,4 +1,5 @@
 <?php
+
 namespace Licencia\Service;
 
 use DBAL\Entity\Licencia;
@@ -6,64 +7,62 @@ use Licencia\Form\LicenciaForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
-
 /**
  * This service is responsible for adding/editing licencias
  * and changing licencia password.
  */
-class LicenciaManager
-{
+class LicenciaManager {
+
     /**
      * Doctrine entity manager.
      * @var Doctrine\ORM\EntityManager
      */
-    private $entityManager;  
-    
+    private $entityManager;
+
     /**
      * PHP template renderer.
      * @var type 
      */
     private $viewRenderer;
-    
+
     /**
      * Application config.
      * @var type 
      */
     private $config;
-    
+
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) 
-    {
+    public function __construct($entityManager, $viewRenderer, $config) {
         $this->entityManager = $entityManager;
         $this->viewRenderer = $viewRenderer;
         $this->config = $config;
     }
-    
-     public function getLicencias(){
-        $licencias=$this->entityManager->getRepository(Licencia::class)->findAll();
+
+    public function getLicencias() {
+        $licencias = $this->entityManager->getRepository(Licencia::class)->findAll();
         return $licencias;
     }
-    
-    public function getLicenciaId($id){
-       return $this->entityManager->getRepository(Licencia::class)
-                ->find($id);
+
+    public function getLicenciaId($id) {
+        return $this->entityManager->getRepository(Licencia::class)
+                        ->find($id);
     }
-  
-    public function getLicenciaFromForm($form, $data){
+
+    public function getLicenciaFromForm($form, $data) {
         $form->setData($data);
-            if($form->isValid()) {
-                $data = $form->getData();
-                $licencia = $this->addLicencia($data);
-            }
+        if ($form->isValid()) {
+            $data = $form->getData();
+            $licencia = $this->addLicencia($data);
+        }
         return $licencia;
     }
+
     /**
      * This method adds a new licencia.
      */
-    public function addLicencia($data) 
-    {
+    public function addLicencia($data) {
         $licencia = new Licencia();
         $licencia->setVersion($data['version_licencia']);
         $licencia->setNombre($data['nombre_licencia']);
@@ -77,18 +76,17 @@ class LicenciaManager
         $this->entityManager->flush();
         return $licencia;
     }
-    
-    public function createForm(){
-        return new LicenciaForm('create', $this->entityManager,null);
+
+    public function createForm() {
+        return new LicenciaForm('create', $this->entityManager, null);
     }
-    
-   public function formValid($form, $data){
-       $form->setData($data);
-       return $form->isValid();  
+
+    public function formValid($form, $data) {
+        $form->setData($data);
+        return $form->isValid();
     }
-       
-   
-   public function getFormForLicencia($licencia) {
+
+    public function getFormForLicencia($licencia) {
 
         if ($licencia == null) {
             return null;
@@ -96,13 +94,12 @@ class LicenciaManager
         $form = new LicenciaForm('update', $this->entityManager, $licencia);
         return $form;
     }
-    
-    
-    public function getFormEdited($form, $licencia){
+
+    public function getFormEdited($form, $licencia) {
         $form->setData(array(
-                    'nombre_licencia'=>$licencia->getNombre(),
-                    'version_licencia'=>$licencia->getVersion(),                    
-                ));
+            'nombre_licencia' => $licencia->getNombre(),
+            'version_licencia' => $licencia->getVersion(),
+        ));
     }
 
     /**
@@ -120,15 +117,14 @@ class LicenciaManager
         $this->entityManager->flush();
         return true;
     }
-    
-    public function removeLicencia($licencia){
-       
 
-            $this->entityManager->remove($licencia);
-            $this->entityManager->flush();
-           
+    public function removeLicencia($licencia) {
+
+
+        $this->entityManager->remove($licencia);
+        $this->entityManager->flush();
     }
-    
+
     public function getTabla() {
         // Create the adapter
         $adapter = new SelectableAdapter($this->entityManager->getRepository(Licencia::class)); // An object repository implements Selectable
@@ -137,18 +133,10 @@ class LicenciaManager
 
         return ($paginator);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     private function getClientes() {
         $clientes = $this->entityManager
-                ->getRepository(Cliente::class)
+                        ->getRepository(Cliente::class)
                 ->findAll;
         return $clientes;
     }
@@ -159,8 +147,4 @@ class LicenciaManager
         }
         $this->entityManager->flush();
     }
-    
-    
-    
-    
-} 
+}

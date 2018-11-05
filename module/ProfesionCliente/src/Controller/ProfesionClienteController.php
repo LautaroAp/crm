@@ -50,7 +50,6 @@ class ProfesionClienteController extends AbstractActionController {
     }
 
     public function indexAction() {
-//        return $this->procesarIndexAction();
         $view = $this->procesarAddAction();
         return $view;
     }
@@ -70,6 +69,17 @@ class ProfesionClienteController extends AbstractActionController {
     private function procesarAddAction() {
         $form = $this->profesionclienteManager->createForm();
         $profesionclientes = $this->profesionclienteManager->getProfesionClientes();
+        
+        $paginator = $this->profesionclienteManager->getTabla();
+        $mensaje = "";
+
+        $page = 1;
+        if ($this->params()->fromRoute('id')) {
+            $page = $this->params()->fromRoute('id');
+        }
+        $paginator->setCurrentPageNumber((int) $page)
+                ->setItemCountPerPage(10);
+        
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $profesioncliente = $this->profesionclienteManager->getProfesionClienteFromForm($form, $data);
@@ -78,6 +88,8 @@ class ProfesionClienteController extends AbstractActionController {
         return new ViewModel([
             'form' => $form,
             'profesionclientes' => $profesionclientes,
+            'profesiones_pag' => $paginator,
+            'mensaje' => $mensaje
         ]);
     }
 

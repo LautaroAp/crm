@@ -55,8 +55,6 @@ class LicenciaController extends AbstractActionController {
     }
 
     private function procesarIndexAction() {
-//        $licencias = $this->licenciaManager->getLicencias();  
-
         $paginator = $this->licenciaManager->getTabla();
         $mensaje = "";
 
@@ -68,7 +66,6 @@ class LicenciaController extends AbstractActionController {
                 ->setItemCountPerPage(10);
 
         return new ViewModel([
-//            'licencias' => $licencias
             'licencias' => $paginator,
             'mensaje' => $mensaje
         ]);

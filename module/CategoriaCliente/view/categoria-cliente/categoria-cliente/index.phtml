@@ -52,18 +52,22 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <?php foreach ($categoriaclientes as $categoriacliente) : ?>
-                    <tr>
-                            <td><?php echo ($categoriacliente->getNombre()); ?></td>
-                            <td class="table-items-right">
-                                <a class="btn btn-default" href="<?= $this->url('categoriacliente', ['action' => 'edit', 'id' => $categoriacliente->getId()]); ?>">
-                                    <span class="glyphicon glyphicon-pencil" ></span> 
-                                </a>
-                                <button name="<?= $categoriacliente->getId() ?>" id="<?= $categoriacliente->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $categoriacliente->getId() ?>">
-                                    <span class="glyphicon glyphicon-remove" ></span>
-                                </button>
-                            </td>
-                            <!-- Modal -->
+                    <tbody>
+                        <?php
+                        if (isset($categorias_pag)) {
+                            foreach ($categorias_pag as $categoriacliente) :
+                                ?>
+                                <tr>
+                                    <td><?php echo ($categoriacliente->getNombre()); ?></td>
+                                    <td class="table-items-right">
+                                        <a class="btn btn-default" href="<?= $this->url('categoriacliente/editar', ['action' => 'edit', 'id' => $categoriacliente->getId()]); ?>">
+                                            <span class="glyphicon glyphicon-pencil" ></span> 
+                                        </a>
+                                        <button name="<?= $categoriacliente->getId() ?>" id="<?= $categoriacliente->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $categoriacliente->getId() ?>">
+                                            <span class="glyphicon glyphicon-remove" ></span>
+                                        </button>
+                                    </td>
+                                    <!-- Modal -->
                             <div id="myModal<?= $categoriacliente->getId() ?>" class="modal fade" role="dialog">
                                 <div class="modal-dialog">
                                     <!-- Modal content-->
@@ -79,7 +83,7 @@
                                             </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="<?= $this->url('categoriacliente', ['action' => 'remove', 'id' => $categoriacliente->getId()]); ?>" class="btn btn-default">
+                                            <a href="<?= $this->url('categoriacliente/borrar', ['action' => 'remove', 'id' => $categoriacliente->getId()]); ?>" class="btn btn-default">
                                                 Aceptar
                                             </a>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -87,9 +91,15 @@
                                     </div>
                                 </div>
                             </div>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <?php
+                    echo $this->paginationControl($categorias_pag, 'Sliding', // All, Elastic, Jumping, Sliding
+                            'search_pagination_cat.phtml', $this->url('categoriacliente/page', ['action' => 'index', 'id' => 1]));
+                }
+                ?>
             </div>
         </div>  
     </div>

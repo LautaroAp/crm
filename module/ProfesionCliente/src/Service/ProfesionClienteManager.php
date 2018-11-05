@@ -3,7 +3,8 @@ namespace ProfesionCliente\Service;
 
 use DBAL\Entity\ProfesionCliente;
 use ProfesionCliente\Form\ProfesionClienteForm;
-
+use Zend\Paginator\Paginator;
+use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
 
 class ProfesionClienteManager
@@ -111,5 +112,13 @@ class ProfesionClienteManager
             $this->entityManager->flush();
            
     }
-    //ver de borrar las profesionclientes 
+    
+    public function getTabla() {
+        // Create the adapter
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(ProfesionCliente::class)); // An object repository implements Selectable
+        // Create the paginator itself
+        $paginator = new Paginator($adapter);
+
+        return ($paginator);
+    }
 } 

@@ -3,6 +3,8 @@ namespace CategoriaCliente\Service;
 
 use DBAL\Entity\CategoriaCliente;
 use CategoriaCliente\Form\CategoriaClienteForm;
+use Zend\Paginator\Paginator;
+use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
 
 
@@ -109,11 +111,16 @@ class CategoriaClienteManager
     }
     
     public function removeCategoriaCliente($categoriacliente){
-       
-
             $this->entityManager->remove($categoriacliente);
             $this->entityManager->flush();
-           
     }
-    //ver de borrar las categoriaclientes 
+    
+    public function getTabla() {
+        // Create the adapter
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(CategoriaCliente::class)); // An object repository implements Selectable
+        // Create the paginator itself
+        $paginator = new Paginator($adapter);
+
+        return ($paginator);
+    }
 } 
