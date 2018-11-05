@@ -40,7 +40,7 @@ class Usuario {
     protected $telefono;
     
       /**
-     * @ORM\Column(name="CELULAR", nullable=true, type="string", length=255)
+     * @ORM\Column(name="SKYPE", nullable=true, type="string", length=255)
      */
     protected $skype;
     

@@ -34,8 +34,7 @@ $this->headTitle('Detalles de la empresa');
     </div>
 </div>
 <!-- Fin: Datos de Empresa -->
-
-<!-- Inicio: Parametros Empresa -->
+<!-- Parametros de Empresa-->
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
@@ -44,25 +43,11 @@ $this->headTitle('Detalles de la empresa');
     </div>
     <div class="row form-row">
         <div class="form-group col-md-4">
-            <label>Intervalo Vencimiento</label>
-            <select class="form-control" id="vencimiento" name="vencimiento">
-                <option value="" hidden="">Seleccionar</option>
-                <option value="3">3 meses</option>
-                <option value="6">6 meses</option>
-                <option value="9">9 meses</option>
-            </select>
+            <p><label>Meses de vencimiento:</label> <?php echo ($empresa->getParametro_vencimiento()); ?></p>
         </div>
     </div>
-    <div class="row form-row">
-        <div class="form-group col-md-4">
-            <label>Otros</label>
-            <input type="text" class="form-control" name="actividad" placeholder="Ingresar Parámetro">
-        </div>
-    </div>
-
 </div>
-<!-- Fin: Parametros Empresa -->
-
+<!-- Fin: Parametros de Empresa -->
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
     <div class="row">
@@ -71,13 +56,13 @@ $this->headTitle('Detalles de la empresa');
                 <div class="row img-centrar">
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
-                            <a href="<?= $this->url('empresa', ['action' => 'edit', 'id' => $empresa->getId()]) ?>"><img src="<?= $this->basePath('img/crm/Aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                            <a href="<?= $this->url('empresa', ['action' => 'edit', 'id' => $empresa->getId()]) ?>"><img src="<?= $this->basePath('img/crm/Editar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
                         </div>
                         <div class="ficha-cliente-label">
-                            <label>Guardar</label>
+                            <label>Editar</label>
                         </div>
                     </div>
-                    <div class="col ficha-cliente-p img-centrar">
+                     <div class="col ficha-cliente-p img-centrar">
                         <div>
                             <a href="<?= $this->url('gestion') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
                         </div>

@@ -46,7 +46,6 @@ class EventoController extends AbstractActionController {
             $array2 = array($tipo->getId() => $tipo->getNombre());
             $array = $array + $array2;
         }
-
         return $array;
     }
 

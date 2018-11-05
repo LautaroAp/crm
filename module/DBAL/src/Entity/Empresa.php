@@ -86,6 +86,10 @@ class Empresa {
      */
     protected $CP;
     
+    /**
+     * @ORM\Column(name="PARAMETRO_VENCIMIENTO", nullable=true, type="integer")
+     */
+    protected $parametro_vencimiento;
     
     function getNombre() {
         return $this->nombre;
@@ -215,6 +219,23 @@ class Empresa {
     function setId($id_empresa) {
         $this->id_empresa = $id_empresa;
     }
+    
+    function getId_empresa() {
+        return $this->id_empresa;
+    }
+
+    function getParametro_vencimiento() {
+        return $this->parametro_vencimiento;
+    }
+
+    function setId_empresa($id_empresa) {
+        $this->id_empresa = $id_empresa;
+    }
+
+    function setParametro_vencimiento($parametro_vencimiento) {
+        $this->parametro_vencimiento = $parametro_vencimiento;
+    }
+
 
 
 }

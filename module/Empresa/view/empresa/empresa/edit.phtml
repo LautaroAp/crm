@@ -96,6 +96,11 @@ $form->get('CP')->setAttributes([
 
 ]);
 
+$form->get('parametro_vencimiento')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getParametro_vencimiento()
+
+]);
 
 $form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
 
@@ -194,11 +199,12 @@ $form->prepare();
                 <?= $this->formElementErrors($form->get('CP')); ?> 
             </div>
             
+        </div>    
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
-             Modal content
+            Modal content
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -208,13 +214,38 @@ $form->prepare();
                     <p>¿Está seguro que desea guardar los cambios?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Aceptar</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-default">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 </div>
+
+<!-- Inicio: Parametros Empresa -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">Parámetros de Empresa</div>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="form-group col-md-4">
+<!--            <label>Intervalo Vencimiento</label>
+            <select class="form-control" id="parametro_vencimiento" name="parametro_vencimiento">
+                <option value="" hidden="">Seleccionar</option>
+                <option value="3">3 meses</option>
+                <option value="6">6 meses</option>
+                <option value="9">9 meses</option>
+            </select>-->
+                <?= $this->formLabel($form->get('parametro_vencimiento')); ?>
+                <?= $this->formElement($form->get('parametro_vencimiento')); ?>
+                <?= $this->formElementErrors($form->get('parametro_vencimiento')); ?> 
+        </div>
+    </div>
+</div>
+<!-- Fin: Parametros Empresa -->
 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">

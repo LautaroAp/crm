@@ -29,7 +29,7 @@ class EmpresaManager
      * @var type 
      */
     private $config;
-    
+   
     /**
      * Constructs the service.
      */
@@ -38,6 +38,10 @@ class EmpresaManager
         $this->entityManager = $entityManager;
         $this->viewRenderer = $viewRenderer;
         $this->config = $config;
+    }
+    
+    public function setVencimientos($vencimientos){
+        $this->vencimientos= $vencimientos;
     }
     
      public function getEmpresas(){
@@ -98,9 +102,27 @@ class EmpresaManager
      */
     public function updateEmpresa($empresa, $form) 
     {      
-        print("entra a updateEmpresa");
+        
+        
         $data = $form->getData();
+//        print_r($data);
+//        die();
         $empresa->setNombre($data['nombre']);
+        $empresa->setDireccion($data['direccion']);
+        $empresa->setTelefono($data['telefono']);
+        $empresa->setMail($data['mail']);
+        $empresa->setMovil($data['movil']);
+        $empresa->setFax($data['fax']);
+        $empresa->setWeb($data['web']);
+        $empresa->setCuit_cuil($data['cuit_cuil']);
+        $empresa->setVencimiento_cai($data['vencimiento_cai']);
+        $empresa->setRazon_social($data['razon_social']);
+        $empresa->setTipo_iva('tipo_iva');
+        $empresa->setLocalidad($data['localidad']);
+        $empresa->setProvincia($data['provincia']);
+        $empresa->setPais($data['pais']);
+        $empresa->setCP($data['CP']);
+        $empresa->setParametro_vencimiento($data['parametro_vencimiento']);
         // Apply changes to database.
         $this->entityManager->flush();
      

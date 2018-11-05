@@ -27,9 +27,11 @@ class EmpresaForm extends Form
      */
     private $empresa = null;
     
+    
     /**
      * Constructor.     
      */
+   
     public function __construct($scenario = 'create', $entityManager = null, $empresa = null)
     {
         // Define form name
@@ -44,7 +46,7 @@ class EmpresaForm extends Form
         $this->empresa = $empresa;
         
         $this->addElements();
-        $this->addInputFilter();          
+        //$this->addInputFilter();          
     }
     
     /**
@@ -129,7 +131,7 @@ class EmpresaForm extends Form
             'name' => 'cuit_cuil',
             'value' => '',
             'options' => [
-                'label' => 'Web',
+                'label' => 'CUIT/CUIL',
             ],
         ]);
         
@@ -198,6 +200,16 @@ class EmpresaForm extends Form
             ],
         ]);
 
+        $this->add([
+            'type' => 'text',
+            'name' => 'parametro_vencimiento',
+            'value' => '',
+            'options' => [
+                'label' => 'Meses de vencimiento',
+        ],
+        ]);
+         
+        
         $this->add([
             'type' => 'submit',
             'name' => 'submit',
@@ -431,7 +443,7 @@ class EmpresaForm extends Form
                 ],
             ],
         ]);
-               
+              
          
         
     }       

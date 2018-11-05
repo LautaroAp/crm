@@ -25,6 +25,7 @@ class EmpresaController extends AbstractActionController
     
     protected $empresaManager;
 
+    private $vencimientos;
 
     public function __construct($entityManager, $empresaManager)
     {
@@ -60,29 +61,23 @@ class EmpresaController extends AbstractActionController
         $empresas = $this->empresaManager->getEmpresas();  
         $empresa = $empresas[0];
         $form =$this->empresaManager->getFormForEmpresa($empresa);
-
         if ($form == null){
             $this->getResponse()->setStatusCode(404);
         }
         else{
-
             if ($this->getRequest()->isPost()) {
-
                $data = $this->params()->fromPost();
-
                if ($this->empresaManager->formValid($form,$data)){
                     $this->empresaManager->updateEmpresa($empresa,$form);
-                    
-                    return $this->redirect()->toRoute('application',['action'=>'utilidades']);    
+                    return $this->redirect()->toRoute('empresa',['action'=>'index']);    
                }
             }               
          else {
             $this->empresaManager->getFormEdited($form, $empresa);
          }
-         
         return new ViewModel(array(
             'empresa' => $empresa,
-            'form' => $form
+            'form' => $form,
         ));
         }
             
