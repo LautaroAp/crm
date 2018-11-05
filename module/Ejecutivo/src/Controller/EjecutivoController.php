@@ -63,7 +63,13 @@ class EjecutivoController extends AbstractActionController
             'mensaje' => $mensaje
         ]);
     }
-    
+     public function addAction()
+    {
+       $view = $this->procesarAddAction();
+        
+        return $view; 
+    }
+     
     private function procesarAddAction(){
         // Create ejecutivo form
         $form = new EjecutivoForm('create', $this->entityManager);
@@ -99,15 +105,7 @@ class EjecutivoController extends AbstractActionController
                 'form' => $form
             ]);
     }
-    
-    
-    public function addAction()
-    {
-       $view = $this->procesarAddAction();
-        
-        return $view; 
-    }
-     
+   
     public function viewAction() 
     {
         $id = (int)$this->params()->fromRoute('id', -1);

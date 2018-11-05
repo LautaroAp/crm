@@ -92,7 +92,7 @@
                     </table>
                     <?php
                     echo $this->paginationControl($ejecutivos, 'Sliding', // All, Elastic, Jumping, Sliding
-                            'search_pagination4.phtml', $this->url('ejecutivos/page', ['action' => 'index', 'id' => 1]));
+                            'search_pagination_ejecutivo.phtml', $this->url('ejecutivos/page', ['action' => 'index', 'id' => 1]));
                 }
                 ?>
             </div>
@@ -108,7 +108,7 @@
                     <div class="row img-centrar">
                         <div class="col ficha-cliente-p img-centrar">
                             <div>
-                                <a href="<?= $this->url('ejecutivos', ['action' => 'add']); ?>"><img src="<?= $this->basePath('img/crm/ActividadAgregar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                                <a href="<?= $this->url('ejecutivos/agregar'); ?>"><img src="<?= $this->basePath('img/crm/ActividadAgregar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
                             </div>
                             <div class="ficha-cliente-label">
                                 <label>Ejecutivo</label><br>

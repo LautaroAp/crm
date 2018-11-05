@@ -89,7 +89,8 @@ class EjecutivoManager
         $ejecutivo->setNombre($data['nombre']);
         $ejecutivo->setMail($data['mail']);
         $ejecutivo->setUsuario($data['usuario']);
-        $ejecutivo->setClave($data['clave']);        
+        $ejecutivo->setClave($data['clave']);
+        $ejecutivo->setActivo('S');
         // Add the entity to the entity manager.
         $this->entityManager->persist($ejecutivo);
         // Apply changes to database.
