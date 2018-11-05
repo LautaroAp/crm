@@ -92,19 +92,12 @@ class ClientesManager {
         $queryBuilder->select('C')
                 ->from(Cliente::class, 'C');
         $indices = array_keys($parametros);
+        
         for ($i = 0; $i < count($indices); $i++) {
             $p = $i + 1;
             $nombreCampo = $indices[$i];
-//            if($nombreCampo=='pais'){
-//                $valorCampo = $this->getPais($parametros[$nombreCampo]);
-//            }
-//            elseif($nombreCampo=='provincia'){
-//                $valorCampo = $this->getProvincia($parametros[$nombreCampo]);
-//            }
-//            else
-            
-                 $valorCampo = $parametros[$nombreCampo];
-            
+            $valorCampo = $parametros[$nombreCampo];
+                        
             if ($i == 0) {
                 $queryBuilder->where("C.$nombreCampo = ?$p");
             } else {
@@ -115,7 +108,7 @@ class ClientesManager {
         $queryBuilder->andWhere('C.estado = :state')->setParameter('state', 'S');
         return $queryBuilder->getQuery();
     }
-    
+
     public function getActivos() {
 
         $entityManager = $this->entityManager;
@@ -152,13 +145,13 @@ class ClientesManager {
         $cliente->setEmpresa($data['empresa']);
         $categoria = $this->getCategoriaCliente($data['categoria']);
         $cliente->setCategoria($categoria);
-        if($data['licencia'] == "-1"){
+        if ($data['licencia'] == "-1") {
             $cliente->setLicencia(null);
         } else {
             $licencia = $this->getLicencia($data['licencia']);
             $cliente->setLicencia($licencia);
         }
-        if($data['profesion'] == "-1"){
+        if ($data['profesion'] == "-1") {
             $cliente->setProfesion(null);
         } else {
             $profesion = $this->getProfesionCliente($data['profesion']);
@@ -169,7 +162,7 @@ class ClientesManager {
         $cliente->setEstablecimientos($data['establecimientos']);
         $cliente->setRazaManejo($data['raza_manejo']);
         $cliente->setEstado("S");
-        if($data['version'] == "-1"){
+        if ($data['version'] == "-1") {
             $cliente->setVersion(null);
         } else {
             $cliente->setVersion($data['version']);
@@ -195,13 +188,13 @@ class ClientesManager {
         $cliente->setEmpresa($data['empresa']);
         $categoria = $this->getCategoriaCliente($data['categoria']);
         $cliente->setCategoria($categoria);
-        if($data['licencia'] == "-1"){
+        if ($data['licencia'] == "-1") {
             $cliente->setLicencia(null);
         } else {
             $licencia = $this->getLicencia($data['licencia']);
             $cliente->setLicencia($licencia);
         }
-        if($data['profesion'] == "-1"){
+        if ($data['profesion'] == "-1") {
             $cliente->setProfesion(null);
         } else {
             $profesion = $this->getProfesionCliente($data['profesion']);
@@ -211,7 +204,7 @@ class ClientesManager {
         $cliente->setAnimales($data['animales']);
         $cliente->setEstablecimientos($data['establecimientos']);
         $cliente->setRazaManejo($data['raza_manejo']);
-        if($data['version'] == "-1"){
+        if ($data['version'] == "-1") {
             $cliente->setVersion(null);
         } else {
             $cliente->setVersion($data['version']);
@@ -236,13 +229,13 @@ class ClientesManager {
         $cliente = $this->entityManager
                 ->getRepository(Cliente::class)
                 ->findOneBy(['Id' => $id]);
-        $estado_nuevo="";
+        $estado_nuevo = "";
         if ($cliente->getEstado() == "S") {
             $cliente->setEstado("N");
-            $estado_nuevo="N";
+            $estado_nuevo = "N";
         } else if ($cliente->getEstado() == "N") {
             $cliente->setEstado("S");
-            $estado_nuevo="S";
+            $estado_nuevo = "S";
         }
         $entityManager->flush();
         return $estado_nuevo;
@@ -320,7 +313,7 @@ class ClientesManager {
         return $provincias;
     }
 
-    public function getDatosClientes($data){
+    public function getDatosClientes($data) {
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select($data)
@@ -328,43 +321,44 @@ class ClientesManager {
                 ->where('C.estado = :state')->setParameter('state', 'S');
         return $queryBuilder->getQuery();
     }
-    
+
     public function eliminarLicenciaClientes($id) {
-        $entityManager = $this->entityManager;     
+        $entityManager = $this->entityManager;
         $clientes = $this->entityManager->getRepository(Cliente::class)->findAll();
         foreach ($clientes as $cliente) {
-            if(!is_null($cliente->getLicencia())){
-                if($cliente->getLicencia()->getId() == $id){
+            if (!is_null($cliente->getLicencia())) {
+                if ($cliente->getLicencia()->getId() == $id) {
                     $cliente->setLicencia(null);
                 }
             }
         }
         $entityManager->flush();
     }
-    
+
     public function eliminarCategoriaClientes($id) {
-        $entityManager = $this->entityManager;     
+        $entityManager = $this->entityManager;
         $clientes = $this->entityManager->getRepository(Cliente::class)->findAll();
         foreach ($clientes as $cliente) {
-            if(!is_null($cliente->getCategoria())){
-                if($cliente->getCategoria()->getId() == $id){
+            if (!is_null($cliente->getCategoria())) {
+                if ($cliente->getCategoria()->getId() == $id) {
                     $cliente->setCategoria(null);
                 }
             }
         }
         $entityManager->flush();
     }
-    
+
     public function eliminarProfesionClientes($id) {
-        $entityManager = $this->entityManager;     
+        $entityManager = $this->entityManager;
         $clientes = $this->entityManager->getRepository(Cliente::class)->findAll();
         foreach ($clientes as $cliente) {
-            if(!is_null($cliente->getProfesion())){
-                if($cliente->getProfesion()->getId() == $id){
+            if (!is_null($cliente->getProfesion())) {
+                if ($cliente->getProfesion()->getId() == $id) {
                     $cliente->setProfesion(null);
                 }
             }
         }
         $entityManager->flush();
     }
+
 }

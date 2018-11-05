@@ -98,7 +98,8 @@ $form->get('CP')->setAttributes([
 
 $form->get('parametro_vencimiento')->setAttributes([
     'class' => 'form-control',
-    'value' => $empresa->getParametro_vencimiento()
+    'value' => $empresa->getParametro_vencimiento(),
+    'style' => 'width: 50px;'
 
 ]);
 
@@ -230,18 +231,11 @@ $form->prepare();
             <div class="panel-heading text-center">Parámetros de Empresa</div>
         </div>
     </div>
-    <div class="row form-row">
-        <div class="form-group col-md-4">
-<!--            <label>Intervalo Vencimiento</label>
-            <select class="form-control" id="parametro_vencimiento" name="parametro_vencimiento">
-                <option value="" hidden="">Seleccionar</option>
-                <option value="3">3 meses</option>
-                <option value="6">6 meses</option>
-                <option value="9">9 meses</option>
-            </select>-->
+    <div class="row form-inline">
+        <div class="form-group col-md-2">
                 <?= $this->formLabel($form->get('parametro_vencimiento')); ?>
                 <?= $this->formElement($form->get('parametro_vencimiento')); ?>
-                <?= $this->formElementErrors($form->get('parametro_vencimiento')); ?> 
+                <?= $this->formElementErrors($form->get('parametro_vencimiento')); ?> meses
         </div>
     </div>
 </div>

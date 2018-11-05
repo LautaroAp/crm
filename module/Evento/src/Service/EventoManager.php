@@ -7,6 +7,7 @@ use DBAL\Entity\TipoEvento;
 use Evento\Form\EventoForm;
 use DBAL\Entity\Cliente;
 use DBAL\Entity\Ejecutivo;
+use DBAL\Entity\Empresa;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
@@ -111,7 +112,9 @@ class EventoManager {
                 $cliente->setFechaUltimoContacto($fecha_evento);
             }
             // Vencimiento
-            $fecha_vencimiento->add(new DateInterval('P3M'));
+            $empresa = $this->entityManager->getRepository(Empresa::class)->find(1);
+            $interval = 'P'.$empresa->getParametro_vencimiento().'M';
+            $fecha_vencimiento->add(new DateInterval($interval));
             if ($fecha_vencimiento > $cliente->getVencimiento()) {
                 $cliente->setVencimiento($fecha_vencimiento);
             }
@@ -237,5 +240,5 @@ class EventoManager {
         }
         $entityManager->flush();
     }
-
+    
 }

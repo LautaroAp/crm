@@ -78,7 +78,14 @@ class AuthAdapter implements AdapterInterface
                 Result::FAILURE_IDENTITY_NOT_FOUND, 
                 null, 
                 ['El usuario no existe']);        
-        }   
+        }
+        
+        if (!$user->isActivo()) {
+            return new Result(
+                Result::FAILURE_IDENTITY_NOT_FOUND, 
+                null, 
+                ['El usuario no se encuentra activo']);        
+        }
         
         if ($this->password == $user->getClave()){
             return new Result(

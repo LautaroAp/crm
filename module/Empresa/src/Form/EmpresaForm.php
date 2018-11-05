@@ -205,7 +205,7 @@ class EmpresaForm extends Form
             'name' => 'parametro_vencimiento',
             'value' => '',
             'options' => [
-                'label' => 'Meses de vencimiento',
+                'label' => 'Vigencia del Soporte',
         ],
         ]);
          
