@@ -197,7 +197,7 @@ $id_cliente = $this->cliente->getId();
                         <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getUsuarioEjecutivo()); ?></td>
                         <td id="<?= $evento->getId() ?>" class=""><?php if(!is_null($evento->getTipo())){echo($evento->getTipo());} else {echo('No definido');} ?></td>
                         <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getDescripcion()); ?></td>
-                    </tr>
+                    </tr> 
                 <?php endforeach; ?>    
             </tbody>
         </table>
