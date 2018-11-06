@@ -178,23 +178,25 @@ $id_cliente = $this->cliente->getId();
             <div class="panel-heading text-center">Registro de Actividades</div>
         </div>
         <!-- Datos de Usuarios Adicionales -->
-        <table id="tabla_evento" class="table table-striped table-scroll table-zebra">            
+        <table id="tabla_evento" class="table table-bordered table-zebra table-bot">            
             <thead class="table-scroll-head">
                 <tr> 
-                    <th class="th-sm" id="fila">Fecha</th>
-                    <th class="th-sm">Responsable</th>
-                    <th class="th-sm">Tipo</th>
-                    <th class="th-sm">Detalle</th>     
+                    <th class="" id="fila">Fecha</th>
+                    <th class="">Responsable</th>
+                    <th class="">Tipo</th>
+                    <th class="detalle-width">Detalle</th>     
                 </tr>
             </thead>
-            <tbody role="button">
+        </table>
+        <table id="tabla_evento" class="table table-bordered table-zebra table-scroll table-top">            
+            <tbody role="button" class="">
                 <?php               
                 foreach ($eventos as $evento): ?>
                     <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
-                        <td id="<?= $evento->getId() ?>"><?php if(!is_null($evento->getFecha())){echo($evento->getFecha()->format('d/m/Y'));}  ?></td>
-                        <td id="<?= $evento->getId() ?>"><?php echo($evento->getUsuarioEjecutivo()); ?></td>
-                        <td id="<?= $evento->getId() ?>"><?php echo($evento->getTipo()); ?></td>
-                        <td id="<?= $evento->getId() ?>"><?php echo($evento->getDescripcion()); ?></td>
+                        <td id="<?= $evento->getId() ?>" class=""><?php if(!is_null($evento->getFecha())){echo($evento->getFecha()->format('d/m/Y'));}  ?></td>
+                        <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getUsuarioEjecutivo()); ?></td>
+                        <td id="<?= $evento->getId() ?>" class=""><?php if(!is_null($evento->getTipo())){echo($evento->getTipo());} else {echo('No definido');} ?></td>
+                        <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getDescripcion()); ?></td>
                     </tr>
                 <?php endforeach; ?>    
             </tbody>
@@ -267,8 +269,7 @@ $id_cliente = $this->cliente->getId();
                         </div>
                     </div>
                     <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            
+                        <div>   
                             <?php
                                 $ruta="";
                                 if ($cliente->getEstado() == "S") {

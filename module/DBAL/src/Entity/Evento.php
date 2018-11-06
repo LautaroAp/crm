@@ -83,11 +83,19 @@ class Evento {
     }
 
     function getTipo() {
-        return $this->tipo->getNombre();
+        if (!is_null($this->tipo)) {
+            return $this->tipo->getNombre();
+        } else {
+            return null;
+        }
     }
 
     function getTipoId() {
-        return $this->tipo->getId();
+        if (!is_null($this->tipo)) {
+            return $this->tipo->getId();
+        } else {
+            return null;
+        }
     }
 
     function getId_cliente() {

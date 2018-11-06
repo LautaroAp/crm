@@ -232,9 +232,9 @@ class EventoManager {
         foreach ($eventos as $evento) {
             if (!is_null($evento->getTipoId())) {
                 if ($evento->getTipoId() == $id) {
-                    $tipo_evento = $this->entityManager->getRepository(TipoEvento::class)
-                            ->findOneBy(['id_tipo_evento' => 1]);
-                    $evento->setTipo($tipo_evento);
+//                    $tipo_evento = $this->entityManager->getRepository(TipoEvento::class)
+//                            ->findOneBy(['id_tipo_evento' => 1]);
+                    $evento->setTipo(null);
                 }
             }
         }
