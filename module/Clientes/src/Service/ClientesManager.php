@@ -97,13 +97,29 @@ class ClientesManager {
             $p = $i + 1;
             $nombreCampo = $indices[$i];
             $valorCampo = $parametros[$nombreCampo];
-                        
+
             if ($i == 0) {
-                $queryBuilder->where("C.$nombreCampo = ?$p");
-            } else {
-                $queryBuilder->andWhere("C.$nombreCampo = ?$p");
+                if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+                    $queryBuilder->where("C.$nombreCampo LIKE ?$p");
+                }
+                else {
+                    $queryBuilder->where("C.$nombreCampo = ?$p");
+                }
             }
-            $queryBuilder->setParameter("$p", $valorCampo);
+            else {
+                if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+                    $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
+                }
+                else{
+                    $queryBuilder->andWhere("C.$nombreCampo = ?$p");
+                }
+            }
+            if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+                    $queryBuilder->setParameter("$p", '%'.$valorCampo.'%');
+                }
+            else{
+                $queryBuilder->setParameter("$p", $valorCampo);
+            }
         }
         $queryBuilder->andWhere('C.estado = :state')->setParameter('state', 'S');
         return $queryBuilder->getQuery();
