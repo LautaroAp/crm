@@ -82,11 +82,17 @@ class EventoVentaManager extends EventoManager
             if ($nombreCampo == "tipo") {
                 $valorCampo=$parametros['tipo'];
                 if ($valorCampo=="Ventas"){   
-                    $queryBuilder->where('E.tipo = :tipo1')->setParameter('tipo1', 2);
-                    $queryBuilder->orWhere('E.tipo = :tipo2')->setParameter('tipo2', 5);
+                    $queryBuilder->where('E.tipo = :tipo1')->setParameter('tipo1', 10);
+                    $queryBuilder->orWhere('E.tipo = :tipo2')->setParameter('tipo2', 11);
                 }
                 elseif ($valorCampo=="Cotizaciones"){
-                    $queryBuilder->where('E.tipo = :tipo3')->setParameter('tipo3', 8);
+                    $queryBuilder->where('E.tipo = :tipo3')->setParameter('tipo3', 6);
+                }
+                 elseif ($valorCampo=="Soportes"){
+                    $queryBuilder->where('E.tipo = :tipo4')->setParameter('tipo4', 7);
+                    $queryBuilder->orWhere('E.tipo = :tipo5')->setParameter('tipo5', 8);
+                    $queryBuilder->orWhere('E.tipo = :tipo6')->setParameter('tipo6', 9);
+
                 }
                 $valorCampo = $this->entityManager->getRepository(TipoEvento::class)->findOneBy(array('id_tipo_evento' => $parametros[$nombreCampo]));
             }
