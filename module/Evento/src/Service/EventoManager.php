@@ -203,7 +203,8 @@ class EventoManager {
      */
     public function updateEvento($evento, $form) {
         $data = $form->getData();
-        $evento->setFecha($data['fecha_evento']);
+        $fecha_evento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
+        $evento->setFecha($fecha_evento);
         $evento->setTipo($data['tipo_evento']);
         $evento->setId_cliente($data['id_cliente']);
         $evento->setId_ejecutivo($data['id_ejecutivo']);
