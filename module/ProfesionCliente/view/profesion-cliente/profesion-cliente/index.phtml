@@ -1,8 +1,22 @@
 <script src="js/functions.js"></script>
+
+<script>
+    function bloqueaPantalla() {
+        document.getElementById('bloquea').style.display = 'block';
+        $('#loader').toggleClass('loader');
+        $('#loader').toggleClass('WindowLoad');
+    }
+</script>
+
+<div id="bloquea" class="cargando" style="display:none;">
+</div>
+<div class="" id="loader"></div>
+
+
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">Listado Profesiones</div>
+            <div class="panel-heading text-center">Listado Profesiones</div>
         </div>
     </div>
 </div>
@@ -78,12 +92,12 @@
                                         </div>
                                         <div class="modal-body">
                                             <p>
-                                                ¿¿Está seguro que desea eliminar la profesión: 
+                                                ¿Está seguro que desea eliminar la profesión: 
                                                 "<?= $this->escapeHtml($profesioncliente->getNombre()) ?>"?
                                             </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="<?= $this->url('profesioncliente/borrar', ['action' => 'remove', 'id' => $profesioncliente->getId()]); ?>" class="btn btn-default">Aceptar</a>
+                                            <a href="<?= $this->url('profesioncliente/borrar', ['action' => 'remove', 'id' => $profesioncliente->getId()]); ?>" class="btn btn-default" onclick="bloqueaPantalla()">Aceptar</a>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                         </div>
                                     </div>
