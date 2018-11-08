@@ -1,6 +1,16 @@
 <script src="js/functions.js"></script>
 
-<div class="loader"></div>
+<script>
+    function bloqueaPantalla() {
+        document.getElementById('bloquea').style.display = 'block';
+        $('#loader').toggleClass('loader');
+        $('#loader').toggleClass('WindowLoad');
+    }
+</script>
+
+<div id="bloquea" class="cargando" style="display:none;">
+</div>
+<div class="" id="loader"></div>
 
 <div class="container margen">
     <div class="row">
@@ -86,7 +96,7 @@
                                             </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="<?= $this->url('tipoevento/borrar', ['action' => 'remove', 'id' => $tipoevento->getId()]); ?>" class="btn btn-default">Aceptar</a>
+                                            <a href="<?= $this->url('tipoevento/borrar', ['action' => 'remove', 'id' => $tipoevento->getId()]); ?>" class="btn btn-default" onclick="bloqueaPantalla()">Aceptar</a>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                         </div>
                                     </div>
