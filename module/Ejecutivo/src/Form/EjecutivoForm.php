@@ -96,7 +96,7 @@ class EjecutivoForm extends Form
         
         // Add "clave" field
         $this->add([            
-            'type'  => 'text',
+            'type'  => 'Zend\Form\Element\Password',
             'name' => 'clave',
             'options' => [
                 'label' => 'Clave',
