@@ -130,6 +130,11 @@ class Cliente {
      * @ORM\Column(name="FECHA_ULTIMO_CONTACTO", type="datetime")
      */
     private $fecha_ultimo_contacto;
+    
+    /**
+     * @ORM\Column(name="FECHA_ULTIMO_PAGO", type="datetime")
+     */
+    private $fecha_ultimo_pago;
 
     /**
      * @ORM\Column(name="LICENCIA_ACTUAL", nullable=true, type="string", length=255)
@@ -348,7 +353,15 @@ class Cliente {
     function setFechaUltimoContacto($fecha_ultimo_contacto) {
         $this->fecha_ultimo_contacto = $fecha_ultimo_contacto;
     }
+    
+    function getFechaUltimoPago() {
+        return $this->fecha_ultimo_pago;
+    }
 
+    function setFechaUltimoPago($fecha_ultimo_pago) {
+        $this->fecha_ultimo_pago = $fecha_ultimo_pago;
+    }
+    
     function getNombreLicenciaCliente() {
         if (is_null($this->licencia)) {
             return null;
@@ -403,8 +416,11 @@ class Cliente {
 
     public function isPrimeraVenta() {
         $array_eventos = $this->getEventos();
+        if (is_null($this->fecha_compra)){
+            return true;
+        }
         foreach ($array_eventos as $eve) {
-            if ($eve->getTipoId() == 2) {
+            if ($eve->getTipoId() == 11) {
                 return false;
                 break;
             }

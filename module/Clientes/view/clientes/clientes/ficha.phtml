@@ -94,8 +94,9 @@ $id_cliente = $this->cliente->getId();
                     </div>
                     <div class="col-md-4 ficha-cliente-p">
                         <p><label>Fecha de Compra:</label> <?php if(!is_null($cliente->getFechaCompra())) {echo ($cliente->getFechaCompra()->format('d/m/Y'));} ?></p>
-                        <p><label>Último Pago:</label> <?php if(!is_null($cliente->getFechaUltimoContacto())) {echo ($cliente->getFechaUltimoContacto()->format('d/m/Y'));} ?></p>
+                        <p><label>Último Pago:</label> <?php if(!is_null($cliente->getFechaUltimoPago())) {echo ($cliente->getFechaUltimoPago()->format('d/m/Y'));} ?></p>
                         <p><label>Fecha Vencimiento:</label> <?php if(!is_null($cliente->getVencimiento())) {echo ($cliente->getVencimiento()->format('d/m/Y'));} ?></p>
+                        <p><label>Último Contacto:</label> <?php if(!is_null($cliente->getFechaUltimoContacto())) {echo ($cliente->getFechaUltimoContacto()->format('d/m/Y'));} ?></p>
                         <p><label>Estado:</label> <?php echo ($cliente->getEstadoNombre()); ?></p>
                     </div>
                 </div>

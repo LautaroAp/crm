@@ -99,21 +99,33 @@ class EventoManager {
 
         $evento->setDescripcion($data['detalle']);
 
-        // Fecha Compra
-        if ($tipo_evento->getId() == 2) {
+        // Ultimo Contacto
+        if (is_null($cliente->getFechaUltimoContacto())) {
+            $cliente->setFechaUltimoContacto($fecha_evento);
+        } else {
+            if ($fecha_evento > $cliente->getFechaUltimoContacto()) {
+                $cliente->setFechaUltimoContacto($fecha_evento);
+            }
+        }
+        // Fecha Compra (VENTA)
+        if ($tipo_evento->getId() == 11) {
             if ($cliente->isPrimeraVenta()) {
                 $cliente->setFechaCompra($fecha_evento);
             }
         }
-        // Ultimo Pago & Vencimiento
-        if (($tipo_evento->getId() == 2) or ( $tipo_evento->getId() == 5)) {
+        // Ultimo Pago & Vencimiento (COBRO + VENTA)
+        if (($tipo_evento->getId() == 10) or ( $tipo_evento->getId() == 11)) {
             // Ultimo Pago
-            if ($fecha_evento > $cliente->getFechaUltimoContacto()) {
-                $cliente->setFechaUltimoContacto($fecha_evento);
+            if (is_null($cliente->getFechaUltimoPago())) {
+                $cliente->setFechaUltimoPago($fecha_evento);
+            } else {
+                if ($fecha_evento > $cliente->getFechaUltimoPago()) {
+                    $cliente->setFechaUltimoPago($fecha_evento);
+                }
             }
             // Vencimiento
             $empresa = $this->entityManager->getRepository(Empresa::class)->find(1);
-            $interval = 'P'.$empresa->getParametro_vencimiento().'M';
+            $interval = 'P' . $empresa->getParametro_vencimiento() . 'M';
             $fecha_vencimiento->add(new DateInterval($interval));
             if ($fecha_vencimiento > $cliente->getVencimiento()) {
                 $cliente->setVencimiento($fecha_vencimiento);
@@ -228,7 +240,7 @@ class EventoManager {
 
     public function eliminarTipoEventos($id) {
         $entityManager = $this->entityManager;
-        $eventos = $this->entityManager->getRepository(Evento::class)->findAll();      
+        $eventos = $this->entityManager->getRepository(Evento::class)->findAll();
         foreach ($eventos as $evento) {
             if (!is_null($evento->getTipoId())) {
                 if ($evento->getTipoId() == $id) {
@@ -238,5 +250,5 @@ class EventoManager {
         }
         $entityManager->flush();
     }
-    
+
 }
