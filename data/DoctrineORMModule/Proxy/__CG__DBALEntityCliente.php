@@ -64,10 +64,10 @@ class Cliente extends \DBAL\Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'Id', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'nombre', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'apellido', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'pais', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'provincia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'ciudad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'telefono', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'email', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'skype', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'profesion', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'empresa', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'actividad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'animales', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'establecimientos', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'raza_manejo', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'categoria', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'version', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_compra', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'vencimiento', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_contacto', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia_actual', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'estado', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'usuarios', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'eventos'];
+            return ['__isInitialized__', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'Id', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'nombre', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'apellido', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'pais', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'provincia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'ciudad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'telefono', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'email', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'skype', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'profesion', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'empresa', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'actividad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'animales', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'establecimientos', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'raza_manejo', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'categoria', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'version', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_compra', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'vencimiento', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_contacto', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_pago', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia_actual', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'estado', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'usuarios', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'eventos'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'Id', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'nombre', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'apellido', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'pais', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'provincia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'ciudad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'telefono', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'email', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'skype', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'profesion', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'empresa', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'actividad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'animales', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'establecimientos', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'raza_manejo', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'categoria', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'version', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_compra', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'vencimiento', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_contacto', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia_actual', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'estado', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'usuarios', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'eventos'];
+        return ['__isInitialized__', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'Id', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'nombre', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'apellido', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'pais', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'provincia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'ciudad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'telefono', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'email', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'skype', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'profesion', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'empresa', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'actividad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'animales', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'establecimientos', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'raza_manejo', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'categoria', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'version', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_compra', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'vencimiento', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_contacto', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_pago', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia_actual', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'estado', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'usuarios', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'eventos'];
     }
 
     /**
@@ -622,6 +622,28 @@ class Cliente extends \DBAL\Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFechaUltimoContacto', [$fecha_ultimo_contacto]);
 
         return parent::setFechaUltimoContacto($fecha_ultimo_contacto);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFechaUltimoPago()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFechaUltimoPago', []);
+
+        return parent::getFechaUltimoPago();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setFechaUltimoPago($fecha_ultimo_pago)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFechaUltimoPago', [$fecha_ultimo_pago]);
+
+        return parent::setFechaUltimoPago($fecha_ultimo_pago);
     }
 
     /**
