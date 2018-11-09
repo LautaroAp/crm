@@ -105,8 +105,6 @@ class EmpresaManager
         
         
         $data = $form->getData();
-//        print_r($data);
-//        die();
         $empresa->setNombre($data['nombre']);
         $empresa->setDireccion($data['direccion']);
         $empresa->setTelefono($data['telefono']);
@@ -115,7 +113,8 @@ class EmpresaManager
         $empresa->setFax($data['fax']);
         $empresa->setWeb($data['web']);
         $empresa->setCuit_cuil($data['cuit_cuil']);
-        $empresa->setVencimiento_cai($data['vencimiento_cai']);
+        $vencimiento_cai = \DateTime::createFromFormat('d/m/Y', $data['vencimiento_cai']);
+        $empresa->setVencimiento_cai ($vencimiento_cai);
         $empresa->setRazon_social($data['razon_social']);
         $empresa->setTipo_iva('tipo_iva');
         $empresa->setLocalidad($data['localidad']);

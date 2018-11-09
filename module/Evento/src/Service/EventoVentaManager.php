@@ -82,7 +82,7 @@ class EventoVentaManager extends EventoManager
             if ($nombreCampo == "tipo") {
                 $valorCampo=$parametros['tipo'];
                 if ($valorCampo=="Ventas"){   
-                    $queryBuilder->where('E.tipo = :tipo1')->setParameter('tipo1', 10);
+                    $queryBuilder->where('E.tipo_ = :tipo1')->setParameter('tipo1', 10);
                     $queryBuilder->orWhere('E.tipo = :tipo2')->setParameter('tipo2', 11);
                 }
                 elseif ($valorCampo=="Cotizaciones"){

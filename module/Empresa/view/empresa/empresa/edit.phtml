@@ -52,12 +52,11 @@ $form->get('cuit_cuil')->setAttributes([
 ]);
 
 
-$form->get('vencimiento_cai')->setAttributes([
-    'class' => 'form-control',
-    'value' => $empresa->getVencimiento_cai()
-
-]);
-
+//$form->get('vencimiento_cai')->setAttributes([
+//    'class' => 'form-control',
+//    'value' => $empresa->getVencimiento_cai()
+//
+//]);
 
 $form->get('razon_social')->setAttributes([
     'class' => 'form-control',
@@ -107,6 +106,16 @@ $form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
 
 $form->prepare();
 ?>
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker3').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+    });
+</script>
 
 <div class="container margen">
     <div class="row">
@@ -164,9 +173,13 @@ $form->prepare();
             </div>
             
             <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('vencimiento_cai')); ?>
-                <?= $this->formElement($form->get('vencimiento_cai')); ?>
-                <?= $this->formElementErrors($form->get('vencimiento_cai')); ?> 
+                <label>Vencimiento CAI</label>
+                <div class='input-group date' id='datetimepicker3'>
+                    <input type='text' class="form-control" name="vencimiento_cai" value="<?php if(!is_null($empresa->getVencimiento_cai())) {echo ($empresa->getVencimiento_cai()->format('d/m/Y'));}?>"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
             </div>
             
             <div class="form-group col-md-4">
@@ -199,6 +212,7 @@ $form->prepare();
                 <?= $this->formElement($form->get('CP')); ?>
                 <?= $this->formElementErrors($form->get('CP')); ?> 
             </div>
+            
             
         </div>    
     <!-- Modal -->

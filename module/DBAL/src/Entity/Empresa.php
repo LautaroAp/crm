@@ -59,7 +59,7 @@ class Empresa {
      */
     protected $cuit_cuil;
     /**
-     * @ORM\Column(name="VENCIMIENTO_CAI", nullable=true, type="datetime", length=255)
+     * @ORM\Column(name="VENCIMIENTO_CAI", nullable=true, type="datetime")
      */
     protected $vencimiento_cai;/**
      * @ORM\Column(name="RAZON_SOCIAL", nullable=true, type="string", length=255)

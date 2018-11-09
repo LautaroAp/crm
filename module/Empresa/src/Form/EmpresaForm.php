@@ -144,7 +144,7 @@ class EmpresaForm extends Form
             ],
         ]);
         
-         
+
         $this->add([
             'type' => 'text',
             'name' => 'razon_social',
@@ -340,21 +340,23 @@ class EmpresaForm extends Form
                 ],
             ],
         ]);
-               
-                $inputFilter->add([
+        $inputFilter->add([
             'name' => 'vencimiento_cai',
             'required' => true,
-            'filters' => [
-                ['name' => 'StringTrim'],
-            ],
+//            'filters' => [
+//                ['name' => 'StringTrim'],
+//            ],
             'validators' => [
                 [
                     'name' => 'StringLength',
+                    'options' => [
+                        'format' => 'd-m-Y',
+                    ],
                     
                 ],
             ],
         ]);
-                
+//                
                  $inputFilter->add([
             'name' => 'razon_social',
             'required' => true,
