@@ -154,6 +154,7 @@
     display: block;
 }
 
-.input-xs{
-    width:60 px !important;
+
+.crm-version{
+    font-size: 3px !important;
 }
