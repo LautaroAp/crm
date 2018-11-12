@@ -153,3 +153,7 @@
 .bloquear {
     display: block;
 }
+
+.crm-version{
+    font-size: 3px !important;
+}
