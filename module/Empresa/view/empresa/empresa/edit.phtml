@@ -52,11 +52,11 @@ $form->get('cuit_cuil')->setAttributes([
 ]);
 
 
-//$form->get('vencimiento_cai')->setAttributes([
-//    'class' => 'form-control',
-//    'value' => $empresa->getVencimiento_cai()
-//
-//]);
+$form->get('vencimiento_cai')->setAttributes([
+    'class' => 'form-control',
+    'value' => $empresa->getVencimiento_cai()
+
+]);
 
 $form->get('razon_social')->setAttributes([
     'class' => 'form-control',
@@ -244,12 +244,12 @@ $form->prepare();
         <div class="panel panel-default">
             <div class="panel-heading text-center">Parámetros de Empresa</div>
         </div>
-    </div>
+    </div>            
+    <label>Vigencia del soporte</label>
+
     <div class="row form-inline">
-        <div class="form-group col-md-2">
-                <?= $this->formLabel($form->get('parametro_vencimiento')); ?>
-                <?= $this->formElement($form->get('parametro_vencimiento')); ?>
-                <?= $this->formElementErrors($form->get('parametro_vencimiento')); ?> meses
+        <div class="form-group col-sm-4">
+            <input type="number" class="form-control" style="width:60px;" name="parametro_vencimiento" min="1" max="12" placeholder="Mes" value="<?php echo($empresa->getParametro_vencimiento()); ?>"> meses                       
         </div>
     </div>
 </div>

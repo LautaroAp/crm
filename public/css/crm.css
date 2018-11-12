@@ -153,3 +153,7 @@
 .bloquear {
     display: block;
 }
+
+.input-xs{
+    width:60 px !important;
+}

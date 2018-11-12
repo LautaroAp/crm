@@ -4,7 +4,7 @@ namespace Empresa\Form;
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
-
+use Zend\Form\Element\Select;
 
 
 class EmpresaForm extends Form
@@ -200,16 +200,39 @@ class EmpresaForm extends Form
             ],
         ]);
 
+//        $this->add([
+//            'type' => 'text',
+//            'name' => 'parametro_vencimiento',
+//            'value' => '',
+//            'options' => [
+//                'label' => 'Vigencia del Soporte',
+//        ],
+//        ]);
+         
         $this->add([
-            'type' => 'text',
+            'type' => 'select',
             'name' => 'parametro_vencimiento',
             'value' => '',
             'options' => [
                 'label' => 'Vigencia del Soporte',
-        ],
+                'value_options' => array(
+                    '1' => '1',
+                    '2' => '2',
+                    '3' => '3',
+                    '4' => '4',
+                    '5' => '5',
+                    '6' => '6',
+                    '7' => '7',
+                    '8' => '8',
+                    '9' => '9',
+                    '10' => '10',
+                    '11' => '11',
+                    '12' => '12',           
+                ),
+            ],
         ]);
-         
-        
+
+
         $this->add([
             'type' => 'submit',
             'name' => 'submit',
