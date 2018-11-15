@@ -81,7 +81,10 @@ class EventoController extends AbstractActionController {
         $form = $this->eventoManager->createForm($this->tipos);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $this->eventoManager->addEvento($data);  
+            $this->eventoManager->addEvento($data);
+            
+            $estado = $this->eventoManager->getEstado();
+            
             return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $data['id_cliente']]);
         }
         return new ViewModel([

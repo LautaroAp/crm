@@ -12,6 +12,8 @@ use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use DateInterval;
+use Zend\Mvc\Plugin\FlashMessenger;
+//use Zend\Mvc\Controller\Plugin\FlashMessenger;
 
 /**
  * This service is responsible for adding/editing eventos
@@ -36,6 +38,12 @@ class EventoManager {
      * @var type 
      */
     private $config;
+    
+    /**
+     * Application config.
+     * @var type 
+     */
+    protected $estado;
 
     /**
      * Constructs the service.
@@ -71,6 +79,10 @@ class EventoManager {
             $evento = $this->addEvento($data);
         }
         return $evento;
+    }
+    
+    public function getEstado(){
+        return $this->estado;
     }
 
     /**
@@ -132,8 +144,10 @@ class EventoManager {
             }
         }
 
-        $this->entityManager->persist($evento);
-        $this->entityManager->flush();
+//        $this->entityManager->persist($evento);
+//        $this->entityManager->flush();
+        
+        $this->estado = $this->tryAddEvento($evento);        
         return $evento;
     }
 
@@ -249,6 +263,17 @@ class EventoManager {
             }
         }
         $entityManager->flush();
+    }
+    
+    private function tryAddEvento($evento){
+        try {
+            $this->entityManager->persist($evento);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
     }
 
 }
