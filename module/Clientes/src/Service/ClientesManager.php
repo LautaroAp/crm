@@ -173,31 +173,33 @@ class ClientesManager {
             $valorCampo = $parametros[$nombreCampo];
 
             if ($i == 0) {
-                if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+                if ($nombreCampo == 'nombre'){
                     $queryBuilder->where("C.$nombreCampo LIKE ?$p");
+                    $queryBuilder->orWhere("C.apellido LIKE ?$p");
                     $queryBuilder->orWhere("U.nombre LIKE ?$p");
                 }
                 else {
-                    $queryBuilder->where("C.$nombreCampo = ?$p");
-                    $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
+                    $queryBuilder->where("C.$nombreCampo LIKE ?$p");
+                    if ($nombreCampo =! "empresa"){
+                       $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
+                    }
                 }
             }
             else {
-                if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+                if ($nombreCampo == 'nombre'){
                     $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
+                    $queryBuilder->orWhere("C.apellido LIKE ?$p");
                     $queryBuilder->orWhere("U.nombre LIKE ?$p");
                 }
                 else{
-                    $queryBuilder->andWhere("C.$nombreCampo = ?$p");
-                    $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
+                    $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
+                     if ($nombreCampo =! "empresa"){
+                        $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
+                    }
                 }
             }
-            if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
-                    $queryBuilder->setParameter("$p", '%'.$valorCampo.'%');
-                }
-            else{
-                $queryBuilder->setParameter("$p", $valorCampo);
-            }
+            $queryBuilder->setParameter("$p", '%'.$valorCampo.'%');
+             
         }
         $queryBuilder->andWhere('C.estado = :state')->setParameter('state', 'S');
         return $queryBuilder->getQuery();

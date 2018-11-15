@@ -9,19 +9,19 @@
                 <form method="post">
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="apellido" placeholder="Apellido">
+                            <input type="text" class="form-control" name="nombre" placeholder="Nombre o Apellido" value="<?php if (count($parametros)>0){echo($parametros['nombre']);} ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+                            <input type="text" class="form-control" name="email" placeholder="Email" value="<?php if (count($parametros)>0){echo($parametros['email']);} ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="email" placeholder="Email">
+                            <input type="text" class="form-control" name="empresa" placeholder="Empresa" value="<?php if (count($parametros)>0){echo($parametros['empresa']);} ?>">
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-1">
                             <button type="submit" class="btn btn-default"> 
                                 <i class="glyphicon glyphicon-search"></i> Buscar
                             </button>                      
-                        </div>
+                        </div>         
                     </div>
             </div>
             </form>

@@ -25,18 +25,25 @@ class ClientesInactivosController extends ClientesController {
     }
 
     public function indexAction() {
-       $request = $this->getRequest();
+        $request = $this->getRequest();
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
-        } 
-        $parametros = $this->params()->fromPost();
-        $paginator = $this->clientesInactivosManager->getFiltrados($parametros);
-        $total_inactivos = $this->clientesInactivosManager->getTotal();
-        $pag = $this->getPaginator($paginator);
+            $_SESSION['PARAMETROS_CLIENTE'] = $parametros;
+        }
+        if (!is_null($_SESSION['PARAMETROS_CLIENTE'])){
+          $parametros = $_SESSION['PARAMETROS_CLIENTE'];
+        }
+        else{
+            $parametros=array();
+        }               
+        $paginator = $this->clientesInactivosManager->getTablaFiltrado($parametros);
+        $total_inactivos = $this->clientesInactivosManager->getTotal(); 
+        $pag = $this->getPaginator($paginator);                
         return new ViewModel([
             'clientes' => $pag,
-            'total_inactivos'=>$total_inactivos,
-        ]);
+            'parametros' =>$parametros,
+            'total_inactivos' => $total_inactivos,
+         ]);
     }
 
     public function getPaginator($paginator) {
