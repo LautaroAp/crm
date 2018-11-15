@@ -41,13 +41,6 @@ class ClientesController extends AbstractActionController {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
-            
-//            Separo campo nombre en {nombre, nombre2, nombre3} luego se tiene que buscar por todos
-//            $nombres = explode(" ", $parametros['nombre']);
-//            if(isset($nombres[0])){$parametros['nombre'] = $nombres[0];}
-//            if(isset($nombres[1])){$parametros['nombre2'] = $nombres[1];}
-//            if(isset($nombres[2])){$parametros['nombre3'] = $nombres[2];}
-            
             $_SESSION['PARAMETROS_CLIENTE'] = $parametros;
         }
         if (!is_null($_SESSION['PARAMETROS_CLIENTE'])){
@@ -57,6 +50,7 @@ class ClientesController extends AbstractActionController {
             $parametros=array();
         }               
         $paginator = $this->clientesManager->getTablaFiltrado($parametros);
+        //$paginator= $this->clientesManager->getClientesConUsuariosAdicionales($parametros);
         $total_clientes = $this->clientesManager->getTotal(); 
         $pag = $this->getPaginator($paginator);                
         return new ViewModel([

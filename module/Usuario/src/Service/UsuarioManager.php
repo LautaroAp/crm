@@ -15,6 +15,7 @@ use Zend\Mail\Transport\Smtp as SmtpTransport;
 use Zend\Mail\Transport\SmtpOptions;
 use Zend\Mime\Message as MimeMessage;
 use Zend\Mime\Part as MimePart;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * This service is responsible for adding/editing usuarios
@@ -109,5 +110,82 @@ class UsuarioManager {
 
         return $usuario;
     }
+    
+    public function buscarUsuarios($parametros) {      
+        $entityManager = $this->entityManager;
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('U')
+                 ->from(Usuario::class, 'U');
+        $indices = array_keys($parametros);
 
+        for ($i = 0; $i < count($indices); $i++) {
+            $p = $i + 1;
+            $nombreCampo = $indices[$i];
+            $valorCampo = $parametros[$nombreCampo];
+
+            if ($i == 0) {
+                if ($nombreCampo == 'nombre' || $nombreCampo == 'apellido') {
+                    $queryBuilder->where("U.nombre LIKE ?$p");
+                } else {
+                    $queryBuilder->where("U.$nombreCampo LIKE ?$p");
+                }
+            } else {
+                if ($nombreCampo == 'nombre' || $nombreCampo == 'apellido') {
+                    $queryBuilder->andWhere("U.nombre LIKE ?$p");
+                } else {
+                    $queryBuilder->andWhere("U.$nombreCampo like ?$p");
+                }
+            }
+            $queryBuilder->setParameter("$p", '%'.$valorCampo.'%');
+        }
+        return $queryBuilder->getQuery()->execute();
+    }
+
+    public function getClientesUsuarioAdicional($parametros){
+        $clientes = array();
+        if (COUNT($parametros)>0){
+            $usuarios = $this->buscarUsuarios($parametros);
+            $i = 0;
+            foreach ($usuarios as $usuario):
+                if ($this->entityManager->getRepository(Cliente::class)->findOneBy(['Id'=>$usuario->getCliente()])){
+                    $clientes[$i] = $usuario->getCliente();
+                    $i=$i+1;
+            }
+            endforeach;
+        }
+        return $clientes;
+    }
+    
+    public function getClientes($parametros){
+        $entityManager = $this->entityManager;
+        $qb = $entityManager->createQueryBuilder();
+        $qb->select('C') 
+                ->from(Usuario::class, 'U')
+                ->leftJoin(Cliente::class, 'C',  "WITH", 'C.Id = U.id_cliente');
+        $indices = array_keys($parametros);
+
+        for ($i = 0; $i < count($indices); $i++) {
+            $p = $i + 1;
+            $nombreCampo = $indices[$i];
+            $valorCampo = $parametros[$nombreCampo];
+
+            if ($i == 0) {
+                if ($nombreCampo == 'nombre' || $nombreCampo == 'apellido') {
+                    $qb->where("U.nombre LIKE ?$p");
+                } else {
+                    $qb->where("U.$nombreCampo LIKE ?$p");
+                }
+            } else {
+                if ($nombreCampo == 'nombre' || $nombreCampo == 'apellido') {
+                    $qb->andWhere("U.nombre LIKE ?$p");
+                } else {
+                    $qb->andWhere("U.$nombreCampo like ?$p");
+                }
+            }
+            $qb->setParameter("$p", '%'.$valorCampo.'%');
+        }
+
+        return $qb->getQuery();
+    }
+     
 }

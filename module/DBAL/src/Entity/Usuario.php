@@ -47,7 +47,7 @@ class Usuario {
          /**
      * @ORM\Column(name="MAIL_CONTACTO", nullable=true, type="string", length=255)
      */
-    protected $mail;
+    protected $email;
     
     function getId() {
         return $this->id_usuario;
@@ -67,7 +67,7 @@ class Usuario {
     }
 
     function getMail() {
-        return $this->mail;
+        return $this->email;
     }
 
     function getSkype(){
@@ -92,7 +92,7 @@ class Usuario {
     }
 
     function setMail($mail) {
-        $this->mail = $mail;
+        $this->email = $mail;
     }
 
     function setSkype($skype) {

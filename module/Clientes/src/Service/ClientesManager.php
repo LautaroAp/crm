@@ -27,13 +27,15 @@ class ClientesManager {
      */
     private $entityManager;
 
+    private $usuarioManager;
     /**
      * Constructs the service.
      */
     protected $total;
 
-    public function __construct($entityManager) {
+    public function __construct($entityManager, $usuarioManager) {
         $this->entityManager = $entityManager;
+        $this->usuarioManager = $usuarioManager;
     }
 
     private function getUsuarios($id_cliente) {
@@ -65,26 +67,57 @@ class ClientesManager {
 
 //La funcion getTabla() devuelve tabla de clientes sin filtro    
     public function getTabla() {
-        // Create the adapter
         $adapter = new SelectableAdapter($this->entityManager->getRepository(Cliente::class)); // An object repository implements Selectable
-        // Create the paginator itself
         $paginator = new Paginator($adapter);
         return ($paginator);
     }
 
     public function getTablaFiltrado($parametros) {
         $filtros = $this->limpiarParametros($parametros);
-        $query = $this->busquedaPorFiltros($filtros);
-        $adapter = new DoctrineAdapter(new ORMPaginator($query));
+        $query = $this->busquedaPorFiltros2($filtros);
+        $pag = new ORMPaginator($query);
+        $pag->setUseOutputWalkers(true);
+        $adapter = new DoctrineAdapter($pag);
         $this->total = COUNT($adapter);
+       
         $paginator = new Paginator($adapter);
+        return $paginator;
+    }
+    
+    public function getClientesConUsuariosAdicionales($parametros){
+        $filtros = $this->limpiarParametros($parametros);
+        $query2 = $this->usuarioManager->getClientes($filtros);
+        $pag = new ORMPaginator($query2);
+        $pag->setUseOutputWalkers(false);
+        $adapter2 = new DoctrineAdapter($pag);
+        $paginator = new Paginator($adapter2);
         return $paginator;
     }
 
     public function getTotal() {
         return $this->total;
     }
+    
+    private function getQueryClientes($clientes){
+        $entityManager = $this->entityManager;
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('C')
+                    ->from(Cliente::class, 'C');
+        $p=0;
+        $queryBuilder->where("C.Id = ?$p")->setParameter("$p", $clientes[0]->getId());
+        for ($i = 1; $i < count($clientes); $i++) {
+            $p=$p+1;
+            $queryBuilder->orWhere("C.Id = ?$p")->setParameter("$p", $clientes[$i]->getId());
+        }
+        return $queryBuilder->getQuery();
+    }
 
+    public function busquedaPorUsuariosAdicionales($parametros){
+        $clientes= $this->usuarioManager->getClientesUsuarioAdicional($parametros);
+        $query = $this->getQueryClientes($clientes);
+        return $query;
+    }
+    
     public function busquedaPorFiltros($parametros) {
 
         $entityManager = $this->entityManager;
@@ -112,6 +145,51 @@ class ClientesManager {
                 }
                 else{
                     $queryBuilder->andWhere("C.$nombreCampo = ?$p");
+                }
+            }
+            if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+                    $queryBuilder->setParameter("$p", '%'.$valorCampo.'%');
+                }
+            else{
+                $queryBuilder->setParameter("$p", $valorCampo);
+            }
+        }
+        $queryBuilder->andWhere('C.estado = :state')->setParameter('state', 'S');
+        return $queryBuilder->getQuery();
+    }
+    
+    public function busquedaPorFiltros2($parametros) {
+
+        $entityManager = $this->entityManager;
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('C')
+                     ->from(Cliente::class, 'C')
+                    ->join(Usuario::class, 'U',  "WITH", 'C.Id = U.id_cliente');
+        $indices = array_keys($parametros);
+        
+        for ($i = 0; $i < count($indices); $i++) {
+            $p = $i + 1;
+            $nombreCampo = $indices[$i];
+            $valorCampo = $parametros[$nombreCampo];
+
+            if ($i == 0) {
+                if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+                    $queryBuilder->where("C.$nombreCampo LIKE ?$p");
+                    $queryBuilder->orWhere("U.nombre LIKE ?$p");
+                }
+                else {
+                    $queryBuilder->where("C.$nombreCampo = ?$p");
+                    $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
+                }
+            }
+            else {
+                if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+                    $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
+                    $queryBuilder->orWhere("U.nombre LIKE ?$p");
+                }
+                else{
+                    $queryBuilder->andWhere("C.$nombreCampo = ?$p");
+                    $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
                 }
             }
             if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){

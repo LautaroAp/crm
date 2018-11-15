@@ -34,7 +34,7 @@ class ClientesInactivosManager extends ClientesManager{
 
     public function getFiltrados($parametros){
         $filtros = $this->limpiarParametros($parametros);
-        $query = $this->busquedaPorFiltros($filtros);
+        $query = $this->busquedaPorFiltros2($filtros);
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
         $this->total = COUNT($adapter);
         $paginator = new Paginator($adapter);
@@ -61,6 +61,51 @@ class ClientesInactivosManager extends ClientesManager{
             $queryBuilder->setParameter("$p", $valorCampo);
         }
         $queryBuilder->andWhere('C.estado = :state') ->setParameter('state', 'N'); 
+        return $queryBuilder->getQuery();
+    }
+    
+    public function busquedaPorFiltros2($parametros) {
+
+        $entityManager = $this->entityManager;
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('C')
+                     ->from(Cliente::class, 'C')
+                    ->join(Usuario::class, 'U',  "WITH", 'C.Id = U.id_cliente');
+        $indices = array_keys($parametros);
+        
+        for ($i = 0; $i < count($indices); $i++) {
+            $p = $i + 1;
+            $nombreCampo = $indices[$i];
+            $valorCampo = $parametros[$nombreCampo];
+
+            if ($i == 0) {
+                if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+                    $queryBuilder->where("C.$nombreCampo LIKE ?$p");
+                    $queryBuilder->orWhere("U.nombre LIKE ?$p");
+                }
+                else {
+                    $queryBuilder->where("C.$nombreCampo = ?$p");
+                    $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
+                }
+            }
+            else {
+                if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+                    $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
+                    $queryBuilder->orWhere("U.nombre LIKE ?$p");
+                }
+                else{
+                    $queryBuilder->andWhere("C.$nombreCampo = ?$p");
+                    $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
+                }
+            }
+            if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+                    $queryBuilder->setParameter("$p", '%'.$valorCampo.'%');
+                }
+            else{
+                $queryBuilder->setParameter("$p", $valorCampo);
+            }
+        }
+        $queryBuilder->andWhere('C.estado = :state')->setParameter('state', 'N');
         return $queryBuilder->getQuery();
     }
 }
