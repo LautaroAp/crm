@@ -1,7 +1,5 @@
 <?php
-
 namespace Evento\Service;
-
 use DBAL\Entity\Evento;
 use DBAL\Entity\TipoEvento;
 use Evento\Form\EventoForm;
@@ -13,7 +11,6 @@ use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use DateInterval;
 use Zend\Mvc\Plugin\FlashMessenger;
-//use Zend\Mvc\Controller\Plugin\FlashMessenger;
 
 /**
  * This service is responsible for adding/editing eventos
@@ -144,10 +141,14 @@ class EventoManager {
             }
         }
 
-//        $this->entityManager->persist($evento);
-//        $this->entityManager->flush();
+        $this->estado = $this->tryAddEvento($evento);
+//        $_SESSION['MENSAJE_EVENTO'] = $msj_eve;
         
-        $this->estado = $this->tryAddEvento($evento);        
+//        if ($this->tryAddEvento($evento)) {
+//                $_SESSION['MENSAJE_EVENTO'] = 1;
+//            } else {
+//                $_SESSION['MENSAJE_EVENTO'] = 0;
+//            }
         return $evento;
     }
 

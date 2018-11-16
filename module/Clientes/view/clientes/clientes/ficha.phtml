@@ -5,7 +5,22 @@ $id_cliente = $this->cliente->getId();
 //if (1 == 1) {
 //    echo "<script>jQuery(function(){swal(\"¡Bien!\", \"Condición cumplida\", \"success\");});</script>";
 //}
-?>
+//$this->flashMessenger()->addMessage('OK!');
+//echo $this->flashMessenger()->render();
+
+//$msj_eve = $_SESSION['MENSAJE_EVENTO'];
+//
+//if(!is_null($msj_eve)){
+//    if($msj_eve){
+//        echo "<script>jQuery(function(){swal('OK!', 'Datos guardados correctamente', 'success');});</script>";
+//    } else {
+//        echo "<script>jQuery(function(){swal('ERROR!', 'Error al guardar datos', 'error');});</script>";
+//    }
+//    $_SESSION['MENSAJE_EVENTO'] = null;
+//}
+//
+//?>
+
 
 <!-- Inicio: Datos de Cliente -->
 <div class="container margen">
@@ -17,22 +32,22 @@ $id_cliente = $this->cliente->getId();
                 <div class="row ficha-cliente-titulo">
                     <div class="form-group col-md-5">
                         <h3>
-                            <?php echo($cliente->getApellido() . ", " . $cliente->getNombre()); ?>
+<?php echo($cliente->getApellido() . ", " . $cliente->getNombre()); ?>
                         </h3>
                     </div>
                     <div class="form-group col-md-3">
                         <h3>
-                            <?php echo ($cliente->getNombreCategoriaCliente()); ?>
+<?php echo ($cliente->getNombreCategoriaCliente()); ?>
                         </h3>
                     </div>
                     <div class="form-group col-md-4">
                         <h3>
-                            <?php
-                            echo ($cliente->getNombreLicenciaCliente());
-                            if (!is_null($cliente->getVersion())) {
-                                echo (" - " . $cliente->getVersion());
-                            }
-                            ?>
+<?php
+echo ($cliente->getNombreLicenciaCliente());
+if (!is_null($cliente->getVersion())) {
+    echo (" - " . $cliente->getVersion());
+}
+?>
                         </h3>
                     </div>
                 </div>
@@ -59,7 +74,7 @@ $id_cliente = $this->cliente->getId();
                             if (!is_null($cliente->getFechaCompra())) {
                                 echo ($cliente->getFechaCompra()->format('d/m/Y'));
                             }
-                            ?></p>
+?></p>
                         <p><label>Último Pago:</label> <?php
                             if (!is_null($cliente->getFechaUltimoPago())) {
                                 echo ($cliente->getFechaUltimoPago()->format('d/m/Y'));
@@ -95,7 +110,7 @@ $id_cliente = $this->cliente->getId();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($usuarios as $usuario) : ?>
+<?php foreach ($usuarios as $usuario) : ?>
                     <tr>
                         <td><?php echo($usuario->getNombre()); ?></td>
                         <td><?php echo($usuario->getTelefono()); ?></td>
@@ -134,7 +149,7 @@ $id_cliente = $this->cliente->getId();
                     </div>
                 </div>
                 </tr>
-            <?php endforeach; ?>
+<?php endforeach; ?>
             <tr>
                 <td>
                     <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $cliente->getId()]); ?>" type="button">
@@ -169,24 +184,24 @@ $id_cliente = $this->cliente->getId();
         </table>
         <table id="tabla_evento" class="table table-bordered table-zebra table-scroll table-top">            
             <tbody role="button" class="">
-                <?php foreach ($eventos as $evento): ?>
+<?php foreach ($eventos as $evento): ?>
                     <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
                         <td id="<?= $evento->getId() ?>" class=""><?php
-                            if (!is_null($evento->getFecha())) {
-                                echo($evento->getFecha()->format('d/m/Y'));
-                            }
-                            ?></td>
+                if (!is_null($evento->getFecha())) {
+                    echo($evento->getFecha()->format('d/m/Y'));
+                }
+    ?></td>
                         <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getUsuarioEjecutivo()); ?></td>
                         <td id="<?= $evento->getId() ?>" class=""><?php
-                            if (!is_null($evento->getTipo())) {
-                                echo($evento->getTipo());
-                            } else {
-                                echo('No definido');
-                            }
-                            ?></td>
+                        if (!is_null($evento->getTipo())) {
+                            echo($evento->getTipo());
+                        } else {
+                            echo('No definido');
+                        }
+    ?></td>
                         <td id="<?= $evento->getId() ?>" class=""><?php echo(nl2br($evento->getDescripcion())); ?></td>
                     </tr> 
-                <?php endforeach; ?>    
+<?php endforeach; ?>    
             </tbody>
         </table>
     </div>
@@ -236,36 +251,36 @@ $id_cliente = $this->cliente->getId();
                         <div>
                             <a role="button" name="<?= $cliente->getId() ?>" id="<?= $cliente->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $cliente->getId() ?>">
                                 <img src="<?php
-                                if ($cliente->getEstado() == "S") {
-                                    echo($this->basePath('img/crm/ClienteEliminar.png'));
-                                } else {
-                                    echo($this->basePath('img/crm/ClienteAgregar.png'));
-                                }
-                                ?>" class="img-rounded img-responsive img-texto-derecha">
+if ($cliente->getEstado() == "S") {
+    echo($this->basePath('img/crm/ClienteEliminar.png'));
+} else {
+    echo($this->basePath('img/crm/ClienteAgregar.png'));
+}
+?>" class="img-rounded img-responsive img-texto-derecha">
                             </a>
                         </div>
                         <div class="ficha-cliente-label">
-                            <?php
-                            if ($cliente->getEstado() == "S") {
-                                echo('<label>Eliminar</label><br>'
-                                . '<label>Cliente</label>');
-                            } else {
-                                echo('<label>Agregar</label><br>'
-                                . '<label>Cliente</label>');
-                            }
-                            ?>
+<?php
+if ($cliente->getEstado() == "S") {
+    echo('<label>Eliminar</label><br>'
+    . '<label>Cliente</label>');
+} else {
+    echo('<label>Agregar</label><br>'
+    . '<label>Cliente</label>');
+}
+?>
                         </div>
                     </div>
                     <div class="col ficha-cliente-p img-centrar">
                         <div>   
-                            <?php
-                            $ruta = "";
-                            if ($cliente->getEstado() == "S") {
-                                $ruta = 'clientes';
-                            } else {
-                                $ruta = 'clientes/inactivos';
-                            }
-                            ?>
+<?php
+$ruta = "";
+if ($cliente->getEstado() == "S") {
+    $ruta = 'clientes';
+} else {
+    $ruta = 'clientes/inactivos';
+}
+?>
                             <a href="<?= $this->url($ruta) ?>" role="button">
                                 <img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha">
                             </a>
@@ -294,8 +309,8 @@ $id_cliente = $this->cliente->getId();
             <div class="modal-body">
                 <p>
                     ¿Está seguro que desea eliminar el cliente:
-                    "<?= $this->escapeHtml($cliente->getNombre()) ?>." ".
-                    <?= $this->escapeHtml($cliente->getApellido()) ?>"
+                    "<?= $this->escapeHtml($cliente->getNombre()) ?> <?= $this->escapeHtml($cliente->getApellido()) ?>"
+
                     ?<br>
                     <?php
                     if ($cliente->getEstado() == "S") {
