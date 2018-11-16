@@ -28,4 +28,40 @@
     <body class="homepage">
         <?= $this->content; ?>
     </body>
+
+   
+
+    <div id="footer" >
+        <div class="container ">
+            <div class="row align-center">
+                
+                <div class="col-xs-3"></div>
+                <div class="col-xs-2 align-right">
+                    <img src="http://www.softhuella.com.ar/wp-content/uploads/logo-footer1.jpg" class="img-responsive footer-logo" alt="" width="100" height="80">
+                </div>
+                <div class="col-xs-5 align-left">
+                     <section class="6u">
+                        <p class="default">
+                            <a href=""<?= $this->url('application', ['action' => 'index']); ?>">HOME</a>
+                            ·
+                            <a href="<?= $this->url('clientes'); ?>">CLIENTES</a>
+                            ·
+                            <a href="<?= $this->url('licencia', ['action' => 'index']); ?>">LICENCIAS</a>
+                            ·
+                            <a href="<?= $this->url('ventas'); ?>">VENTAS</a>
+                            ·
+                            <a href="<?= $this->url('gestion'); ?>">GESTION</a>
+                            ·
+                            <a href="<?= $this->url('application', ['action' => 'backup']); ?>">BACKUP</a>
+                        </p>
+                        <p>
+                          <span>Tandil - Provincia de Buenos Aires - Argentina</span>	 
+                        </p>
+                    </section>
+                </div>
+                <div class="col-xs-2">
+                </div>
+            </div>
+        </div>
+    </div>
 </html>

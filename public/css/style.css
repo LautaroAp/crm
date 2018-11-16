@@ -108,6 +108,10 @@
 	footer.major {
 		padding-top: 3em;
 	}
+        
+        header.footer{
+            font: normal 5px sans-serif;
+        }
 
 /* Form */
 
@@ -630,15 +634,22 @@
 	#footer {
 		padding: 4em 0;
 		color: #fff;
+                background-color: rgb(68,68,68);
 	}
 
 		#footer .major h2 {
 			font-size: 2em;
 			color: #FFF;
+                        background-color: rgb(66,66,66);
+
+                       
 		}
 
 		#footer .major .byline {
 			font-size: 1.1em;
+                                        background-color: rgb(66,66,66);
+
+
 		}
 
 		#footer .copyright {
@@ -648,8 +659,14 @@
 			border-color: rgba(192, 192, 192, 0.15);
 			text-align: center;
 			color: inherit;
+                                        background-color: rgb(66,66,66);
+
+
 		}
 
 		#footer a {
 			color: inherit;
+                        background-color: rgb(66,66,66);
+
+
 		}
