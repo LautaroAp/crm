@@ -164,7 +164,7 @@ class ClientesManager {
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('C')
                      ->from(Cliente::class, 'C')
-                    ->join(Usuario::class, 'U',  "WITH", 'C.Id = U.id_cliente');
+                    ->leftJoin(Usuario::class, 'U',  "WITH", 'C.Id = U.id_cliente');
         $indices = array_keys($parametros);
         
         for ($i = 0; $i < count($indices); $i++) {
