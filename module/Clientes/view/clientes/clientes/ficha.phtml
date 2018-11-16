@@ -7,57 +7,11 @@ $id_cliente = $this->cliente->getId();
 //}
 ?>
 
-<script>
-    var eventos = [];
-
-    // obtengo ID de eventos
-    function seleccionarFila(e) {
-        elementId = e.target.id;
-        $('#' + elementId).toggleClass('table-seleccion');
-        if ($('#' + elementId).hasClass('table-seleccion')) {
-            // Guardo id de evento
-            eventos.push(elementId);
-            console.log(eventos);
-        } else {
-            // Elimino id de evento
-            eventos.splice($.inArray(elementId, eventos), 1);
-            console.log(eventos);
-        }
-    }
-    ;
-
-    // funcion para eliminar los eventos guardados
-    function eliminaEventos() {
-        // para cada elemento, envio id a la Action eliminaEvento
-        for (i = 0; i < eventos.length; i++) {
-            id_evento = eventos[i];
-            $.ajax({
-                "dataType": "text",
-                "type": "POST",
-                "data": "temp",
-                "url": '/crm/clientes/ajax/eliminaEventos/' + id_evento,
-
-                "success": function (msg) {
-                    document.location.reload();
-                },
-                "error": function (msg) {
-                    console.log("1-error!");
-                }
-
-            }).done(function (msg) {
-                console.log("1-done!");
-            })
-        }
-    }
-</script>
-
-
-
 <!-- Inicio: Datos de Cliente -->
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">Ficha de Cliente</div>
+            <div class="panel-heading text-center">DATOS PARTICULARES</div>
             <div class="panel-body">
                 <!-- Header -->
                 <div class="row ficha-cliente-titulo">
@@ -127,13 +81,13 @@ $id_cliente = $this->cliente->getId();
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading text-center">Usuarios Adicionales</div>
+            <div class="panel-heading text-center">USUARIOS Y DATOS ADICIONALES</div>
         </div>
         <!-- Datos de Usuarios Adicionales -->
         <table id="tabla_evento" class="table table-condensed">            
             <thead>
                 <tr> 
-                    <th class="th-sm">Usuario Adicional</th>
+                    <th class="th-sm">U/Dato Adicional</th>
                     <th class="th-sm">Teléfono</th>
                     <th class="th-sm">Email</th>
                     <th class="th-sm">Skype</th>
@@ -200,7 +154,7 @@ $id_cliente = $this->cliente->getId();
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">Registro de Actividades</div>
+            <div class="panel-heading text-center">REGISTRO DE ACTIVIDADES</div>
         </div>
         <!-- Datos de Usuarios Adicionales -->
         <table id="tabla_evento" class="table table-bordered table-zebra table-bot">            

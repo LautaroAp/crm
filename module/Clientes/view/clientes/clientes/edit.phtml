@@ -2,52 +2,28 @@
 $title = 'Editar Cliente';
 $this->headTitle($title);
 $id = $cliente->getId();
-
 $apellido = $cliente->getApellido();
 $nombre = $cliente->getNombre();
 $telefono = $cliente->getTelefono();
 $email = $cliente->getEmail();
-
-//$pais = $cliente->getNombrePaisCliente();
-//$provincia = $cliente->getNombreProvinciaCliente();
 $pais = $cliente->getPais();
 $provincia = $cliente->getProvincia();
 $ciudad = $cliente->getCiudad();
 $empresa = $cliente->getEmpresa();
-
-//$categoria = $cliente->getNombreCategoriaCliente();
-//$licencia = $cliente->getNombreLicenciaCliente();
 $categoria = $cliente->getCategoria();
 $licencia = $cliente->getLicencia();
 $version = $cliente->getVersion();
-
-//$profesion = $cliente->getNombreProfesionCliente();
 $profesion = $cliente->getProfesion();
 $actividad = $cliente->getActividad();
 $animales = $cliente->getAnimales();
 $establecimientos = $cliente->getEstablecimientos();
-
-
-
 ?>
-
-<script>
-    
-    //toma el pais al cambiar la opcion, lo envia a la accion getPovincias que devuelve la lista de provincias para elegir
-    function actualizarDatosProvincias(id_pais)
-    {
-        $.post('/crm/clientes/ajax/getProvincias/'+id_pais, function( data ) {
-                $('#div_provincias').html(data);
-            });    
-    }
-
-</script>
 
 <!-- Inicio: Cliente Nuevo -->
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">Modificar datos de Cliente</div>
+            <div class="panel-heading">MODIFICAR DATOS PARTICULARES</div>
         </div>   
     </div>
 </div>
@@ -162,7 +138,7 @@ $establecimientos = $cliente->getEstablecimientos();
                     <div class="container margen">
                         <div class="row">
                             <div class="panel panel-default">
-                                <div class="panel-heading">Caracteristicas de trabajo</div>
+                                <div class="panel-heading">MODIFICAR DATOS LABORALES</div>
                             </div>   
                         </div>
                     </div>

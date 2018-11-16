@@ -62,7 +62,7 @@ class ProfesionClienteForm extends Form
             'name' => 'nombre',
             'value' => '',
             'options' => [
-                'label' => 'Nombre',
+                'label' => 'Nombre de Profesión',
             ],
         ]);
 

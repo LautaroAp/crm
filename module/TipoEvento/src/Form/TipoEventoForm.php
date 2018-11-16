@@ -62,7 +62,7 @@ class TipoEventoForm extends Form
             'name' => 'nombre',
             'value' => '',
             'options' => [
-                'label' => 'Nombre Tipo Evento',
+                'label' => 'Nombre del Tipo de Actividad',
             ],
         ]);
 

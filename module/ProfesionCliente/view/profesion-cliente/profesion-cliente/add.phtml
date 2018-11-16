@@ -1,51 +1,36 @@
-
 <?php
 $this->headTitle('Agregar CategoriaCliente');
-
 $form->get('nombre')->setAttributes([
     'class' => 'form-control',
     'value' => ''
 ]);
-
 $form->get('version')->setAttributes([
     'class' => 'form-control',
     'value' => ''
 ]);
-
 $form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
-
 $form->prepare();
 ?>
-
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1>Agregar CategoriaCliente</h1>
-
+            <h1>Agregar</h1>
             <h4>
-                Por favor ingrese los datos de la nueva categoria
+                Por favor ingrese los datos
             </h4>
-
             <div class="row">
                 <div class="col-md-8">
                     <?= $this->form()->openTag($form); ?>
-
                     <div class="form-group">
                         <?= $this->formLabel($form->get('nombre')); ?>
                         <?= $this->formElement($form->get('nombre')); ?>
                         <?= $this->formElementErrors($form->get('nombre')); ?>                  
                     </div>
-
-               
                     <?= $this->formElement($form->get('submit')); ?>
-
                     <?= $this->form()->closeTag(); ?>
                 </div>    
             </div>  
-
-
-
         </div>
     </div>
 </div>

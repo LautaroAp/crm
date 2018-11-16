@@ -1,48 +1,35 @@
-
 <?php
 $this->headTitle('Editar Licencia');
-
 $nombre_licencia = $form->get('nombre_licencia');
-
 $form->get('nombre_licencia')->setAttributes([
     'class' => 'form-control',
     'value' => $licencia->getNombre(),
-    'required' => '',
-    
+    'required' => '',  
 ]);
-
 $form->get('precio_local')->setAttributes([
     'class' => 'form-control',
     'value' => $licencia->getPrecio_local(),
-
 ]);
-
 $form->get('precio_extranjero')->setAttributes([
     'class' => 'form-control',
     'value' => $licencia->getPrecio_extranjero(),
-
 ]);
-
 $form->get('descuento')->setAttributes([
     'class' => 'form-control',
     'value' => $licencia->getDescuento(),
-
 ]);
-
 $form->get('iva')->setAttributes([
     'class' => 'form-control',
     'value' => $licencia->getIva(),
-
 ]);
 $form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
-
 $form->prepare();
 ?>
 
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">Editar datos de Licencia</div>
+            <div class="panel-heading">EDITAR LICENCIA</div>
         </div>
     </div>
 </div>
@@ -91,7 +78,6 @@ $form->prepare();
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
-
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">

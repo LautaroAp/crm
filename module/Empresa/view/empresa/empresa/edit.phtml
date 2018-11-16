@@ -1,109 +1,71 @@
-
 <?php
 $this->headTitle('Editar datos de la empresa');
-
 $form->get('nombre')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getNombre()
 ]);
-
 $form->get('direccion')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getDireccion()
-
 ]);
-
 $form->get('telefono')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getTelefono()
-
 ]);
-
 $form->get('mail')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getMail()
-
 ]);
-
 $form->get('movil')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getMovil()
-
 ]);
-
-
 $form->get('fax')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getFax()
-
 ]);
-
-
 $form->get('web')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getWeb()
-
 ]);
-
 $form->get('cuit_cuil')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getCuit_cuil()
-
 ]);
-
-
 $form->get('vencimiento_cai')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getVencimiento_cai()
-
 ]);
-
 $form->get('razon_social')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getRazon_social()
-
 ]);
-
 $form->get('tipo_iva')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getTipo_iva()
-
 ]);
-
 $form->get('localidad')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getLocalidad()
-
 ]);
-
 $form->get('provincia')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getProvincia()
-
 ]);
-
 $form->get('pais')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getPais()
-
 ]);
-
-
 $form->get('CP')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getCP()
-
 ]);
-
 $form->get('parametro_vencimiento')->setAttributes([
     'class' => 'form-control',
     'value' => $empresa->getParametro_vencimiento(),
     'style' => 'width: 50px;'
-
 ]);
-
 $form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
-
 $form->prepare();
 ?>
 <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
@@ -120,7 +82,7 @@ $form->prepare();
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">Editar los datos de la empresa</div>
+            <div class="panel-heading">EDITAR DATOS DE EMPRESA</div>
         </div>
     </div>
 </div>
@@ -212,13 +174,10 @@ $form->prepare();
                 <?= $this->formElement($form->get('CP')); ?>
                 <?= $this->formElementErrors($form->get('CP')); ?> 
             </div>
-            
-            
         </div>    
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
-
             Modal content
             <div class="modal-content">
                 <div class="modal-header">
@@ -242,7 +201,7 @@ $form->prepare();
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">Parámetros de Empresa</div>
+            <div class="panel-heading">EDITAR PARÁMETROS DE EMPRESA</div>
         </div>
     </div>            
     <label>Vigencia del soporte</label>
@@ -285,6 +244,5 @@ $form->prepare();
     </div>
 </div>
 <!-- Fin: Panel Botones -->
-
 <?= $this->form()->closeTag(); ?>
 

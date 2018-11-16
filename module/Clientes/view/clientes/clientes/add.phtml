@@ -3,23 +3,11 @@ $title = 'Agregar Cliente';
 $this->headTitle($title);
 ?>
 
-<script>
-    
-    //toma el pais al cambiar la opcion, lo envia a la accion getPovincias que devuelve la lista de provincias para elegir
-    function actualizarDatosProvincias(id_pais)
-    {
-        $.post('/crm/clientes/ajax/getProvincias/'+id_pais, function( data ) {
-                $('#div_provincias').html(data);
-            });    
-    }
-
-</script>
-
 <!-- Inicio: Cliente Nuevo -->
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">Datos del Cliente</div>
+            <div class="panel-heading">AGREGAR DATOS PARTICULARES</div>
         </div>   
     </div>
 </div>
@@ -120,7 +108,7 @@ $this->headTitle($title);
                     <div class="container margen">
                         <div class="row">
                             <div class="panel panel-default">
-                                <div class="panel-heading">Caracteristicas de trabajo</div>
+                                <div class="panel-heading">AGREGAR DATOS LABORALES</div>
                             </div>   
                         </div>
                     </div>

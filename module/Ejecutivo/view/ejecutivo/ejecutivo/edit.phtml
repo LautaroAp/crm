@@ -1,50 +1,38 @@
 <?php
 $this->headTitle('Edit Ejecutivo');
-
 $form->get('apellido')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'Ingresar Apellido',
     'value' => $ejecutivo->getApellido()
-
 ]);
-
 $form->get('nombre')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'Ingresar Nombre',
     'value' => $ejecutivo->getNombre()
-
 ]);
-
 $form->get('mail')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'nombre@ejemplo.com',
     'value' => $ejecutivo->getMail()
-
 ]);
-
 $form->get('usuario')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'Ingresar Usuario',
     'value' => $ejecutivo->getUsuario()
-
 ]);
-
 $form->get('clave')->setAttributes([
     'class' => 'form-control',
     'value' => $ejecutivo->getClave()
     ]);
-
 $form->get('submit')
         ->setAttributes(['class' => 'btn btn-info'])
         ->setValue('Guardar');
-
 $form->prepare();
 ?>
-
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">Editar ejecutivo</div>
+            <div class="panel-heading">EDITAR EJECUTIVO</div>
         </div>
     </div>
 </div>

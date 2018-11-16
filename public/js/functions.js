@@ -1,4 +1,3 @@
-
 function sortTableString(n, id) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById(id);
@@ -110,3 +109,8 @@ function sortTableNumeric(n, id) {
     }
 }
 
+function bloqueaPantalla() {
+    document.getElementById('bloquea').style.display = 'block';
+    $('#loader').toggleClass('loader');
+    $('#loader').toggleClass('WindowLoad');
+}

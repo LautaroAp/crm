@@ -1,46 +1,36 @@
 <?php
-
 use DBAL\Entity\Ejecutivo;
-
 $this->headTitle('Add Ejecutivo');
-
 $form->get('apellido')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'Ingresar Apellido'
 ]);
-
 $form->get('nombre')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'Ingresar Nombre'
 ]);
-
 $form->get('mail')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'nombre@ejemplo.com'
 ]);
-
 $form->get('usuario')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'Ingresar Usuario'
 ]);
-
 $form->get('clave')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'Ingresar Clave'
 ]);
-
-
 $form->get('submit')->setAttributes(['class' => 'btn btn-danger'])
         ->setValue('Crear')
 ;
-
 $form->prepare();
 ?>
 
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">Ejecutivo nuevo</div>
+            <div class="panel-heading">AGREGAR EJECUTIVO</div>
         </div>
     </div>
 </div>
@@ -131,5 +121,4 @@ $form->prepare();
     </div>
 </div>
 <!-- Fin: Panel Botones -->
-
 <?= $this->form()->closeTag(); ?>
