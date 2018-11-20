@@ -263,12 +263,27 @@ class ClientesManager {
         } else {
             $cliente->setVersion($data['version']);
         }
-        $this->entityManager->persist($cliente);
-        // Apply changes to database.
-        $this->entityManager->flush();
+        if ($this->tryAddCliente($cliente)) {
+            $_SESSION['MENSAJES']['listado_clientes'] = 1;
+            $_SESSION['MENSAJES']['listado_clientes_msj'] = 'Cliente agregado correctamente';
+        } else {
+            $_SESSION['MENSAJES']['listado_clientes'] = 0;
+            $_SESSION['MENSAJES']['listado_clientes_msj'] = 'Error al agregar cliente';
+        }
         return $cliente;
     }
 
+    private function tryAddCliente($cliente) {
+        try {
+            $this->entityManager->persist($cliente);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
+    }
+    
     public function updateCliente($data) {
         $cliente = $this->getCliente($data['id']);
         $cliente->setApellido($data['apellido']);
@@ -305,11 +320,26 @@ class ClientesManager {
         } else {
             $cliente->setVersion($data['version']);
         }
-        // Apply changes to database.
-        $this->entityManager->flush();
+        if ($this->tryUpdateCliente($cliente)) {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 1;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Cliente modificado correctamente';
+        } else {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 0;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al modificar cliente';
+        }
         return true;
     }
-
+    
+    private function tryUpdateCliente($cliente) {
+        try {
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
+    }
+    
     public function deleteCliente($id) {
         $entityManager = $this->entityManager;
         $cliente = $this->entityManager
@@ -329,11 +359,14 @@ class ClientesManager {
         if ($cliente->getEstado() == "S") {
             $cliente->setEstado("N");
             $estado_nuevo = "N";
+            $_SESSION['MENSAJES']['listado_clientes_msj'] = 'Cliente dado de Baja correctamente';
         } else if ($cliente->getEstado() == "N") {
             $cliente->setEstado("S");
             $estado_nuevo = "S";
+            $_SESSION['MENSAJES']['listado_clientes_msj'] = 'Cliente dado de Alta correctamente';
         }
         $entityManager->flush();
+        $_SESSION['MENSAJES']['listado_clientes'] = 1;
         return $estado_nuevo;
     }
 

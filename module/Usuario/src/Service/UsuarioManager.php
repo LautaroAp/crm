@@ -64,7 +64,6 @@ class UsuarioManager {
      * This method adds a new usuario.
      */
     public function addUsuario($data) {
-
         $usuario = new Usuario();
         $usuario->setNombre($data['nombre']);
         $usuario->setTelefono($data['telefono']);
@@ -78,32 +77,73 @@ class UsuarioManager {
                 ->findOneBy(['Id' => $idCliente]);
         
         $usuario->setId_cliente($cliente);
-        // Add the entity to the entity manager.
-        $this->entityManager->persist($usuario);
-        // Apply changes to database.
-        $this->entityManager->flush();
-
+        if ($this->tryAddUsuario($usuario)) {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 1;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Datos guardados correctamente';
+        } else {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 0;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al guardar datos';
+        }
         return $usuario;
     }
 
     public function updateUsuario($usuario, $data) {
-
         $usuario->setNombre($data['nombre']);
         $usuario->setTelefono($data['telefono']);
         $usuario->setMail($data['mail']);
         $usuario->setSkype($data['skype']);
-        // Apply changes to database.
-        $this->entityManager->flush();
-
+        if ($this->tryUpdateUsuario($usuario)) {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 1;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Datos editados correctamente';
+        } else {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 0;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al editar datos';
+        }
         return true;
     }
 
     public function removeUsuario($usuario) {
-
-        $this->entityManager->remove($usuario);
-        $this->entityManager->flush();
+        if ($this->tryRemoveUsuario($usuario)) {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 1;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Datos eliminados correctamente';
+        } else {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 0;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al eliminar datos';
+        }
     }
 
+    private function tryAddUsuario($usuario) {
+        try {
+            $this->entityManager->persist($usuario);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
+    }
+
+    private function tryUpdateUsuario($usuario) {
+        try {
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
+    }
+    
+    private function tryRemoveUsuario($usuario) {
+        try {
+            $this->entityManager->remove($usuario);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
+    }
+    
     public function recuperarUsuario($id_usuario) {
         $usuario = $this->entityManager->getRepository(Usuario::class)
                 ->findOneBy(['id_usuario' => $id_usuario]);

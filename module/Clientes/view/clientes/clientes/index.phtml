@@ -1,4 +1,15 @@
-<!-- MODULE CLIENTES -->
+<?php
+if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
+    if ($_SESSION['MENSAJES']['listado_clientes']) {
+        echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['listado_clientes_msj'] . "', 'success');});</script>";
+    } else {
+        echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['listado_clientes_msj'] . "', 'error');});</script>";
+    }
+    $_SESSION['MENSAJES']['listado_clientes'] = null;
+    $_SESSION['MENSAJES']['listado_clientes_msj'] = null;
+}
+?>
+
 <script src="js/functions.js"></script>
 <!-- Inicio: Tabla Clientes -->
 <div class="container margen">

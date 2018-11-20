@@ -71,9 +71,13 @@ class LicenciaManager {
         $licencia->setDescuento($data['descuento']);
         $licencia->setIva($data['iva']);
         $licencia->setPrecio_extranjero($data['precio_extranjero']);
-
-        $this->entityManager->persist($licencia);
-        $this->entityManager->flush();
+        if ($this->tryAddLicencia($licencia)) {
+            $_SESSION['MENSAJES']['licencia'] = 1;
+            $_SESSION['MENSAJES']['licencia_msj'] = 'Licencia agregada correctamente';
+        } else {
+            $_SESSION['MENSAJES']['licencia'] = 0;
+            $_SESSION['MENSAJES']['licencia_msj'] = 'Error al agregar licencia';
+        }
         return $licencia;
     }
 
@@ -87,7 +91,6 @@ class LicenciaManager {
     }
 
     public function getFormForLicencia($licencia) {
-
         if ($licencia == null) {
             return null;
         }
@@ -113,16 +116,24 @@ class LicenciaManager {
         $licencia->setPrecio_extranjero($data['precio_extranjero']);
         $licencia->setIva($data['iva']);
         $licencia->setDescuento($data['descuento']);
-        // Apply changes to database.
-        $this->entityManager->flush();
+        if ($this->tryUpdateLicencia($licencia)) {
+            $_SESSION['MENSAJES']['licencia'] = 1;
+            $_SESSION['MENSAJES']['licencia_msj'] = 'Licencia editada correctamente';
+        } else {
+            $_SESSION['MENSAJES']['licencia'] = 0;
+            $_SESSION['MENSAJES']['licencia_msj'] = 'Error al editar licencia';
+        }
         return true;
     }
 
     public function removeLicencia($licencia) {
-
-
-        $this->entityManager->remove($licencia);
-        $this->entityManager->flush();
+        if ($this->tryRemoveLicencia($licencia)) {
+            $_SESSION['MENSAJES']['licencia'] = 1;
+            $_SESSION['MENSAJES']['licencia_msj'] = 'Licencia eliminada correctamente';
+        } else {
+            $_SESSION['MENSAJES']['licencia'] = 0;
+            $_SESSION['MENSAJES']['licencia_msj'] = 'Error al eliminar licencia';
+        }
     }
 
     public function getTabla() {
@@ -146,5 +157,37 @@ class LicenciaManager {
             $cliente->setLicencia(null);
         }
         $this->entityManager->flush();
+    }
+    
+    private function tryAddLicencia($licencia) {
+        try {
+            $this->entityManager->persist($licencia);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
+    }
+
+    private function tryUpdateLicencia($licencia) {
+        try {
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
+    }
+    
+    private function tryRemoveLicencia($licencia) {
+        try {
+            $this->entityManager->remove($licencia);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
     }
 }

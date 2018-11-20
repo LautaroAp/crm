@@ -1,4 +1,14 @@
-<?= $this->doctype() ?>
+<?= $this->doctype();
+if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
+    if ($_SESSION['MENSAJES']['ejecutivo']) {
+        echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['ejecutivo_msj'] . "', 'success');});</script>";
+    } else {
+        echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['ejecutivo_msj'] . "', 'error');});</script>";
+    }
+    $_SESSION['MENSAJES']['ejecutivo'] = null;
+    $_SESSION['MENSAJES']['ejecutivo_msj'] = null;
+}
+?>
 <html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />

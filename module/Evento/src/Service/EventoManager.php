@@ -1,5 +1,7 @@
 <?php
+
 namespace Evento\Service;
+
 use DBAL\Entity\Evento;
 use DBAL\Entity\TipoEvento;
 use Evento\Form\EventoForm;
@@ -35,7 +37,7 @@ class EventoManager {
      * @var type 
      */
     private $config;
-    
+
     /**
      * Application config.
      * @var type 
@@ -77,8 +79,8 @@ class EventoManager {
         }
         return $evento;
     }
-    
-    public function getEstado(){
+
+    public function getEstado() {
         return $this->estado;
     }
 
@@ -141,14 +143,13 @@ class EventoManager {
             }
         }
 
-        $this->estado = $this->tryAddEvento($evento);
-//        $_SESSION['MENSAJE_EVENTO'] = $msj_eve;
-        
-//        if ($this->tryAddEvento($evento)) {
-//                $_SESSION['MENSAJE_EVENTO'] = 1;
-//            } else {
-//                $_SESSION['MENSAJE_EVENTO'] = 0;
-//            }
+        if ($this->tryAddEvento($evento)) {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 1;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Actividad guardada correctamente';
+        } else {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 0;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al guardar actividad';
+        }
         return $evento;
     }
 
@@ -243,8 +244,13 @@ class EventoManager {
     public function removeEvento($id) {
         $evento = $this->entityManager->getRepository(Evento::class)
                 ->findOneById($id);
-        $this->entityManager->remove($evento);
-        $this->entityManager->flush();
+        if ($this->tryRemoveEvento($evento)) {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 1;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Actividad eliminada/as correctamente';
+        } else {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 0;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al eliminar actividad/es';
+        }
     }
 
     public function eliminarEventos($eventos_array) {
@@ -265,10 +271,21 @@ class EventoManager {
         }
         $entityManager->flush();
     }
-    
-    private function tryAddEvento($evento){
+
+    private function tryAddEvento($evento) {
         try {
             $this->entityManager->persist($evento);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
+    }
+
+    private function tryRemoveEvento($evento) {
+        try {
+            $this->entityManager->remove($evento);
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {

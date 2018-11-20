@@ -167,12 +167,7 @@ class ClientesController extends AbstractActionController {
             // Tiene que grabar
             $id = $this->params()->fromRoute('id');
             $estado_nuevo = $this->clientesManager->modificarEstado($id);
-            if($estado_nuevo == "S"){
-                $this->redirect()->toRoute('clientes');
-            }
-            else{
-                $this->redirect()->toRoute('clientes/inactivos');
-            }
+            $this->redirect()->toRoute('clientes');
         } else {
             return new ViewModel();
         }
