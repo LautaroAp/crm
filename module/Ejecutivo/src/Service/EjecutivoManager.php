@@ -1,4 +1,5 @@
 <?php
+
 namespace Ejecutivo\Service;
 
 use DBAL\Entity\Ejecutivo;
@@ -18,72 +19,55 @@ use Zend\Mime\Part as MimePart;
  * This service is responsible for adding/editing ejecutivos
  * and changing ejecutivo password.
  */
-class EjecutivoManager
-{
+class EjecutivoManager {
+
     /**
      * Doctrine entity manager.
      * @var Doctrine\ORM\EntityManager
      */
-    private $entityManager;  
-    
+    private $entityManager;
+
     /**
      * PHP template renderer.
      * @var type 
      */
     private $viewRenderer;
-    
+
     /**
      * Application config.
      * @var type 
      */
     private $config;
-    
+
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) 
-    {
+    public function __construct($entityManager, $viewRenderer, $config) {
         $this->entityManager = $entityManager;
         $this->viewRenderer = $viewRenderer;
         $this->config = $config;
     }
-    
-    
-    //La funcion getTabla() devuelve tabla de clientes sin filtro    
-//    public function getTabla() {
-//        // Create the adapter
-//        $adapter = new SelectableAdapter($this->entityManager->getRepository(Ejecutivo::class)); // An object repository implements Selectable
-//        // Create the paginator itself
-//        $paginator = new Paginator($adapter);
-//
-//        return ($paginator);
-//    }
-    
-        public function getTabla() {
+
+    public function getTabla() {
         $query = $this->busquedaActivos();
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
         $paginator = new Paginator($adapter);
         return $paginator;
     }
-      
 
     public function busquedaActivos() {
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('E')
                 ->from(Ejecutivo::class, 'E')
-                ->where('E.activo = :state') ->setParameter('state', 'S'); 
+                ->where('E.activo = :state')->setParameter('state', 'S');
         return $queryBuilder->getQuery();
     }
-    
-    
+
     /**
      * This method adds a new ejecutivo.
      */
-    
-    public function addEjecutivo($data) 
-    {
-        // Create new Ejecutivo entity.
+    public function addEjecutivo($data) {
         $ejecutivo = new Ejecutivo();
         $ejecutivo->setApellido($data['apellido']);
         $ejecutivo->setNombre($data['nombre']);
@@ -91,49 +75,66 @@ class EjecutivoManager
         $ejecutivo->setUsuario($data['usuario']);
         $ejecutivo->setClave($data['clave']);
         $ejecutivo->setActivo('S');
-        // Add the entity to the entity manager.
-        $this->entityManager->persist($ejecutivo);
-        // Apply changes to database.
-        $this->entityManager->flush();
-        
+        if ($this->tryAddEjecutivo($ejecutivo)) {
+            $_SESSION['MENSAJES']['ejecutivo'] = 1;
+            $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Ejecutivo eliminados correctamente';
+        } else {
+            $_SESSION['MENSAJES']['ejecutivo'] = 0;
+            $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Error al eliminar ejecutivo';
+        }
         return $ejecutivo;
     }
-    
-    public function updateEjecutivo($ejecutivo, $data) 
-    {
-        /*
-        // Do not allow to change user email if another user with such email already exits.
-        if($user->getEmail()!=$data['email'] && $this->checkUserExists($data['email'])) {
-            throw new \Exception("Another user with email address " . $data['email'] . " already exists");
-        }*/
+
+    public function updateEjecutivo($ejecutivo, $data) {
         $ejecutivo->setApellido($data['apellido']);
         $ejecutivo->setNombre($data['nombre']);
         $ejecutivo->setMail($data['mail']);
         $ejecutivo->setUsuario($data['usuario']);
-        $ejecutivo->setClave($data['clave']);   
-        
-        // Apply changes to database.
-        $this->entityManager->flush();
-
+        $ejecutivo->setClave($data['clave']);
+        if ($this->tryUpdateEjecutivo($ejecutivo)) {
+            $_SESSION['MENSAJES']['ejecutivo'] = 1;
+            $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Ejecutivo editado correctamente';
+        } else {
+            $_SESSION['MENSAJES']['ejecutivo'] = 0;
+            $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Error al editar ejecutivo';
+        }
         return true;
     }
-    
-    public function removeEjecutivo($ejecutivo) 
-    {
-       $ejecutivo->inactivar();
-       $this->entityManager->flush();
 
+    public function removeEjecutivo($ejecutivo) {
+        $ejecutivo->inactivar();
+        $this->entityManager->flush();
+        $_SESSION['MENSAJES']['ejecutivo'] = 1;
+        $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Ejecutivo dado de Baja correctamente';
     }
-    
-    public function recuperarEjecutivo($id){
-        if (is_null($this->entityManager)){
-            print_r("no hay entityManager");die();
+
+    public function recuperarEjecutivo($id) {
+        if (!is_null($this->entityManager)) {
+            $ejecutivo = $this->entityManager
+                    ->getRepository(Ejecutivo::class)
+                    ->findOneById($id);
+            return $ejecutivo;
         }
-        $ejecutivo= $this->entityManager
-                        ->getRepository(Ejecutivo::class)
-                        ->findOneById($id);
-        return $ejecutivo;
     }
-    
-}
 
+    private function tryAddEjecutivo($ejecutivo) {
+        try {
+            $this->entityManager->persist($ejecutivo);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
+    }
+
+    private function tryUpdateEjecutivo($ejecutivo) {
+        try {
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
+    }
+}

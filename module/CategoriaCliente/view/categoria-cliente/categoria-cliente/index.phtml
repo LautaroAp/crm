@@ -1,3 +1,14 @@
+<?php
+if (isset($_SESSION['MENSAJES']['categoria_cliente'])) {
+    if ($_SESSION['MENSAJES']['categoria_cliente']) {
+        echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['categoria_cliente_msj'] . "', 'success');});</script>";
+    } else {
+        echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['categoria_cliente_msj'] . "', 'error');});</script>";
+    }
+    $_SESSION['MENSAJES']['categoria_cliente'] = null;
+    $_SESSION['MENSAJES']['categoria_cliente_msj'] = null;
+}
+?>
 <!--Bloqueo de pantalla + animacion-->
 <div id="bloquea" class="cargando" style="display:none;"></div>
 <div class="" id="loader"></div>

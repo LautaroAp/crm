@@ -62,8 +62,13 @@ class ProfesionClienteManager
     {
         $profesioncliente = new ProfesionCliente();
         $profesioncliente->setNombre($data['nombre']);
-        $this->entityManager->persist($profesioncliente);
-        $this->entityManager->flush();
+        if ($this->tryAddProfesionCliente($profesioncliente)) {
+            $_SESSION['MENSAJES']['profesion_cliente'] = 1;
+            $_SESSION['MENSAJES']['profesion_cliente_msj'] = 'Profesión agregada correctamente';
+        } else {
+            $_SESSION['MENSAJES']['profesion_cliente'] = 0;
+            $_SESSION['MENSAJES']['profesion_cliente_msj'] = 'Error al agregar profesión';
+        }
         return $profesioncliente;
     }
     
@@ -100,17 +105,24 @@ class ProfesionClienteManager
     {       
         $data = $form->getData();
         $profesioncliente->setNombre($data['nombre']);
-        // Apply changes to database.
-        $this->entityManager->flush();
+        if ($this->tryUpdateProfesionCliente($profesioncliente)) {
+            $_SESSION['MENSAJES']['profesion_cliente'] = 1;
+            $_SESSION['MENSAJES']['profesion_cliente_msj'] = 'Profesión editada correctamente';
+        } else {
+            $_SESSION['MENSAJES']['profesion_cliente'] = 0;
+            $_SESSION['MENSAJES']['profesion_cliente_msj'] = 'Error al editar profesión';
+        }
         return true;
     }
     
     public function removeProfesionCliente($profesioncliente){
-       
-
-            $this->entityManager->remove($profesioncliente);
-            $this->entityManager->flush();
-           
+       if ($this->tryRemoveProfesionCliente($profesioncliente)) {
+            $_SESSION['MENSAJES']['profesion_cliente'] = 1;
+            $_SESSION['MENSAJES']['profesion_cliente_msj'] = 'Profesión eliminada correctamente';
+        } else {
+            $_SESSION['MENSAJES']['profesion_cliente'] = 0;
+            $_SESSION['MENSAJES']['profesion_cliente_msj'] = 'Error al eliminar profesión';
+        }           
     }
     
     public function getTabla() {
@@ -120,5 +132,37 @@ class ProfesionClienteManager
         $paginator = new Paginator($adapter);
 
         return ($paginator);
+    }
+    
+    private function tryAddProfesionCliente($profesioncliente) {
+        try {
+            $this->entityManager->persist($profesioncliente);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
+    }
+
+    private function tryUpdateProfesionCliente($profesioncliente) {
+        try {
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
+    }
+    
+    private function tryRemoveProfesionCliente($profesioncliente) {
+        try {
+            $this->entityManager->remove($profesioncliente);
+            $this->entityManager->flush();
+            return true;
+        } catch (\Exception $e) {
+            $this->entityManager->rollBack();
+            return false;
+        }
     }
 } 
