@@ -75,9 +75,8 @@
                                             </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <a class="btn btn-default" href="<?= $this->url('ejecutivos/activar', ['action' => 'activar', 'id' => $ejecutivo->getId()]); ?>">
-                                                Aceptar
-                                            </a>
+                                            <a href="<?= $this->url('ejecutivos/activar', ['action' => 'activar', 'id' => $ejecutivo->getId()]); ?>" type="button">
+                                            <span class="btn btn-default">Aceptar</span></a>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                         </div>
                                     </div>

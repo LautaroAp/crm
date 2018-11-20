@@ -86,7 +86,8 @@
                                             </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="<?= $this->url('tipoevento/borrar', ['action' => 'remove', 'id' => $tipoevento->getId()]); ?>" class="btn btn-default" onclick="bloqueaPantalla()">Aceptar</a>
+                                            <a href="<?= $this->url('tipoevento/borrar', ['action' => 'remove', 'id' => $tipoevento->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
+                                            <span class="btn btn-default">Aceptar</span></a>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                         </div>
                                     </div>

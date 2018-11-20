@@ -140,9 +140,9 @@ if (!is_null($cliente->getVersion())) {
                                 </p>
                             </div>
                             <div class="modal-footer">
-                                <a class="btn btn-default" href="<?= $this->url('usuarios', ['action' => 'delete', 'id' => $usuario->getId()]); ?>">
-                                    Aceptar
-                                </a>
+                                <a href="<?= $this->url('usuarios', ['action' => 'delete', 'id' => $usuario->getId()]); ?>" type="button">
+                                <span class="btn btn-default">Aceptar</span></a>
+                               
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
@@ -322,9 +322,9 @@ if ($cliente->getEstado() == "S") {
                 </p>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-default" href="<?= $this->url('clientes/modificarEstado', ['action' => 'modificarEstado', 'id' => (int) $cliente->getId()]) ?>">
-                    Aceptar
-                </a>
+                <a href="<?= $this->url('clientes/modificarEstado', ['action' => 'modificarEstado', 'id' => (int) $cliente->getId()]) ?>" type="button">
+                <span class="btn btn-default">Aceptar</span></a>
+               
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
