@@ -1,5 +1,14 @@
 <?php
 $this->headTitle('Detalles de la empresa');
+if (isset($_SESSION['MENSAJES']['empresa'])) {
+    if ($_SESSION['MENSAJES']['empresa']) {
+        echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['empresa_msj'] . "', 'success');});</script>";
+    } else {
+        echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['empresa_msj'] . "', 'error');});</script>";
+    }
+    $_SESSION['MENSAJES']['empresa'] = null;
+    $_SESSION['MENSAJES']['empresa_msj'] = null;
+}
 ?>
 
 <!-- Inicio: Datos de Empresa -->
