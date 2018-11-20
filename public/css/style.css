@@ -6,6 +6,7 @@
 
 	body {
 		background: #ffffff;
+
 	}
 
 	body, input, select, textarea {
@@ -473,7 +474,7 @@
 
 	#header {
                 /*background: #d9d9d9 url("../img/crm/tope.jpg") no-repeat;*/
-		background: #d9d9d9 url("../img/crm/tope.jpg") no-repeat;
+		background:#d9d9d9 url("../img/crm/tope.jpg") no-repeat;
 		background-size: cover;
 		color: #fff;
 		padding: 2%;
@@ -631,42 +632,69 @@
 
 /* Footer */
 
-	#footer {
-		padding: 4em 0;
-		color: #fff;
-                background-color: rgb(68,68,68);
-	}
+    #footer-simple {
+        padding: 2%;
+        color: #fff;
+        background-color: rgb(68,68,68);
+    }
 
-		#footer .major h2 {
-			font-size: 2em;
-			color: #FFF;
-                        background-color: rgb(66,66,66);
+    #footer-simple .major h2 {
+        font-size: 2em;
+        color: #FFF;
+        background-color: rgb(66,66,66);
+    }
 
-                       
-		}
+    #footer-simple .major .byline {
+        font-size: 1.1em;
+        background-color: rgb(66,66,66);
+    }
 
-		#footer .major .byline {
-			font-size: 1.1em;
-                                        background-color: rgb(66,66,66);
+    #footer-simple .copyright {
+        margin-top: 3em;
+        padding-top: 3em;
+        border-top: 1px solid;
+        border-color: rgba(192, 192, 192, 0.15);
+        text-align: center;
+        color: inherit;
+        background-color: rgb(66,66,66);
+    }
 
+    #footer-simple a {
+        color: inherit;
+        background-color: rgb(66,66,66);
+    }
 
-		}
+    #footer-layout {
+        /*                padding: 10px 0 5px 0;		*/
+        padding-top: 1%;
+        padding-bottom: 10%;
+        padding-bottom: 25px;	
+        color: #fff;
+        background-color: rgb(68,68,68);
+    }
+    
+    #footer-layout .major h2 {
+        font-size: 2em;
+        color: #FFF;
+        background-color: rgb(66,66,66);
+    }
 
-		#footer .copyright {
-			margin-top: 3em;
-			padding-top: 3em;
-			border-top: 1px solid;
-			border-color: rgba(192, 192, 192, 0.15);
-			text-align: center;
-			color: inherit;
-                                        background-color: rgb(66,66,66);
+    #footer-layout .major .byline {
+        font-size: 1.1em;
+        background-color: rgb(66,66,66);
+    }
 
+    #footer-layout .copyright {
+        margin-top: 3em;
+        padding-top: 3em;
+        border-top: 1px solid;
+        border-color: rgba(192, 192, 192, 0.15);
+        text-align: center;
+        color: inherit;
+        background-color: rgb(66,66,66);
+    }
 
-		}
-
-		#footer a {
-			color: inherit;
-                        background-color: rgb(66,66,66);
-
-
-		}
+    #footer-layout a {
+        color: inherit;
+        background-color: rgb(66,66,66);
+    }
