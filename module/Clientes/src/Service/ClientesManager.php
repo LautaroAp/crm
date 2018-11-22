@@ -436,7 +436,8 @@ class ClientesManager {
         foreach ($clientes as $cliente) {
             if (!is_null($cliente->getLicencia())) {
                 if ($cliente->getLicencia()->getId() == $id) {
-                    $cliente->setLicencia(null);
+                    $cliente->setLicencia(null)
+                            ->setVersion(null);
                 }
             }
         }
