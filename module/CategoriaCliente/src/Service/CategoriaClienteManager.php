@@ -85,7 +85,6 @@ class CategoriaClienteManager {
     }
 
     public function getFormForCategoriaCliente($categoriacliente) {
-
         if ($categoriacliente == null) {
             return null;
         }
@@ -130,7 +129,6 @@ class CategoriaClienteManager {
         $adapter = new SelectableAdapter($this->entityManager->getRepository(CategoriaCliente::class)); // An object repository implements Selectable
         // Create the paginator itself
         $paginator = new Paginator($adapter);
-
         return ($paginator);
     }
 

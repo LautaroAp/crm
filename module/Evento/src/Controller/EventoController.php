@@ -10,12 +10,8 @@ namespace Evento\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use Zend\Paginator\Paginator;
-use Application\Entity\Post;
 use DBAL\Entity\Evento;
-use Evento\Form\EventoForm;
 use DBAL\Entity\Cliente;
 use DBAL\Entity\TipoEvento;
 
@@ -54,7 +50,6 @@ class EventoController extends AbstractActionController {
     }
 
     private function procesarIndexAction() {
-
         $paginator = $this->eventoManager->getTabla();
         $mensaje = "";
         $page = 1;
@@ -82,7 +77,6 @@ class EventoController extends AbstractActionController {
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->eventoManager->addEvento($data);
-//            $estado = $this->eventoManager->getEstado();
             return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $data['id_cliente']]);
         }
         return new ViewModel([
@@ -95,8 +89,6 @@ class EventoController extends AbstractActionController {
     public function getTablaFiltrado($filtro) {
         $listaEventos = $this->getSearch($filtro);
         $adapter = new SelectableAdapter($this->entityManager->getRepository(Evento::class));
-        $paginator = new Paginator($adapter);
-
         return ($listaEventos);
     }
 
@@ -133,7 +125,6 @@ class EventoController extends AbstractActionController {
     }
 
     public function removeAction() {
-
         $view = $this->procesarRemoveAction();
         return $view;
     }

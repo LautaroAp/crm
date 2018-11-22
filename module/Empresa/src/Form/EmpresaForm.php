@@ -1,64 +1,49 @@
 <?php
+
 namespace Empresa\Form;
 
 use Zend\Form\Form;
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilter;
-use Zend\Form\Element\Select;
 
+class EmpresaForm extends Form {
 
-class EmpresaForm extends Form
-{
     /**
      * Scenario ('create' or 'update').
      * @var string 
      */
     private $scenario;
-    
+
     /**
      * Entity manager.
      * @var Doctrine\ORM\EntityManager 
      */
     private $entityManager = null;
-    
+
     /**
      * Current pais.
      * @var Pais\Entity\Pais 
      */
     private $empresa = null;
-    
-    
+
     /**
      * Constructor.     
      */
-   
-    public function __construct($scenario = 'create', $entityManager = null, $empresa = null)
-    {
+    public function __construct($scenario = 'create', $entityManager = null, $empresa = null) {
         // Define form name
         parent::__construct('pais-form');
-     
         // Set POST method for this form
         $this->setAttribute('method', 'post');
-        
         // Save parameters for internal use.
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
         $this->empresa = $empresa;
-        
         $this->addElements();
         //$this->addInputFilter();          
     }
-    
+
     /**
      * This method adds elements to form (input fields and submit button).
      */
-    protected function addElements() 
-    {
-       
-
-        // Add "full_name" field 
-       
-        
+    protected function addElements() {
         $this->add([
             'type' => 'text',
             'name' => 'nombre',
@@ -67,7 +52,7 @@ class EmpresaForm extends Form
                 'label' => 'Nombre',
             ],
         ]);
-        
+
         $this->add([
             'type' => 'text',
             'name' => 'direccion',
@@ -76,8 +61,7 @@ class EmpresaForm extends Form
                 'label' => 'Dirección',
             ],
         ]);
-        
-        
+
         $this->add([
             'type' => 'text',
             'name' => 'telefono',
@@ -86,8 +70,7 @@ class EmpresaForm extends Form
                 'label' => 'Teléfono',
             ],
         ]);
-        
-        
+
         $this->add([
             'type' => 'text',
             'name' => 'mail',
@@ -96,8 +79,7 @@ class EmpresaForm extends Form
                 'label' => 'E-mail',
             ],
         ]);
-        
-        
+
         $this->add([
             'type' => 'text',
             'name' => 'movil',
@@ -106,7 +88,7 @@ class EmpresaForm extends Form
                 'label' => 'Movil',
             ],
         ]);
-        
+
         $this->add([
             'type' => 'text',
             'name' => 'fax',
@@ -115,7 +97,7 @@ class EmpresaForm extends Form
                 'label' => 'Fax',
             ],
         ]);
-        
+
         $this->add([
             'type' => 'text',
             'name' => 'web',
@@ -124,8 +106,7 @@ class EmpresaForm extends Form
                 'label' => 'Web',
             ],
         ]);
-        
-            
+
         $this->add([
             'type' => 'text',
             'name' => 'cuit_cuil',
@@ -134,7 +115,7 @@ class EmpresaForm extends Form
                 'label' => 'CUIT/CUIL',
             ],
         ]);
-        
+
         $this->add([
             'type' => 'text',
             'name' => 'vencimiento_cai',
@@ -143,7 +124,6 @@ class EmpresaForm extends Form
                 'label' => 'Vencimiento CAI',
             ],
         ]);
-        
 
         $this->add([
             'type' => 'text',
@@ -153,8 +133,7 @@ class EmpresaForm extends Form
                 'label' => 'Razón social',
             ],
         ]);
-        
-         
+
         $this->add([
             'type' => 'text',
             'name' => 'tipo_iva',
@@ -163,7 +142,7 @@ class EmpresaForm extends Form
                 'label' => 'Tipo IVA',
             ],
         ]);
-         
+
         $this->add([
             'type' => 'text',
             'name' => 'localidad',
@@ -172,8 +151,8 @@ class EmpresaForm extends Form
                 'label' => 'Localidad',
             ],
         ]);
-        
-         $this->add([
+
+        $this->add([
             'type' => 'text',
             'name' => 'provincia',
             'value' => '',
@@ -181,8 +160,8 @@ class EmpresaForm extends Form
                 'label' => 'Provincia',
             ],
         ]);
-         
-          $this->add([
+
+        $this->add([
             'type' => 'text',
             'name' => 'pais',
             'value' => '',
@@ -190,7 +169,7 @@ class EmpresaForm extends Form
                 'label' => 'Pais',
             ],
         ]);
-        
+
         $this->add([
             'type' => 'text',
             'name' => 'CP',
@@ -200,15 +179,6 @@ class EmpresaForm extends Form
             ],
         ]);
 
-//        $this->add([
-//            'type' => 'text',
-//            'name' => 'parametro_vencimiento',
-//            'value' => '',
-//            'options' => [
-//                'label' => 'Vigencia del Soporte',
-//        ],
-//        ]);
-         
         $this->add([
             'type' => 'select',
             'name' => 'parametro_vencimiento',
@@ -227,11 +197,10 @@ class EmpresaForm extends Form
                     '9' => '9',
                     '10' => '10',
                     '11' => '11',
-                    '12' => '12',           
+                    '12' => '12',
                 ),
             ],
         ]);
-
 
         $this->add([
             'type' => 'submit',
@@ -241,16 +210,11 @@ class EmpresaForm extends Form
             ],
         ]);
     }
-    
-    
-    
-  private function addInputFilter() 
-    {
+
+    private function addInputFilter() {
         // Create main input filter
-        $inputFilter = $this->getInputFilter();        
-                
-   
-       
+        $inputFilter = $this->getInputFilter();
+
         $inputFilter->add([
             'name' => 'nombre',
             'required' => true,
@@ -260,12 +224,11 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-        
-         $inputFilter->add([
+
+        $inputFilter->add([
             'name' => 'direccion',
             'required' => true,
             'filters' => [
@@ -274,12 +237,11 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-         
-          $inputFilter->add([
+
+        $inputFilter->add([
             'name' => 'telefono',
             'required' => true,
             'filters' => [
@@ -288,12 +250,11 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-          
-           $inputFilter->add([
+
+        $inputFilter->add([
             'name' => 'mail',
             'required' => true,
             'filters' => [
@@ -302,13 +263,11 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-           
-           
-            $inputFilter->add([
+
+        $inputFilter->add([
             'name' => 'movil',
             'required' => true,
             'filters' => [
@@ -317,12 +276,11 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-            
-             $inputFilter->add([
+
+        $inputFilter->add([
             'name' => 'fax',
             'required' => true,
             'filters' => [
@@ -331,12 +289,11 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-             
-              $inputFilter->add([
+
+        $inputFilter->add([
             'name' => 'web',
             'required' => true,
             'filters' => [
@@ -345,12 +302,11 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-              
-               $inputFilter->add([
+
+        $inputFilter->add([
             'name' => 'cuit_cuil',
             'required' => true,
             'filters' => [
@@ -359,28 +315,23 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
         $inputFilter->add([
             'name' => 'vencimiento_cai',
             'required' => true,
-//            'filters' => [
-//                ['name' => 'StringTrim'],
-//            ],
             'validators' => [
                 [
                     'name' => 'StringLength',
                     'options' => [
                         'format' => 'd-m-Y',
                     ],
-                    
                 ],
             ],
         ]);
-//                
-                 $inputFilter->add([
+              
+        $inputFilter->add([
             'name' => 'razon_social',
             'required' => true,
             'filters' => [
@@ -389,13 +340,11 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-                 
-                 
-                  $inputFilter->add([
+
+        $inputFilter->add([
             'name' => 'tipo_iva',
             'required' => true,
             'filters' => [
@@ -404,13 +353,11 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-                  
-                  
-                   $inputFilter->add([
+
+        $inputFilter->add([
             'name' => 'localidad',
             'required' => true,
             'filters' => [
@@ -419,13 +366,11 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-                   
-                   
-            $inputFilter->add([
+
+        $inputFilter->add([
             'name' => 'provincia',
             'required' => true,
             'filters' => [
@@ -434,13 +379,11 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-            
-            
-             $inputFilter->add([
+
+        $inputFilter->add([
             'name' => 'pais',
             'required' => true,
             'filters' => [
@@ -449,13 +392,11 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-             
-             
-              $inputFilter->add([
+
+        $inputFilter->add([
             'name' => 'CP',
             'required' => true,
             'filters' => [
@@ -464,14 +405,9 @@ class EmpresaForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
-              
-         
-        
-    }       
+    }
 
-    
 }

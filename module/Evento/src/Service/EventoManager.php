@@ -12,7 +12,6 @@ use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use DateInterval;
-use Zend\Mvc\Plugin\FlashMessenger;
 
 /**
  * This service is responsible for adding/editing eventos
@@ -89,27 +88,34 @@ class EventoManager {
      */
     public function addEvento($data) {
         $evento = new Evento();
-
         $fecha_evento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
         $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
-
-        $evento->setFecha($fecha_evento);
-
         $tipo_evento = $this->entityManager->getRepository(TipoEvento::class)
-                ->findOneBy(['id_tipo_evento' => $data['tipo_evento']]);
-        $evento->setTipo($tipo_evento);
-
+                        ->findOneBy(['id_tipo_evento' => $data['tipo_evento']]);
         $cliente = $this->entityManager->getRepository(Cliente::class)
                 ->findOneBy(['Id' => $data['id_cliente']]);
-
-        $evento->setId_cliente($cliente);
-
         $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
-                ->findOneBy(['usuario' => $data['ejecutivo']]);
-        $evento->setId_ejecutivo($ejecutivo);
+                ->findOneBy(['usuario' => $data['ejecutivo']]);     
+        
+        $this->actualizaFechas($evento, $cliente, $tipo_evento, $fecha_evento, $fecha_vencimiento);
+        
+        $evento->setFecha($fecha_evento)
+                ->setTipo($tipo_evento)
+                ->setId_cliente($cliente)
+                ->setId_ejecutivo($ejecutivo)
+                ->setDescripcion($data['detalle']);
+        
+        if ($this->tryAddEvento($evento)) {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 1;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Actividad guardada correctamente';
+        } else {
+            $_SESSION['MENSAJES']['ficha_cliente'] = 0;
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al guardar actividad';
+        }
+        return $evento;
+    }
 
-        $evento->setDescripcion($data['detalle']);
-
+    private function actualizaFechas($evento, $cliente, $tipo_evento, $fecha_evento, $fecha_vencimiento) {
         // Ultimo Contacto
         if (is_null($cliente->getFechaUltimoContacto())) {
             $cliente->setFechaUltimoContacto($fecha_evento);
@@ -142,17 +148,8 @@ class EventoManager {
                 $cliente->setVencimiento($fecha_vencimiento);
             }
         }
-
-        if ($this->tryAddEvento($evento)) {
-            $_SESSION['MENSAJES']['ficha_cliente'] = 1;
-            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Actividad guardada correctamente';
-        } else {
-            $_SESSION['MENSAJES']['ficha_cliente'] = 0;
-            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al guardar actividad';
-        }
-        return $evento;
     }
-
+    
     public function getEventosFiltrados($parametros) {
 
         if (size($parametros) == 0) {
