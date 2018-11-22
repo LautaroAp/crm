@@ -25,8 +25,6 @@ class EmpresaController extends AbstractActionController
     
     protected $empresaManager;
 
-    private $vencimientos;
-
     public function __construct($entityManager, $empresaManager)
     {
         $this->entityManager = $entityManager;
@@ -80,7 +78,6 @@ class EmpresaController extends AbstractActionController
             'form' => $form,
         ));
         }
-            
     }
 
     public function removeAction() 
@@ -104,28 +101,7 @@ class EmpresaController extends AbstractActionController
         }
     }
   
-      public function viewAction() 
-    {
-       /* $id = (int)$this->params()->fromRoute('id', -1);
-        if ($id<1) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        
-        // Find a user with such ID.
-        $empresa = $this->entityManager->getRepository(Empresa::class)
-                ->find($id_empresa);
-        
-        if ($empresa == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-                
-        return new ViewModel([
-            'empresa' => $empresa
-        ]);*/
-          
-          
+      public function viewAction() {    
           return new ViewModel();
     }
 }

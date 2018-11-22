@@ -132,7 +132,7 @@ class ProfesionClienteController extends AbstractActionController {
         if ($profesioncliente == null) {
             $this->reportarError();
         } else {
-            $this->clientesManager->eliminarProfesionClientes($profesioncliente->getId());
+            $this->clientesManager->eliminarProfesionClientes($id);
             $this->profesionclienteManager->removeProfesionCliente($profesioncliente);
             return $this->redirect()->toRoute('profesioncliente');
         }

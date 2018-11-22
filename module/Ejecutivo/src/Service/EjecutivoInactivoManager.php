@@ -73,5 +73,10 @@ class EjecutivoInactivoManager extends EjecutivoManager {
             return $ejecutivo;
         }
     }
-
+    
+    public function activarEjecutivo($id){
+        $ejecutivo = $this->recuperarEjecutivo($id);
+        $ejecutivo->activar();
+        $this->entityManager->flush();
+    }
 }

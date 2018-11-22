@@ -145,8 +145,8 @@ class CategoriaClienteController extends AbstractActionController {
         if ($categoriacliente == null) {
             $this->reportarError();
         } else {
-            $this->clientesManager->eliminarCategoriaClientes($categoriacliente->getId());
-            $this->categoriaclienteManager->removeCategoriaCliente($categoriacliente);
+            $this->clientesManager->eliminarCategoriaClientes($id);
+            $this->categoriaclienteManager->removeCategoriaCliente($id);
             return $this->redirect()->toRoute('categoriacliente');
         }
     }

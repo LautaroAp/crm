@@ -82,7 +82,7 @@ class TipoEventoController extends AbstractActionController {
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $tipoevento = $this->tipoeventoManager->getTipoEventoFromForm($form, $data);
+            $this->tipoeventoManager->getTipoEventoFromForm($form, $data);
             return $this->redirect()->toRoute('tipoevento');
         }
         return new ViewModel([
@@ -133,7 +133,7 @@ class TipoEventoController extends AbstractActionController {
         if ($tipoevento == null) {
             $this->reportarError();
         } else {
-            $this->eventoManager->eliminarTipoEventos($tipoevento->getId());
+            $this->eventoManager->eliminarTipoEventos($id);
             $this->tipoeventoManager->removeTipoEvento($tipoevento);
             return $this->redirect()->toRoute('tipoevento');
         }

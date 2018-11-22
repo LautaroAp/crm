@@ -31,16 +31,21 @@ class EventoController extends AbstractActionController {
      * @var User\Service\EventoManager 
      */
     protected $eventoManager;
-    private $tipos;
+    
+    protected $clienteManager;
+    protected $tipoEventoManager;
+//    private $tipos;
 
-    public function __construct($entityManager, $eventoManager) {
+    public function __construct($entityManager, $eventoManager, $clienteManager, $tipoEventoManager) {
         $this->entityManager = $entityManager;
         $this->eventoManager = $eventoManager;
-        $this->tipos = $this->getArrayTipos();
+        $this->clienteManager= $clienteManager;
+        $this->tipoEventoManager= $tipoEventoManager;
+//        $this->tipos = $this->getArrayTipos();
     }
 
     private function getArrayTipos() {
-        $tipos = $this->entityManager->getRepository(TipoEvento::class)->findAll();
+        $tipos = $this->tipoEventoManager->getTipoEventos();
         $array = array();
         foreach ($tipos as $tipo) {
             $array2 = array($tipo->getId() => $tipo->getNombre());
@@ -54,7 +59,6 @@ class EventoController extends AbstractActionController {
     }
 
     private function procesarIndexAction() {
-
         $paginator = $this->eventoManager->getTabla();
         $mensaje = "";
         $page = 1;
@@ -77,26 +81,23 @@ class EventoController extends AbstractActionController {
 
     private function procesarAddAction() {
         $Id = (int) $this->params()->fromRoute('id', -1);
-        $cliente = $this->entityManager->getRepository(Cliente::class)->findOneBy(['Id' => $Id]);
-        $form = $this->eventoManager->createForm($this->tipos);
+        $cliente = $this->clienteManager->getCliente($Id);
+        $tipoEventos = $this->getArrayTipos();
+        $form = $this->eventoManager->createForm($tipoEventos);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->eventoManager->addEvento($data);
-//            $estado = $this->eventoManager->getEstado();
             return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $data['id_cliente']]);
         }
         return new ViewModel([
             'form' => $form,
             'cliente' => $cliente,
-            'tipos' => $this->tipos,
+            'tipos' => $tipoEventos,
         ]);
     }
 
     public function getTablaFiltrado($filtro) {
         $listaEventos = $this->getSearch($filtro);
-        $adapter = new SelectableAdapter($this->entityManager->getRepository(Evento::class));
-        $paginator = new Paginator($adapter);
-
         return ($listaEventos);
     }
 
@@ -108,9 +109,7 @@ class EventoController extends AbstractActionController {
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $evento = $this->eventoManager->getEventoId($id);
-
         $form = $this->eventoManager->createForm($this->tipos);
-
         // $form = $this->eventoManager->getFormForEvento($evento);
         if ($form == null) {
             $this->reportarError();
@@ -141,7 +140,6 @@ class EventoController extends AbstractActionController {
     public function procesarRemoveAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $evento = $this->eventoManager->getEventoId($id);
-
         if ($evento == null) {
             $this->reportarError();
         } else {

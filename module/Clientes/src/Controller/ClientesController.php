@@ -176,8 +176,8 @@ class ClientesController extends AbstractActionController {
     public function fichaAction() {
         $Id = (int) $this->params()->fromRoute('id', -1);
         $cliente = $this->clientesManager->getCliente($Id);
-        $usuarios = $cliente->getUsuarios();
-        $eventos = $cliente->getEventos();
+        $usuarios = $this->clientesManager->getUsuariosCliente($Id);
+        $eventos = $this->clientesManager->getEventos($Id);
         $tipo_eventos = $this->tipoEventosManager->getTipoEventos();
                 
         return new ViewModel([

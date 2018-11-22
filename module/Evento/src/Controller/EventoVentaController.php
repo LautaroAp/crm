@@ -15,12 +15,6 @@ use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use Zend\Paginator\Paginator;
 use Application\Entity\Post;
-use DBAL\Entity\Evento;
-use Evento\Form\EventoForm;
-use DBAL\Entity\Cliente;
-use DBAL\Entity\TipoEvento;
-
-
 
 class EventoVentaController extends EventoController
 {
@@ -35,36 +29,15 @@ class EventoVentaController extends EventoController
      */
     
     protected $eventoManager;
-    
 
-    /*public function __construct($entityManager, $eventoManager)
-    {
-        $this->entityManager = $entityManager;
-        $this->eventoManager = $eventoManager;
-    }
-    */
-    
-    private $tipos;
     
     public function __construct($entityManager, $eventoManager)
     {
         $this->entityManager = $entityManager;
         $this->eventoManager = $eventoManager;
-        $this->tipos = $this->getArrayTipos();
     }
     
-   private function getArrayTipos(){
-       $tipos = $this->entityManager->getRepository(TipoEvento::class)->findAll();
-       $array = array();
-       foreach ($tipos as $tipo){
-           $array2 = array($tipo->getId() => $tipo->getNombre());
-           $array= $array + $array2;       
-       }
-       
-       return $array;
-   }
-   
-   
+    
     public function indexAction()
     {
         return $this->procesarIndexAction();

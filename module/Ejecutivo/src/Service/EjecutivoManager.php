@@ -137,4 +137,36 @@ class EjecutivoManager {
             return false;
         }
     }
+    
+    public function getApellido($id){
+        $ejecutivo = $this->entityManager
+                    ->getRepository(Ejecutivo::class)
+                    ->findOneById($id);
+        return $ejecutivo->getApellido();
+    }
+    public function getNombre($id){
+        $ejecutivo = $this->entityManager
+                    ->getRepository(Ejecutivo::class)
+                    ->findOneById($id);
+        return $ejecutivo->getNombre();
+    }
+    public function getMail($id){
+        $ejecutivo = $this->entityManager
+                    ->getRepository(Ejecutivo::class)
+                    ->findOneById($id);
+        return $ejecutivo->getMail();
+    }
+        public function getUsuario($id){
+        $ejecutivo = $this->entityManager
+                    ->getRepository(Ejecutivo::class)
+                    ->findOneById($id);
+        return $ejecutivo->getUsuario();
+        
+    }    public function getClave($id){
+        $ejecutivo = $this->entityManager
+                    ->getRepository(Ejecutivo::class)
+                    ->findOneById($id);
+        return $ejecutivo->getClave();
+    }
+    
 }

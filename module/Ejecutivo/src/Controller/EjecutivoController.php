@@ -45,9 +45,7 @@ class EjecutivoController extends AbstractActionController
 
     public function indexAction()
     {
-        $ejecutivos = $this->getEntityManager()
-                ->getRepository(Ejecutivo::class)->findAll();         
-        
+       
         $paginator = $this->ejecutivoManager->getTabla();
         $mensaje ="";
         
@@ -116,8 +114,7 @@ class EjecutivoController extends AbstractActionController
         }
         
         // Find a user with such ID.
-        $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
-                ->find($id);
+        $ejecutivo = $this->entityManager->recuperarEjecutivo($id);
         
         if ($ejecutivo == null) {
             $this->getResponse()->setStatusCode(404);
@@ -131,14 +128,13 @@ class EjecutivoController extends AbstractActionController
      public function editAction() 
     {
         $view = $this->procesarEditAction();
-        
         return $view;
     }
     private function procesarEditAction()
     {
         $id = (int)$this->params()->fromRoute('id', -1);  
-        $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
-                ->find($id);
+        $ejecutivo = $this->entityManager->recuperarEjecutivo($id);
+
         if ($ejecutivo == null) {
             $this->getResponse()->setStatusCode(404);
             return;
@@ -154,13 +150,18 @@ class EjecutivoController extends AbstractActionController
                                               
             }               
         } else {
+            $apellido= $this->ejecutivoManager->getApellido($id);
+            $nombre= $this->ejecutivoManager->getNombre($id);
+            $mail= $this->ejecutivoManager->getMail($id);
+            $usuario= $this->ejecutivoManager->getUsuario($id);
+            $clave= $this->ejecutivoManager->getClave($id);
             $form->setData(array(
-                    'id_ejecutivo'=>$ejecutivo->getId(),
-                    'apellido'=>$ejecutivo->getApellido(),
-                    'nombre'=>$ejecutivo->getNombre(),
-                    'mail'=>$ejecutivo->getMail(),
-                    'usuario'=>$ejecutivo->getUsuario(),
-                    'clave'=>$ejecutivo->getClave(),                   
+                    'id_ejecutivo'=>$id,
+                    'apellido'=>$apellido,
+                    'nombre'=>$nombre,
+                    'mail'=>$mail,
+                    'usuario'=>$usuario,
+                    'clave'=>$clave,                 
                 ));
         }
         return new ViewModel(array(

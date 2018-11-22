@@ -67,9 +67,7 @@ class EjecutivoInactivoController extends EjecutivoController
     }
     
     private function procesarActivar($id){
-        $ejecutivo = $this->ejecutivoInactivoManager->recuperarEjecutivo($id);
-        $ejecutivo->activar();
-        $this->entityManager->flush();
+        $this->ejecutivoInactivoManager->activarEjecutivo($id);
         $_SESSION['MENSAJES']['ejecutivo_inactivo'] = 1;
         $_SESSION['MENSAJES']['ejecutivo_inactivo_msj'] = 'Ejecutivo dado de Alta correctamente';
     }

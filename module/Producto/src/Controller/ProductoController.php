@@ -32,12 +32,6 @@ class ProductoController extends AbstractActionController
     
 protected $productoManager;
 
-    /*public function __construct($entityManager, $productoManager)
-    {
-        $this->entityManager = $entityManager;
-        $this->productoManager = $productoManager;
-    }
-    */
     public function __construct($entityManager, $productoManager)
     {
         $this->entityManager = $entityManager;
@@ -141,27 +135,7 @@ protected $productoManager;
     
     
       public function viewAction() 
-    {
-       /* $id = (int)$this->params()->fromRoute('id', -1);
-        if ($id<1) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        
-        // Find a user with such ID.
-        $producto = $this->entityManager->getRepository(Producto::class)
-                ->find($id_producto);
-        
-        if ($producto == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-                
-        return new ViewModel([
-            'producto' => $producto
-        ]);*/
-          
-          
+    {         
           return new ViewModel();
     }
     

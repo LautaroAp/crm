@@ -133,26 +133,6 @@ class ServicioController extends AbstractActionController
   
       public function viewAction() 
     {
-       /* $id = (int)$this->params()->fromRoute('id', -1);
-        if ($id<1) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        
-        // Find a user with such ID.
-        $servicio = $this->entityManager->getRepository(Servicio::class)
-                ->find($id_servicio);
-        
-        if ($servicio == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-                
-        return new ViewModel([
-            'servicio' => $servicio
-        ]);*/
-          
-          
           return new ViewModel();
     }
 }
