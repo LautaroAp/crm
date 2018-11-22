@@ -10,12 +10,7 @@ namespace Provincia\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-use Zend\Paginator\Paginator;
-use Application\Entity\Post;
-use DBAL\Entity\Provincia;
-use Provincia\Form\ProvinciaForm;
+
 
 class ProvinciaController extends AbstractActionController {
 
@@ -38,7 +33,7 @@ class ProvinciaController extends AbstractActionController {
     
     public function indexAction() {
 //        return $this->procesarIndexAction();
-        $view = $this->procesarAddAction();
+        $view = $this->procesarIndexAction();
         return $view;
     }
 
@@ -118,26 +113,6 @@ class ProvinciaController extends AbstractActionController {
     }
 
     public function viewAction() {
-        /* $id = (int)$this->params()->fromRoute('id', -1);
-          if ($id<1) {
-          $this->getResponse()->setStatusCode(404);
-          return;
-          }
-
-          // Find a user with such ID.
-          $provincia = $this->entityManager->getRepository(Provincia::class)
-          ->find($id_provincia);
-
-          if ($provincia == null) {
-          $this->getResponse()->setStatusCode(404);
-          return;
-          }
-
-          return new ViewModel([
-          'provincia' => $provincia
-          ]); */
-
-
         return new ViewModel();
     }
 

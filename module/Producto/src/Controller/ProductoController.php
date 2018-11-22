@@ -7,15 +7,8 @@
 
 namespace Producto\Controller;
 
-
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-use Zend\Paginator\Paginator;
-use Application\Entity\Post;
-use DBAL\Entity\Producto;
-use Producto\Form\ProductoForm;
 
 
 class ProductoController extends AbstractActionController
@@ -42,7 +35,6 @@ protected $productoManager;
     public function indexAction()
     {
         return $this->procesarIndexAction();
-             
     }
     
     private function procesarIndexAction(){
@@ -57,16 +49,13 @@ protected $productoManager;
     {
         $view = $this->procesarAddAction();
         return $view;
-       
     }
     
     private function procesarAddAction(){
-       $form = $this->productoManager->createForm();
-
+        $form = $this->productoManager->createForm();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $producto = $this->productoManager->getProductoFromForm($form, $data);
-          
+            $this->productoManager->getProductoFromForm($form, $data);
             return $this->redirect()->toRoute('producto', ['action' => 'index']);
         }
         return new ViewModel([
@@ -84,24 +73,19 @@ protected $productoManager;
     public function procesarEditAction(){
         $id = (int)$this->params()->fromRoute('id', -1);
         $producto = $this->productoManager->getProductoId($id);
- 
         $form =$this->productoManager->getFormForProducto($producto);
         if ($form == null){
             $this->reportarError();
         }
         else{
             if ($this->getRequest()->isPost()) {
-
                $data = $this->params()->fromPost();
-
                if ($this->productoManager->formValid($form,$data)){
-                  
                     $this->productoManager->updateProducto($producto,$form);
                     return $this->redirect()->toRoute('producto', ['action' => 'index']);
                }
             }               
          else {
-                       
             $this->productoManager->getFormEdited($form, $producto);
          }
         return new ViewModel(array(
@@ -109,12 +93,10 @@ protected $productoManager;
             'form' => $form
         ));
         }
-            
     }
 
     public function removeAction() 
     {
-       
        $view = $this->procesarRemoveAction();
        return $view;
     }
@@ -122,7 +104,6 @@ protected $productoManager;
     public function procesarRemoveAction(){
         $id = (int)$this->params()->fromRoute('id', -1);
         $producto = $this->productoManager->getProductoId($id);
-         
         if ($producto == null) {
             $this->reportarError();
         }
@@ -131,8 +112,6 @@ protected $productoManager;
             return $this->redirect()->toRoute('producto', ['action' => 'index']);   
         }
     }
-  
-    
     
       public function viewAction() 
     {         

@@ -59,8 +59,7 @@ class ServicioController extends AbstractActionController
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $servicio = $this->servicioManager->getServicioFromForm($form, $data);
-          
+            $this->servicioManager->getServicioFromForm($form, $data);
             return $this->redirect()->toRoute('servicio', ['action' => 'index']);
         }
         return new ViewModel([

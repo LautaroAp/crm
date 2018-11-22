@@ -4,8 +4,6 @@ namespace Servicio\Service;
 use DBAL\Entity\Servicio;
 use Servicio\Form\ServicioForm;
 
-
-
 /**
  * This service is responsible for adding/editing servicios
  * and changing servicio password.
@@ -63,7 +61,6 @@ class ServicioManager
      */
     public function addServicio($data) 
     {
-       
         $servicio = new Servicio();
         $servicio->setDescripcion($data['descripcion']);
         $servicio->setCosto($data['costo']);

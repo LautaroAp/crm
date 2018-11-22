@@ -10,12 +10,6 @@ namespace ProfesionCliente\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-use Zend\Paginator\Paginator;
-use Application\Entity\Post;
-use DBAL\Entity\ProfesionCliente;
-use ProfesionCliente\Form\ProfesionClienteForm;
 
 class ProfesionClienteController extends AbstractActionController {
 
@@ -50,7 +44,7 @@ class ProfesionClienteController extends AbstractActionController {
     }
 
     public function indexAction() {
-        $view = $this->procesarAddAction();
+        $view = $this->procesarIndexAction();
         return $view;
     }
 
@@ -82,7 +76,7 @@ class ProfesionClienteController extends AbstractActionController {
         
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $profesioncliente = $this->profesionclienteManager->getProfesionClienteFromForm($form, $data);
+            $this->profesionclienteManager->getProfesionClienteFromForm($form, $data);
             return $this->redirect()->toRoute('profesioncliente');
         }
         return new ViewModel([

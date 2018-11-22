@@ -10,12 +10,7 @@ namespace TipoEvento\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-use Zend\Paginator\Paginator;
-use Application\Entity\Post;
-use DBAL\Entity\TipoEvento;
-use TipoEvento\Form\TipoEventoForm;
+
 
 class TipoEventoController extends AbstractActionController {
 
@@ -54,12 +49,6 @@ class TipoEventoController extends AbstractActionController {
         return $view;
     }
 
-    private function procesarIndexAction() {
-        $tipoeventos = $this->tipoeventoManager->getTipoEventos();
-        return new ViewModel([
-            'tipoeventos' => $tipoeventos
-        ]);
-    }
 
     public function addAction() {
         $view = $this->procesarAddAction();

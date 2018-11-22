@@ -2,9 +2,6 @@
 namespace TipoEvento\Form;
 
 use Zend\Form\Form;
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilter;
-
 
 
 class TipoEventoForm extends Form
@@ -27,8 +24,7 @@ class TipoEventoForm extends Form
      */
     private $tipoevento = null;
     
-    
-    
+        
     /**
      * Constructor.     
      */
@@ -55,7 +51,6 @@ class TipoEventoForm extends Form
     protected function addElements() 
     {
        
-
         // Add "full_name" field
         $this->add([
             'type' => 'text',
@@ -81,8 +76,6 @@ class TipoEventoForm extends Form
     {
         // Create main input filter
         $inputFilter = $this->getInputFilter();        
-                
-   
         
         // Add input for "nombre" field
         $inputFilter->add([

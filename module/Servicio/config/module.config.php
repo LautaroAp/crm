@@ -7,8 +7,6 @@
 
 namespace Servicio;
 
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 
 
