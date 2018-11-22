@@ -1,17 +1,8 @@
 <?php
 
-/**
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 namespace Clientes\Controller;
 
 use Zend\View\Model\ViewModel;
-use DBAL\Entity\Usuario;
-use DBAL\Entity\Evento;
-use DBAL\Entity\CategoriaCliente;
 
 class ClientesInactivosController extends ClientesController {
 
@@ -30,20 +21,19 @@ class ClientesInactivosController extends ClientesController {
             $parametros = $this->params()->fromPost();
             $_SESSION['PARAMETROS_CLIENTE'] = $parametros;
         }
-        if (!is_null($_SESSION['PARAMETROS_CLIENTE'])){
-          $parametros = $_SESSION['PARAMETROS_CLIENTE'];
+        if (!is_null($_SESSION['PARAMETROS_CLIENTE'])) {
+            $parametros = $_SESSION['PARAMETROS_CLIENTE'];
+        } else {
+            $parametros = array();
         }
-        else{
-            $parametros=array();
-        }               
         $paginator = $this->clientesInactivosManager->getTablaFiltrado($parametros);
-        $total_inactivos = $this->clientesInactivosManager->getTotal(); 
-        $pag = $this->getPaginator($paginator);                
+        $total_inactivos = $this->clientesInactivosManager->getTotal();
+        $pag = $this->getPaginator($paginator);
         return new ViewModel([
             'clientes' => $pag,
-            'parametros' =>$parametros,
+            'parametros' => $parametros,
             'total_inactivos' => $total_inactivos,
-         ]);
+        ]);
     }
 
     public function getPaginator($paginator) {
@@ -56,12 +46,11 @@ class ClientesInactivosController extends ClientesController {
         return $paginator;
     }
 
-
-    public function processIndex(){
+    public function processIndex() {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
-        } 
+        }
         $parametros = $this->params()->fromPost();
         $paginator = $this->clientesInactivosManager->getFiltrados($parametros);
         $pag = $this->getPaginator($paginator);
@@ -69,4 +58,5 @@ class ClientesInactivosController extends ClientesController {
             'clientes' => $pag,
         ]);
     }
+
 }

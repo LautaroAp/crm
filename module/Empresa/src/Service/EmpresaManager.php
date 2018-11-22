@@ -56,9 +56,6 @@ class EmpresaManager {
         return $empresa;
     }
 
-    /**
-     * This method adds a new empresa.
-     */
     public function addEmpresa($data) {
         $empresa = new Empresa();
         $empresa->setNombre($data['nombre_empresa']);
@@ -95,9 +92,6 @@ class EmpresaManager {
         ));
     }
 
-    /**
-     * This method updates data of an existing empresa.
-     */
     public function updateEmpresa($empresa, $form) {
         $data = $form->getData();
         $empresa->setNombre($data['nombre']);
@@ -148,7 +142,7 @@ class EmpresaManager {
         }
     }
 
-    private function tryUpdateEmpresa($empresa) {
+    private function tryUpdateEmpresa() {
         try {
             $this->entityManager->flush();
             return true;

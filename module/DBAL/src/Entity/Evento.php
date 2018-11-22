@@ -78,7 +78,6 @@ class Evento {
     }
 
     function getFecha() {
-
         return $this->fecha;
     }
 
@@ -108,26 +107,30 @@ class Evento {
 
     function setId($id_evento) {
         $this->id_evento = $id_evento;
+        return $this;
     }
 
     function setFecha($fecha_evento) {
         $this->fecha = $fecha_evento;
+        return $this;
     }
 
     function setTipo($tipo_evento) {
         $this->tipo = $tipo_evento;
+        return $this;
     }
 
     function setId_cliente($id_cliente) {
         $this->cliente = $id_cliente;
+        return $this;
     }
 
     function setId_ejecutivo($id_ejecutivo) {
         $this->ejecutivo = $id_ejecutivo;
+        return $this;
     }
 
     public function getNombreCliente() {
-
         if (is_null($this->cliente)) {
             return "NO DEFINIDO";
         } else {
@@ -139,7 +142,6 @@ class Evento {
     }
 
     public function getUsuarioEjecutivo() {
-
         if (is_null($this->ejecutivo)) {
             return "NO DEFINIDO";
         } else {
@@ -153,6 +155,6 @@ class Evento {
 
     function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
+        return $this;
     }
-
 }

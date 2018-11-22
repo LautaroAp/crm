@@ -3,7 +3,6 @@
 namespace DBAL\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DBAL\Entity\Evento;
 
 /**
  * Description of Cliente
@@ -130,7 +129,7 @@ class Cliente {
      * @ORM\Column(name="FECHA_ULTIMO_CONTACTO", type="datetime")
      */
     private $fecha_ultimo_contacto;
-    
+
     /**
      * @ORM\Column(name="FECHA_ULTIMO_PAGO", type="datetime")
      */
@@ -168,19 +167,21 @@ class Cliente {
     }
 
     public function getNombre() {
-            return $this->nombre;
+        return $this->nombre;
     }
 
     public function setNombre($nombre) {
         $this->nombre = $nombre;
+        return $this;
     }
 
     public function getApellido() {
-            return $this->apellido;
+        return $this->apellido;
     }
 
     public function setApellido($apellido) {
         $this->apellido = $apellido;
+        return $this;
     }
 
     public function getPais() {
@@ -189,6 +190,7 @@ class Cliente {
 
     public function setPais($pais) {
         $this->pais = $pais;
+        return $this;
     }
 
     public function getNombrePaisCliente() {
@@ -213,6 +215,7 @@ class Cliente {
 
     public function setProvincia($provincia) {
         $this->provincia = $provincia;
+        return $this;
     }
 
     public function getNombreProvinciaCliente() {
@@ -225,11 +228,12 @@ class Cliente {
     }
 
     public function getCiudad() {
-            return $this->ciudad;
+        return $this->ciudad;
     }
 
     public function setCiudad($ciudad) {
         $this->ciudad = $ciudad;
+        return $this;
     }
 
     public function getProfesion() {
@@ -238,6 +242,7 @@ class Cliente {
 
     public function setProfesion($profesion) {
         $this->profesion = $profesion;
+        return $this;
     }
 
     public function getNombreProfesionCliente() {
@@ -255,6 +260,7 @@ class Cliente {
 
     public function setEmpresa($empresa) {
         $this->empresa = $empresa;
+        return $this;
     }
 
     public function getActividad() {
@@ -263,6 +269,7 @@ class Cliente {
 
     public function setActividad($actividad) {
         $this->actividad = $actividad;
+        return $this;
     }
 
     public function getAnimales() {
@@ -271,6 +278,7 @@ class Cliente {
 
     public function setAnimales($animales) {
         $this->animales = $animales;
+        return $this;
     }
 
     public function getEstablecimientos() {
@@ -279,6 +287,7 @@ class Cliente {
 
     public function setEstablecimientos($establecimientos) {
         $this->establecimientos = $establecimientos;
+        return $this;
     }
 
     public function getRazaManejo() {
@@ -287,30 +296,34 @@ class Cliente {
 
     public function setRazaManejo($raza_manejo) {
         $this->raza_manejo = $raza_manejo;
+        return $this;
     }
 
     public function getTelefono() {
-            return $this->telefono;
+        return $this->telefono;
     }
 
     public function setTelefono($telefono) {
         $this->telefono = $telefono;
+        return $this;
     }
 
     public function getSkype() {
-            return $this->skype;
+        return $this->skype;
     }
 
     public function setSkype($skype) {
         $this->skype = $skype;
+        return $this;
     }
 
     public function getEmail() {
-            return $this->email;
+        return $this->email;
     }
 
     public function setEmail($email) {
         $this->email = $email;
+        return $this;
     }
 
     public function getCategoria() {
@@ -319,6 +332,7 @@ class Cliente {
 
     public function setCategoria($categoria) {
         $this->categoria = $categoria;
+        return $this;
     }
 
     public function getNombreCategoriaCliente() {
@@ -336,6 +350,7 @@ class Cliente {
 
     public function setFechaCompra($fecha_compra) {
         $this->fecha_compra = $fecha_compra;
+        return $this;
     }
 
     public function getVencimiento() {
@@ -344,6 +359,7 @@ class Cliente {
 
     public function setVencimiento($vencimiento) {
         $this->vencimiento = $vencimiento;
+        return $this;
     }
 
     function getFechaUltimoContacto() {
@@ -352,16 +368,18 @@ class Cliente {
 
     function setFechaUltimoContacto($fecha_ultimo_contacto) {
         $this->fecha_ultimo_contacto = $fecha_ultimo_contacto;
+        return $this;
     }
-    
+
     function getFechaUltimoPago() {
         return $this->fecha_ultimo_pago;
     }
 
     function setFechaUltimoPago($fecha_ultimo_pago) {
         $this->fecha_ultimo_pago = $fecha_ultimo_pago;
+        return $this;
     }
-    
+
     function getNombreLicenciaCliente() {
         if (is_null($this->licencia)) {
             return null;
@@ -376,6 +394,7 @@ class Cliente {
 
     function setLicencia($licencia) {
         $this->licencia = $licencia;
+        return $this;
     }
 
     public function getVersion() {
@@ -384,6 +403,7 @@ class Cliente {
 
     public function setVersion($version) {
         $this->version = $version;
+        return $this;
     }
 
     public function getEstado() {
@@ -400,6 +420,7 @@ class Cliente {
 
     public function setEstado($estado) {
         $this->estado = $estado;
+        return $this;
     }
 
     public function addUsuario($usuario) {
@@ -416,7 +437,7 @@ class Cliente {
 
     public function isPrimeraVenta() {
         $array_eventos = $this->getEventos();
-        if (is_null($this->fecha_compra)){
+        if (is_null($this->fecha_compra)) {
             return true;
         }
         foreach ($array_eventos as $eve) {

@@ -9,7 +9,6 @@ use DBAL\Entity\Pais;
 use DBAL\Entity\Provincia;
 use DBAL\Entity\ProfesionCliente;
 use DBAL\Entity\CategoriaCliente;
-use DBAL\Entity\TipoEvento;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
@@ -26,8 +25,8 @@ class ClientesManager {
      * @var Doctrine\ORM\EntityManager
      */
     private $entityManager;
-
     private $usuarioManager;
+
     /**
      * Constructs the service.
      */
@@ -53,7 +52,7 @@ class ClientesManager {
         $this->entityManager->flush();
     }
 
-//La funcion getListaClientes() devuelve lñista de clientes sin paginado
+//La funcion getListaClientes() devuelve lista de clientes sin paginado
     public function getListaClientes() {
         $lista = $this->entityManager->getRepository(Cliente::class)->findAll();
         return $lista;
@@ -79,12 +78,12 @@ class ClientesManager {
         $pag->setUseOutputWalkers(true);
         $adapter = new DoctrineAdapter($pag);
         $this->total = COUNT($adapter);
-       
+
         $paginator = new Paginator($adapter);
         return $paginator;
     }
-    
-    public function getClientesConUsuariosAdicionales($parametros){
+
+    public function getClientesConUsuariosAdicionales($parametros) {
         $filtros = $this->limpiarParametros($parametros);
         $query2 = $this->usuarioManager->getClientes($filtros);
         $pag = new ORMPaginator($query2);
@@ -97,116 +96,107 @@ class ClientesManager {
     public function getTotal() {
         return $this->total;
     }
-    
-    private function getQueryClientes($clientes){
+
+    private function getQueryClientes($clientes) {
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('C')
-                    ->from(Cliente::class, 'C');
-        $p=0;
+                ->from(Cliente::class, 'C');
+        $p = 0;
         $queryBuilder->where("C.Id = ?$p")->setParameter("$p", $clientes[0]->getId());
         for ($i = 1; $i < count($clientes); $i++) {
-            $p=$p+1;
+            $p = $p + 1;
             $queryBuilder->orWhere("C.Id = ?$p")->setParameter("$p", $clientes[$i]->getId());
         }
         return $queryBuilder->getQuery();
     }
 
-    public function busquedaPorUsuariosAdicionales($parametros){
-        $clientes= $this->usuarioManager->getClientesUsuarioAdicional($parametros);
+    public function busquedaPorUsuariosAdicionales($parametros) {
+        $clientes = $this->usuarioManager->getClientesUsuarioAdicional($parametros);
         $query = $this->getQueryClientes($clientes);
         return $query;
     }
-    
-    public function busquedaPorFiltros($parametros) {
 
+    public function busquedaPorFiltros($parametros) {
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('C')
                 ->from(Cliente::class, 'C');
         $indices = array_keys($parametros);
-        
         for ($i = 0; $i < count($indices); $i++) {
             $p = $i + 1;
             $nombreCampo = $indices[$i];
             $valorCampo = $parametros[$nombreCampo];
-
             if ($i == 0) {
-                if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+                if ($nombreCampo == 'nombre' || $nombreCampo == 'apellido') {
                     $queryBuilder->where("C.$nombreCampo LIKE ?$p");
-                }
-                else {
+                } else {
                     $queryBuilder->where("C.$nombreCampo = ?$p");
                 }
-            }
-            else {
-                if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
+            } else {
+                if ($nombreCampo == 'nombre' || $nombreCampo == 'apellido') {
                     $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
-                }
-                else{
+                } else {
                     $queryBuilder->andWhere("C.$nombreCampo = ?$p");
                 }
             }
-            if ($nombreCampo == 'nombre' || $nombreCampo== 'apellido'){
-                    $queryBuilder->setParameter("$p", '%'.$valorCampo.'%');
-                }
-            else{
+            if ($nombreCampo == 'nombre' || $nombreCampo == 'apellido') {
+                $queryBuilder->setParameter("$p", '%' . $valorCampo . '%');
+            } else {
                 $queryBuilder->setParameter("$p", $valorCampo);
             }
         }
         $queryBuilder->andWhere('C.estado = :state')->setParameter('state', 'S');
         return $queryBuilder->getQuery();
     }
-    
-    public function busquedaPorFiltros2($parametros) {
 
+    public function busquedaPorFiltros2($parametros) {
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('C')
-                     ->from(Cliente::class, 'C')
-                    ->leftJoin(Usuario::class, 'U',  "WITH", 'C.Id = U.id_cliente');
+                ->from(Cliente::class, 'C')
+                ->leftJoin(Usuario::class, 'U', "WITH", 'C.Id = U.id_cliente');
         $indices = array_keys($parametros);
-        
+
         for ($i = 0; $i < count($indices); $i++) {
             $p = $i + 1;
             $nombreCampo = $indices[$i];
             $valorCampo = $parametros[$nombreCampo];
-
-            if ($i == 0) {
-                if ($nombreCampo == 'nombre'){
-                    $queryBuilder->where("C.$nombreCampo LIKE ?$p");
-                    $queryBuilder->orWhere("C.apellido LIKE ?$p");
-                    $queryBuilder->orWhere("U.nombre LIKE ?$p");
-                }
-                else {
-                    $queryBuilder->where("C.$nombreCampo LIKE ?$p");
-                    if ($nombreCampo =! "empresa"){
-                       $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
-                    }
-                }
-            }
-            else {
-                if ($nombreCampo == 'nombre'){
-                    $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
-                    $queryBuilder->orWhere("C.apellido LIKE ?$p");
-                    $queryBuilder->orWhere("U.nombre LIKE ?$p");
-                }
-                else{
-                    $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
-                     if ($nombreCampo =! "empresa"){
-                        $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
-                    }
-                }
-            }
-            $queryBuilder->setParameter("$p", '%'.$valorCampo.'%');
-             
+            $this->comparaCamposParametros($i, $p, $nombreCampo, $indices, $parametros, $queryBuilder);
+            $queryBuilder->setParameter("$p", '%' . $valorCampo . '%');
         }
+
         $queryBuilder->andWhere('C.estado = :state')->setParameter('state', 'S');
         return $queryBuilder->getQuery();
     }
 
-    public function getActivos() {
+    protected function comparaCamposParametros($i, $p, $nombreCampo, $indices, $parametros, $queryBuilder) {
+        if ($i == 0) {
+            if ($nombreCampo == 'nombre') {
+                $queryBuilder->where("C.$nombreCampo LIKE ?$p");
+                $queryBuilder->orWhere("C.apellido LIKE ?$p");
+                $queryBuilder->orWhere("U.nombre LIKE ?$p");
+            } else {
+                $queryBuilder->where("C.$nombreCampo LIKE ?$p");
+                if ($nombreCampo = !"empresa") {
+                    $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
+                }
+            }
+        } else {
+            if ($nombreCampo == 'nombre') {
+                $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
+                $queryBuilder->orWhere("C.apellido LIKE ?$p");
+                $queryBuilder->orWhere("U.nombre LIKE ?$p");
+            } else {
+                $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
+                if ($nombreCampo = !"empresa") {
+                    $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
+                }
+            }
+        }
+    }
 
+    public function getActivos() {
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('C')
@@ -228,41 +218,13 @@ class ClientesManager {
 
     public function addCliente($data) {
         $cliente = new Cliente();
-        $cliente->setApellido($data['apellido']);
-        $cliente->setNombre($data['nombre']);
-        $cliente->setTelefono($data['telefono']);
-        $cliente->setEmail($data['email']);
-        $cliente->setSkype($data['skype']);
-        $pais = $this->getPais($data['pais']);
-        $cliente->setPais($pais);
-        $provincia = $this->getProvincia($data['provincia']);
-        $cliente->setProvincia($provincia);
-        $cliente->setCiudad($data['ciudad']);
-        $cliente->setEmpresa($data['empresa']);
-        $categoria = $this->getCategoriaCliente($data['categoria']);
-        $cliente->setCategoria($categoria);
-        if ($data['licencia'] == "-1") {
-            $cliente->setLicencia(null);
-        } else {
-            $licencia = $this->getLicencia($data['licencia']);
-            $cliente->setLicencia($licencia);
-        }
-        if ($data['profesion'] == "-1") {
-            $cliente->setProfesion(null);
-        } else {
-            $profesion = $this->getProfesionCliente($data['profesion']);
-            $cliente->setProfesion($profesion);
-        }
-        $cliente->setActividad($data['actividad']);
-        $cliente->setAnimales($data['animales']);
-        $cliente->setEstablecimientos($data['establecimientos']);
-        $cliente->setRazaManejo($data['raza_manejo']);
-        $cliente->setEstado("S");
-        if ($data['version'] == "-1") {
-            $cliente->setVersion(null);
-        } else {
-            $cliente->setVersion($data['version']);
-        }
+        // Datos Particulares
+        $this->addClienteDatosParticulares($cliente, $data);
+        // Datos Laborales
+        $this->addClienteDatosLaborales($cliente, $data);
+        // Datos de Licencia
+        $this->addClienteDatosLicencia($cliente, $data);
+
         if ($this->tryAddCliente($cliente)) {
             $_SESSION['MENSAJES']['listado_clientes'] = 1;
             $_SESSION['MENSAJES']['listado_clientes_msj'] = 'Cliente agregado correctamente';
@@ -283,43 +245,16 @@ class ClientesManager {
             return false;
         }
     }
-    
+
     public function updateCliente($data) {
         $cliente = $this->getCliente($data['id']);
-        $cliente->setApellido($data['apellido']);
-        $cliente->setNombre($data['nombre']);
-        $cliente->setTelefono($data['telefono']);
-        $cliente->setEmail($data['email']);
-        $cliente->setSkype($data['skype']);
-        $pais = $this->getPais($data['pais']);
-        $cliente->setPais($pais);
-        $provincia = $this->getProvincia($data['provincia']);
-        $cliente->setProvincia($provincia);
-        $cliente->setCiudad($data['ciudad']);
-        $cliente->setEmpresa($data['empresa']);
-        $categoria = $this->getCategoriaCliente($data['categoria']);
-        $cliente->setCategoria($categoria);
-        if ($data['licencia'] == "-1") {
-            $cliente->setLicencia(null);
-        } else {
-            $licencia = $this->getLicencia($data['licencia']);
-            $cliente->setLicencia($licencia);
-        }
-        if ($data['profesion'] == "-1") {
-            $cliente->setProfesion(null);
-        } else {
-            $profesion = $this->getProfesionCliente($data['profesion']);
-            $cliente->setProfesion($profesion);
-        }
-        $cliente->setActividad($data['actividad']);
-        $cliente->setAnimales($data['animales']);
-        $cliente->setEstablecimientos($data['establecimientos']);
-        $cliente->setRazaManejo($data['raza_manejo']);
-        if ($data['version'] == "-1") {
-            $cliente->setVersion(null);
-        } else {
-            $cliente->setVersion($data['version']);
-        }
+        // Datos Particulares
+        $this->addClienteDatosParticulares($cliente, $data);
+        // Datos Laborales
+        $this->addClienteDatosLaborales($cliente, $data);
+        // Datos de Licencia
+        $this->addClienteDatosLicencia($cliente, $data);
+
         if ($this->tryUpdateCliente($cliente)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Cliente modificado correctamente';
@@ -329,7 +264,7 @@ class ClientesManager {
         }
         return true;
     }
-    
+
     private function tryUpdateCliente($cliente) {
         try {
             $this->entityManager->flush();
@@ -339,7 +274,51 @@ class ClientesManager {
             return false;
         }
     }
-    
+
+    private function addClienteDatosParticulares($cliente, $data) {
+        $pais = $this->getPais($data['pais']);
+        $provincia = $this->getProvincia($data['provincia']);
+        $categoria = $this->getCategoriaCliente($data['categoria']);
+        $cliente->setApellido($data['apellido'])
+                ->setNombre($data['nombre'])
+                ->setTelefono($data['telefono'])
+                ->setEmail($data['email'])
+                ->setSkype($data['skype'])
+                ->setPais($pais)
+                ->setProvincia($provincia)
+                ->setCiudad($data['ciudad'])
+                ->setCategoria($categoria)
+                ->setEmpresa($data['empresa']);
+    }
+
+    private function addClienteDatosLaborales($cliente, $data) {
+        if ($data['profesion'] == "-1") {
+            $cliente->setProfesion(null);
+        } else {
+            $profesion = $this->getProfesionCliente($data['profesion']);
+            $cliente->setProfesion($profesion);
+        }
+        $cliente->setActividad($data['actividad'])
+                ->setAnimales($data['animales'])
+                ->setEstablecimientos($data['establecimientos'])
+                ->setRazaManejo($data['raza_manejo']);
+    }
+
+    private function addClienteDatosLicencia($cliente, $data) {
+        if ($data['licencia'] == "-1") {
+            $cliente->setLicencia(null);
+        } else {
+            $licencia = $this->getLicencia($data['licencia']);
+            $cliente->setLicencia($licencia);
+        }
+        if ($data['version'] == "-1") {
+            $cliente->setVersion(null);
+        } else {
+            $cliente->setVersion($data['version']);
+        }
+        $cliente->setEstado("S");
+    }
+
     public function deleteCliente($id) {
         $entityManager = $this->entityManager;
         $cliente = $this->entityManager

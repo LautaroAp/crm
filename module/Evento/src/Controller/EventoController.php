@@ -10,12 +10,8 @@ namespace Evento\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use Zend\Paginator\Paginator;
-use Application\Entity\Post;
 use DBAL\Entity\Evento;
-use Evento\Form\EventoForm;
 use DBAL\Entity\Cliente;
 use DBAL\Entity\TipoEvento;
 
@@ -132,7 +128,6 @@ class EventoController extends AbstractActionController {
     }
 
     public function removeAction() {
-
         $view = $this->procesarRemoveAction();
         return $view;
     }

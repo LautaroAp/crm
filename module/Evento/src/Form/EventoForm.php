@@ -1,60 +1,53 @@
 <?php
+
 namespace Evento\Form;
 
-use Zend\Form\Element;
 use Zend\Form\Form;
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilter;
 
+class EventoForm extends Form {
 
-
-class EventoForm extends Form
-{
     /**
      * Scenario ('create' or 'update').
      * @var string 
      */
     private $scenario;
-    
+
     /**
      * Entity manager.
      * @var Doctrine\ORM\EntityManager 
      */
     private $entityManager = null;
-    
+
     /**
      * Current evento.
      * @var Evento\Entity\Evento 
      */
     private $evento = null;
-    
     private $tipos = null;
-    
+
     /**
      * Constructor.     
      */
-    public function __construct($scenario = 'create', $entityManager = null, $evento = null, $tipos)
-    {
+    public function __construct($scenario = 'create', $entityManager = null, $evento = null, $tipos) {
         // Define form name
         parent::__construct('evento-form');
-     
+
         // Set POST method for this form
         $this->setAttribute('method', 'post');
-        
+
         // Save parameters for internal use.
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
         $this->evento = $evento;
         $this->tipos = $tipos;
         $this->addElements();
-        $this->addInputFilter();          
+        $this->addInputFilter();
     }
-    
+
     /**
      * This method adds elements to form (input fields and submit button).
      */
-    
-     function setId($id_evento) {
+    function setId($id_evento) {
         $this->id_evento = $id_evento;
     }
 
@@ -73,9 +66,8 @@ class EventoForm extends Form
     function setId_ejecutivo($id_ejecutivo) {
         $this->id_ejecutivo = $id_ejecutivo;
     }
-    protected function addElements() 
-    {
-       
+
+    protected function addElements() {
         $this->add([
             'type' => 'text',
             'name' => 'fecha_evento',
@@ -83,7 +75,7 @@ class EventoForm extends Form
                 'label' => 'Fecha',
             ],
         ]);
-        
+
         $this->add([
             'type' => 'select',
             'name' => 'tipo_evento',
@@ -94,7 +86,6 @@ class EventoForm extends Form
             ],
         ]);
 
-       
         $this->add([
             'type' => 'text',
             'name' => 'id_cliente',
@@ -103,26 +94,25 @@ class EventoForm extends Form
                 'label' => 'Cliente',
             ],
         ]);
-        
-        $this->add([
-                    'type' => 'text',
-                    'name' => 'id_ejecutivo',
-                    'value' => '',
-                    'options' => [
-                        'label' => 'Responsable',
-                    ],
-                ]);
-
 
         $this->add([
-                    'type' => 'text',
-                    'name' => 'ejecutivo',
-                    'value' => '',
-                    'options' => [
-                        'label' => 'Ejecutivo',
-                    ],
-                ]);
-        
+            'type' => 'text',
+            'name' => 'id_ejecutivo',
+            'value' => '',
+            'options' => [
+                'label' => 'Responsable',
+            ],
+        ]);
+
+        $this->add([
+            'type' => 'text',
+            'name' => 'ejecutivo',
+            'value' => '',
+            'options' => [
+                'label' => 'Ejecutivo',
+            ],
+        ]);
+
         $this->add([
             'type' => 'submit',
             'name' => 'submit',
@@ -132,31 +122,23 @@ class EventoForm extends Form
             ],
         ]);
     }
-    
-  private function addInputFilter() 
-    {
-        // Create main input filter
-        $inputFilter = $this->getInputFilter();        
 
+    private function addInputFilter() {
+        // Create main input filter
+        $inputFilter = $this->getInputFilter();
         $inputFilter->add([
             'name' => 'fecha_evento',
             'required' => true,
-//            'filters' => [
-//                ['name' => 'StringTrim'],
-//            ],
             'validators' => [
                 [
                     'name' => 'StringLength',
                     'options' => [
                         'format' => 'd-m-Y',
                     ],
-                    
                 ],
             ],
         ]);
 
-
-        // Add input for "version_evento" field
         $inputFilter->add([
             'name' => 'tipo_evento',
             'required' => true,
@@ -165,7 +147,6 @@ class EventoForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
@@ -178,10 +159,10 @@ class EventoForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
+        
         $inputFilter->add([
             'name' => 'id_ejecutivo',
             'required' => true,
@@ -190,13 +171,9 @@ class EventoForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
+    }
 
-       
-    }       
-
-    
 }
