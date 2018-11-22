@@ -303,5 +303,14 @@ class UserManager
 
         return true;
     }
+    public function getUser($id){
+        return $this->entityManager->getRepository(User::class)
+                ->find($id);
+    }
+    
+    public function getUserByMail($mail){
+        return $this->entityManager->getRepository(User::class)
+                        ->findOneByEmail($data['email']);
+    }
 }
 

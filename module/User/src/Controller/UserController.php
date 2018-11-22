@@ -67,30 +67,22 @@ class UserController extends AbstractActionController
     {
         // Create user form
         $form = new UserForm('create', $this->entityManager);
-        
         // Check if user has submitted the form
         if ($this->getRequest()->isPost()) {
-            
             // Fill in the form with POST data
             $data = $this->params()->fromPost();            
-            
             $form->setData($data);
-            
             // Validate form
             if($form->isValid()) {
-                
                 // Get filtered and validated data
                 $data = $form->getData();
-                
                 // Add user.
                 $user = $this->userManager->addUser($data);
-                
                 // Redirect to "view" page
                 return $this->redirect()->toRoute('users', 
                         ['action'=>'view', 'id'=>$user->getId()]);                
             }               
         } 
-        
         return new ViewModel([
                 'form' => $form
             ]);
@@ -108,8 +100,8 @@ class UserController extends AbstractActionController
         }
         
         // Find a user with such ID.
-        $user = $this->entityManager->getRepository(User::class)
-                ->find($id);
+
+        $user = $this->userManager->getUser($id);
         
         if ($user == null) {
             $this->getResponse()->setStatusCode(404);
@@ -132,8 +124,7 @@ class UserController extends AbstractActionController
             return;
         }
         
-        $user = $this->entityManager->getRepository(User::class)
-                ->find($id);
+        $user =  $this->userManager->getUser($id);
         
         if ($user == null) {
             $this->getResponse()->setStatusCode(404);
@@ -189,8 +180,7 @@ class UserController extends AbstractActionController
             return;
         }
         
-        $user = $this->entityManager->getRepository(User::class)
-                ->find($id);
+        $user =  $this->userManager->getUser($id);;
         
         if ($user == null) {
             $this->getResponse()->setStatusCode(404);
@@ -255,8 +245,8 @@ class UserController extends AbstractActionController
             if($form->isValid()) {
                 
                 // Look for the user with such email.
-                $user = $this->entityManager->getRepository(User::class)
-                        ->findOneByEmail($data['email']);
+                $mail = $data['email'];
+                $user = getUserByMail($mail);
                 
                 if ($user!=null && $user->getStatus() == User::STATUS_ACTIVE) {
                     // Generate a new password for user and send an E-mail 
