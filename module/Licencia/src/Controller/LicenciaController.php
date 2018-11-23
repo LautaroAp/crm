@@ -1,22 +1,9 @@
 <?php
 
-/**
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 namespace Licencia\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-use Zend\Paginator\Paginator;
-use Application\Entity\Post;
-use DBAL\Entity\Licencia;
-use DBAL\Entity\Cliente;
-use Licencia\Form\LicenciaForm;
 
 class LicenciaController extends AbstractActionController {
 
@@ -30,7 +17,7 @@ class LicenciaController extends AbstractActionController {
      * @var User\Service\LicenciaManager 
      */
     protected $licenciaManager;
-    
+
     /**
      * Doctrine entity manager.
      * @var Doctrine\ORM\EntityManager
@@ -104,16 +91,12 @@ class LicenciaController extends AbstractActionController {
             $this->reportarError();
         } else {
             if ($this->getRequest()->isPost()) {
-
                 $data = $this->params()->fromPost();
-
                 if ($this->licenciaManager->formValid($form, $data)) {
-
                     $this->licenciaManager->updateLicencia($licencia, $form);
                     return $this->redirect()->toRoute('licencia', ['action' => 'index']);
                 }
             } else {
-
                 $this->licenciaManager->getFormEdited($form, $licencia);
             }
             return new ViewModel(array(
@@ -149,5 +132,4 @@ class LicenciaController extends AbstractActionController {
         $this->getResponse()->setStatusCode(404);
         return;
     }
-
 }

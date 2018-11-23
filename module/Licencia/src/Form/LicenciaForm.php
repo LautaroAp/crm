@@ -1,59 +1,48 @@
 <?php
+
 namespace Licencia\Form;
 
 use Zend\Form\Form;
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilter;
 
+class LicenciaForm extends Form {
 
-
-class LicenciaForm extends Form
-{
     /**
      * Scenario ('create' or 'update').
      * @var string 
      */
     private $scenario;
-    
+
     /**
      * Entity manager.
      * @var Doctrine\ORM\EntityManager 
      */
     private $entityManager = null;
-    
+
     /**
      * Current licencia.
      * @var Licencia\Entity\Licencia 
      */
     private $licencia = null;
-    
+
     /**
      * Constructor.     
      */
-    public function __construct($scenario = 'create', $entityManager = null, $licencia = null)
-    {
+    public function __construct($scenario = 'create', $entityManager = null, $licencia = null) {
         // Define form name
         parent::__construct('licencia-form');
-     
         // Set POST method for this form
         $this->setAttribute('method', 'post');
-        
         // Save parameters for internal use.
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
         $this->licencia = $licencia;
-        
-        $this->addElements();
-//        $this->addInputFilter();          
+        $this->addElements();       
     }
-    
+
     /**
      * This method adds elements to form (input fields and submit button).
      */
-    protected function addElements() 
-    {
-       
-
+    protected function addElements() {
         // Add "full_name" field
         $this->add([
             'type' => 'text',
@@ -64,7 +53,7 @@ class LicenciaForm extends Form
             ],
         ]);
 
-         $this->add([
+        $this->add([
             'type' => 'text',
             'name' => 'precio_local',
             'value' => '',
@@ -72,8 +61,8 @@ class LicenciaForm extends Form
                 'label' => 'Precio local',
             ],
         ]);
-         
-          $this->add([
+
+        $this->add([
             'type' => 'text',
             'name' => 'precio_extranjero',
             'value' => '',
@@ -81,8 +70,8 @@ class LicenciaForm extends Form
                 'label' => 'Precio Extranjero',
             ],
         ]);
-          
-           $this->add([
+
+        $this->add([
             'type' => 'text',
             'name' => 'iva',
             'value' => '',
@@ -90,8 +79,8 @@ class LicenciaForm extends Form
                 'label' => '% IVA',
             ],
         ]);
-           
-           $this->add([
+
+        $this->add([
             'type' => 'text',
             'name' => 'descuento',
             'value' => '',
@@ -107,92 +96,5 @@ class LicenciaForm extends Form
                 'value' => 'Guardar'
             ],
         ]);
-    }
-    
-    
-    
-//  private function addInputFilter() 
-//    {
-//        // Create main input filter
-//        $inputFilter = $this->getInputFilter();        
-//                
-//   
-//        
-//        // Add input for "nombre_licencia" field
-//        $inputFilter->add([
-//            'name' => 'nombre_licencia',
-//            'required' => true,
-//            'filters' => [
-//                ['name' => 'StringTrim'],
-//            ],
-//            'validators' => [
-//                [
-//                    'name' => 'StringLength',
-//                    
-//                ],
-//            ],
-//        ]);
-//
-//       $inputFilter->add([
-//            'name' => 'precio_local',
-//            'required' => true,
-//            'filters' => [
-//                ['name' => 'StringTrim'],
-//            ],
-//            'validators' => [
-//                [
-//                    'name' => 'StringLength',
-//                    
-//                ],
-//            ],
-//        ]);
-//       
-//       $inputFilter->add([
-//            'name' => 'descuento',
-//            'required' => true,
-//            'filters' => [
-//                ['name' => 'StringTrim'],
-//            ],
-//            'validators' => [
-//                [
-//                    'name' => 'StringLength',
-//                    
-//                ],
-//            ],
-//        ]);
-//       
-//       $inputFilter->add([
-//            'name' => 'iva',
-//            'required' => true,
-//            'filters' => [
-//                ['name' => 'StringTrim'],
-//            ],
-//            'validators' => [
-//                [
-//                    'name' => 'StringLength',
-//                    
-//                ],
-//            ],
-//        ]);
-//       
-//       $inputFilter->add([
-//            'name' => 'precio_extranjero',
-//            'required' => true,
-//            'filters' => [
-//                ['name' => 'StringTrim'],
-//            ],
-//            'validators' => [
-//                [
-//                    'name' => 'StringLength',
-//                    
-//                ],
-//            ],
-//        ]);
-//       
-//  
-//       
-//       
-//    }       
-
-    
+    }    
 }
