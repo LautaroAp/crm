@@ -7,9 +7,9 @@ use Usuario\Controller\UsuarioController;
 use Usuario\Service\UsuarioManager;
 
 /**
- * Description of UsuarioControllerFactory
+ * Esta clase crea una instancia de UsuarioController 
  *
- * @author mariano
+ * @author SoftHuella 
  */
 class UsuarioControllerFactory implements FactoryInterface {
     

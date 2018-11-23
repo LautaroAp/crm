@@ -4,15 +4,15 @@ namespace Usuario\Service;
 
 use DBAL\Entity\Usuario;
 use DBAL\Entity\Cliente;
-//use Zend\Crypt\Password\Bcrypt;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
 
 /**
- * This service is responsible for adding/editing usuarios
- * and changing usuario password.
+ * Esta clase se encarga de obtener y modificar los datos y usuarios adicionales.
+ *
  */
+
 class UsuarioManager {
 
     /**
@@ -52,33 +52,7 @@ class UsuarioManager {
         return ($paginator);
     }
 
-    /**
-     * This method adds a new usuario.
-     */
-//    public function addUsuario($data) {
-//        $usuario = new Usuario();
-//        $usuario->setNombre($data['nombre'])
-//                ->setTelefono($data['telefono'])
-//                ->setMail($data['mail'])
-//                ->setSkype($data['skype']);
-//        $idCliente = $data['id'];
-//        
-//        $cliente = $this->entityManager
-//                ->getRepository(Cliente::class)
-//                ->findOneBy(['Id' => $idCliente]);
-//        
-//        $usuario->setCliente($cliente);
-//        if ($this->tryAddUsuario($usuario)) {
-//            $_SESSION['MENSAJES']['ficha_cliente'] = 1;
-//            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Datos guardados correctamente';
-//        } else {
-//            $_SESSION['MENSAJES']['ficha_cliente'] = 0;
-//            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al guardar datos';
-//        }
-//        return $usuario;
-//    }
-
-        public function addUsuario($data) {
+    public function addUsuario($data) {
         $usuario = new Usuario();
         $usuario->setNombre($data['nombre'])
                 ->setTelefono($data['telefono'])
@@ -240,7 +214,6 @@ class UsuarioManager {
             }
             $qb->setParameter("$p", '%'.$valorCampo.'%');
         }
-
         return $qb->getQuery();
     }
      
@@ -253,24 +226,7 @@ class UsuarioManager {
         $usuario = $this->recuperarUsuario($id);
         return $usuario->getCliente()->getId();
     }
-    
-    public function getNombre($id){
-        $usuario = $this->getUsuario($id);
-        return $usuario->getNombre();
-    }
-    public function getTelefono($id){
-        $usuario = $this->getUsuario($id);
-        return $usuario->getTelefono();
-    }
-    public function getSkype($id){
-        $usuario = $this->getUsuario($id);
-        return $usuario->getSkype();
-    }
-    public function getMail($id){
-        $usuario = $this->getUsuario($id);
-        return $usuario->getMail();
-    }
-    
+
     public function getData($id){
         $usuario = $this->getUsuario($id);
         $arr = [

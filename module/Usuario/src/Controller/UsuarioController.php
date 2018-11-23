@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * Esta clase es el controlador de la entidad Usuario.  
+ * Se encarga de direccionar los datos entre las vistas y el manager
+ * @author SoftHuella 
  */
 
 namespace Usuario\Controller;
@@ -34,37 +34,29 @@ class UsuarioController extends AbstractActionController {
     }
 
     public function indexAction() {
-        $paginator = $this->usuarioManager->getTabla();
-        $mensaje = "";
+        return $this->procesarIndexAction();
+    }
 
+    private function procesarIndexAction(){
+        $paginator = $this->usuarioManager->getTabla();
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
                 ->setItemCountPerPage(10);
-
         return new ViewModel([
             'usuarios' => $paginator,
-            'mensaje' => $mensaje
         ]);
     }
-
     private function procesarAddAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
-               
-        // Create usuario form
         $form = new UsuarioForm('create', $this->entityManager);
-        // Check if usuario has submitted the form
         if ($this->getRequest()->isPost()) {
-            // Fill in the form with POST data
             $data = $this->params()->fromPost();
             $form->setData($data);
-            // Validate form
             if ($form->isValid()) {
-                // Get filtered and validated data
                 $data = $form->getData();
-                // Add usuario.
                 $this->usuarioManager->addUsuario($data);
                 return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $id]);
             }
@@ -76,31 +68,7 @@ class UsuarioController extends AbstractActionController {
     }
 
     public function addAction() {
-        $view = $this->procesarAddAction();
-
-        return $view;
-    }
-
-    public function viewAction() {
-        $id = (int) $this->params()->fromRoute('id', -1);
-        print($id);
-
-        if ($id < 1) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-
-        // Find a user with such ID.
-        $usuario = $this->usuarioManager->getUsuario($id);
-
-        if ($usuario == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-
-        return new ViewModel([
-            'usuario' => $usuario
-        ]);
+        return $this->procesarAddAction();
     }
 
     private function procesarEditAction() {
@@ -129,7 +97,7 @@ class UsuarioController extends AbstractActionController {
         return new ViewModel(array(
             'usuario' => $usuario,
             'form' => $form,
-            'id' => $usuario->getCliente()->getId(),
+            'id' => $this->usuarioManager->getIdCliente($id),
         ));
     }
 
