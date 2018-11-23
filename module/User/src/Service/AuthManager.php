@@ -2,7 +2,6 @@
 namespace User\Service;
 
 use Zend\Authentication\Result;
-use Zend\Session\Container;
 
 /**
  * The AuthManager service is responsible for user's login/logout and simple access 

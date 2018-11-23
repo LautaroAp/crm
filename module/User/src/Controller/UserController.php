@@ -6,7 +6,6 @@ use Zend\View\Model\ViewModel;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use Zend\Paginator\Paginator;
-use Application\Entity\Post;
 use User\Entity\User;
 use User\Form\UserForm;
 use User\Form\PasswordChangeForm;

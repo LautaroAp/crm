@@ -3,8 +3,6 @@ namespace User\Service;
 
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
-use Zend\Crypt\Password\Bcrypt;
-use User\Entity\User;
 use DBAL\Entity\Ejecutivo;
 
 /**

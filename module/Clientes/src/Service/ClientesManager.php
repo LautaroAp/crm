@@ -74,6 +74,7 @@ class ClientesManager {
     public function getTablaFiltrado($parametros) {
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros2($filtros);
+        
         $pag = new ORMPaginator($query);
         $pag->setUseOutputWalkers(true);
         $adapter = new DoctrineAdapter($pag);
