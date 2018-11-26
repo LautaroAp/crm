@@ -176,7 +176,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
         <table id="tabla_evento" class="table table-bordered table-zebra table-scroll table-top">            
             <tbody role="button" class="">
                 <?php foreach ($eventos as $evento): ?>
-                    <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
+                <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
                         <td id="<?= $evento->getId() ?>" class=""><?php
                             if (!is_null($evento->getFecha())) {
                                 echo($evento->getFecha()->format('d/m/Y'));
@@ -190,7 +190,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                 echo('No definido');
                             }
                             ?></td>
-                        <td id="<?= $evento->getId() ?>" class=""><?php echo(nl2br($evento->getDescripcion())); ?></td>
+                        <td id="<?= $evento->getId() ?>" class="table-scroll-description"><?php echo(nl2br($evento->getDescripcion())); ?></td>
                     </tr> 
                 <?php endforeach; ?>    
             </tbody>

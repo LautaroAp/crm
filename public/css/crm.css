@@ -45,6 +45,15 @@
     overflow-y:auto;
 }
 
+.table-scroll-description{
+    display: block;
+    height: 100%;
+    max-height:200px;
+    overflow-y:auto;
+}
+
+
+
 .table-scroll-head{
     /*display: block;*/
     /*min-width: 10% !important;*/
@@ -58,11 +67,13 @@
 .table-zebra>tbody>tr:nth-child(odd)>th {
     background-color: #FFFFFF;
     min-width: 120px !important;
+    min-height: 75px !important;
 }
 .table-zebra>tbody>tr:nth-child(even)>td, 
 .table-zebra>tbody>tr:nth-child(even)>th {
     background-color: #F2F2F2;
     min-width: 120px !important;
+    min-height: 75px !important;
 }
 .table-zebra>thead>tr>th {
     background-color: #F2F2F2;
