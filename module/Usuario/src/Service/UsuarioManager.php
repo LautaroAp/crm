@@ -4,23 +4,15 @@ namespace Usuario\Service;
 
 use DBAL\Entity\Usuario;
 use DBAL\Entity\Cliente;
-//use Zend\Crypt\Password\Bcrypt;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-use Zend\Math\Rand;
-use Zend\Mail;
-use Zend\Mail\Transport\Smtp as SmtpTransport;
-use Zend\Mail\Transport\SmtpOptions;
-use Zend\Mime\Message as MimeMessage;
-use Zend\Mime\Part as MimePart;
-use Doctrine\ORM\Query\Expr\Join;
+
 
 /**
- * This service is responsible for adding/editing usuarios
- * and changing usuario password.
+ * Esta clase se encarga de obtener y modificar los datos y usuarios adicionales.
+ *
  */
+
 class UsuarioManager {
 
     /**
@@ -60,23 +52,21 @@ class UsuarioManager {
         return ($paginator);
     }
 
-    /**
-     * This method adds a new usuario.
-     */
     public function addUsuario($data) {
         $usuario = new Usuario();
-        $usuario->setNombre($data['nombre']);
-        $usuario->setTelefono($data['telefono']);
-        $usuario->setMail($data['mail']);
-        $usuario->setSkype($data['skype']);
+        $usuario->setNombre($data['nombre'])
+                ->setTelefono($data['telefono'])
+                ->setMail($data['mail'])
+                ->setSkype($data['skype']);
         $idCliente = $data['id'];
         
-        $entityManager = $this->entityManager;
+        
         $cliente = $this->entityManager
                 ->getRepository(Cliente::class)
                 ->findOneBy(['Id' => $idCliente]);
         
         $usuario->setId_cliente($cliente);
+
         if ($this->tryAddUsuario($usuario)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Datos guardados correctamente';
@@ -86,7 +76,7 @@ class UsuarioManager {
         }
         return $usuario;
     }
-
+    
     public function updateUsuario($usuario, $data) {
         $usuario->setNombre($data['nombre']);
         $usuario->setTelefono($data['telefono']);
@@ -224,8 +214,28 @@ class UsuarioManager {
             }
             $qb->setParameter("$p", '%'.$valorCampo.'%');
         }
-
         return $qb->getQuery();
     }
      
+    public function getUsuario($id){
+        return $this->entityManager->getRepository(Usuario::class)
+                ->find($id);
+    }
+    
+    public function getIdCliente($id){
+        $usuario = $this->recuperarUsuario($id);
+        return $usuario->getCliente()->getId();
+    }
+
+    public function getData($id){
+        $usuario = $this->getUsuario($id);
+        $arr = [
+            'nombre' =>$usuario->getNombre(),
+            'telefono' =>$usuario->getTelefono(),
+            'skype' => $usuario->getSkype(),
+            'mail' => $usuario->getMail(),
+        ];
+        return $arr;
+    }
+    
 }

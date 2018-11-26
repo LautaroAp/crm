@@ -1,21 +1,16 @@
 <?php
 
 /**
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * Esta clase es el controlador de la entidad Provincia.  
+ * Se encarga de direccionar los datos entre las vistas y el manager
+ * @author SoftHuella 
  */
 
 namespace Provincia\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-use Zend\Paginator\Paginator;
-use Application\Entity\Post;
-use DBAL\Entity\Provincia;
-use Provincia\Form\ProvinciaForm;
+
 
 class ProvinciaController extends AbstractActionController {
 
@@ -37,9 +32,7 @@ class ProvinciaController extends AbstractActionController {
 
     
     public function indexAction() {
-//        return $this->procesarIndexAction();
-        $view = $this->procesarAddAction();
-        return $view;
+        return $this->procesarIndexAction();
     }
 
     private function procesarIndexAction() {
@@ -60,8 +53,7 @@ class ProvinciaController extends AbstractActionController {
         $paises = $this->provinciaManager->getPais();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-                        
-            $provincia = $this->provinciaManager->getProvinciaFromForm($form, $data);
+            $this->provinciaManager->getProvinciaFromForm($form, $data);
             return $this->redirect()->toRoute('provincia');
         }
         return new ViewModel([
@@ -101,7 +93,6 @@ class ProvinciaController extends AbstractActionController {
     }
 
     public function removeAction() {
-
         $view = $this->procesarRemoveAction();
         return $view;
     }
@@ -118,26 +109,6 @@ class ProvinciaController extends AbstractActionController {
     }
 
     public function viewAction() {
-        /* $id = (int)$this->params()->fromRoute('id', -1);
-          if ($id<1) {
-          $this->getResponse()->setStatusCode(404);
-          return;
-          }
-
-          // Find a user with such ID.
-          $provincia = $this->entityManager->getRepository(Provincia::class)
-          ->find($id_provincia);
-
-          if ($provincia == null) {
-          $this->getResponse()->setStatusCode(404);
-          return;
-          }
-
-          return new ViewModel([
-          'provincia' => $provincia
-          ]); */
-
-
         return new ViewModel();
     }
 

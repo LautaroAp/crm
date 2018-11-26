@@ -1,21 +1,16 @@
 <?php
 
 /**
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * Esta clase es el controlador de la entidad TipoEvento.  
+ * Se encarga de direccionar los datos entre las vistas y el manager
+ * @author SoftHuella 
  */
 
 namespace TipoEvento\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-use Zend\Paginator\Paginator;
-use Application\Entity\Post;
-use DBAL\Entity\TipoEvento;
-use TipoEvento\Form\TipoEventoForm;
+
 
 class TipoEventoController extends AbstractActionController {
 
@@ -36,13 +31,6 @@ class TipoEventoController extends AbstractActionController {
      */
     private $eventoManager;
 
-    /* public function __construct($entityManager, $tipoeventoManager)
-      {
-      $this->entityManager = $entityManager;
-      $this->tipoeventoManager = $tipoeventoManager;
-      }
-     */
-
     public function __construct($entityManager, $tipoeventoManager, $eventoManager) {
         $this->entityManager = $entityManager;
         $this->tipoeventoManager = $tipoeventoManager;
@@ -54,12 +42,6 @@ class TipoEventoController extends AbstractActionController {
         return $view;
     }
 
-    private function procesarIndexAction() {
-        $tipoeventos = $this->tipoeventoManager->getTipoEventos();
-        return new ViewModel([
-            'tipoeventos' => $tipoeventos
-        ]);
-    }
 
     public function addAction() {
         $view = $this->procesarAddAction();
@@ -82,7 +64,7 @@ class TipoEventoController extends AbstractActionController {
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $tipoevento = $this->tipoeventoManager->getTipoEventoFromForm($form, $data);
+            $this->tipoeventoManager->getTipoEventoFromForm($form, $data);
             return $this->redirect()->toRoute('tipoevento');
         }
         return new ViewModel([
@@ -133,7 +115,7 @@ class TipoEventoController extends AbstractActionController {
         if ($tipoevento == null) {
             $this->reportarError();
         } else {
-            $this->eventoManager->eliminarTipoEventos($tipoevento->getId());
+            $this->eventoManager->eliminarTipoEventos($id);
             $this->tipoeventoManager->removeTipoEvento($tipoevento);
             return $this->redirect()->toRoute('tipoevento');
         }

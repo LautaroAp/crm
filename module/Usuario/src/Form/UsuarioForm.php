@@ -2,10 +2,7 @@
 namespace Usuario\Form;
 
 use Zend\Form\Form;
-use Zend\Form\Fieldset;
 use DBAL\Entity\Usuario;
-use Zend\InputFilter\InputFilter;
-use Usuario\Validator\UsuarioExistsValidator;
 
 /**
  * This form is used to collect usuario's email, full name, password and status. The form 

@@ -3,10 +3,10 @@
 namespace Evento\Controller;
 
 use Zend\View\Model\ViewModel;
-use DBAL\Entity\TipoEvento;
 
-class EventoVentaController extends EventoController {
 
+class EventoVentaController extends EventoController
+{
     /**
      * @var DoctrineORMEntityManager
      */
@@ -18,32 +18,17 @@ class EventoVentaController extends EventoController {
      */
     protected $eventoManager;
 
+    
+    public function __construct($entityManager, $eventoManager)
+    {
 
-    /* public function __construct($entityManager, $eventoManager)
-      {
-      $this->entityManager = $entityManager;
-      $this->eventoManager = $eventoManager;
-      }
-     */
-    private $tipos;
-
-    public function __construct($entityManager, $eventoManager) {
         $this->entityManager = $entityManager;
         $this->eventoManager = $eventoManager;
-        $this->tipos = $this->getArrayTipos();
     }
-
-    private function getArrayTipos() {
-        $tipos = $this->entityManager->getRepository(TipoEvento::class)->findAll();
-        $array = array();
-        foreach ($tipos as $tipo) {
-            $array2 = array($tipo->getId() => $tipo->getNombre());
-            $array = $array + $array2;
-        }
-        return $array;
-    }
-
-    public function indexAction() {
+    
+    
+    public function indexAction()
+    {
         return $this->procesarIndexAction();
     }
 

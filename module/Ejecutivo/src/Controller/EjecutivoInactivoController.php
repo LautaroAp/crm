@@ -6,17 +6,9 @@
  */
 
 namespace Ejecutivo\Controller;
-
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-use Zend\Paginator\Paginator;
-use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 
-use DBAL\Entity\Ejecutivo;
-use DBAL\Entity\Evento;
 
 class EjecutivoInactivoController extends EjecutivoController
 {
@@ -67,9 +59,7 @@ class EjecutivoInactivoController extends EjecutivoController
     }
     
     private function procesarActivar($id){
-        $ejecutivo = $this->ejecutivoInactivoManager->recuperarEjecutivo($id);
-        $ejecutivo->activar();
-        $this->entityManager->flush();
+        $this->ejecutivoInactivoManager->activarEjecutivo($id);
         $_SESSION['MENSAJES']['ejecutivo_inactivo'] = 1;
         $_SESSION['MENSAJES']['ejecutivo_inactivo_msj'] = 'Ejecutivo dado de Alta correctamente';
     }

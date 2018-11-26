@@ -70,12 +70,11 @@ class ProvinciaManager
         $provincia->setNombre_provincia($data['nombre_provincia']); 
         $pais = $this->entityManager->getRepository(Pais::class)
                 ->findOneBy(['id_pais' => $data['pais']]);
-        $provincia->setId_pais();
+        $provincia->setId_pais($pais);
         $this->entityManager->persist($provincia);
         $this->entityManager->flush();
         return $provincia;
     }
-
     
    public function formValid($form, $data){
        $form->setData($data);

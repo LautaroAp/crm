@@ -2,8 +2,6 @@
 namespace User\Form;
 
 use Zend\Form\Form;
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilter;
 
 /**
  * This form is used to collect user's login, password and 'Remember Me' flag.

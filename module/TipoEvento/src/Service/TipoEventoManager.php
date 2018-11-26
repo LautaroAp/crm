@@ -7,9 +7,10 @@ use TipoEvento\Form\TipoEventoForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
+
 /**
- * This service is responsible for adding/editing tipoeventos
- * and changing tipoevento password.
+ * Esta clase se encarga de obtener y modificar los datos de los tipos de eventos
+ *
  */
 class TipoEventoManager {
 

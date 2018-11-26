@@ -2,11 +2,6 @@
 namespace Provincia\Form;
 
 use Zend\Form\Form;
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilter;
-use DBAL\Entity\Pais;
-
-
 
 class ProvinciaForm extends Form
 {
@@ -45,7 +40,7 @@ class ProvinciaForm extends Form
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
         $this->provincia = $provincia;
-    $this->paises= $paises;
+        $this->paises= $paises;
         $this->addElements();
         $this->addInputFilter();          
     }

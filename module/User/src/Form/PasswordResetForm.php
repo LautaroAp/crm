@@ -2,7 +2,6 @@
 namespace User\Form;
 
 use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
 
 /**
  * This form is used to collect user's E-mail address (used to recover password).

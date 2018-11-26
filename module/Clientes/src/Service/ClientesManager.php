@@ -74,6 +74,7 @@ class ClientesManager {
     public function getTablaFiltrado($parametros) {
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros2($filtros);
+        
         $pag = new ORMPaginator($query);
         $pag->setUseOutputWalkers(true);
         $adapter = new DoctrineAdapter($pag);
@@ -370,6 +371,17 @@ class ClientesManager {
                         ->getRepository(ProfesionCliente::class)
                         ->findAll();
     }
+    
+    public function getEventos($id = null) {
+        if (isset($id)) {
+            $cliente= $this->entityManager
+                            ->getRepository(Cliente::class)
+                            ->findOneBy(['Id' => $id]);
+            return $cliente->getEventos();
+        }
+        return array();
+        
+    }
 
     public function getPais($id = null) {
         if (isset($id)) {
@@ -470,4 +482,10 @@ class ClientesManager {
         $entityManager->flush();
     }
 
+    public function getUsuariosCliente($Id){
+        $cliente= $this->entityManager
+                        ->getRepository(Cliente::class)
+                        ->findOneBy(['Id' => $Id]);
+        return $cliente->getUsuarios();
+    }
 }

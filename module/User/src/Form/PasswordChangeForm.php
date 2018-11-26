@@ -2,8 +2,7 @@
 namespace User\Form;
 
 use Zend\Form\Form;
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilter;
+
 
 /**
  * This form is used when changing user's password (to collect user's old password 

@@ -145,7 +145,7 @@ class ProfesionClienteManager
         }
     }
 
-    private function tryUpdateProfesionCliente($profesioncliente) {
+    private function tryUpdateProfesionCliente() {
         try {
             $this->entityManager->flush();
             return true;

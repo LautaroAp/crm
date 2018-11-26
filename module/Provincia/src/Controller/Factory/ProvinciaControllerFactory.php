@@ -1,4 +1,5 @@
 <?php
+
 namespace Provincia\Controller\Factory;
 
 use Interop\Container\ContainerInterface;
@@ -7,19 +8,18 @@ use Provincia\Controller\ProvinciaController;
 use Provincia\Service\ProvinciaManager;
 
 /**
- * Description of ProvinciaControllerFactory
+ * Esta clase se encarga de crear una instancia de ProvinciaController
  *
- * @author mariano
+ * @author SoftHuella
  */
 class ProvinciaControllerFactory implements FactoryInterface {
-    
 
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
-    {
-       
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null) {
+
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $provinciaManager = $container->get(ProvinciaManager::class);
         // Instantiate the service and inject dependencies
         return new ProvinciaController($entityManager, $provinciaManager);
-    }    
+    }
+
 }

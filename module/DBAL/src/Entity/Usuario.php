@@ -76,7 +76,9 @@ class Usuario {
     
     function setId_usuario($id_usuario) {
         $this->id_usuario = $id_usuario;
+        return $this;
     }
+
 
     function setId_cliente($id_cliente) {
         $this->id_cliente = $id_cliente;
@@ -85,18 +87,22 @@ class Usuario {
 
     function setNombre($nombre) {
         $this->nombre = $nombre;
+        return $this;
     }
 
     function setTelefono($telefono) {
         $this->telefono = $telefono;
+        return $this;
     }
 
     function setMail($mail) {
         $this->email = $mail;
+        return $this;
     }
 
     function setSkype($skype) {
         $this->skype = $skype;
+        return $this;
     }
 
 

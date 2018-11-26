@@ -24,14 +24,8 @@ class ProductoController extends AbstractActionController {
      */
     protected $productoManager;
 
-    /* public function __construct($entityManager, $productoManager)
-      {
-      $this->entityManager = $entityManager;
-      $this->productoManager = $productoManager;
-      }
-     */
-
-    public function __construct($entityManager, $productoManager) {
+    public function __construct($entityManager, $productoManager)
+    {
         $this->entityManager = $entityManager;
         $this->productoManager = $productoManager;
     }
@@ -52,13 +46,12 @@ class ProductoController extends AbstractActionController {
         $view = $this->procesarAddAction();
         return $view;
     }
-
-    private function procesarAddAction() {
+    
+    private function procesarAddAction(){
         $form = $this->productoManager->createForm();
-
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $producto = $this->productoManager->getProductoFromForm($form, $data);
+            $this->productoManager->getProductoFromForm($form, $data);
             return $this->redirect()->toRoute('producto', ['action' => 'index']);
         }
         return new ViewModel([
@@ -74,33 +67,31 @@ class ProductoController extends AbstractActionController {
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $producto = $this->productoManager->getProductoId($id);
-        $form = $this->productoManager->getFormForProducto($producto);
-        if ($form == null) {
+        $form =$this->productoManager->getFormForProducto($producto);
+        if ($form == null){
             $this->reportarError();
         } else {
             if ($this->getRequest()->isPost()) {
-
-                $data = $this->params()->fromPost();
-
-                if ($this->productoManager->formValid($form, $data)) {
-
-                    $this->productoManager->updateProducto($producto, $form);
+               $data = $this->params()->fromPost();
+               if ($this->productoManager->formValid($form,$data)){
+                    $this->productoManager->updateProducto($producto,$form);
                     return $this->redirect()->toRoute('producto', ['action' => 'index']);
-                }
-            } else {
-
-                $this->productoManager->getFormEdited($form, $producto);
-            }
-            return new ViewModel(array(
-                'producto' => $producto,
-                'form' => $form
-            ));
+               }
+            }               
+         else {
+            $this->productoManager->getFormEdited($form, $producto);
+         }
+        return new ViewModel(array(
+            'producto' => $producto,
+            'form' => $form
+        ));
         }
     }
 
-    public function removeAction() {
-        $view = $this->procesarRemoveAction();
-        return $view;
+    public function removeAction() 
+    {
+       $view = $this->procesarRemoveAction();
+       return $view;
     }
 
     public function procesarRemoveAction() {
@@ -113,9 +104,10 @@ class ProductoController extends AbstractActionController {
             return $this->redirect()->toRoute('producto', ['action' => 'index']);
         }
     }
-
-    public function viewAction() {
-        return new ViewModel();
+    
+      public function viewAction() 
+    {         
+          return new ViewModel();
     }
 
     private function reportarError() {

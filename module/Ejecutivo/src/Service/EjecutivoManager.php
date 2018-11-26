@@ -3,17 +3,10 @@
 namespace Ejecutivo\Service;
 
 use DBAL\Entity\Ejecutivo;
-//use Zend\Crypt\Password\Bcrypt;
 use Zend\Paginator\Paginator;
-use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-use Zend\Math\Rand;
-use Zend\Mail;
-use Zend\Mail\Transport\Smtp as SmtpTransport;
-use Zend\Mail\Transport\SmtpOptions;
-use Zend\Mime\Message as MimeMessage;
-use Zend\Mime\Part as MimePart;
+
 
 /**
  * This service is responsible for adding/editing ejecutivos
@@ -136,5 +129,50 @@ class EjecutivoManager {
             $this->entityManager->rollBack();
             return false;
         }
+    }
+    
+    public function getApellido($id){
+        $ejecutivo = $this->entityManager
+                    ->getRepository(Ejecutivo::class)
+                    ->findOneById($id);
+        return $ejecutivo->getApellido();
+    }
+    public function getNombre($id){
+        $ejecutivo = $this->entityManager
+                    ->getRepository(Ejecutivo::class)
+                    ->findOneById($id);
+        return $ejecutivo->getNombre();
+    }
+    public function getMail($id){
+        $ejecutivo = $this->entityManager
+                    ->getRepository(Ejecutivo::class)
+                    ->findOneById($id);
+        return $ejecutivo->getMail();
+    }
+        public function getUsuario($id){
+        $ejecutivo = $this->entityManager
+                    ->getRepository(Ejecutivo::class)
+                    ->findOneById($id);
+        return $ejecutivo->getUsuario();
+        
+    }    public function getClave($id){
+        $ejecutivo = $this->entityManager
+                    ->getRepository(Ejecutivo::class)
+                    ->findOneById($id);
+        return $ejecutivo->getClave();
+    }
+    
+    public function getData($id){
+        $ejecutivo  = $this->entityManager
+                    ->getRepository(Ejecutivo::class)
+                    ->findOneById($id);
+        $data = [
+            'apellido' =>$ejecutivo->getApellido(),
+            'nombre' => $ejecutivo->getNombre(),
+            'mail' => $ejecutivo->getMail(),
+            'usuario' => $ejecutivo->getUsuario(),
+            'clave' =>$ejecutivo->getClave()
+        ];
+       return $data;
     }
 }

@@ -114,7 +114,9 @@ class CategoriaClienteManager {
         return true;
     }
 
-    public function removeCategoriaCliente($categoriacliente) {
+    public function removeCategoriaCliente($id) {
+        $categoriacliente= $this->entityManager->getRepository(CategoriaCliente::class)
+                        ->find($id);
         if ($this->tryRemoveCategoriaCliente($categoriacliente)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría eliminada correctamente';

@@ -17,9 +17,9 @@ class EmpresaController extends AbstractActionController {
      * @var User\Service\EmpresaManager 
      */
     protected $empresaManager;
-    private $vencimientos;
 
-    public function __construct($entityManager, $empresaManager) {
+    public function __construct($entityManager, $empresaManager)
+    {
         $this->entityManager = $entityManager;
         $this->empresaManager = $empresaManager;
     }
@@ -80,8 +80,8 @@ class EmpresaController extends AbstractActionController {
             return $this->redirect()->toRoute('application', ['action' => 'view']);
         }
     }
-
-    public function viewAction() {
-        return new ViewModel();
+ 
+      public function viewAction() {    
+          return new ViewModel();
     }
 }

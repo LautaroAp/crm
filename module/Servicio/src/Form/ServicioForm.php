@@ -2,12 +2,6 @@
 namespace Servicio\Form;
 
 use Zend\Form\Form;
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilter;
-use Zend\Form\Element;
-use Element\Number;
-
-
 
 class ServicioForm extends Form
 {
@@ -54,11 +48,6 @@ class ServicioForm extends Form
      */
     protected function addElements() 
     {
-       
-
-        // Add "full_name" field 
-       
-        
         $this->add([
             'type' => 'text',
             'name' => 'descripcion',
@@ -77,7 +66,6 @@ class ServicioForm extends Form
             ],
         ]);
         
-        
         $this->add([
             'type' => 'text',
             'name' => 'cant_animales',
@@ -86,9 +74,7 @@ class ServicioForm extends Form
                 'label' => 'Cantidad de animales',
             ],
         ]);
-        
-        
-
+     
         $this->add([
             'type' => 'submit',
             'name' => 'submit',
@@ -104,9 +90,6 @@ class ServicioForm extends Form
     {
         // Create main input filter
         $inputFilter = $this->getInputFilter();        
-                
-   
-       
         $inputFilter->add([
             'name' => 'descripcion',
             'required' => true,
@@ -116,7 +99,6 @@ class ServicioForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
@@ -130,7 +112,6 @@ class ServicioForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
@@ -144,13 +125,9 @@ class ServicioForm extends Form
             'validators' => [
                 [
                     'name' => 'StringLength',
-                    
                 ],
             ],
         ]);
- 
-         
-        
     }       
 
     
