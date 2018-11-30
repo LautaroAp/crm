@@ -114,3 +114,9 @@ function bloqueaPantalla() {
     $('#loader').toggleClass('loader');
     $('#loader').toggleClass('WindowLoad');
 }
+
+function cambiaIconoCollapse(e) {
+    elementId = e.target.id;
+    $('#' + elementId).toggleClass('glyphicon-chevron-down');
+    $('#' + elementId).toggleClass('glyphicon-chevron-up');
+}

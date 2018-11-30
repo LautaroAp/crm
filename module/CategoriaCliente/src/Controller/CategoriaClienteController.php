@@ -61,7 +61,6 @@ class CategoriaClienteController extends AbstractActionController {
 
     private function procesarAddAction() {
         $form = $this->categoriaclienteManager->createForm();
-        $categoriaclientes = $this->categoriaclienteManager->getCategoriaClientes();
         $paginator = $this->categoriaclienteManager->getTabla();
         $mensaje = "";
         $page = 1;
@@ -78,7 +77,6 @@ class CategoriaClienteController extends AbstractActionController {
         }
         return new ViewModel([
             'form' => $form,
-            'categoriaclientes' => $categoriaclientes,
             'categorias_pag' => $paginator,
             'mensaje' => $mensaje
         ]);

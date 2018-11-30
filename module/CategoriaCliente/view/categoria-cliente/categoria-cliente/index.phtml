@@ -16,18 +16,24 @@ if (isset($_SESSION['MENSAJES']['categoria_cliente'])) {
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">LISTADO CATEGORÍAS</div>
+            <div class="panel-heading text-center">
+            LISTADO CATEGORÍAS
+                <a data-toggle="collapse" data-parent="#accordion" href="#add_categoria" 
+                aria-expanded="true" aria-controls="add_categoria">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
+                </a>
+            </div>
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container collapse" id="add_categoria">
     <form method="post">
         <div class="row form-row">
             <div class="form-group col-md-4">
-                <input type="text" class="form-control" name="nombre" placeholder="Ingresar Categoría">
+                <input type="text" class="form-control form-margen" name="nombre" placeholder="Ingresar Categoría">
             </div>
             <div class="form-group col-md-4">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+                <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-plus" ></span> Agregar Categoría
                 </button>
             </div>
@@ -53,6 +59,7 @@ if (isset($_SESSION['MENSAJES']['categoria_cliente'])) {
         </div>
     </form>
 </div>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">

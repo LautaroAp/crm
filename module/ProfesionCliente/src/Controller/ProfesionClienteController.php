@@ -44,7 +44,7 @@ class ProfesionClienteController extends AbstractActionController {
     }
 
     public function indexAction() {
-        $view = $this->procesarIndexAction();
+        $view = $this->procesarAddAction();
         return $view;
     }
 

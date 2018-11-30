@@ -29,19 +29,8 @@ class EjecutivoController extends AbstractActionController {
 
 
     public function indexAction() {
-        $paginator = $this->ejecutivoManager->getTabla();
-        $mensaje = "";
-        $page = 1;
-        if ($this->params()->fromRoute('id')) {
-            $page = $this->params()->fromRoute('id');
-        }
-        $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
-
-        return new ViewModel([
-            'ejecutivos' => $paginator,
-            'mensaje' => $mensaje
-        ]);
+        $view = $this->procesarAddAction();
+        return $view;
     }
 
     public function addAction() {
@@ -50,23 +39,24 @@ class EjecutivoController extends AbstractActionController {
     }
 
     private function procesarAddAction() {
-        // Create ejecutivo form
         $form = new EjecutivoForm('create', $this->entityManager);
-        // Check if ejecutivo has submitted the form
+        $paginator = $this->ejecutivoManager->getTabla();
+        $page = 1;
+        if ($this->params()->fromRoute('id')) {
+            $page = $this->params()->fromRoute('id');
+        }
+        $paginator->setCurrentPageNumber((int) $page)
+                ->setItemCountPerPage(10);
         if ($this->getRequest()->isPost()) {
-            // Fill in the form with POST data
             $data = $this->params()->fromPost();
             $form->setData($data);
-            // Validate form
-            if ($form->isValid()) {
-                // Get filtered and validated data
-                $data = $form->getData();
-                // Add ejecutivo.
-                return $this->redirect()->toRoute('ejecutivos');
-            }
+            $ejecutivo = $this->ejecutivoManager->getEjecutivoFromForm($form, $data);
+            return $this->redirect()->toRoute('ejecutivos');
+            
         }
         return new ViewModel([
-            'form' => $form
+            'form' => $form,
+            'ejecutivos' => $paginator
         ]);
     }
 
@@ -77,7 +67,7 @@ class EjecutivoController extends AbstractActionController {
             return;
         }
         // Find a user with such ID.
-        $ejecutivo = $this->entityManager->recuperarEjecutivo($id);
+        $ejecutivo = $this->ejecutivoManager->recuperarEjecutivo($id);
         if ($ejecutivo == null) {
             $this->getResponse()->setStatusCode(404);
             return;
@@ -95,7 +85,7 @@ class EjecutivoController extends AbstractActionController {
     private function procesarEditAction()
     {
         $id = (int)$this->params()->fromRoute('id', -1);  
-        $ejecutivo = $this->entityManager->recuperarEjecutivo($id);
+        $ejecutivo = $this->ejecutivoManager->recuperarEjecutivo($id);
 
        if ($ejecutivo == null) {
             $this->getResponse()->setStatusCode(404);
@@ -111,7 +101,7 @@ class EjecutivoController extends AbstractActionController {
                 return $this->redirect()->toRoute('ejecutivos');
             }
         } else {
-            $data = $this->entityManager->getData($id);
+            $data = $this->ejecutivoManager->getData($id);
             $form->setData(array(
                     'id_ejecutivo'=>$id,
                     'apellido'=>$data['apellido'],

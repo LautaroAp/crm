@@ -38,7 +38,7 @@ class LicenciaController extends AbstractActionController {
     }
 
     public function indexAction() {
-        return $this->procesarIndexAction();
+        return $this->procesarAddAction();
     }
 
     private function procesarIndexAction() {
@@ -66,6 +66,16 @@ class LicenciaController extends AbstractActionController {
     private function procesarAddAction() {
         $form = $this->licenciaManager->createForm();
 
+        $paginator = $this->licenciaManager->getTabla();
+        $mensaje = "";
+
+        $page = 1;
+        if ($this->params()->fromRoute('id')) {
+            $page = $this->params()->fromRoute('id');
+        }
+        $paginator->setCurrentPageNumber((int) $page)
+                ->setItemCountPerPage(10);
+
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $licencia = $this->licenciaManager->getLicenciaFromForm($form, $data);
@@ -73,7 +83,8 @@ class LicenciaController extends AbstractActionController {
             return $this->redirect()->toRoute('licencia', ['action' => 'index']);
         }
         return new ViewModel([
-            'form' => $form
+            'form' => $form,
+            'licencias' => $paginator
         ]);
     }
 

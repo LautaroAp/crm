@@ -175,4 +175,18 @@ class EjecutivoManager {
         ];
        return $data;
     }
+
+    public function getEjecutivoFromForm($form, $data) {
+        $form->setData($data);
+        if ($form->isValid()) {
+            $data = $form->getData();
+            $ejecutivo = $this->addEjecutivo($data);
+        }
+        return $ejecutivo;
+    }
+
+    public function formValid($form, $data) {
+        $form->setData($data);
+        return $form->isValid();
+    }
 }

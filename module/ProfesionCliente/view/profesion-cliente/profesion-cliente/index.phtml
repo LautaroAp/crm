@@ -9,6 +9,7 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
     $_SESSION['MENSAJES']['profesion_cliente_msj'] = null;
 }
 ?>
+
 <!--Bloqueo de pantalla + animacion-->
 <div id="bloquea" class="cargando" style="display:none;"></div>
 <div class="" id="loader"></div>
@@ -16,18 +17,24 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">LISTADO PROFESIONES</div>
+            <div class="panel-heading text-center">
+                LISTADO PROFESIONES
+                <a data-toggle="collapse" data-parent="#accordion" href="#add_profesion" 
+                    aria-expanded="true" aria-controls="add_profesion">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
+                </a>
+            </div>
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container collapse" id="add_profesion">
     <form method="post">
         <div class="row form-row">
             <div class="form-group col-md-4">
-                <input type="text" class="form-control" name="nombre" placeholder="Ingresar Profesión">
+                <input type="text" class="form-control form-margen" name="nombre" placeholder="Ingresar Profesión">
             </div>
             <div class="form-group col-md-4">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+                <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-plus" ></span> Agregar Profesión
                 </button>
             </div>
@@ -69,7 +76,7 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
                     <tbody>
                         <?php
                         if (isset($profesiones_pag)) {
-                            foreach ($profesiones_pag as $profesioncliente):
+                            foreach ($profesionclientes as $profesioncliente):
                                 ?>
                                 <tr>
                                     <td><?php echo ($profesioncliente->getNombre()); ?></td>
@@ -98,7 +105,7 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
                                         </div>
                                         <div class="modal-footer">
                                             <a href="<?= $this->url('profesioncliente/borrar', ['action' => 'remove', 'id' => $profesioncliente->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
-                <span class="btn btn-default">Aceptar</span></a>
+                                            <span class="btn btn-default">Aceptar</span></a>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                         </div>
                                     </div>

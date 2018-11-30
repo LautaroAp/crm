@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit colors="true">
+<phpunit colors="true"
+        backupGlobals="false"
+        backupStaticAttributes="false"
+        bootstrap="vendor/autoload.php"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        processIsolation="false"
+        stopOnFailure="false">
     <testsuites>
         <testsuite name="ZendSkeletonApplication Test Suite">
             <directory>./module/Application/test</directory>
         </testsuite>
+        <testsuite name="DBAL">
+            <directory>./module/DBAL/test</directory>
+        </testsuite>
     </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./module</directory>
+        </whitelist>
+    </filter>
+    <php>
+        <!-- <env name="APP_ENV" value="testing"/> -->
+    </php>
 </phpunit>

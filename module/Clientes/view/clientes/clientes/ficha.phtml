@@ -86,72 +86,83 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading text-center">USUARIOS Y DATOS ADICIONALES</div>
-        </div>
+
         <!-- Datos de Usuarios Adicionales -->
-        <table id="tabla_evento" class="table table-condensed">            
-            <thead>
-                <tr> 
-                    <th class="th-sm">U/Dato Adicional</th>
-                    <th class="th-sm">Teléfono</th>
-                    <th class="th-sm">Email</th>
-                    <th class="th-sm">Skype</th>
-                    <th></th>      
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($usuarios as $usuario) : ?>
-                    <tr>
-                        <td><?php echo($usuario->getNombre()); ?></td>
-                        <td><?php echo($usuario->getTelefono()); ?></td>
-                        <td><?php echo($usuario->getMail()); ?></td>
-                        <td><?php echo($usuario->getSkype()); ?></td>
-                        <td> <a class="btn btn-default" href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
-                                <span class="glyphicon glyphicon-pencil" ></span> 
-                            </a>
-                            <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#usuarioModal<?= $usuario->getId() ?>">
-                                <span class="glyphicon glyphicon-remove" ></span
-                            </button>
-                        </td>
-                        <!-- Modal Usuario Adicional -->
-                <div id="usuarioModal<?= $usuario->getId() ?>" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Eliminar usuario</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>
-                                    ¿Está seguro que desea eliminar el usuario:
-                                    "<?= $this->escapeHtml($usuario->getNombre()) ?>"
-                                    de forma permanente?
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="<?= $this->url('usuarios', ['action' => 'delete', 'id' => $usuario->getId()]); ?>" type="button">
-                                <span class="btn btn-default">Aceptar</span></a>
-                               
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                USUARIOS Y DATOS ADICIONALES
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseUsuariosDatosAdicionales" 
+                aria-expanded="true" aria-controls="collapseUsuariosDatosAdicionales">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="ud_adicionales" 
+                    onclick="cambiaIconoCollapse(event)"></i></span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="collapse" id="collapseUsuariosDatosAdicionales">
+            <table id="tabla_evento" class="table table-condensed">            
+                <thead>
+                    <tr> 
+                        <th class="th-sm">U/Dato Adicional</th>
+                        <th class="th-sm">Teléfono</th>
+                        <th class="th-sm">Email</th>
+                        <th class="th-sm">Skype</th>
+                        <th></th>      
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($usuarios as $usuario) : ?>
+                        <tr>
+                            <td><?php echo($usuario->getNombre()); ?></td>
+                            <td><?php echo($usuario->getTelefono()); ?></td>
+                            <td><?php echo($usuario->getMail()); ?></td>
+                            <td><?php echo($usuario->getSkype()); ?></td>
+                            <td> <a class="btn btn-default" href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
+                                    <span class="glyphicon glyphicon-pencil" ></span> 
+                                </a>
+                                <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#usuarioModal<?= $usuario->getId() ?>">
+                                    <span class="glyphicon glyphicon-remove" ></span
+                                </button>
+                            </td>
+                            <!-- Modal Usuario Adicional -->
+                    <div id="usuarioModal<?= $usuario->getId() ?>" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Eliminar usuario</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        ¿Está seguro que desea eliminar el usuario:
+                                        "<?= $this->escapeHtml($usuario->getNombre()) ?>"
+                                        de forma permanente?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="<?= $this->url('usuarios', ['action' => 'delete', 'id' => $usuario->getId()]); ?>" type="button">
+                                    <span class="btn btn-default">Aceptar</span></a>
+                                
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <td>
+                        <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $cliente->getId()]); ?>" type="button">
+                            <span class="btn btn-default">
+                                <span class="glyphicon glyphicon-plus" ></span> Agregar
+                            </span>
+                        </a> 
+                    </td>
                 </tr>
-            <?php endforeach; ?>
-            <tr>
-                <td>
-                    <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $cliente->getId()]); ?>" type="button">
-                        <span class="btn btn-default">
-                            <span class="glyphicon glyphicon-plus" ></span> Agregar
-                        </span>
-                    </a> 
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <!-- Fin: Datos de Cliente -->
@@ -160,9 +171,17 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">REGISTRO DE ACTIVIDADES</div>
+            <div class="panel-heading text-center">
+                REGISTRO DE ACTIVIDADES
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
+                </a>
+            </div>
         </div>
-        <!-- Datos de Usuarios Adicionales -->
+
+        <div class="collapse" id="collapseActividades">
+
+        <!-- Registro de Actividades -->
         <table id="tabla_evento" class="table table-bordered table-zebra table-bot">            
             <thead class="table-scroll-head">
                 <tr> 
@@ -195,6 +214,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                 <?php endforeach; ?>    
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 <!-- Fin: Actividades -->
@@ -208,7 +228,8 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
                             <a role="button" href="<?= $this->url('evento', ['action' => 'add', 'id' => (int) $cliente->getId()]) ?>">
-                                <img src="<?= $this->basePath('img/crm/ActividadAgregar.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                                <img src="<?= $this->basePath('img/crm/TipoActividadAgregar.png') ?>" 
+                                class="img-rounded img-responsive img-texto-derecha img-submenu">
                             </a>
                         </div>
                         <div class="ficha-cliente-label">
@@ -219,7 +240,8 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
                             <a role="button" data-toggle="modal" data-target="#actividadModal">
-                                <img src="<?= $this->basePath('img/crm/ActividadEliminar.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                                <img src="<?= $this->basePath('img/crm/TipoActividadEliminar.png') ?>" 
+                                class="img-rounded img-responsive img-texto-derecha img-submenu">
                             </a>
                         </div>
                         <div class="ficha-cliente-label">
@@ -230,7 +252,8 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
                             <a href="<?= $this->url('clientes/editar', ['action' => 'edit', 'id' => (int) $cliente->getId()]) ?>" role="button">
-                                <img src="<?= $this->basePath('img/crm/ClienteModificar.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                                <img src="<?= $this->basePath('img/crm/ClienteModificar.png') ?>" 
+                                class="img-rounded img-responsive img-texto-derecha img-submenu">
                             </a>
                         </div>
                         <div class="ficha-cliente-label">
@@ -243,11 +266,11 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             <a role="button" name="<?= $cliente->getId() ?>" id="<?= $cliente->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $cliente->getId() ?>">
                                 <img src="<?php
                                 if ($cliente->getEstado() == "S") {
-                                    echo($this->basePath('img/crm/ClienteEliminar.png'));
+                                    echo($this->basePath('img/crm/ClienteInactivo.png'));
                                 } else {
-                                    echo($this->basePath('img/crm/ClienteAgregar.png'));
+                                    echo($this->basePath('img/crm/ClienteActivo.png'));
                                 }
-                                ?>" class="img-rounded img-responsive img-texto-derecha">
+                                ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
                             </a>
                         </div>
                         <div class="ficha-cliente-label">
