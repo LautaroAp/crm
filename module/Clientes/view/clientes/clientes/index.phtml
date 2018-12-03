@@ -38,19 +38,30 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                         <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion" data-target="#collapseBusquedaAvanzada" 
                             aria-expanded="true" aria-controls="collapseBusquedaAvanzada">
                             Búsqueda avanzada
-                    </label> 
+                    </label>
                     <div class="row form-row collapse" id="collapseBusquedaAvanzada">
-                        <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="pais" placeholder="País" value="<?php if (count($parametros)>0){echo($parametros['pais']);} ?>">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="provincia" placeholder="Provincia" value="<?php if (count($parametros)>0){echo($parametros['provincia']);} ?>">
-                        </div>
                         <div class="form-group col-md-3">
                             <input type="text" class="form-control" name="empresa" placeholder="Empresa" value="<?php if (count($parametros)>0){echo($parametros['empresa']);} ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="categoria" placeholder="Categoría" value="<?php if (count($parametros)>0){echo($parametros['categoria']);} ?>">
+                            <select class="form-control" id="categoria" name="categoria" required="">
+                                <option value="" hidden="">Seleccionar Categoría</option>
+                                <?php foreach ($categorias as $categoria) : ?>
+                                <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)" required="">
+                                <option value="" hidden="">Seleccionar País</option>
+                                <?php foreach ($paises as $pais) : ?>
+                                    <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3" id="div_provincias">
+                            <select class="form-control" id="ops_provincias" name="provincia" required="">
+                            </select>
                         </div>
                     </div>  
                 </form>

@@ -31,6 +31,9 @@ class ClientesController extends AbstractActionController {
 
     public function indexAction() {
         $request = $this->getRequest();
+        $pais = $this->clientesManager->getPais();
+        $provincia = $this->clientesManager->getProvincia();
+        $CategoriaCliente = $this->clientesManager->getCategoriaCliente();
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
             $_SESSION['PARAMETROS_CLIENTE'] = $parametros;
@@ -45,6 +48,9 @@ class ClientesController extends AbstractActionController {
         $pag = $this->getPaginator($paginator);
         return new ViewModel([
             'clientes' => $pag,
+            'paises' => $pais,
+            'provincias' => $provincia,
+            'categorias' => $CategoriaCliente,
             'parametros' => $parametros,
             'total_clientes' => $total_clientes,
         ]);
