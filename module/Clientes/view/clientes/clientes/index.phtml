@@ -20,31 +20,49 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                 <form method="post">
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="nombre" placeholder="Nombre o Apellido" value="<?php if (count($parametros)>0){echo($parametros['nombre']);} ?>">
+                            <input type="text" class="form-control" name="nombre" placeholder="Apellido/s, Nombre/s" value="<?php if (count($parametros)>0){echo($parametros['nombre']);} ?>">
                         </div>
                         <div class="form-group col-md-3">
                             <input type="text" class="form-control" name="email" placeholder="Email" value="<?php if (count($parametros)>0){echo($parametros['email']);} ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="empresa" placeholder="Empresa" value="<?php if (count($parametros)>0){echo($parametros['empresa']);} ?>">
+                            <input type="text" class="form-control" name="telefono" placeholder="Teléfono" value="<?php if (count($parametros)>0){echo($parametros['telefono']);} ?>">
                         </div>
-                        <div class="form-group col-md-1">
+                        <div class="form-group col-md-3">
                             <button type="submit" class="btn btn-default"> 
                                 <i class="glyphicon glyphicon-search"></i> Buscar
-                            </button>                      
+                            </button>                    
                         </div>                        
-                    </div>  
                     </div>
+                    <label>
+                        <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion" data-target="#collapseBusquedaAvanzada" 
+                            aria-expanded="true" aria-controls="collapseBusquedaAvanzada">
+                            Búsqueda avanzada
+                    </label> 
+                    <div class="row form-row collapse" id="collapseBusquedaAvanzada">
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="pais" placeholder="País" value="<?php if (count($parametros)>0){echo($parametros['pais']);} ?>">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="provincia" placeholder="Provincia" value="<?php if (count($parametros)>0){echo($parametros['provincia']);} ?>">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="empresa" placeholder="Empresa" value="<?php if (count($parametros)>0){echo($parametros['empresa']);} ?>">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="categoria" placeholder="Categoría" value="<?php if (count($parametros)>0){echo($parametros['categoria']);} ?>">
+                        </div>
+                    </div>  
                 </form>
             </div>
         </div>
+
         <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
             <thead>
                 <tr> 
-                    <th class="th-sm">Apellido</th>
-                    <th class="th-sm">Nombre</th>
-                    <th class="th-sm">Categoria</th>
-                    <th class="th-sm">Licencia</th>   
+                    <th class="th-sm">Cliente</th>
+                    <th class="th-sm">Teléfono</th>
+                    <th class="th-sm">Email</th>   
                     <th></th>
                 </tr>
             </thead>
@@ -55,23 +73,20 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                         if ($cliente->getEstado()!='N'){  
                             echo('<tr>');
                             echo ('<td>');
-                            echo ($cliente->getApellido());
+                            echo ($cliente->getApellido() . ', ' . $cliente->getNombre());
                             echo ('</td>');
                             echo ('<td>');
-                            echo ($cliente->getNombre());
+                            echo ($cliente->getTelefono());
                             echo ('</td>');
                             echo ('<td>');
-                            echo ($cliente->getNombreCategoriaCliente());
-                            echo ('</td>');
-                            echo ('<td>');
-                            echo ($cliente->getNombreLicenciaCliente());
+                            echo ($cliente->getEmail());
                             echo ('</td>');               
                 ?>
-                    <td class="table-items-right">
-                        <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $cliente->getId()]); ?>">
-                            <span class="glyphicon glyphicon-share-alt" ></span>
-                        </a>
-                    </td>
+                <td class="table-items-right">
+                    <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $cliente->getId()]); ?>">
+                        <span class="glyphicon glyphicon-share-alt" ></span>
+                    </a>
+                </td>
                 <?php 
                         }   
                         
