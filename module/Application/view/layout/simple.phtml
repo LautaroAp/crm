@@ -8,12 +8,13 @@
         $this->headScript()->appendFile($this->basePath('js/bootstrap.min.js', 'text/javascript'));
         $this->headScript()->appendFile($this->basePath('js/jquery.dropotron.min.js', 'text/javascript'));
         $this->headLink()->appendStylesheet($this->basePath('css/style.css'));
+        $this->headLink()->appendStylesheet($this->basePath('css/bootstrap-theme.min.css'));
         $this->headLink()->appendStylesheet($this->basePath('css/bootstrap.min.css'));
         $this->headLink()->appendStylesheet($this->basePath('css/crm.css'));
         echo ($this->headLink());
         echo ($this->headScript());
         ?>
-        <meta http-equiv="Content-Type" content="text/html" charset=utf-8"/> 
+        <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/> 
         <script src="/js/functions.js"></script>
         <script src="/js/ajax.js"></script>
         <!-- jQuery -->
