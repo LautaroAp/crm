@@ -5,73 +5,106 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading text-center">CLIENTES INACTIVOS (<?php echo($total_inactivos); ?>)</div>
-            <div class="panel-body">
-                <form method="post">
-                    <div class="row form-row">
-                        <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="nombre" placeholder="Nombre o Apellido" value="<?php if (count($parametros)>0){echo($parametros['nombre']);} ?>">
+                <div class="panel-body">
+                    <form method="post">
+                        <div class="row form-row">
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" name="nombre" placeholder="Apellido/s, Nombre/s" value="<?php if (count($parametros)>0){echo($parametros['nombre']);} ?>">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" name="email" placeholder="Email" value="<?php if (count($parametros)>0){echo($parametros['email']);} ?>">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" name="telefono" placeholder="Teléfono" value="<?php if (count($parametros)>0){echo($parametros['telefono']);} ?>">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <button type="submit" class="btn btn-default"> 
+                                    <i class="glyphicon glyphicon-search"></i> Buscar
+                                </button>                    
+                            </div>                        
                         </div>
-                        <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="email" placeholder="Email" value="<?php if (count($parametros)>0){echo($parametros['email']);} ?>">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="empresa" placeholder="Empresa" value="<?php if (count($parametros)>0){echo($parametros['empresa']);} ?>">
-                        </div>
-                        <div class="form-group col-md-1">
-                            <button type="submit" class="btn btn-default"> 
-                                <i class="glyphicon glyphicon-search"></i> Buscar
-                            </button>                      
-                        </div>         
-                    </div>
-            </div>
-            </form>
-        </div>
-    </div>
-    <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
-        <thead>
-            <tr> 
-                <th class="th-sm">Apellido</th>
-                <th class="th-sm">Nombre</th>
-                <th class="th-sm">Categoria</th>
-                <th class="th-sm">Licencia</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if (isset($clientes)) {
-                foreach ($clientes as $cliente) {
 
-                    echo('<tr>');
-                    echo ('<td>');
-                    echo ($cliente->getApellido());
-                    echo ('</td>');
-                    echo ('<td>');
-                    echo ($cliente->getNombre());
-                    echo ('</td>');
-                    echo ('<td>');
-                    echo ($cliente->getNombreCategoriaCliente());
-                    echo ('</td>');
-                    echo ('<td>');
-                    echo ($cliente->getNombreLicenciaCliente());
-                    echo ('</td>');
-                    ?>
-                <td class="table-items-right">
-                    <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $cliente->getId()]); ?>">
-                        <span class="glyphicon glyphicon-share-alt" ></span>
-                    </a>
-                </td>
-                <?php }
-            ?>
-            </tr>
-            </tbody>
-        </table>
-    <?php
-    echo $this->paginationControl($clientes, 'Sliding', // All, Elastic, Jumping, Sliding
-            'search_pagination_4.phtml', $this->url('clientes/pageinactivos', ['action' => 'index', 'id' => 1]));
-}
-?>
-</div>
+                        <label>
+                            <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion" data-target="#collapseBusquedaAvanzada" 
+                                aria-expanded="true" aria-controls="collapseBusquedaAvanzada">
+                                Búsqueda avanzada
+                        </label>
+
+                        <div class="row form-row collapse" id="collapseBusquedaAvanzada">
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" name="empresa" placeholder="Empresa" value="<?php if (count($parametros)>0){echo($parametros['empresa']);} ?>">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <select class="form-control" id="categoria" name="categoria" required="">
+                                    <option value="" hidden="">Seleccionar Categoría</option>
+                                    <?php foreach ($categorias as $categoria) : ?>
+                                    <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)" required="">
+                                    <option value="" hidden="">Seleccionar País</option>
+                                    <?php foreach ($paises as $pais) : ?>
+                                        <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3" id="div_provincias">
+                                <select class="form-control" id="ops_provincias" name="provincia" required="">
+                                </select>
+                            </div>
+                        </div>  
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
+            <thead>
+                <tr> 
+                    <th class="th-sm">Apellido</th>
+                    <th class="th-sm">Nombre</th>
+                    <th class="th-sm">Categoria</th>
+                    <th class="th-sm">Licencia</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if (isset($clientes)) {
+                    foreach ($clientes as $cliente) {
+
+                        echo('<tr>');
+                        echo ('<td>');
+                        echo ($cliente->getApellido());
+                        echo ('</td>');
+                        echo ('<td>');
+                        echo ($cliente->getNombre());
+                        echo ('</td>');
+                        echo ('<td>');
+                        echo ($cliente->getNombreCategoriaCliente());
+                        echo ('</td>');
+                        echo ('<td>');
+                        echo ($cliente->getNombreLicenciaCliente());
+                        echo ('</td>');
+                        ?>
+                    <td class="table-items-right">
+                        <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $cliente->getId()]); ?>">
+                            <span class="glyphicon glyphicon-share-alt" ></span>
+                        </a>
+                    </td>
+                    <?php }
+                ?>
+                </tr>
+                </tbody>
+            </table>
+        <?php
+        echo $this->paginationControl($clientes, 'Sliding', // All, Elastic, Jumping, Sliding
+                'search_pagination_4.phtml', $this->url('clientes/pageinactivos', ['action' => 'index', 'id' => 1]));
+        }
+        ?>
+    </div>
 </div>
 <!-- Fin: Tabla Clientes -->
 
@@ -83,7 +116,10 @@
                 <div class="row img-centrar">
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
-                            <a href='<?= $this->url("clientes") ?>'><img src="<?= $this->basePath('img/crm/ClienteAgregar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                            <a href='<?= $this->url("clientes") ?>'>
+                                <img src="<?= $this->basePath('img/crm/ClienteActivo.png') ?>"
+                                 class="img-rounded img-responsive img-texto-derecha img-submenu">
+                            </a>
                         </div>
                         <div class="ficha-cliente-label">
                             <label>Clientes</label><br>
@@ -93,7 +129,10 @@
 
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
-                            <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                            <a href="<?= $this->url('home') ?>">
+                                <img src="<?= $this->basePath('img/crm/Volver.png') ?>"
+                                 class="img-rounded img-responsive img-texto-derecha">
+                            </a>
                         </div>
                         <div class="ficha-cliente-label">
                             <label>Volver</label>

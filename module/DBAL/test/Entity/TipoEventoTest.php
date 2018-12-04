@@ -11,7 +11,7 @@ class TipoEventoTest extends TestCase {
         $this->assertNull($tipo_evento->getNombre(), '"nombre" no es NULL !!');
     }
 
-    public function testTipoEventoSetsPropertiesCorrectly() {
+    public function testTipoEventoSetsAndGetsPropertiesCorrectly() {
         $tipo_evento = new TipoEvento();
         $tipo_evento->setId_tipoevento(123);
         $tipo_evento->setNombre("test");

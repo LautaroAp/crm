@@ -8,12 +8,13 @@
         $this->headScript()->appendFile($this->basePath('js/bootstrap.min.js', 'text/javascript'));
         $this->headScript()->appendFile($this->basePath('js/jquery.dropotron.min.js', 'text/javascript'));
         $this->headLink()->appendStylesheet($this->basePath('css/style.css'));
+        $this->headLink()->appendStylesheet($this->basePath('css/bootstrap-theme.min.css'));
         $this->headLink()->appendStylesheet($this->basePath('css/bootstrap.min.css'));
         $this->headLink()->appendStylesheet($this->basePath('css/crm.css'));
         echo ($this->headLink());
         echo ($this->headScript());
         ?>
-        <meta http-equiv="Content-Type" content="text/html" charset=utf-8"/> 
+        <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/> 
         <script src="/js/functions.js"></script>
         <script src="/js/ajax.js"></script>
         <!-- jQuery -->
@@ -45,7 +46,7 @@
                     <img src="http://www.softhuella.com.ar/wp-content/uploads/logo-footer1.jpg" class="img-responsive footer-logo" alt="" width="100" height="80">
                 </div>
                 <div class="col-xs-6 align-left">
-                    <section class="6u">
+                    <section>
                         <p class="default">
                             <a href=""<?= $this->url('application', ['action' => 'index']); ?>">HOME</a>
                             ·
