@@ -20,13 +20,13 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                 <form method="post">
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="nombre" placeholder="Nombre o Apellido" value="<?php if (count($parametros)>0){echo($parametros['nombre']);} ?>">
+                            <input type="text" class="form-control" name="nombre" placeholder="Nombre" value="<?php if (count($parametros)>0){echo($parametros['nombre']);} ?>">
                         </div>
                         <div class="form-group col-md-3">
                             <input type="text" class="form-control" name="email" placeholder="Email" value="<?php if (count($parametros)>0){echo($parametros['email']);} ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="empresa" placeholder="Empresa" value="<?php if (count($parametros)>0){echo($parametros['empresa']);} ?>">
+                            <input type="text" class="form-control" name="telefono" placeholder="Telefono" value="<?php if (count($parametros)>0){echo($parametros['telefono']);} ?>">
                         </div>
                         <div class="form-group col-md-1">
                             <button type="submit" class="btn btn-default"> 
@@ -41,10 +41,9 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
         <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
             <thead>
                 <tr> 
-                    <th class="th-sm">Apellido</th>
-                    <th class="th-sm">Nombre</th>
-                    <th class="th-sm">Categoria</th>
-                    <th class="th-sm">Licencia</th>   
+                    <th class="th-sm">Cliente</th>
+                    <th class="th-sm">Email</th>
+                    <th class="th-sm">Telefono</th>   
                     <th></th>
                 </tr>
             </thead>
@@ -55,16 +54,13 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                         if ($cliente->getEstado()!='N'){  
                             echo('<tr>');
                             echo ('<td>');
-                            echo ($cliente->getApellido());
-                            echo ('</td>');
-                            echo ('<td>');
                             echo ($cliente->getNombre());
                             echo ('</td>');
                             echo ('<td>');
-                            echo ($cliente->getNombreCategoriaCliente());
+                            echo ($cliente->getEmail());
                             echo ('</td>');
                             echo ('<td>');
-                            echo ($cliente->getNombreLicenciaCliente());
+                            echo ($cliente->getTelefono());
                             echo ('</td>');               
                 ?>
                     <td class="table-items-right">

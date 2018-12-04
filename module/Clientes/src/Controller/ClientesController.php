@@ -149,7 +149,7 @@ class ClientesController extends AbstractActionController {
         $request = $this->getRequest();
         if (!$request->isPost()) {
             $id = $this->params()->fromRoute('id');
-            $estado_nuevo = $this->clientesManager->modificarEstado($id);
+            $this->clientesManager->modificarEstado($id);
             $this->redirect()->toRoute('clientes');
         } else {
             return new ViewModel();

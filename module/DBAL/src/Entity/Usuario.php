@@ -2,6 +2,7 @@
 namespace DBAL\Entity;
 
 use DBAL\Entity\Cliente;
+use DBAL\Entity\Persona;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,27 +28,18 @@ class Usuario {
      * @ORM\JoinColumn(name="ID_CLIENTE", referencedColumnName="ID_CLIENTE")
      */ 
     protected $id_cliente;
-            
-    
+        
     /**
-     * @ORM\Column(name="NOMBRE_CONTACTO", nullable=true, type="string", length=255)
-     */
-    protected $nombre;
-
-     /**
-     * @ORM\Column(name="TELEFONO", nullable=true, type="string", length=255)
-     */
-    protected $telefono;
-    
-      /**
      * @ORM\Column(name="SKYPE", nullable=true, type="string", length=255)
      */
     protected $skype;
-    
-         /**
-     * @ORM\Column(name="MAIL_CONTACTO", nullable=true, type="string", length=255)
-     */
-    protected $email;
+     /**
+     * Many Usuario have One Persona.
+     * @ORM\ManyToOne(targetEntity="Persona")
+     * @ORM\JoinColumn(name="ID_PERSONA", referencedColumnName="ID")
+     */ 
+    protected $persona;
+
     
     function getId() {
         return $this->id_usuario;
@@ -56,20 +48,6 @@ class Usuario {
     function getCliente() {
         return $this->id_cliente;
     }
-
-    
-    function getNombre() {
-        return $this->nombre;
-    }
-
-    function getTelefono() {
-        return $this->telefono;
-    }
-
-    function getMail() {
-        return $this->email;
-    }
-
     function getSkype(){
         return $this->skype;
     }
@@ -85,21 +63,6 @@ class Usuario {
 //        $clientes->addUsuario($this);
     }
 
-    function setNombre($nombre) {
-        $this->nombre = $nombre;
-        return $this;
-    }
-
-    function setTelefono($telefono) {
-        $this->telefono = $telefono;
-        return $this;
-    }
-
-    function setMail($mail) {
-        $this->email = $mail;
-        return $this;
-    }
-
     function setSkype($skype) {
         $this->skype = $skype;
         return $this;
@@ -107,4 +70,24 @@ class Usuario {
 
 
 
+
+    /**
+     * Get the value of persona
+     */ 
+    public function getPersona()
+    {
+        return $this->persona;
+    }
+
+    /**
+     * Set the value of persona
+     *
+     * @return  self
+     */ 
+    public function setPersona($persona)
+    {
+        $this->persona = $persona;
+
+        return $this;
+    }
 }

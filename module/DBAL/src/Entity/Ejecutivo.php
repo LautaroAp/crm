@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Description of Ejecutivo
  *
- * This class represents a registered user.
+ * This class represents a registered executive
  * @ORM\Entity()
  * @ORM\Table(name="EJECUTIVO")
  */
@@ -19,22 +19,7 @@ class Ejecutivo {
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;   
-    
-    /**
-     * @ORM\Column(name="APELLIDO_EJECUTIVO", nullable=true, type="string", length=255)
-     */
-    protected $apellido;
 
-     /**
-     * @ORM\Column(name="NOMBRE_EJECUTIVO", nullable=true, type="string", length=255)
-     */
-    protected $nombre;
-    
-         /**
-     * @ORM\Column(name="MAIL_EJECUTIVO", nullable=true, type="string", length=255)
-     */
-    protected $mail;
-    
          /**
      * @ORM\Column(name="NOMUSR", nullable=true, type="string", length=255)
      */
@@ -50,22 +35,14 @@ class Ejecutivo {
      */
     protected $activo;
     
-  
+    /**
+     * @ORM\ManyToOne(targetEntity="Persona")
+     * @ORM\JoinColumn(name="ID_PERSONA", referencedColumnName="ID")
+     */
+    private $persona;
     
     function getId() {
         return $this->id;
-    }
-
-    function getApellido() {
-        return $this->apellido;
-    }
-
-    function getNombre() {
-        return $this->nombre;
-    }
-
-    function getMail() {
-        return $this->mail;
     }
 
     function getUsuario() {
@@ -74,22 +51,6 @@ class Ejecutivo {
 
     function getClave() {
         return $this->clave;
-    }
-
-    function setId_ejecutivo($id_ejecutivo) {
-        $this->id_ejecutivo = $id_ejecutivo;
-    }
-
-    function setApellido ($apellido) {
-        $this->apellido = $apellido;
-    }
-
-    function setNombre ($nombre) {
-        $this->nombre= $nombre;
-    }
-
-    function setMail($mail) {
-        $this->mail = $mail;
     }
 
     function setUsuario($usuario) {
@@ -113,4 +74,15 @@ class Ejecutivo {
         return $this->activo=="S";
     }
 
+    public function getPersona()
+    {
+        return $this->persona;
+    }
+
+    public function setPersona($persona)
+    {
+        $this->persona = $persona;
+
+        return $this;
+    }
 }

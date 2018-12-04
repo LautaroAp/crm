@@ -26,6 +26,7 @@ class CategoriaCliente {
      */
     protected $nombre;
 
+    
      
     function getId() {
         return $this->id_categoria_cliente;

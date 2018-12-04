@@ -3,6 +3,8 @@ namespace Usuario\Service\Factory;
 
 use Interop\Container\ContainerInterface;
 use Usuario\Service\UsuarioManager;
+use Persona\Service\PersonaManager;
+
 
 /**
  * This is the factory class for UsuarioManager service. The purpose of the factory
@@ -18,7 +20,7 @@ class UsuarioManagerFactory
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $viewRenderer = $container->get('ViewRenderer');
         $config = $container->get('Config');
-                        
-        return new UsuarioManager($entityManager, $viewRenderer, $config);
+        $personaManager = $container->get(PersonaManager::class);
+        return new UsuarioManager($entityManager, $viewRenderer, $config, $personaManager);
     }
 }

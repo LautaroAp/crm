@@ -36,9 +36,16 @@ class UsuarioManager {
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) {
+
+    private $personaManager;
+
+    private $tipo; 
+
+    public function __construct($entityManager, $viewRenderer, $config, $personaManager) {
         $this->entityManager = $entityManager;
         $this->viewRenderer = $viewRenderer;
+        $this->personaManager = $personaManager;
+        $this->tipo = $tipo;
         $this->config = $config;
     }
 
@@ -54,19 +61,16 @@ class UsuarioManager {
 
     public function addUsuario($data) {
         $usuario = new Usuario();
-        $usuario->setNombre($data['nombre'])
-                ->setTelefono($data['telefono'])
-                ->setMail($data['mail'])
-                ->setSkype($data['skype']);
-        $idCliente = $data['id'];
+        $persona = $this->personaManager->addPersona($data, $this->tipo);
+        $usuario->setSkype($data['skype']);
         
-        
+        $idCliente = $data['id'];     
         $cliente = $this->entityManager
                 ->getRepository(Cliente::class)
                 ->findOneBy(['Id' => $idCliente]);
         
         $usuario->setId_cliente($cliente);
-
+        $usuario->setPersona($persona);
         if ($this->tryAddUsuario($usuario)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Datos guardados correctamente';
@@ -78,10 +82,10 @@ class UsuarioManager {
     }
     
     public function updateUsuario($usuario, $data) {
-        $usuario->setNombre($data['nombre']);
-        $usuario->setTelefono($data['telefono']);
-        $usuario->setMail($data['mail']);
+        $persona = $usuario->getPersona();
+        $this->personaManager->updatePersona($persona, $data);
         $usuario->setSkype($data['skype']);
+
         if ($this->tryUpdateUsuario($usuario)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Datos editados correctamente';

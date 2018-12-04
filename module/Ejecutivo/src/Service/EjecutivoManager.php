@@ -35,10 +35,17 @@ class EjecutivoManager {
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) {
+
+    private $personaManager;
+
+    private $tipo;
+
+    public function __construct($entityManager, $viewRenderer, $config, $personaManager) {
         $this->entityManager = $entityManager;
         $this->viewRenderer = $viewRenderer;
         $this->config = $config;
+        $this->$personaManager = $personaManager;
+        $this->tipo = "EJECUTIVO";
     }
 
     public function getTabla() {
@@ -49,12 +56,9 @@ class EjecutivoManager {
     }
 
     public function busquedaActivos() {
-        $entityManager = $this->entityManager;
-        $queryBuilder = $entityManager->createQueryBuilder();
-        $queryBuilder->select('E')
-                ->from(Ejecutivo::class, 'E')
-                ->where('E.activo = :state')->setParameter('state', 'S');
-        return $queryBuilder->getQuery();
+        $parametros = ['estado'=>'S', 'tipo' => 'EJECUTIVO'];
+        $query = $this->personaManager->buscarPersonas($parametros);
+        return $query;
     }
 
     /**
@@ -62,12 +66,10 @@ class EjecutivoManager {
      */
     public function addEjecutivo($data) {
         $ejecutivo = new Ejecutivo();
-        $ejecutivo->setApellido($data['apellido']);
-        $ejecutivo->setNombre($data['nombre']);
-        $ejecutivo->setMail($data['mail']);
+        $persona = $this->personaManager->addPersona($data, $this->tipo);
         $ejecutivo->setUsuario($data['usuario']);
         $ejecutivo->setClave($data['clave']);
-        $ejecutivo->setActivo('S');
+        $ejecutivo->setPersona($persona);
         if ($this->tryAddEjecutivo($ejecutivo)) {
             $_SESSION['MENSAJES']['ejecutivo'] = 1;
             $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Ejecutivo eliminados correctamente';
@@ -79,9 +81,8 @@ class EjecutivoManager {
     }
 
     public function updateEjecutivo($ejecutivo, $data) {
-        $ejecutivo->setApellido($data['apellido']);
-        $ejecutivo->setNombre($data['nombre']);
-        $ejecutivo->setMail($data['mail']);
+        $persona = $ejecutivo->getPersona();
+        $this->personaManager->updatePersona($persona,$data);
         $ejecutivo->setUsuario($data['usuario']);
         $ejecutivo->setClave($data['clave']);
         if ($this->tryUpdateEjecutivo($ejecutivo)) {
@@ -95,8 +96,8 @@ class EjecutivoManager {
     }
 
     public function removeEjecutivo($ejecutivo) {
-        $ejecutivo->inactivar();
-        $this->entityManager->flush();
+        $persona = $ejecutivo->getPersona();
+        $this->personaManager->modicarEstado($persona);
         $_SESSION['MENSAJES']['ejecutivo'] = 1;
         $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Ejecutivo dado de Baja correctamente';
     }
@@ -131,25 +132,7 @@ class EjecutivoManager {
         }
     }
     
-    public function getApellido($id){
-        $ejecutivo = $this->entityManager
-                    ->getRepository(Ejecutivo::class)
-                    ->findOneById($id);
-        return $ejecutivo->getApellido();
-    }
-    public function getNombre($id){
-        $ejecutivo = $this->entityManager
-                    ->getRepository(Ejecutivo::class)
-                    ->findOneById($id);
-        return $ejecutivo->getNombre();
-    }
-    public function getMail($id){
-        $ejecutivo = $this->entityManager
-                    ->getRepository(Ejecutivo::class)
-                    ->findOneById($id);
-        return $ejecutivo->getMail();
-    }
-        public function getUsuario($id){
+    public function getUsuario($id){
         $ejecutivo = $this->entityManager
                     ->getRepository(Ejecutivo::class)
                     ->findOneById($id);
@@ -166,10 +149,11 @@ class EjecutivoManager {
         $ejecutivo  = $this->entityManager
                     ->getRepository(Ejecutivo::class)
                     ->findOneById($id);
+        $persona = $ejecutivo->getPersona();
         $data = [
-            'apellido' =>$ejecutivo->getApellido(),
-            'nombre' => $ejecutivo->getNombre(),
-            'mail' => $ejecutivo->getMail(),
+            'nombre' =>$persona->getNombre(),
+            'telefono' => $persona->getTelefono(),
+            'mail' => $persona->getMail(),
             'usuario' => $ejecutivo->getUsuario(),
             'clave' =>$ejecutivo->getClave()
         ];

@@ -52,7 +52,8 @@
             "ProfesionCliente\\": "module/ProfesionCliente/src/",
             "Empresa\\": "module/Empresa/src/",
             "Servicio\\": "module/Servicio/src/",
-            "Producto\\": "module/Producto/src/"
+            "Producto\\": "module/Producto/src/",
+            "Persona\\": "module/Persona/src/"
         }
     },
     "autoload-dev": {

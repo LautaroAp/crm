@@ -57,26 +57,15 @@ class EjecutivoInactivoManager extends EjecutivoManager {
     }
 
     public function busquedaInactivos() {
-        $entityManager = $this->entityManager;
-        $queryBuilder = $entityManager->createQueryBuilder();
-        $queryBuilder->select('E')
-                ->from(Ejecutivo::class, 'E')
-                ->where('E.activo = :state')->setParameter('state', 'N');
-        return $queryBuilder->getQuery();
-    }
-
-    public function recuperarEjecutivo($id) {
-        if (!is_null($this->entityManager)) {
-            $ejecutivo = $this->entityManager
-                    ->getRepository(Ejecutivo::class)
-                    ->findOneById($id);
-            return $ejecutivo;
-        }
+        $parametros = ['estado'=>'SN', 'tipo' => 'EJECUTIVO'];
+        $query = $this->personaManager->buscarPersonas($parametros);
+        return $query;
     }
     
     public function activarEjecutivo($id){
         $ejecutivo = $this->recuperarEjecutivo($id);
-        $ejecutivo->activar();
+        $persona = $ejecutivo->getPersona();
+        $this->personaManager->cambiarEstado($persona);
         $this->entityManager->flush();
     }
 }

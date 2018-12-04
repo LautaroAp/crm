@@ -5,9 +5,8 @@ namespace DBAL\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Description of Cliente
  *
- * This class represents a registered user.
+ * This class represents a client.
  * @ORM\Entity()
  * @ORM\Table(name="CLIENTE")
  */
@@ -20,15 +19,6 @@ class Cliente {
      */
     private $Id;
 
-    /**
-     * @ORM\Column(name="NOMBRE_CLIENTE", nullable=true, type="string", length=255)
-     */
-    private $nombre;
-
-    /**
-     * @ORM\Column(name="APELLIDO_CLIENTE", nullable=true, type="string", length=255)
-     */
-    private $apellido;
 
     /**
      * Many Features have One Product.
@@ -49,16 +39,7 @@ class Cliente {
      */
     private $ciudad;
 
-    /**
-     * @ORM\Column(name="TELEFONO", nullable=true, type="string", length=255)
-     */
-    private $telefono;
-
-    /**
-     * @ORM\Column(name="MAIL", nullable=true, type="string", length=255)
-     */
-    private $email;
-
+   
     /**
      * @ORM\Column(name="CUENTA_SKYPE_CLIENTE", nullable=true, type="string", length=255)
      */
@@ -140,10 +121,6 @@ class Cliente {
      */
     private $licencia_actual;
 
-    /**
-     * @ORM\Column(name="ACTIVO", nullable=true, type="string", length=1)
-     */
-    private $estado;
 
     /**
      * 
@@ -158,32 +135,17 @@ class Cliente {
      */
     private $eventos;
 
-//    public function __construct() {
-//        $this->usuario = new ArrayCollection();
-//    }
+    /**
+     * @ORM\ManyToOne(targetEntity="PERSONA")
+     * @ORM\JoinColumn(name="ID_PERSONA", referencedColumnName="ID")
+     */
+    private $persona;
 
     public function getId() {
         return $this->Id;
     }
 
-    public function getNombre() {
-        return $this->nombre;
-    }
-
-    public function setNombre($nombre) {
-        $this->nombre = $nombre;
-        return $this;
-    }
-
-    public function getApellido() {
-        return $this->apellido;
-    }
-
-    public function setApellido($apellido) {
-        $this->apellido = $apellido;
-        return $this;
-    }
-
+    
     public function getPais() {
         return $this->pais;
     }
@@ -299,15 +261,7 @@ class Cliente {
         return $this;
     }
 
-    public function getTelefono() {
-        return $this->telefono;
-    }
-
-    public function setTelefono($telefono) {
-        $this->telefono = $telefono;
-        return $this;
-    }
-
+   
     public function getSkype() {
         return $this->skype;
     }
@@ -317,15 +271,7 @@ class Cliente {
         return $this;
     }
 
-    public function getEmail() {
-        return $this->email;
-    }
-
-    public function setEmail($email) {
-        $this->email = $email;
-        return $this;
-    }
-
+   
     public function getCategoria() {
         return $this->categoria;
     }
@@ -406,23 +352,7 @@ class Cliente {
         return $this;
     }
 
-    public function getEstado() {
-        return $this->estado;
-    }
-
-    public function getEstadoNombre() {
-        if ($this->estado == "S") {
-            return "Activo";
-        } else {
-            return "Inactivo";
-        }
-    }
-
-    public function setEstado($estado) {
-        $this->estado = $estado;
-        return $this;
-    }
-
+   
     public function addUsuario($usuario) {
         $this->usuarios[] = $usuario;
     }
@@ -449,4 +379,23 @@ class Cliente {
         return true;
     }
 
+
+    /**
+     * Get the value of persona
+     */ 
+    public function getPersona()
+    {
+        return $this->persona;
+    }
+
+    /**
+     * Set the value of persona
+     *
+     * @return  self
+     */ 
+    public function setPersona($persona)
+    {
+        $this->persona = $persona;
+        return $this;
+    }
 }
