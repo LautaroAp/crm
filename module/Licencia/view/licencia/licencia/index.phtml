@@ -29,12 +29,14 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
         <div class="container collapse" id="add_licencia">
             <form method="post">
                 <div class="row form-row">
-                    <div class="form-group form-inline">
+                    <div class="form-group form-inline licencia-margen-bot">
                         <input type="text" class="form-control licencia-lg form-margen" name="nombre_licencia" placeholder="Nombre de Licencia" required="">
                         <input type="text" class="form-control licencia-md form-margen" name="precio_local" placeholder="Precio ARG" required="">
                         <input type="text" class="form-control licencia-md form-margen" name="precio_extranjero" placeholder="Precio USD" required="">
                         <input type="text" class="form-control licencia-sm form-margen" name="iva" placeholder="% IVA" required="">
                         <input type="text" class="form-control licencia-sm form-margen" name="descuento" placeholder="% Dto." required="">
+                    </div>
+                    <div class="form-group licencia-margen-top">
                         <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
                             <span class="glyphicon glyphicon-plus" ></span> Agregar Licencia
                         </button>
@@ -115,8 +117,8 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
                                 </div>
                                 <div class="modal-footer">
                                     <a href="<?= $this->url('licencia/borrar', ['action' => 'remove', 'id' => $licencia->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
-                <span class="btn btn-default">Aceptar</span></a>
-                                    
+                                        <span class="btn btn-default">Aceptar</span>
+                                    </a>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>

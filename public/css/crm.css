@@ -138,6 +138,14 @@
     width: 30% !important;
 }
 
+.licencia-margen-top{
+    margin-top: 0px !important;
+}
+
+.licencia-margen-bot{
+    margin-bottom: 0px !important;
+}
+
 .ejecutivo-md{
     min-width: 110px;
     width: 10% !important;
@@ -149,7 +157,7 @@
 }
 
 .titulo{
-    font-family: "Arial Helvetica sans-serif"; 
+    font-family: "Arial", Helvetica, sans-serif;
     font-size: 72px;
     font-weight: 500;
 }

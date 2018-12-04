@@ -44,7 +44,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                             <input type="text" class="form-control" name="empresa" placeholder="Empresa" value="<?php if (count($parametros)>0){echo($parametros['empresa']);} ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <select class="form-control" id="categoria" name="categoria" required="">
+                            <select class="form-control" id="categoria" name="categoria">
                                 <option value="" hidden="">Seleccionar Categoría</option>
                                 <?php foreach ($categorias as $categoria) : ?>
                                 <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
@@ -52,7 +52,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)" required="">
+                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
                                 <option value="" hidden="">Seleccionar País</option>
                                 <?php foreach ($paises as $pais) : ?>
                                     <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
@@ -60,7 +60,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                             </select>
                         </div>
                         <div class="form-group col-md-3" id="div_provincias">
-                            <select class="form-control" id="ops_provincias" name="provincia" required="">
+                            <select class="form-control" id="ops_provincias" name="provincia">
                             </select>
                         </div>
                     </div>  
