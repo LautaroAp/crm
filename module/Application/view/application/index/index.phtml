@@ -3,46 +3,44 @@
         <!-- Logo -->
         <h1>
             <a href="<?= $this->url('application', ['action' => 'index']); ?>" id="logo" class="titulo">Huella CRM</a>
-            <small id="crm_version" style="font-size: 12px;">v1.0.6</small>
+            <small id="crm_version" style="font-size: 12px;">v1.1.0</small>
         </h1>
         <header class="major">
             <span class="byline">Sistema de Administración de Clientes, Stock y Ventas </span>
         </header>                 
-
-        <!-- Nav -->
-              
+        <!-- Nav -->      
         <nav class="navbar" id="nav">
             <ul>
                 <li>
-                    <a href="<?= $this->url('clientes'); ?>">
-                        <img src="<?= $this->basePath('img/crm/BotonClientes.png') ?>" class="img-rounded img-responsive img-menu">
+                    <a href="<?= $this->url('gestionClientes'); ?>">
+                        <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" class="img-rounded img-responsive">
                     </a> Clientes
                 </li>
                 <li>
-                    <a href="<?= $this->url('licencia', ['action' => 'index']); ?>">
-                        <img src="<?= $this->basePath('img/crm/BotonLicencias.png') ?>" class="img-rounded img-responsive img-menu">
-                    </a> Licencias
+                    <a href="<?= $this->url('gestionProveedores'); ?>">
+                        <img src="<?= $this->basePath('img/crm/proveedor_v.png') ?>" class="img-rounded img-responsive">
+                    </a> Proveedores
                 </li>
                 <li>
-                    <a href="<?= $this->url('ventas'); ?>">
-                        <img src="<?= $this->basePath('img/crm/BotonMovimientos.png') ?>" class="img-rounded img-responsive img-menu">
-                    </a> Movimientos
+                    <a href="<?= $this->url('gestionEmpresa'); ?>">
+                        <img src="<?= $this->basePath('img/crm/empresa_n.png') ?>" class="img-rounded img-responsive">
+                    </a> Empresa
                 </li>
                 <li>
-                    <a href="<?= $this->url('gestion'); ?>">
-                        <img src="<?= $this->basePath('img/crm/BotonGestion.png') ?>" class="img-rounded img-responsive img-menu">
-                    </a> Gestion
+                    <a href="<?= $this->url('herramientas'); ?>">
+                        <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" class="img-rounded img-responsive">
+                    </a> Heramientas
                 </li>
+            </ul>
+            <ul> 
                 <li>
-                    <a href="<?= $this->url('application', ['action' => 'backup']); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/BotonBackup.png') ?>" class="img-rounded img-responsive img-menu">
-                    </a> Backup
+                    <img src="<?= $this->basePath('img/crm/bienvenido_g.png') ?>" class="img-rounded img-responsive">
                 </li>
             </ul>
             <ul> 
                 <li>
                     <a href="<?= $this->url('logout') ?>" role="button">
-                        <img src="<?= $this->basePath('img/crm/Salir.png') ?>" class="img-rounded img-responsive img-submenu">
+                        <img src="<?= $this->basePath('img/crm/salir.png') ?>" class="img-rounded img-responsive">
                     </a> Salir
                 </li>
             </ul>

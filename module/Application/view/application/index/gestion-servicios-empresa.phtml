@@ -1,0 +1,45 @@
+<div class="container margen text-center" >         
+    <nav class="navbar" id="nav" >
+        <ul>
+            <li>
+                <a href="<?= $this->url('gestionProveedores'); ?>" > 
+                    <img src="<?= $this->basePath('img/crm/servicio_n.png') ?>" class="img-rounded img-responsive img-menu">
+                </a>
+                <small>Listado Servicios</small>
+            </li>
+            <li>
+                <a href="<?= $this->url("clientes/agregar", ["action" => "add"]); ?>" > 
+                    <img src="<?= $this->basePath('img/crm/servicio_n.png') ?>" class="img-rounded img-responsive img-menu">
+                </a>
+                <small>Agregar Servicio</small>
+            </li>
+            <li>
+                <a href="<?= $this->url('gestionProveedores'); ?>" > 
+                    <img src="<?= $this->basePath('img/crm/servicio_n.png') ?>" class="img-rounded img-responsive img-menu">
+                </a>
+                <small>Categorias</small>
+            </li>
+            <li>
+                <a href="<?= $this->url('gestionProveedores'); ?>" > 
+                    <img src="<?= $this->basePath('img/crm/servicio_n.png') ?>" class="img-rounded img-responsive img-menu">
+                </a>
+                <small>Exportar a Excel</small>
+            </li>
+        </ul>
+    </nav>
+    <nav id="nav" >
+        <ul>
+            <li>
+                <div class="img-centrar">
+                    <div>
+                        <a href="<?= $this->url('gestionEmpresa') ?>"><img src="<?= $this->basePath('img/crm/volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                    </div>
+                    <div class="ficha-cliente-label">
+                        <label>Volver</label>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </nav>
+</div>

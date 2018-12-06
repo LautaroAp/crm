@@ -16,10 +16,10 @@ return [
    
    'router' => [
         'routes' => [
-            'empresa' => [
+            'editarempresa' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/empresa[/:action[/:id]]',
+                    'route'    => '/empresa/edit[/:action[/:id]]',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-zA-Z0-9_-]*',

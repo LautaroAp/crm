@@ -20,8 +20,8 @@ return [
                 'options' => [
                     'route' => '/clientes',
                     'defaults' => [
-                        'controller' => Controller\ClientesController::class,
-                        'action' => 'index',
+                        'controller' => \Application\Controller\IndexController::class,
+                        'action' => 'gestionClientes',
                     ],
                 ],
                 'may_terminate' => true,
@@ -31,6 +31,7 @@ return [
                         'options' => [
                             'route' => '/edit[/:id]',
                             'defaults' => [
+                                'controller' => Controller\ClientesController::class,
                                 'action' => 'edit',
                             ],
                             'constraints' => [
@@ -57,6 +58,7 @@ return [
                         'options' => [
                             'route' => '/add',
                             'defaults' => [
+                                'controller' => Controller\ClientesController::class,
                                 'action' => 'add',
                             ],
                         ],
@@ -66,6 +68,7 @@ return [
                         'options' => [
                             'route' => '/delete[/:id]',
                             'defaults' => [
+                                'controller' => Controller\ClientesController::class,
                                 'action' => 'delete',
                             ],
                             'constraints' => [
@@ -78,6 +81,7 @@ return [
                         'options' => [
                             'route' => '/modificarEstado[/:id]',
                             'defaults' => [
+                                'controller' => Controller\ClientesController::class,
                                 'action' => 'modificarEstado',
                             ],
                             'constraints' => [
@@ -90,6 +94,7 @@ return [
                         'options' => [
                             'route' => '/ficha[/:id]',
                             'defaults' => [
+                                'controller' => Controller\ClientesController::class,
                                 'action' => 'ficha',
                             ],
                             'constraints' => [
@@ -103,6 +108,7 @@ return [
                         'options' => [
                             'route' => '/seach',
                             'defaults' => [
+                                'controller' => Controller\ClientesController::class,
                                 'action' => 'search',
                             ],
                         ],
@@ -112,6 +118,7 @@ return [
                         'options' => [
                             'route' => '/page[/:id[/:estado]]',
                             'defaults' => [
+                                'controller' => Controller\ClientesController::class,
                                 'action' => 'index',
                             ],
                             'constraints' => [

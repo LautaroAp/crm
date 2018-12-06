@@ -19,7 +19,7 @@ return [
             'licencia' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/licencia',
+                    'route' => '/empresa/licencia',
                     'defaults' => [
                         'controller' => Controller\LicenciaController::class,
                         'action' => 'index',
