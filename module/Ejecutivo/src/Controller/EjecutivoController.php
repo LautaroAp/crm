@@ -86,7 +86,7 @@ class EjecutivoController extends AbstractActionController {
     {
         $id = (int)$this->params()->fromRoute('id', -1);  
         $ejecutivo = $this->ejecutivoManager->recuperarEjecutivo($id);
-       if ($ejecutivo == null) {
+        if ($ejecutivo == null) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
