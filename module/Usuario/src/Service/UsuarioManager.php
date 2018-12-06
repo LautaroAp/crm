@@ -233,11 +233,12 @@ class UsuarioManager {
 
     public function getData($id){
         $usuario = $this->getUsuario($id);
+        $persona = $usuario->getPersona();
         $arr = [
-            'nombre' =>$usuario->getNombre(),
-            'telefono' =>$usuario->getTelefono(),
+            'nombre' =>$persona->getNombre(),
+            'telefono' =>$persona->getTelefono(),
             'skype' => $usuario->getSkype(),
-            'mail' => $usuario->getMail(),
+            'mail' => $persona->getEmail(),
         ];
         return $arr;
     }

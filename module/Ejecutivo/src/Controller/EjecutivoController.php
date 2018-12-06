@@ -12,14 +12,17 @@ class EjecutivoController extends AbstractActionController {
      * @var DoctrineORMEntityManager
      */
     protected $entityManager;
+    protected $ejecutivoManager;
+    protected $personaManager;
 
-    //private $ejecutivoManager;
-
-    public function __construct($entityManager, $ejecutivoManager) {
+    public function __construct($entityManager, $ejecutivoManager, $personaManager) {
         $this->entityManager = $entityManager;
         $this->ejecutivoManager = $ejecutivoManager;
+        $this->personaManager = $personaManager;
     }
 
+ 
+   
     public function getEntityManager() {
         if (null === $this->entityManager) {
             $this->entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
@@ -27,10 +30,32 @@ class EjecutivoController extends AbstractActionController {
         return $this->entityManager;
     }
 
-
     public function indexAction() {
-        $view = $this->procesarAddAction();
+        $view = $this->procesarIndexAction();
         return $view;
+    }
+    public function procesarIndexAction(){
+        $paginator = $this->ejecutivoManager->getTabla();
+        $pag = $this->getPaginator($paginator);
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $form = new EjecutivoForm('create', $this->entityManager);
+            $this->ejecutivoManager->getEjecutivoFromForm($form, $data);
+            return $this->redirect()->toRoute('ejecutivos');
+        }
+        return new ViewModel([
+            'ejecutivos' => $pag,
+            ]);
+    }
+
+    protected function getPaginator($paginator) {
+        $page = 1;
+        if ($this->params()->fromRoute('id')) {
+            $page = $this->params()->fromRoute('id');
+        }
+        $paginator->setCurrentPageNumber((int) $page)
+                ->setItemCountPerPage(10);
+        return $paginator;
     }
 
     public function addAction() {
@@ -41,42 +66,17 @@ class EjecutivoController extends AbstractActionController {
     private function procesarAddAction() {
         $form = new EjecutivoForm('create', $this->entityManager);
         $paginator = $this->ejecutivoManager->getTabla();
-        $page = 1;
-        if ($this->params()->fromRoute('id')) {
-            $page = $this->params()->fromRoute('id');
-        }
-        $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $form->setData($data);
-            $ejecutivo = $this->ejecutivoManager->getEjecutivoFromForm($form, $data);
+            $this->ejecutivoManager->getEjecutivoFromForm($form, $data);
             return $this->redirect()->toRoute('ejecutivos');
-            
         }
         return new ViewModel([
             'form' => $form,
             'ejecutivos' => $paginator
         ]);
     }
-
-    public function viewAction() {
-        $id = (int) $this->params()->fromRoute('id', -1);
-        if ($id < 1) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        // Find a user with such ID.
-        $ejecutivo = $this->ejecutivoManager->recuperarEjecutivo($id);
-        if ($ejecutivo == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        return new ViewModel([
-            'ejecutivo' => $ejecutivo
-        ]);
-    }
-
+    
     public function editAction() {
         $view = $this->procesarEditAction();
         return $view;
@@ -86,7 +86,6 @@ class EjecutivoController extends AbstractActionController {
     {
         $id = (int)$this->params()->fromRoute('id', -1);  
         $ejecutivo = $this->ejecutivoManager->recuperarEjecutivo($id);
-
        if ($ejecutivo == null) {
             $this->getResponse()->setStatusCode(404);
             return;
@@ -113,6 +112,7 @@ class EjecutivoController extends AbstractActionController {
         }
         return new ViewModel(array(
             'ejecutivo' => $ejecutivo,
+            'persona'=>$ejecutivo->getPersona(),
             'form' => $form
         ));
     }

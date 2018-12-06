@@ -1,19 +1,14 @@
 <?php
 $this->headTitle('Edit Ejecutivo');
-$form->get('apellido')->setAttributes([
-    'class' => 'form-control',
-    'placeholder' => 'Ingresar Apellido',
-    'value' => $ejecutivo->getApellido()
-]);
 $form->get('nombre')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'Ingresar Nombre',
-    'value' => $ejecutivo->getNombre()
+    'value' => $persona->getNombre()
 ]);
 $form->get('mail')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'nombre@ejemplo.com',
-    'value' => $ejecutivo->getMail()
+    'value' => $persona->getEmail()
 ]);
 $form->get('usuario')->setAttributes([
     'class' => 'form-control',
@@ -41,11 +36,6 @@ $form->prepare();
 <div class="container">   
     <div class="row">
         <div class="form-row">
-            <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('apellido')); ?>
-                <?= $this->formElement($form->get('apellido')); ?>
-                <?= $this->formElementErrors($form->get('apellido')); ?> 
-            </div>
             <div class="form-group col-md-4">
                 <?= $this->formLabel($form->get('nombre')); ?>
                 <?= $this->formElement($form->get('nombre')); ?>

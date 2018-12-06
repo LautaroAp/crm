@@ -1,13 +1,8 @@
 <?php
-/**
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace Ejecutivo\Controller;
 use Zend\View\Model\ViewModel;
-
+use Ejecutivo\Controller\EjecutivoController;
 
 
 class EjecutivoInactivoController extends EjecutivoController
@@ -15,17 +10,14 @@ class EjecutivoInactivoController extends EjecutivoController
     /**
      * @var DoctrineORMEntityManager
      */
-    protected $entityManager;
-    
+    private $ejecutivoInactivoManager;
 
-    //private $ejecutivoInactivo;
-    
-    public function __construct($entityManager, $ejecutivoInactivo)
-    {
+    public function __construct($entityManager, $ejecutivoInactivoManager, $personaManager) {
         $this->entityManager = $entityManager;
-        $this->ejecutivoInactivoManager = $ejecutivoInactivo;
+        $this->ejecutivoInactivoManager = $ejecutivoInactivoManager;
+        $this->personaManager = $personaManager;
     }
-    
+
     public function getEntityManager()
     {
         if (null === $this->entityManager) {
@@ -34,23 +26,25 @@ class EjecutivoInactivoController extends EjecutivoController
         return $this->entityManager;
     }
 
-    public function indexAction()
-    {     
-        $paginator = $this->ejecutivoInactivoManager->getTabla();
-        $mensaje ="";
-        $page = 1;
-        if ($this->params()->fromRoute('id')) {
-            $page = $this->params()->fromRoute('id');
-        }
-        $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
-        
-        return new ViewModel([
-            'ejecutivos' => $paginator,
-            'mensaje' => $mensaje
-        ]);
+    public function indexAction() {
+        $view = $this->procesarIndexAction();
+        return $view;
     }
-    
+    public function procesarIndexAction(){
+        $paginator = $this->ejecutivoInactivoManager->getTabla();
+        $pag = $this->getPaginator($paginator);
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $form = new EjecutivoForm('create', $this->entityManager);
+            $this->ejecutivoManager->getEjecutivoFromForm($form, $data);
+            return $this->redirect()->toRoute('ejecutivos');
+        }
+        return new ViewModel([
+            'ejecutivos' => $pag,
+            'mensaje' => $mensaje
+            ]);
+    }
+   
     public function activarAction(){
         $id = $this->params()->fromRoute('id');
         $this->procesarActivar($id);

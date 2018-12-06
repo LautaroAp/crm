@@ -64,10 +64,10 @@ class Ejecutivo extends \DBAL\Entity\Ejecutivo implements \Doctrine\ORM\Proxy\Pr
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'apellido', 'nombre', 'mail', 'usuario', 'clave', 'activo'];
+            return ['__isInitialized__', 'id', 'usuario', 'clave', 'activo', '' . "\0" . 'DBAL\\Entity\\Ejecutivo' . "\0" . 'persona'];
         }
 
-        return ['__isInitialized__', 'id', 'apellido', 'nombre', 'mail', 'usuario', 'clave', 'activo'];
+        return ['__isInitialized__', 'id', 'usuario', 'clave', 'activo', '' . "\0" . 'DBAL\\Entity\\Ejecutivo' . "\0" . 'persona'];
     }
 
     /**
@@ -191,39 +191,6 @@ class Ejecutivo extends \DBAL\Entity\Ejecutivo implements \Doctrine\ORM\Proxy\Pr
     /**
      * {@inheritDoc}
      */
-    public function getApellido()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApellido', []);
-
-        return parent::getApellido();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getNombre()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNombre', []);
-
-        return parent::getNombre();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getMail()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMail', []);
-
-        return parent::getMail();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getUsuario()
     {
 
@@ -241,50 +208,6 @@ class Ejecutivo extends \DBAL\Entity\Ejecutivo implements \Doctrine\ORM\Proxy\Pr
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getClave', []);
 
         return parent::getClave();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setId_ejecutivo($id_ejecutivo)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId_ejecutivo', [$id_ejecutivo]);
-
-        return parent::setId_ejecutivo($id_ejecutivo);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setApellido($apellido)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApellido', [$apellido]);
-
-        return parent::setApellido($apellido);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setNombre($nombre)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNombre', [$nombre]);
-
-        return parent::setNombre($nombre);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setMail($mail)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setMail', [$mail]);
-
-        return parent::setMail($mail);
     }
 
     /**
@@ -351,6 +274,28 @@ class Ejecutivo extends \DBAL\Entity\Ejecutivo implements \Doctrine\ORM\Proxy\Pr
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'isActivo', []);
 
         return parent::isActivo();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPersona()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPersona', []);
+
+        return parent::getPersona();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPersona($persona)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPersona', [$persona]);
+
+        return parent::setPersona($persona);
     }
 
 }

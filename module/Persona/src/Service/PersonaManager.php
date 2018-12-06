@@ -54,26 +54,21 @@ class PersonaManager {
 
     public function addPersona($data, $tipo) {
         $persona = new Persona();
-        $persona->setNombre($data['nombre'])
-                ->setTelefono($data['telefono'])
-                ->setMail($data['mail'])
-                ->setTipo($tipo)
-                ->setEstado("S");
-        
+        $persona=$this->setData($persona, $data,$tipo);
         if ($this->tryAddPersona($persona)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
-            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Datos guardados correctamente';
+            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Persona agregada correctamente';
         } else {
             $_SESSION['MENSAJES']['ficha_cliente'] = 0;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al guardar datos';
+
         }
         return $persona;
+
     }
     
     public function updatePersona($persona, $data) {
-        $persona->setNombre($data['nombre']);
-        $persona->setTelefono($data['telefono']);
-        $persona->setMail($data['mail']);
+        $persona=$this->setData($persona, $data);
         if ($this->tryUpdatePersona($persona)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Datos editados correctamente';
@@ -82,6 +77,17 @@ class PersonaManager {
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al editar datos';
         }
         return true;
+    }
+
+    private function setData($persona, $data, $tipo= null){
+        $persona->setNombre($data['nombre'])
+        ->setTelefono($data['telefono'])
+        ->setEmail($data['mail'])
+        ->setEstado("S");
+        if (isset($tipo)){
+            $persona->setTipo($tipo);
+        }
+        return $persona;
     }
 
     public function removePersona($persona) {
@@ -125,14 +131,12 @@ class PersonaManager {
             return false;
         }
     }
-    
-    public function recuperarPersona($id_persona) {
-        $persona = $this->entityManager->getRepository(Persona::class)
-                ->findOneBy(['id' => $id_persona]);
-
-        return $persona;
+           
+    public function getPersona($id){
+        return $this->entityManager->getRepository(Persona::class)
+                ->find($id);
     }
-    
+
     public function buscarPersonas($parametros) {      
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
@@ -162,13 +166,6 @@ class PersonaManager {
         return $queryBuilder->getQuery();
     }
 
-     
-    public function getPersona($id){
-        return $this->entityManager->getRepository(Persona::class)
-                ->find($id);
-    }
-    
-
     public function getData($id){
         $persona = $this->getPersona($id);
         $arr = [
@@ -192,8 +189,13 @@ class PersonaManager {
             } else if ($persona->getEstado() == "N") {
                 $persona->setEstado("S");
             }
-            $entityManager->flush();
+            $this->entityManager->flush();
         }
         return $persona->getEstado();    
+    }
+
+    public function modificarEstadoCliente($cliente, $estado){
+        $persona = $this->getPersona($cliente->getId());
+        $persona->setEstado($estado);
     }
 }

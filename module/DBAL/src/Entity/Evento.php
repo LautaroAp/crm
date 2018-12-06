@@ -134,10 +134,7 @@ class Evento {
         if (is_null($this->cliente)) {
             return "NO DEFINIDO";
         } else {
-            $nombre = $this->cliente->getNombre();
-            $apellido = $this->cliente->getApellido();
-            $nya = $nombre . " " . $apellido;
-            return $nya;
+            return $this->cliente->getPersona()->getNombre();      
         }
     }
 

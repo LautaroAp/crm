@@ -2,10 +2,9 @@
 $title = 'Editar Cliente';
 $this->headTitle($title);
 $id = $cliente->getId();
-$apellido = $cliente->getApellido();
-$nombre = $cliente->getNombre();
-$telefono = $cliente->getTelefono();
-$email = $cliente->getEmail();
+$nombre = $persona->getNombre();
+$telefono = $persona->getTelefono();
+$email = $persona->getEmail();
 $pais = $cliente->getPais();
 $provincia = $cliente->getProvincia();
 $ciudad = $cliente->getCiudad();
@@ -36,10 +35,6 @@ $establecimientos = $cliente->getEstablecimientos();
                     <!-- Inicio: Datos del Cliente -->
                     <div class="row form-row">
                         <input type="hidden" name="id" value="<?= $id ?>">
-                        <div class="form-group col-md-4">
-                            <label>Apellido</label>
-                            <input type="text" class="form-control" name="apellido" value="<?php echo($apellido); ?>" placeholder="Ingresar Apellido">
-                        </div>
                         <div class="form-group col-md-4">
                             <label>País</label>
                             <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">

@@ -3,7 +3,9 @@
 namespace Ejecutivo\Service;
 
 use DBAL\Entity\Ejecutivo;
+use DBAL\Entity\Persona;
 use Zend\Paginator\Paginator;
+use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 
@@ -18,49 +20,47 @@ class EjecutivoManager {
      * Doctrine entity manager.
      * @var Doctrine\ORM\EntityManager
      */
-    private $entityManager;
-
-    /**
-     * PHP template renderer.
-     * @var type 
-     */
-    private $viewRenderer;
-
-    /**
-     * Application config.
-     * @var type 
-     */
-    private $config;
-
+    protected $entityManager;
+    protected $personaManager;
+    protected $tipo;
     /**
      * Constructs the service.
      */
 
-    private $personaManager;
 
-    private $tipo;
-
-    public function __construct($entityManager, $viewRenderer, $config, $personaManager) {
+    public function __construct($entityManager, $personaManager) {
         $this->entityManager = $entityManager;
-        $this->viewRenderer = $viewRenderer;
-        $this->config = $config;
-        $this->$personaManager = $personaManager;
+        $this->personaManager = $personaManager;
         $this->tipo = "EJECUTIVO";
     }
-
+    
     public function getTabla() {
-        $query = $this->busquedaActivos();
-        $adapter = new DoctrineAdapter(new ORMPaginator($query));
+        $query = $this->getPersonasActivas();
+        $personas = $query->getResult();
+        $ejecutivos = $this->getEjecutivosFromPersonas($personas);
+        $adapter = new DoctrineAdapter(new ORMPaginator($ejecutivos));
         $paginator = new Paginator($adapter);
         return $paginator;
     }
 
-    public function busquedaActivos() {
-        $parametros = ['estado'=>'S', 'tipo' => 'EJECUTIVO'];
+    private function getPersonasActivas(){
+        $parametros= Array();
+        $parametros+=['tipo'=> $this->tipo];
+        $parametros+=['estado'=>"S"];
         $query = $this->personaManager->buscarPersonas($parametros);
         return $query;
     }
 
+    protected function getEjecutivosFromPersonas($personas){
+        $entityManager = $this->entityManager;
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('E')
+                ->from(Ejecutivo::class, 'E');
+        $p = 0;
+        $queryBuilder->where('E.persona IN (:personas)')
+                    ->setParameter('personas', $personas);
+        return $queryBuilder->getQuery();
+    }
     /**
      * This method adds a new ejecutivo.
      */
@@ -97,7 +97,7 @@ class EjecutivoManager {
 
     public function removeEjecutivo($ejecutivo) {
         $persona = $ejecutivo->getPersona();
-        $this->personaManager->modicarEstado($persona);
+        $this->personaManager->cambiarEstado($persona);
         $_SESSION['MENSAJES']['ejecutivo'] = 1;
         $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Ejecutivo dado de Baja correctamente';
     }
@@ -153,7 +153,7 @@ class EjecutivoManager {
         $data = [
             'nombre' =>$persona->getNombre(),
             'telefono' => $persona->getTelefono(),
-            'mail' => $persona->getMail(),
+            'mail' => $persona->getEmail(),
             'usuario' => $ejecutivo->getUsuario(),
             'clave' =>$ejecutivo->getClave()
         ];

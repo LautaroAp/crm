@@ -49,7 +49,6 @@ class EjecutivoForm extends Form
         $this->ejecutivo = $ejecutivo;
         
         $this->addElements();
-        $this->addInputFilter();          
     }
     
     /**
@@ -58,15 +57,6 @@ class EjecutivoForm extends Form
     protected function addElements() 
     {
               
-        // Add "apellido" field
-        $this->add([            
-            'type'  => 'text',
-            'name' => 'apellido',
-            'options' => [
-                'label' => 'Apellido',
-            ],
-        ]);
-        
         // Add "nombre" field
         $this->add([            
             'type'  => 'text',
@@ -121,102 +111,7 @@ class EjecutivoForm extends Form
    
     private function addInputFilter() 
     {
-        // Create main input filter
-                   
-       //$inputFilter = new InputFilter();        
-        
-        $inputFilter = $this->getInputFilter();  
-        $this->setInputFilter($inputFilter);
-               
-        // Add input for "apellido" field
-        $inputFilter->add([
-                'name'     => 'apellido',
-                'required' => true,
-                'filters'  => [                    
-                    ['name' => 'StringTrim'],
-                ],                
-                'validators' => [
-                    [
-                        'name'    => 'StringLength',
-                        'options' => [
-                            'min' => 1,
-                            'max' => 512
-                        ],
-                    ],
-                ],
-            ]);
-        
-        // Add input for "nombre" field
-        $inputFilter->add([
-                'name'     => 'nombre',
-                'required' => true,
-                'filters'  => [                    
-                    ['name' => 'StringTrim'],
-                ],                
-                'validators' => [
-                    [
-                        'name'    => 'StringLength',
-                        'options' => [
-                            'min' => 1,
-                            'max' => 512
-                        ],
-                    ],
-                ],
-            ]);
-        
-        // Add input for "mail" field
-        $inputFilter->add([
-                'name'     => 'mail',
-                'required' => false,
-                'filters'  => [                    
-                    ['name' => 'StringTrim'],
-                ],                
-                'validators' => [
-                    [
-                        'name'    => 'StringLength',
-                        'options' => [
-                            'min' => 1,
-                            'max' => 512
-                        ],
-                    ],
-                ],
-            ]);
-        
-        // Add input for "usuario" field
-        $inputFilter->add([
-                'name'     => 'usuario',
-                'required' => true,
-                'filters'  => [                    
-                    ['name' => 'StringTrim'],
-                ],                
-                'validators' => [
-                    [
-                        'name'    => 'StringLength',
-                        'options' => [
-                            'min' => 1,
-                            'max' => 512
-                        ],
-                    ],
-                ],
-            ]);
-        
-        // Add input for "clave" field
-        $inputFilter->add([
-                'name'     => 'clave',
-                'required' => true,
-                'filters'  => [                    
-                    ['name' => 'StringTrim'],
-                ],                
-                'validators' => [
-                    [
-                        'name'    => 'StringLength',
-                        'options' => [
-                            'min' => 1,
-                            'max' => 512
-                        ],
-                    ],
-                ],
-            ]);
+       
         
     }       
 }

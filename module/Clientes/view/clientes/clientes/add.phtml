@@ -20,10 +20,6 @@ $this->headTitle($title);
                     <!-- Inicio: Datos del Cliente -->
                     <div class="row form-row">
                         <div class="form-group col-md-4">
-                            <label>Apellido</label>
-                            <input type="text" class="form-control" name="apellido" placeholder="Ingresar Apellido" required="">
-                        </div>
-                        <div class="form-group col-md-4">
                             <label>País</label>
                             <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)" required="">
                                 <option value="" hidden="">Seleccionar País</option>
@@ -44,8 +40,8 @@ $this->headTitle($title);
                     </div>
                     <div class="row form-row">
                         <div class="form-group col-md-4">
-                            <label>Nombre</label>
-                            <input type="text" class="form-control" name="nombre" placeholder="Ingresar Nombre" required="">
+                            <label>Nombre y Apellido</label>
+                            <input type="text" class="form-control" name="nombre" placeholder="Ingresar Nombre y Apellido" required="">
                         </div>
                         
                         <div class="form-group col-md-4">

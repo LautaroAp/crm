@@ -66,7 +66,7 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                         <td><?php echo ($evento->getId_cliente()->getNombreCategoriaCliente()); ?> </td>
 
                         <td>
-                            <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getId_cliente()->getId()]); ?>">
+                            <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getId_cliente()->getPersona()->getId()]); ?>">
                                 <span class="glyphicon glyphicon-share-alt" ></span>
                             </a>
                         </td>

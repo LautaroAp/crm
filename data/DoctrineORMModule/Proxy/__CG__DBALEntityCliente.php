@@ -64,10 +64,10 @@ class Cliente extends \DBAL\Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'Id', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'nombre', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'apellido', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'pais', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'provincia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'ciudad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'telefono', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'email', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'skype', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'profesion', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'empresa', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'actividad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'animales', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'establecimientos', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'raza_manejo', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'categoria', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'version', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_compra', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'vencimiento', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_contacto', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_pago', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia_actual', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'estado', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'usuarios', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'eventos'];
+            return ['__isInitialized__', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'Id', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'pais', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'provincia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'ciudad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'skype', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'profesion', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'empresa', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'actividad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'animales', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'establecimientos', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'raza_manejo', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'categoria', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'version', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_compra', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'vencimiento', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_contacto', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_pago', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia_actual', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'usuarios', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'eventos', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'persona'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'Id', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'nombre', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'apellido', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'pais', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'provincia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'ciudad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'telefono', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'email', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'skype', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'profesion', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'empresa', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'actividad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'animales', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'establecimientos', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'raza_manejo', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'categoria', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'version', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_compra', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'vencimiento', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_contacto', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_pago', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia_actual', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'estado', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'usuarios', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'eventos'];
+        return ['__isInitialized__', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'Id', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'pais', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'provincia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'ciudad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'skype', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'profesion', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'empresa', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'actividad', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'animales', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'establecimientos', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'raza_manejo', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'categoria', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'version', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_compra', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'vencimiento', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_contacto', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'fecha_ultimo_pago', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'licencia_actual', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'usuarios', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'eventos', '' . "\0" . 'DBAL\\Entity\\Cliente' . "\0" . 'persona'];
     }
 
     /**
@@ -182,50 +182,6 @@ class Cliente extends \DBAL\Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getNombre()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNombre', []);
-
-        return parent::getNombre();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setNombre($nombre)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNombre', [$nombre]);
-
-        return parent::setNombre($nombre);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getApellido()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getApellido', []);
-
-        return parent::getApellido();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setApellido($apellido)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApellido', [$apellido]);
-
-        return parent::setApellido($apellido);
     }
 
     /**
@@ -462,28 +418,6 @@ class Cliente extends \DBAL\Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getTelefono()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTelefono', []);
-
-        return parent::getTelefono();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setTelefono($telefono)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTelefono', [$telefono]);
-
-        return parent::setTelefono($telefono);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getSkype()
     {
 
@@ -501,28 +435,6 @@ class Cliente extends \DBAL\Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSkype', [$skype]);
 
         return parent::setSkype($skype);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getEmail()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEmail', []);
-
-        return parent::getEmail();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setEmail($email)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEmail', [$email]);
-
-        return parent::setEmail($email);
     }
 
     /**
@@ -704,39 +616,6 @@ class Cliente extends \DBAL\Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getEstado()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEstado', []);
-
-        return parent::getEstado();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getEstadoNombre()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEstadoNombre', []);
-
-        return parent::getEstadoNombre();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setEstado($estado)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEstado', [$estado]);
-
-        return parent::setEstado($estado);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function addUsuario($usuario)
     {
 
@@ -776,6 +655,28 @@ class Cliente extends \DBAL\Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'isPrimeraVenta', []);
 
         return parent::isPrimeraVenta();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPersona()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPersona', []);
+
+        return parent::getPersona();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPersona($persona)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPersona', [$persona]);
+
+        return parent::setPersona($persona);
     }
 
 }

@@ -25,16 +25,15 @@ class ClientesManager {
      * Doctrine entity manager.
      * @var Doctrine\ORM\EntityManager
      */
-    private $entityManager;
-    private $usuarioManager;
-    private $personaManager;
+    protected $entityManager;
+    protected $usuarioManager;
+    protected $personaManager;
+    protected $total;
+    protected $tipo;
+    
     /**
      * Constructs the service.
      */
-    protected $total;
-
-    private $tipo;
-
     public function __construct($entityManager, $usuarioManager, $personaManager) {
         $this->entityManager = $entityManager;
         $this->usuarioManager = $usuarioManager;
@@ -90,6 +89,8 @@ class ClientesManager {
     //     return $paginator;
     // }
 
+    //esta funcion es usada por el controller para obtener todos los clientes
+    //que cumplen con los parametros
     public function getTablaFiltrado($parametros) {
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->getActivos($filtros);
@@ -103,9 +104,8 @@ class ClientesManager {
     }
 
     public function getActivos($parametros){
-        $parametros+=["tipo"=> $this->tipo];
-        $parametros+=["estado"=>"S"];
-        print_r($parametros);
+        $parametros+=['tipo'=> $this->tipo];
+        $parametros+=['estado'=>"S"];
         $query = $this->personaManager->buscarPersonas($parametros);
         return $query;
     }
@@ -120,6 +120,21 @@ class ClientesManager {
         }
         return ($param);
     }
+
+    public function getDataFicha($id_persona){
+        $persona = $this->personaManager->getPersona($id_persona);
+        $cliente = $this->entityManager
+                        ->getRepository(Cliente::class)
+                        ->findOneBy(['persona' => $id_persona]);
+        $data = [
+            'cliente' =>$cliente,
+            'eventos' =>$cliente->getEventos(),
+            'usuarios' => $cliente->getUsuarios(),
+            'persona'=>$cliente->getPersona()
+        ];
+        return $data;
+    }
+
 
 
     public function getClientesConUsuariosAdicionales($parametros) {
@@ -253,7 +268,7 @@ class ClientesManager {
         $this->addDatosLaborales($cliente, $data);
         // Datos de Licencia
         $this->addDatosLicencia($cliente, $data);        
-        $persona = $this->personaManager->addPersona($persona, $data);
+        $persona = $this->personaManager->addPersona($data, $this->tipo);
         $cliente->setPersona($persona);
         if ($this->tryAddCliente($cliente)) {
             $_SESSION['MENSAJES']['listado_clientes'] = 1;
@@ -278,7 +293,7 @@ class ClientesManager {
     }
 
     public function updateCliente($data) {
-        $cliente = $this->getCliente($data['id']);
+        $cliente = $this->getClienteIdPersona($data['id']);
         // Datos Particulares
         $this->addDatosParticulares($cliente, $data);
         // Datos Laborales
@@ -306,7 +321,7 @@ class ClientesManager {
         }
     }
 
-    private function addDatosParticulares($cliente, $persona, $data) {
+    private function addDatosParticulares($cliente, $data) {
         $pais = $this->getPais($data['pais']);
         $provincia = $this->getProvincia($data['provincia']);
         $categoria = $this->getCategoriaCliente($data['categoria']);
@@ -343,7 +358,6 @@ class ClientesManager {
         } else {
             $cliente->setVersion($data['version']);
         }
-        $cliente->setEstado("S");
     }
 
     public function deleteCliente($id) {
@@ -498,5 +512,12 @@ class ClientesManager {
                         ->getRepository(Cliente::class)
                         ->findOneBy(['Id' => $Id]);
         return $cliente->getUsuarios();
+    }
+
+    public function getClienteIdPersona($id_persona){
+        $cliente= $this->entityManager
+                    ->getRepository(Cliente::class)
+                    ->findOneBy(['persona' => $id_persona]);
+        return $cliente;
     }
 }

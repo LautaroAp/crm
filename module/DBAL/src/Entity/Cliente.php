@@ -136,7 +136,7 @@ class Cliente {
     private $eventos;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PERSONA")
+     * @ORM\ManyToOne(targetEntity="Persona")
      * @ORM\JoinColumn(name="ID_PERSONA", referencedColumnName="ID")
      */
     private $persona;

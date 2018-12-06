@@ -22,11 +22,14 @@ class ClientesController extends AbstractActionController {
      * @var DoctrineORMEntityManager
      */
     protected $tipoEventosManager;
+    protected $personaManager;
 
-    public function __construct($clientesManager, $tipoEventosManager, $eventoManager) {
+    public function __construct($clientesManager, $tipoEventosManager, $eventoManager,
+     $personaManager) {
         $this->clientesManager = $clientesManager;
         $this->tipoEventosManager = $tipoEventosManager;
         $this->eventoManager = $eventoManager;
+        $this->personaManager = $personaManager;
     }
 
     public function indexAction() {
@@ -56,7 +59,7 @@ class ClientesController extends AbstractActionController {
         ]);
     }
 
-    public function getPaginator($paginator) {
+    private function getPaginator($paginator) {
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
@@ -107,20 +110,20 @@ class ClientesController extends AbstractActionController {
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
         $licencia = $this->clientesManager->getLicencia();
-
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $cliente = $this->clientesManager->updateCliente($data);
-            $id = $this->params()->fromRoute('id');
-            $cliente_ficha = $this->clientesManager->getCliente($id);
+            $id_persona = $this->params()->fromRoute('id');
+            $cliente_ficha = $this->clientesManager->getClienteIdPersona($id_persona);
             $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $cliente_ficha->getId()]);
         } else {
-            $id = $this->params()->fromRoute('id');
-            $cliente = $this->clientesManager->getCliente($id);
+            $id_persona = $this->params()->fromRoute('id');
+            $persona = $this->personaManager->getPersona($id_persona);
+            $cliente = $this->clientesManager->getClienteIdPersona($id_persona);
         }
-
         return new ViewModel([
             'cliente' => $cliente,
+            'persona'=>$persona,
             'mensaje' => $mensaje,
             'categorias' => $CategoriaCliente,
             'profesiones' => $ProfesionCliente,
@@ -163,17 +166,14 @@ class ClientesController extends AbstractActionController {
     }
 
     public function fichaAction() {
-        $Id = (int) $this->params()->fromRoute('id', -1);
-        $cliente = $this->clientesManager->getCliente($Id);
-        $usuarios = $this->clientesManager->getUsuariosCliente($Id);
-        $eventos = $this->clientesManager->getEventos($Id);
-        $tipo_eventos = $this->tipoEventosManager->getTipoEventos();
-
+        $id_persona = (int) $this->params()->fromRoute('id', -1);
+        $data = $this->clientesManager->getDataFicha($id_persona);
         return new ViewModel([
-            'cliente' => $cliente,
-            'usuarios' => $usuarios,
-            'eventos' => $eventos,
-            'tipo_eventos' => $tipo_eventos,
+            'cliente' => $data['cliente'],
+            'usuarios' => $data['usuarios'],
+            'eventos' => $data['eventos'],
+            'tipo_eventos' => $this->tipoEventosManager->getTipoEventos(),
+            'persona' =>$data['persona']
         ]);
     }
 

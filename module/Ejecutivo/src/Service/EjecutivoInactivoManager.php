@@ -22,46 +22,32 @@ use Zend\Mime\Part as MimePart;
 class EjecutivoInactivoManager extends EjecutivoManager {
 
     /**
-     * Doctrine entity manager.
-     * @var Doctrine\ORM\EntityManager
-     */
-    private $entityManager;
-
-    /**
-     * PHP template renderer.
-     * @var type 
-     */
-    private $viewRenderer;
-
-    /**
-     * Application config.
-     * @var type 
-     */
-    private $config;
-
-    /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) {
-        $this->entityManager = $entityManager;
-        $this->viewRenderer = $viewRenderer;
-        $this->config = $config;
-    }
 
-    //La funcion getTabla() devuelve tabla de ejecutivos inactivoss 
+    public function __construct($entityManager, $personaManager) {
+        parent::__construct($entityManager,$personaManager);
+
+    }
+    
+    //La funcion getTabla() devuelve tabla de ejecutivos inactivos
+
     public function getTabla() {
-        $query = $this->busquedaInactivos();
-        $adapter = new DoctrineAdapter(new ORMPaginator($query));
+        $query = $this->getPersonasActivas();
+        $personas = $query->getResult();
+        $ejecutivos = $this->getEjecutivosFromPersonas($personas);
+        $adapter = new DoctrineAdapter(new ORMPaginator($ejecutivos));
         $paginator = new Paginator($adapter);
         return $paginator;
     }
 
-    public function busquedaInactivos() {
-        $parametros = ['estado'=>'SN', 'tipo' => 'EJECUTIVO'];
+    private function getPersonasActivas(){
+        $parametros= Array();
+        $parametros+=['tipo'=> $this->tipo];
+        $parametros+=['estado'=>"N"];
         $query = $this->personaManager->buscarPersonas($parametros);
         return $query;
     }
-    
     public function activarEjecutivo($id){
         $ejecutivo = $this->recuperarEjecutivo($id);
         $persona = $ejecutivo->getPersona();

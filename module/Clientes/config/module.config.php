@@ -97,7 +97,6 @@ return [
                             ],
                         ],
                     ],
-
                     'buscar' => [
                         'type' => Segment::class,
                         'options' => [

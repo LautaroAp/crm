@@ -79,17 +79,30 @@ return [
                     ],
                 ],
             ],
+            // 'ejecutivos' => [
+            //     'type' => Literal::class,
+            //     'options' => [
+            //         'route' => '/ejecutivos',
+            //         'defaults' => [
+            //             'controller' => \Ejecutivo\Controller\EjecutivoController::class,
+            //             'action' => 'index',
+            //         ],
+            //     ],
+            // ],
             'ejecutivos' => [
                 'type' => Literal::class,
                 'options' => [
                     'route' => '/ejecutivos',
+                        'route' => '/ejecutivos/[page/:page]',
+                         'constraints' => [
+                            'page' => '[0-9]*',
+                             ],
                     'defaults' => [
                         'controller' => \Ejecutivo\Controller\EjecutivoController::class,
                         'action' => 'index',
                     ],
                 ],
             ],
-            
             'licencia' => [
                 'type' => Literal::class,
                 'options' => [

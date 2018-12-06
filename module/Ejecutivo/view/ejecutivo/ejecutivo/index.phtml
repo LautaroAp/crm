@@ -8,7 +8,7 @@ if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
     $_SESSION['MENSAJES']['ejecutivo'] = null;
     $_SESSION['MENSAJES']['ejecutivo_msj'] = null;
 }
-?>
+ ?>
 <html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -34,8 +34,7 @@ if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
                 <form method="post">
                     <div class="row form-row">
                         <div class="form-group form-inline">
-                            <input type="text" class="form-control ejecutivo-lg form-margen" name="apellido" placeholder="Apellido" required="">
-                            <input type="text" class="form-control ejecutivo-lg form-margen" name="nombre" placeholder="Nombre" required="">
+                            <input type="text" class="form-control ejecutivo-lg form-margen" name="nombre" placeholder="Nombre y Apellido" required="">
                             <input type="text" class="form-control ejecutivo-lg form-margen" name="mail" placeholder="Email" required="">
                             <input type="text" class="form-control ejecutivo-md form-margen" name="usuario" placeholder="Usuario" required="">
                             <input type="password" class="form-control ejecutivo-md form-margen" name="clave" placeholder="Clave" required="">
@@ -71,10 +70,7 @@ if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
                 <table class="table table-hover table-striped" id="t-ejecutivos">
                     <thead>
                         <tr>
-                            <th class="th-sm" onclick="sortTableString(1, 'tabla_evento')">
-                                <i class="fa fa-sort float-right" aria-hidden="true"></i> Apellido
-                            </th>
-                            <th class="th-sm">Nombre</th>
+                            <th class="th-sm">Ejecutivo</th>
                             <th class="th-sm">Email</th>
                             <th class="th-sm">Usuario</th>
                             <th class="th-sm"">Clave</th>
@@ -85,15 +81,13 @@ if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
                         <?php
                         if (isset($ejecutivos)) {
                             foreach ($ejecutivos as $ejecutivo) {
+                                $persona = $ejecutivo->getPersona();
                                 echo ('<tr>');
                                 echo ('<td>');
-                                echo ($ejecutivo->getApellido());
+                                echo ($persona->getNombre());
                                 echo ('</td>');
                                 echo ('<td>');
-                                echo ($ejecutivo->getNombre());
-                                echo ('</td>');
-                                echo ('<td>');
-                                echo ($ejecutivo->getMail());
+                                echo ($persona->getEmail());
                                 echo ('</td>');
                                 echo ('<td>');
                                 echo ($ejecutivo->getUsuario());
@@ -122,8 +116,7 @@ if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
                                         <div class="modal-body">
                                             <p>
                                                 ¿Está seguro que desea desactivar el ejecutivo
-                                                "<?= $this->escapeHtml($ejecutivo->getNombre()) ?>
-                                                <?= $this->escapeHtml($ejecutivo->getApellido()) ?>"?
+                                                "<?= $this->escapeHtml($persona->getNombre()) ?>"?
                                             </p>
                                         </div>
                                         <div class="modal-footer">

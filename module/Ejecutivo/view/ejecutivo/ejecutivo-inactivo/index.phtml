@@ -43,15 +43,13 @@ if (isset($_SESSION['MENSAJES']['ejecutivo_inactivo'])) {
                         <?php
                         if (isset($ejecutivos)) {
                             foreach ($ejecutivos as $ejecutivo) {
+                                $persona = $ejecutivo->getPersona();
                                 echo ('<tr>');
                                 echo ('<td>');
-                                echo ($ejecutivo->getApellido());
+                                echo ($persona->getNombre());
                                 echo ('</td>');
                                 echo ('<td>');
-                                echo ($ejecutivo->getNombre());
-                                echo ('</td>');
-                                echo ('<td>');
-                                echo ($ejecutivo->getMail());
+                                echo ($persona->getEmail());
                                 echo ('</td>');
                                 echo ('<td>');
                                 echo ($ejecutivo->getUsuario());
@@ -80,8 +78,7 @@ if (isset($_SESSION['MENSAJES']['ejecutivo_inactivo'])) {
                                         <div class="modal-body">
                                             <p>
                                                 ¿Está seguro que desea activar el ejecutivo 
-                                                "<?= $this->escapeHtml($ejecutivo->getNombre()) ?>
-                                                <?= $this->escapeHtml($ejecutivo->getApellido()) ?>"?
+                                                "<?= $this->escapeHtml($persona->getNombre()) ?>"?
                                             </p>
                                         </div>
                                         <div class="modal-footer">

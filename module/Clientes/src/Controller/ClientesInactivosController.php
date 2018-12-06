@@ -19,10 +19,10 @@ class ClientesInactivosController extends ClientesController {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
-            $_SESSION['PARAMETROS_CLIENTE'] = $parametros;
+            $_SESSION['PARAMETROS_CLIENTE_INACTIVO'] = $parametros;
         }
-        if (!is_null($_SESSION['PARAMETROS_CLIENTE'])) {
-            $parametros = $_SESSION['PARAMETROS_CLIENTE'];
+        if (!is_null($_SESSION['PARAMETROS_CLIENTE_INACTIVO'])) {
+            $parametros = $_SESSION['PARAMETROS_CLIENTE_INACTIVO'];
         } else {
             $parametros = array();
         }
