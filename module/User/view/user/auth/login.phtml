@@ -21,15 +21,15 @@ $form->get('password')->setAttributes([
         ]);
 ?>
 
-<div class="container">
+<div class="container margen">
     <div class="row img-centrar">
         <div class="col-md-offset-2 col-md-2">
-            <img src="<?= $this->basePath('img/crm/Usuarioslock.png') ?>" class="img-rounded img-responsive img-tamaño">
+            <img src="<?= $this->basePath('img/crm/bienvenido_s.png') ?>" class="img-rounded img-responsive">
         </div>
 
         <div class="col-md-4">
             <form class="form-signin" method="post">
-                <h2 class="form-signin-heading text-center">Formulario de Ingreso</h2>
+                <!-- <h2 class="form-signin-heading text-center">Formulario de Ingreso</h2> -->
                 <?php if ($isLoginError): ?>
                     <div class="alert alert-warning" role="alert">
                         Nombre de Usuario y/o Clave incorrecto. 

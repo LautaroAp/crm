@@ -44,31 +44,7 @@ return [
                 ],
                 
              ],
-            'backup2' => [
-                'type' => Literal::class,
-                'options' => [
-                    'route' => '/backup2',
-                    'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action' => 'backup2',
-                    ],
-                ],
-                
-             ],
-            'clientes' => [
-                'type' => Literal::class,
-                'options' => [
-                    'route' => '/clientes',
-                        'route' => '/clientes/[page/:page]',
-                         'constraints' => [
-                            'page' => '[0-9]*',
-                             ],
-                    'defaults' => [
-                        'controller' => \Clientes\Controller\ClientesController::class,
-                        'action' => 'index',
-                    ],
-                ],
-            ],
+            
              'evento' => [
                 'type' => Literal::class,
                 'options' => [
@@ -79,16 +55,6 @@ return [
                     ],
                 ],
             ],
-            // 'ejecutivos' => [
-            //     'type' => Literal::class,
-            //     'options' => [
-            //         'route' => '/ejecutivos',
-            //         'defaults' => [
-            //             'controller' => \Ejecutivo\Controller\EjecutivoController::class,
-            //             'action' => 'index',
-            //         ],
-            //     ],
-            // ],
             'ejecutivos' => [
                 'type' => Literal::class,
                 'options' => [
@@ -113,6 +79,7 @@ return [
                     ],
                 ],
             ],
+
             'pais' => [
                 'type' => Literal::class,
                 'options' => [
@@ -123,6 +90,7 @@ return [
                     ],
                 ],
             ],
+
             'tipoevento' => [
                 'type' => Literal::class,
                 'options' => [
@@ -133,17 +101,7 @@ return [
                     ],
                 ],
             ],
-            'utilidades' => [
-                'type' => Literal::class,
-                'options' => [
-                    'route' => '/utilidades',
-                    'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action' => 'utilidades',
-                    ],
-                ],
-                
-             ],
+          
             'empresa' => [
                 'type' => Literal::class,
                 'options' => [
@@ -155,17 +113,7 @@ return [
                 ],
                 
              ],
-            'servicio' => [
-                'type' => Literal::class,
-                'options' => [
-                    'route' => '/servicio',
-                    'defaults' => [
-                        'controller' => Controller\ServicioController::class,
-                        'action' => 'index',
-                    ],
-                ],
-                
-             ],
+          
             'usuarios' => [
                 'type' => Literal::class,
                 'options' => [
@@ -177,6 +125,7 @@ return [
                 ],
                 
              ],
+
             'ventas' => [
                 'type' => Literal::class,
                 'options' => [
@@ -187,6 +136,7 @@ return [
                     ],
                 ], 
              ],
+
             'gestion' => [
                 'type' => Literal::class,
                 'options' => [
@@ -196,7 +146,154 @@ return [
                         'action' => 'gestion',
                     ],
                 ],
-                
+             ],
+
+             'gestionClientes' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/clientes',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'gestionClientes',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'listado' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/listado',
+                            'defaults' => [
+                                'controller' => \Clientes\Controller\ClientesController::class,
+                                'action' => 'index',
+                            ],
+                        ], 
+                    ],
+                    'agregar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/add',
+                            'defaults' => [
+                                'controller' => \Clientes\Controller\ClientesController::class,
+                                'action' => 'add',
+                            ],
+                        ],
+                    ],
+                    'profesioncliente' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/profesioncliente',
+                            'defaults' => [
+                                'controller' => \ProfesionCliente\Controller\ProfesionClienteController::class,
+                                'action' => 'index',
+                            ],
+                        ], 
+                     ],
+                ],
+             ],
+
+             'gestionProveedores' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/proveedores',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'gestionProveedores',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'listado' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/listado',
+                            'defaults' => [
+                                'controller' => \Clientes\Controller\ClientesController::class,
+                                'action' => 'index',
+                            ],
+                        ], 
+                    ],
+                ],
+             ],
+
+             'gestionEmpresa' => [
+                 'type' => Literal::class,
+                 'options' => [
+                     'route' => '/empresa',
+                     'defaults' => [
+                         'controller' => Controller\IndexController::class,
+                         'action' => 'gestionEmpresa',
+                     ],
+                 ],
+                 'may_terminate' => true,
+                 'child_routes' => [
+                    'configuracion' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/configuracion',
+                            'defaults' => [
+                                'controller' => \Empresa\Controller\EmpresaController::class,
+                                'action' => 'index',
+                            ],
+                        ], 
+                     ],
+                    'ventas' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/ventas',
+                            'defaults' => [
+                                'controller' => \Evento\Controller\EventoVentaController::class,
+                                'action' => 'index',
+                            ],
+                        ], 
+                     ],
+                     'licencia' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/licencia',
+                            'defaults' => [
+                                'controller' => \Licencia\Controller\LicenciaController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                     'productos' => [
+                         'type' => Segment::class,
+                         'options' => [
+                             'route' => '/productos[/:id]',
+                             'defaults' => [
+                                 'action' => 'gestionProductosEmpresa',
+                             ],
+                             'constraints' => [
+                                 'id' => '[0-9]\d*',
+                             ],
+                         ],
+                     ],
+                 ],
+              ],
+         
+              'herramientas' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/herramientas',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'herramientas',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'ejecutivos' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/ejecutivos',
+                            'defaults' => [
+                                'controller' => \Ejecutivo\Controller\EjecutivoController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                ],
              ],
         ],
     ],

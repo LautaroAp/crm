@@ -29,13 +29,30 @@ class IndexController extends AbstractActionController {
         return new ViewModel();
     }
 
+    public function gestionClientesAction() {
+        return new ViewModel();
+    }
+
+    public function gestionProveedoresAction() {
+        return new ViewModel();
+    }
+
+
+    public function gestionEmpresaAction() {
+        return new ViewModel();
+    }
+
+    public function herramientasAction() {
+        return new ViewModel();
+    }
+
     public function utilidadesAction() {
         return new ViewModel();
     }
 
     public function gestionAction() {
         return new ViewModel();
-    }
+    }  
 
     public function backupmenuAction() {
         $request = $this->getRequest();

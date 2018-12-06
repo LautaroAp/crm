@@ -20,7 +20,7 @@ return [
             'profesioncliente' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/profesioncliente',
+                    'route'    => '/clientes/profesioncliente',
                     'defaults' => [
                         'controller'    => Controller\ProfesionClienteController::class,
                         'action'        => 'index',
