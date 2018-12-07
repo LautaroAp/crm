@@ -21,122 +21,105 @@ if (isset($_SESSION['MENSAJES']['ejecutivo_inactivo'])) {
     <div class="container margen">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading text-center">EJECUTIVOS INACTIVOS</div>
-
-            </div>
-            <!-- Datos de Usuarios Adicionales -->
-            <div class="table-responsive">
-                <table class="table table-hover table-striped" id="t-ejecutivos">
-                    <thead>
-                        <tr>
-                            <th class="th-sm" onclick="sortTableString(1, 'tabla_evento')">
-                                <i class="fa fa-sort float-right" aria-hidden="true"></i> Apellido
-                            </th>
-                            <th class="th-sm">Nombre</th>
-                            <th class="th-sm">Email</th>
-                            <th class="th-sm">Usuario</th>
-                            <th class="th-sm"">Clave</th>
-                            <th></th>     
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        <?php
-                        if (isset($ejecutivos)) {
-                            foreach ($ejecutivos as $ejecutivo) {
-                                $persona = $ejecutivo->getPersona();
-                                echo ('<tr>');
-                                echo ('<td>');
-                                echo ($persona->getNombre());
-                                echo ('</td>');
-                                echo ('<td>');
-                                echo ($persona->getEmail());
-                                echo ('</td>');
-                                echo ('<td>');
-                                echo ($ejecutivo->getUsuario());
-                                echo ('</td>');
-                                echo ('<td>');
-                                echo ($ejecutivo->getClave());
-                                echo ('</td>');
-                                ?>    
-                            <td class="table-items-right">
-                                <a class="btn btn-default" href="<?= $this->url('ejecutivos/editar', ['action' => 'edit', 'id' => $ejecutivo->getId()]); ?>">
-                                    <span class="glyphicon glyphicon-pencil" ></span> 
-                                </a>
-                                <button name="<?= $ejecutivo->getId() ?>" id="<?= $ejecutivo->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $ejecutivo->getId() ?>">
-                                    <span class="glyphicon glyphicon-ok" ></span
-                                </button>
-                            </td>
-                            <!-- Modal -->
-                            <div id="myModal<?= $ejecutivo->getId() ?>" class="modal fade" role="dialog">
-                                <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Eliminar ejecutivo</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>
-                                                ¿Está seguro que desea activar el ejecutivo 
-                                                "<?= $this->escapeHtml($persona->getNombre()) ?>"?
-                                            </p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a href="<?= $this->url('ejecutivos/activar', ['action' => 'activar', 'id' => $ejecutivo->getId()]); ?>" type="button">
-                                            <span class="btn btn-default">Aceptar</span></a>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <div class="panel-heading text-center">
+                    EJECUTIVOS INACTIVOS
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped" id="t-ejecutivos">
+                            <thead>
+                                <tr>
+                                    <th class="th-sm" onclick="sortTableString(1, 'tabla_evento')">
+                                        <i class="fa fa-sort float-right" aria-hidden="true"></i> Apellido
+                                    </th>
+                                    <th class="th-sm">Nombre</th>
+                                    <th class="th-sm">Email</th>
+                                    <th class="th-sm">Usuario</th>
+                                    <th class="th-sm">Clave</th>
+                                    <th></th>     
+                                </tr>
+                            </thead>
+                            <tbody> 
+                                <?php
+                                if (isset($ejecutivos)) {
+                                    foreach ($ejecutivos as $ejecutivo) {
+                                        $persona = $ejecutivo->getPersona();
+                                        echo ('<tr>');
+                                        echo ('<td>');
+                                        echo ($persona->getNombre());
+                                        echo ('</td>');
+                                        echo ('<td>');
+                                        echo ($persona->getEmail());
+                                        echo ('</td>');
+                                        echo ('<td>');
+                                        echo ($ejecutivo->getUsuario());
+                                        echo ('</td>');
+                                        echo ('<td>');
+                                        echo ($ejecutivo->getClave());
+                                        echo ('</td>');
+                                        ?>    
+                                    <td class="table-items-right">
+                                        <a class="btn btn-default" href="<?= $this->url('ejecutivos/editar', ['action' => 'edit', 'id' => $ejecutivo->getId()]); ?>">
+                                            <span class="glyphicon glyphicon-pencil" ></span> 
+                                        </a>
+                                        <button name="<?= $ejecutivo->getId() ?>" id="<?= $ejecutivo->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $ejecutivo->getId() ?>">
+                                            <span class="glyphicon glyphicon-ok" ></span
+                                        </button>
+                                    </td>
+                                    <!-- Modal -->
+                                    <div id="myModal<?= $ejecutivo->getId() ?>" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Eliminar ejecutivo</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>
+                                                        ¿Está seguro que desea activar el ejecutivo 
+                                                        "<?= $this->escapeHtml($persona->getNombre()) ?>"?
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= $this->url('ejecutivos/activar', ['action' => 'activar', 'id' => $ejecutivo->getId()]); ?>" type="button">
+                                                    <span class="btn btn-default">Aceptar</span></a>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            </td>
-                            <?php
-                            echo ('</tr>');
-                        }
-                        ?>
-                        </tbody>
-                    </table>
-                    <?php
-                    echo $this->paginationControl($ejecutivos, 'Sliding', // All, Elastic, Jumping, Sliding
-                            'search_pagination_ejecutivo_inactivo.phtml', $this->url('ejecutivos/page', ['action' => 'index', 'id' => 1]));
-                }
-                ?>
+                                    </td>
+                                    <?php
+                                    echo ('</tr>');
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
+            <?php
+                echo $this->paginationControl($ejecutivos, 'Sliding', // All, Elastic, Jumping, Sliding
+                        'search_pagination_ejecutivo_inactivo.phtml', $this->url('ejecutivos/page', ['action' => 'index', 'id' => 1]));
+            }
+            ?>
         </div>
     </div>
     <!-- Fin: Tabla Ejecutivos -->
 
     <!-- Inicio: Panel Botones -->
     <div class="container margen">
-        <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="row img-centrar">
-                         <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a href='<?= $this->url("ejecutivos") ?>'>
-                                <img src="<?= $this->basePath('img/crm/EjecutivoActivo.png') ?>" 
-                                class="img-rounded img-responsive img-texto-derecha img-submenu">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Ejecutivos</label><br>
-                            <label>Activos</label>
-                        </div>
-                    </div>
-
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a href="<?= $this->url('gestion') ?>">
-                                <img src="<?= $this->basePath('img/crm/Volver.png') ?>" 
-                                class="img-rounded img-responsive img-texto-derecha">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Volver</label>
-                        </div>
-                    </div>
-                    </div>
+        <div class="row img-centrar">
+            <div class="col ficha-cliente-p img-centrar">
+                <div>
+                    <a href="<?= $this->url('herramientas') ?>">
+                        <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
+                        class="img-rounded img-responsive img-texto-derecha">
+                    </a>
+                </div>
+                <div class="ficha-cliente-label">
+                    <label>Volver</label>
                 </div>
             </div>
         </div>

@@ -2,19 +2,19 @@
     <nav class="navbar" id="nav" >
         <ul>
             <li>
-                <a href="<?= $this->url('gestionEmpresa/licencia'); ?>" > 
+                <a href="<?= $this->url('gestionEmpresa/gestionLicencias'); ?>" > 
                     <img src="<?= $this->basePath('img/crm/billete_n.png') ?>" class="img-rounded img-responsive img-menu">
                 </a>
                 <small>Licencias</small>
             </li>
             <li>
-                <a href="<?= $this->url('gestionEmpresa'); ?>" > 
+                <a href="<?= $this->url('gestionEmpresa/gestionProductos'); ?>" > 
                     <img src="<?= $this->basePath('img/crm/producto_n.png') ?>" class="img-rounded img-responsive img-menu">
                 </a>
                 <small>Productos</small>
             </li>
             <li>
-                <a href="<?= $this->url('gestionEmpresa/productos', ['action' => 'gestionProductosEmpresa','id' => 0]); ?>" > 
+                <a href="<?= $this->url('gestionEmpresa/gestionServicios'); ?>" > 
                     <img src="<?= $this->basePath('img/crm/servicio_n.png') ?>" class="img-rounded img-responsive img-menu">
                 </a>
                 <small>Servicios</small>

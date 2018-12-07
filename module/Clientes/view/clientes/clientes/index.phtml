@@ -115,45 +115,15 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row img-centrar">
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a href='<?= $this->url("clientes/agregar", ["action" => "add"]) ?>'>
-                                <img src="<?= $this->basePath('img/crm/ClienteAgregar.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Cliente</label><br>
-                            <label>Nuevo</label>
-                        </div>
-                    </div>
-                    
-                     <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a href='<?= $this->url("clientes/inactivos") ?>'>
-                                <img src="<?= $this->basePath('img/crm/ClienteInactivo.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Clientes</label><br>
-                            <label>Inactivos</label>
-                        </div>
-                    </div>
-                    
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Volver</label>
-                        </div>
-                    </div>
-                </div>
+    <div class="row img-centrar">                    
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('gestionClientes') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
             </div>
         </div>
-    </div>
+    </div>       
 </div>
 <!-- Fin: Panel Botones -->

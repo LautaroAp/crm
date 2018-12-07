@@ -18,7 +18,7 @@ return [
             'tipoevento' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/tipoevento',
+                    'route'    => '/clientes/actividades',
                     'defaults' => [
                         'controller'    => Controller\TipoEventoController::class,
                         'action'        => 'index',
