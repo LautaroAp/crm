@@ -282,7 +282,7 @@ return [
                     'inactivos' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/ejecutivos',
+                            'route' => '/inactivos',
                             'defaults' => [
                                 'controller' => \Ejecutivo\Controller\EjecutivoInactivoController::class,
                                 'action' => 'index',

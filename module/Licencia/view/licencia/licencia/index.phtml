@@ -142,7 +142,10 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionEmpresa/gestionLicencias') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                <a href="<?= $this->url('gestionEmpresa/gestionLicencias') ?>">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha">
+                    </a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Volver</label>
