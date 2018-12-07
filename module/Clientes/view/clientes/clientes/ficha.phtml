@@ -252,7 +252,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     </div>
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
-                            <a href="<?= $this->url('clientes/editar', ['action' => 'edit', 'id' => (int) $cliente->getId()]) ?>" role="button">
+                            <a href="<?= $this->url('clientes/editar', ['action' => 'edit', 'id' => $persona->getId()]) ?>" role="button">
                                 <img src="<?= $this->basePath('img/crm/ClienteModificar.png') ?>" 
                                 class="img-rounded img-responsive img-texto-derecha img-submenu">
                             </a>

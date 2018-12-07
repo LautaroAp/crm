@@ -36,7 +36,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                     </div>
                     <label>
                         <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion" data-target="#collapseBusquedaAvanzada" 
-                            aria-expanded="true" aria-controls="collapseBusquedaAvanzada">
+                            aria-expanded="true" aria-controls="collapseBusquedaAvanzada" name="busquedaAvanzada" id="busquedaAvanzada">
                             Búsqueda avanzada
                     </label>
                     <div class="row form-row collapse" id="collapseBusquedaAvanzada">
@@ -79,35 +79,33 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
             </thead>
             <tbody>
                 <?php
-                if (isset($clientes)) {
-                    foreach ($clientes as $cliente) {
-                        if ($cliente->getEstado()!='N'){  
+                if (isset($personas)) {
+                    foreach ($personas as $persona) {
                             echo('<tr>');
                             echo ('<td>');
-                            echo ($cliente->getNombre());
+                            echo ($persona->getNombre());
                             echo ('</td>');
                             echo ('<td>');
-                            echo ($cliente->getTelefono());
+                            echo ($persona->getTelefono());
                             echo ('</td>');
                             echo ('<td>');
-                            echo ($cliente->getEmail());
-                            echo ('</td>');               
+                            echo ($persona->getEmail());
+                            echo ('</td>'); 
+                            
                 ?>
                 <td class="table-items-right">
-                    <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $cliente->getId()]); ?>">
+                    <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]); ?>">
                         <span class="glyphicon glyphicon-share-alt" ></span>
                     </a>
                 </td>
                 <?php 
-                        }   
-                        
                 } ?>
                     
                 </tr>
                 </tbody>
             </table>
             <?php
-            echo $this->paginationControl($clientes, 'Sliding', // All, Elastic, Jumping, Sliding
+            echo $this->paginationControl($personas, 'Sliding', // All, Elastic, Jumping, Sliding
                     'search_pagination_2.phtml', $this->url('clientes/page', ['action' => 'index', 'id' => 1]));
         }
         ?>

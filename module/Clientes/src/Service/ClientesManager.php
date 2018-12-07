@@ -69,7 +69,7 @@ class ClientesManager {
                         ->findOneBy(['Id' => $Id]);
     }
 
-//La funcion getTabla() devuelve tabla de clientes sin filtro    
+    //La funcion getTabla() devuelve tabla de clientes sin filtro    
     public function getTabla() {
         $adapter = new SelectableAdapter($this->entityManager->getRepository(Cliente::class)); // An object repository implements Selectable
         $paginator = new Paginator($adapter);
@@ -104,18 +104,59 @@ class ClientesManager {
     }
 
     public function getActivos($parametros){
-        $parametros+=['tipo'=> $this->tipo];
+        $tipos= ['CLIENTE','USUARIO'];
         $parametros+=['estado'=>"S"];
-        $query = $this->personaManager->buscarPersonas($parametros);
+        if (in_array('busquedaAvanzada', $parametros)){
+            unset($parametros['busquedaAvanzada']);
+            $params_cliente=$this->diferenciarParametros($parametros,"CLIENTE");
+            $params_persona=$this->diferenciarParametros($parametros,"PERSONA");
+            $clientes= $this->buscarClientes($params_cliente)->getResult();
+            $personas=$this->getPersonasFromClientes($clientes);
+            print_r($personas);
+            $query = $this->personaManager->buscarPersonas($params_persona,$tipos,$personas);
+        }
+        else{
+            $query = $this->personaManager->buscarPersonas($parametros, $tipos);
+        }
         return $query;
     }
 
-    public function limpiarParametros($param) {
+    protected function getPersonasFromClientes($clientes){
+        $salida=Array();
+        foreach ($clientes as $cliente){
+            array_push($salida,$cliente->getPersona()->getId());
+        }
+        return $salida;
+    }
+    protected function diferenciarParametros($parametros, $tipo){
+        $cliente= ['empresa', 'categoria', 'pais'];
+        $persona=['nombre', 'telefono', 'email', 'estado', 'tipo'];
+        $salida=Array();
+        foreach ($parametros as $filtro => $valor) {
+            if ($tipo=='CLIENTE'){
+                if (in_array($filtro,$cliente)){
+                    $salida+=[$filtro=>$valor];
+                } 
+            }else {
+                if (in_array($filtro,$persona)){
+                    $salida+=[$filtro=>$valor];
+                } 
+            }
+        }
+        return $salida;
+    }
+
+    protected function limpiarParametros($param) {
         foreach ($param as $filtro => $valor) {
-            if (empty($valor)) {
+            if ($filtro != 'busquedaAvanzada'){
+                 if (empty($valor)) {
                 unset($param[$filtro]);
-            } else {
+                 } else {
                 trim($param[$filtro]);
+                 }
+            }
+            else{
+                $param[$filtro]=true;
             }
         }
         return ($param);
@@ -123,9 +164,14 @@ class ClientesManager {
 
     public function getDataFicha($id_persona){
         $persona = $this->personaManager->getPersona($id_persona);
-        $cliente = $this->entityManager
-                        ->getRepository(Cliente::class)
-                        ->findOneBy(['persona' => $id_persona]);
+        $cliente=null;
+        if($persona->getTipo()=="CLIENTE"){
+            $cliente = $this->getClienteIdPersona($persona->getId());
+        }
+        else{
+            $usuario= $this->usuarioManager->getUsuarioIdPersona($persona->getId());
+            $cliente =$usuario->getCliente(); 
+        }
         $data = [
             'cliente' =>$cliente,
             'eventos' =>$cliente->getEventos(),
@@ -171,38 +217,25 @@ class ClientesManager {
         return $query;
     }
 
-    // public function busquedaPorFiltros($parametros) {
-    //     $entityManager = $this->entityManager;
-    //     $queryBuilder = $entityManager->createQueryBuilder();
-    //     $queryBuilder->select('C')
-    //             ->from(Cliente::class, 'C');
-    //     $indices = array_keys($parametros);
-    //     for ($i = 0; $i < count($indices); $i++) {
-    //         $p = $i + 1;
-    //         $nombreCampo = $indices[$i];
-    //         $valorCampo = $parametros[$nombreCampo];
-    //         if ($i == 0) {
-    //             if ($nombreCampo == 'nombre' || $nombreCampo == 'apellido') {
-    //                 $queryBuilder->where("C.$nombreCampo LIKE ?$p");
-    //             } else {
-    //                 $queryBuilder->where("C.$nombreCampo = ?$p");
-    //             }
-    //         } else {
-    //             if ($nombreCampo == 'nombre' || $nombreCampo == 'apellido') {
-    //                 $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
-    //             } else {
-    //                 $queryBuilder->andWhere("C.$nombreCampo = ?$p");
-    //             }
-    //         }
-    //         if ($nombreCampo == 'nombre' || $nombreCampo == 'apellido') {
-    //             $queryBuilder->setParameter("$p", '%' . $valorCampo . '%');
-    //         } else {
-    //             $queryBuilder->setParameter("$p", $valorCampo);
-    //         }
-    //     }
-    //     $queryBuilder->andWhere('C.estado = :state')->setParameter('state', 'S');
-    //     return $queryBuilder->getQuery();
-    // }
+    public function buscarClientes($parametros) {
+        $entityManager = $this->entityManager;
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('C')
+                ->from(Cliente::class, 'C');
+        $indices = array_keys($parametros);
+        for ($i = 0; $i < count($indices); $i++) {
+            $p = $i + 1;
+            $nombreCampo = $indices[$i];
+            $valorCampo = $parametros[$nombreCampo];
+            if ($i == 0) {
+                $queryBuilder->where("C.$nombreCampo LIKE ?$p");
+            } else {
+                 $queryBuilder->andWhere("C.$nombreCampo like ?$p");
+            }
+            $queryBuilder->setParameter("$p", '%'.$valorCampo.'%');
+        }
+        return $queryBuilder->getQuery();
+    }
 
     // public function busquedaPorFiltros2($parametros) {
     //     $entityManager = $this->entityManager;

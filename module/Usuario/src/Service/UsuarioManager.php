@@ -243,4 +243,10 @@ class UsuarioManager {
         return $arr;
     }
     
+    public function getUsuarioIdPersona($id_persona){
+        $usuario= $this->entityManager
+                 ->getRepository(Usuario::class)
+                 ->findOneBy(['persona' => $id_persona]);
+        return $usuario;
+    }
 }

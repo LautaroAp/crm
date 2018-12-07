@@ -50,7 +50,7 @@ class ClientesController extends AbstractActionController {
         $total_clientes = $this->clientesManager->getTotal();
         $pag = $this->getPaginator($paginator);
         return new ViewModel([
-            'clientes' => $pag,
+            'personas' => $pag,
             'paises' => $pais,
             'provincias' => $provincia,
             'categorias' => $CategoriaCliente,

@@ -136,7 +136,7 @@ class PersonaManager {
                 ->find($id);
     }
 
-    public function buscarPersonas($parametros) {      
+    public function buscarPersonas($parametros, $tipos=null, $personas=null) {      
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('P')
@@ -146,24 +146,24 @@ class PersonaManager {
             $p = $i + 1;
             $nombreCampo = $indices[$i];
             $valorCampo = $parametros[$nombreCampo];
-
             if ($i == 0) {
-                if ($nombreCampo == 'nombre' || $nombreCampo == 'apellido') {
-                    $queryBuilder->where("P.nombre LIKE ?$p");
-                } else {
-                    $queryBuilder->where("P.$nombreCampo LIKE ?$p");
-                }
+                $queryBuilder->where("P.$nombreCampo LIKE ?$p");
             } else {
-                if ($nombreCampo == 'nombre' || $nombreCampo == 'apellido') {
-                    $queryBuilder->andWhere("P.nombre LIKE ?$p");
-                } else {
                     $queryBuilder->andWhere("P.$nombreCampo like ?$p");
-                }
             }
             $queryBuilder->setParameter("$p", '%'.$valorCampo.'%');
         }
+        if (isset($personas)){
+            $queryBuilder->andWhere('P IN (:personas)')
+                ->setParameter('personas', $personas);
+        }
+        if (isset($tipos)){
+            $queryBuilder->andWhere('P.tipo IN (:tipos)')
+                ->setParameter('tipos', $tipos);
+        }
         return $queryBuilder->getQuery();
     }
+
 
     public function getData($id){
         $persona = $this->getPersona($id);
