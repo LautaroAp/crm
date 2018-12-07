@@ -220,97 +220,6 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 </div>
 <!-- Fin: Actividades -->
 
-<!-- Inicio: Panel Botones -->
-<div class="container margen">
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row img-centrar">
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a role="button" href="<?= $this->url('evento', ['action' => 'add', 'id' => (int) $cliente->getId()]) ?>">
-                                <img src="<?= $this->basePath('img/crm/TipoActividadAgregar.png') ?>" 
-                                class="img-rounded img-responsive img-texto-derecha img-submenu">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Agregar</label><br>
-                            <label>Actividad</label>
-                        </div>
-                    </div>
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a role="button" data-toggle="modal" data-target="#actividadModal">
-                                <img src="<?= $this->basePath('img/crm/TipoActividadEliminar.png') ?>" 
-                                class="img-rounded img-responsive img-texto-derecha img-submenu">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Eliminar</label><br>
-                            <label>Actividad</label>
-                        </div>
-                    </div>
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a href="<?= $this->url('clientes/editar', ['action' => 'edit', 'id' => (int) $cliente->getId()]) ?>" role="button">
-                                <img src="<?= $this->basePath('img/crm/ClienteModificar.png') ?>" 
-                                class="img-rounded img-responsive img-texto-derecha img-submenu">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Modificar</label><br>
-                            <label>Datos</label>
-                        </div>
-                    </div>
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a role="button" name="<?= $cliente->getId() ?>" id="<?= $cliente->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $cliente->getId() ?>">
-                                <img src="<?php
-                                if ($persona->getEstado() == "S") {
-                                    echo($this->basePath('img/crm/ClienteInactivo.png'));
-                                } else {
-                                    echo($this->basePath('img/crm/ClienteActivo.png'));
-                                }
-                                ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <?php
-                            if ($persona->getEstado() == "S") {
-                                echo('<label>Eliminar</label><br>'
-                                . '<label>Cliente</label>');
-                            } else {
-                                echo('<label>Agregar</label><br>'
-                                . '<label>Cliente</label>');
-                            }
-                            ?>
-                        </div>
-                    </div>
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>   
-                            <?php
-                            $ruta = "";
-                            if ($persona->getEstado() == "S") {
-                                $ruta = 'clientes';
-                            } else {
-                                $ruta = 'clientes/inactivos';
-                            }
-                            ?>
-                            <a href="<?= $this->url($ruta) ?>" role="button">
-                                <img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Volver</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Fin: Panel Botones -->
-
 <!-- Modal Ciente -->
 <div class="modal fade" id="exampleModal<?= $cliente->getId() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -365,3 +274,90 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
         </div>
     </div>
 </div>
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    
+                <div class="row img-centrar">
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a role="button" href="<?= $this->url('evento', ['action' => 'add', 'id' => (int) $cliente->getId()]) ?>">
+                                <img src="<?= $this->basePath('img/crm/agregar.png') ?>" 
+                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                            </a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Agregar</label><br>
+                            <label>Actividad</label>
+                        </div>
+                    </div>
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a role="button" data-toggle="modal" data-target="#actividadModal">
+                                <img src="<?= $this->basePath('img/crm/eliminar.png') ?>" 
+                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                            </a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Eliminar</label><br>
+                            <label>Actividad</label>
+                        </div>
+                    </div>
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a href="<?= $this->url('clientes/editar', ['action' => 'edit', 'id' => (int) $cliente->getId()]) ?>" role="button">
+                                <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" 
+                                class="img-rounded img-responsive img-texto-derecha img-submenu">
+                            </a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Modificar</label><br>
+                            <label>Datos</label>
+                        </div>
+                    </div>
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>
+                            <a role="button" name="<?= $cliente->getId() ?>" id="<?= $cliente->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $cliente->getId() ?>">
+                                <img src="<?php
+                                if ($persona->getEstado() == "S") {
+                                    echo($this->basePath('img/crm/cliente_a.png'));
+                                } else {
+                                    echo($this->basePath('img/crm/cliente_a.png'));
+                                }
+                                ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
+                            </a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <?php
+                            if ($persona->getEstado() == "S") {
+                                echo('<label>Eliminar</label><br>'
+                                . '<label>Cliente</label>');
+                            } else {
+                                echo('<label>Agregar</label><br>'
+                                . '<label>Cliente</label>');
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col ficha-cliente-p img-centrar">
+                        <div>   
+                            <?php
+                            $ruta = "";
+                            if ($persona->getEstado() == "S") {
+                                $ruta = 'clientes';
+                            } else {
+                                $ruta = 'clientes/inactivos';
+                            }
+                            ?>
+                            <a href="<?= $this->url($ruta) ?>" role="button">
+                                <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                            </a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
+                </div>
+           
+</div>
+<!-- Fin: Panel Botones -->

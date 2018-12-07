@@ -42,6 +42,18 @@ class IndexController extends AbstractActionController {
         return new ViewModel();
     }
 
+    public function gestionLicenciasEmpresaAction() {
+        return new ViewModel();
+    }
+
+    public function gestionProductosEmpresaAction() {
+        return new ViewModel();
+    }
+
+    public function gestionServiciosEmpresaAction() {
+        return new ViewModel();
+    }
+
     public function herramientasAction() {
         return new ViewModel();
     }

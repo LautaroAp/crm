@@ -15,14 +15,34 @@
                 <small>Agregar Cliente</small>
             </li>
             <li>
-                <a href="<?= $this->url('gestionClientes/profesioncliente'); ?>" > 
+                <a href="<?= $this->url('clientes/inactivos'); ?>" > 
                     <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" class="img-rounded img-responsive img-menu">
+                </a>
+                <small>Inactivos</small>
+            </li>
+            <li>
+                <a href="<?= $this->url('gestionClientes/tipoevento'); ?>" > 
+                    <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" class="img-rounded img-responsive img-menu">
+                </a>
+                <small>Actividades</small>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <a href="<?= $this->url('gestionClientes/categoriacliente'); ?>" > 
+                    <img src="<?= $this->basePath('img/crm/consulta_a.png') ?>" class="img-rounded img-responsive img-menu">
+                </a>
+                <small>Categorías</small>
+            </li>
+            <li>
+                <a href="<?= $this->url('gestionClientes/profesioncliente'); ?>" > 
+                    <img src="<?= $this->basePath('img/crm/consulta_a.png') ?>" class="img-rounded img-responsive img-menu">
                 </a>
                 <small>Profesiones</small>
             </li>
             <li>
-                <a href="<?= $this->url('gestionClientes'); ?>" > 
-                    <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" class="img-rounded img-responsive img-menu">
+                <a href="<?= $this->url('backup'); ?>" > 
+                    <img src="<?= $this->basePath('img/crm/consulta_a.png') ?>" class="img-rounded img-responsive img-menu">
                 </a>
                 <small>Exportar a Excel</small>
             </li>

@@ -2,26 +2,20 @@
     <nav class="navbar" id="nav" >
         <ul>
             <li>
-                <a href="<?= $this->url('gestionProveedores'); ?>" > 
+                <a href="<?= $this->url('gestionEmpresa/gestionLicencias/listado'); ?>" > 
                     <img src="<?= $this->basePath('img/crm/producto_n.png') ?>" class="img-rounded img-responsive img-menu">
                 </a>
-                <small>Listado Productos</small>
+                <small>Listado</small>
             </li>
             <li>
-                <a href="<?= $this->url("clientes/agregar", ["action" => "add"]); ?>" > 
+                <a href="<?= $this->url("gestionEmpresa/gestionLicencias/agregar", ["action" => "add"]); ?>" > 
                     <img src="<?= $this->basePath('img/crm/producto_n.png') ?>" class="img-rounded img-responsive img-menu">
                 </a>
                 <small>Agregar Producto</small>
             </li>
             <li>
-                <a href="<?= $this->url('gestionProveedores'); ?>" > 
-                    <img src="<?= $this->basePath('img/crm/producto_n.png') ?>" class="img-rounded img-responsive img-menu">
-                </a>
-                <small>Categorias</small>
-            </li>
-            <li>
-                <a href="<?= $this->url('gestionProveedores'); ?>" > 
-                    <img src="<?= $this->basePath('img/crm/producto_n.png') ?>" class="img-rounded img-responsive img-menu">
+                <a href="<?= $this->url('gestionEmpresa'); ?>" > 
+                    <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>" class="img-rounded img-responsive img-menu">
                 </a>
                 <small>Exportar a Excel</small>
             </li>

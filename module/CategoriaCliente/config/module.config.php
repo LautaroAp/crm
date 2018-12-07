@@ -19,7 +19,7 @@ return [
             'categoriacliente' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/categoriacliente',
+                    'route'    => '/clientes/categoriacliente',
                     'defaults' => [
                         'controller'    => Controller\CategoriaClienteController::class,
                         'action'        => 'index',

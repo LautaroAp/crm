@@ -199,30 +199,24 @@ $establecimientos = $cliente->getEstablecimientos();
 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row img-centrar">
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a data-toggle="modal" data-target="#myModal"><img src="<?= $this->basePath('img/crm/Aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha" role="button"></a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Guardar</label>
-                        </div>
-                    </div>
+    <div class="row img-centrar">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a data-toggle="modal" data-target="#myModal"><img src="<?= $this->basePath('img/crm/aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm" role="button"></a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Guardar</label>
+            </div>
+        </div>
 
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $id]) ?>">
-                                <img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Volver</label>
-                        </div>
-                    </div>
-                </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $id]) ?>">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
             </div>
         </div>
     </div>
