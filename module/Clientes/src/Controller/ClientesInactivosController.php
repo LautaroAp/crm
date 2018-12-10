@@ -9,14 +9,17 @@ class ClientesInactivosController extends ClientesController {
     /**
      * @var DoctrineORMEntityManager
      */
-    protected $clientesInactivosManager;
+    protected $clientesManager;
 
-    public function __construct($clientesInactivosManager) {
-        $this->clientesInactivosManager = $clientesInactivosManager;
+    public function __construct($clientesManager) {
+        $this->clientesManager = $clientesManager;
     }
 
     public function indexAction() {
         $request = $this->getRequest();
+        $pais = $this->clientesManager->getPais();
+        $provincia = $this->clientesManager->getProvincia();
+        $CategoriaCliente = $this->clientesManager->getCategoriaCliente();
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
             $_SESSION['PARAMETROS_CLIENTE_INACTIVO'] = $parametros;
@@ -26,13 +29,16 @@ class ClientesInactivosController extends ClientesController {
         } else {
             $parametros = array();
         }
-        $paginator = $this->clientesInactivosManager->getTablaFiltrado($parametros);
-        $total_inactivos = $this->clientesInactivosManager->getTotal();
+        $paginator = $this->clientesManager->getTablaFiltrado($parametros, "N");
+        $total_inactivos = $this->clientesManager->getTotal();
         $pag = $this->getPaginator($paginator);
         return new ViewModel([
             'clientes' => $pag,
             'parametros' => $parametros,
             'total_inactivos' => $total_inactivos,
+            'paises' => $pais,
+            'provincias' => $provincia,
+            'categorias' => $CategoriaCliente,
         ]);
     }
 
@@ -52,7 +58,7 @@ class ClientesInactivosController extends ClientesController {
             $parametros = $this->params()->fromPost();
         }
         $parametros = $this->params()->fromPost();
-        $paginator = $this->clientesInactivosManager->getFiltrados($parametros);
+        $paginator = $this->clientesManager->getTablaFiltrado($parametros);
         $pag = $this->getPaginator($paginator);
         return new ViewModel([
             'clientes' => $pag,

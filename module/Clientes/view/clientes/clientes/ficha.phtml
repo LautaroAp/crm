@@ -344,7 +344,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             <?php
                             $ruta = "";
                             if ($persona->getEstado() == "S") {
-                                $ruta = 'clientes';
+                                $ruta = 'gestionClientes/listado';
                             } else {
                                 $ruta = 'clientes/inactivos';
                             }
