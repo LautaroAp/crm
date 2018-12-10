@@ -16,239 +16,487 @@ class Producto {
      * @ORM\Column(name="ID_PRODUCTO", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id_producto;   
-           /**
-     * Many Features have One Product.
-     * @ORM\ManyToOne(targetEntity="Evento")
-     * @ORM\JoinColumn(name="ID_EVENTO", referencedColumnName="ID_EVENTO")
-     */ 
-    protected $evento;   
+    protected $id_producto; 
     
-    /**
-     * @ORM\Column(name="CANTIDAD", nullable=true, type="integer")
-     */
-    protected $cantidad;
+    // protected $id_evento;
 
-     /**
-     * @ORM\Column(name="PRECIO", nullable=true, type="float")
-     */
-    protected $precio;
-    
-        /**
-     * @ORM\Column(name="PRECIO_TOTAL", nullable=true, type="float")
-     */
-    protected $precio_total;
-    
-        /**
-     * @ORM\Column(name="NOMBRE", nullable=true, type="string", length=255)
+    /**
+     * @ORM\Column(name="NOMBRE", nullable=true, type="string")
      */
     protected $nombre;
-    
-        /**
-     * @ORM\Column(name="DESCRIPCION", nullable=true, type="string", length=255)
+
+    /**
+     * @ORM\Column(name="DESCRIPCION", nullable=true, type="string")
      */
     protected $descripcion;
-    
-        /**
-     * @ORM\Column(name="IVA", nullable=true, type="float")
+
+    /**
+     * @ORM\Column(name="CATEGORIA", type="integer")
      */
-    protected $iva;
+    protected $id_categoria;
+
+    /**
+     * @ORM\Column(name="PROVEEDOR", type="integer")
+     */
+    protected $id_proveddor;
+
+    /**
+     * @ORM\Column(name="MARCA", nullable=true, type="string")
+     */
+    protected $marca;
+
+    /**
+     * @ORM\Column(name="PRESENTACION", nullable=true, type="string")
+     */
+    protected $presentacion;
+
+    /**
+     * @ORM\Column(name="STOCK", nullable=true, type="integer")
+     */
+    protected $stock;
+
+    /**
+     * @ORM\Column(name="REPOSICION", nullable=true, type="integer")
+     */
+    protected $reposicion;
+
+    /**
+     * @ORM\Column(name="CODIGO_PRODUCTO", nullable=true, type="string")
+     */
+    protected $codigo_producto;
+
+    /**
+     * @ORM\Column(name="CODIGO_BARRAS", nullable=true, type="string")
+     */
+    protected $codigo_barras;
+
+     /**
+     * @ORM\Column(name="PRECIO_COMPRA", nullable=true, type="decimal")
+     */
+    protected $precio_compra;
     
-        /**
-     * @ORM\Column(name="DESCUENTO", nullable=true, type="float")
+    /**
+     * @ORM\Column(name="PRECIO_VENTA", nullable=true, type="decimal")
+     */
+    protected $precio_venta;
+    
+    /**
+     * @ORM\Column(name="PRECIO_FINAL", nullable=true, type="decimal")
+     */
+    protected $precio_final;
+    
+    /**
+     * @ORM\Column(name="CONTRIBUCION_MARGINAL_VALOR", nullable=true, type="decimal")
+     */
+    protected $contribucion_marginal_valor;
+
+    /**
+     * @ORM\Column(name="CONTRIBUCION_MARGINAL_PORCENTUAL", nullable=true, type="decimal")
+     */
+    protected $contribucion_marginal_porcentual;
+
+    /**
+     * @ORM\Column(name="COSTOS_DIRECTOS", nullable=true, type="decimal")
+     */
+    protected $costos_directos;
+
+    /**
+     * @ORM\Column(name="GASTOS_DIRECTOS", nullable=true, type="decimal")
+     */
+    protected $gastos_directos;
+
+    /**
+     * @ORM\Column(name="DESCUENTO", nullable=true, type="decimal")
      */
     protected $descuento;
     
-        /**
-     * @ORM\Column(name="TIPO_PROD", nullable=true, type="integer")
+    /**
+     * @ORM\Column(name="IVA", nullable=true, type="decimal")
      */
-    protected $tipo_prod;
+    protected $iva;
     
-        /**
-     * @ORM\Column(name="USUARIOS_ADICIONALES", nullable=true, type="integer")
+    /**
+     * @ORM\Column(name="IVA_GRAVADO", nullable=true, type="integer")
      */
-    protected $usuarios_adicionales;
-    
-        /**
-     * @ORM\Column(name="VERSION_TERMINAL", nullable=true, type="string", length=255)
-     */
-    protected $version_terminal;
-        /**
-     * @ORM\Column(name="TERMINALES", nullable=true, type="integer")
-     */
-    protected $terminales;
-    
-         /**
-     * @ORM\Column(name="TIPO_LICENCIA", nullable=true, type="string", length=255)
-     */
-    protected $tipo_licencia;
-    
-         /**
-     * @ORM\Column(name="VERSION", nullable=true, type="string", length=255)
-     */
-    protected $version;
-    
-         /**
-     * @ORM\Column(name="MONEDA", nullable=true, type="string", length=1)
+    protected $iva_gravado;
+           
+    /**
+     * @ORM\Column(name="MONEDA", type="integer")
      */
     protected $moneda;
     
     
-    function getId() {
+    /**
+     * Get the value of id_producto
+     */ 
+    public function getId_producto(){
         return $this->id_producto;
     }
 
-    function setId($id_producto) {
+    /**
+     * Set the value of id_producto
+     *
+     * @return  self
+     */ 
+    public function setId_producto($id_producto){
         $this->id_producto = $id_producto;
+        return $this;
     }
 
-        
-    function getId_Evento() {
-        if ($this->evento != NULL){
-            return $this->evento->getId();
-        }
-        else{
-            return "No definido";
-        }
-    }
-    
-    function getCliente() {
-         if ($this->evento != NULL){
-            return $this->evento->getNombreCliente();
-        }
-        else{
-            return "No definido";
-        }
-       
-    }
-    
-    
-     function getFecha() {
-         if ($this->evento != NULL){
-            return $this->evento->getFecha();
-        }
-        else{
-            return "No definido";
-        } 
-    }
- 
-    function getCantidad() {
-        return $this->cantidad;
-    }
-
-    function getPrecio() {
-        return $this->precio;
-    }
-
-    function getPrecio_total() {
-        return $this->precio_total;
-    }
-
-    function getNombre() {
+    /**
+     * Get the value of nombre
+     */ 
+    public function getNombre(){
         return $this->nombre;
     }
 
-    function getDescripcion() {
+    /**
+     * Set the value of nombre
+     *
+     * @return  self
+     */ 
+    public function setNombre($nombre){
+        $this->nombre = $nombre;
+        return $this;
+    }
+
+    /**
+     * Get the value of descripcion
+     */ 
+    public function getDescripcion(){
         return $this->descripcion;
     }
 
-    function getIva() {
-        return $this->iva;
+    /**
+     * Set the value of descripcion
+     *
+     * @return  self
+     */ 
+    public function setDescripcion($descripcion){
+        $this->descripcion = $descripcion;
+        return $this;
     }
 
-    function getDescuento() {
+    /**
+     * Get the value of id_categoria
+     */ 
+    public function getId_categoria(){
+        return $this->id_categoria;
+    }
+
+    /**
+     * Set the value of id_categoria
+     *
+     * @return  self
+     */ 
+    public function setId_categoria($id_categoria){
+        $this->id_categoria = $id_categoria;
+        return $this;
+    }
+
+    /**
+     * Get the value of id_proveddor
+     */ 
+    public function getId_proveddor(){
+        return $this->id_proveddor;
+    }
+
+    /**
+     * Set the value of id_proveddor
+     *
+     * @return  self
+     */ 
+    public function setId_proveddor($id_proveddor){
+        $this->id_proveddor = $id_proveddor;
+        return $this;
+    }
+
+    /**
+     * Get the value of marca
+     */ 
+    public function getMarca(){
+        return $this->marca;
+    }
+
+    /**
+     * Set the value of marca
+     *
+     * @return  self
+     */ 
+    public function setMarca($marca){
+        $this->marca = $marca;
+        return $this;
+    }
+
+    /**
+     * Get the value of presentacion
+     */ 
+    public function getPresentacion(){
+        return $this->presentacion;
+    }
+
+    /**
+     * Set the value of presentacion
+     *
+     * @return  self
+     */ 
+    public function setPresentacion($presentacion){
+        $this->presentacion = $presentacion;
+        return $this;
+    }
+
+    /**
+     * Get the value of stock
+     */ 
+    public function getStock(){
+        return $this->stock;
+    }
+
+    /**
+     * Set the value of stock
+     *
+     * @return  self
+     */ 
+    public function setStock($stock){
+        $this->stock = $stock;
+        return $this;
+    }
+
+    /**
+     * Get the value of reposicion
+     */ 
+    public function getReposicion(){
+        return $this->reposicion;
+    }
+
+    /**
+     * Set the value of reposicion
+     *
+     * @return  self
+     */ 
+    public function setReposicion($reposicion){
+        $this->reposicion = $reposicion;
+        return $this;
+    }
+
+    /**
+     * Get the value of codigo_producto
+     */ 
+    public function getCodigo_producto(){
+        return $this->codigo_producto;
+    }
+
+    /**
+     * Set the value of codigo_producto
+     *
+     * @return  self
+     */ 
+    public function setCodigo_producto($codigo_producto){
+        $this->codigo_producto = $codigo_producto;
+        return $this;
+    }
+
+    /**
+     * Get the value of codigo_barras
+     */ 
+    public function getCodigo_barras(){
+        return $this->codigo_barras;
+    }
+
+    /**
+     * Set the value of codigo_barras
+     *
+     * @return  self
+     */ 
+    public function setCodigo_barras($codigo_barras){
+        $this->codigo_barras = $codigo_barras;
+        return $this;
+    }
+
+    /**
+     * Get the value of precio_compra
+     */ 
+    public function getPrecio_compra(){
+        return $this->precio_compra;
+    }
+
+    /**
+     * Set the value of precio_compra
+     *
+     * @return  self
+     */ 
+    public function setPrecio_compra($precio_compra){
+        $this->precio_compra = $precio_compra;
+        return $this;
+    }
+
+    /**
+     * Get the value of precio_venta
+     */ 
+    public function getPrecio_venta(){
+        return $this->precio_venta;
+    }
+
+    /**
+     * Set the value of precio_venta
+     *
+     * @return  self
+     */ 
+    public function setPrecio_venta($precio_venta){
+        $this->precio_venta = $precio_venta;
+        return $this;
+    }
+
+    /**
+     * Get the value of precio_final
+     */ 
+    public function getPrecio_final(){
+        return $this->precio_final;
+    }
+
+    /**
+     * Set the value of precio_final
+     *
+     * @return  self
+     */ 
+    public function setPrecio_final($precio_final){
+        $this->precio_final = $precio_final;
+        return $this;
+    }
+
+    /**
+     * Get the value of contribucion_marginal_valor
+     */ 
+    public function getContribucion_marginal_valor(){
+        return $this->contribucion_marginal_valor;
+    }
+
+    /**
+     * Set the value of contribucion_marginal_valor
+     *
+     * @return  self
+     */ 
+    public function setContribucion_marginal_valor($contribucion_marginal_valor){
+        $this->contribucion_marginal_valor = $contribucion_marginal_valor;
+        return $this;
+    }
+
+    /**
+     * Get the value of contribucion_marginal_porcentual
+     */ 
+    public function getContribucion_marginal_porcentual(){
+        return $this->contribucion_marginal_porcentual;
+    }
+
+    /**
+     * Set the value of contribucion_marginal_porcentual
+     *
+     * @return  self
+     */ 
+    public function setContribucion_marginal_porcentual($contribucion_marginal_porcentual){
+        $this->contribucion_marginal_porcentual = $contribucion_marginal_porcentual;
+        return $this;
+    }
+
+    /**
+     * Get the value of costos_directos
+     */ 
+    public function getCostos_directos(){
+        return $this->costos_directos;
+    }
+
+    /**
+     * Set the value of costos_directos
+     *
+     * @return  self
+     */ 
+    public function setCostos_directos($costos_directos){
+        $this->costos_directos = $costos_directos;
+        return $this;
+    }
+
+    /**
+     * Get the value of gastos_directos
+     */ 
+    public function getGastos_directos(){
+        return $this->gastos_directos;
+    }
+
+    /**
+     * Set the value of gastos_directos
+     *
+     * @return  self
+     */ 
+    public function setGastos_directos($gastos_directos){
+        $this->gastos_directos = $gastos_directos;
+        return $this;
+    }
+
+    /**
+     * Get the value of descuento
+     */ 
+    public function getDescuento(){
         return $this->descuento;
     }
 
-    function getTipo_prod() {
-        return $this->tipo_prod;
+    /**
+     * Set the value of descuento
+     *
+     * @return  self
+     */ 
+    public function setDescuento($descuento){
+        $this->descuento = $descuento;
+        return $this;
     }
 
-    function getUsuarios_adicionales() {
-        return $this->usuarios_adicionales;
+    /**
+     * Get the value of iva
+     */ 
+    public function getIva(){
+        return $this->iva;
     }
 
-    function getVersion_terminal() {
-        return $this->version_terminal;
+    /**
+     * Set the value of iva
+     *
+     * @return  self
+     */ 
+    public function setIva($iva){
+        $this->iva = $iva;
+        return $this;
     }
 
-    function getTerminales() {
-        return $this->terminales;
+    /**
+     * Get the value of iva_gravado
+     */ 
+    public function getIva_gravado(){
+        return $this->iva_gravado;
     }
 
-    function getTipo_licencia() {
-        return $this->tipo_licencia;
+    /**
+     * Set the value of iva_gravado
+     *
+     * @return  self
+     */ 
+    public function setIva_gravado($iva_gravado){
+        $this->iva_gravado = $iva_gravado;
+        return $this;
     }
 
-    function getVersion() {
-        return $this->version;
-    }
-
-    function getMoneda() {
+    /**
+     * Get the value of moneda
+     */ 
+    public function getMoneda(){
         return $this->moneda;
     }
 
-    function setId_evento($id_evento) {
-        $this->id_evento = $id_evento;
-    }
-
-    function setCantidad($cantidad) {
-        $this->cantidad = $cantidad;
-    }
-
-    function setPrecio($precio) {
-        $this->precio = $precio;
-    }
-
-    function setPrecio_total($precio_total) {
-        $this->precio_total = $precio_total;
-    }
-
-    function setNombre($nombre) {
-        $this->nombre = $nombre;
-    }
-
-    function setDescripcion($descripcion) {
-        $this->descripcion = $descripcion;
-    }
-
-    function setIva($iva) {
-        $this->iva = $iva;
-    }
-
-    function setDescuento($descuento) {
-        $this->descuento = $descuento;
-    }
-
-    function setTipo_prod($tipo_prod) {
-        $this->tipo_prod = $tipo_prod;
-    }
-
-    function setUsuarios_adicionales($usuarios_adicionales) {
-        $this->usuarios_adicionales = $usuarios_adicionales;
-    }
-
-    function setVersion_terminal($version_terminal) {
-        $this->version_terminal = $version_terminal;
-    }
-
-    function setTerminales($terminales) {
-        $this->terminales = $terminales;
-    }
-
-    function setTipo_licencia($tipo_licencia) {
-        $this->tipo_licencia = $tipo_licencia;
-    }
-
-    function setVersion($version) {
-        $this->version = $version;
-    }
-
-    function setMoneda($moneda) {
+    /**
+     * Set the value of moneda
+     *
+     * @return  self
+     */ 
+    public function setMoneda($moneda){
         $this->moneda = $moneda;
+        return $this;
     }
-
-
-
-
 }
