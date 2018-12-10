@@ -130,7 +130,6 @@ class Persona {
 
     public function setEstado($estado) {
         $this->estado = $estado;
-        return $this;
     }
 
 
