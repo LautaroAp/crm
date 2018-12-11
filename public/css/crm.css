@@ -225,6 +225,9 @@
     display: block;
 }
 
+.prod-imput-gray{
+    background-color: #eee !important;
+}
 
 .crm-version{
     font-size: 3px !important;
