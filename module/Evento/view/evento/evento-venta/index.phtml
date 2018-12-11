@@ -7,7 +7,9 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading text-center">LISTADO MOVIMIENTOS</div>
+                <div class="panel-heading text-center">
+                    LISTADO MOVIMIENTOS
+                </div>
                 <div class="panel-body">
                     <form method="post">
                         <div class="row form-row">
@@ -46,40 +48,43 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                                 echo(': ' . count($total));
                             ?>
                     </div>
+                    <p>
+                    </p>
+                    <table id="tabla_evento" class="table table-bordred table-striped">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Tipo</th>
+                                <th>Cliente</th>
+                                <th>Categoria</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <?php foreach ($eventos as $evento) : ?>
+                        <tr>
+                            <td><?php if(!is_null($evento->getFecha())) {echo ($evento->getFecha()->format('d/m/Y'));} ?></td>
+                            <td><?php echo ($evento->getTipo()); ?></td>
+                            <td><?php echo ($evento->getNombreCliente()); ?></td>
+                            <td><?php echo ($evento->getId_cliente()->getNombreCategoriaCliente()); ?> </td>
+
+                            <td>
+                                <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getId_cliente()->getPersona()->getId()]); ?>">
+                                    <span class="glyphicon glyphicon-share-alt" ></span>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </table>
                 </div>
             </div>
-           <table id="tabla_evento" class="table table-bordred table-striped">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Tipo</th>
-                        <th>Cliente</th>
-                        <th>Categoria</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                    <?php foreach ($eventos as $evento) : ?>
-                    <tr>
-                        <td><?php if(!is_null($evento->getFecha())) {echo ($evento->getFecha()->format('d/m/Y'));} ?></td>
-                        <td><?php echo ($evento->getTipo()); ?></td>
-                        <td><?php echo ($evento->getNombreCliente()); ?></td>
-                        <td><?php echo ($evento->getId_cliente()->getNombreCategoriaCliente()); ?> </td>
-
-                        <td>
-                            <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getId_cliente()->getPersona()->getId()]); ?>">
-                                <span class="glyphicon glyphicon-share-alt" ></span>
-                            </a>
-                        </td>
-                    </tr>
-            <?php endforeach; ?>
-            </table>
-            <?php
-            echo $this->paginationControl($eventos, 'Sliding', // All, Elastic, Jumping, Sliding
-                    'search_pagination3.phtml', $this->url('pageventas', ['action' => 'index', 'id' => 1]));
-            ?>
         </div>
     </div>  
+    <?php
+    echo $this->paginationControl($eventos, 'Sliding', // All, Elastic, Jumping, Sliding
+            'search_pagination3.phtml', $this->url('pageventas', ['action' => 'index', 'id' => 1]));
+    ?>     
 </div>
+
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
     <div class="row img-centrar">

@@ -7,113 +7,118 @@ $this->headTitle($title);
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">AGREGAR DATOS PARTICULARES</div>
-        </div>   
-    </div>
-</div>
+            <div class="panel-heading">
+                AGREGAR DATOS PARTICULARES
+            </div>
+            <div class="panel-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">  
+                            <div class="row">
+                                <form method="post">
+                                    <!-- Inicio: Datos del Cliente -->
+                                    <div class="row form-row">
+                                        <div class="form-group col-md-4">
+                                            <label>Nombre y Apellido</label>
+                                            <input type="text" class="form-control" name="nombre" placeholder="Ingresar Nombre y Apellido" required="">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control" name="email" placeholder="Ingresar Email">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>Teléfono</label>
+                                            <input type="text" class="form-control" name="telefono" placeholder="Ingresar Teléfono">
+                                        </div>
+                                    </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">  
-            <div class="row">
-                <form method="post">
-                    <!-- Inicio: Datos del Cliente -->
-                    <div class="row form-row">
-                        <div class="form-group col-md-4">
-                            <label>País</label>
-                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)" required="">
-                                <option value="" hidden="">Seleccionar País</option>
-                                <?php foreach ($paises as $pais) : ?>
-                                    <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Categoría</label>
-                            <select class="form-control" id="categoria" name="categoria" required="">
-                                <option value="" hidden="">Seleccionar Categoría</option>
-                                <?php foreach ($categorias as $categoria) : ?>
-                                <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-row">
-                        <div class="form-group col-md-4">
-                            <label>Nombre y Apellido</label>
-                            <input type="text" class="form-control" name="nombre" placeholder="Ingresar Nombre y Apellido" required="">
-                        </div>
-                        
-                        <div class="form-group col-md-4">
-                            <label>Provincia</label>
-                            <div id="div_provincias">
-                            <select class="form-control" id="ops_provincias" name="provincia" required="">
-                            </select>
+                                    <div class="row form-row">
+                                        <div class="form-group col-md-4">
+                                            <label>País</label>
+                                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)" required="">
+                                                <option value="" hidden="">Seleccionar País</option>
+                                                <?php foreach ($paises as $pais) : ?>
+                                                    <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Provincia</label>
+                                            <div id="div_provincias">
+                                            <select class="form-control" id="ops_provincias" name="provincia" required="">
+                                            </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>Ciudad</label>
+                                            <input type="text" class="form-control" name="ciudad" placeholder="Ingresar Ciudad">
+                                        </div>  
+                                    </div>
+
+                                    <div class="row form-row">
+                                        <div class="form-group col-md-4">
+                                            <label>Licencia</label>
+                                            <select class="form-control" id="licencia" name="licencia" required="">
+                                                <option value="" hidden="">Seleccionar Licencia</option>
+                                                <option value="-1">NO DEFINIDO</option>
+                                                <?php foreach ($licencias as $licencia) : ?>
+                                                    <option value="<?php echo ($licencia->getId()); ?>"><?php echo ($licencia->getNombre()); ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Categoría</label>
+                                            <select class="form-control" id="categoria" name="categoria" required="">
+                                                <option value="" hidden="">Seleccionar Categoría</option>
+                                                <?php foreach ($categorias as $categoria) : ?>
+                                                <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>Versión</label>
+                                            <select class="form-control" id="version" name="version">
+                                                <option value="" hidden="">Seleccionar Versión</option>
+                                                <option value="Productores">Productores</option>
+                                                <option value="Veterinarios">Veterinarios</option>
+                                                <option value="-1">NO DEFINIDO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="form-group col-md-4">
+                                            <label>Empresa</label>
+                                            <input type="text" class="form-control" name="empresa" placeholder="Ingresar Empresa">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Skype</label>
+                                            <input type="text" class="form-control" name="skype" placeholder="Ingresar Skype">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>Raza de Manejo</label>
+                                            <input type="text" class="form-control" name="raza_manejo" placeholder="Ingresar Raza">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>Licencia</label>
-                            <select class="form-control" id="licencia" name="licencia" required="">
-                                <option value="" hidden="">Seleccionar Licencia</option>
-                                <option value="-1">NO DEFINIDO</option>
-                                <?php foreach ($licencias as $licencia) : ?>
-                                    <option value="<?php echo ($licencia->getId()); ?>"><?php echo ($licencia->getNombre()); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
                     </div>
-                    <div class="row form-row">
-                        <div class="form-group col-md-4">
-                            <label>Teléfono</label>
-                            <input type="text" class="form-control" name="telefono" placeholder="Ingresar Teléfono">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Ciudad</label>
-                            <input type="text" class="form-control" name="ciudad" placeholder="Ingresar Ciudad">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Versión</label>
-                            <select class="form-control" id="version" name="version">
-                                <option value="" hidden="">Seleccionar Versión</option>
-                                <option value="Productores">Productores</option>
-                                <option value="Veterinarios">Veterinarios</option>
-                                <option value="-1">NO DEFINIDO</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-row">
-                        <div class="form-group col-md-4">
-                            <label>Email</label>
-                            <input type="text" class="form-control" name="email" placeholder="Ingresar Email">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Empresa</label>
-                            <input type="text" class="form-control" name="empresa" placeholder="Ingresar Empresa">
-                        </div>
-                    </div>
-                    <div class="row form-row">
-                        <div class="form-group col-md-4">
-                            <label>Skype</label>
-                            <input type="text" class="form-control" name="skype" placeholder="Ingresar Skype">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Raza de Manejo</label>
-                            <input type="text" class="form-control" name="raza_manejo" placeholder="Ingresar Raza">
-                        </div>
-                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
                     <!-- Fin: Datos del Cliente -->
-                    
-                    <!-- Inicio: Caracteristicas de trabajo -->
-                    <div class="container margen">
-                        <div class="row">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">AGREGAR DATOS LABORALES</div>
-                            </div>   
-                        </div>
-                    </div>
+     
 
+                    <!-- Inicio: Caracteristicas de trabajo -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">AGREGAR DATOS LABORALES</div>
+                <div class="panel panel-body">
                     <div class="row form-row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-5">
                             <label>Profesión</label>
                             <select class="form-control" id="profesion" name="profesion">
                                 <option value="" hidden="">Seleccionar Profesión</option>
@@ -123,48 +128,49 @@ $this->headTitle($title);
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-5">
                             <label>Nro. de Animales</label>
                             <input type="text" class="form-control" name="animales" placeholder="Ingresar Nro. Animales">
                         </div>
                     </div>
                     <div class="row form-row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-5">
                             <label>Actividad</label>
                             <input type="text" class="form-control" name="actividad" placeholder="Ingresar Actividad">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-5">
                             <label>Nro. de Establecimientos</label>
                             <input type="text" class="form-control" name="establecimientos" placeholder="Ingresar Nro. Establecimientos">
                         </div>
                     </div>
-                    <!-- Fin: Caracteristicas de trabajo -->
+                <div>
+            <div>
+        </div>
+    </div>
+</div>
+</form>
+ <!-- Fin: Caracteristicas de trabajo -->
 
-                    <!-- Modal -->
-                    <div id="myModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Agregar cliente</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>¿Está seguro que desea agregar este cliente?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-default">Aceptar</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </form>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Agregar cliente</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que desea agregar este cliente?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default">Aceptar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
+</div>
+
 </div>
 <!-- Fin: Cliente Nuevo -->
 

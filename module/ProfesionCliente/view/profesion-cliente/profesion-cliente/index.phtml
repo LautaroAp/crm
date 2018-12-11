@@ -24,106 +24,109 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
                     <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
                 </a>
             </div>
-        </div>
-    </div>
-</div>
-<div class="container collapse" id="add_profesion">
-    <form method="post">
-        <div class="row form-row">
-            <div class="form-group col-md-4">
-                <input type="text" class="form-control form-margen" name="nombre" placeholder="Ingresar Profesión">
+            <div class="panel panel-body">
+                <div class="container collapse" id="add_profesion">
+                    <form method="post">
+                        <div class="row form-row">
+                            <div class="form-group col-md-4">
+                                <input type="text" class="form-control form-margen" name="nombre" placeholder="Ingresar Profesión">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
+                                    <span class="glyphicon glyphicon-plus" ></span> Agregar Profesión
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Agregar profesión</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Está seguro que desea agregar esta profesión?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-default">Aceptar</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group col-md-4">
-                <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
-                    <span class="glyphicon glyphicon-plus" ></span> Agregar Profesión
-                </button>
-            </div>
-        </div>
-        <!-- Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Agregar profesión</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>¿Está seguro que desea agregar esta profesión?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-default">Aceptar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="tabla_profesioncliente" class="table table-bordred table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="th-sm" onclick="sortTableString(1, 'tabla_profesioncliente')">Profesión
+                                            <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    if (isset($profesiones_pag)) {
+                                        foreach ($profesionclientes as $profesioncliente):
+                                            ?>
+                                            <tr>
+                                                <td><?php echo ($profesioncliente->getNombre()); ?></td>
+                                                <td class="table-items-right">
+                                                    <a class="btn btn-default" href="<?= $this->url('profesioncliente/editar', ['action' => 'edit', 'id' => $profesioncliente->getId()]); ?>">
+                                                        <span class="glyphicon glyphicon-pencil" ></span> 
+                                                    </a>
+                                                    <button name="<?= $profesioncliente->getId() ?>" id="<?= $profesioncliente->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $profesioncliente->getId() ?>">
+                                                        <span class="glyphicon glyphicon-remove" ></span>
+                                                    </button>
+                                                </td>
+                                                <!-- Modal -->
+                                        <div id="myModal<?= $profesioncliente->getId() ?>" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Eliminar profesión</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>
+                                                            ¿Está seguro que desea eliminar la profesión: 
+                                                            "<?= $this->escapeHtml($profesioncliente->getNombre()) ?>"?
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= $this->url('profesioncliente/borrar', ['action' => 'remove', 'id' => $profesioncliente->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
+                                                        <span class="btn btn-default">Aceptar</span></a>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>  
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+        <?php
+        echo $this->paginationControl($profesiones_pag, 'Sliding', // All, Elastic, Jumping, Sliding
+                'search_pagination_prof.phtml', $this->url('profesioncliente/page', ['action' => 'index', 'id' => 1]));
+    }
+    ?>                 
 </div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="table-responsive">
-                <table id="tabla_profesioncliente" class="table table-bordred table-striped">
-                    <thead>
-                        <tr>
-                            <th class="th-sm" onclick="sortTableString(1, 'tabla_profesioncliente')">Profesión
-                                <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        if (isset($profesiones_pag)) {
-                            foreach ($profesionclientes as $profesioncliente):
-                                ?>
-                                <tr>
-                                    <td><?php echo ($profesioncliente->getNombre()); ?></td>
-                                    <td class="table-items-right">
-                                        <a class="btn btn-default" href="<?= $this->url('profesioncliente/editar', ['action' => 'edit', 'id' => $profesioncliente->getId()]); ?>">
-                                            <span class="glyphicon glyphicon-pencil" ></span> 
-                                        </a>
-                                        <button name="<?= $profesioncliente->getId() ?>" id="<?= $profesioncliente->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $profesioncliente->getId() ?>">
-                                            <span class="glyphicon glyphicon-remove" ></span>
-                                        </button>
-                                    </td>
-                                    <!-- Modal -->
-                            <div id="myModal<?= $profesioncliente->getId() ?>" class="modal fade" role="dialog">
-                                <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Eliminar profesión</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>
-                                                ¿Está seguro que desea eliminar la profesión: 
-                                                "<?= $this->escapeHtml($profesioncliente->getNombre()) ?>"?
-                                            </p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a href="<?= $this->url('profesioncliente/borrar', ['action' => 'remove', 'id' => $profesioncliente->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
-                                            <span class="btn btn-default">Aceptar</span></a>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                    <?php
-                    echo $this->paginationControl($profesiones_pag, 'Sliding', // All, Elastic, Jumping, Sliding
-                            'search_pagination_prof.phtml', $this->url('profesioncliente/page', ['action' => 'index', 'id' => 1]));
-                }
-                ?>
-            </div>
-        </div>  
-    </div>
-</div>
+
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
     <div class="row img-centrar">

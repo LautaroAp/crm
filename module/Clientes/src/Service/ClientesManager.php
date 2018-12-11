@@ -313,6 +313,13 @@ class ClientesManager {
         return $estado_nuevo;
     }
 
+    //La funcion getListaClientes() devuelve lista de clientes sin paginado
+    //Usada en la generacion de backup
+    public function getListaClientes() {
+        $lista = $this->entityManager->getRepository(Cliente::class)->findAll();
+        return $lista;
+    }
+
     public function getCategoriaCliente($id = null) {
         if (isset($id)) {
             return $this->entityManager
