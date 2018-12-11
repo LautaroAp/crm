@@ -5,7 +5,8 @@ namespace Clientes\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class ClientesController extends AbstractActionController {
+class ClientesController extends AbstractActionController
+{
 
     /**
      * @var DoctrineORMEntityManager
@@ -24,15 +25,19 @@ class ClientesController extends AbstractActionController {
     protected $tipoEventosManager;
     protected $personaManager;
 
-    public function __construct($clientesManager, $tipoEventosManager, $eventoManager,
-     $personaManager) {
+    public function __construct(
+        $clientesManager,
+        $tipoEventosManager,
+        $eventoManager,
+        $personaManager
+    ) {
         $this->clientesManager = $clientesManager;
         $this->tipoEventosManager = $tipoEventosManager;
         $this->eventoManager = $eventoManager;
         $this->personaManager = $personaManager;
     }
 
-    public function indexAction() {
+    public function indexAction(){
         $request = $this->getRequest();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
@@ -59,22 +64,22 @@ class ClientesController extends AbstractActionController {
         ]);
     }
 
-    private function getPaginator($paginator) {
+    private function getPaginator($paginator){
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
         }
-        $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
+        $paginator->setCurrentPageNumber((int)$page)
+            ->setItemCountPerPage(10);
         return $paginator;
     }
 
-    public function addAction() {
+    public function addAction(){
         $view = $this->processAdd();
         return $view;
     }
 
-    private function processAdd() {
+    private function processAdd(){
         $request = $this->getRequest();
         $mensaje = "";
         $CategoriaCliente = $this->clientesManager->getCategoriaCliente();
@@ -97,12 +102,12 @@ class ClientesController extends AbstractActionController {
         ]);
     }
 
-    public function editAction() {
+    public function editAction(){
         $view = $this->processEdit();
         return $view;
     }
 
-    private function processEdit() {
+    private function processEdit(){
         $request = $this->getRequest();
         $mensaje = "";
         $CategoriaCliente = $this->clientesManager->getCategoriaCliente();
@@ -123,7 +128,7 @@ class ClientesController extends AbstractActionController {
         }
         return new ViewModel([
             'cliente' => $cliente,
-            'persona'=>$persona,
+            'persona' => $persona,
             'mensaje' => $mensaje,
             'categorias' => $CategoriaCliente,
             'profesiones' => $ProfesionCliente,
@@ -138,7 +143,7 @@ class ClientesController extends AbstractActionController {
         return $view;
     }
 
-    private function processDelete() {
+    private function processDelete(){
         $request = $this->getRequest();
         if (!$request->isPost()) {
             $id = $this->params()->fromRoute('id');
@@ -149,12 +154,12 @@ class ClientesController extends AbstractActionController {
         }
     }
 
-    public function modificarEstadoAction() {
+    public function modificarEstadoAction(){
         $view = $this->processModificarEstado();
         return $view;
     }
 
-    private function processModificarEstado() {
+    private function processModificarEstado(){
         $request = $this->getRequest();
         if (!$request->isPost()) {
             $id = $this->params()->fromRoute('id');
@@ -165,19 +170,19 @@ class ClientesController extends AbstractActionController {
         }
     }
 
-    public function fichaAction() {
-        $id_persona = (int) $this->params()->fromRoute('id', -1);
+    public function fichaAction(){
+        $id_persona = (int)$this->params()->fromRoute('id', -1);
         $data = $this->clientesManager->getDataFicha($id_persona);
         return new ViewModel([
             'cliente' => $data['cliente'],
             'usuarios' => $data['usuarios'],
             'eventos' => $data['eventos'],
             'tipo_eventos' => $this->tipoEventosManager->getTipoEventos(),
-            'persona' =>$data['persona']
+            'persona' => $data['persona']
         ]);
     }
 
-    public function eliminaEventosAction() {
+    public function eliminaEventosAction(){
         $this->layout()->setTemplate('layout/nulo');
         $id = $this->params()->fromRoute('id');
         $this->eventoManager->removeEvento($id);
@@ -187,16 +192,15 @@ class ClientesController extends AbstractActionController {
         return $view;
     }
 
-    function getProvinciasAction() {
+    public function getProvinciasAction() {
         $this->layout()->setTemplate('layout/nulo');
         $id_pais = $this->params()->fromRoute('id');
         $provs = $this->clientesManager->getProvincias($id_pais);
-        $view = new ViewModel([
-            'provincias' => $provs]);
+        $view = new ViewModel(['provincias' => $provs]);
         return $view;
     }
 
-    public function backupAction() {
+    public function backupAction(){
         $this->layout()->setTemplate('layout/nulo');
         $resultado = $this->clientesManager->getListaClientes();
         return new ViewModel([
