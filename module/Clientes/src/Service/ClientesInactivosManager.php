@@ -9,8 +9,7 @@ use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 
 /**
- * This service is responsible for adding/editing users
- * and changing user password.
+ * PARECIERA QUE ESTA CLASE NO ES NECESARIA
  */
 class ClientesInactivosManager extends ClientesManager {
 
@@ -24,19 +23,21 @@ class ClientesInactivosManager extends ClientesManager {
         parent::__construct($entityManager, $usuarioManager, $personaManager);
     }
 
-    public function getTablaFiltrado($parametros) {
-        $filtros = $this->limpiarParametros($parametros);
-        $query = $this->getInactivos($filtros);
-        $adapter = new DoctrineAdapter(new ORMPaginator($query));
-        $this->total = COUNT($adapter);
-        $paginator = new Paginator($adapter);
-        return $paginator;
-    }
+    // public function getTablaFiltrado($parametros, $estado) {
+    //     $filtros = $this->limpiarParametros($parametros);
+    //     $query = $this->getClientes($filtros, $estado);
+    //     $pag = new ORMPaginator($query);
+    //     $pag->setUseOutputWalkers(true);
+    //     $adapter = new DoctrineAdapter($pag);
+    //     $this->total = COUNT($adapter);
+    //     $paginator = new Paginator($adapter);
+    //     return $paginator;
+    // }
 
-    public function getInactivos($filtros){
-        $filtros+=['tipo'=> $this->tipo];
-        $filtros+=['estado'=>"N"];
-        $query = $this->personaManager->buscarPersonas($filtros);
-        return $query;
-    }
+    // public function getInactivos($filtros){
+    //     $filtros+=['tipo'=> $this->tipo];
+    //     $filtros+=['estado'=>"N"];
+    //     $query = $this->personaManager->buscarPersonas($filtros);
+    //     return $query;
+    // }
 }

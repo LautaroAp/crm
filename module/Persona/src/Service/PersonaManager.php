@@ -54,7 +54,7 @@ class PersonaManager {
 
     public function addPersona($data, $tipo) {
         $persona = new Persona();
-        $persona=$this->setData($persona, $data,$tipo);
+        $persona=$this->setData($persona, $data,$tipo, "S");
         if ($this->tryAddPersona($persona)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Persona agregada correctamente';
@@ -79,12 +79,15 @@ class PersonaManager {
         return true;
     }
 
-    private function setData($persona, $data, $tipo= null){
+    private function setData($persona, $data, $tipo= null, $estado=null){
         $persona->setNombre($data['nombre'])
         ->setTelefono($data['telefono'])
         ->setEmail($data['mail']);
         if (isset($tipo)){
             $persona->setTipo($tipo);
+        }
+        if (isset($estado)){
+            $persona->setEstado($estado);
         }
         return $persona;
     }

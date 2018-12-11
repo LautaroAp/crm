@@ -30,6 +30,8 @@ class IndexController extends AbstractActionController {
     }
 
     public function gestionClientesAction() {
+        $_SESSION['PARAMETROS_CLIENTE'] = array();
+        $_SESSION['PARAMETROS_CLIENTE_INACTIVO'] = array();
         return new ViewModel();
     }
 

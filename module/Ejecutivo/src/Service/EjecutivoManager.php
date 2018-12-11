@@ -72,10 +72,10 @@ class EjecutivoManager {
         $ejecutivo->setPersona($persona);
         if ($this->tryAddEjecutivo($ejecutivo)) {
             $_SESSION['MENSAJES']['ejecutivo'] = 1;
-            $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Ejecutivo eliminados correctamente';
+            $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Ejecutivo agregado correctamente';
         } else {
             $_SESSION['MENSAJES']['ejecutivo'] = 0;
-            $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Error al eliminar ejecutivo';
+            $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Error al agregar ejecutivo';
         }
         return $ejecutivo;
     }
@@ -162,10 +162,11 @@ class EjecutivoManager {
 
     public function getEjecutivoFromForm($form, $data) {
         $form->setData($data);
-        if ($form->isValid()) {
-            $data = $form->getData();
-            $ejecutivo = $this->addEjecutivo($data);
-        }
+        // if ($form->isValid()) {
+        //     $data = $form->getData();
+        //     $ejecutivo = $this->addEjecutivo($data);
+        // }
+        $ejecutivo = $this->addEjecutivo($data);
         return $ejecutivo;
     }
 

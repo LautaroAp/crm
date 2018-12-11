@@ -46,7 +46,7 @@ class ClientesController extends AbstractActionController {
         } else {
             $parametros = array();
         }
-        $paginator = $this->clientesManager->getTablaFiltrado($parametros);
+        $paginator = $this->clientesManager->getTablaFiltrado($parametros, "S");
         $total_clientes = $this->clientesManager->getTotal();
         $pag = $this->getPaginator($paginator);
         return new ViewModel([
@@ -143,7 +143,7 @@ class ClientesController extends AbstractActionController {
         if (!$request->isPost()) {
             $id = $this->params()->fromRoute('id');
             $this->clientesManager->deleteCliente($id);
-            $this->redirect()->toRoute('clientes');
+            $this->redirect()->toRoute('clientes/listado');
         } else {
             return new ViewModel();
         }
@@ -159,7 +159,7 @@ class ClientesController extends AbstractActionController {
         if (!$request->isPost()) {
             $id = $this->params()->fromRoute('id');
             $this->clientesManager->modificarEstado($id);
-            $this->redirect()->toRoute('clientes');
+            $this->redirect()->toRoute('gestionClientes/listado');
         } else {
             return new ViewModel();
         }

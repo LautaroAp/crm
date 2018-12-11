@@ -57,43 +57,18 @@ class ClientesManager {
         $this->entityManager->flush();
     }
 
-//La funcion getListaClientes() devuelve lista de clientes sin paginado
-    public function getListaClientes() {
-        $lista = $this->entityManager->getRepository(Cliente::class)->findAll();
-        return $lista;
-    }
-
     public function getCliente($Id) {
         return $this->entityManager
                         ->getRepository(Cliente::class)
                         ->findOneBy(['Id' => $Id]);
     }
 
-    //La funcion getTabla() devuelve tabla de clientes sin filtro    
-    public function getTabla() {
-        $adapter = new SelectableAdapter($this->entityManager->getRepository(Cliente::class)); // An object repository implements Selectable
-        $paginator = new Paginator($adapter);
-        return ($paginator);
-    }
-
-    // public function getTablaFiltrado($parametros) {
-    //     $filtros = $this->limpiarParametros($parametros);
-    //     $query = $this->busquedaPorFiltros2($filtros);
-        
-    //     $pag = new ORMPaginator($query);
-    //     $pag->setUseOutputWalkers(true);
-    //     $adapter = new DoctrineAdapter($pag);
-    //     $this->total = COUNT($adapter);
-
-    //     $paginator = new Paginator($adapter);
-    //     return $paginator;
-    // }
 
     //esta funcion es usada por el controller para obtener todos los clientes
     //que cumplen con los parametros
-    public function getTablaFiltrado($parametros) {
+    public function getTablaFiltrado($parametros, $estado) {
         $filtros = $this->limpiarParametros($parametros);
-        $query = $this->getActivos($filtros);
+        $query = $this->getClientes($filtros, $estado);
         $pag = new ORMPaginator($query);
         $pag->setUseOutputWalkers(true);
         $adapter = new DoctrineAdapter($pag);
@@ -103,16 +78,15 @@ class ClientesManager {
         return $paginator;
     }
 
-    public function getActivos($parametros){
+    public function getClientes($parametros, $estado){
         $tipos= ['CLIENTE','USUARIO'];
-        $parametros+=['estado'=>"S"];
+        $parametros+=['estado'=>$estado];
         if (in_array('busquedaAvanzada', $parametros)){
             unset($parametros['busquedaAvanzada']);
             $params_cliente=$this->diferenciarParametros($parametros,"CLIENTE");
             $params_persona=$this->diferenciarParametros($parametros,"PERSONA");
             $clientes= $this->buscarClientes($params_cliente)->getResult();
             $personas=$this->getPersonasFromClientes($clientes);
-            print_r($personas);
             $query = $this->personaManager->buscarPersonas($params_persona,$tipos,$personas);
         }
         else{
@@ -181,40 +155,8 @@ class ClientesManager {
         return $data;
     }
 
-
-
-    public function getClientesConUsuariosAdicionales($parametros) {
-        $filtros = $this->limpiarParametros($parametros);
-        $query2 = $this->usuarioManager->getClientes($filtros);
-        $pag = new ORMPaginator($query2);
-        $pag->setUseOutputWalkers(false);
-        $adapter2 = new DoctrineAdapter($pag);
-        $paginator = new Paginator($adapter2);
-        return $paginator;
-    }
-
     public function getTotal() {
         return $this->total;
-    }
-
-    private function getQueryClientes($clientes) {
-        $entityManager = $this->entityManager;
-        $queryBuilder = $entityManager->createQueryBuilder();
-        $queryBuilder->select('C')
-                ->from(Cliente::class, 'C');
-        $p = 0;
-        $queryBuilder->where("C.Id = ?$p")->setParameter("$p", $clientes[0]->getId());
-        for ($i = 1; $i < count($clientes); $i++) {
-            $p = $p + 1;
-            $queryBuilder->orWhere("C.Id = ?$p")->setParameter("$p", $clientes[$i]->getId());
-        }
-        return $queryBuilder->getQuery();
-    }
-
-    public function busquedaPorUsuariosAdicionales($parametros) {
-        $clientes = $this->usuarioManager->getClientesUsuarioAdicional($parametros);
-        $query = $this->getQueryClientes($clientes);
-        return $query;
     }
 
     public function buscarClientes($parametros) {
@@ -228,71 +170,24 @@ class ClientesManager {
             $nombreCampo = $indices[$i];
             $valorCampo = $parametros[$nombreCampo];
             if ($i == 0) {
-                $queryBuilder->where("C.$nombreCampo LIKE ?$p");
+                if ($nombreCampo=="empresa"){
+                    $queryBuilder->where("C.$nombreCampo  LIKE ?$p");
+                }else{
+                $queryBuilder->where("C.$nombreCampo  = ?$p");}
             } else {
-                 $queryBuilder->andWhere("C.$nombreCampo like ?$p");
+                if ($nombreCampo=="empresa"){
+                    $queryBuilder->andWhere("C.$nombreCampo  LIKE ?$p");
+                }else{
+                 $queryBuilder->andWhere("C.$nombreCampo = ?$p");}
             }
-            $queryBuilder->setParameter("$p", '%'.$valorCampo.'%');
+            if ($nombreCampo=="empresa"){
+                $queryBuilder->setParameter("$p",'%'.$valorCampo.'%');}
+            else{
+                $queryBuilder->setParameter("$p",$valorCampo);}
         }
         return $queryBuilder->getQuery();
     }
 
-    // public function busquedaPorFiltros2($parametros) {
-    //     $entityManager = $this->entityManager;
-    //     $queryBuilder = $entityManager->createQueryBuilder();
-    //     $queryBuilder->select('C')
-    //             ->from(Cliente::class, 'C')
-    //             ->leftJoin(Usuario::class, 'U', "WITH", 'C.Id = U.id_cliente');
-    //     $indices = array_keys($parametros);
-
-    //     for ($i = 0; $i < count($indices); $i++) {
-    //         $p = $i + 1;
-    //         $nombreCampo = $indices[$i];
-    //         $valorCampo = $parametros[$nombreCampo];
-    //         $this->comparaCamposParametros($i, $p, $nombreCampo, $indices, $parametros, $queryBuilder);
-    //         $queryBuilder->setParameter("$p", '%' . $valorCampo . '%');
-    //     }
-
-    //     $queryBuilder->andWhere('C.estado = :state')->setParameter('state', 'S');
-    //     return $queryBuilder->getQuery();
-    // }
-
-    // protected function comparaCamposParametros($i, $p, $nombreCampo, $indices, $parametros, $queryBuilder) {
-    //     if ($i == 0) {
-    //         if ($nombreCampo == 'nombre') {
-    //             $queryBuilder->where("C.$nombreCampo LIKE ?$p");
-    //             $queryBuilder->orWhere("C.apellido LIKE ?$p");
-    //             $queryBuilder->orWhere("U.nombre LIKE ?$p");
-    //         } else {
-    //             $queryBuilder->where("C.$nombreCampo LIKE ?$p");
-    //             if ($nombreCampo = !"empresa") {
-    //                 $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
-    //             }
-    //         }
-    //     } else {
-    //         if ($nombreCampo == 'nombre') {
-    //             $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
-    //             $queryBuilder->orWhere("C.apellido LIKE ?$p");
-    //             $queryBuilder->orWhere("U.nombre LIKE ?$p");
-    //         } else {
-    //             $queryBuilder->andWhere("C.$nombreCampo LIKE ?$p");
-    //             if ($nombreCampo = !"empresa") {
-    //                 $queryBuilder->orWhere("U.$nombreCampo LIKE ?$p");
-    //             }
-    //         }
-    //     }
-    // }
-
-    // public function getActivos() {
-    //     $entityManager = $this->entityManager;
-    //     $queryBuilder = $entityManager->createQueryBuilder();
-    //     $queryBuilder->select('C')
-    //             ->from(Cliente::class, 'C');
-    //     $queryBuilder->where('C.estado = :state')->setParameter('state', 'S');
-    //     return $queryBuilder->getQuery();
-    // }
-
-    
     public function addCliente($data) {
         $cliente = new Cliente();
         // Datos Particulares
@@ -491,15 +386,6 @@ class ClientesManager {
         return $provincias;
     }
 
-    public function getDatosClientes($data) {
-        $entityManager = $this->entityManager;
-        $queryBuilder = $entityManager->createQueryBuilder();
-        $queryBuilder->select($data)
-                ->from(Cliente::class, 'C')
-                ->where('C.estado = :state')->setParameter('state', 'S');
-        return $queryBuilder->getQuery();
-    }
-
     public function eliminarLicenciaClientes($id) {
         $entityManager = $this->entityManager;
         $clientes = $this->entityManager->getRepository(Cliente::class)->findAll();
@@ -538,13 +424,6 @@ class ClientesManager {
             }
         }
         $entityManager->flush();
-    }
-
-    public function getUsuariosCliente($Id){
-        $cliente= $this->entityManager
-                        ->getRepository(Cliente::class)
-                        ->findOneBy(['Id' => $Id]);
-        return $cliente->getUsuarios();
     }
 
     public function getClienteIdPersona($id_persona){
