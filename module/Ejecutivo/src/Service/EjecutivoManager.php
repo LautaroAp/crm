@@ -174,4 +174,9 @@ class EjecutivoManager {
         $form->setData($data);
         return $form->isValid();
     }
+
+    public function getEjecutivos(){
+        $ejecutivos = $this->entityManager->getRepository(Ejecutivo::class)->findAll();
+        return $ejecutivos;
+    }
 }

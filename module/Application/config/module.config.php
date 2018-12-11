@@ -185,6 +185,16 @@ return [
                                     ],
                                 ],
                             ],
+                            'backup' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/backup',
+                                    'defaults' => [
+                                        'controller' => \Licencia\Controller\LicenciaController::class,
+                                        'action' => 'backup',
+                                    ],
+                                ],
+                            ],
                             'agregar' => [
                                 'type' => Segment::class,
                                 'options' => [
@@ -296,6 +306,16 @@ return [
                             'defaults' => [
                                 'controller' => \Ejecutivo\Controller\EjecutivoInactivoController::class,
                                 'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'backup' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/backup',
+                            'defaults' => [
+                                'controller' => \Ejecutivo\Controller\EjecutivoController::class,
+                                'action' => 'backup',
                             ],
                         ],
                     ],
