@@ -78,12 +78,5 @@ class IndexController extends AbstractActionController {
         return new ViewModel();
     }
 
-    public function backupAction() {
-        $this->layout()->setTemplate('layout/nulo');
-        $resultado = $this->clientesManager->getListaClientes();
-        return new ViewModel([
-            'resultado' => $resultado
-        ]);
-    }
-
+   
 }
