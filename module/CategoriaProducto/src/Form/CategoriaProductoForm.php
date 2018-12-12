@@ -1,10 +1,10 @@
 <?php
 
-namespace CategoriaCliente\Form;
+namespace CategoriaProducto\Form;
 
 use Zend\Form\Form;
 
-class CategoriaClienteForm extends Form {
+class CategoriaProductoForm extends Form {
 
     /**
      * Scenario ('create' or 'update').
@@ -19,17 +19,17 @@ class CategoriaClienteForm extends Form {
     private $entityManager = null;
 
     /**
-     * Current categoriacliente.
-     * @var CategoriaCliente\Entity\CategoriaCliente 
+     * Current categoriaProducto.
+     * @var CategoriaProducto\Entity\CategoriaProducto 
      */
-    private $categoriacliente = null;
+    private $categoriaProducto = null;
 
     /**
      * Constructor.     
      */
-    public function __construct($scenario = 'create', $entityManager = null, $categoriacliente = null) {
+    public function __construct($scenario = 'create', $entityManager = null, $categoriaProducto = null) {
         // Define form name
-        parent::__construct('categoriacliente-form');
+        parent::__construct('categoriaProducto-form');
 
         // Set POST method for this form
         $this->setAttribute('method', 'post');
@@ -37,10 +37,10 @@ class CategoriaClienteForm extends Form {
         // Save parameters for internal use.
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
-        $this->categoriacliente = $categoriacliente;
+        $this->categoriaProducto = $categoriaProducto;
 
         $this->addElements();
-        $this->addInputFilter();
+        // $this->addInputFilter();
     }
 
     /**
@@ -57,6 +57,15 @@ class CategoriaClienteForm extends Form {
         ]);
 
         $this->add([
+            'type' => 'text',
+            'name' => 'descripcion',
+            'value' => '',
+            'options' => [
+                'label' => 'Descripcion de Categoría',
+            ],
+        ]);
+
+        $this->add([
             'type' => 'submit',
             'name' => 'submit',
             'attributes' => [
@@ -65,20 +74,20 @@ class CategoriaClienteForm extends Form {
         ]);
     }
 
-    private function addInputFilter() {
-        $inputFilter = $this->getInputFilter();
-        $inputFilter->add([
-            'name' => 'nombre',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StringTrim'],
-            ],
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                ],
-            ],
-        ]);
-    }
+    // private function addInputFilter() {
+    //     $inputFilter = $this->getInputFilter();
+    //     $inputFilter->add([
+    //         'name' => 'nombre',
+    //         'required' => true,
+    //         'filters' => [
+    //             ['name' => 'StringTrim'],
+    //         ],
+    //         'validators' => [
+    //             [
+    //                 'name' => 'StringLength',
+    //             ],
+    //         ],
+    //     ]);
+    // }
 
 }

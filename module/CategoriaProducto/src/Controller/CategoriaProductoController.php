@@ -37,8 +37,6 @@ class CategoriaProductoController extends AbstractActionController {
 
     private function procesarIndexAction() {
         $paginator = $this->categoriaProductoManager->getTabla();
-        $mensaje = "";
-
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
@@ -49,8 +47,7 @@ class CategoriaProductoController extends AbstractActionController {
         $categoriaProductos = $this->categoriaProductoManager->getCategoriaProductos();
         return new ViewModel([
             'categoriaProductos' => $categoriaProductos,
-            'categorias_pag' => $paginator,
-            'mensaje' => $mensaje
+            'categorias_pag' => $paginator
         ]);
     }
 
@@ -62,7 +59,6 @@ class CategoriaProductoController extends AbstractActionController {
     private function procesarAddAction() {
         $form = $this->categoriaProductoManager->createForm();
         $paginator = $this->categoriaProductoManager->getTabla();
-        $mensaje = "";
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
@@ -72,13 +68,13 @@ class CategoriaProductoController extends AbstractActionController {
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
+            // $this->categoriaProductoManager->addCategoriaProducto($data);
             $categoriaProducto = $this->categoriaProductoManager->getCategoriaProductoFromForm($form, $data);
             return $this->redirect()->toRoute('categoriaProducto');
         }
         return new ViewModel([
             'form' => $form,
-            'categorias_pag' => $paginator,
-            'mensaje' => $mensaje
+            'categorias_pag' => $paginator
         ]);
     }
 

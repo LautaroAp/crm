@@ -249,6 +249,16 @@ return [
                                     ],
                                 ],
                             ],
+                            'categorias' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/categorias',
+                                    'defaults' => [
+                                        'controller' => \CategoriaProducto\Controller\CategoriaProductoController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                            ],
                         ], 
                     ],
                     // Gestion Servicios

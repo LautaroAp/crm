@@ -20,10 +20,15 @@ $form->prepare();
             <div class="row">
                 <div class="col-md-8">
                     <?= $this->form()->openTag($form); ?>
-                   <div class="form-group">
+                    <div class="form-group">
                         <?= $this->formLabel($form->get('nombre')); ?>
                         <?= $this->formElement($form->get('nombre')); ?>
                         <?= $this->formElementErrors($form->get('nombre')); ?>                  
+                    </div>
+                    <div class="form-group">
+                        <?= $this->formLabel($form->get('descripcion')); ?>
+                        <?= $this->formElement($form->get('descripcion')); ?>
+                        <?= $this->formElementErrors($form->get('descripcion')); ?>                  
                     </div>
                     <button type="submit" class="btn btn-default">Aceptar</button>
                     <button type="submit" class="btn btn-default">Cancelar</button>

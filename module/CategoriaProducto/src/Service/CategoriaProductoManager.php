@@ -65,6 +65,8 @@ class CategoriaProductoManager {
     public function addCategoriaProducto($data) {
         $categoriaProducto = new CategoriaProducto();
         $categoriaProducto->setNombre($data['nombre']);
+        $categoriaProducto->setDescripcion($data['descripcion']);
+
         if ($this->tryAddCategoriaProducto($categoriaProducto)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría agregada correctamente';
