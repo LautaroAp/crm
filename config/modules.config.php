@@ -31,6 +31,7 @@ return [
     'User',
     'TipoEvento',
     'CategoriaCliente',
+    'CategoriaProducto',
     'Usuario',
     'ProfesionCliente',
     'Empresa',

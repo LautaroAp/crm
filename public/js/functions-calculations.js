@@ -105,14 +105,33 @@ function calculaDescuentoIVA() {
     $p_venta = parseFloat($('#precio_venta').val());
     $descuento = parseFloat($('#descuento').val()) / 100;
     $iva = parseFloat($('#iva').val()) / 100;
-    // Precio Final
-    $p_final = $p_venta - ($p_venta * $descuento);
-    $p_final = ($p_final + ($p_final * $iva)).toFixed(2);
-    // $p_final = $p_final.toFixed(2); 
-    if ($p_final){
-        $("#precio_final").val($p_final);
+    // Precio Venta con Dto.
+    $p_venta_dto = ($p_venta - ($p_venta * $descuento)).toFixed(2);
+    if ($p_venta_dto){
+        $("#precio_venta_dto").val($p_venta_dto);
     } else {
-        $("#precio_final").val("0");
+        $("#precio_venta_dto").val("0");
+    }
+    // Total IVA.
+    $iva_total = ($p_venta * $iva).toFixed(2);
+    if ($p_venta_dto){
+        $("#iva_total").val($iva_total);
+    } else {
+        $("#iva_total").val("0");
+    }
+    // Precio Publico + IVA
+    $p_publico_iva = ($p_venta + ($p_venta * $iva)).toFixed(2);
+    if ($p_publico_iva){
+        $("#precio_publico_iva").val($p_publico_iva);
+    } else {
+        $("#precio_publico_iva").val("0");
+    }
+    // Precio Publico + IVA + Dto.
+    $p_publico_iva_dto = ( ($p_venta - ($p_venta * $descuento)) + (($p_venta - ($p_venta * $descuento)) * $iva) ).toFixed(2);
+    if ($p_publico_iva_dto){
+        $("#precio_publico_iva_dto").val($p_publico_iva_dto);
+    } else {
+        $("#precio_publico_iva_dto").val("0");
     }
 }
 

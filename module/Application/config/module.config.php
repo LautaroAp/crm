@@ -234,7 +234,7 @@ return [
                                 'options' => [
                                     'route' => '/listado',
                                     'defaults' => [
-                                        'controller' => \Licencia\Controller\LicenciaController::class,
+                                        'controller' => \Producto\Controller\ProductoController::class,
                                         'action' => 'index',
                                     ],
                                 ],
@@ -244,7 +244,7 @@ return [
                                 'options' => [
                                     'route' => '/add',
                                     'defaults' => [
-                                        'controller' => \Licencia\Controller\LicenciaController::class,
+                                        'controller' => \Producto\Controller\ProductoController::class,
                                         'action' => 'add',
                                     ],
                                 ],
