@@ -95,6 +95,16 @@ return [
                             ],
                         ],
                     ],
+                    'backup' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/backup',
+                            'defaults' => [
+                                'controller' => \Clientes\Controller\ClientesController::class,
+                                'action' => 'backup',
+                            ],
+                        ],
+                    ],
                 ],
              ],
              // Gestion Proveedores
@@ -172,6 +182,16 @@ return [
                                     'defaults' => [
                                         'controller' => \Licencia\Controller\LicenciaController::class,
                                         'action' => 'index',
+                                    ],
+                                ],
+                            ],
+                            'backup' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/backup',
+                                    'defaults' => [
+                                        'controller' => \Licencia\Controller\LicenciaController::class,
+                                        'action' => 'backup',
                                     ],
                                 ],
                             ],
@@ -289,21 +309,21 @@ return [
                             ],
                         ],
                     ],
+                    'backup' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/backup',
+                            'defaults' => [
+                                'controller' => \Ejecutivo\Controller\EjecutivoController::class,
+                                'action' => 'backup',
+                            ],
+                        ],
+                    ],
                 ],
              ],
-
-            'backup' => [
-                'type' => Literal::class,
-                'options' => [
-                    'route' => '/backup',
-                    'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action' => 'backup',
-                    ],
-                ], 
-             ],
-
-        ],
+        
+            ],
+            
     ],
     'controllers' => [
         'factories' => [

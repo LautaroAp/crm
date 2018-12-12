@@ -66,8 +66,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                     </div>  
                 </form>
             </div>
-        </div>
-
+        <div class="panel-body">
         <table id="tabla_evento" class="table table-bordred table-hover table-condensed" style="vertical-align: center;">            
             <thead>
                 <tr> 
@@ -104,6 +103,8 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                 </tr>
                 </tbody>
             </table>
+        </div>
+        </div>
             <?php
             echo $this->paginationControl($personas, 'Sliding', // All, Elastic, Jumping, Sliding
                     'search_pagination_2.phtml', $this->url('clientes/page', ['action' => 'index', 'id' => 1]));

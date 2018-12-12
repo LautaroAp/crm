@@ -81,16 +81,16 @@ class ClientesManager {
     public function getClientes($parametros, $estado){
         $tipos= ['CLIENTE','USUARIO'];
         $parametros+=['estado'=>$estado];
+        $params_cliente=$this->diferenciarParametros($parametros,"CLIENTE");
+        $params_persona=$this->diferenciarParametros($parametros,"PERSONA");
         if (in_array('busquedaAvanzada', $parametros)){
-            unset($parametros['busquedaAvanzada']);
-            $params_cliente=$this->diferenciarParametros($parametros,"CLIENTE");
-            $params_persona=$this->diferenciarParametros($parametros,"PERSONA");
+            // unset($parametros['busquedaAvanzada']);
             $clientes= $this->buscarClientes($params_cliente)->getResult();
             $personas=$this->getPersonasFromClientes($clientes);
             $query = $this->personaManager->buscarPersonas($params_persona,$tipos,$personas);
         }
         else{
-            $query = $this->personaManager->buscarPersonas($parametros, $tipos);
+            $query = $this->personaManager->buscarPersonas($params_persona, $tipos);
         }
         return $query;
     }
@@ -311,6 +311,13 @@ class ClientesManager {
         }
         $_SESSION['MENSAJES']['listado_clientes'] = 1;
         return $estado_nuevo;
+    }
+
+    //La funcion getListaClientes() devuelve lista de clientes sin paginado
+    //Usada en la generacion de backup
+    public function getListaClientes() {
+        $lista = $this->entityManager->getRepository(Cliente::class)->findAll();
+        return $lista;
     }
 
     public function getCategoriaCliente($id = null) {

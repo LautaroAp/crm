@@ -9,7 +9,7 @@ use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
 
 /**
- * Esta clase se encarga de obtener y modificar los datos y personas adicionales.
+ * Esta clase se encarga de obtener y modificar los datos y personas.
  *
  */
 

@@ -143,4 +143,12 @@ class LicenciaController extends AbstractActionController {
         $this->getResponse()->setStatusCode(404);
         return;
     }
+
+    public function backupAction() {
+        $this->layout()->setTemplate('layout/nulo');
+        $resultado = $this->licenciaManager->getLicencias();
+        return new ViewModel([
+            'resultado' => $resultado
+        ]);
+    }
 }

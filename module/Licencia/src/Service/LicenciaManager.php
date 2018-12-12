@@ -40,6 +40,7 @@ class LicenciaManager {
         $this->config = $config;
     }
 
+    //retorna todas las licencias sin paginator para el backup
     public function getLicencias() {
         $licencias = $this->entityManager->getRepository(Licencia::class)->findAll();
         return $licencias;

@@ -96,73 +96,75 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="ud_adicionales" 
                     onclick="cambiaIconoCollapse(event)"></i></span>
                 </a>
-            </div>
-        </div>
-        
-        <div class="collapse" id="collapseUsuariosDatosAdicionales">
-            <table id="tabla_evento" class="table table-condensed">            
-                <thead>
-                    <tr> 
-                        <th class="th-sm">U/Dato Adicional</th>
-                        <th class="th-sm">Teléfono</th>
-                        <th class="th-sm">Email</th>
-                        <th class="th-sm">Skype</th>
-                        <th></th>      
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($usuarios as $usuario) : 
-                        $persona_usuario = $usuario->getPersona(); ?>
-                            <tr>
-                            <td><?php echo($persona_usuario->getNombre()); ?></td>
-                            <td><?php echo($persona_usuario->getTelefono()); ?></td>
-                            <td><?php echo($persona_usuario->getEmail()); ?></td>
-                            <td><?php echo($usuario->getSkype()); ?></td>
-                            <td> <a class="btn btn-default" href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
-                                    <span class="glyphicon glyphicon-pencil" ></span> 
-                                </a>
-                                <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#usuarioModal<?= $usuario->getId() ?>">
-                                    <span class="glyphicon glyphicon-remove" ></span
-                                </button>
-                            </td>
-                            <!-- Modal Usuario Adicional -->
-                    <div id="usuarioModal<?= $usuario->getId() ?>" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Eliminar usuario</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>
-                                        ¿Está seguro que desea eliminar el usuario:
-                                        "<?= $this->escapeHtml($persona_usuario->getNombre()) ?>"
-                                        de forma permanente?
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="<?= $this->url('usuarios', ['action' => 'delete', 'id' => $usuario->getId()]); ?>" type="button">
-                                    <span class="btn btn-default">Aceptar</span></a>
-                                
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>   
+
+            <div class="collapse " id="collapseUsuariosDatosAdicionales">
+                <div class="panel panel-body">
+                    <table id="tabla_evento" class="table table-condensed">            
+                        <thead>
+                            <tr> 
+                                <th class="th-sm">U/Dato Adicional</th>
+                                <th class="th-sm">Teléfono</th>
+                                <th class="th-sm">Email</th>
+                                <th class="th-sm">Skype</th>
+                                <th></th>      
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($usuarios as $usuario) : 
+                                $persona_usuario = $usuario->getPersona(); ?>
+                                    <tr>
+                                    <td><?php echo($persona_usuario->getNombre()); ?></td>
+                                    <td><?php echo($persona_usuario->getTelefono()); ?></td>
+                                    <td><?php echo($persona_usuario->getEmail()); ?></td>
+                                    <td><?php echo($usuario->getSkype()); ?></td>
+                                    <td> <a class="btn btn-default" href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
+                                            <span class="glyphicon glyphicon-pencil" ></span> 
+                                        </a>
+                                        <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#usuarioModal<?= $usuario->getId() ?>">
+                                            <span class="glyphicon glyphicon-remove" ></span
+                                        </button>
+                                    </td>
+                                    <!-- Modal Usuario Adicional -->
+                            <div id="usuarioModal<?= $usuario->getId() ?>" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Eliminar usuario</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                ¿Está seguro que desea eliminar el usuario:
+                                                "<?= $this->escapeHtml($persona_usuario->getNombre()) ?>"
+                                                de forma permanente?
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="<?= $this->url('usuarios', ['action' => 'delete', 'id' => $usuario->getId()]); ?>" type="button">
+                                            <span class="btn btn-default">Aceptar</span></a>
+                                        
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    </tr>
-                <?php endforeach; ?>
-                <tr>
-                    <td>
-                        <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $cliente->getId()]); ?>" type="button">
-                            <span class="btn btn-default">
-                                <span class="glyphicon glyphicon-plus" ></span> Agregar
-                            </span>
-                        </a> 
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                            </tr>
+                        <?php endforeach; ?>
+                        <tr>
+                            <td>
+                                <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $cliente->getId()]); ?>" type="button">
+                                    <span class="btn btn-default">
+                                        <span class="glyphicon glyphicon-plus" ></span> Agregar
+                                    </span>
+                                </a> 
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

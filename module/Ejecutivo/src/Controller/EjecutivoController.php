@@ -138,4 +138,11 @@ class EjecutivoController extends AbstractActionController {
         return $view;
     }
 
+    public function backupAction() {
+        $this->layout()->setTemplate('layout/nulo');
+        $resultado = $this->ejecutivoManager->getEjecutivos();
+        return new ViewModel([
+            'resultado' => $resultado
+        ]);
+    }
 }
