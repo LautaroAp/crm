@@ -163,6 +163,16 @@ return [
                             ],
                         ], 
                      ],
+                     'backup' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/backup',
+                            'defaults' => [
+                                'controller' => \Empresa\Controller\EmpresaController::class,
+                                'action' => 'backup',
+                            ],
+                        ],
+                    ],
                      // Gestion Licencias
                      'gestionLicencias' => [
                         'type' => Literal::class,

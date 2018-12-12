@@ -1,0 +1,75 @@
+<?php 
+header("Pragma: public");
+header("Expires: 0");
+$filename = "Backup_Ejecutivos.xls";
+//header("Content-type: application/x-msdownload; charset=utf8");
+header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+header("Content-Disposition: attachment; filename=$filename");
+header("Pragma: no-cache");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+?>
+
+<table>
+    <tbody>
+            <tr>
+                <td><?php echo (utf8_decode("Empresa:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getNombre())); ?></td>
+            </tr>
+            <tr>
+            <td><?php echo (utf8_decode("Dirección:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getDireccion())); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo (utf8_decode("Teléfono:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getTelefono())); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo (utf8_decode("Email:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getMail())); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo (utf8_decode("Móvil:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getMovil())); ?></td>
+            </tr>   
+            <tr>
+                <td><?php echo (utf8_decode("Fax:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getFax())); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo (utf8_decode("Dirección web:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getWeb())); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo (utf8_decode("CUIT/CUIL:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getCuit_cuil())); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo (utf8_decode("Vencimiento CAI:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getVencimiento_cai())); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo (utf8_decode("Razón Social:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getRazon_social())); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo (utf8_decode("Tipo IVA:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getTipo_iva())); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo (utf8_decode("País:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getPais())); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo (utf8_decode("Provincia:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getProvincia())); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo (utf8_decode("Localidad:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getLocalidad())); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo (utf8_decode("Código postal:"));?> </td>
+                <td><?php echo (utf8_decode($empresa->getCP())); ?></td>
+            </tr>
+        </tbody>
+</table>
