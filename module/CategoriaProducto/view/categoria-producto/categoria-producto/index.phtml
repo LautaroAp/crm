@@ -30,7 +30,10 @@ if (isset($_SESSION['MENSAJES']['categoria_producto'])) {
     <form method="post">
         <div class="row form-row">
             <div class="form-group col-md-4">
-                <input type="text" class="form-control form-margen" name="nombre" placeholder="Ingresar Categoría">
+                <input type="text" class="form-control form-margen" name="nombre" placeholder="Nombre de categoría">
+            </div>
+            <div class="form-group col-md-4">
+                <input type="text" class="form-control form-margen" name="descripcion" placeholder="Descripción de categoría">
             </div>
             <div class="form-group col-md-4">
                 <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
@@ -67,10 +70,12 @@ if (isset($_SESSION['MENSAJES']['categoria_producto'])) {
                 <table id="tabla_categoriaproducto" class="table table-bordred table-striped">
                     <thead>
                         <tr>
-                            <th class="th-sm" onclick="sortTableString(1, 'tabla_categoriaproducto')">Categoría
-                                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                            <th class="th-sm" onclick="sortTableString(1, 'tabla_categoriaproducto')" style="width:35%;">
+                                Categoría de Producto <i class="fa fa-sort float-right" aria-hidden="true"></i>
                             </th>
-                            <th></th>
+                            <th class="th-sm" onclick="sortTableString(1, 'tabla_categoriaproducto')" style="width:55%;">
+                                Descripción </th>
+                            <th style="width:10%;"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,6 +85,7 @@ if (isset($_SESSION['MENSAJES']['categoria_producto'])) {
                                 ?>
                                 <tr>
                                     <td><?php echo ($categoriaProducto->getNombre()); ?></td>
+                                    <td><?php echo ($categoriaProducto->getDescripcion()); ?></td>
                                     <td class="table-items-right">
                                         <a class="btn btn-default" href="<?= $this->url('categoriaProducto/editar', ['action' => 'edit', 'id' => $categoriaProducto->getId()]); ?>">
                                             <span class="glyphicon glyphicon-pencil" ></span> 
@@ -117,7 +123,7 @@ if (isset($_SESSION['MENSAJES']['categoria_producto'])) {
                     </table>
                     <?php
                     echo $this->paginationControl($categorias_pag, 'Sliding', // All, Elastic, Jumping, Sliding
-                            'search_pagination_cat.phtml', $this->url('categoriaProducto/page', ['action' => 'index', 'id' => 1]));
+                            'search_pagination_cat_prod.phtml', $this->url('categoriaProducto/page', ['action' => 'index', 'id' => 1]));
                 }
                 ?>
             </div>

@@ -101,8 +101,7 @@ class ProductoManager
     /**
      * This method updates data of an existing producto.
      */
-    public function updateProducto($producto, $form) 
-    {       
+    public function updateProducto($producto, $form) {       
         $data = $form->getData();
         $producto->setVersion($data['version_producto']);
         $producto->setNombre($data['nombre_producto']);           
@@ -111,12 +110,21 @@ class ProductoManager
         return true;
     }
     
-    public function removeProducto($producto){
-       
-
-            $this->entityManager->remove($producto);
-            $this->entityManager->flush();
-           
+    public function eliminarCategoriaProductos($id) {
+        $entityManager = $this->entityManager;
+        $producto = $this->entityManager->getRepository(Producto::class)->findAll();
+        foreach ($productos as $producto) {
+            if (!is_null($producto->getId_categoria())) {
+                if ($producto->getId_categoria() == $id) {
+                    $producto->setId_categoria(null);
+                }
+            }
+        }
+        $entityManager->flush();
     }
-    //ver de borrar las productos 
+
+    public function removeProducto($producto) {
+            $this->entityManager->remove($producto);
+            $this->entityManager->flush();  
+    }
 } 
