@@ -48,6 +48,7 @@
             "User\\": "module/User/src/",
             "TipoEvento\\": "module/TipoEvento/src/",
             "CategoriaCliente\\": "module/CategoriaCliente/src/",
+            "CategoriaProducto\\": "module/CategoriaProducto/src/",
             "Usuario\\": "module/Usuario/src/",
             "ProfesionCliente\\": "module/ProfesionCliente/src/",
             "Empresa\\": "module/Empresa/src/",
