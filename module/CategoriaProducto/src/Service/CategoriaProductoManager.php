@@ -68,11 +68,11 @@ class CategoriaProductoManager {
         $categoriaProducto->setDescripcion($data['descripcion']);
 
         if ($this->tryAddCategoriaProducto($categoriaProducto)) {
-            $_SESSION['MENSAJES']['categoria_cliente'] = 1;
-            $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría agregada correctamente';
+            $_SESSION['MENSAJES']['categoria_producto'] = 1;
+            $_SESSION['MENSAJES']['categoria_producto_msj'] = 'Categoría agregada correctamente';
         } else {
-            $_SESSION['MENSAJES']['categoria_cliente'] = 0;
-            $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Error al agregar categoría';
+            $_SESSION['MENSAJES']['categoria_producto'] = 0;
+            $_SESSION['MENSAJES']['categoria_producto_msj'] = 'Error al agregar categoría';
         }
         return $categoriaProducto;
     }
@@ -106,12 +106,13 @@ class CategoriaProductoManager {
     public function updateCategoriaProducto($categoriaProducto, $form) {
         $data = $form->getData();
         $categoriaProducto->setNombre($data['nombre']);
+        $categoriaProducto->setDescripcion($data['descripcion']);
         if ($this->tryUpdateCategoriaProducto($categoriaProducto)) {
-            $_SESSION['MENSAJES']['categoria_cliente'] = 1;
-            $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría editada correctamente';
+            $_SESSION['MENSAJES']['categoria_producto'] = 1;
+            $_SESSION['MENSAJES']['categoria_producto_msj'] = 'Categoría editada correctamente';
         } else {
-            $_SESSION['MENSAJES']['categoria_cliente'] = 0;
-            $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Error al editar categoría';
+            $_SESSION['MENSAJES']['categoria_producto'] = 0;
+            $_SESSION['MENSAJES']['categoria_producto_msj'] = 'Error al editar categoría';
         }
         return true;
     }
@@ -120,11 +121,11 @@ class CategoriaProductoManager {
         $categoriaProducto= $this->entityManager->getRepository(CategoriaProducto::class)
                         ->find($id);
         if ($this->tryRemoveCategoriaProducto($categoriaProducto)) {
-            $_SESSION['MENSAJES']['categoria_cliente'] = 1;
-            $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría eliminada correctamente';
+            $_SESSION['MENSAJES']['categoria_producto'] = 1;
+            $_SESSION['MENSAJES']['categoria_producto_msj'] = 'Categoría eliminada correctamente';
         } else {
-            $_SESSION['MENSAJES']['categoria_cliente'] = 0;
-            $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Error al eliminar categoría';
+            $_SESSION['MENSAJES']['categoria_producto'] = 0;
+            $_SESSION['MENSAJES']['categoria_producto_msj'] = 'Error al eliminar categoría';
         }
     }
 

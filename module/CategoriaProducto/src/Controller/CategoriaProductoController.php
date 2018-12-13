@@ -64,13 +64,13 @@ class CategoriaProductoController extends AbstractActionController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
+                ->setItemCountPerPage(4);
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             // $this->categoriaProductoManager->addCategoriaProducto($data);
             $categoriaProducto = $this->categoriaProductoManager->getCategoriaProductoFromForm($form, $data);
-            return $this->redirect()->toRoute('categoriaProducto');
+            return $this->redirect()->toRoute('gestionEmpresa/gestionProductos/categorias');
         }
         return new ViewModel([
             'form' => $form,
@@ -94,7 +94,7 @@ class CategoriaProductoController extends AbstractActionController {
                 $data = $this->params()->fromPost();
                 if ($this->categoriaProductoManager->formValid($form, $data)) {
                     $this->categoriaProductoManager->updateCategoriaProducto($categoriaProducto, $form);
-                    return $this->redirect()->toRoute('categoriaProducto');
+                    return $this->redirect()->toRoute('gestionEmpresa/gestionProductos/categorias');
                 }
             } else {
                 $this->categoriaProductoManager->getFormEdited($form, $categoriaProducto);

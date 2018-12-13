@@ -4,9 +4,7 @@ $this->headTitle($title);
 ?>
 
 <form method="post">
-
 <div class="container margen">
-
     <!-- Datos del Producto -->
     <div class="row">
         <div class="panel panel-default">
@@ -42,9 +40,12 @@ $this->headTitle($title);
                         <label>Categoría</label>
                         <select class="form-control" id="categoria" name="categoria">
                             <option value="" hidden="">Seleccionar Categoría</option>
-                            <option value="1">...</option>
-                            <option value="2">...</option>
                             <option value="-1">NO DEFINIDO</option>
+                            <?php foreach ($categorias as $categoria) : ?>
+                                <option value="<?= $categoria->getId(); ?>">
+                                    <?= $categoria->getNombre(); ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group col-md-6">
@@ -88,7 +89,7 @@ $this->headTitle($title);
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">
-                DATOS MONETARIOS DEL PRODUCTO
+                DATOS ECONÓMICOS DEL PRODUCTO
             </div>
             <div class="panel-body">
                 <!-- 1ra fila -->
@@ -106,12 +107,12 @@ $this->headTitle($title);
                     <div class="form-group col-md-2">
                         <label>Gastos Directos</label>
                         <input type="text" class="form-control" name="gastos_directos" id="gastos_directos"
-                            value=0 onkeyup="calculaCostoTotalCompra()">
+                            value=0 onkeypress="return justNumbers(event);" onkeyup="calculaCostoTotalCompra()">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Costo Total de Compra</label>
-                        <input type="text" class="form-control" name="costo_total_compra" id="costo_total_compra"
-                            value=0 disabled>
+                        <input type="text" class="form-control" name="precio_compra_total" id="precio_compra_total"
+                            value=0 readonly>
                     </div>
                 </div>
                 <!-- 2da fila -->
@@ -133,7 +134,7 @@ $this->headTitle($title);
                     </div>
                     <div class="form-group col-md-4">
                         <label>Precio Venta con Dto.</label>
-                        <input type="text" class="form-control" name="precio_venta_dto" id="precio_venta_dto" value=0 disabled>
+                        <input type="text" class="form-control" name="precio_venta_dto" id="precio_venta_dto" value=0 readonly>
                     </div>
                 </div>
                 <!-- 3ra fila -->
@@ -156,18 +157,18 @@ $this->headTitle($title);
                     </div>
                     <div class="form-group col-md-4">
                         <label>Total IVA $</label>
-                        <input type="text" class="form-control" name="iva_total" id="iva_total" value=0>
+                        <input type="text" class="form-control" name="iva_gravado" id="iva_gravado" value=0>
                     </div>
                 </div>
                 <!-- 4ta fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>Precio Publico + IVA</label>
-                        <input type="text" class="form-control" name="precio_publico_iva" id="precio_publico_iva" value=0 disabled>
+                        <input type="text" class="form-control" name="precio_final_iva" id="precio_final_iva" value=0 readonly>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Precio Publico +IVA con Dto.</label>
-                        <input type="text" class="form-control" name="precio_publico_iva_dto" id="precio_publico_iva_dto" value=0 disabled>
+                        <input type="text" class="form-control" name="precio_final_iva_dto" id="precio_final_iva_dto" value=0 readonly>
                     </div>
                 </div>
             </div>
@@ -215,7 +216,7 @@ $this->headTitle($title);
         </div>                   
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionClientes') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                <a href="<?= $this->url('gestionEmpresa/gestionProductos') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Volver</label>

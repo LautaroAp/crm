@@ -1,42 +1,84 @@
 <?php
 $this->headTitle('Editar Categoria');
-
-$form->get('nombre')->setAttributes([
-    'class' => 'form-control'
-]);
-
 $form->prepare();
 ?>
+
+<?= $this->form()->openTag($form); ?>
+
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">EDITAR CATEGORÍA</div>
+            <div class="panel-heading">
+                EDITAR CATEGORÍA
+            </div>
+            <div class="panel-body">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>Nombre de Categoría</label>
+                        <input type="text" class="form-control" name="nombre"
+                            value="<?= $categoriaProducto->getNombre(); ?>">
+                    </div>
+                    <div class="form-group col-md-4">
+                    <label>Descripción de Categoría</label>
+                    <input type="text" class="form-control" name="descripcion"
+                        value="<?= $categoriaProducto->getDescripcion(); ?>">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-8">
-                    <?= $this->form()->openTag($form); ?>
-                    <div class="form-group">
-                        <?= $this->formLabel($form->get('nombre')); ?>
-                        <?= $this->formElement($form->get('nombre')); ?>
-                        <?= $this->formElementErrors($form->get('nombre')); ?>                  
-                    </div>
-                    <div class="form-group">
-                        <?= $this->formLabel($form->get('descripcion')); ?>
-                        <?= $this->formElement($form->get('descripcion')); ?>
-                        <?= $this->formElementErrors($form->get('descripcion')); ?>                  
-                    </div>
+
+<!-- Inicio: Modal -->
+<div class="container">   
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Editar categoría</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro que desea editar los datos de este categoría?</p>
+                </div>
+                <div class="modal-footer">
                     <button type="submit" class="btn btn-default">Aceptar</button>
-                    <button type="submit" class="btn btn-default">Cancelar</button>
-                    <?= $this->form()->closeTag(); ?>
-                </div>    
-            </div>   
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+<!-- Fin: Modal -->
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row img-centrar">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a data-toggle="modal" data-target="#myModal">
+                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Guardar</label>
+            </div>
+        </div>
+
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('gestionEmpresa/gestionProductos/categorias') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
+            </div>
         </div>
     </div>
 </div>
-    
+<!-- Fin: Panel Botones -->
+
+<?= $this->form()->closeTag(); ?>
 

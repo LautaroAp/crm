@@ -20,14 +20,69 @@ return [
             'producto' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/producto[/:action[/:id]]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
-                    ],
+                    'route' => '/producto',
                     'defaults' => [
-                        'controller'    => Controller\ProductoController::class,
-                        'action'        => 'index',
+                        'controller' => \Application\Controller\IndexController::class,
+                        'action' => 'gestionProductos',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'listado' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/listado',
+                            'defaults' => [
+                                'controller' => \Producto\Controller\ProductoController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'agregar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/add',
+                            'defaults' => [
+                                'controller' => \Producto\Controller\ProductoController::class,
+                                'action' => 'add',
+                            ],
+                        ],
+                    ],
+                    'editar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/edit[/:id]',
+                            'defaults' => [
+                                'controller' => \Producto\Controller\ProductoController::class,
+                                'action' => 'edit',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'categorias' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/categorias',
+                            'defaults' => [
+                                'controller' => \CategoriaProducto\Controller\CategoriaProductoController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'page' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/page[/:id[/:estado]]',
+                            'defaults' => [
+                                'controller' => \Producto\Controller\ProductoController::class,
+                                'action' => 'index',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
                     ],
                 ],
             ],

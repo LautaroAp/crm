@@ -29,10 +29,18 @@ class ProductoController extends AbstractActionController {
     }
 
     private function procesarIndexAction() {
-        $productos = $this->productoManager->getProductos();
+        $paginator = $this->productoManager->getTabla();
+        $page = 1;
+        if ($this->params()->fromRoute('id')) {
+            $page = $this->params()->fromRoute('id');
+        }
+        $paginator->setCurrentPageNumber((int) $page)
+                ->setItemCountPerPage(3);
 
+        $productos = $this->productoManager->getProductos();
         return new ViewModel([
-            'productos' => $productos
+            'productos' => $productos,
+            'productos_pag' => $paginator
         ]);
     }
 
@@ -43,13 +51,14 @@ class ProductoController extends AbstractActionController {
     
     private function procesarAddAction() {
         $request = $this->getRequest();
+        $categoriaProductos = $this->productoManager->getCategoriaProducto();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
-            // $this->clientesManager->addCliente($data);
-            $this->redirect()->toRoute('home');
+            $this->productoManager->addProducto($data);
+            $this->redirect()->toRoute('gestionEmpresa/gestionProductos/listado');
         }
         return new ViewModel([
-            'categorias' => 1
+            'categorias' => $categoriaProductos
         ]);
     }
 
@@ -59,27 +68,20 @@ class ProductoController extends AbstractActionController {
     }
 
     public function procesarEditAction() {
+        $request = $this->getRequest();
         $id = (int) $this->params()->fromRoute('id', -1);
         $producto = $this->productoManager->getProductoId($id);
-        $form =$this->productoManager->getFormForProducto($producto);
-        if ($form == null){
-            $this->reportarError();
-        } else {
-            if ($this->getRequest()->isPost()) {
-               $data = $this->params()->fromPost();
-               if ($this->productoManager->formValid($form,$data)){
-                    $this->productoManager->updateProducto($producto,$form);
-                    return $this->redirect()->toRoute('producto', ['action' => 'index']);
-               }
-            }               
-         else {
-            $this->productoManager->getFormEdited($form, $producto);
-         }
-        return new ViewModel(array(
-            'producto' => $producto,
-            'form' => $form
-        ));
+        $categoriaProductos = $this->productoManager->getCategoriaProducto();
+
+        if ($request->isPost()) {
+            $data = $this->params()->fromPost();
+            $this->productoManager->updateProducto($producto, $data);
+            $this->redirect()->toRoute('gestionEmpresa/gestionProductos/listado');
         }
+        return new ViewModel([
+            'producto' => $producto,
+            'categorias' => $categoriaProductos,
+        ]);
     }
 
     public function removeAction() 
