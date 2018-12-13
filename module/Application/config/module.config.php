@@ -306,6 +306,16 @@ return [
                                     ],
                                 ],
                             ],
+                            'backup' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/add',
+                                    'defaults' => [
+                                        'controller' => \Servicio\Controller\ServicioController::class,
+                                        'action' => 'backup',
+                                    ],
+                                ],
+                            ],
                         ], 
                     ],
                  ],
