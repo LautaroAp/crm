@@ -79,6 +79,7 @@ class EventoController extends AbstractActionController {
         $Id = (int) $this->params()->fromRoute('id', -1);
         $cliente = $this->clienteManager->getCliente($Id);
         $tipoEventos = $this->getArrayTipos();
+        $transacciones = $this->tipoEventoManager->getTipoEventos();
         $form = $this->eventoManager->createForm($tipoEventos);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
@@ -89,6 +90,7 @@ class EventoController extends AbstractActionController {
             'form' => $form,
             'cliente' => $cliente,
             'tipos' => $tipoEventos,
+            'transacciones' => $transacciones
         ]);
     }
 

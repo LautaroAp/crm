@@ -31,7 +31,7 @@ $establecimientos = $cliente->getEstablecimientos();
                         <div class="col-md-12">  
                             <div class="row">
                                 <form method="post">
-                                    <!-- Inicio: Datos del Cliente -->
+                                    <!-- 1ra fila -->
                                     <div class="row form-row">  
                                         <input type="hidden" name="id" value="<?= $id ?>">
                                         <div class="form-group col-md-4">
@@ -47,6 +47,7 @@ $establecimientos = $cliente->getEstablecimientos();
                                             <input type="text" class="form-control" name="telefono" value="<?php echo($telefono); ?>" placeholder="Ingresar Teléfono">
                                         </div>
                                     </div>
+                                    <!-- 2da fila -->
                                     <div class="row form-row">
                                         <div class="form-group col-md-4">
                                             <label>País</label>
@@ -72,6 +73,7 @@ $establecimientos = $cliente->getEstablecimientos();
                                             <input type="text" class="form-control" name="ciudad" value="<?php echo($ciudad); ?>" placeholder="Ingresar Ciudad">
                                         </div>   
                                     </div>
+                                    <!-- 3ra fila -->
                                     <div class="row form-row">
                                         <div class="form-group col-md-4">
                                             <label>Licencia</label>
@@ -108,6 +110,7 @@ $establecimientos = $cliente->getEstablecimientos();
                                             </select>
                                         </div>
                                     </div>
+                                    <!-- 4ta fila -->
                                     <div class="row form-row">
                                         <div class="form-group col-md-4">
                                             <label>Empresa</label>
@@ -117,12 +120,7 @@ $establecimientos = $cliente->getEstablecimientos();
                                             <label>Skype</label>
                                             <input type="text" class="form-control" name="skype" placeholder="Ingresar Skype">
                                         </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Raza de Manejo</label>
-                                            <input type="text" class="form-control" name="raza_manejo" placeholder="Ingresar Raza">
-                                        </div>
                                     </div>
-                                    <!-- Fin: Datos del Cliente -->
                                 </div>
                             </div>
                         </div>
@@ -155,14 +153,18 @@ $establecimientos = $cliente->getEstablecimientos();
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Nro. de Animales</label>
-                        <input type="text" class="form-control" name="animales" value="<?php echo($animales); ?>" placeholder="Ingresar Nro. Animales">
+                        <label>Actividad</label>
+                        <input type="text" class="form-control" name="actividad" value="<?php echo($actividad); ?>" placeholder="Ingresar Actividad">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Raza de Manejo</label>
+                        <input type="text" class="form-control" name="raza_manejo" placeholder="Ingresar Raza">
                     </div>
                 </div>
                 <div class="row form-row">
                     <div class="form-group col-md-4">
-                        <label>Actividad</label>
-                        <input type="text" class="form-control" name="actividad" value="<?php echo($actividad); ?>" placeholder="Ingresar Actividad">
+                        <label>Nro. de Animales</label>
+                        <input type="text" class="form-control" name="animales" value="<?php echo($animales); ?>" placeholder="Ingresar Nro. Animales">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Nro. de Establecimientos</label>
@@ -173,7 +175,62 @@ $establecimientos = $cliente->getEstablecimientos();
         </div>
     </div>
 </div>
- <!-- Fin: Caracteristicas de trabajo -->
+<!-- Fin: Caracteristicas de trabajo -->
+
+<!-- Inicio: Datos de Facturacion -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                MODIFICAR DATOS DE FACTURACIÓN
+            </div>
+            <div class="panel panel-body">
+                <div class="row form-row">
+                    <div class="form-group col-md-4">
+                        <label>Razón Social</label>
+                        <input type="text" class="form-control" name="razon_social" 
+                            value="<?= $cliente->getRazon_social(); ?>" placeholder="Ingresar Razón Social">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Condición de IVA</label>
+                        <select class="form-control" id="condicion_iva" name="condicion_iva">
+                            <option value="<?php if(isset($profesion)){ echo ($profesion->getId()); }?>" hidden="">  
+                                <?php if(isset($profesion)){ echo($profesion->getNombre()); } else {echo ("Seleccionar Profesión");}?>
+                            </option>
+                            <option value="-1">NO DEFINIDO</option>
+                            <?php foreach ($profesiones as $profesion) : ?>
+                                <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Banco</label>
+                        <input type="text" class="form-control" name="banco" 
+                            value="<?= $cliente->getBanco(); ?>" placeholder="Ingresar Banco">
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="form-group col-md-4">
+                        <label>Dirección de Facturación</label>
+                        <input type="text" class="form-control" name="direccion_facturacion" 
+                            value="<?= $cliente->getDireccion_facturacion(); ?>" placeholder="Ingresar Dirección de Facturación">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>CUIT/CUIL</label>
+                        <input type="text" class="form-control" name="cuit_cuil"
+                        value="<?= $cliente->getCuit_cuil(); ?>" placeholder="Ingresar CUIT/CUIL">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>CBU</label>
+                        <input type="text" class="form-control" name="cbu"
+                            value="<?= $cliente->getCbu(); ?>" placeholder="Ingresar CBU">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Datos de Facturacion -->
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
