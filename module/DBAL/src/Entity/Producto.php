@@ -23,7 +23,7 @@ class Producto
     /**
      * @ORM\Column(name="ID_EVENTO", nullable=true, type="integer")
      */
-    protected $id_evento;
+    protected $evento;
 
     /**
      * @ORM\Column(name="NOMBRE", nullable=true, type="string")
@@ -38,12 +38,12 @@ class Producto
     /**
      * @ORM\Column(name="ID_CATEGORIA", nullable=true, type="integer")
      */
-    protected $id_categoria;
+    protected $categoria;
 
     /**
      * @ORM\Column(name="ID_PROVEEDOR", nullable=true, type="integer")
      */
-    protected $id_proveddor;
+    protected $proveddor;
 
     /**
      * @ORM\Column(name="MARCA", nullable=true, type="string")
@@ -123,7 +123,7 @@ class Producto
     /**
      * @ORM\Column(name="ID_IVA", nullable=true, type="integer")
      */
-    protected $id_iva;
+    protected $iva;
 
     /**
      * @ORM\Column(name="IVA_GRAVADO", nullable=true, type="decimal")
@@ -143,32 +143,16 @@ class Producto
     /**
      * @ORM\Column(name="ID_MONEDA", type="integer")
      */
-    protected $id_moneda;
+    protected $moneda;
 
-
-
-
-    /**
-     * Get the value of id_producto
-     */
-    public function getId_producto(){
+    public function getId(){
         return $this->id_producto;
-    }
-
-    /**
-     * Set the value of id_producto
-     *
-     * @return self
-     */
-    public function setId_producto($id_producto){
-        $this->id_producto = $id_producto;
-        return $this;
     }
 
     /**
      * Get the value of id_evento
      */
-    public function getId_evento(){
+    public function getEvento(){
         return $this->id_evento;
     }
 
@@ -177,8 +161,8 @@ class Producto
      *
      * @return self
      */
-    public function setId_evento($id_evento){
-        $this->id_evento = $id_evento;
+    public function setEvento($evento){
+        $this->evento = $evento;
         return $this;
     }
 
@@ -217,36 +201,36 @@ class Producto
     }
 
     /**
-     * Get the value of id_categoria
+     * Get the value of categoria
      */
-    public function getId_categoria(){
-        return $this->id_categoria;
+    public function getCategoria(){
+        return $this->categoria;
     }
 
     /**
-     * Set the value of id_categoria
+     * Set the value of categoria
      *
      * @return self
      */
-    public function setId_categoria($id_categoria){
-        $this->id_categoria = $id_categoria;
+    public function setCategoria($categoria){
+        $this->categoria = $categoria;
         return $this;
     }
 
     /**
-     * Get the value of id_proveddor
+     * Get the value of proveedor
      */
-    public function getId_proveddor(){
-        return $this->id_proveddor;
+    public function getProveedor(){
+        return $this->proveedor;
     }
 
     /**
-     * Set the value of id_proveddor
+     * Set the value of proveddor
      *
      * @return self
      */
-    public function setId_proveddor($id_proveddor){
-        $this->id_proveddor = $id_proveddor;
+    public function setProveedor($proveedor){
+        $this->proveedor = $proveedor;
         return $this;
     }
 
@@ -507,19 +491,19 @@ class Producto
     }
 
     /**
-     * Get the value of id_iva
+     * Get the value of iva
      */ 
-    public function getId_iva() {
-        return $this->id_iva;
+    public function getIva() {
+        return $this->iva;
     }
 
     /**
-     * Set the value of id_iva
+     * Set the value of iva
      *
      * @return self
      */ 
-    public function setId_iva($id_iva) {
-        $this->id_iva = $id_iva;
+    public function setIva($iva) {
+        $this->iva = $iva;
         return $this;
     }
 
@@ -575,10 +559,10 @@ class Producto
     }
 
     /**
-     * Get the value of id_moneda
+     * Get the value of moneda
      */ 
-    public function getId_moneda() {
-        return $this->id_moneda;
+    public function getMoneda() {
+        return $this->moneda;
     }
 
     /**
@@ -586,8 +570,8 @@ class Producto
      *
      * @return self
      */ 
-    public function setId_moneda($id_moneda) {
-        $this->id_moneda = $id_moneda;
+    public function setMoneda($moneda) {
+        $this->moneda = $moneda;
         return $this;
     }
 }

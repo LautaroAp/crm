@@ -90,6 +90,11 @@ class Empresa {
      * @ORM\Column(name="PARAMETRO_VENCIMIENTO", nullable=true, type="integer")
      */
     protected $parametro_vencimiento;
+
+    /**
+     * @ORM\Column(name="PARAMETRO_ELEMENTOS_PAGINA", nullable=true, type="integer")
+     */
+    protected $parametro_elementos_pagina;
     
     function getNombre() {
         return $this->nombre;
@@ -236,6 +241,20 @@ class Empresa {
         $this->parametro_vencimiento = $parametro_vencimiento;
     }
 
+    /**
+     * Get the value of parametro_elementos_pagina
+     */ 
+    public function getParametro_elementos_pagina() {
+        return $this->parametro_elementos_pagina;
+    }
 
-
+    /**
+     * Set the value of parametro_elementos_pagina
+     *
+     * @return self
+     */ 
+    public function setParametro_elementos_pagina($parametro_elementos_pagina) {
+        $this->parametro_elementos_pagina = $parametro_elementos_pagina;
+        return $this;
+    }
 }

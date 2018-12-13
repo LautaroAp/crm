@@ -249,6 +249,19 @@ return [
                                     ],
                                 ],
                             ],
+                            'editar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/edit[/:id]',
+                                    'defaults' => [
+                                        'controller' => \Producto\Controller\ProductoController::class,
+                                        'action' => 'edit',
+                                    ],
+                                    'constraints' => [
+                                        'id' => '[0-9]\d*',
+                                    ],
+                                ],
+                            ],
                             'categorias' => [
                                 'type' => Segment::class,
                                 'options' => [

@@ -18,9 +18,9 @@ function calculaCostoTotalCompra() {
     $total = $total + parseFloat($('#costos_directos').val());
     $total = ($total + parseFloat($('#gastos_directos').val())).toFixed(2);
     if ($total){
-        $("#costo_total_compra").val($total);
+        $("#precio_compra_total").val($total);
     } else {
-        $("#costo_total_compra").val("0");
+        $("#precio_compra_total").val("0");
     }
     // Precio Venta
     calculaCMPorcentual();
@@ -32,7 +32,7 @@ function calculaCostoTotalCompra() {
 function calculaCMValor() {
     $("#cm_valor").removeClass("prod-imput-gray");
     // Precio de Venta
-    $c_total = parseFloat($('#costo_total_compra').val());
+    $c_total = parseFloat($('#precio_compra_total').val());
     $cm_valor = parseFloat($('#cm_valor').val());
     $p_venta = ($c_total + $cm_valor).toFixed(2);
     if ($p_venta){
@@ -57,7 +57,7 @@ function calculaCMValor() {
 function calculaCMPorcentual() {
     $("#cm_porcentual").removeClass("prod-imput-gray");
     // Precio de Venta
-    $c_total = parseFloat($('#costo_total_compra').val());
+    $c_total = parseFloat($('#precio_compra_total').val());
     $cm_porcentual = parseFloat($('#cm_porcentual').val()) / 100;
     $p_venta = (($c_total * $cm_porcentual) + $c_total).toFixed(2);
     if ($p_venta){
@@ -81,7 +81,7 @@ function calculaCMPorcentual() {
 // Precio de Venta
 function calculaPrecioVenta() {
     $("#precio_venta").removeClass("prod-imput-gray");
-    $c_total = parseFloat($('#costo_total_compra').val());
+    $c_total = parseFloat($('#precio_compra_total').val());
     $p_venta = parseFloat($('#precio_venta').val());
     // Contribucion Marginal Valor
     $cm_valor = ($p_venta - $c_total).toFixed(2);
@@ -116,25 +116,25 @@ function calculaDescuentoIVA() {
         $("#precio_venta_dto").val("0");
     }
     // Total IVA.
-    $iva_total = ($p_venta * $iva).toFixed(2);
+    $iva_gravado = ($p_venta * $iva).toFixed(2);
     if ($p_venta_dto){
-        $("#iva_total").val($iva_total);
+        $("#iva_gravado").val($iva_gravado);
     } else {
-        $("#iva_total").val("0");
+        $("#iva_gravado").val("0");
     }
     // Precio Publico + IVA
-    $p_publico_iva = ($p_venta + ($p_venta * $iva)).toFixed(2);
-    if ($p_publico_iva){
-        $("#precio_publico_iva").val($p_publico_iva);
+    $p_final_iva = ($p_venta + ($p_venta * $iva)).toFixed(2);
+    if ($p_final_iva){
+        $("#precio_final_iva").val($p_final_iva);
     } else {
-        $("#precio_publico_iva").val("0");
+        $("#precio_final_iva").val("0");
     }
     // Precio Publico + IVA + Dto.
-    $p_publico_iva_dto = ( ($p_venta - ($p_venta * $descuento)) + (($p_venta - ($p_venta * $descuento)) * $iva) ).toFixed(2);
-    if ($p_publico_iva_dto){
-        $("#precio_publico_iva_dto").val($p_publico_iva_dto);
+    $p_final_iva_dto = ( ($p_venta - ($p_venta * $descuento)) + (($p_venta - ($p_venta * $descuento)) * $iva) ).toFixed(2);
+    if ($p_final_iva_dto){
+        $("#precio_final_iva_dto").val($p_final_iva_dto);
     } else {
-        $("#precio_publico_iva_dto").val("0");
+        $("#precio_final_iva_dto").val("0");
     }
 }
 

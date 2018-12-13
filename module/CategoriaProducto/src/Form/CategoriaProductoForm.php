@@ -73,21 +73,4 @@ class CategoriaProductoForm extends Form {
             ],
         ]);
     }
-
-    // private function addInputFilter() {
-    //     $inputFilter = $this->getInputFilter();
-    //     $inputFilter->add([
-    //         'name' => 'nombre',
-    //         'required' => true,
-    //         'filters' => [
-    //             ['name' => 'StringTrim'],
-    //         ],
-    //         'validators' => [
-    //             [
-    //                 'name' => 'StringLength',
-    //             ],
-    //         ],
-    //     ]);
-    // }
-
 }
