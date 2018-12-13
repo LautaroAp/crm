@@ -2,75 +2,76 @@
 $this->headTitle('Servicios');
 ?>
 <script src="js/functions.js"> </script>
-<div class="container">
+<div class="container margen">
     <div class="row">
-         <div class="panel panel-default">
-            <div class="panel-heading text-center">Servicios disponibles</div>
-        </div>
-        <div class="col-md-12">
-            <div class="table-responsive">
-                  
-                    <table id="tabla_servicios" class="table table-bordred table-striped">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                SERVICIOS DE LA EMPRESA
+            </div>
+            <div class="panel panel-body">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                            <table id="tabla_servicios" class="table table-bordred table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="th-sm">Nombre</th>
+                                    <th class="th-sm">Precio</th>
+                                    <th class="th-sm">Descuento</th>
+                                    <th class="th-sm">Precio final IVA</th>
+                                    <th class="th-sm">Precio final IVA DTO</th>
+                                    <th></th>
+                                </tr>
+                            
+                            </thead>
 
-                    <thead>
+                            <?php foreach ($servicios as $servicio) : ?>
+                                <tr>
+                                    <td><?php echo ($servicio->getNombre()); ?></td>
+                                    <td><?php echo ($servicio->getPrecio()); ?></td>
+                                    <td><?php echo ($servicio->getDescuento()); ?></td>
+                                    <td><?php echo ($servicio->getPrecio_final_iva()); ?></td>
+                                    <td><?php echo ($servicio->getPrecio_final_iva_dto()); ?></td>
+                                    <td class="table-items-right"> 
+                                    <a class="btn btn-default" href="<?= $this->url('servicio/editar', ['action' => 'edit', 'id' => $servicio->getId()]); ?>">
+                                        <span class="glyphicon glyphicon-pencil" ></span> 
+                                    </a>
+                                    <button name="<?= $servicio->getId() ?>" id="<?= $servicio->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $servicio->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
+                                </td>
+                                <!-- Modal -->
+                                <div id="myModal<?= $servicio->getId() ?>" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
 
-                        <tr>
-                            <th class="th-sm"  onclick="sortTableStriing(0,'tabla_servicios')">Descripcion
-                                <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                            </th>
-                            <th class="th-sm" onclick="sortTableNuemeric(1,'tabla_servicios')">Costo
-                                <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                            </th>
-                            <th class="th-sm" onclick="sortTableNuemeric(2,'tabla_servicios')">Cantidad de animales
-                                <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                            </th>
-                            <th></th>
-                        </tr>
-                       
-                    </thead>
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Borrar cliente</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Estas seguro de borrar el servicio?
+                                                    "<?= $this->escapeHtml($servicio->getNombre()) ?>"
 
-                    <?php foreach ($servicios as $servicio) : ?>
-                        <tr>
-                            <td><?php echo($servicio->getDescripcion()); ?></td>
-                            <td><?php echo ($servicio->getCosto()); ?></td>
-                            <td><?php echo ($servicio->getCant_animales()); ?></td>
-
-                            <td> <a class="btn btn-default" href="<?= $this->url('servicio', ['action' => 'edit', 'id' => $servicio->getId()]); ?>"> <span class="glyphicon glyphicon-pencil" ></span> </a>                            
-                             <button name="<?= $servicio->getId() ?>" id="<?= $servicio->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $servicio->getId() ?>"><span class="glyphicon glyphicon-remove" ></span</button></td>
-
-
-                            <!-- Modal -->
-                        <div id="myModal<?= $servicio->getId() ?>" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
-
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Borrar cliente</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>
-                                            Estas seguro de borrar el servicio?
-                                            "<?= $this->escapeHtml($servicio->getDescripcion()) ?>"
-
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="<?= $this->url('servicio', ['action' => 'remove', 'id' => $servicio->getId()]); ?>" class="btn btn-default">Borrar</a>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= $this->url('servicio', ['action' => 'remove', 'id' => $servicio->getId()]); ?>" class="btn btn-default">Borrar</a>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                </div>  
             </div>
-           </div>  
+        </div>
     </div>
+    <?php
+        echo $this->paginationControl($servicios, 'Sliding', // All, Elastic, Jumping, Sliding
+                    'search_pagination6.phtml', $this->url('servicio/page', ['action' => 'index', 'id' => 1]));    ?>
 </div>
 
 
@@ -100,7 +101,7 @@ $this->headTitle('Servicios');
                     
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
-                            <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                            <a href="<?= $this->url('gestionEmpresa/gestionServicios') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
                         </div>
                         <div class="ficha-cliente-label">
                             <label>Volver</label>

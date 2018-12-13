@@ -54,7 +54,11 @@
             "Empresa\\": "module/Empresa/src/",
             "Servicio\\": "module/Servicio/src/",
             "Producto\\": "module/Producto/src/",
-            "Persona\\": "module/Persona/src/"
+            "Persona\\": "module/Persona/src/",
+            "CategoriaServicio\\": "module/CategoriaServicio/src/",
+            "Moneda\\": "module/Moneda/src/"
+
+
         }
     },
     "autoload-dev": {

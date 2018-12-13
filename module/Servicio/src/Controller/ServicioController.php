@@ -32,11 +32,16 @@ class ServicioController extends AbstractActionController {
     }
 
     private function procesarIndexAction() {
-
-        $servicios = $this->servicioManager->getServicios();
+        $paginator = $this->servicioManager->getTabla();
+        $page = 1;
+        if ($this->params()->fromRoute('id')) {
+            $page = $this->params()->fromRoute('id');
+        }
+        $paginator->setCurrentPageNumber((int) $page)
+                ->setItemCountPerPage(10);
         return new ViewModel([
-            'servicios' => $servicios
-        ]);
+            'servicios' => $paginator
+        ]);        
     }
 
     public function addAction() {
@@ -45,16 +50,12 @@ class ServicioController extends AbstractActionController {
     }
 
     private function procesarAddAction() {
-        $form = $this->servicioManager->createForm();
-
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $this->servicioManager->getServicioFromForm($form, $data);
+            $this->servicioManager->addServicio($data);
             return $this->redirect()->toRoute('servicio', ['action' => 'index']);
         }
-        return new ViewModel([
-            'form' => $form
-        ]);
+        return new ViewModel();
     }
 
     public function editAction() {
@@ -64,26 +65,13 @@ class ServicioController extends AbstractActionController {
     public function procesarEditAction() {
         $id = $this->params()->fromRoute('id', -1);
         $servicio = $this->servicioManager->getServicioId($id);
-        $form = $this->servicioManager->getFormForServicio($servicio);
-
-        if ($form == null) {
-            $this->getResponse()->setStatusCode(404);
-        } else {
-            if ($this->getRequest()->isPost()) {
-                $data = $this->params()->fromPost();
-                if ($this->servicioManager->formValid($form, $data)) {
-                    $this->servicioManager->updateServicio($servicio, $form);
-                    return $this->redirect()->toRoute('servicio', ['action' => 'index']);
-                }
-            } else {
-                $this->servicioManager->getFormEdited($form, $servicio);
-            }
-
-            return new ViewModel(array(
-                'servicio' => $servicio,
-                'form' => $form
-            ));
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $this->servicioManager->updateServicio($servicio, $data);
+            return $this->redirect()->toRoute('servicio', ['action' => 'index']);
         }
+        return new ViewModel([
+            'servicio' => $servicio]);
     }
 
     public function removeAction() {

@@ -4,13 +4,13 @@ namespace DBAL\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Description of CategoriaProducto
+ * Description of CategoriaServicio
  *
  * This class represents a registered categoriaProducto.
  * @ORM\Entity()
- * @ORM\Table(name="CATEGORIA_SERVICIO")
+ * @ORM\Table(name="CATEGORIA_PRODUCTO")
  */
-class CategoriaProducto
+class CategoriaServicio
 {
     /**
      * @ORM\Id
@@ -28,9 +28,6 @@ class CategoriaProducto
      * @ORM\Column(name="DESCRIPCION", nullable=true, type="string")
      */
     protected $descripcion;
-
-
-
 
     /**
      * Get the value of id

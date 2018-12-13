@@ -1,29 +1,25 @@
 <?php
 /**
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * Esta clase configura las rutas del modulo Moneda
  */
 
-namespace Servicio;
+namespace Moneda;
 
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
+use Application;
 
 
 return [
-   
    'router' => [
         'routes' => [
-            'servicio' => [
+            'moneda' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/servicio[/:action[/:id]]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
-                    ],
+                    'route'    => '/productos/moneda',
                     'defaults' => [
-                        'controller'    => Controller\ServicioController::class,
+                        'controller'    => Controller\MonedaController::class,
                         'action'        => 'index',
                     ],
                 ],
@@ -38,15 +34,6 @@ return [
                             ],
                             'constraints' => [
                                 'id' => '[0-9]\d*',
-                            ],
-                        ],
-                    ],
-                    'agregar' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/add',
-                            'defaults' => [
-                                'action' => 'add',
                             ],
                         ],
                     ],
@@ -82,17 +69,17 @@ return [
     
  'controllers' => array(
         'factories' => [
-            Controller\ServicioController::class => Controller\Factory\ServicioControllerFactory::class,
+            Controller\MonedaController::class => Controller\Factory\MonedaControllerFactory::class,
         ],
      ),
      'view_manager' => array(
          'template_path_stack' => array(
-             'servicio' => __DIR__ . '/../view',
+             'moneda' => __DIR__ . '/../view',
          ),
      ),
     'service_manager' => array(
         'factories' => array(
-            Service\ServicioManager::class => Service\Factory\ServicioManagerFactory::class,
+            Service\MonedaManager::class => Service\Factory\MonedaManagerFactory::class,
         ),
     )
  ];

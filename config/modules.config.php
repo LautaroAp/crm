@@ -37,5 +37,7 @@ return [
     'Empresa',
     'Servicio',
     'Producto',
-    'Persona'
+    'Persona',
+    'CategoriaServicio',
+    'Moneda'
 ];

@@ -4,7 +4,8 @@ namespace Servicio\Service;
 
 use DBAL\Entity\Servicio;
 use Servicio\Form\ServicioForm;
-
+use Zend\Paginator\Paginator;
+use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 /**
  * Esta clase se encarga de obtener y modificar los datos de los servicios 
  * Actualmente sin uso
@@ -48,61 +49,45 @@ class ServicioManager {
                         ->find($id);
     }
 
-    public function getServicioFromForm($form, $data) {
-        $form->setData($data);
-        if ($form->isValid()) {
-            $data = $form->getData();
-            $servicio = $this->addServicio($data);
-        }
-        return $servicio;
+    public function getTabla() {
+        // Create the adapter
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(Servicio::class)); // An object repository implements Selectable
+        // Create the paginator itself
+        $paginator = new Paginator($adapter);
+        return ($paginator);
     }
-
     /**
      * This method adds a new servicio.
      */
     public function addServicio($data) {
         $servicio = new Servicio();
-        $servicio->setDescripcion($data['descripcion']);
-        $servicio->setCosto($data['costo']);
-        $servicio->setCant_animales($data['cant_animales']);
+        $servicio=$this->setData($servicio, $data);
         $this->entityManager->persist($servicio);
         $this->entityManager->flush();
         return $servicio;
     }
 
-    public function createForm() {
-        return new ServicioForm('create', $this->entityManager, null);
-    }
-
-    public function formValid($form, $data) {
-        $form->setData($data);
-        return $form->isValid();
-    }
-
-    public function getFormForServicio($servicio) {
-        if ($servicio == null) {
-            return null;
-        }
-        $form = new ServicioForm('update', $this->entityManager, $servicio);
-        return $form;
-    }
-
-    public function getFormEdited($form, $servicio) {
-        $form->setData(array(
-            'descripcion' => $servicio->getDescripcion(),
-            'costo' => $servicio->getCosto(),
-            'cant_animales' => $servicio->getCant_animales(),
-        ));
+    private function setData($servicio, $data){
+        $servicio->setNombre($data['nombre']);
+        $servicio->setDescripcion($data['descripcion']);
+        // $servicio->setCategoria($data['categoria']);
+        // $servicio->setProveedor($data['proveedor']);
+        $servicio->setPrecio($data['precio_venta']);
+        $servicio->setIva_gravado($data['iva_total']);
+        // $servicio->setIva($data['iva']);
+        $servicio->setPrecio($data['precio_venta']);
+        $servicio->setDescuento($data['descuento']);
+        $servicio->setPrecio_final_iva($data['precio_publico_iva']);
+        $servicio->setPrecio_final_iva_dto($data['precio_publico_iva_dto']);
+        //MONEDA
+        return $servicio;
     }
 
     /**
      * This method updates data of an existing servicio.
      */
-    public function updateServicio($servicio, $form) {
-        $data = $form->getData();
-        $servicio->setDescripcion($data['descripcion']);
-        $servicio->setCosto($data['costo']);
-        $servicio->setCant_animales($data['cant_animales']);
+    public function updateServicio($servicio, $data) {
+        $servicio=$this->setData($servicio, $data);
         // Apply changes to database.
         $this->entityManager->flush();
         return true;

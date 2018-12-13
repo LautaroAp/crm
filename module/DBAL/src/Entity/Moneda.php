@@ -4,13 +4,13 @@ namespace DBAL\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Description of CategoriaProducto
+ * Description of Moneda
  *
  * This class represents a registered categoriaProducto.
  * @ORM\Entity()
- * @ORM\Table(name="CATEGORIA_SERVICIO")
+ * @ORM\Table(name="MONEDA")
  */
-class CategoriaProducto
+class Moneda
 {
     /**
      * @ORM\Id
@@ -23,14 +23,6 @@ class CategoriaProducto
      * @ORM\Column(name="NOMBRE", nullable=true, type="string")
      */
     protected $nombre;
-
-    /**
-     * @ORM\Column(name="DESCRIPCION", nullable=true, type="string")
-     */
-    protected $descripcion;
-
-
-
 
     /**
      * Get the value of id
@@ -63,23 +55,6 @@ class CategoriaProducto
      */
     public function setNombre($nombre) {
         $this->nombre = $nombre;
-        return $this;
-    }
-
-    /**
-     * Get the value of descripcion
-     */
-    public function getDescripcion() {
-        return $this->descripcion;
-    }
-
-    /**
-     * Set the value of descripcion
-     *
-     * @return self
-     */
-    public function setDescripcion($descripcion) {
-        $this->descripcion = $descripcion;
         return $this;
     }
 }
