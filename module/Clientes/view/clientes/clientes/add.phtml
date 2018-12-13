@@ -94,10 +94,6 @@ $this->headTitle($title);
                                             <label>Skype</label>
                                             <input type="text" class="form-control" name="skype" placeholder="Ingresar Skype">
                                         </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Raza de Manejo</label>
-                                            <input type="text" class="form-control" name="raza_manejo" placeholder="Ingresar Raza">
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -108,17 +104,16 @@ $this->headTitle($title);
         </div>
     </div>
 </div>
-                    <!-- Fin: Datos del Cliente -->
-     
+<!-- Fin: Datos del Cliente -->
 
-                    <!-- Inicio: Caracteristicas de trabajo -->
+<!-- Inicio: Caracteristicas de trabajo -->
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">AGREGAR DATOS LABORALES</div>
                 <div class="panel panel-body">
                     <div class="row form-row">
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-4">
                             <label>Profesión</label>
                             <select class="form-control" id="profesion" name="profesion">
                                 <option value="" hidden="">Seleccionar Profesión</option>
@@ -128,17 +123,21 @@ $this->headTitle($title);
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="form-group col-md-5">
-                            <label>Nro. de Animales</label>
-                            <input type="text" class="form-control" name="animales" placeholder="Ingresar Nro. Animales">
-                        </div>
-                    </div>
-                    <div class="row form-row">
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-4">
                             <label>Actividad</label>
                             <input type="text" class="form-control" name="actividad" placeholder="Ingresar Actividad">
                         </div>
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-3">
+                            <label>Raza de Manejo</label>
+                            <input type="text" class="form-control" name="raza_manejo" placeholder="Ingresar Raza">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-4">
+                            <label>Nro. de Animales</label>
+                            <input type="text" class="form-control" name="animales" placeholder="Ingresar Nro. Animales">
+                        </div>
+                        <div class="form-group col-md-4">
                             <label>Nro. de Establecimientos</label>
                             <input type="text" class="form-control" name="establecimientos" placeholder="Ingresar Nro. Establecimientos">
                         </div>
@@ -150,6 +149,54 @@ $this->headTitle($title);
 </div>
 </form>
  <!-- Fin: Caracteristicas de trabajo -->
+
+<!-- Inicio: Datos de Facturacion -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                MODIFICAR DATOS DE FACTURACIÓN
+            </div>
+            <div class="panel panel-body">
+                <div class="row form-row">
+                    <div class="form-group col-md-4">
+                        <label>Razón Social</label>
+                        <input type="text" class="form-control" name="razon_social" placeholder="Ingresar Razón Social">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Condición de IVA</label>
+                        <select class="form-control" id="condicion_iva" name="condicion_iva">
+                            <option value="" hidden="">Seleccionar Profesión</option>
+                            <option value="-1">NO DEFINIDO</option>
+                            <?php foreach ($profesiones as $profesion) : ?>
+                                <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Banco</label>
+                        <input type="text" class="form-control" name="banco" placeholder="Ingresar Banco">
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="form-group col-md-4">
+                        <label>Dirección de Facturación</label>
+                        <input type="text" class="form-control" name="direccion_facturacion" placeholder="Ingresar Dirección de Facturación">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>CUIT/CUIL</label>
+                        <input type="text" class="form-control" name="cuit_cuil" placeholder="Ingresar CUIT/CUIL">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>CBU</label>
+                        <input type="text" class="form-control" name="cbu" placeholder="Ingresar CBU">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Datos de Facturacion -->
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -180,7 +227,8 @@ $this->headTitle($title);
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <a data-toggle="modal" data-target="#myModal">
-                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm" role="button">
+                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>"
+                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm" role="button">
                 </a>
             </div>
             <div class="ficha-cliente-label">
@@ -189,7 +237,9 @@ $this->headTitle($title);
         </div>                   
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionClientes') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                <a href="<?= $this->url('gestionClientes') ?>">
+                <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                class="img-rounded img-responsive img-texto-derecha"></a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Volver</label>

@@ -45,7 +45,7 @@ $form->prepare();
 <?= $this->form()->openTag($form); ?>
 <div class="container">
     <div class="row">
-        <div class="form-row">
+        <div class="row form-row">
             <input type="hidden" name="id" value="<?= $id ?>"> 
             <div class="form-group col-md-4">
                 <?= $this->formLabel($form->get('nombre')); ?>
@@ -57,14 +57,13 @@ $form->prepare();
                 <?= $this->formElement($form->get('telefono')); ?>
                 <?= $this->formElementErrors($form->get('telefono')); ?>
             </div>
+        </div>
+        <div class="row form-row">
             <div class="form-group col-md-4">
                 <?= $this->formLabel($form->get('mail')); ?>
                 <?= $this->formElement($form->get('mail')); ?>
                 <?= $this->formElementErrors($form->get('mail')); ?>
             </div>
-        </div>
-
-        <div class="form-row">
             <div class="form-group col-md-4">
                 <?= $this->formLabel($form->get('skype')); ?>
                 <?= $this->formElement($form->get('skype')); ?>
@@ -97,32 +96,27 @@ $form->prepare();
 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row img-centrar">
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a data-toggle="modal" data-target="#myModal" role="button">
-                                <img src="<?= $this->basePath('img/crm/Aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Guardar</label>
-                        </div>
-                    </div>
+    <div class="row img-centrar">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a data-toggle="modal" data-target="#myModal" role="button">
+                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Guardar</label>
+            </div>
+        </div>
 
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $id]) ?>">
-                                <img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Volver</label>
-                        </div>
-                    </div>
-                </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $id]) ?>">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
             </div>
         </div>
     </div>

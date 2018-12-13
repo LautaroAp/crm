@@ -190,11 +190,9 @@ class ClientesManager {
 
     public function addCliente($data) {
         $cliente = new Cliente();
-        // Datos Particulares
         $this->addDatosParticulares($cliente, $data);
-        // Datos Laborales
+        $this->addDatosFacturacion($cliente, $data);
         $this->addDatosLaborales($cliente, $data);
-        // Datos de Licencia
         $this->addDatosLicencia($cliente, $data);        
         $persona = $this->personaManager->addPersona($data, $this->tipo);
         $cliente->setPersona($persona);
@@ -222,11 +220,9 @@ class ClientesManager {
 
     public function updateCliente($data) {
         $cliente = $this->getClienteIdPersona($data['id']);
-        // Datos Particulares
         $this->addDatosParticulares($cliente, $data);
-        // Datos Laborales
+        $this->addDatosFacturacion($cliente, $data);
         $this->addDatosLaborales($cliente, $data);
-        // Datos de Licencia
         $this->addDatosLicencia($cliente, $data);
         $this->personaManager->updatePersona($cliente->getPersona(), $data);
         if ($this->tryUpdateCliente($cliente)) {
@@ -259,6 +255,15 @@ class ClientesManager {
                 ->setCiudad($data['ciudad'])
                 ->setCategoria($categoria)
                 ->setEmpresa($data['empresa']);
+    }
+
+    private function addDatosFacturacion($cliente, $data) {
+        $cliente->setRazon_social($data['razon_social'])
+                ->setDireccion_facturacion($data['direccion_facturacion'])
+                // ->setCondicion_iva($data['condicion_iva'])
+                ->setBanco($data['banco'])
+                ->setCbu($data['cbu'])
+                ->setCuit_cuil($data['cuit_cuil']);
     }
 
     private function addDatosLaborales($cliente, $data) {

@@ -17,14 +17,14 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">DATOS PARTICULARES</div>
+            <div class="panel-heading text-center">
+                DATOS PARTICULARES
+            </div>
             <div class="panel-body">
                 <!-- Header -->
                 <div class="row ficha-cliente-titulo">
                     <div class="form-group col-md-5">
-                        <h3>
-                            <?php echo($persona->getNombre()); ?>
-                        </h3>
+                        <h3><?php echo($persona->getNombre()); ?></h3>
                     </div>
                     <div class="form-group col-md-3">
                         <h3>
@@ -43,19 +43,19 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     </div>
                 </div>
                 <!-- Datos de Cliente -->
+
                 <div class="row">
                     <div class="col-md-5 ficha-cliente-p">
-                        <p><label>País:</label> <?php echo ($cliente->getNombrePaisCliente()); ?></p>
-                        <p><label>Provincia:</label> <?php echo ($cliente->getNombreProvinciaCliente()); ?></p>
-                        <p><label>Ciudad:</label> <?php echo ($cliente->getCiudad()); ?></p>
                         <p><label>Teléfono:</label> <?php echo ($persona->getTelefono()); ?></p>
                         <p><label>Email:</label> <?php echo ($persona->getEmail()); ?></p>
                         <p><label>Skype:</label> <?php echo ($cliente->getSkype()); ?></p>
+                        <p><label>Ciudad:</label> <?php echo ($cliente->getCiudad()); ?></p>
+                        <p><label>Provincia:</label> <?php echo ($cliente->getNombreProvinciaCliente()); ?></p>
+                        <p><label>País:</label> <?php echo ($cliente->getNombrePaisCliente()); ?></p>
                     </div>
                     <div class="col-md-3 ficha-cliente-p">
                         <p><label>Profesíon:</label> <?php echo ($cliente->getNombreProfesionCliente()); ?></p>
                         <p><label>Actividad:</label> <?php echo ($cliente->getActividad()); ?></p>
-                        <p><label>Empresa:</label> <?php echo ($cliente->getEmpresa()); ?></p>
                         <p><label>Nro. Animales:</label> <?php echo ($cliente->getAnimales()); ?></p>
                         <p><label>Nro. Establecimientos:</label> <?php echo ($cliente->getEstablecimientos()); ?></p>
                         <p><label>Raza de Manejo:</label> <?php echo ($cliente->getRazaManejo()); ?></p>
@@ -82,6 +82,33 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             }
                             ?></p>
                         <p><label>Estado:</label> <?php echo ($persona->getEstadoNombre()); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Datos de Facturacion -->
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                DATOS DE FACTURACIÓN
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-5 ficha-cliente-p">
+                        <p><label>Razón Social:</label> <?= $cliente->getRazon_social(); ?></p>
+                        <p><label>Dirección de Facturación:</label> <?= $cliente->getDireccion_facturacion(); ?></p>
+                        <p><label>Condición de IVA:</label> <?= $cliente->getCondicion_iva(); ?></p>
+                    </div>
+                    <div class="col-md-4 ficha-cliente-p">
+                        <p><label>Banco:</label> <?= $cliente->getBanco(); ?></p>
+                        <p><label>CBU:</label> <?= $cliente->getCbu(); ?></p>
+                        <p><label>CUIT/CUIL:</label> <?= $cliente->getCuit_cuil(); ?></p>
+                    </div>
+                    <div class="col-md-3 ficha-cliente-p">
+                        <button class="btn btn-default pull-right">
+                            <span class="clickable glyphicon glyphicon-plus btn-collapse"></span>
+                            Repositorio
+                        </button>
                     </div>
                 </div>
             </div>
@@ -118,11 +145,13 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                     <td><?php echo($persona_usuario->getTelefono()); ?></td>
                                     <td><?php echo($persona_usuario->getEmail()); ?></td>
                                     <td><?php echo($usuario->getSkype()); ?></td>
-                                    <td> <a class="btn btn-default" href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
+                                    <td> 
+                                        <a class="btn btn-default pull-right" href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
                                             <span class="glyphicon glyphicon-pencil" ></span> 
                                         </a>
-                                        <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#usuarioModal<?= $usuario->getId() ?>">
-                                            <span class="glyphicon glyphicon-remove" ></span
+                                        <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>" type="button"
+                                            class="btn btn-default pull-right" data-toggle="modal" data-target="#usuarioModal<?= $usuario->getId() ?>">
+                                            <span class="glyphicon glyphicon-remove" ></span>
                                         </button>
                                     </td>
                                     <!-- Modal Usuario Adicional -->
@@ -154,9 +183,10 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <?php endforeach; ?>
                         <tr>
                             <td>
+                                <br>
                                 <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $cliente->getId()]); ?>" type="button">
                                     <span class="btn btn-default">
-                                        <span class="glyphicon glyphicon-plus" ></span> Agregar
+                                        <span class="glyphicon glyphicon-plus" ></span> Agregar Datos Adicionales
                                     </span>
                                 </a> 
                             </td>
