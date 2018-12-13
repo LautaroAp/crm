@@ -60,69 +60,62 @@ if (isset($_SESSION['MENSAJES']['categoria_producto'])) {
                         </div>
                     </form>
                 </div>
-
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table id="tabla_categoriaproducto" class="table table-bordred table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th class="th-sm" onclick="sortTableString(1, 'tabla_categoriaproducto')" style="width:35%;">
-                                                Categoría de Producto <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                                            </th>
-                                            <th class="th-sm" onclick="sortTableString(1, 'tabla_categoriaproducto')" style="width:55%;">
-                                                Descripción </th>
-                                            <th style="width:10%;"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        if (isset($categorias_pag)) {
-                                            foreach ($categorias_pag as $categoriaProducto) :
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo ($categoriaProducto->getNombre()); ?></td>
-                                                    <td><?php echo ($categoriaProducto->getDescripcion()); ?></td>
-                                                    <td class="table-items-right">
-                                                        <a class="btn btn-default" href="<?= $this->url('categoriaProducto/editar', ['action' => 'edit', 'id' => $categoriaProducto->getId()]); ?>">
-                                                            <span class="glyphicon glyphicon-pencil" ></span> 
-                                                        </a>
-                                                        <button name="<?= $categoriaProducto->getId() ?>" id="<?= $categoriaProducto->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $categoriaProducto->getId() ?>">
-                                                            <span class="glyphicon glyphicon-remove" ></span>
-                                                        </button>
-                                                    </td>
-                                                    <!-- Modal -->
-                                            <div id="myModal<?= $categoriaProducto->getId() ?>" class="modal fade" role="dialog">
-                                                <div class="modal-dialog">
-                                                    <!-- Modal content-->
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                            <h4 class="modal-title">Borrar cliente</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>
-                                                                ¿Está seguro que desea eliminar la categoría: 
-                                                                "<?= $this->escapeHtml($categoriaProducto->getNombre()) ?>"?
-                                                            </p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <a href="<?= $this->url('categoriaProducto/borrar', ['action' => 'remove', 'id' => $categoriaProducto->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
-                                                            <span class="btn btn-default">Aceptar</span></a>
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                <div class="table-responsive">
+                    <table id="tabla_categoriaproducto" class="table table-bordred table-striped">
+                        <thead>
+                            <tr>
+                                <th class="th-sm" onclick="sortTableString(1, 'tabla_categoriaproducto')" style="width:35%;">
+                                    Categoría de Producto <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                                </th>
+                                <th class="th-sm" onclick="sortTableString(1, 'tabla_categoriaproducto')" style="width:55%;">
+                                    Descripción </th>
+                                <th style="width:10%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if (isset($categorias_pag)) {
+                                foreach ($categorias_pag as $categoriaProducto) :
+                                    ?>
+                                    <tr>
+                                        <td><?php echo ($categoriaProducto->getNombre()); ?></td>
+                                        <td><?php echo ($categoriaProducto->getDescripcion()); ?></td>
+                                        <td class="table-items-right">
+                                            <a class="btn btn-default" href="<?= $this->url('categoriaProducto/editar', ['action' => 'edit', 'id' => $categoriaProducto->getId()]); ?>">
+                                                <span class="glyphicon glyphicon-pencil" ></span> 
+                                            </a>
+                                            <button name="<?= $categoriaProducto->getId() ?>" id="<?= $categoriaProducto->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $categoriaProducto->getId() ?>">
+                                                <span class="glyphicon glyphicon-remove" ></span>
+                                            </button>
+                                        </td>
+                                        <!-- Modal -->
+                                <div id="myModal<?= $categoriaProducto->getId() ?>" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Borrar cliente</h4>
                                             </div>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                                
-                            </div>
-                        </div>  
-                    </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    ¿Está seguro que desea eliminar la categoría: 
+                                                    "<?= $this->escapeHtml($categoriaProducto->getNombre()) ?>"?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= $this->url('categoriaProducto/borrar', ['action' => 'remove', 'id' => $categoriaProducto->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
+                                                <span class="btn btn-default">Aceptar</span></a>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
                 </div>
             </div>
         </div>
