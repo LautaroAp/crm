@@ -1,0 +1,146 @@
+<?php
+if (isset($_SESSION['MENSAJES']['categoria_producto'])) {
+    if ($_SESSION['MENSAJES']['categoria_producto']) {
+        echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['categoria_producto_msj'] . "', 'success');});</script>";
+    } else {
+        echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['categoria_producto_msj'] . "', 'error');});</script>";
+    }
+    $_SESSION['MENSAJES']['categoria_producto'] = null;
+    $_SESSION['MENSAJES']['categoria_producto_msj'] = null;
+}
+?>
+<!--Bloqueo de pantalla + animacion-->
+<div id="bloquea" class="cargando" style="display:none;"></div>
+<div class="" id="loader"></div>
+<!-- Inicio: Tabla Categoria -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                LISTADO CATEGORÍAS
+                <a data-toggle="collapse" data-parent="#accordion" href="#add_categoria" 
+                aria-expanded="true" aria-controls="add_categoria">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
+                </a>
+            </div>
+            <div class="panel-body">
+                <div class="container collapse" id="add_categoria">
+                    <form method="post">
+                        <div class="row form-row">
+                            <div class="form-group col-md-4">
+                                <input type="text" class="form-control form-margen" name="nombre" placeholder="Nombre de categoría">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <input type="text" class="form-control form-margen" name="descripcion" placeholder="Descripción de categoría">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
+                                    <span class="glyphicon glyphicon-plus" ></span> Agregar Categoría
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Agregar categoría</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Está seguro que desea agregar esta categoría?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-default">Aceptar</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table id="tabla_categoriaproducto" class="table table-bordred table-striped">
+                        <thead>
+                            <tr>
+                                <th class="th-sm" onclick="sortTableString(1, 'tabla_categoriaproducto')" style="width:35%;">
+                                    Categoría de Producto <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                                </th>
+                                <th class="th-sm" onclick="sortTableString(1, 'tabla_categoriaproducto')" style="width:55%;">
+                                    Descripción </th>
+                                <th style="width:10%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if (isset($categorias_pag)) {
+                                foreach ($categorias_pag as $categoriaProducto) :
+                                    ?>
+                                    <tr>
+                                        <td><?php echo ($categoriaProducto->getNombre()); ?></td>
+                                        <td><?php echo ($categoriaProducto->getDescripcion()); ?></td>
+                                        <td class="table-items-right">
+                                            <a class="btn btn-default" href="<?= $this->url('categoriaProducto/editar', ['action' => 'edit', 'id' => $categoriaProducto->getId()]); ?>">
+                                                <span class="glyphicon glyphicon-pencil" ></span> 
+                                            </a>
+                                            <button name="<?= $categoriaProducto->getId() ?>" id="<?= $categoriaProducto->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $categoriaProducto->getId() ?>">
+                                                <span class="glyphicon glyphicon-remove" ></span>
+                                            </button>
+                                        </td>
+                                        <!-- Modal -->
+                                <div id="myModal<?= $categoriaProducto->getId() ?>" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Borrar cliente</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    ¿Está seguro que desea eliminar la categoría: 
+                                                    "<?= $this->escapeHtml($categoriaProducto->getNombre()) ?>"?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= $this->url('categoriaProducto/borrar', ['action' => 'remove', 'id' => $categoriaProducto->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
+                                                <span class="btn btn-default">Aceptar</span></a>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+        </div>
+        <?php
+        echo $this->paginationControl($categorias_pag, 'Sliding', // All, Elastic, Jumping, Sliding
+                'search_pagination_cat_prod.phtml', $this->url('categoriaProducto/page', ['action' => 'index', 'id' => 1]));
+        }
+        ?>
+    </div>
+</div>
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row img-centrar">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('gestionEmpresa/gestionProductos') ?>">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->

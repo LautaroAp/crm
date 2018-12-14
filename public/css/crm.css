@@ -94,7 +94,7 @@
 }
 
 .detalle-width{
-    width: 100%;
+    width: 75% !important;
 }
 
 .table-zebra>tbody>tr:nth-child(odd)>td, 
@@ -130,6 +130,10 @@
 }
 .margen {
     margin-top: 10px;
+}
+
+.padding-top-cero {
+    padding-top: 0px !important;
 }
 
 .licencia-sm{

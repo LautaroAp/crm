@@ -13,37 +13,43 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 }
 ?>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+</script>
+
 <!-- Inicio: Datos de Cliente -->
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading text-center">
-                DATOS PARTICULARES
+                DATOS GENERALES
             </div>
-            <div class="panel-body">
+            <div class="panel-body padding-top-cero">
                 <!-- Header -->
                 <div class="row ficha-cliente-titulo">
                     <div class="form-group col-md-5">
-                        <h3><?php echo($persona->getNombre()); ?></h3>
+                        <h4><?php echo($persona->getNombre()); ?></h4>
                     </div>
                     <div class="form-group col-md-3">
-                        <h3>
-                            <?php echo ($cliente->getNombreCategoriaCliente()); ?>
-                        </h3>
+                        <h4><?php echo ($cliente->getNombreCategoriaCliente()); ?></h4>
                     </div>
                     <div class="form-group col-md-4">
-                        <h3>
+                        <h4>
                             <?php
                             echo ($cliente->getNombreLicenciaCliente());
                             if (!is_null($cliente->getVersion())) {
                                 echo (" - " . $cliente->getVersion());
                             }
                             ?>
-                        </h3>
+                        </h4>
                     </div>
                 </div>
                 <!-- Datos de Cliente -->
-
                 <div class="row">
                     <div class="col-md-5 ficha-cliente-p">
                         <p><label>Teléfono:</label> <?php echo ($persona->getTelefono()); ?></p>
@@ -109,6 +115,39 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             <span class="clickable glyphicon glyphicon-plus btn-collapse"></span>
                             Repositorio
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modulos Adicionales -->
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                DATOS GANADERÍA
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseModulosAdicionales" 
+                aria-expanded="true" aria-controls="collapseModulosAdicionales">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse" 
+                    onclick="cambiaIconoCollapse(event)"></i></span>
+                </a>
+            </div>
+            <div class="collapse " id="collapseModulosAdicionales">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-5 ficha-cliente-p">
+                            <p><label>Nro. Animales:</label> <?php echo ($cliente->getAnimales()); ?></p>
+                            <p><label>Nro. Establecimientos:</label> <?php echo ($cliente->getEstablecimientos()); ?></p>
+                            <p><label>Raza de Manejo:</label> <?php echo ($cliente->getRazaManejo()); ?></p>
+                        </div>
+                        <div class="col-md-4 ficha-cliente-p">
+                            <p><label>Profesíon:</label> <?php echo ($cliente->getNombreProfesionCliente()); ?></p>
+                            <p><label>Actividad:</label> <?php echo ($cliente->getActividad()); ?></p>
+                        </div>
+                        <div class="col-md-3 ficha-cliente-p">
+                            <button class="btn btn-default pull-right">
+                                <span class="clickable glyphicon glyphicon-plus btn-collapse"></span>
+                                Repositorio
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -210,43 +249,40 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
                 </a>
             </div>
-        </div>
-
-        <div class="collapse" id="collapseActividades">
-
-        <!-- Registro de Actividades -->
-        <table id="tabla_evento" class="table table-bordered table-zebra table-bot">            
-            <thead class="table-scroll-head">
-                <tr> 
-                    <th class="" id="fila">Fecha</th>
-                    <th class="">Responsable</th>
-                    <th class="">Tipo</th>
-                    <th class="detalle-width">Detalle</th>     
-                </tr>
-            </thead>
-        </table>
-        <table id="tabla_evento" class="table table-bordered table-zebra table-scroll table-top">            
-            <tbody role="button" class="">
-                <?php foreach ($eventos as $evento): ?>
-                <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
-                        <td id="<?= $evento->getId() ?>" class=""><?php
-                            if (!is_null($evento->getFecha())) {
-                                echo($evento->getFecha()->format('d/m/Y'));
-                            }
-                            ?></td>
-                        <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getUsuarioEjecutivo()); ?></td>
-                        <td id="<?= $evento->getId() ?>" class=""><?php
-                            if (!is_null($evento->getTipo())) {
-                                echo($evento->getTipo());
-                            } else {
-                                echo('No definido');
-                            }
-                            ?></td>
-                        <td id="<?= $evento->getId() ?>" class="table-scroll-description"><?php echo(nl2br($evento->getDescripcion())); ?></td>
-                    </tr> 
-                <?php endforeach; ?>    
-            </tbody>
-        </table>
+            <div class="panel-body">
+                <div class="collapse" id="collapseActividades">
+                    <table id="table_id" class="display">
+                        <thead>
+                            <tr> 
+                                <th class="" id="fila">Fecha</th>
+                                <th class="">Responsable</th>
+                                <th class="">Tipo</th>
+                                <th class="detalle-width">Detalle</th>     
+                            </tr>
+                        </thead>
+                        <tbody role="button" class="">
+                            <?php foreach ($eventos as $evento): ?>
+                                <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
+                                    <td id="<?= $evento->getId() ?>" class=""><?php
+                                        if (!is_null($evento->getFecha())) {
+                                            echo($evento->getFecha()->format('d/m/Y'));
+                                        }
+                                        ?></td>
+                                    <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getUsuarioEjecutivo()); ?></td>
+                                    <td id="<?= $evento->getId() ?>" class=""><?php
+                                        if (!is_null($evento->getTipo())) {
+                                            echo($evento->getTipo());
+                                        } else {
+                                            echo('No definido');
+                                        }
+                                        ?></td>
+                                    <td id="<?= $evento->getId() ?>" class="table-scroll-description"><?php echo(nl2br($evento->getDescripcion())); ?></td>
+                                </tr> 
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -309,87 +345,85 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
-    
-                <div class="row img-centrar">
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a role="button" href="<?= $this->url('evento', ['action' => 'add', 'id' => (int) $cliente->getId()]) ?>">
-                                <img src="<?= $this->basePath('img/crm/agregar.png') ?>" 
-                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Agregar</label><br>
-                            <label>Actividad</label>
-                        </div>
-                    </div>
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a role="button" data-toggle="modal" data-target="#actividadModal">
-                                <img src="<?= $this->basePath('img/crm/eliminar.png') ?>" 
-                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Eliminar</label><br>
-                            <label>Actividad</label>
-                        </div>
-                    </div>
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a href="<?= $this->url('clientes/editar', ['action' => 'edit', 'id' => (int) $persona->getId()]) ?>" role="button">
-                                <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" 
-                                class="img-rounded img-responsive img-texto-derecha img-submenu">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Modificar</label><br>
-                            <label>Datos</label>
-                        </div>
-                    </div>
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a role="button" name="<?= $cliente->getId() ?>" id="<?= $cliente->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $cliente->getId() ?>">
-                                <img src="<?php
-                                if ($persona->getEstado() == "S") {
-                                    echo($this->basePath('img/crm/cliente_a.png'));
-                                } else {
-                                    echo($this->basePath('img/crm/cliente_a.png'));
-                                }
-                                ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <?php
-                            if ($persona->getEstado() == "S") {
-                                echo('<label>Eliminar</label><br>'
-                                . '<label>Cliente</label>');
-                            } else {
-                                echo('<label>Agregar</label><br>'
-                                . '<label>Cliente</label>');
-                            }
-                            ?>
-                        </div>
-                    </div>
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>   
-                            <?php
-                            $ruta = "";
-                            if ($persona->getEstado() == "S") {
-                                $ruta = 'gestionClientes/listado';
-                            } else {
-                                $ruta = 'clientes/inactivos';
-                            }
-                            ?>
-                            <a href="<?= $this->url($ruta) ?>" role="button">
-                                <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Volver</label>
-                        </div>
-                    </div>
-                </div>
-           
+    <div class="row img-centrar">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a role="button" href="<?= $this->url('evento', ['action' => 'add', 'id' => (int) $cliente->getId()]) ?>">
+                    <img src="<?= $this->basePath('img/crm/agregar.png') ?>" 
+                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Agregar</label><br>
+                <label>Actividad</label>
+            </div>
+        </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a role="button" data-toggle="modal" data-target="#actividadModal">
+                    <img src="<?= $this->basePath('img/crm/eliminar.png') ?>" 
+                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Eliminar</label><br>
+                <label>Actividad</label>
+            </div>
+        </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('clientes/editar', ['action' => 'edit', 'id' => (int) $persona->getId()]) ?>" role="button">
+                    <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" 
+                    class="img-rounded img-responsive img-texto-derecha img-submenu">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Modificar</label><br>
+                <label>Datos</label>
+            </div>
+        </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a role="button" name="<?= $cliente->getId() ?>" id="<?= $cliente->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $cliente->getId() ?>">
+                    <img src="<?php
+                    if ($persona->getEstado() == "S") {
+                        echo($this->basePath('img/crm/cliente_a.png'));
+                    } else {
+                        echo($this->basePath('img/crm/cliente_a.png'));
+                    }
+                    ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <?php
+                if ($persona->getEstado() == "S") {
+                    echo('<label>Eliminar</label><br>'
+                    . '<label>Cliente</label>');
+                } else {
+                    echo('<label>Agregar</label><br>'
+                    . '<label>Cliente</label>');
+                }
+                ?>
+            </div>
+        </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>   
+                <?php
+                $ruta = "";
+                if ($persona->getEstado() == "S") {
+                    $ruta = 'gestionClientes/listado';
+                } else {
+                    $ruta = 'clientes/inactivos';
+                }
+                ?>
+                <a href="<?= $this->url($ruta) ?>" role="button">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
+            </div>
+        </div>
+    </div>   
 </div>
 <!-- Fin: Panel Botones -->
