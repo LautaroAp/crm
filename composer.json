@@ -56,9 +56,8 @@
             "Producto\\": "module/Producto/src/",
             "Persona\\": "module/Persona/src/",
             "CategoriaServicio\\": "module/CategoriaServicio/src/",
-            "Moneda\\": "module/Moneda/src/"
-
-
+            "Moneda\\": "module/Moneda/src/",
+            "Iva\\": "module/Iva/src/"
         }
     },
     "autoload-dev": {

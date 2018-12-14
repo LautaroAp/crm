@@ -309,7 +309,7 @@ return [
                             'backup' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/add',
+                                    'route' => '/backup',
                                     'defaults' => [
                                         'controller' => \Servicio\Controller\ServicioController::class,
                                         'action' => 'backup',

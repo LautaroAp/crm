@@ -85,52 +85,27 @@ $this->headTitle('Servicios');
 <div class="container margen">
     <div class="row">
     <div class="row img-centrar">
-            <div class="col ficha-cliente-p img-centrar">
-                <div>
-                    <a href="<?= $this->url('servicio', ['action' => 'add']); ?>">
-                        <img src="<?= $this->basePath('img/crm/aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha">
-                    </a>
-                </div>
-                <div class="ficha-cliente-label">
-                    <label>Agregar</label><br>
-                    <label>Servicio</label>
-                </div>
-            </div>
-            
-            <div class="col ficha-cliente-p img-centrar">
-                <div>
-                <a href="<?= $this->url('gestionEmpresa/gestionServicios') ?>">
-                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
-                        class="img-rounded img-responsive img-texto-derecha">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('servicio', ['action' => 'add']); ?>">
+                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha">
                 </a>
-                </div>
-                <div class="ficha-cliente-label">
-                    <label>Volver</label>
-                </div>
             </div>
-        </div><div class="row img-centrar">
-            <div class="col ficha-cliente-p img-centrar">
-                <div>
-                    <a href="<?= $this->url('servicio', ['action' => 'add']); ?>">
-                        <img src="<?= $this->basePath('img/crm/aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha">
-                    </a>
-                </div>
-                <div class="ficha-cliente-label">
-                    <label>Agregar</label><br>
-                    <label>Servicio</label>
-                </div>
+            <div class="ficha-cliente-label">
+                <label>Agregar</label><br>
+                <label>Servicio</label>
             </div>
-            
-            <div class="col ficha-cliente-p img-centrar">
-                <div>
-                <a href="<?= $this->url('gestionEmpresa/gestionServicios') ?>">
-                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
-                        class="img-rounded img-responsive img-texto-derecha">
-                </a>
-                </div>
-                <div class="ficha-cliente-label">
-                    <label>Volver</label>
-                </div>
+        </div>
+        
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+            <a href="<?= $this->url('gestionEmpresa/gestionServicios') ?>">
+                <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                    class="img-rounded img-responsive img-texto-derecha">
+            </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
             </div>
         </div>
     </div>

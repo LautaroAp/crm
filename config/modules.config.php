@@ -39,5 +39,6 @@ return [
     'Producto',
     'Persona',
     'CategoriaServicio',
-    'Moneda'
+    'Moneda',
+    'Iva'
 ];
