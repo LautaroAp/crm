@@ -41,8 +41,7 @@ class EmpresaController extends AbstractActionController {
     }
 
     public function procesarEditAction() {
-        $empresas = $this->empresaManager->getEmpresas();
-        $empresa = $empresas[0];
+        $empresa = $this->getEmpresa();
         $form = $this->empresaManager->getFormForEmpresa($empresa);
         if ($form == null) {
             $this->getResponse()->setStatusCode(404);
@@ -83,5 +82,19 @@ class EmpresaController extends AbstractActionController {
  
       public function viewAction() {    
           return new ViewModel();
+    }
+
+    private function getEmpresa(){
+        $empresas = $this->empresaManager->getEmpresas();
+        $empresa = $empresas[0];
+        return $empresa;
+    }
+
+    public function backupAction() {
+        $this->layout()->setTemplate('layout/nulo');
+        $empresa= $this->getEmpresa();
+        return new ViewModel([
+            'empresa' => $empresa
+        ]);
     }
 }

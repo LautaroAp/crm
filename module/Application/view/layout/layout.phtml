@@ -70,18 +70,22 @@
                         <div class="col-xs-6 align-left">
                             <section>
                                 <p>
-                                    <a href=""<?= $this->url('application', ['action' => 'index']); ?>">HOME</a>
+                                    <a href="<?= $this->url('home'); ?>">HOME</a>
                                     .
                                     <a href="<?= $this->url('clientes'); ?>">CLIENTES</a>
                                     .
-                                    <a href="<?= $this->url('licencia', ['action' => 'index']); ?>">LICENCIAS</a>
+                                    <a href="<?= $this->url('application', ['action' => 'gestionProveedores']); ?>">PROVEEDORES</a>
                                     .
-                                    <a href="<?= $this->url('ventas'); ?>">VENTAS</a>
-                                    .
-                                    
-                                    .
-                                    <a href="<?= $this->url('application', ['action' => 'backup']); ?>">BACKUP</a>
+                                    <a href="<?= $this->url('application', ['action' => 'gestionEmpresa']); ?>">EMPRESA</a>
                                 </p>
+                                <!-- <p>
+                                    <a href="<?= $this->url('application', ['action' => 'gestionLicencias']); ?>">LICENCIAS</a>
+                                    .
+                                    <a href="<?= $this->url('application', ['action' => 'gestionProductos']); ?>">PRODUCTOS</a>
+                                    .
+                                    <a href="<?= $this->url('application', ['action' => 'gestionServicios']); ?>">SERVICIOS</a>
+
+                                </p> -->
                                 <p>
                                      <a>
                                     <span>Tandil - Provincia de Buenos Aires - Argentina</span>	 

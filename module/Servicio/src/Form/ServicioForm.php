@@ -50,6 +50,15 @@ class ServicioForm extends Form
     {
         $this->add([
             'type' => 'text',
+            'name' => 'nombre',
+            'value' => '',
+            'options' => [
+                'label' => 'Nombre',
+            ],
+        ]);
+
+        $this->add([
+            'type' => 'text',
             'name' => 'descripcion',
             'value' => '',
             'options' => [
@@ -59,22 +68,40 @@ class ServicioForm extends Form
         
         $this->add([
             'type' => 'text',
-            'name' => 'costo',
+            'name' => 'precio',
             'value' => '',
             'options' => [
-                'label' => 'Costo',
+                'label' => 'Precio',
             ],
         ]);
         
         $this->add([
             'type' => 'text',
-            'name' => 'cant_animales',
+            'name' => 'categoria',
             'value' => '',
             'options' => [
-                'label' => 'Cantidad de animales',
+                'label' => 'Categoria',
+            ],
+        ]);
+
+        $this->add([
+            'type' => 'text',
+            'name' => 'moneda',
+            'value' => '',
+            'options' => [
+                'label' => 'Moneda',
             ],
         ]);
      
+        $this->add([
+            'type' => 'text',
+            'name' => 'descuento',
+            'value' => '',
+            'options' => [
+                'label' => 'Descuento',
+            ],
+        ]);
+
         $this->add([
             'type' => 'submit',
             'name' => 'submit',
@@ -88,47 +115,47 @@ class ServicioForm extends Form
     
   private function addInputFilter() 
     {
-        // Create main input filter
-        $inputFilter = $this->getInputFilter();        
-        $inputFilter->add([
-            'name' => 'descripcion',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StringTrim'],
-            ],
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                ],
-            ],
-        ]);
+    //     // Create main input filter
+    //     $inputFilter = $this->getInputFilter();        
+    //     $inputFilter->add([
+    //         'name' => 'descripcion',
+    //         'required' => true,
+    //         'filters' => [
+    //             ['name' => 'StringTrim'],
+    //         ],
+    //         'validators' => [
+    //             [
+    //                 'name' => 'StringLength',
+    //             ],
+    //         ],
+    //     ]);
         
-          $inputFilter->add([
-            'name' => 'costo',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StringTrim'],
-            ],
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                ],
-            ],
-        ]);
+    //       $inputFilter->add([
+    //         'name' => 'costo',
+    //         'required' => true,
+    //         'filters' => [
+    //             ['name' => 'StringTrim'],
+    //         ],
+    //         'validators' => [
+    //             [
+    //                 'name' => 'StringLength',
+    //             ],
+    //         ],
+    //     ]);
          
-          $inputFilter->add([
-            'name' => 'cant_animales',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StringTrim'],
-            ],
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                ],
-            ],
-        ]);
-    }       
+    //       $inputFilter->add([
+    //         'name' => 'cant_animales',
+    //         'required' => true,
+    //         'filters' => [
+    //             ['name' => 'StringTrim'],
+    //         ],
+    //         'validators' => [
+    //             [
+    //                 'name' => 'StringLength',
+    //             ],
+    //         ],
+    //     ]);
+     }       
 
     
 }

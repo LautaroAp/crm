@@ -1,3 +1,6 @@
+// C A L C U L O     P R O D U C T O S
+
+
 // $('#precio_compra').change(calculaCostoTotalCompra);
 
 function justNumbers(e) {
@@ -134,4 +137,106 @@ function calculaDescuentoIVA() {
         $("#precio_final_iva_dto").val("0");
     }
 }
+
+
+
+
+// C A L C U L O     S E R V I C I O S
+function calcularPrecios2(){
+    $precio = (parseFloat($('#precio_venta').val())).toFixed(2);
+    $descuento = (parseFloat($('#descuento').val())).toFixed(2);
+    $iva = (parseFloat($('#iva').val())).toFixed(2);
+    $precio_dto = $precio - (($descuento * $precio)/100).toFixed(2);
+    $precio_iva = $precio + (($iva * $precio)/100).toFixed(2);
+    $precio_dto_iva= $precio_dto + (($iva * $precio_dto)/100).toFixed(2);
+
+    if($precio){
+        $("#precio_publico").val($precio);
+        $("#precio_publico_dto").val($precio);
+        $("#precio_publico_iva").val($precio);
+        $("#precio_publico_iva_dto").val($precio);
+        if($descuento){
+            $precio_dto = $precio - (($descuento * $precio)/100).toFixed(2);
+            $("#precio_publico_dto").val($precio_dto);
+            $("#precio_publico_iva_dto").val($precio_dto); 
+            if ($iva){
+                $precio_dto_iva= $precio_dto + (($iva * $precio_dto)/100).toFixed(2);
+                $precio_iva = $precio + (($iva * $precio)/100).toFixed(2);
+                $("#precio_publico_iva").val($precio_iva);
+                $("#precio_publico_iva_dto").val($precio_dto_iva);
+            }
+        }
+        else{
+            if ($iva){
+                $precio_iva = $precio + (($iva * $precio)/100).toFixed(2);
+                $("#precio_publico_iva").val($precio_iva);
+                $("#precio_publico_iva_dto").val($precio_iva);
+            }
+        }
+    }     
+}
+
+
+function calcularPrecios(){
+    $precio = (parseFloat($('#precio_venta').val()));
+    $descuento = (parseFloat($('#descuento').val()));
+    $iva = (parseFloat($('#iva').val()));
+    $precio_dto = ($precio - (($descuento * $precio)/100));
+    $precio_iva = ($precio + (($iva * $precio)/100));
+    $precio_dto_iva= ($precio_dto + (($iva * $precio_dto)/100));
+    $total_iva= ($precio_iva-$precio);
+    $precio = ($precio).toFixed(2);
+    //setea el precio publico
+
+    if($precio){
+        $("#precio_publico").val($precio);
+    }
+    else{
+        $("#precio_publico").val("0");
+    }
+    //setea el precio publico con descuento
+    if($precio_dto){
+        $precio_dto_f= ($precio_dto).toFixed(2);
+        $("#precio_publico_dto").val($precio_dto_f);
+    }
+    else{
+        $("#precio_publico_dto").val("0");
+    }
+    //setea el precio publico con iva
+    if($precio_iva){
+        $precio_iva_f= ($precio_iva).toFixed(2);
+        $("#precio_publico_iva").val($precio_iva_f);
+    }
+    else{
+        $("#precio_publico_iva").val("0");
+    }
+    //setea el precio publico con iva y descuento
+
+    if ($precio_dto_iva){
+        $precio_dto_iva_f=($precio_dto_iva).toFixed(2);
+        $("#precio_publico_iva_dto").val($precio_dto_iva_f);
+    }else{
+        $("#precio_publico_iva_dto").val("0");
+    }     
+
+    if ($total_iva){
+        $total_iva_f=($total_iva).toFixed(2);
+        $("#iva_total").val($total_iva_f);
+    }else{
+        $("#iva_total").val("0");
+    }     
+}
+
+
+function calculaPrecioDescuento(){
+    $precio = parseFloat($('#precio_venta').val()).toFixed(2);
+    $descuento =parseFloat($('#descuento').val()).toFixed(2);
+    if ($precio && $descuento){
+        $precio_dto = $precio - (($descuento * $precio)/100).toFixed(2);
+        $("#precio_publico_dto").val($precio_dto);
+        $("#precio_publico_iva_dto").val($precio_dto);
+        $("#precio_publico_iva").val($precio_dto);
+    }
+}
+
 

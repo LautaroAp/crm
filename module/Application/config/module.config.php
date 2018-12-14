@@ -163,6 +163,16 @@ return [
                             ],
                         ], 
                      ],
+                     'backup' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/backup',
+                            'defaults' => [
+                                'controller' => \Empresa\Controller\EmpresaController::class,
+                                'action' => 'backup',
+                            ],
+                        ],
+                    ],
                      // Gestion Licencias
                      'gestionLicencias' => [
                         'type' => Literal::class,
@@ -281,7 +291,7 @@ return [
                                 'options' => [
                                     'route' => '/listado',
                                     'defaults' => [
-                                        'controller' => \Licencia\Controller\LicenciaController::class,
+                                        'controller' => \Servicio\Controller\ServicioController::class,
                                         'action' => 'index',
                                     ],
                                 ],
@@ -291,8 +301,18 @@ return [
                                 'options' => [
                                     'route' => '/add',
                                     'defaults' => [
-                                        'controller' => \Licencia\Controller\LicenciaController::class,
+                                        'controller' => \Servicio\Controller\ServicioController::class,
                                         'action' => 'add',
+                                    ],
+                                ],
+                            ],
+                            'backup' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/add',
+                                    'defaults' => [
+                                        'controller' => \Servicio\Controller\ServicioController::class,
+                                        'action' => 'backup',
                                     ],
                                 ],
                             ],

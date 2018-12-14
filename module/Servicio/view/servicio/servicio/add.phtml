@@ -1,74 +1,126 @@
-
 <?php
-$this->headTitle('Agregar Servicio');
-
-$form->get('descripcion')->setAttributes([
-    'class' => 'form-control',
-    'value' => ''
-]);
-
-$form->get('costo')->setAttributes([
-    'class' => 'form-control',
-    'value' => ''
-]);
-
-$form->get('cant_animales')->setAttributes([
-    'class' => 'form-control',
-    'value' => ''
-]);
-
-$form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
-
-$form->prepare();
+$title = 'Agregar Servicio';
+$this->headTitle($title);
 ?>
 
+<form method="post">
+
 <div class="container margen">
+
+    <!-- Datos del Servicio -->
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">Producto Nuevo</div>
-        </div>
+            <div class="panel-heading">
+                DATOS PARTICULARES DEL SERVICIO
+            </div>
+            <div class="panel-body">
+                <!-- 1ra fila -->
+                <div class="row form-row">
+                    <div class="form-group col-md-6">
+                        <label>Nombre</label>
+                        <input type="text" required="true" class="form-control" name="nombre" placeholder="Ingresar nombre">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Descripción</label>
+                        <input type="text" class="form-control" name="descripcion" placeholder="Ingresar descripcion">
+                    </div>
+                </div>
+                <!-- 2da fila -->
+                <div class="row form-row">
+                    <div class="form-group col-md-6">
+                        <label>Categoría</label>
+                        <select class="form-control" id="categoria" name="categoria">
+                            <option value="" hidden="">Seleccionar Categoría</option>
+                            <option value="1">...</option>
+                            <option value="2">...</option>
+                            <option value="-1">NO DEFINIDO</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Proveedor</label>
+                        <select class="form-control" id="proveedor" name="proveedor">
+                            <option value="" hidden="">Seleccionar Proveedor</option>
+                            <option value="1">...</option>
+                            <option value="2">...</option>
+                            <option value="-1">NO DEFINIDO</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>   
     </div>
-</div>
+    <!-- Fin Datos del Servicio -->
 
-<?= $this->form()->openTag($form); ?>
-<div class="container"> 
+    <!-- Precios del Servicio -->
     <div class="row">
-        <div class="row form-row">
-            <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('descripcion')); ?>
-                <?= $this->formElement($form->get('descripcion')); ?>
-                <?= $this->formElementErrors($form->get('descripcion')); ?> 
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                DATOS ECONÓMICOS DEL SERVICIO
             </div>
-       
-            <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('costo')); ?>
-                <?= $this->formElement($form->get('costo')); ?>
-                <?= $this->formElementErrors($form->get('costo')); ?> 
+            <div class="panel-body">
+                <!-- 1ra fila -->
+                <div class="row form-row">
+                    <div class="form-group col-md-4">
+                        <label>Precio</label>
+                        <input type="text" class="form-control" name="precio_venta" id="precio_venta" 
+                            value=0 onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>% Descuento</label>
+                        <input type="text" class="form-control" name="descuento" id="descuento" value=0
+                            onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>% IVA</label>
+                        <select class="form-control" name="iva" id="iva"
+                        onkeypress="return justNumbers(event);" onchange="calcularPrecios()">
+                            <option value="0" hidden="">Seleccionar IVA</option>
+                            <option value="0">Exento</option>
+                            <option value="10.5">10.5</option>
+                            <option value="21">21</option>
+                            <option value="27">27</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Total IVA $</label>
+                        <input type="text" class="form-control" name="iva_total" id="iva_total" value=0>
+                    </div>
+                   
+                </div>
+                <!-- 3ra fila -->
+                <div class="row form-row">
+                    
+                </div>
+                <!-- 4ta fila -->
+                <div class="row form-row">
+                    <div class="form-group col-md-4">
+                        <label>Precio Público con Dto</label>
+                        <input type="text" class="form-control" name="precio_publico_dto" id="precio_publico_dto" value=0 readonly>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Precio Público + IVA</label>
+                        <input type="text" class="form-control" name="precio_publico_iva" id="precio_publico_iva" value=0 readonly>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Precio Público +IVA con Dto.</label>
+                        <input type="text" class="form-control" name="precio_publico_iva_dto" id="precio_publico_iva_dto" value=0 readonly>
+                    </div>
+                </div>
             </div>
-            <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('cant_animales')); ?>
-                <?= $this->formElement($form->get('cant_animales')); ?>
-                <?= $this->formElementErrors($form->get('cant_animales')); ?> 
-            </div>
-            
-        </div>
-
-       
+        </div>   
+    </div>
+    <!-- Fin Precios del Servicio -->
 
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
-
-            <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Borrar cliente</h4>
+                    <h4 class="modal-title">Agregar servicio</h4>
                 </div>
                 <div class="modal-body">
-                    <p>
-                        ¿Estas seguro de que quieres agregar el servicio?
-                    </p>
+                    <p>¿Está seguro que desea agregar este servicio?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-default">Aceptar</button>
@@ -76,37 +128,37 @@ $form->prepare();
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
+    <!-- Fin Modal -->
 </div>
+
+<!-- Fin: Cliente Nuevo -->
+
+</form>
 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row img-centrar">
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a data-toggle="modal" data-target="#myModal"><img src="<?= $this->basePath('img/crm/Aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Guardar</label>
-                        </div>
-                    </div>
-
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a href="<?= $this->url('servicio') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Volver</label>
-                        </div>
-                    </div>
-                </div>
+    <div class="row img-centrar"> 
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a data-toggle="modal" data-target="#myModal">
+                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm" role="button">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Guardar</label>
+            </div>
+        </div>                   
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('gestionEmpresa/gestionServicios') ?>">
+                <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
+                class="img-rounded img-responsive img-texto-derecha"></a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
             </div>
         </div>
-    </div>
+    </div>       
 </div>
 <!-- Fin: Panel Botones -->
-
-<?= $this->form()->closeTag(); ?>

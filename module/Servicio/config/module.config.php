@@ -27,6 +27,54 @@ return [
                         'action'        => 'index',
                     ],
                 ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'editar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/edit[/:id]',
+                            'defaults' => [
+                                'action' => 'edit',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'agregar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/add',
+                            'defaults' => [
+                                'action' => 'add',
+                            ],
+                        ],
+                    ],
+                    'borrar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/remove[/:id]',
+                            'defaults' => [
+                                'action' => 'remove',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'page' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/page[/:id[/:estado]]',
+                            'defaults' => [
+                                'action' => 'index',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ],
     ],       
