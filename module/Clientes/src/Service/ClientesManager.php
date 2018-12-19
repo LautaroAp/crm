@@ -10,6 +10,7 @@ use DBAL\Entity\Pais;
 use DBAL\Entity\Provincia;
 use DBAL\Entity\ProfesionCliente;
 use DBAL\Entity\CategoriaCliente;
+use DBAL\Entity\Ganaderia;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
@@ -28,16 +29,18 @@ class ClientesManager {
     protected $entityManager;
     protected $usuarioManager;
     protected $personaManager;
+    protected $ganaderiaManager;
     protected $total;
     protected $tipo;
     
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $usuarioManager, $personaManager) {
+    public function __construct($entityManager, $usuarioManager, $personaManager, $ganaderiaManager) {
         $this->entityManager = $entityManager;
         $this->usuarioManager = $usuarioManager;
         $this->personaManager = $personaManager;
+        $this->ganaderiaManager = $ganaderiaManager;
         $this->tipo = "CLIENTE";
 
     }

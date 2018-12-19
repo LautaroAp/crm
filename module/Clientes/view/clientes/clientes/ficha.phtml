@@ -26,7 +26,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">
+            <div class="panel-heading text-center titulo-espaciado">
                 DATOS GENERALES
             </div>
             <div class="panel-body padding-top-cero">
@@ -55,39 +55,31 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <p><label>Teléfono:</label> <?php echo ($persona->getTelefono()); ?></p>
                         <p><label>Email:</label> <?php echo ($persona->getEmail()); ?></p>
                         <p><label>Skype:</label> <?php echo ($cliente->getSkype()); ?></p>
+                    </div>
+                    <div class="col-md-3 ficha-cliente-p">
                         <p><label>Ciudad:</label> <?php echo ($cliente->getCiudad()); ?></p>
                         <p><label>Provincia:</label> <?php echo ($cliente->getNombreProvinciaCliente()); ?></p>
                         <p><label>País:</label> <?php echo ($cliente->getNombrePaisCliente()); ?></p>
-                    </div>
-                    <div class="col-md-3 ficha-cliente-p">
-                        <p><label>Profesíon:</label> <?php echo ($cliente->getNombreProfesionCliente()); ?></p>
-                        <p><label>Actividad:</label> <?php echo ($cliente->getActividad()); ?></p>
-                        <p><label>Nro. Animales:</label> <?php echo ($cliente->getAnimales()); ?></p>
-                        <p><label>Nro. Establecimientos:</label> <?php echo ($cliente->getEstablecimientos()); ?></p>
-                        <p><label>Raza de Manejo:</label> <?php echo ($cliente->getRazaManejo()); ?></p>
                     </div>
                     <div class="col-md-4 ficha-cliente-p">
                         <p><label>Fecha de Compra:</label> <?php
                             if (!is_null($cliente->getFechaCompra())) {
                                 echo ($cliente->getFechaCompra()->format('d/m/Y'));
                             }
-                            ?></p>
+                            ?>
+                        </p>
                         <p><label>Último Pago:</label> <?php
                             if (!is_null($cliente->getFechaUltimoPago())) {
                                 echo ($cliente->getFechaUltimoPago()->format('d/m/Y'));
                             }
-                            ?></p>
+                            ?>
+                        </p>
                         <p><label>Fecha Vencimiento:</label> <?php
                             if (!is_null($cliente->getVencimiento())) {
                                 echo ($cliente->getVencimiento()->format('d/m/Y'));
                             }
-                            ?></p>
-                        <p><label>Último Contacto:</label> <?php
-                            if (!is_null($cliente->getFechaUltimoContacto())) {
-                                echo ($cliente->getFechaUltimoContacto()->format('d/m/Y'));
-                            }
-                            ?></p>
-                        <p><label>Estado:</label> <?php echo ($persona->getEstadoNombre()); ?></p>
+                            ?>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -95,7 +87,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 
         <!-- Datos de Facturacion -->
         <div class="panel panel-default">
-            <div class="panel-heading text-center">
+            <div class="panel-heading text-center titulo-espaciado">
                 DATOS DE FACTURACIÓN
             </div>
             <div class="panel-body">
@@ -120,10 +112,10 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             </div>
         </div>
 
-        <!-- Modulos Adicionales -->
+        <!-- Datos Ganaderos -->
         <div class="panel panel-default">
-            <div class="panel-heading text-center">
-                DATOS GANADERÍA
+            <div class="panel-heading text-center titulo-espaciado">
+                DATOS GANADEROS
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseModulosAdicionales" 
                 aria-expanded="true" aria-controls="collapseModulosAdicionales">
                     <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse" 
@@ -134,13 +126,14 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-5 ficha-cliente-p">
-                            <p><label>Nro. Animales:</label> <?php echo ($cliente->getAnimales()); ?></p>
-                            <p><label>Nro. Establecimientos:</label> <?php echo ($cliente->getEstablecimientos()); ?></p>
-                            <p><label>Raza de Manejo:</label> <?php echo ($cliente->getRazaManejo()); ?></p>
+                            <p><label>Profesión:</label> <?= $cliente->getNombreProfesionCliente(); ?></p>
+                            <p><label>Actividad:</label> <?= $cliente->getActividad(); ?></p>
+                            <p><label>Empresa:</label> <?= $cliente->getEmpresa(); ?></p>
                         </div>
                         <div class="col-md-4 ficha-cliente-p">
-                            <p><label>Profesíon:</label> <?php echo ($cliente->getNombreProfesionCliente()); ?></p>
-                            <p><label>Actividad:</label> <?php echo ($cliente->getActividad()); ?></p>
+                            <p><label>Nro. Animales:</label> <?= $cliente->getAnimales(); ?></p>
+                            <p><label>Nro. Establecimientos:</label> <?= $cliente->getEstablecimientos(); ?></p>
+                            <p><label>Raza de Manejo:</label> <?= $cliente->getRazaManejo(); ?></p>
                         </div>
                         <div class="col-md-3 ficha-cliente-p">
                             <button class="btn btn-default pull-right">
@@ -155,7 +148,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 
         <!-- Datos de Usuarios Adicionales -->
         <div class="panel panel-default">
-            <div class="panel-heading text-center">
+            <div class="panel-heading text-center titulo-espaciado">
                 USUARIOS Y DATOS ADICIONALES
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseUsuariosDatosAdicionales" 
                 aria-expanded="true" aria-controls="collapseUsuariosDatosAdicionales">
@@ -243,7 +236,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">
+            <div class="panel-heading text-center titulo-espaciado">
                 REGISTRO DE ACTIVIDADES
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
                     <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
@@ -346,23 +339,92 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
     <div class="row img-centrar">
+        <!-- Agregar Actividad -->
         <div class="col ficha-cliente-p img-centrar">
-            <div>
-                <a role="button" href="<?= $this->url('evento', ['action' => 'add', 'id' => (int) $cliente->getId()]) ?>">
-                    <img src="<?= $this->basePath('img/crm/agregar.png') ?>" 
-                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+            <div class="btn-group dropup">
+                <a role="button" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
+                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
                 </a>
+                <ul class="dropdown-menu" role="menu" style="width:300px;">
+                    <li>
+                        <a href="#" class="padding-cero">
+                            <div class="col img-centrar">
+                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                Presupuesto
+                            </div> 
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="padding-cero">
+                            <div class="col img-centrar">
+                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                Pedido
+                            </div> 
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="padding-cero">
+                            <div class="col img-centrar">
+                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                Remito
+                            </div> 
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="padding-cero">
+                            <div class="col img-centrar">
+                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                Factura
+                            </div> 
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="padding-cero">
+                            <div class="col img-centrar">
+                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                Nota de Crédito
+                            </div> 
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="padding-cero">
+                            <div class="col img-centrar">
+                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                Nota de Débito
+                            </div> 
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="<?= $this->url('evento', ['action' => 'add', 'id' => (int) $cliente->getId()]) ?>" class="padding-cero">
+                            <div class="col img-centrar">
+                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                Acción Comercial
+                            </div> 
+                        </a>
+                    </li>
+                </ul>
             </div>
             <div class="ficha-cliente-label">
                 <label>Agregar</label><br>
                 <label>Actividad</label>
             </div>
         </div>
+
+        <!-- Eliminar Actividad -->
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <a role="button" data-toggle="modal" data-target="#actividadModal">
-                    <img src="<?= $this->basePath('img/crm/eliminar.png') ?>" 
-                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                    <img src="<?= $this->basePath('img/crm/remove_carrito_a.png') ?>" 
+                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
                 </a>
             </div>
             <div class="ficha-cliente-label">
@@ -373,7 +435,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <a href="<?= $this->url('clientes/editar', ['action' => 'edit', 'id' => (int) $persona->getId()]) ?>" role="button">
-                    <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" 
+                    <img src="<?= $this->basePath('img/crm/cliente_update_a.png') ?>" 
                     class="img-rounded img-responsive img-texto-derecha img-submenu">
                 </a>
             </div>
@@ -387,9 +449,9 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                 <a role="button" name="<?= $cliente->getId() ?>" id="<?= $cliente->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $cliente->getId() ?>">
                     <img src="<?php
                     if ($persona->getEstado() == "S") {
-                        echo($this->basePath('img/crm/cliente_a.png'));
+                        echo($this->basePath('img/crm/cliente_remove_a.png'));
                     } else {
-                        echo($this->basePath('img/crm/cliente_a.png'));
+                        echo($this->basePath('img/crm/cliente_add_a.png'));
                     }
                     ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
                 </a>

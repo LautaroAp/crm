@@ -6,6 +6,7 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 use TipoEvento\Controller\TipoEventoController;
 use TipoEvento\Service\TipoEventoManager;
 use Evento\Service\EventoManager;
+use CategoriaEvento\Service\CategoriaEventoManager;
 
 /**
  * Description of TipoEventoControllerFactory
@@ -21,7 +22,8 @@ class TipoEventoControllerFactory implements FactoryInterface {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $tipoeventoManager = $container->get(TipoEventoManager::class);
         $eventoManager = $container->get(EventoManager::class);
+        $categoriaEventoManager = $container->get(CategoriaEventoManager::class);
         // Instantiate the service and inject dependencies
-        return new TipoEventoController($entityManager, $tipoeventoManager, $eventoManager);
+        return new TipoEventoController($entityManager, $tipoeventoManager, $eventoManager, $categoriaEventoManager);
     }    
 }

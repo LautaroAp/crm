@@ -16,7 +16,7 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">
+            <div class="panel-heading text-center titulo-espaciado">
                 LISTADO TIPO DE ACTIVIDADES
                 <a data-toggle="collapse" data-parent="#accordion" href="#add_tipo_evento" 
                     aria-expanded="true" aria-controls="add_tipo_evento">
@@ -24,15 +24,33 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
                 </a>
             </div>
         <div class="panel panel-body">
-            <div class="container collapse" id="add_tipo_evento">
+            <div class="collapse" id="add_tipo_evento">
                 <form method="post">
                     <div class="row form-row">
                         <div class="form-group col-md-4">
-                            <input type="text" class="form-control form-margen" name="nombre" placeholder="Ingresar tipo de Actividad">
+                            <label>Tipo de Actividad</label>
+                            <input type="text" class="form-control form-margen" name="nombre" placeholder="Tipo de Actividad">
                         </div>
                         <div class="form-group col-md-4">
+                        <label>Categoría</label>
+                            <select class="form-control form-margen" id="accion_comercial" name="categoria">
+                                <option value="" hidden="">Seleccionar</option>
+                                <option value="-1">NO DEFINIDO</option>
+                                <?php foreach ($categoriaeventos as $categoria) : ?>
+                                    <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                        <label>Descripción</label>
+                            <input type="text" class="form-control form-margen" name="descripcion" placeholder="Descripción">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
                             <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
-                                <span class="glyphicon glyphicon-plus" ></span> Agregar tipo de actividad
+                                <span class="glyphicon glyphicon-plus" ></span>
+                                Agregar tipo de actividad
                             </button>
                         </div>
                     </div>
@@ -65,8 +83,14 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
                         <table id="tabla_tipoevento" class="table table-bordred table-striped">
                             <thead>
                                 <tr>
-                                    <th class="th-sm" onclick="sortTableString(1, 'tabla_tipoevento')">Tipo de Actividad
-                                        <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                                    <th class="th-sm" onclick="sortTableString(1, 'tabla_tipoevento')">
+                                        Tipo de Actividad <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                                    </th>
+                                    <th class="th-sm" onclick="sortTableString(1, 'tabla_tipoevento')">
+                                        Categoría <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                                    </th>
+                                    <th class="th-sm" onclick="sortTableString(1, 'tabla_tipoevento')">
+                                        Descripción <i class="fa fa-sort float-right" aria-hidden="true"></i>
                                     </th>
                                     <th></th>
                                 </tr>
@@ -74,20 +98,22 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
                             <tbody>
                                 <?php
                                 if (isset($tipoeventos_pag)) {
-                                    foreach ($tipoeventos_pag as $tipoevento) :
+                                    foreach ($tipoeventos_pag as $tipo) :
                                         ?>
                                         <tr>
-                                            <td><?php echo ($tipoevento->getNombre()); ?></td>
+                                            <td><?php echo ($tipo->getNombre()); ?></td>
+                                            <td><?php echo ($tipo->getNombreCategoriaEvento()); ?></td>
+                                            <td><?php echo ($tipo->getDescripcion()); ?></td>
                                             <td class="table-items-right">
-                                                <a class="btn btn-default" href="<?= $this->url('tipoevento/editar', ['action' => 'edit', 'id' => $tipoevento->getId()]); ?>">
+                                                <a class="btn btn-default" href="<?= $this->url('tipoevento/editar', ['action' => 'edit', 'id' => $tipo->getId()]); ?>">
                                                     <span class="glyphicon glyphicon-pencil" ></span> 
                                                 </a>
-                                                <button name="<?= $tipoevento->getId() ?>" id="<?= $tipoevento->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $tipoevento->getId() ?>">
+                                                <button name="<?= $tipo->getId() ?>" id="<?= $tipo->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $tipo->getId() ?>">
                                                     <span class="glyphicon glyphicon-remove" ></span>
                                                 </button>
                                             </td>
                                             <!-- Modal -->
-                                    <div id="myModal<?= $tipoevento->getId() ?>" class="modal fade" role="dialog">
+                                    <div id="myModal<?= $tipo->getId() ?>" class="modal fade" role="dialog">
                                         <div class="modal-dialog">
                                             <!-- Modal content-->
                                             <div class="modal-content">
@@ -98,11 +124,11 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
                                                 <div class="modal-body">
                                                     <p>
                                                         ¿Está seguro que desea eliminar el tipo de actividad: 
-                                                        "<?= $this->escapeHtml($tipoevento->getNombre()) ?>"?
+                                                        "<?= $this->escapeHtml($tipo->getNombre()) ?>"?
                                                     </p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="<?= $this->url('tipoevento/borrar', ['action' => 'remove', 'id' => $tipoevento->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
+                                                    <a href="<?= $this->url('tipoevento/borrar', ['action' => 'remove', 'id' => $tipo->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
                                                     <span class="btn btn-default">Aceptar</span></a>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                                 </div>
@@ -130,7 +156,7 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionClientes') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                <a href="<?= $this->url('gestionClientes/gestionActividadesClientes') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Volver</label>

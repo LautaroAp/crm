@@ -5,6 +5,7 @@ $id = $cliente->getId();
 $nombre = $persona->getNombre();
 $telefono = $persona->getTelefono();
 $email = $persona->getEmail();
+$skype = $cliente->getSkype();
 $pais = $cliente->getPais();
 $provincia = $cliente->getProvincia();
 $ciudad = $cliente->getCiudad();
@@ -16,172 +17,117 @@ $profesion = $cliente->getProfesion();
 $actividad = $cliente->getActividad();
 $animales = $cliente->getAnimales();
 $establecimientos = $cliente->getEstablecimientos();
+$raza_manejo = $cliente->getRazaManejo();
 ?>
 
-<!-- Inicio: Datos Cliente -->
+<!-- Inicio: Datos Generales -->
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading titulo-espaciado">
                 MODIFICAR DATOS PARTICULARES
             </div>
             <div class="panel panel-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">  
-                            <div class="row">
-                                <form method="post">
-                                    <!-- 1ra fila -->
-                                    <div class="row form-row">  
-                                        <input type="hidden" name="id" value="<?= $id ?>">
-                                        <div class="form-group col-md-4">
-                                            <label>Nombre</label>
-                                            <input type="text" class="form-control" name="nombre" value="<?php echo($nombre); ?>" placeholder="Ingresar Nombre">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label>Email</label>
-                                            <input type="text" class="form-control" name="email" value="<?php echo($email); ?>" placeholder="Ingresar Email">
-                                        </div>
-                                         <div class="form-group col-md-3">
-                                            <label>Teléfono</label>
-                                            <input type="text" class="form-control" name="telefono" value="<?php echo($telefono); ?>" placeholder="Ingresar Teléfono">
-                                        </div>
-                                    </div>
-                                    <!-- 2da fila -->
-                                    <div class="row form-row">
-                                        <div class="form-group col-md-4">
-                                            <label>País</label>
-                                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
-                                                <option value="<?php if(isset($pais)){ echo ($pais->getId()); }?>" hidden="">  
-                                                    <?php if(isset($pais)){ echo($pais->getNombre()); } else {echo ("Seleccionar País");}?>
-                                                </option>
-                                                <?php foreach ($paises as $pais) : ?>
-                                                    <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-4" id="div_provincias">
-                                            <label>Provincia</label>
-                                            <select class="form-control" id="ops_provincias" name="provincia" required="">
-                                                <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); }?>" hidden="">  
-                                                    <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Ciudad</label>
-                                            <input type="text" class="form-control" name="ciudad" value="<?php echo($ciudad); ?>" placeholder="Ingresar Ciudad">
-                                        </div>   
-                                    </div>
-                                    <!-- 3ra fila -->
-                                    <div class="row form-row">
-                                        <div class="form-group col-md-4">
-                                            <label>Licencia</label>
-                                            <select class="form-control" id="licencia" name="licencia">
-                                                <option value="<?php if(isset($licencia)){ echo ($licencia->getId()); }?>" hidden="">  
-                                                    <?php if(isset($licencia)){ echo($licencia->getNombre()); } else {echo ("Seleccionar Licencia");}?>
-                                                </option>
-                                                <option value="-1">NO DEFINIDO</option>
-                                                <?php foreach ($licencias as $licencia) : ?>
-                                                    <option value="<?php echo ($licencia->getId()); ?>"><?php echo ($licencia->getNombre()); ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label>Categoría</label>
-                                            <select class="form-control" id="categoria" name="categoria">
-                                                <option value="<?php if(isset($categoria)){ echo ($categoria->getId()); }?>" hidden="">  
-                                                    <?php if(isset($categoria)){ echo($categoria->getNombre()); } else {echo ("Seleccionar Categoría");}?>
-                                                </option>                           
-                                                <?php foreach ($categorias as $categoria) : ?>
-                                                    <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Versión</label>
-                                            <select class="form-control" id="version" name="version">
-                                                <option value="<?php if(isset($version)){ echo ($version); }?>" hidden="">  
-                                                    <?php if(isset($version)){ echo($version); } else {echo ("Seleccionar Versión");}?>
-                                                </option>
-                                                <option value="Productores">Productores</option>
-                                                <option value="Veterinarios">Veterinarios</option>
-                                                <option value="-1">NO DEFINIDO</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- 4ta fila -->
-                                    <div class="row form-row">
-                                        <div class="form-group col-md-4">
-                                            <label>Empresa</label>
-                                            <input type="text" class="form-control" name="empresa" value="<?php echo($empresa); ?>" placeholder="Ingresar Empresa">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label>Skype</label>
-                                            <input type="text" class="form-control" name="skype" placeholder="Ingresar Skype">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <form method="post">
+                    <!-- 1ra fila -->
+                    <div class="row form-row">  
+                        <input type="hidden" name="id" value="<?= $id ?>">
+                        <div class="form-group col-md-4">
+                            <label>Nombre</label>
+                            <input type="text" class="form-control" name="nombre" value="<?php echo($nombre); ?>" placeholder="Ingresar Nombre">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>País</label>
+                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
+                                <option value="<?php if(isset($pais)){ echo ($pais->getId()); }?>" hidden="">  
+                                    <?php if(isset($pais)){ echo($pais->getNombre()); } else {echo ("Seleccionar País");}?>
+                                </option>
+                                <?php foreach ($paises as $pais) : ?>
+                                    <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Categoría</label>
+                            <select class="form-control" id="categoria" name="categoria">
+                                <option value="<?php if(isset($categoria)){ echo ($categoria->getId()); }?>" hidden="">  
+                                    <?php if(isset($categoria)){ echo($categoria->getNombre()); } else {echo ("Seleccionar Categoría");}?>
+                                </option>                           
+                                <?php foreach ($categorias as $categoria) : ?>
+                                    <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div> 
+                    </div>
+                    <!-- 2da fila -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-4">
+                            <label>Teléfono</label>
+                            <input type="text" class="form-control" name="telefono" value="<?php echo($telefono); ?>" placeholder="Ingresar Teléfono">
+                        </div>
+                        <div class="form-group col-md-4" id="div_provincias">
+                            <label>Provincia</label>
+                            <select class="form-control" id="ops_provincias" name="provincia" required="">
+                                <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); }?>" hidden="">  
+                                    <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
+                                </option>
+                            </select>
+                        </div> 
+                        <div class="form-group col-md-4">
+                            <label>Licencia</label>
+                            <select class="form-control" id="licencia" name="licencia">
+                                <option value="<?php if(isset($licencia)){ echo ($licencia->getId()); }?>" hidden="">  
+                                    <?php if(isset($licencia)){ echo($licencia->getNombre()); } else {echo ("Seleccionar Licencia");}?>
+                                </option>
+                                <option value="-1">NO DEFINIDO</option>
+                                <?php foreach ($licencias as $licencia) : ?>
+                                    <option value="<?php echo ($licencia->getId()); ?>"><?php echo ($licencia->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- 3ra fila -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-4">
+                            <label>Email</label>
+                            <input type="text" class="form-control" name="email" 
+                                value="<?php echo($email); ?>" placeholder="Ingresar Email">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Ciudad</label>
+                            <input type="text" class="form-control" name="ciudad" value="<?php echo($ciudad); ?>" placeholder="Ingresar Ciudad">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Versión</label>
+                            <select class="form-control" id="version" name="version">
+                                <option value="<?php if(isset($version)){ echo ($version); }?>" hidden="">  
+                                    <?php if(isset($version)){ echo($version); } else {echo ("Seleccionar Versión");}?>
+                                </option>
+                                <option value="Productores">Productores</option>
+                                <option value="Veterinarios">Veterinarios</option>
+                                <option value="-1">NO DEFINIDO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- 4ta fila -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-4">
+                            <label>Skype</label>
+                            <input type="text" class="form-control" name="skype"
+                                value="<?php echo($skype); ?>" placeholder="Ingresar Skype">
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
-
-<!-- Inicio: Caracteristicas de trabajo -->
-<div class="container margen">
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                MODIFICAR DATOS LABORALES
-            </div>
-            <div class="panel panel-body">
-                <div class="row form-row">
-                    <div class="form-group col-md-4">
-                        <label>Profesión</label>
-                        <select class="form-control" id="profesion" name="profesion">
-                            <option value="<?php if(isset($profesion)){ echo ($profesion->getId()); }?>" hidden="">  
-                                <?php if(isset($profesion)){ echo($profesion->getNombre()); } else {echo ("Seleccionar Profesión");}?>
-                            </option>
-                            <option value="-1">NO DEFINIDO</option>
-                            <?php foreach ($profesiones as $profesion) : ?>
-                                <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Actividad</label>
-                        <input type="text" class="form-control" name="actividad" value="<?php echo($actividad); ?>" placeholder="Ingresar Actividad">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>Raza de Manejo</label>
-                        <input type="text" class="form-control" name="raza_manejo" placeholder="Ingresar Raza">
-                    </div>
-                </div>
-                <div class="row form-row">
-                    <div class="form-group col-md-4">
-                        <label>Nro. de Animales</label>
-                        <input type="text" class="form-control" name="animales" value="<?php echo($animales); ?>" placeholder="Ingresar Nro. Animales">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Nro. de Establecimientos</label>
-                        <input type="text" class="form-control" name="establecimientos" value="<?php echo($establecimientos); ?>" placeholder="Ingresar Nro. Establecimientos">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Fin: Caracteristicas de trabajo -->
+<!-- Fin: Datos Generales -->
 
 <!-- Inicio: Datos de Facturacion -->
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading titulo-espaciado">
                 MODIFICAR DATOS DE FACTURACIÓN
             </div>
             <div class="panel panel-body">
@@ -231,6 +177,66 @@ $establecimientos = $cliente->getEstablecimientos();
     </div>
 </div>
 <!-- Fin: Datos de Facturacion -->
+
+<!-- Inicio: Datos Ganaderos -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading titulo-espaciado">
+                MODIFICAR DATOS GANADEROS
+            </div>
+            <div class="panel panel-body">
+                <!-- Fila 1 -->
+                <div class="row form-row">
+                    <div class="form-group col-md-4">
+                        <label>Profesión</label>
+                        <select class="form-control" id="profesion" name="profesion">
+                            <option value="<?php if(isset($profesion)){ echo ($profesion->getId()); }?>" hidden="">  
+                                <?php if(isset($profesion)){ echo($profesion->getNombre()); } else {echo ("Seleccionar Profesión");}?>
+                            </option>
+                            <option value="-1">NO DEFINIDO</option>
+                            <?php foreach ($profesiones as $profesion) : ?>
+                                <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Nro. de Animales</label>
+                        <input type="text" class="form-control" name="animales" 
+                            value="<?php echo($animales); ?>" placeholder="Ingresar Nro. Animales">
+                    </div>
+                </div>
+                <!-- Fila 2 -->
+                <div class="row form-row">
+                    <div class="form-group col-md-4">
+                        <label>Actividad</label>
+                        <input type="text" class="form-control" name="actividad" 
+                            value="<?php echo($actividad); ?>" placeholder="Ingresar Actividad">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Nro. de Establecimientos</label>
+                        <input type="text" class="form-control" name="establecimientos"
+                            value="<?php echo($establecimientos); ?>" placeholder="Ingresar Nro. Establecimientos">
+                    </div>
+                </div>
+                <!-- Fila 3 -->
+                <div class="row form-row">
+                        <div class="form-group col-md-4">
+                            <label>Empresa</label>
+                            <input type="text" class="form-control" name="empresa"
+                                value="<?php echo($empresa); ?>" placeholder="Ingresar Empresa">
+                        </div>
+                    <div class="form-group col-md-3">
+                        <label>Raza de Manejo</label>
+                        <input type="text" class="form-control" name="raza_manejo"
+                            value="<?php echo($raza_manejo); ?>" placeholder="Ingresar Raza">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Datos Ganaderos -->
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">

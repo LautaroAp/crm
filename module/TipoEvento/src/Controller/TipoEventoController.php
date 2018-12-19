@@ -10,6 +10,8 @@ namespace TipoEvento\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use DBAL\Entity\CategoriaEvento;
+use DBAL\Entity\Evento;
 
 
 class TipoEventoController extends AbstractActionController {
@@ -31,10 +33,17 @@ class TipoEventoController extends AbstractActionController {
      */
     private $eventoManager;
 
-    public function __construct($entityManager, $tipoeventoManager, $eventoManager) {
+    /**
+     * Doctrine entity manager.
+     * @var Doctrine\ORM\EntityManager
+     */
+    private $categoriaEventoManager;
+
+    public function __construct($entityManager, $tipoeventoManager, $eventoManager, $categoriaEventoManager) {
         $this->entityManager = $entityManager;
         $this->tipoeventoManager = $tipoeventoManager;
         $this->eventoManager = $eventoManager;
+        $this->categoriaEventoManager = $categoriaEventoManager;
     }
 
     public function indexAction() {
@@ -51,10 +60,8 @@ class TipoEventoController extends AbstractActionController {
     private function procesarAddAction() {
         $form = $this->tipoeventoManager->createForm();
         $tipoeventos = $this->tipoeventoManager->getTipoEventos();
-
+        $categoriaeventos = $this->categoriaEventoManager->getCategoriaEventos();
         $paginator = $this->tipoeventoManager->getTabla();
-        $mensaje = "";
-
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
@@ -71,7 +78,7 @@ class TipoEventoController extends AbstractActionController {
             'form' => $form,
             'tipoeventos' => $tipoeventos,
             'tipoeventos_pag' => $paginator,
-            'mensaje' => $mensaje
+            'categoriaeventos' => $categoriaeventos,
         ]);
     }
 
@@ -83,6 +90,7 @@ class TipoEventoController extends AbstractActionController {
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $tipoevento = $this->tipoeventoManager->getTipoEventoId($id);
+        $categoriaeventos = $this->categoriaEventoManager->getCategoriaEventos();
         $form = $this->tipoeventoManager->getFormForTipoEvento($tipoevento);
         if ($form == null) {
             $this->reportarError();
@@ -90,7 +98,7 @@ class TipoEventoController extends AbstractActionController {
             if ($this->getRequest()->isPost()) {
                 $data = $this->params()->fromPost();
                 if ($this->tipoeventoManager->formValid($form, $data)) {
-                    $this->tipoeventoManager->updateTipoEvento($tipoevento, $form);
+                    $this->tipoeventoManager->updateTipoEvento($tipoevento, $data);
                     return $this->redirect()->toRoute('tipoevento');
                 }
             } else {
@@ -98,6 +106,7 @@ class TipoEventoController extends AbstractActionController {
             }
             return new ViewModel(array(
                 'tipoevento' => $tipoevento,
+                'categoriaeventos' => $categoriaeventos,
                 'form' => $form
             ));
         }
@@ -115,9 +124,11 @@ class TipoEventoController extends AbstractActionController {
         if ($tipoevento == null) {
             $this->reportarError();
         } else {
+                    
             $this->eventoManager->eliminarTipoEventos($id);
+            
             $this->tipoeventoManager->removeTipoEvento($tipoevento);
-            return $this->redirect()->toRoute('tipoevento');
+            return $this->redirect()->toRoute('home');
         }
     }
 

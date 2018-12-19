@@ -53,6 +53,11 @@ class Cliente {
     private $profesion;
 
     /**
+     * * @ORM\Column(name="CARGO_CLIENTE", nullable=true, type="string", length=255)
+     */
+    private $cargo;
+
+    /**
      * @ORM\Column(name="EMPRESA_CLIENTE", nullable=true, type="string", length=255)
      */
     private $empresa;

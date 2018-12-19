@@ -30,6 +30,7 @@ return [
     'Evento',
     'User',
     'TipoEvento',
+    'CategoriaEvento',
     'CategoriaCliente',
     'CategoriaProducto',
     'Usuario',
@@ -39,5 +40,6 @@ return [
     'Producto',
     'Persona',
     'CategoriaServicio',
-    'Moneda'
+    'Moneda',
+    'Ganaderia'
 ];

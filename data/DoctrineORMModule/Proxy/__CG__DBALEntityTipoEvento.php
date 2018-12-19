@@ -64,10 +64,10 @@ class TipoEvento extends \DBAL\Entity\TipoEvento implements \Doctrine\ORM\Proxy\
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id_tipo_evento', 'nombre'];
+            return ['__isInitialized__', 'id_tipo_evento', 'nombre', 'descripcion', '' . "\0" . 'DBAL\\Entity\\TipoEvento' . "\0" . 'categoria_evento'];
         }
 
-        return ['__isInitialized__', 'id_tipo_evento', 'nombre'];
+        return ['__isInitialized__', 'id_tipo_evento', 'nombre', 'descripcion', '' . "\0" . 'DBAL\\Entity\\TipoEvento' . "\0" . 'categoria_evento'];
     }
 
     /**
@@ -215,6 +215,72 @@ class TipoEvento extends \DBAL\Entity\TipoEvento implements \Doctrine\ORM\Proxy\
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNombre', [$nombre]);
 
         return parent::setNombre($nombre);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDescripcion()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescripcion', []);
+
+        return parent::getDescripcion();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setDescripcion($descripcion)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDescripcion', [$descripcion]);
+
+        return parent::setDescripcion($descripcion);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCategoria_evento()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCategoria_evento', []);
+
+        return parent::getCategoria_evento();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setCategoria_evento($categoria_evento)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCategoria_evento', [$categoria_evento]);
+
+        return parent::setCategoria_evento($categoria_evento);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getNombreCategoriaEvento()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNombreCategoriaEvento', []);
+
+        return parent::getNombreCategoriaEvento();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCategoriaId()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCategoriaId', []);
+
+        return parent::getCategoriaId();
     }
 
 }

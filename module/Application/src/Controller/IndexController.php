@@ -35,10 +35,13 @@ class IndexController extends AbstractActionController {
         return new ViewModel();
     }
 
-    public function gestionProveedoresAction() {
+    public function gestionActividadesClientesAction() {
         return new ViewModel();
     }
 
+    public function gestionProveedoresAction() {
+        return new ViewModel();
+    }
 
     public function gestionEmpresaAction() {
         return new ViewModel();
