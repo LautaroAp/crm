@@ -258,14 +258,14 @@ class EventoManager {
 
     public function eliminarTipoEventos($id) {
         $entityManager = $this->entityManager;
-        $eventos = $this->entityManager->getRepository(Evento::class)->findAll();
+        $eventos = $this->entityManager->getRepository(Evento::class)->findBy(['tipo'=>$id]);
         foreach ($eventos as $evento) {
             if (!is_null($evento->getTipoId())) {
                 if ($evento->getTipoId() == $id) {
                     $evento->setTipo(null);
                 }
             }
-        }
+        }      
         $entityManager->flush();
     }
 

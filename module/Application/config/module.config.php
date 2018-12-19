@@ -85,13 +85,60 @@ return [
                             ],
                         ], 
                      ],
-                     'tipoevento' => [
+                    //  Gestion Actividades
+                     'gestionActividadesClientes' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/actividades',
+                            'route' => '/gestionActividadesClientes',
                             'defaults' => [
-                                'controller' => \TipoEvento\Controller\TipoEventoController::class,
-                                'action' => 'index',
+                                'controller' => \Application\Controller\IndexController::class,
+                                'action' => 'gestionActividadesClientes',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'tipoevento' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/actividades',
+                                    'defaults' => [
+                                        'controller' => \TipoEvento\Controller\TipoEventoController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                            ],
+                            'agregar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/add',
+                                    'defaults' => [
+                                        'controller' => \Producto\Controller\ProductoController::class,
+                                        'action' => 'add',
+                                    ],
+                                ],
+                            ],
+                            'editar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/edit[/:id]',
+                                    'defaults' => [
+                                        'controller' => \Producto\Controller\ProductoController::class,
+                                        'action' => 'edit',
+                                    ],
+                                    'constraints' => [
+                                        'id' => '[0-9]\d*',
+                                    ],
+                                ],
+                            ],
+                            'categoriaevento' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/categoriaevento',
+                                    'defaults' => [
+                                        'controller' => \CategoriaEvento\Controller\CategoriaEventoController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
                             ],
                         ],
                     ],

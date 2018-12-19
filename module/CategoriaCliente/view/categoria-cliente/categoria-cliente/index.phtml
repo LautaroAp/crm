@@ -16,7 +16,7 @@ if (isset($_SESSION['MENSAJES']['categoria_cliente'])) {
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">
+            <div class="panel-heading text-center titulo-espaciado">
                 LISTADO CATEGORÍAS
                 <a data-toggle="collapse" data-parent="#accordion" href="#add_categoria" 
                 aria-expanded="true" aria-controls="add_categoria">
@@ -24,14 +24,14 @@ if (isset($_SESSION['MENSAJES']['categoria_cliente'])) {
                 </a>
             </div>
         <div class="panel panel-body">
-            <div class="container collapse" id="add_categoria">
+            <div class="collapse" id="add_categoria">
                 <form method="post">
                     <div class="row form-row">
                         <div class="form-group col-md-4">
                             <input type="text" class="form-control form-margen" name="nombre" placeholder="Ingresar Categoría">
                         </div>
                         <div class="form-group col-md-4">
-                            <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
+                            <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModalAdd">
                                 <span class="glyphicon glyphicon-plus" ></span> Agregar Categoría
                             </button>
                         </div>
@@ -62,8 +62,10 @@ if (isset($_SESSION['MENSAJES']['categoria_cliente'])) {
                                                 <a class="btn btn-default" href="<?= $this->url('categoriacliente/editar', ['action' => 'edit', 'id' => $categoriacliente->getId()]); ?>">
                                                     <span class="glyphicon glyphicon-pencil" ></span> 
                                                 </a>
-                                                <button name="<?= $categoriacliente->getId() ?>" id="<?= $categoriacliente->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $categoriacliente->getId() ?>">
-                                                    <span class="glyphicon glyphicon-remove" ></span>
+                                                <button name="<?= $categoriacliente->getId() ?>" id="<?= $categoriacliente->getId() ?>" 
+                                                type="button" class="btn btn-default" data-toggle="modal" 
+                                                data-target="#myModal<?= $categoriacliente->getId() ?>">
+                                                <span class="glyphicon glyphicon-remove" ></span>
                                                 </button>
                                             </td>
                                         </tr>
@@ -107,7 +109,7 @@ if (isset($_SESSION['MENSAJES']['categoria_cliente'])) {
     </div>
 </div>
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="myModalAdd" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">

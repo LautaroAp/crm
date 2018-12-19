@@ -10,6 +10,8 @@
     color: rgba(50, 50, 50) !important;
 }
 
+
+
 .img-centrar{
     display:flex;
     align-items: center;
@@ -36,6 +38,11 @@
     height: 50px;
 }
 
+.img-submenu-add{
+    width: 90px;
+    height: 90px;
+}
+
 .img-submenu-sm{
     width: 35px;
     height: 35px;
@@ -47,6 +54,10 @@
 
 .form-margen{
     margin: 5px;
+}
+
+.titulo-espaciado {
+    letter-spacing: 0.3em
 }
 
 .ficha-cliente-titulo{
@@ -134,6 +145,10 @@
 
 .padding-top-cero {
     padding-top: 0px !important;
+}
+
+.padding-cero {
+    padding: 0px !important;
 }
 
 .licencia-sm{

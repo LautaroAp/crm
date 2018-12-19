@@ -16,124 +16,138 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">
+            <div class="panel-heading text-center titulo-espaciado">
                 LISTADO LICENCIAS
                 <a data-toggle="collapse" data-parent="#accordion" href="#add_licencia" 
                     aria-expanded="true" aria-controls="add_licencia">
                     <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
                 </a>
             </div>
+            <!-- Inicio: Agregar Licencia -->
             <div class="panel panel-body">
-                <!-- Inicio: Agregar Licencia -->
-                <div class="container collapse" id="add_licencia">
-                    <form method="post">
-                        <div class="row form-row">
-                            <div class="form-group form-inline licencia-margen-bot">
-                                <input type="text" class="form-control licencia-lg form-margen" name="nombre_licencia" placeholder="Nombre de Licencia" required="">
-                                <input type="text" class="form-control licencia-md form-margen" name="precio_local" placeholder="Precio ARG" required="">
-                                <input type="text" class="form-control licencia-md form-margen" name="precio_extranjero" placeholder="Precio USD" required="">
-                                <input type="text" class="form-control licencia-sm form-margen" name="iva" placeholder="% IVA" required="">
-                                <input type="text" class="form-control licencia-sm form-margen" name="descuento" placeholder="% Dto." required="">
-                            </div>
-                            <div class="form-group licencia-margen-top">
-                                <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
-                                    <span class="glyphicon glyphicon-plus" ></span> Agregar Licencia
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Modal -->
-                        <div id="myModal" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Agregar licencia</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>
-                                            ¿Está seguro que desea agregar esta licencia?
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-default">Aceptar</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                    </div>
+                <div class="container">
+                    <div class="collapse" id="add_licencia">
+                        <form method="post">
+                            <div class="row form-row">
+                                <div class="form-group form-inline">
+                                    <input type="text" class="form-control licencia-lg form-margen" name="nombre_licencia" placeholder="Nombre de Licencia" required="">
+                                    <input type="text" class="form-control licencia-md form-margen" name="precio_local" placeholder="Precio ARG" required="">
+                                    <input type="text" class="form-control licencia-md form-margen" name="precio_extranjero" placeholder="Precio USD" required="">
+                                    <input type="text" class="form-control licencia-sm form-margen" name="iva" placeholder="% IVA" required="">
+                                    <input type="text" class="form-control licencia-sm form-margen" name="descuento" placeholder="% Dto." required="">
                                 </div>
                             </div>
-                        </div>   
-                    </form>
-                </div>
-                <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
-                    <thead>
-                        <tr>
-                            <th class="th-sm"> Licencia</th>
-                            <th class="">Precio Local</th>
-                            <th class="">Precio Extranjero</th>
-                            <th class="">% IVA</th>
-                            <th class="">% Dto</th>
-                            <th class="">Total Local</th>
-                            <th class="">Total Extranjero</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            if (isset($licencias)) {
-                            foreach ($licencias as $licencia) : ?>
-                            <tr>
-                                <td><?php echo ($licencia->getNombre()); ?></td>
-                                <td><?php echo money_format("$ %n", $licencia->getPrecio_local()); ?></td>
-                                <td><?php echo money_format("USD %i", $licencia->getPrecio_extranjero()); ?></td>
-                                <td><?php echo ($licencia->getIva()); ?> %</td>
-                                <td><?php echo ($licencia->getDescuento()); ?> %</td>
-                                <td><?php echo money_format("$ %n", $licencia->getTotal_local()); ?></td>
-                                <td><?php echo money_format("USD %i", $licencia->getTotal_extranjero()); ?></td>
-                                <td class="table-items-right"> 
-                                    <a class="btn btn-default" href="<?= $this->url('licencia/editar', ['action' => 'edit', 'id' => $licencia->getId()]); ?>">
-                                        <span class="glyphicon glyphicon-pencil" ></span> 
-                                    </a>
-                                    <button name="<?= $licencia->getId() ?>" id="<?= $licencia->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $licencia->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
-                                </td>
-                            <!-- Modal -->
-                            <div id="myModal<?= $licencia->getId() ?>" class="modal fade" role="dialog">
-                                <div class="modal-dialog">
+                            <div class="row form-row">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
+                                        <span class="glyphicon glyphicon-plus" ></span> Agregar Licencia
+                                    </button>
+                                </div>
+                            </div>
 
+                            <!-- Modal -->
+                            <div id="myModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
                                     <!-- Modal content-->
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Eliminar licencia</h4>
+                                            <h4 class="modal-title">Agregar licencia</h4>
                                         </div>
                                         <div class="modal-body">
                                             <p>
-                                                Está seguro que desea eliminar la licencia: 
-                                                "<?= $this->escapeHtml($licencia->getNombre()) ?>"
-                                                de forma permanente?
+                                                ¿Está seguro que desea agregar esta licencia?
                                             </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="<?= $this->url('licencia/borrar', ['action' => 'remove', 'id' => $licencia->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
-                                                <span class="btn btn-default">Aceptar</span>
-                                            </a>
+                                            <button type="submit" class="btn btn-default">Aceptar</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
+                            </div>   
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
+                            <thead>
+                                <tr>
+                                    <th class="th-sm"> Licencia</th>
+                                    <th class="">Precio Local</th>
+                                    <th class="">Precio Extranjero</th>
+                                    <th class="">% IVA</th>
+                                    <th class="">% Dto</th>
+                                    <th class="">Total Local</th>
+                                    <th class="">Total Extranjero</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if (isset($licencias)) {
+                                    foreach ($licencias as $licencia) : ?>
+                                    <tr>
+                                        <td><?php echo ($licencia->getNombre()); ?></td>
+                                        <td><?php echo money_format("$ %n", $licencia->getPrecio_local()); ?></td>
+                                        <td><?php echo money_format("USD %i", $licencia->getPrecio_extranjero()); ?></td>
+                                        <td><?php echo ($licencia->getIva()); ?> %</td>
+                                        <td><?php echo ($licencia->getDescuento()); ?> %</td>
+                                        <td><?php echo money_format("$ %n", $licencia->getTotal_local()); ?></td>
+                                        <td><?php echo money_format("USD %i", $licencia->getTotal_extranjero()); ?></td>
+                                        <td class="table-items-right"> 
+                                            <a class="btn btn-default" href="<?= $this->url('licencia/editar', ['action' => 'edit', 'id' => $licencia->getId()]); ?>">
+                                                <span class="glyphicon glyphicon-pencil" ></span> 
+                                            </a>
+                                            <button name="<?= $licencia->getId() ?>" id="<?= $licencia->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $licencia->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
+                                        </td>
+                                    <!-- Modal -->
+                                    <div id="myModal<?= $licencia->getId() ?>" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Eliminar licencia</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>
+                                                        Está seguro que desea eliminar la licencia: 
+                                                        "<?= $this->escapeHtml($licencia->getNombre()) ?>"
+                                                        de forma permanente?
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= $this->url('licencia/borrar', ['action' => 'remove', 'id' => $licencia->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
+                                                        <span class="btn btn-default">Aceptar</span>
+                                                    </a>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <?php
-        echo $this->paginationControl($licencias, 'Sliding', // All, Elastic, Jumping, Sliding
-                    'search_pagination5.phtml', $this->url('licencia/page', ['action' => 'index', 'id' => 1]));
-        }
-        ?>
+    echo $this->paginationControl(
+        $licencias,
+        'Sliding', // All, Elastic, Jumping, Sliding
+        'search_pagination5.phtml',
+        $this->url('licencia/page', ['action' => 'index', 'id' => 1])
+    );
+}
+?>
 </div>
 <!-- Fin: Tabla Licencias -->
 

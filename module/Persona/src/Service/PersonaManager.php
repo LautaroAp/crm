@@ -82,7 +82,7 @@ class PersonaManager {
     private function setData($persona, $data, $tipo= null, $estado=null){
         $persona->setNombre($data['nombre'])
         ->setTelefono($data['telefono'])
-        ->setEmail($data['mail']);
+        ->setEmail($data['email']);
         if (isset($tipo)){
             $persona->setTipo($tipo);
         }
@@ -173,7 +173,7 @@ class PersonaManager {
         $arr = [
             'nombre' =>$persona->getNombre(),
             'telefono' =>$persona->getTelefono(),
-            'mail' => $persona->getMail(),
+            'email' => $persona->getMail(),
             'estado' =>$persona->getEstado(),
             'tipo' =>$persona->getTipo()
         ];

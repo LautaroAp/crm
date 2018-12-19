@@ -87,7 +87,6 @@ class ProvinciaManager
             return null;
         }
         $paises=$this->entityManager->getRepository(Pais::class)->findAll();
-
         $form = new ProvinciaForm('update', $this->entityManager, $provincia, $paises);
         return $form;
     }

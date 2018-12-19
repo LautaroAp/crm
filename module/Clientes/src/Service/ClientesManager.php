@@ -10,6 +10,7 @@ use DBAL\Entity\Pais;
 use DBAL\Entity\Provincia;
 use DBAL\Entity\ProfesionCliente;
 use DBAL\Entity\CategoriaCliente;
+use DBAL\Entity\Ganaderia;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
@@ -28,16 +29,18 @@ class ClientesManager {
     protected $entityManager;
     protected $usuarioManager;
     protected $personaManager;
+    protected $ganaderiaManager;
     protected $total;
     protected $tipo;
     
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $usuarioManager, $personaManager) {
+    public function __construct($entityManager, $usuarioManager, $personaManager, $ganaderiaManager) {
         $this->entityManager = $entityManager;
         $this->usuarioManager = $usuarioManager;
         $this->personaManager = $personaManager;
+        $this->ganaderiaManager = $ganaderiaManager;
         $this->tipo = "CLIENTE";
 
     }
@@ -400,40 +403,28 @@ class ClientesManager {
 
     public function eliminarLicenciaClientes($id) {
         $entityManager = $this->entityManager;
-        $clientes = $this->entityManager->getRepository(Cliente::class)->findAll();
+        $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['licencia'=>$id]);
         foreach ($clientes as $cliente) {
-            if (!is_null($cliente->getLicencia())) {
-                if ($cliente->getLicencia()->getId() == $id) {
-                    $cliente->setLicencia(null)
-                            ->setVersion(null);
-                }
-            }
+            $cliente->setLicencia(null)
+                     ->setVersion(null);
         }
         $entityManager->flush();
     }
 
     public function eliminarCategoriaClientes($id) {
         $entityManager = $this->entityManager;
-        $clientes = $this->entityManager->getRepository(Cliente::class)->findAll();
+        $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['categoria'=>$id]);
         foreach ($clientes as $cliente) {
-            if (!is_null($cliente->getCategoria())) {
-                if ($cliente->getCategoria()->getId() == $id) {
-                    $cliente->setCategoria(null);
-                }
-            }
+            $cliente->setCategoria(null);
         }
         $entityManager->flush();
     }
 
     public function eliminarProfesionClientes($id) {
         $entityManager = $this->entityManager;
-        $clientes = $this->entityManager->getRepository(Cliente::class)->findAll();
+        $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['profesion'=>$id]);
         foreach ($clientes as $cliente) {
-            if (!is_null($cliente->getProfesion())) {
-                if ($cliente->getProfesion()->getId() == $id) {
-                    $cliente->setProfesion(null);
-                }
-            }
+             $cliente->setProfesion(null);
         }
         $entityManager->flush();
     }

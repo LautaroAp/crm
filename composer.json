@@ -45,6 +45,7 @@
             "Provincia\\": "module/Provincia/src/",
             "Clientes\\": "module/Clientes/src/",
             "Evento\\": "module/Evento/src/",
+            "CategoriaEvento\\": "module/CategoriaEvento/src/",
             "User\\": "module/User/src/",
             "TipoEvento\\": "module/TipoEvento/src/",
             "CategoriaCliente\\": "module/CategoriaCliente/src/",
@@ -57,6 +58,7 @@
             "Persona\\": "module/Persona/src/",
             "CategoriaServicio\\": "module/CategoriaServicio/src/",
             "Moneda\\": "module/Moneda/src/",
+            "Ganaderia\\": "module/Ganaderia/src/",
             "Iva\\": "module/Iva/src/"
         }
     },

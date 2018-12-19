@@ -6,6 +6,7 @@ use DBAL\Entity\TipoEvento;
 use TipoEvento\Form\TipoEventoForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
+use DBAL\Entity\CategoriaEvento;
 
 
 /**
@@ -53,11 +54,7 @@ class TipoEventoManager {
     }
 
     public function getTipoEventoFromForm($form, $data) {
-        $form->setData($data);
-        if ($form->isValid()) {
-            $data = $form->getData();
-            $tipoevento = $this->addTipoEvento($data);
-        }
+        $tipoevento = $this->addTipoEvento($data);
         return $tipoevento;
     }
 
@@ -66,7 +63,8 @@ class TipoEventoManager {
      */
     public function addTipoEvento($data) {
         $tipoevento = new TipoEvento();
-        $tipoevento->setNombre($data['nombre']);
+        $this->addData($tipoevento, $data);
+
         if ($this->tryAddTipoEvento($tipoevento)) {
             $_SESSION['MENSAJES']['tipo_evento'] = 1;
             $_SESSION['MENSAJES']['tipo_evento_msj'] = 'Tipo de actividad agregada correctamente';
@@ -75,6 +73,44 @@ class TipoEventoManager {
             $_SESSION['MENSAJES']['tipo_evento_msj'] = 'Error al agregar tipo de actividad';
         }
         return $tipoevento;
+    }
+
+    /**
+     * This method updates data of an existing tipoevento.
+     */
+    public function updateTipoEvento($tipoevento, $data) {
+        $this->addData($tipoevento, $data);
+
+        if ($this->tryUpdateTipoEvento($tipoevento)) {
+            $_SESSION['MENSAJES']['tipo_evento'] = 1;
+            $_SESSION['MENSAJES']['tipo_evento_msj'] = 'Tipo de actividad editada correctamente';
+        } else {
+            $_SESSION['MENSAJES']['tipo_evento'] = 0;
+            $_SESSION['MENSAJES']['tipo_evento_msj'] = 'Error al editar tipo de actividad';
+        }
+        return true;
+    }
+
+    private function addData($tipoevento, $data) {
+        $tipoevento->setNombre($data['nombre']);
+        if ($data['categoria'] == "-1") {
+            $tipoevento->setCategoria_evento(null);
+        } else {
+            $categoria_eve = $this->getCategoria_evento($data['categoria']);
+            $tipoevento->setCategoria_evento($categoria_eve);
+        }
+        $tipoevento->setDescripcion($data['descripcion']);
+    }
+
+    public function getCategoria_evento($id = null) {
+        if (isset($id)) {
+            return $this->entityManager
+                            ->getRepository(CategoriaEvento::class)
+                            ->findOneBy(['id' => $id]);
+        }
+        return $this->entityManager
+                        ->getRepository(CategoriaEvento::class)
+                        ->findAll();
     }
 
     public function createForm() {
@@ -101,21 +137,7 @@ class TipoEventoManager {
         ));
     }
 
-    /**
-     * This method updates data of an existing tipoevento.
-     */
-    public function updateTipoEvento($tipoevento, $form) {
-        $data = $form->getData();
-        $tipoevento->setNombre($data['nombre']);
-        if ($this->tryUpdateTipoEvento($tipoevento)) {
-            $_SESSION['MENSAJES']['tipo_evento'] = 1;
-            $_SESSION['MENSAJES']['tipo_evento_msj'] = 'Tipo de actividad editada correctamente';
-        } else {
-            $_SESSION['MENSAJES']['tipo_evento'] = 0;
-            $_SESSION['MENSAJES']['tipo_evento_msj'] = 'Error al editar tipo de actividad';
-        }
-        return true;
-    }
+    
 
     public function removeTipoEvento($tipoevento) {
         if ($this->tryRemoveTipoEvento($tipoevento)) {
@@ -125,6 +147,24 @@ class TipoEventoManager {
             $_SESSION['MENSAJES']['tipo_evento'] = 0;
             $_SESSION['MENSAJES']['tipo_evento_msj'] = 'Error al eliminar tipo de actividad';
         }
+    }
+
+    public function eliminarTipoEventos($id) {
+        $entityManager = $this->entityManager;
+        $eventos = $this->entityManager->getRepository(Evento::class)->findBy(['tipo'=>$id]);
+        foreach ($eventos as $evento) {
+            $evento->setTipo(null);
+        }
+        $entityManager->flush();
+    }
+
+    public function eliminarCategoriaEventos($id) {
+        $entityManager = $this->entityManager;
+        $tipoeventos = $this->entityManager->getRepository(TipoEvento::class)->findBy(['categoria_evento'=>$id]);
+        foreach ($tipoeventos as $tipoevento) {
+            $tipoevento->setCategoria_evento(null);
+        }
+        $entityManager->flush();
     }
 
     public function getTabla() {
