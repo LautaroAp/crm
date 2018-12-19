@@ -18,9 +18,12 @@ class MonedaController extends AbstractActionController {
      */
     protected $monedaManager;
 
+    private $servicioManager;
+      
     public function __construct($entityManager, $monedaManager, $servicioManager) {
         $this->entityManager = $entityManager;
         $this->monedaManager = $monedaManager;
+        $this->servicioManager = $servicioManager;
     }
 
     public function indexAction() {

@@ -20,24 +20,10 @@ class MonedaManager {
     private $entityManager;
 
     /**
-     * PHP template renderer.
-     * @var type 
-     */
-    private $viewRenderer;
-
-    /**
-     * Application config.
-     * @var type 
-     */
-    private $config;
-
-    /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) {
+    public function __construct($entityManager) {
         $this->entityManager = $entityManager;
-        $this->viewRenderer = $viewRenderer;
-        $this->config = $config;
     }
 
     public function getMonedas() {
@@ -50,14 +36,6 @@ class MonedaManager {
                         ->find($id);
     }
 
-    public function getMonedaFromForm($form, $data) {
-        $form->setData($data);
-        if ($form->isValid()) {
-            $data = $form->getData();
-            $categoriaProducto = $this->addMoneda($data);
-        }
-        return $categoriaProducto;
-    }
 
     /**
      * This method adds a new categoriaProducto.
@@ -65,8 +43,6 @@ class MonedaManager {
     public function addMoneda($data) {
         $categoriaProducto = new Moneda();
         $categoriaProducto->setNombre($data['nombre']);
-        $categoriaProducto->setDescripcion($data['descripcion']);
-
         if ($this->tryAddMoneda($categoriaProducto)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría agregada correctamente';
@@ -77,34 +53,10 @@ class MonedaManager {
         return $categoriaProducto;
     }
 
-    public function createForm() {
-        return new MonedaForm('create', $this->entityManager, null);
-    }
-
-    public function formValid($form, $data) {
-        $form->setData($data);
-        return $form->isValid();
-    }
-
-    public function getFormForMoneda($categoriaProducto) {
-        if ($categoriaProducto == null) {
-            return null;
-        }
-        $form = new MonedaForm('update', $this->entityManager, $categoriaProducto);
-        return $form;
-    }
-
-    public function getFormEdited($form, $categoriaProducto) {
-        $form->setData(array(
-            'nombre' => $categoriaProducto->getNombre(),
-        ));
-    }
-
     /**
      * This method updates data of an existing categoriaProducto.
      */
-    public function updateMoneda($categoriaProducto, $form) {
-        $data = $form->getData();
+    public function updateMoneda($categoriaProducto, $data) {
         $categoriaProducto->setNombre($data['nombre']);
         if ($this->tryUpdateMoneda($categoriaProducto)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;

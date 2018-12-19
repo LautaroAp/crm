@@ -18,10 +18,12 @@ class ProductoController extends AbstractActionController {
      */
     protected $productoManager;
 
-    public function __construct($entityManager, $productoManager)
+    private $ivaManager;
+    public function __construct($entityManager, $productoManager, $ivaManager)
     {
         $this->entityManager = $entityManager;
         $this->productoManager = $productoManager;
+        $this->ivaManager = $ivaManager;
     }
 
     public function indexAction() {
@@ -35,12 +37,12 @@ class ProductoController extends AbstractActionController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(3);
+                ->setItemCountPerPage(10);
 
         $productos = $this->productoManager->getProductos();
         return new ViewModel([
             'productos' => $productos,
-            'productos_pag' => $paginator
+            'productos_pag' => $paginator,
         ]);
     }
 
@@ -52,13 +54,15 @@ class ProductoController extends AbstractActionController {
     private function procesarAddAction() {
         $request = $this->getRequest();
         $categoriaProductos = $this->productoManager->getCategoriaProducto();
+        $ivas = $this->ivaManager->getIvas();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $this->productoManager->addProducto($data);
             $this->redirect()->toRoute('gestionEmpresa/gestionProductos/listado');
         }
         return new ViewModel([
-            'categorias' => $categoriaProductos
+            'categorias' => $categoriaProductos,
+            'ivas'=>$ivas
         ]);
     }
 
@@ -72,6 +76,7 @@ class ProductoController extends AbstractActionController {
         $id = (int) $this->params()->fromRoute('id', -1);
         $producto = $this->productoManager->getProductoId($id);
         $categoriaProductos = $this->productoManager->getCategoriaProducto();
+        $ivas = $this->ivaManager->getIvas();
 
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
@@ -81,6 +86,7 @@ class ProductoController extends AbstractActionController {
         return new ViewModel([
             'producto' => $producto,
             'categorias' => $categoriaProductos,
+            'ivas'=>$ivas
         ]);
     }
 
@@ -97,7 +103,7 @@ class ProductoController extends AbstractActionController {
             $this->reportarError();
         } else {
             $this->productoManager->removeProducto($producto);
-            return $this->redirect()->toRoute('producto', ['action' => 'index']);
+            return $this->redirect()->toRoute('gestionEmpresa/gestionProductos/listado');
         }
     }
     
@@ -111,4 +117,11 @@ class ProductoController extends AbstractActionController {
         return;
     }
 
+    public function backupAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $resultado = $this->productoManager->getTabla();
+        return new ViewModel([
+            'resultado' => $resultado
+        ]);
+    }
 }

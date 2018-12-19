@@ -5,11 +5,13 @@ use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Servicio\Controller\ServicioController;
 use Servicio\Service\ServicioManager;
+use Iva\Service\IvaManager;
+use CategoriaServicio\Service\CategoriaServicioManager;
 
 /**
  * Description of ServicioControllerFactory
  *
- * @author mariano
+ * @author SoftHuella
  */
 class ServicioControllerFactory implements FactoryInterface {
     
@@ -19,7 +21,10 @@ class ServicioControllerFactory implements FactoryInterface {
        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $servicioManager = $container->get(ServicioManager::class);
+        $ivaManager = $container->get(IvaManager::class);            
+        $categoriaServicioManager = $container->get(CategoriaServicioManager::class);
         // Instantiate the service and inject dependencies
-        return new ServicioController($entityManager, $servicioManager);
+        return new ServicioController($entityManager, $servicioManager, $ivaManager,
+        $categoriaServicioManager);
     }    
 }

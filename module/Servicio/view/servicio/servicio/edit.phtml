@@ -2,6 +2,7 @@
 <?php
 $title = 'Editar Servicio';
 $this->headTitle($title);
+$categoria= $servicio->getCategoria();
 ?>
 
 <form method="post">
@@ -31,10 +32,15 @@ $this->headTitle($title);
                     <div class="form-group col-md-6">
                         <label>Categoría</label>
                         <select class="form-control" id="categoria" name="categoria">
-                            <option value="" hidden="">Seleccionar Categoría</option>
-                            <option value="1">...</option>
-                            <option value="2">...</option>
+                             <option value="<?php if(isset($categoria)){ echo ($categoria->getId()); }?>" hidden="">  
+                                <?php if(isset($categoria)){ echo $categoria->getNombre(); } else {echo ("Seleccionar Categoría");}?>
+                            </option>
                             <option value="-1">NO DEFINIDO</option>
+                            <?php foreach ($categorias as $categoria) : ?>
+                                <option value="<?= $categoria->getId(); ?>">
+                                    <?= $categoria->getNombre(); ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group col-md-6">
@@ -138,32 +144,26 @@ $this->headTitle($title);
 </form>
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row img-centrar">
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a data-toggle="modal" data-target="#myModal"><img src="<?= $this->basePath('img/crm/Aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
-
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Guardar</label>
-                        </div>
-                    </div>
-
-                    <div class="col ficha-cliente-p img-centrar">
-                        <div>
-                            <a href="<?= $this->url('servicio', ['action' => 'index']) ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Volver</label>
-                        </div>
-                    </div>
-                </div>
+    <div class="row img-centrar"> 
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a data-toggle="modal" data-target="#myModal">
+                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm" role="button">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Guardar</label>
+            </div>
+        </div>                   
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('gestionEmpresa/gestionServicios/listado') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
             </div>
         </div>
-    </div>
+    </div>       
 </div>
 <!-- Fin: Panel Botones -->
 

@@ -1,6 +1,7 @@
 <?php
 $title = 'Agregar Cliente';
 $this->headTitle($title);
+$categoria = $producto->getCategoria();
 ?>
 
 <form method="post">
@@ -45,8 +46,8 @@ $this->headTitle($title);
                     <div class="form-group col-md-6">
                         <label>Categoría</label>
                         <select class="form-control" id="categoria" name="categoria">
-                            <option value="<?= $producto->getCategoria(); ?>" hidden="">
-                                <?= $producto->getCategoria(); ?>
+                             <option value="<?php if(isset($categoria)){ echo ($categoria->getId()); }?>" hidden="">  
+                                <?php if(isset($categoria)){ echo $categoria->getNombre(); } else {echo ("Seleccionar Categoría");}?>
                             </option>
                             <option value="-1">NO DEFINIDO</option>
                             <?php foreach ($categorias as $categoria) : ?>
@@ -59,15 +60,10 @@ $this->headTitle($title);
                     <div class="form-group col-md-6">
                         <label>Proveedor</label>
                         <select class="form-control" id="proveedor" name="proveedor">
-                            <option value="<?= $producto->getCategoria(); ?>" hidden="">
-                                <?= $producto->getCategoria(); ?>
-                            </option>
+                        <option value="" hidden="">Seleccionar Proveedor</option>
+                            <option value="1">...</option>
+                            <option value="2">...</option>
                             <option value="-1">NO DEFINIDO</option>
-                            <?php foreach ($categorias as $categoria) : ?>
-                                <option value="<?= $categoria->getId(); ?>">
-                                    <?= $categoria->getNombre(); ?>
-                                </option>
-                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
@@ -173,13 +169,12 @@ $this->headTitle($title);
                         <label>% IVA</label>
                         <select class="form-control" name="iva" id="iva"
                         onkeypress="return justNumbers(event);" onchange="calculaDescuentoIVA()">
-                            <option value="<?= $producto->getIva(); ?>" hidden="">
-                                <?= $producto->getIva(); ?>
-                            </option>
-                            <option value="0">Exento</option>
-                            <option value="10.5">10.5</option>
-                            <option value="21">21</option>
-                            <option value="27">27</option>
+                        <option value="0" hidden="">Seleccionar IVA</option>
+                        <?php foreach ($ivas as $iva) : ?>
+                            <option value="<?php  echo  ($iva->getValor()); ?>">
+                            <?php if ($iva->getId()==1){echo ("Excento");} 
+                                else {echo ($iva->getValor());} ?></option>
+                        <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group col-md-4">

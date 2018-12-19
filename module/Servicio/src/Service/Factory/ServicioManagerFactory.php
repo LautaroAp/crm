@@ -3,6 +3,9 @@ namespace Servicio\Service\Factory;
 
 use Interop\Container\ContainerInterface;
 use Servicio\Service\ServicioManager;
+use Iva\Service\IvaManager;
+use CategoriaServicio\Service\CategoriaServicioManager;
+
 
 /**
  * This is the factory class for ServicioManager service. The purpose of the factory
@@ -16,9 +19,8 @@ class ServicioManagerFactory
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
-        $viewRenderer = $container->get('ViewRenderer');
-        $config = $container->get('Config');
-                        
-        return new ServicioManager($entityManager, $viewRenderer, $config);
+        $ivaManager = $container->get(IvaManager::class);   
+        $categoriaServicioManager = $container->get(CategoriaServicioManager::class);         
+        return new ServicioManager($entityManager, $ivaManager, $categoriaServicioManager);
     }
 }

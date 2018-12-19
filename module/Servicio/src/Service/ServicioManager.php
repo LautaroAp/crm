@@ -8,7 +8,7 @@ use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 /**
  * Esta clase se encarga de obtener y modificar los datos de los servicios 
- * Actualmente sin uso
+ * 
  */
 class ServicioManager {
 
@@ -18,25 +18,15 @@ class ServicioManager {
      */
     private $entityManager;
 
-    /**
-     * PHP template renderer.
-     * @var type 
-     */
-    private $viewRenderer;
-
-    /**
-     * Application config.
-     * @var type 
-     */
-    private $config;
-
+    protected $ivaManager;
+    protected $categoriaServicioManager;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) {
+    public function __construct($entityManager, $ivaManager, $categoriaServicioManager) {
         $this->entityManager = $entityManager;
-        $this->viewRenderer = $viewRenderer;
-        $this->config = $config;
+        $this->ivaManager=$ivaManager;
+        $this->categoriaServicioManager=$categoriaServicioManager;
     }
 
     public function getServicios() {
@@ -70,11 +60,18 @@ class ServicioManager {
     private function setData($servicio, $data){
         $servicio->setNombre($data['nombre']);
         $servicio->setDescripcion($data['descripcion']);
-        // $servicio->setCategoria($data['categoria']);
+        if($data['categoria'] == "-1"){
+            $servicio->setCategoria(null);
+        } else {
+            // Obtener Entidad con id y pasarla
+            $servicio->setCategoria($this->categoriaServicioManager
+                                    ->getCategoriaServicio($data['categoria']));
+        }
         // $servicio->setProveedor($data['proveedor']);
         $servicio->setPrecio($data['precio_venta']);
         $servicio->setIva_gravado($data['iva_total']);
-        // $servicio->setIva($data['iva']);
+        $iva=$this->ivaManager->getIvaPorValor($data['iva']);
+        $servicio->setIva($iva);
         $servicio->setPrecio($data['precio_venta']);
         $servicio->setDescuento($data['descuento']);
         $servicio->setPrecio_final_iva($data['precio_publico_iva']);
@@ -98,4 +95,12 @@ class ServicioManager {
         $this->entityManager->flush();
     }
 
+    public function eliminarCategoriaServicio($id){
+        $entityManager = $this->entityManager;
+        $servicios = $this->entityManager->getRepository(Servicio::class)->findBy(['categoria'=>$id]);
+        foreach ($servicios as $s) {
+            $s->setCategoria(null);
+        }
+        $entityManager->flush();
+    }
 }

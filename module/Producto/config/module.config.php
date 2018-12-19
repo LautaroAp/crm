@@ -61,6 +61,19 @@ return [
                             ],
                         ],
                     ],
+                    'eliminar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/remove[/:id]',
+                            'defaults' => [
+                                'controller' => \Producto\Controller\ProductoController::class,
+                                'action' => 'remove',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
                     'categorias' => [
                         'type' => Segment::class,
                         'options' => [

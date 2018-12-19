@@ -28,12 +28,15 @@ $this->headTitle($title);
                 <!-- 2da fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-6">
-                        <label>Categoría</label>
+                    <label>Categoría</label>
                         <select class="form-control" id="categoria" name="categoria">
                             <option value="" hidden="">Seleccionar Categoría</option>
-                            <option value="1">...</option>
-                            <option value="2">...</option>
                             <option value="-1">NO DEFINIDO</option>
+                            <?php foreach ($categorias as $categoria) : ?>
+                                <option value="<?= $categoria->getId(); ?>">
+                                    <?= $categoria->getNombre(); ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group col-md-6">
@@ -71,19 +74,20 @@ $this->headTitle($title);
                             onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
                     </div>
                     <div class="form-group col-md-2">
-                        <label>% IVA</label>
+                    <label>% IVA</label>
                         <select class="form-control" name="iva" id="iva"
                         onkeypress="return justNumbers(event);" onchange="calcularPrecios()">
-                            <option value="0" hidden="">Seleccionar IVA</option>
-                            <option value="0">Exento</option>
-                            <option value="10.5">10.5</option>
-                            <option value="21">21</option>
-                            <option value="27">27</option>
+                        <option value="0" hidden="">Seleccionar IVA</option>
+                        <?php foreach ($ivas as $iva) : ?>
+                            <option value="<?php  echo  ($iva->getValor()); ?>">
+                            <?php if ($iva->getId()==1){echo ("Excento");} 
+                                else {echo ($iva->getValor());} ?></option>
+                        <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Total IVA $</label>
-                        <input type="text" class="form-control" name="iva_total" id="iva_total" value=0>
+                        <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
                     </div>
                    
                 </div>

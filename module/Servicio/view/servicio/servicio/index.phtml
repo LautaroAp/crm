@@ -1,5 +1,6 @@
 <?php
 $this->headTitle('Servicios');
+
 ?>
 <script src="js/functions.js"> </script>
 <div class="container margen">
@@ -15,6 +16,7 @@ $this->headTitle('Servicios');
                             <thead>
                                 <tr>
                                     <th class="th-sm">Nombre</th>
+                                    <th class="th-sm">Categoria</th>
                                     <th class="th-sm">Precio</th>
                                     <th class="th-sm">Descuento</th>
                                     <th class="th-sm">Precio final IVA</th>
@@ -27,12 +29,13 @@ $this->headTitle('Servicios');
                             <?php foreach ($servicios as $servicio) : ?>
                                 <tr>
                                     <td><?php echo ($servicio->getNombre()); ?></td>
+                                    <td><?php echo ($servicio->getCategoriaNombre()); ?></td>
                                     <td><?php echo ($servicio->getPrecio()); ?></td>
                                     <td><?php echo ($servicio->getDescuento()); ?></td>
                                     <td><?php echo ($servicio->getPrecio_final_iva()); ?></td>
                                     <td><?php echo ($servicio->getPrecio_final_iva_dto()); ?></td>
                                     <td class="table-items-right"> 
-                                    <a class="btn btn-default" href="<?= $this->url('servicio/editar', ['action' => 'edit', 'id' => $servicio->getId()]); ?>">
+                                    <a class="btn btn-default" href="<?= $this->url('gestionEmpresa/gestionServicios/editar', ['action' => 'edit', 'id' => $servicio->getId()]); ?>">
                                         <span class="glyphicon glyphicon-pencil" ></span> 
                                     </a>
                                     <button name="<?= $servicio->getId() ?>" id="<?= $servicio->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $servicio->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
@@ -55,7 +58,7 @@ $this->headTitle('Servicios');
                                                 </p>
                                             </div>
                                             <div class="modal-footer">
-                                                <a href="<?= $this->url('servicio', ['action' => 'remove', 'id' => $servicio->getId()]); ?>" class="btn btn-default">Borrar</a>
+                                                <a href="<?= $this->url('gestionEmpresa/gestionServicios/eliminar', ['action' => 'remove', 'id' => $servicio->getId()]); ?>" class="btn btn-default">Borrar</a>
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                             </div>
                                         </div>
@@ -71,24 +74,22 @@ $this->headTitle('Servicios');
     </div>
     <?php
         echo $this->paginationControl($servicios, 'Sliding', // All, Elastic, Jumping, Sliding
-                    'search_pagination6.phtml', $this->url('servicio/page', ['action' => 'index', 'id' => 1]));    ?>
+                    'search_pagination_servicio.phtml', $this->url('servicio/page', ['action' => 'index', 'id' => 1]));    ?>
 </div>
 
 
 
 
 <!-- Fin: Datos de la empresa -->
-
-
-
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
     <div class="row">
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('servicio', ['action' => 'add']); ?>">
-                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                <a href="<?= $this->url('gestionEmpresa/gestionServicios/agregar'); ?>">
+                    <img src="<?= $this->basePath('img/crm/servicio_add_n.png') ?>"
+                    class="img-rounded img-responsive img-texto-derecha img-submenu">
                 </a>
             </div>
             <div class="ficha-cliente-label">

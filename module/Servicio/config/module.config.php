@@ -8,6 +8,8 @@
 namespace Servicio;
 
 use Zend\Router\Http\Segment;
+use Zend\Router\Http\Literal;
+use Application;
 
 
 return [
@@ -17,14 +19,10 @@ return [
             'servicio' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/servicio[/:action[/:id]]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
-                    ],
+                    'route'    => '/servicio',
                     'defaults' => [
-                        'controller'    => Controller\ServicioController::class,
-                        'action'        => 'index',
+                        'controller' => \Application\Controller\IndexController::class,
+                        'action' => 'gestionServicios',
                     ],
                 ],
                 'may_terminate' => true,
@@ -67,6 +65,7 @@ return [
                         'options' => [
                             'route' => '/page[/:id[/:estado]]',
                             'defaults' => [
+                                'controller' => \Servicio\Controller\ServicioController::class,
                                 'action' => 'index',
                             ],
                             'constraints' => [

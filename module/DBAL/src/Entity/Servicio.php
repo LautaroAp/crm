@@ -29,12 +29,12 @@ class Servicio {
      */
     protected $descripcion;
     
-   /**
+    /**
      * Many Services have One Type.
      * @ORM\ManyToOne(targetEntity="CategoriaServicio")
      * @ORM\JoinColumn(name="ID_CATEGORIA", referencedColumnName="ID")
      */
-    private $categoriaServicio;
+    private $categoria;
     
     // /**
     //  * Many Services have One Proveedor.
@@ -53,10 +53,13 @@ class Servicio {
      */
     protected $precio;
 
-    // /**
-    //  * @ORM\Column(name="PRECIO", nullable=true, type="integer")
-    //  */
-    // protected $iva;
+  
+     /**
+     * Many Products have One Product.
+     * @ORM\ManyToOne(targetEntity="Iva")
+     * @ORM\JoinColumn(name="ID_IVA", referencedColumnName="ID")
+     */
+    protected $iva;
 
     /**
      * @ORM\Column(name="IVA_GRAVADO", nullable=true, type="decimal")
@@ -143,26 +146,7 @@ class Servicio {
         return $this;
     }
 
-    /**
-     * Get many Services have One Type.
-     */ 
-    public function getCategoriaServicio()
-    {
-        return $this->categoriaServicio;
-    }
-
-    /**
-     * Set many Services have One Type.
-     *
-     * @return  self
-     */ 
-    public function setCategoriaServicio($categoriaServicio)
-    {
-        $this->categoriaServicio = $categoriaServicio;
-        return $this;
-    }
-
-
+    
     /**
      * Get the value of proveedor
      */ 
@@ -182,10 +166,8 @@ class Servicio {
         return $this;
     }
 
-
-
     /**
-     * Get the value of iva
+     * Get the object iva
      */ 
     public function getIva()
     {
@@ -317,5 +299,39 @@ class Servicio {
         $this->descripcion = $descripcion;
 
         return $this;
+    }
+
+    /**
+     * Get many Services have One Type.
+     */ 
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * Set many Services have One Type.
+     *
+     * @return  self
+     */ 
+    public function setCategoria($categoria)
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    public function getValorIVa(){
+        if(is_null($this->iva)){
+            return "No definido";
+        }
+        return $this->iva->getValor();
+    }
+
+    public function getCategoriaNombre(){
+        if(is_null($this->categoria)){
+            return "No definido";
+        }
+        return $this->categoria->getNombre();
     }
 }

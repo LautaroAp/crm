@@ -7,7 +7,6 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 use Moneda\Controller\MonedaController;
 use Moneda\Service\MonedaManager;
 use Servicio\Service\ServicioManager;
-
 /**
  * Description of MonedaControllerFactory
  *

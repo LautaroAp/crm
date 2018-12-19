@@ -18,10 +18,12 @@ class CategoriaServicioController extends AbstractActionController {
      */
     protected $categoriaServicioManager;
 
+    private $servicioManager;
 
-    public function __construct($entityManager, $categoriaServicioManager) {
+    public function __construct($entityManager, $categoriaServicioManager, $servicioManager) {
         $this->entityManager = $entityManager;
         $this->categoriaServicioManager = $categoriaServicioManager;
+        $this->servicioManager= $servicioManager;
     }
 
     public function indexAction() {
@@ -40,7 +42,6 @@ class CategoriaServicioController extends AbstractActionController {
 
         $categoriaServicios = $this->categoriaServicioManager->getCategoriaServicios();
         return new ViewModel([
-            'categoriaServicios' => $categoriaServicios,
             'categorias_pag' => $paginator
         ]);
     }
@@ -58,13 +59,13 @@ class CategoriaServicioController extends AbstractActionController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
+                ->setItemCountPerPage(4);
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             // $this->categoriaServicioManager->addCategoriaServicio($data);
             $categoriaServicio = $this->categoriaServicioManager->getCategoriaServicioFromForm($form, $data);
-            return $this->redirect()->toRoute('categoriaServicio');
+            return $this->redirect()->toRoute('gestionEmpresa/gestionServicios/categorias');
         }
         return new ViewModel([
             'form' => $form,
@@ -107,16 +108,15 @@ class CategoriaServicioController extends AbstractActionController {
 
     public function procesarRemoveAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
-        $categoriaServicio = $this->categoriaServicioManager->getCategoriaServicioId($id);
+        $categoriaServicio = $this->categoriaServicioManager->getCategoriaServicio($id);
         if ($categoriaServicio == null) {
             $this->reportarError();
         } else {
-            $this->productoManager->eliminarCategoriaServicios($id);
+            $this->servicioManager->eliminarCategoriaServicio($id);
             $this->categoriaServicioManager->removeCategoriaServicio($id);
             return $this->redirect()->toRoute('categoriaServicio');
         }
     }
-
     public function viewAction() {
         return new ViewModel();
     }

@@ -22,9 +22,14 @@ class ServicioController extends AbstractActionController {
      */
     protected $servicioManager;
 
-    public function __construct($entityManager, $servicioManager) {
+    private $ivaManager;
+    private $categoriaServicioManager;
+    public function __construct($entityManager, $servicioManager, $ivaManager,
+    $categoriaServicioManager) {
         $this->entityManager = $entityManager;
         $this->servicioManager = $servicioManager;
+        $this->ivaManager= $ivaManager;
+        $this->categoriaServicioManager = $categoriaServicioManager;
     }
 
     public function indexAction() {
@@ -53,9 +58,15 @@ class ServicioController extends AbstractActionController {
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->servicioManager->addServicio($data);
-            return $this->redirect()->toRoute('servicio', ['action' => 'index']);
+            $this->redirect()->toRoute('gestionEmpresa/gestionServicios/listado');
         }
-        return new ViewModel();
+        $ivas = $this->ivaManager->getIvas();
+        $categorias = $this->categoriaServicioManager->getCategoriaServicios();
+        return new ViewModel([
+            'ivas'=>$ivas,
+            'categorias'=>$categorias
+        ]);
+
     }
 
     public function editAction() {
@@ -65,13 +76,16 @@ class ServicioController extends AbstractActionController {
     public function procesarEditAction() {
         $id = $this->params()->fromRoute('id', -1);
         $servicio = $this->servicioManager->getServicioId($id);
+        $categorias = $this->categoriaServicioManager->getCategoriaServicios();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->servicioManager->updateServicio($servicio, $data);
-            return $this->redirect()->toRoute('servicio', ['action' => 'index']);
+            return $this->redirect()->toRoute('gestionEmpresa/gestionServicios/listado');
         }
         return new ViewModel([
-            'servicio' => $servicio]);
+            'servicio' => $servicio,
+            'categorias'=>$categorias
+        ]);
     }
 
     public function removeAction() {
@@ -87,7 +101,7 @@ class ServicioController extends AbstractActionController {
             return;
         } else {
             $this->servicioManager->removeServicio($servicio);
-            return $this->redirect()->toRoute('servicio', ['action' => 'index']);
+            return $this->redirect()->toRoute('gestionEmpresa/gestionServicios/listado');
         }
     }
 

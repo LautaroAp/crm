@@ -11,15 +11,29 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 
 <table>
     <tbody>
+        <tr>
+            <td>Servicio</td>
+            <td><?php echo(utf8_decode("Descripción"))?></td>
+            <td>Precio</td>
+            <td>IVA</td>
+            <td>IVA gravado</td>
+            <td>Precio final con IVA</td>
+            <td>Descuento</td>
+            <td>Precio final con IVA y Descuento</td>
+
+        </tr>
         <?php foreach ($resultado as $servicio): 
         ?>
             <tr>
                 <td><?php echo(utf8_decode($servicio->getNombre())); ?></td>
                 <td><?php echo(utf8_decode($servicio->getDescripcion()));?></td>
-                <td><?php echo(utf8_decode($servicio->getCategoriaServicio()));?></td>
+                <td><?php echo(utf8_decode($servicio->getNombreCategoria()));?></td>
                 <td><?php echo(utf8_decode($servicio->getPrecio()));?></td>
+                <td><?php echo(utf8_decode($servicio->getValorIVa()));?></td>
                 <td><?php echo(utf8_decode($servicio->getIva_gravado()));?></td>
                 <td><?php echo(utf8_decode($servicio->getPrecio_final_iva()));?></td>
+                <td><?php echo(utf8_decode($servicio->getDescuento()));?></td>
+                <td><?php echo(utf8_decode($servicio->getPrecio_final_iva_dto()));?></td>                
             </tr>
         <?php endforeach;?>
     </tbody>

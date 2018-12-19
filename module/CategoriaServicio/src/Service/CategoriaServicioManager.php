@@ -19,24 +19,10 @@ class CategoriaServicioManager {
     private $entityManager;
 
     /**
-     * PHP template renderer.
-     * @var type 
-     */
-    private $viewRenderer;
-
-    /**
-     * Application config.
-     * @var type 
-     */
-    private $config;
-
-    /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) {
+    public function __construct($entityManager) {
         $this->entityManager = $entityManager;
-        $this->viewRenderer = $viewRenderer;
-        $this->config = $config;
     }
 
     public function getCategoriaServicios() {
@@ -44,7 +30,7 @@ class CategoriaServicioManager {
         return $categoriaServicios;
     }
 
-    public function getCategoriaServicioId($id) {
+    public function getCategoriaServicio($id) {
         return $this->entityManager->getRepository(CategoriaServicio::class)
                         ->find($id);
     }

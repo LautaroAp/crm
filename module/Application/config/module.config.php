@@ -262,6 +262,19 @@ return [
                                     ],
                                 ],
                             ],
+                            'eliminar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/remove[/:id]',
+                                    'defaults' => [
+                                        'controller' => \Producto\Controller\ProductoController::class,
+                                        'action' => 'remove',
+                                    ],
+                                    'constraints' => [
+                                        'id' => '[0-9]\d*',
+                                    ],
+                                ],
+                            ],
                             'categorias' => [
                                 'type' => Segment::class,
                                 'options' => [
@@ -269,6 +282,16 @@ return [
                                     'defaults' => [
                                         'controller' => \CategoriaProducto\Controller\CategoriaProductoController::class,
                                         'action' => 'index',
+                                    ],
+                                ],
+                            ],
+                            'backup' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/backup',
+                                    'defaults' => [
+                                        'controller' => \Producto\Controller\ProductoController::class,
+                                        'action' => 'backup',
                                     ],
                                 ],
                             ],
@@ -303,6 +326,42 @@ return [
                                     'defaults' => [
                                         'controller' => \Servicio\Controller\ServicioController::class,
                                         'action' => 'add',
+                                    ],
+                                ],
+                            ],
+                            'editar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/edit[/:id]',
+                                    'defaults' => [
+                                        'controller' => \Servicio\Controller\ServicioController::class,
+                                        'action' => 'edit',
+                                    ],
+                                    'constraints' => [
+                                        'id' => '[0-9]\d*',
+                                    ],
+                                ],
+                            ],
+                            'eliminar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/remove[/:id]',
+                                    'defaults' => [
+                                        'controller' => \Servicio\Controller\ServicioController::class,
+                                        'action' => 'remove',
+                                    ],
+                                    'constraints' => [
+                                        'id' => '[0-9]\d*',
+                                    ],
+                                ],
+                            ],
+                            'categorias' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/categorias',
+                                    'defaults' => [
+                                        'controller' => \CategoriaServicio\Controller\CategoriaServicioController::class,
+                                        'action' => 'index',
                                     ],
                                 ],
                             ],

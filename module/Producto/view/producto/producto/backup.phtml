@@ -1,0 +1,66 @@
+<?php 
+header("Pragma: public");
+header("Expires: 0");
+$filename = "Backup_Productos.xls";
+//header("Content-type: application/x-msdownload; charset=utf8");
+header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+header("Content-Disposition: attachment; filename=$filename");
+header("Pragma: no-cache");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+?>
+
+<table>
+    <tbody>
+        <tr>
+            <td>Producto</td>
+            <td><?php echo(utf8_decode("Presentación"))?></td>
+            <td><?php echo(utf8_decode("Descripción"))?></td>
+            <td>Marca</td>
+            <td><?php echo(utf8_decode("Categoría"))?></td>
+            <td><?php echo(utf8_decode("Código del producto"))?></td>
+            <td>Stock</td>
+            <td><?php echo(utf8_decode("Código de barras"))?></td>
+            <td><?php echo(utf8_decode("Reposición"))?></td>
+            <td>Precio de compra</td>
+            <td>Costos directos</td>
+            <td>Gastos directos</td>
+            <td>Costo total de compra</td>
+            <td><?php echo(utf8_decode("Contribución marginal ($)"))?></td>
+            <td><?php echo(utf8_decode("Contribución marginal (%)"))?></td>
+            <td>Precio de venta</td>
+            <td>Descuento (%)</td>
+            <td><?php echo(utf8_decode("Precio público con Descuento"))?></td>
+            <td>IVA (%)</td>
+            <td>IVA gravado</td>
+            <td><?php echo(utf8_decode("Precio público con IVA"))?></td>
+            <td><?php echo(utf8_decode("Precio público con IVA y Descuento"))?></td>
+
+        </tr>
+        <?php foreach ($resultado as $producto): 
+        ?>
+            <tr>
+                <td><?php echo(utf8_decode($producto->getNombre())); ?></td>
+                <td><?php echo(utf8_decode($producto->getPresentacion()));?></td>
+                <td><?php echo(utf8_decode($producto->getDescripcion()));?></td>
+                <td><?php echo(utf8_decode($producto->getMarca()));?></td>
+                <td><?php echo(utf8_decode($producto->getCategoriaNombre()));?></td>
+                <td><?php echo(utf8_decode($producto->getCodigo_producto()));?></td>
+                <td><?php echo(utf8_decode($producto->getStock()));?></td>
+                <td><?php echo(utf8_decode($producto->getCodigo_barras()));?></td>
+                <td><?php echo(utf8_decode($producto->getReposicion()));?></td>
+                <td><?php echo(utf8_decode($producto->getPrecio_compra()));?></td>
+                <td><?php echo(utf8_decode($producto->getCostos_directos()));?></td>
+                <td><?php echo(utf8_decode($producto->getGastos_directos()));?></td>
+                <td><?php echo(utf8_decode($producto->getContribucion_marginal_valor()));?></td>
+                <td><?php echo(utf8_decode($producto->getContribucion_marginal_porcentual()));?></td>
+                <td><?php echo(utf8_decode($producto->getPrecio_venta()));?></td>
+                <td><?php echo(utf8_decode($producto->getDescuento()));?></td>
+                <td><?php echo(utf8_decode($producto->getPrecio_venta_dto()));?></td>
+                <td><?php echo(utf8_decode($producto->getValorIva()));?></td>
+                <td><?php echo(utf8_decode($producto->getPrecio_final_iva()));?></td>
+                <td><?php echo(utf8_decode($producto->getPrecio_final_iva_dto()));?></td>
+            </tr>
+        <?php endforeach;?>
+    </tbody>
+</table>
+

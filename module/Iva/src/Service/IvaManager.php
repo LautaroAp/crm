@@ -42,31 +42,25 @@ class IvaManager {
 
     public function getIvas() {
         $iva = $this->entityManager->getRepository(Iva::class)->findAll();
-        return $categoriaProductos;
+        return $iva;
     }
 
-    public function getIvaId($id) {
+    public function getIva($id) {
         return $this->entityManager->getRepository(Iva::class)
                         ->find($id);
     }
 
-    public function getIvaFromForm($form, $data) {
-        $form->setData($data);
-        if ($form->isValid()) {
-            $data = $form->getData();
-            $categoriaProducto = $this->addIva($data);
-        }
-        return $categoriaProducto;
+    public function getIvaPorValor($valor){
+        return $this->entityManager->getRepository(Iva::class)
+                        ->findOneBy(['valor'=>$valor]);
     }
-
+   
     /**
      * This method adds a new categoriaProducto.
      */
     public function addIva($data) {
         $categoriaProducto = new Iva();
         $categoriaProducto->setNombre($data['nombre']);
-        $categoriaProducto->setDescripcion($data['descripcion']);
-
         if ($this->tryAddIva($categoriaProducto)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría agregada correctamente';

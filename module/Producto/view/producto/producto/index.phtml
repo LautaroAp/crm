@@ -4,7 +4,7 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading text-center">
-                LISTADO CATEGORIA PRODUCTOS
+                LISTADO DE PRODUCTOS
             </div>
             <div class="panel-body">
                 <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
@@ -25,7 +25,7 @@
                                 <tr>
                                     <td><?php echo ($producto->getNombre()); ?></td>
                                     <td><?php echo ($producto->getDescripcion()); ?></td>
-                                    <td><?php echo ($producto->getCategoria()); ?></td>
+                                    <td><?php echo ($producto->getCategoriaNombre()); ?></td>
                                     <td><?php echo ($producto->getStock()); ?></td>
                                     <td><?php echo money_format("$ %n", $producto->getPrecio_venta()); ?></td>
                                     <td><?php echo money_format("$ %n", $producto->getPrecio_venta() * $producto->getStock()); ?></td>
@@ -44,7 +44,7 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Borrar cliente</h4>
+                                                    <h4 class="modal-title">Borrar producto</h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>
@@ -53,7 +53,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="<?= $this->url('producto', ['action' => 'remove', 'id' => $producto->getId()]); ?>" class="btn btn-primary">Borrar</a>
+                                                    <a href="<?= $this->url('gestionEmpresa/gestionProductos/eliminar', ['action' => 'remove', 'id' => $producto->getId()]); ?>" class="btn btn-default">Borrar</a>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                                 </div>
                                             </div>
@@ -78,13 +78,14 @@
         <div class="row img-centrar">
             <div class="col ficha-cliente-p img-centrar">
                 <div>
-                    <a href="<?= $this->url('producto', ['action' => 'add']); ?>">
-                        <img src="<?= $this->basePath('img/crm/aceptar.png') ?>"
-                            class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                    <a href="<?= $this->url('gestionEmpresa/gestionProductos/agregar'); ?>">
+                        <img src="<?= $this->basePath('img/crm/producto_add_n.png') ?>"
+                            class="img-rounded img-responsive img-texto-derecha img-submenu">
                     </a>
                 </div>
                 <div class="ficha-cliente-label">
-                    <label>Guardar</label>
+                    <label>Agregar</label><br>
+                    <label>Producto</label>
                 </div>
             </div>
             

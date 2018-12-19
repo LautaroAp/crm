@@ -36,7 +36,9 @@ class Producto
     protected $descripcion;
 
     /**
-     * @ORM\Column(name="ID_CATEGORIA", nullable=true, type="integer")
+     * Many Services have One Type.
+     * @ORM\ManyToOne(targetEntity="CategoriaProducto")
+     * @ORM\JoinColumn(name="ID_CATEGORIA", referencedColumnName="ID")
      */
     protected $categoria;
 
@@ -120,8 +122,11 @@ class Producto
      */
     protected $descuento;
 
-    /**
-     * @ORM\Column(name="ID_IVA", nullable=true, type="integer")
+
+     /**
+     * Many Products have One Product.
+     * @ORM\ManyToOne(targetEntity="Iva")
+     * @ORM\JoinColumn(name="ID_IVA", referencedColumnName="ID")
      */
     protected $iva;
 
@@ -497,6 +502,12 @@ class Producto
         return $this->iva;
     }
 
+    public function getValorIva(){
+        if (is_null($this->iva)){
+            return "No definido";
+        }
+        return $this->iva->getValor();
+    }
     /**
      * Set the value of iva
      *
@@ -573,5 +584,15 @@ class Producto
     public function setMoneda($moneda) {
         $this->moneda = $moneda;
         return $this;
+    }
+
+    public function getCategoriaNombre(){
+        if (is_null($this->categoria)){
+            return "No definido";
+        }
+        else{
+            return $this->categoria->getNombre();
+        }
+
     }
 }

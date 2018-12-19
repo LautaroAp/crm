@@ -19,26 +19,17 @@ class ProductoManager
      */
     private $entityManager;  
     
-    /**
-     * PHP template renderer.
-     * @var type 
-     */
-    private $viewRenderer;
-    
-    /**
-     * Application config.
-     * @var type 
-     */
-    private $config;
-    
+    private $ivaManager;
+
+    private $categoriaProductoManager;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) 
+    public function __construct($entityManager, $ivaManager, $categoriaProductoManager) 
     {
         $this->entityManager = $entityManager;
-        $this->viewRenderer = $viewRenderer;
-        $this->config = $config;
+        $this->ivaManager= $ivaManager;
+        $this->categoriaProductoManager= $categoriaProductoManager;
     }
     
      public function getProductos(){
@@ -50,15 +41,7 @@ class ProductoManager
        return $this->entityManager->getRepository(Producto::class)
                 ->find($id);
     }
-  
-    public function getProductoFromForm($form, $data){
-        $form->setData($data);
-            if($form->isValid()) {
-                $data = $form->getData();
-                $producto = $this->addProducto($data);
-            }
-        return $producto;
-    }
+
     /**
      * This method adds a new producto.
      */
@@ -90,7 +73,8 @@ class ProductoManager
             $producto->setCategoria(null);
         } else {
             // Obtener Entidad con id y pasarla
-            $producto->setCategoria($data['categoria']);
+            $producto->setCategoria($this->categoriaProductoManager
+                                    ->getCategoriaProductoId($data['categoria']));
         }
         if($data['proveedor'] == "-1"){
             $producto->setProveedor(null);
@@ -117,7 +101,7 @@ class ProductoManager
         $producto->setPrecio_venta_dto($data['precio_venta_dto']);
         $producto->setDescuento($data['descuento']);
         // Entidad
-        $producto->setIva($data['iva']);
+        $producto->setIva($this->ivaManager->getIvaPorValor($data['iva']));
         $producto->setIva_gravado($data['iva_gravado']);
         $producto->setPrecio_final_iva($data['precio_final_iva']);
         $producto->setPrecio_final_iva_dto($data['precio_final_iva_dto']);
@@ -154,13 +138,9 @@ class ProductoManager
     
     public function eliminarCategoriaProductos($id) {
         $entityManager = $this->entityManager;
-        $producto = $this->entityManager->getRepository(Producto::class)->findAll();
+        $productos = $this->entityManager->getRepository(Producto::class)->findBy(['categoria'=>$id]);
         foreach ($productos as $producto) {
-            if (!is_null($producto->getId_categoria())) {
-                if ($producto->getId_categoria() == $id) {
-                    $producto->setId_categoria(null);
-                }
-            }
+            $producto->setCategoria(null);
         }
         $entityManager->flush();
     }

@@ -1,7 +1,7 @@
 <div class="container margen text-center" >         
     <nav class="navbar" id="nav" >
         <ul>
-            <li>
+        <li>
                 <a href="<?= $this->url('gestionEmpresa/gestionServicios/listado'); ?>" > 
                     <img src="<?= $this->basePath('img/crm/servicio_n.png') ?>" class="img-rounded img-responsive img-menu">
                 </a>
@@ -14,12 +14,17 @@
                 <small>Agregar Servicio</small>
             </li>
             <li>
+                <a href="<?= $this->url('gestionEmpresa/gestionServicios/categorias'); ?>" > 
+                    <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>" class="img-rounded img-responsive img-menu">
+                </a>
+                <small>Categorias</small>
+            </li>
+            <li>
                 <a href="<?= $this->url('gestionEmpresa/gestionServicios/backup'); ?>" > 
-                    <img src="<?= $this->basePath('img/crm/servicio_excel_n.png') ?>" class="img-rounded img-responsive img-menu">
+                    <img src="<?= $this->basePath('img/crm/producto_excel_n.png') ?>" class="img-rounded img-responsive img-menu">
                 </a>
                 <small>Exportar a Excel</small>
             </li>
-        </ul>
     </nav>
     <nav id="nav" >
         <ul>
