@@ -41,5 +41,6 @@ return [
     'Persona',
     'CategoriaServicio',
     'Moneda',
-    'Ganaderia'
+    'Ganaderia',
+    'Iva'
 ];

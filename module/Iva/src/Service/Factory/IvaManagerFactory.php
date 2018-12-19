@@ -1,17 +1,17 @@
 <?php
-namespace Moneda\Service\Factory;
+namespace Iva\Service\Factory;
 
 use Interop\Container\ContainerInterface;
-use Moneda\Service\MonedaManager;
+use Iva\Service\IvaManager;
 
 /**
- * This is the factory class for MonedaManager service. The purpose of the factory
+ * This is the factory class for IvaManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
  */
-class MonedaManagerFactory
+class IvaManagerFactory
 {
     /**
-     * This method creates the MonedaManager service and returns its instance. 
+     * This method creates the IvaManager service and returns its instance. 
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
@@ -19,6 +19,6 @@ class MonedaManagerFactory
         $viewRenderer = $container->get('ViewRenderer');
         $config = $container->get('Config');
                         
-        return new MonedaManager($entityManager, $viewRenderer, $config);
+        return new IvaManager($entityManager, $viewRenderer, $config);
     }
 }

@@ -58,7 +58,8 @@
             "Persona\\": "module/Persona/src/",
             "CategoriaServicio\\": "module/CategoriaServicio/src/",
             "Moneda\\": "module/Moneda/src/",
-            "Ganaderia\\": "module/Ganaderia/src/"
+            "Ganaderia\\": "module/Ganaderia/src/",
+            "Iva\\": "module/Iva/src/"
         }
     },
     "autoload-dev": {
