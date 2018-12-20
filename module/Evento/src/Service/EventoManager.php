@@ -91,7 +91,7 @@ class EventoManager {
         $fecha_evento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
         $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
         $tipo_evento = $this->entityManager->getRepository(TipoEvento::class)
-                        ->findOneBy(['id_tipo_evento' => $data['tipo_evento']]);
+                        ->findOneBy(['id_tipo_evento' => $data['accion_comercial']]);
         $cliente = $this->entityManager->getRepository(Cliente::class)
                 ->findOneBy(['Id' => $data['id_cliente']]);
         $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
@@ -230,7 +230,7 @@ class EventoManager {
         $data = $form->getData();
         $fecha_evento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
         $evento->setFecha($fecha_evento);
-        $evento->setTipo($data['tipo_evento']);
+        $evento->setTipo($data['accion_comercial']);
         $evento->setId_cliente($data['id_cliente']);
         $evento->setId_ejecutivo($data['id_ejecutivo']);
         // Apply changes to database.

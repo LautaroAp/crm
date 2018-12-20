@@ -19,10 +19,7 @@ class Licencia {
      */ 
     protected $id_licencia;   
     
-    /**
-     * @ORM\Column(name="VERSION_LICENCIA", nullable=true, type="decimal")
-     */
-    protected $version_licencia;
+    
 
      /**
      * @ORM\Column(name="NOMBRE_LICENCIA", nullable=true, type="string", length=255)
