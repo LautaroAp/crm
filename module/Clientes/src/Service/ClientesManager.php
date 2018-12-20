@@ -393,7 +393,7 @@ class ClientesManager {
         if (isset($id)) {
             return $this->entityManager
                             ->getRepository(Licencia::class)
-                            ->findOneBy(['id_licencia' => $id]);
+                            ->findOneBy(['id' => $id]);
         }
         return $this->entityManager
                         ->getRepository(Licencia::class)
