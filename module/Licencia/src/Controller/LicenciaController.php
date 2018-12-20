@@ -24,17 +24,13 @@ class LicenciaController extends AbstractActionController {
      */
     protected $clientesManager;
 
-    /* public function __construct($entityManager, $licenciaManager)
-      {
-      $this->entityManager = $entityManager;
-      $this->licenciaManager = $licenciaManager;
-      }
-     */
+    private $ivaManager;
 
-    public function __construct($entityManager, $licenciaManager, $clientesManager) {
+    public function __construct($entityManager, $licenciaManager, $clientesManager, $ivaManager) {
         $this->entityManager = $entityManager;
         $this->licenciaManager = $licenciaManager;
         $this->clientesManager = $clientesManager;
+        $this->ivaManager= $ivaManager;
     }
 
     public function indexAction() {
@@ -65,7 +61,7 @@ class LicenciaController extends AbstractActionController {
 
     private function procesarAddAction() {
         $form = $this->licenciaManager->createForm();
-
+        $ivas = $this->ivaManager->getIvas();
         $paginator = $this->licenciaManager->getTabla();
         $mensaje = "";
 
@@ -84,7 +80,8 @@ class LicenciaController extends AbstractActionController {
         }
         return new ViewModel([
             'form' => $form,
-            'licencias' => $paginator
+            'licencias' => $paginator,
+            'ivas'=>$ivas
         ]);
     }
 

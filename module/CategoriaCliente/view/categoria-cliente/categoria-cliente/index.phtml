@@ -31,7 +31,7 @@ if (isset($_SESSION['MENSAJES']['categoria_cliente'])) {
                             <input type="text" class="form-control form-margen" name="nombre" placeholder="Ingresar Categoría">
                         </div>
                         <div class="form-group col-md-4">
-                            <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModalAdd">
+                            <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
                                 <span class="glyphicon glyphicon-plus" ></span> Agregar Categoría
                             </button>
                         </div>
@@ -82,10 +82,8 @@ if (isset($_SESSION['MENSAJES']['categoria_cliente'])) {
                                                 <a class="btn btn-default" href="<?= $this->url('categoriacliente/editar', ['action' => 'edit', 'id' => $categoriacliente->getId()]); ?>">
                                                     <span class="glyphicon glyphicon-pencil" ></span> 
                                                 </a>
-                                                <button name="<?= $categoriacliente->getId() ?>" id="<?= $categoriacliente->getId() ?>" 
-                                                type="button" class="btn btn-default" data-toggle="modal" 
-                                                data-target="#myModal<?= $categoriacliente->getId() ?>">
-                                                <span class="glyphicon glyphicon-remove" ></span>
+                                                <button name="<?= $categoriacliente->getId() ?>" id="<?= $categoriacliente->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $categoriacliente->getId() ?>">
+                                                    <span class="glyphicon glyphicon-remove" ></span>
                                                 </button>
                                             </td>
                                             <!-- Modal -->

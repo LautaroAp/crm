@@ -7,6 +7,7 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 use Licencia\Controller\LicenciaController;
 use Licencia\Service\LicenciaManager;
 use Clientes\Service\ClientesManager;
+use Iva\Service\IvaManager;
 
 /**
  * Description of LicenciaControllerFactory
@@ -20,8 +21,9 @@ class LicenciaControllerFactory implements FactoryInterface {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $licenciaManager = $container->get(LicenciaManager::class);
         $clientesManager = $container->get(ClientesManager::class);
+        $ivaManager = $container->get(IvaManager::class); 
         // Instantiate the service and inject dependencies
-        return new LicenciaController($entityManager, $licenciaManager, $clientesManager);
+        return new LicenciaController($entityManager, $licenciaManager, $clientesManager, $ivaManager);
     }
 
 }
