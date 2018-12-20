@@ -47,6 +47,10 @@ class MonedaController extends AbstractActionController {
         ]);
     }
 
+    public function getMonedas(){
+        return $this->entityManager->getRepository(Moneda::class)->fetchAll();
+    }
+
     public function addAction() {
         $view = $this->procesarAddAction();
         return $view;

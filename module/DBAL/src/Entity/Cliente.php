@@ -21,14 +21,14 @@ class Cliente {
 
 
     /**
-     * Many Features have One Product.
+     * Many Clientes have One Pais.
      * @ORM\ManyToOne(targetEntity="Pais")
      * @ORM\JoinColumn(name="ID_PAIS_CLIENTE", referencedColumnName="ID_PAIS")
      */
     private $pais;
 
     /**
-     * Many Features have One Product.
+     * Many Clientes have One Provincia.
      * @ORM\ManyToOne(targetEntity="Provincia")
      * @ORM\JoinColumn(name="ID_PROVINCIA_CLIENTE", referencedColumnName="ID_PROVINCIA")
      */
@@ -46,7 +46,7 @@ class Cliente {
     private $skype;
 
     /**
-     * Many Features have One Product.
+     * Many Clientes have One Profesion.
      * @ORM\ManyToOne(targetEntity="ProfesionCliente")
      * @ORM\JoinColumn(name="ID_PROFESION_CLIENTE", referencedColumnName="ID_TIPO_CLIENTE")
      */
