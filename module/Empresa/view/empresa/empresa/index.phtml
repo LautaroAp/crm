@@ -115,6 +115,9 @@ if (isset($_SESSION['MENSAJES']['empresa'])) {
                     <div class="form-group col-md-4">
                         <p><label>Elementos por Página:</label> <?php echo ($empresa->getParametro_elementos_pagina()); ?></p>
                     </div>
+                    <div class="form-group col-md-4">
+                        <p><label>Moneda:</label> <?php echo ($empresa->getNombreMoneda()); ?></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,7 +141,7 @@ if (isset($_SESSION['MENSAJES']['empresa'])) {
         </div>
             <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                <a href="<?= $this->url('gestionEmpresa') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Volver</label>

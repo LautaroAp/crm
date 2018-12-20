@@ -21,9 +21,10 @@ class ServicioController extends AbstractActionController {
      * @var User\Service\ServicioManager 
      */
     protected $servicioManager;
-
     private $ivaManager;
     private $categoriaServicioManager;
+
+
     public function __construct($entityManager, $servicioManager, $ivaManager,
     $categoriaServicioManager) {
         $this->entityManager = $entityManager;
@@ -77,6 +78,7 @@ class ServicioController extends AbstractActionController {
         $id = $this->params()->fromRoute('id', -1);
         $servicio = $this->servicioManager->getServicioId($id);
         $categorias = $this->categoriaServicioManager->getCategoriaServicios();
+        $ivas = $this->ivaManager->getIvas();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->servicioManager->updateServicio($servicio, $data);
@@ -84,7 +86,8 @@ class ServicioController extends AbstractActionController {
         }
         return new ViewModel([
             'servicio' => $servicio,
-            'categorias'=>$categorias
+            'categorias'=>$categorias,
+            'ivas'=>$ivas
         ]);
     }
 

@@ -30,10 +30,10 @@ $this->headTitle('Servicios');
                                 <tr>
                                     <td><?php echo ($servicio->getNombre()); ?></td>
                                     <td><?php echo ($servicio->getCategoriaNombre()); ?></td>
-                                    <td><?php echo ($servicio->getPrecio()); ?></td>
+                                    <td><?php echo  money_format("$ %n",($servicio->getPrecio())); ?></td>
                                     <td><?php echo ($servicio->getDescuento()); ?></td>
-                                    <td><?php echo ($servicio->getPrecio_final_iva()); ?></td>
-                                    <td><?php echo ($servicio->getPrecio_final_iva_dto()); ?></td>
+                                    <td><?php echo  money_format("$ %n",($servicio->getPrecio_final_iva())); ?></td>
+                                    <td><?php echo  money_format("$ %n",($servicio->getPrecio_final_iva_dto())); ?></td>
                                     <td class="table-items-right"> 
                                     <a class="btn btn-default" href="<?= $this->url('gestionEmpresa/gestionServicios/editar', ['action' => 'edit', 'id' => $servicio->getId()]); ?>">
                                         <span class="glyphicon glyphicon-pencil" ></span> 

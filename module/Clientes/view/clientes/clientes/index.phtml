@@ -92,7 +92,6 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                             echo ('<td>');
                             echo ($persona->getEmail());
                             echo ('</td>'); 
-                            
                 ?>
                 <td class="table-items-right">
                     <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]); ?>">

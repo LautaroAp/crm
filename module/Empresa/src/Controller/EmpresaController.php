@@ -17,11 +17,13 @@ class EmpresaController extends AbstractActionController {
      * @var User\Service\EmpresaManager 
      */
     protected $empresaManager;
+    private $monedaManager;
 
-    public function __construct($entityManager, $empresaManager)
+    public function __construct($entityManager, $empresaManager, $monedaManager)
     {
         $this->entityManager = $entityManager;
         $this->empresaManager = $empresaManager;
+        $this->monedaManager = $monedaManager;
     }
 
     public function indexAction() {
@@ -43,6 +45,7 @@ class EmpresaController extends AbstractActionController {
     public function procesarEditAction() {
         $empresa = $this->getEmpresa();
         $form = $this->empresaManager->getFormForEmpresa($empresa);
+        $monedas=$this->monedaManager->getMonedas();
         if ($form == null) {
             $this->getResponse()->setStatusCode(404);
         } else {
@@ -50,15 +53,16 @@ class EmpresaController extends AbstractActionController {
                 $data = $this->params()->fromPost();
                 if ($this->empresaManager->formValid($form, $data)) {
                     $this->empresaManager->updateEmpresa($empresa, $form);
-                    return $this->redirect()->toRoute('empresa', ['action' => 'index']);
+                    return $this->redirect()->toRoute('gestionEmpresa/configuracion');
                 }
             } else {
                 $this->empresaManager->getFormEdited($form, $empresa);
             }
-            return new ViewModel(array(
-                'empresa' => $empresa,
-                'form' => $form,
-            ));
+        return new ViewModel(array(
+            'empresa' => $empresa,
+            'form' => $form,
+            'monedas'=>$monedas
+        ));
         }
     }
 

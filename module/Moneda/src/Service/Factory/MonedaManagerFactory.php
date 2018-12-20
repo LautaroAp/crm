@@ -15,10 +15,7 @@ class MonedaManagerFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
-        $entityManager = $container->get('doctrine.entitymanager.orm_default');
-        $viewRenderer = $container->get('ViewRenderer');
-        $config = $container->get('Config');
-                        
-        return new MonedaManager($entityManager, $viewRenderer, $config);
+        $entityManager = $container->get('doctrine.entitymanager.orm_default');                        
+        return new MonedaManager($entityManager);
     }
 }

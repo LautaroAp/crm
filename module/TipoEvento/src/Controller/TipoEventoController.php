@@ -128,7 +128,7 @@ class TipoEventoController extends AbstractActionController {
             $this->eventoManager->eliminarTipoEventos($id);
             
             $this->tipoeventoManager->removeTipoEvento($tipoevento);
-            return $this->redirect()->toRoute('home');
+            return $this->redirect()->toRoute('gestionClientes/gestionActividadesClientes/tipoevento');
         }
     }
 

@@ -258,7 +258,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                 <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
                                     <td id="<?= $evento->getId() ?>" class=""><?php
                                         if (!is_null($evento->getFecha())) {
-                                            echo($evento->getFecha()->format('d/m/Y'));
+                                            echo($evento->getFecha()->format('Y/m/d'));
                                         }
                                         ?></td>
                                     <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getUsuarioEjecutivo()); ?></td>

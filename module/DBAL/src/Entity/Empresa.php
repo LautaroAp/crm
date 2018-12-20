@@ -95,6 +95,13 @@ class Empresa {
      * @ORM\Column(name="PARAMETRO_ELEMENTOS_PAGINA", nullable=true, type="integer")
      */
     protected $parametro_elementos_pagina;
+
+    /**
+     * Many Empresas have One Moneda.
+     * @ORM\ManyToOne(targetEntity="Moneda")
+     * @ORM\JoinColumn(name="MONEDA", referencedColumnName="ID")
+     */
+    private $moneda;
     
     function getNombre() {
         return $this->nombre;
@@ -256,5 +263,34 @@ class Empresa {
     public function setParametro_elementos_pagina($parametro_elementos_pagina) {
         $this->parametro_elementos_pagina = $parametro_elementos_pagina;
         return $this;
+    }
+
+
+
+    /**
+     * Get many Empresas have One Moneda.
+     */ 
+    public function getMoneda()
+    {
+        return $this->moneda;
+    }
+
+    /**
+     * Set many Empresas have One Moneda.
+     *
+     * @return  self
+     */ 
+    public function setMoneda($moneda)
+    {
+        $this->moneda = $moneda;
+
+        return $this;
+    }
+
+    public function getNombreMoneda(){
+        if(is_null($this->moneda)){
+            return "No definido";
+        }
+        return $this->moneda->getNombre();
     }
 }
