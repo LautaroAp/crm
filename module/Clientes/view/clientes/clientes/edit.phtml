@@ -10,6 +10,7 @@ $pais = $cliente->getPais();
 $provincia = $cliente->getProvincia();
 $ciudad = $cliente->getCiudad();
 $empresa = $cliente->getEmpresa();
+$cargo = $cliente->getCargo();
 $categoria = $cliente->getCategoria();
 $licencia = $cliente->getLicencia();
 $version = $cliente->getVersion();
@@ -117,11 +118,58 @@ $raza_manejo = $cliente->getRazaManejo();
                                 value="<?php echo($skype); ?>" placeholder="Ingresar Skype">
                         </div>
                     </div>
-                </div>
+            </div>
         </div>
     </div>
 </div>
 <!-- Fin: Datos Generales -->
+
+<!-- Inicio: Datos Laborales -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading titulo-espaciado">
+                MODIFICAR DATOS LABORALES
+            </div>
+            <div class="panel panel-body">
+                <!-- Fila 1 -->
+                <div class="row form-row">
+                    <div class="form-group col-md-4">
+                        <label>Empresa</label>
+                        <input type="text" class="form-control" name="empresa"
+                            value="<?php echo($empresa); ?>" placeholder="Ingresar Empresa">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Profesión</label>
+                        <select class="form-control" id="profesion" name="profesion">
+                            <option value="<?php if(isset($profesion)){ echo ($profesion->getId()); }?>" hidden="">  
+                                <?php if(isset($profesion)){ echo($profesion->getNombre()); } else {echo ("Seleccionar Profesión");}?>
+                            </option>
+                            <option value="-1">NO DEFINIDO</option>
+                            <?php foreach ($profesiones as $profesion) : ?>
+                                <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <!-- Fila 2 -->
+                <div class="row form-row">
+                    <div class="form-group col-md-4">
+                        <label>Cargo</label>
+                        <input type="text" class="form-control" name="cargo"
+                            value="<?php echo($cargo); ?>" placeholder="Ingresar Cargo">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Tipo de Negocio</label>
+                        <input type="text" class="form-control" name="actividad" 
+                            value="<?php echo($actividad); ?>" placeholder="Ingresar Actividad">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Datos Laborales -->
 
 <!-- Inicio: Datos de Facturacion -->
 <div class="container margen">
@@ -189,47 +237,19 @@ $raza_manejo = $cliente->getRazaManejo();
                 <!-- Fila 1 -->
                 <div class="row form-row">
                     <div class="form-group col-md-4">
-                        <label>Profesión</label>
-                        <select class="form-control" id="profesion" name="profesion">
-                            <option value="<?php if(isset($profesion)){ echo ($profesion->getId()); }?>" hidden="">  
-                                <?php if(isset($profesion)){ echo($profesion->getNombre()); } else {echo ("Seleccionar Profesión");}?>
-                            </option>
-                            <option value="-1">NO DEFINIDO</option>
-                            <?php foreach ($profesiones as $profesion) : ?>
-                                <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <label>Raza de Manejo</label>
+                        <input type="text" class="form-control" name="raza_manejo"
+                            value="<?php echo($raza_manejo); ?>" placeholder="Ingresar Raza">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Nro. de Animales</label>
                         <input type="text" class="form-control" name="animales" 
                             value="<?php echo($animales); ?>" placeholder="Ingresar Nro. Animales">
                     </div>
-                </div>
-                <!-- Fila 2 -->
-                <div class="row form-row">
-                    <div class="form-group col-md-4">
-                        <label>Actividad</label>
-                        <input type="text" class="form-control" name="actividad" 
-                            value="<?php echo($actividad); ?>" placeholder="Ingresar Actividad">
-                    </div>
                     <div class="form-group col-md-4">
                         <label>Nro. de Establecimientos</label>
                         <input type="text" class="form-control" name="establecimientos"
                             value="<?php echo($establecimientos); ?>" placeholder="Ingresar Nro. Establecimientos">
-                    </div>
-                </div>
-                <!-- Fila 3 -->
-                <div class="row form-row">
-                        <div class="form-group col-md-4">
-                            <label>Empresa</label>
-                            <input type="text" class="form-control" name="empresa"
-                                value="<?php echo($empresa); ?>" placeholder="Ingresar Empresa">
-                        </div>
-                    <div class="form-group col-md-4">
-                        <label>Raza de Manejo</label>
-                        <input type="text" class="form-control" name="raza_manejo"
-                            value="<?php echo($raza_manejo); ?>" placeholder="Ingresar Raza">
                     </div>
                 </div>
             </div>

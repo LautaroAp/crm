@@ -3,6 +3,7 @@ namespace Licencia\Service\Factory;
 
 use Interop\Container\ContainerInterface;
 use Licencia\Service\LicenciaManager;
+use Iva\Service\IvaManager;
 
 /**
  * This is the factory class for LicenciaManager service. The purpose of the factory
@@ -18,7 +19,8 @@ class LicenciaManagerFactory
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $viewRenderer = $container->get('ViewRenderer');
         $config = $container->get('Config');
+        $ivaManager = $container->get(IvaManager::class);
                         
-        return new LicenciaManager($entityManager, $viewRenderer, $config);
+        return new LicenciaManager($entityManager, $viewRenderer, $config, $ivaManager);
     }
 }

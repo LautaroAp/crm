@@ -31,13 +31,16 @@ class LicenciaManager {
      */
     private $config;
 
+    private $ivaManager;
+
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) {
+    public function __construct($entityManager, $viewRenderer, $config, $ivaManager) {
         $this->entityManager = $entityManager;
         $this->viewRenderer = $viewRenderer;
         $this->config = $config;
+        $this->ivaManager= $ivaManager;
     }
 
     //retorna todas las licencias sin paginator para el backup
@@ -56,28 +59,6 @@ class LicenciaManager {
         if ($form->isValid()) {
             $data = $form->getData();
             $licencia = $this->addLicencia($data);
-        }
-        return $licencia;
-    }
-
-    /**
-     * This method adds a new licencia.
-     */
-    public function addLicencia($data) {
-        $licencia = new Licencia();
-        $licencia->setVersion($data['version_licencia']);
-        $licencia->setNombre($data['nombre_licencia']);
-        $licencia->setPrecio_local($data['precio_local']);
-        $licencia->setPrecio_extranjero($data['precio_extranjero']);
-        $licencia->setDescuento($data['descuento']);
-        $licencia->setIva($data['iva']);
-        $licencia->setPrecio_extranjero($data['precio_extranjero']);
-        if ($this->tryAddLicencia($licencia)) {
-            $_SESSION['MENSAJES']['licencia'] = 1;
-            $_SESSION['MENSAJES']['licencia_msj'] = 'Licencia agregada correctamente';
-        } else {
-            $_SESSION['MENSAJES']['licencia'] = 0;
-            $_SESSION['MENSAJES']['licencia_msj'] = 'Error al agregar licencia';
         }
         return $licencia;
     }
@@ -107,16 +88,29 @@ class LicenciaManager {
     }
 
     /**
+     * This method adds a new licencia.
+     */
+    public function addLicencia($data) {
+        $licencia = new Licencia();
+        $this->addData($licencia, $data);
+
+        if ($this->tryAddLicencia($licencia)) {
+            $_SESSION['MENSAJES']['licencia'] = 1;
+            $_SESSION['MENSAJES']['licencia_msj'] = 'Licencia agregada correctamente';
+        } else {
+            $_SESSION['MENSAJES']['licencia'] = 0;
+            $_SESSION['MENSAJES']['licencia_msj'] = 'Error al agregar licencia';
+        }
+
+        return $licencia;
+    }
+
+    /**
      * This method updates data of an existing licencia.
      */
-    public function updateLicencia($licencia, $form) {
-        $data = $form->getData();
-        $licencia->setVersion($data['version_licencia']);
-        $licencia->setNombre($data['nombre_licencia']);
-        $licencia->setPrecio_local($data['precio_local']);
-        $licencia->setPrecio_extranjero($data['precio_extranjero']);
-        $licencia->setIva($data['iva']);
-        $licencia->setDescuento($data['descuento']);
+    public function updateLicencia($licencia, $data) {
+        $this->addData($licencia, $data);
+        
         if ($this->tryUpdateLicencia($licencia)) {
             $_SESSION['MENSAJES']['licencia'] = 1;
             $_SESSION['MENSAJES']['licencia_msj'] = 'Licencia editada correctamente';
@@ -125,6 +119,32 @@ class LicenciaManager {
             $_SESSION['MENSAJES']['licencia_msj'] = 'Error al editar licencia';
         }
         return true;
+    }
+
+    private function addData($licencia, $data){
+        $licencia->setNombre($data['nombre']);
+        $licencia->setDescripcion($data['descripcion']);
+        $licencia->setCodigo_licencia($data['codigo_licencia']);
+        $licencia->setCodigo_barras($data['codigo_barras']);
+        if($data['categoria'] == "-1"){
+            $licencia->setCategoria(null);
+        } else {
+            // $licencia->setCategoria($this->categoriaProductoManager
+            //                         ->getCategoriaProductoId($data['categoria']));
+            $licencia->setCategoria($data['categoria']);
+        }
+        if($data['proveedor'] == "-1"){
+            $licencia->setProveedor(null);
+        } else {
+            $licencia->setProveedor($data['proveedor']);
+        }
+        $licencia->setPrecio($data['precio']);
+        $licencia->setPrecio_final_iva($data['precio_final_iva']);
+        $licencia->setPrecio_final_dto($data['precio_final_dto']);
+        $licencia->setPrecio_final_iva_dto($data['precio_final_iva_dto']);
+        $licencia->setIva($this->ivaManager->getIvaPorValor($data['iva']));
+        $licencia->setIva_gravado($data['iva_gravado']);
+        $licencia->setDescuento($data['descuento']);
     }
 
     public function removeLicencia($licencia) {

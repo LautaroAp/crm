@@ -85,6 +85,32 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             </div>
         </div>
 
+        
+        <!-- Datos Laborales -->
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                DATOS LABORALES
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-5 ficha-cliente-p">
+                        <p><label>Empresa:</label> <?= $cliente->getEmpresa(); ?></p>
+                        <p><label>Cargo:</label> <?= $cliente->getCargo(); ?></p>
+                    </div>
+                    <div class="col-md-4 ficha-cliente-p">
+                        <p><label>Profesión:</label> <?php echo ($cliente->getNombreProfesionCliente()); ?></p>
+                        <p><label>Tipo de Negocio:</label> <?php echo ($cliente->getActividad()); ?></p>
+                    </div>
+                    <div class="col-md-3 ficha-cliente-p">
+                        <button class="btn btn-default pull-right">
+                            <span class="clickable glyphicon glyphicon-plus btn-collapse"></span>
+                            Repositorio
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Datos de Facturacion -->
         <div class="panel panel-default">
             <div class="panel-heading text-center titulo-espaciado">
@@ -126,20 +152,13 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-5 ficha-cliente-p">
-                            <p><label>Profesión:</label> <?= $cliente->getNombreProfesionCliente(); ?></p>
-                            <p><label>Actividad:</label> <?= $cliente->getActividad(); ?></p>
-                            <p><label>Empresa:</label> <?= $cliente->getEmpresa(); ?></p>
+                            <p><label>Raza de Manejo:</label> <?= $cliente->getRazaManejo(); ?></p>
                         </div>
                         <div class="col-md-4 ficha-cliente-p">
                             <p><label>Nro. Animales:</label> <?= $cliente->getAnimales(); ?></p>
-                            <p><label>Nro. Establecimientos:</label> <?= $cliente->getEstablecimientos(); ?></p>
-                            <p><label>Raza de Manejo:</label> <?= $cliente->getRazaManejo(); ?></p>
                         </div>
                         <div class="col-md-3 ficha-cliente-p">
-                            <button class="btn btn-default pull-right">
-                                <span class="clickable glyphicon glyphicon-plus btn-collapse"></span>
-                                Repositorio
-                            </button>
+                            <p><label>Nro. Establecimientos:</label> <?= $cliente->getEstablecimientos(); ?></p>
                         </div>
                     </div>
                 </div>
@@ -274,6 +293,103 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                    
+                    <div class="row img-centrar margen">
+                        <!-- Accion Comercial -->
+                        <div class="col-md-3 img-centrar">
+                            <div>
+                                <a href="<?= $this->url('evento', ['action' => 'add', 'id' => (int) $cliente->getId()]) ?>" role="button">
+                                    <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                </a>
+                            </div>
+                            <div class="ficha-cliente-label">
+                                <label>Acción</label><br>
+                                <label>Comercial</label>
+                            </div>
+                        </div>
+                        <!-- Transaccion-->
+                        <div class="col-md-3 img-centrar">
+                            <div class="btn-group dropup">
+                                <a role="button" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                </a>
+                                <ul class="dropdown-menu" role="menu" style="width:300px;">
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Presupuesto
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Pedido
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Remito
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Factura
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Nota de Crédito
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Nota de Débito
+                                            </div> 
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="ficha-cliente-label">
+                                <label>Transacciones</label>
+                            </div>
+                        </div>
+                        <!-- Eliminar Actividad -->
+                        <div class="col-md-3 img-centrar">
+                            <div>
+                                <a role="button" data-toggle="modal" data-target="#actividadModal">
+                                    <img src="<?= $this->basePath('img/crm/remove_carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                </a>
+                            </div>
+                            <div class="ficha-cliente-label">
+                                <label>Eliminar</label><br>
+                                <label>Actividad</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -339,99 +455,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
     <div class="row img-centrar">
-        <!-- Agregar Actividad -->
-        <div class="col ficha-cliente-p img-centrar">
-            <div class="btn-group dropup">
-                <a role="button" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
-                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
-                </a>
-                <ul class="dropdown-menu" role="menu" style="width:300px;">
-                    <li>
-                        <a href="#" class="padding-cero">
-                            <div class="col img-centrar">
-                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                Presupuesto
-                            </div> 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="padding-cero">
-                            <div class="col img-centrar">
-                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                Pedido
-                            </div> 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="padding-cero">
-                            <div class="col img-centrar">
-                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                Remito
-                            </div> 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="padding-cero">
-                            <div class="col img-centrar">
-                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                Factura
-                            </div> 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="padding-cero">
-                            <div class="col img-centrar">
-                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                Nota de Crédito
-                            </div> 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="padding-cero">
-                            <div class="col img-centrar">
-                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                Nota de Débito
-                            </div> 
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="<?= $this->url('evento', ['action' => 'add', 'id' => (int) $cliente->getId()]) ?>" class="padding-cero">
-                            <div class="col img-centrar">
-                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                Acción Comercial
-                            </div> 
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="ficha-cliente-label">
-                <label>Agregar</label><br>
-                <label>Actividad</label>
-            </div>
-        </div>
-
-        <!-- Eliminar Actividad -->
-        <div class="col ficha-cliente-p img-centrar">
-            <div>
-                <a role="button" data-toggle="modal" data-target="#actividadModal">
-                    <img src="<?= $this->basePath('img/crm/remove_carrito_a.png') ?>" 
-                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
-                </a>
-            </div>
-            <div class="ficha-cliente-label">
-                <label>Eliminar</label><br>
-                <label>Actividad</label>
-            </div>
-        </div>
+        <!-- Modificar Datos -->
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <a href="<?= $this->url('clientes/editar', ['action' => 'edit', 'id' => (int) $persona->getId()]) ?>" role="button">

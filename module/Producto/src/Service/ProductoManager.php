@@ -100,7 +100,6 @@ class ProductoManager
         $producto->setPrecio_venta($data['precio_venta']);
         $producto->setPrecio_venta_dto($data['precio_venta_dto']);
         $producto->setDescuento($data['descuento']);
-        // Entidad
         $producto->setIva($this->ivaManager->getIvaPorValor($data['iva']));
         $producto->setIva_gravado($data['iva_gravado']);
         $producto->setPrecio_final_iva($data['precio_final_iva']);

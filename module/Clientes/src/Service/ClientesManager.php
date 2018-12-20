@@ -194,9 +194,10 @@ class ClientesManager {
     public function addCliente($data) {
         $cliente = new Cliente();
         $this->addDatosParticulares($cliente, $data);
-        $this->addDatosFacturacion($cliente, $data);
         $this->addDatosLaborales($cliente, $data);
-        $this->addDatosLicencia($cliente, $data);        
+        $this->addDatosFacturacion($cliente, $data);
+        $this->addDatosLicencia($cliente, $data);
+        $this->addDatosGanaderos($cliente, $data);        
         $persona = $this->personaManager->addPersona($data, $this->tipo);
         $cliente->setPersona($persona);
         if ($this->tryAddCliente($cliente)) {
@@ -224,9 +225,10 @@ class ClientesManager {
     public function updateCliente($data) {
         $cliente = $this->getClienteIdPersona($data['id']);
         $this->addDatosParticulares($cliente, $data);
-        $this->addDatosFacturacion($cliente, $data);
         $this->addDatosLaborales($cliente, $data);
+        $this->addDatosFacturacion($cliente, $data);
         $this->addDatosLicencia($cliente, $data);
+        $this->addDatosGanaderos($cliente, $data);
         $this->personaManager->updatePersona($cliente->getPersona(), $data);
         if ($this->tryUpdateCliente($cliente)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
@@ -256,8 +258,19 @@ class ClientesManager {
                 ->setPais($pais)
                 ->setProvincia($provincia)
                 ->setCiudad($data['ciudad'])
-                ->setCategoria($categoria)
-                ->setEmpresa($data['empresa']);
+                ->setCategoria($categoria);
+    }
+
+    private function addDatosLaborales($cliente, $data) {
+        $cliente->setEmpresa($data['empresa'])
+                ->setCargo($data['cargo'])
+                ->setActividad($data['actividad']);
+        if ($data['profesion'] == "-1") {
+            $cliente->setProfesion(null);
+        } else {
+            $profesion = $this->getProfesionCliente($data['profesion']);
+            $cliente->setProfesion($profesion);
+        }
     }
 
     private function addDatosFacturacion($cliente, $data) {
@@ -267,19 +280,6 @@ class ClientesManager {
                 ->setBanco($data['banco'])
                 ->setCbu($data['cbu'])
                 ->setCuit_cuil($data['cuit_cuil']);
-    }
-
-    private function addDatosLaborales($cliente, $data) {
-        if ($data['profesion'] == "-1") {
-            $cliente->setProfesion(null);
-        } else {
-            $profesion = $this->getProfesionCliente($data['profesion']);
-            $cliente->setProfesion($profesion);
-        }
-        $cliente->setActividad($data['actividad'])
-                ->setAnimales($data['animales'])
-                ->setEstablecimientos($data['establecimientos'])
-                ->setRazaManejo($data['raza_manejo']);
     }
 
     private function addDatosLicencia($cliente, $data) {
@@ -294,6 +294,12 @@ class ClientesManager {
         } else {
             $cliente->setVersion($data['version']);
         }
+    }
+
+    private function addDatosGanaderos($cliente, $data) {
+        $cliente->setAnimales($data['animales'])
+                ->setEstablecimientos($data['establecimientos'])
+                ->setRazaManejo($data['raza_manejo']);
     }
 
     public function deleteCliente($id) {
