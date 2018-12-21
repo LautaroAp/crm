@@ -1,29 +1,41 @@
 <div class="container margen text-center" >         
     <nav class="navbar" id="nav" >
         <ul>
-        <li>
-                <a href="<?= $this->url('gestionEmpresa/gestionServicios/listado'); ?>" > 
-                    <img src="<?= $this->basePath('img/crm/servicio_n.png') ?>" class="img-rounded img-responsive img-menu">
-                </a>
-                <small>Listado</small>
+            <li>
+                <figure>
+                    <a href="<?= $this->url('gestionEmpresa/gestionServicios/listado'); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/servicio_n.png') ?>" 
+                        class="img-rounded img-responsive img-menu img-centrar">
+                    </a>
+                    <figcaption>Listado</figcaption>
+                </figure>
             </li>
             <li>
-                <a href="<?= $this->url("gestionEmpresa/gestionServicios/agregar", ["action" => "add"]); ?>" > 
-                    <img src="<?= $this->basePath('img/crm/servicio_add_n.png') ?>" class="img-rounded img-responsive img-menu">
-                </a>
-                <small>Agregar Servicio</small>
+                <figure>
+                    <a href="<?= $this->url("gestionEmpresa/gestionServicios/agregar", ["action" => "add"]); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/servicio_add_n.png') ?>" 
+                        class="img-rounded img-responsive img-menu img-centrar">
+                    </a>
+                    <figcaption>Agregar Servicio</figcaption>
+                </figure>
             </li>
             <li>
-                <a href="<?= $this->url('gestionEmpresa/gestionServicios/categorias'); ?>" > 
-                    <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>" class="img-rounded img-responsive img-menu">
-                </a>
-                <small>Categorias</small>
+                <figure>
+                    <a href="<?= $this->url('gestionEmpresa/gestionServicios/categorias'); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>" 
+                        class="img-rounded img-responsive img-menu img-centrar">
+                    </a>
+                    <figcaption>Categorias</figcaption>
+                </figure>
             </li>
             <li>
-                <a href="<?= $this->url('gestionEmpresa/gestionServicios/backup'); ?>" > 
-                    <img src="<?= $this->basePath('img/crm/producto_excel_n.png') ?>" class="img-rounded img-responsive img-menu">
-                </a>
-                <small>Exportar a Excel</small>
+                <figure>
+                    <a href="<?= $this->url('gestionEmpresa/gestionServicios/backup'); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/producto_excel_n.png') ?>" 
+                        class="img-rounded img-responsive img-menu img-centrar">
+                    </a>
+                    <figcaption>Exportar a Excel</figcaption>
+                </figure>
             </li>
     </nav>
     <nav id="nav" >
