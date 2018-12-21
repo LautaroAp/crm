@@ -22,21 +22,21 @@ class Licencia {
     
 
      /**
-     * @ORM\Column(name="NOMBRE_LICENCIA", nullable=true, type="string", length=255)
+     * @ORM\Column(name="NOMBRE", nullable=true, type="string", length=255)
      */
     protected $nombre_licencia;
     
       /**
-     * @ORM\Column(name="PRECIO_LOCAL", type="float")
+     * @ORM\Column(name="PRECIO", type="float")
      */
     protected $precio_local;
     
       /**
-     * @ORM\Column(name="PRECIO_EXTRANJERO",  type="float")
+     * @ORM\Column(name="PRECIO_FINAL_IVA",  type="float")
      */
     protected $precio_extranjero;
       /**
-     * @ORM\Column(name="IVA", type="float")
+     * @ORM\Column(name="IVA_GRAVADO", type="float")
      */
     protected $iva;
       /**

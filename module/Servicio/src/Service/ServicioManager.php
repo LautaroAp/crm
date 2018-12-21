@@ -74,6 +74,7 @@ class ServicioManager {
         $servicio->setIva($iva);
         $servicio->setPrecio($data['precio_venta']);
         $servicio->setDescuento($data['descuento']);
+        $servicio->setPrecio_final_dto($data['precio_publico_dto']);
         $servicio->setPrecio_final_iva($data['precio_publico_iva']);
         $servicio->setPrecio_final_iva_dto($data['precio_publico_iva_dto']);
         //MONEDA

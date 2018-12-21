@@ -72,6 +72,11 @@ class Servicio {
     protected $descuento;
     
     /**
+     * @ORM\Column(name="PRECIO_FINAL_DTO", nullable=true, type="decimal")
+     */
+    protected $precio_final_dto;
+    
+    /**
      * @ORM\Column(name="PRECIO_FINAL_IVA", nullable=true, type="decimal")
      */
     protected $precio_final_iva;
@@ -333,5 +338,25 @@ class Servicio {
             return "No definido";
         }
         return $this->categoria->getNombre();
+    }
+
+    /**
+     * Get the value of precio_final_dto
+     */ 
+    public function getPrecio_final_dto()
+    {
+        return $this->precio_final_dto;
+    }
+
+    /**
+     * Set the value of precio_final_dto
+     *
+     * @return  self
+     */ 
+    public function setPrecio_final_dto($precio_final_dto)
+    {
+        $this->precio_final_dto = $precio_final_dto;
+
+        return $this;
     }
 }

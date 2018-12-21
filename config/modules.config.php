@@ -42,5 +42,6 @@ return [
     'CategoriaServicio',
     'Moneda',
     'Ganaderia',
-    'Iva'
+    'Iva',
+    'CategoriaLicencia'
 ];

@@ -59,7 +59,9 @@
             "CategoriaServicio\\": "module/CategoriaServicio/src/",
             "Moneda\\": "module/Moneda/src/",
             "Ganaderia\\": "module/Ganaderia/src/",
-            "Iva\\": "module/Iva/src/"
+            "Iva\\": "module/Iva/src/",
+            "CategoriaLicencia\\": "module/CategoriaLicencia/src/"
+
         }
     },
     "autoload-dev": {
