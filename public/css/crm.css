@@ -10,8 +10,6 @@
     color: rgba(50, 50, 50) !important;
 }
 
-
-
 .img-centrar{
     display:flex;
     align-items: center;
@@ -57,7 +55,9 @@
 }
 
 .titulo-espaciado {
-    letter-spacing: 0.3em
+    letter-spacing: 0.3em;
+    font-weight: bold;
+    /* text-shadow: rgb(143, 141, 141) 0.03em 0.03em 0.03em */
 }
 
 .ficha-cliente-titulo{
