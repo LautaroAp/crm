@@ -12,36 +12,57 @@
         <nav class="navbar" id="nav">
             <ul>
                 <li>
-                    <a href="<?= $this->url('gestionClientes'); ?>">
-                        <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" class="img-rounded img-responsive">
-                    </a> Clientes
+                    <figure>
+                        <a href="<?= $this->url('gestionClientes'); ?>">
+                            <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" 
+                            class="img-rounded img-responsive img-centrar">
+                        </a>
+                        <figcaption>Clientes</figcaption>
+                    </figure>
                 </li>
                 <li>
-                    <a href="<?= $this->url('gestionProveedores'); ?>">
-                        <img src="<?= $this->basePath('img/crm/proveedor_v.png') ?>" class="img-rounded img-responsive">
-                    </a> Proveedores
+                    <figure>
+                        <a href="<?= $this->url('gestionProveedores'); ?>">
+                            <img src="<?= $this->basePath('img/crm/proveedor_v.png') ?>" 
+                            class="img-rounded img-responsive img-centrar">
+                        </a>
+                        <figcaption>Proveedores</figcaption>
+                    </figure>
                 </li>
                 <li>
-                    <a href="<?= $this->url('gestionEmpresa'); ?>">
-                        <img src="<?= $this->basePath('img/crm/empresa_n.png') ?>" class="img-rounded img-responsive">
-                    </a> Empresa
+                    <figure>
+                        <a href="<?= $this->url('gestionEmpresa'); ?>">
+                            <img src="<?= $this->basePath('img/crm/empresa_n.png') ?>" 
+                            class="img-rounded img-responsive img-centrar">
+                        </a>
+                        <figcaption>Empresa</figcaption>
+                    </figure>
                 </li>
                 <li>
-                    <a href="<?= $this->url('herramientas'); ?>">
-                        <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" class="img-rounded img-responsive">
-                    </a> Heramientas
+                    <figure>
+                        <a href="<?= $this->url('herramientas'); ?>">
+                            <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
+                            class="img-rounded img-responsive img-centrar">
+                        </a>
+                        <figcaption>Herramientas</figcaption>
+                    </figure>
                 </li>
             </ul>
             <ul> 
                 <li>
-                    <img src="<?= $this->basePath('img/crm/bienvenido_g.png') ?>" class="img-rounded img-responsive">
-                </li>
+                        <img src="<?= $this->basePath('img/crm/bienvenido_g.png') ?>" 
+                        class="img-rounded img-responsive img-centrar">
+                    </li>
             </ul>
             <ul> 
                 <li>
-                    <a href="<?= $this->url('logout') ?>" role="button">
-                        <img src="<?= $this->basePath('img/crm/salir_b.png') ?>" class="img-rounded img-responsive">
-                    </a> Salir
+                    <figure>
+                        <a href="<?= $this->url('logout') ?>" role="button">
+                            <img src="<?= $this->basePath('img/crm/salir_b.png') ?>" 
+                            class="img-rounded img-responsive img-centrar">
+                        </a>
+                        <figcaption>Salir</figcaption>
+                    </figure>
                 </li>
             </ul>
         </nav>
