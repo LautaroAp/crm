@@ -262,6 +262,16 @@ return [
                                     ],
                                 ],
                             ],
+                            'categorias' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/categorias',
+                                    'defaults' => [
+                                        'controller' => \CategoriaLicencia\Controller\CategoriaLicenciaController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                            ],
                         ], 
                     ],
                     // Gestion Productos

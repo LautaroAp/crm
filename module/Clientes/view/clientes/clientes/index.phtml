@@ -16,7 +16,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading text-center titulo-espaciado">
-                LISTADO CLIENTES (<?php echo($total_clientes); ?>)
+                LISTADO DE CLIENTES (<?php echo($total_clientes); ?>)
             </div>
             <div class="panel-body">
                 <form method="post">
@@ -117,10 +117,25 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
-    <div class="row img-centrar">                    
+    <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionClientes') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                <a href="<?= $this->url("gestionClientes/agregar", ["action" => "add"]); ?>">
+                    <img src="<?= $this->basePath('img/crm/cliente_add_a.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha img-submenu">
+                    </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Agregar</label><br>
+                <label>Cliente</label>
+            </div>
+        </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('gestionClientes') ?>">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
+                        class="img-rounded img-responsive img-texto-derecha">
+                </a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Volver</label>

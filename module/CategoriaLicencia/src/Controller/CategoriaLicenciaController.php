@@ -80,7 +80,7 @@ class CategoriaLicenciaController extends AbstractActionController {
 
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
-        $categoriaLicencia = $this->categoriaLicenciaManager->getCategoriaLicenciaId($id);
+        $categoriaLicencia = $this->categoriaLicenciaManager->getCategoriaLicencia($id);
         $form = $this->categoriaLicenciaManager->getFormForCategoriaLicencia($categoriaLicencia);
         if ($form == null) {
             $this->reportarError();

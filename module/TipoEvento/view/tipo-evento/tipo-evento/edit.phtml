@@ -15,7 +15,7 @@ $categoria_eve = $tipoevento->getCategoria_evento();
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading titulo-espaciado">
-            EDITAR TIPO DE ACTIVIDAD
+            EDITAR ACTIVIDAD
             </div>
             <div class="panel-body">
                 <div class="form-row">
@@ -88,7 +88,10 @@ $categoria_eve = $tipoevento->getCategoria_evento();
 
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionClientes/gestionActividadesClientes/tipoevento') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                <a href="<?= $this->url('gestionClientes/gestionActividadesClientes/tipoevento') ?>">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
+                    class="img-rounded img-responsive img-texto-derecha">
+                </a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Volver</label>

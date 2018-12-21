@@ -34,7 +34,7 @@ class LicenciaController extends AbstractActionController {
     }
 
     public function indexAction() {
-        return $this->procesarAddAction();
+        return $this->procesarIndexAction();
     }
 
     private function procesarIndexAction() {
@@ -60,27 +60,16 @@ class LicenciaController extends AbstractActionController {
     }
 
     private function procesarAddAction() {
-        $form = $this->licenciaManager->createForm();
+        $request = $this->getRequest();
+        // $categoriaProductos = $this->licenciaManager->getCategoriaProducto();
         $ivas = $this->ivaManager->getIvas();
-        $paginator = $this->licenciaManager->getTabla();
-        $mensaje = "";
-
-        $page = 1;
-        if ($this->params()->fromRoute('id')) {
-            $page = $this->params()->fromRoute('id');
-        }
-        $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
-
-        if ($this->getRequest()->isPost()) {
+        if ($request->isPost()) {
             $data = $this->params()->fromPost();
-            $licencia = $this->licenciaManager->getLicenciaFromForm($form, $data);
-
-            return $this->redirect()->toRoute('licencia', ['action' => 'index']);
+            $this->licenciaManager->addLicencia($data);
+            $this->redirect()->toRoute('gestionEmpresa/gestionLicencias/listado');
         }
         return new ViewModel([
-            'form' => $form,
-            'licencias' => $paginator,
+            // 'categorias' => $categoriaProductos,
             'ivas'=>$ivas
         ]);
     }
@@ -91,28 +80,47 @@ class LicenciaController extends AbstractActionController {
     }
 
     public function procesarEditAction() {
+        $request = $this->getRequest();
         $id = (int) $this->params()->fromRoute('id', -1);
         $licencia = $this->licenciaManager->getLicenciaId($id);
+        // $categoriaProductos = $this->licenciaManager->getCategoriaProducto();
+        $ivas = $this->ivaManager->getIvas();
 
-        $form = $this->licenciaManager->getFormForLicencia($licencia);
-        if ($form == null) {
-            $this->reportarError();
-        } else {
-            if ($this->getRequest()->isPost()) {
-                $data = $this->params()->fromPost();
-                if ($this->licenciaManager->formValid($form, $data)) {
-                    $this->licenciaManager->updateLicencia($licencia, $form);
-                    return $this->redirect()->toRoute('licencia', ['action' => 'index']);
-                }
-            } else {
-                $this->licenciaManager->getFormEdited($form, $licencia);
-            }
-            return new ViewModel(array(
-                'licencia' => $licencia,
-                'form' => $form
-            ));
+        if ($request->isPost()) {
+            $data = $this->params()->fromPost();
+            $this->licenciaManager->updateLicencia($licencia, $data);
+            $this->redirect()->toRoute('gestionEmpresa/gestionLicencias/listado');
         }
+        return new ViewModel([
+            'licencia' => $licencia,
+            // 'categorias' => $categoriaProductos,
+            'ivas'=>$ivas
+        ]);
     }
+
+    // public function procesarEditAction() {
+    //     $id = (int) $this->params()->fromRoute('id', -1);
+    //     $licencia = $this->licenciaManager->getLicenciaId($id);
+
+    //     $form = $this->licenciaManager->getFormForLicencia($licencia);
+    //     if ($form == null) {
+    //         $this->reportarError();
+    //     } else {
+    //         if ($this->getRequest()->isPost()) {
+    //             $data = $this->params()->fromPost();
+    //             if ($this->licenciaManager->formValid($form, $data)) {
+    //                 $this->licenciaManager->updateLicencia($licencia, $form);
+    //                 return $this->redirect()->toRoute('licencia', ['action' => 'index']);
+    //             }
+    //         } else {
+    //             $this->licenciaManager->getFormEdited($form, $licencia);
+    //         }
+    //         return new ViewModel(array(
+    //             'licencia' => $licencia,
+    //             'form' => $form
+    //         ));
+    //     }
+    // }
 
     public function removeAction() {
         $view = $this->procesarRemoveAction();

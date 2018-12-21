@@ -80,7 +80,7 @@ class CategoriaServicioController extends AbstractActionController {
 
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
-        $categoriaServicio = $this->categoriaServicioManager->getCategoriaServicioId($id);
+        $categoriaServicio = $this->categoriaServicioManager->getCategoriaServicio($id);
         $form = $this->categoriaServicioManager->getFormForCategoriaServicio($categoriaServicio);
         if ($form == null) {
             $this->reportarError();

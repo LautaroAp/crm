@@ -8,7 +8,7 @@ $this->headTitle($title);
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading titulo-espaciado">
-                AGREGAR DATOS GENERALES
+                DATOS GENERALES
             </div>
             <div class="panel-body">
                 <!-- Fila 1 -->
@@ -94,12 +94,54 @@ $this->headTitle($title);
 </div>
 <!-- Fin: Datos Generales -->
 
+<!-- Inicio: Datos Laborales -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading titulo-espaciado">
+                DATOS LABORALES
+            </div>
+            <div class="panel panel-body">
+                <!-- Fila 1 -->
+                <div class="row form-row">
+                    <div class="form-group col-md-4">
+                        <label>Empresa</label>
+                        <input type="text" class="form-control" name="empresa" placeholder="Ingresar Empresa">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Profesión</label>
+                        <select class="form-control" id="profesion" name="profesion">
+                            <option value="" hidden="">Seleccionar Profesión</option>
+                            <option value="-1">NO DEFINIDO</option>
+                            <?php foreach ($profesiones as $profesion) : ?>
+                                <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <!-- Fila 2 -->
+                <div class="row form-row">
+                    <div class="form-group col-md-4">
+                        <label>Cargo</label>
+                        <input type="text" class="form-control" name="cargo" placeholder="Ingresar Cargo">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Tipo de Nogocio</label>
+                        <input type="text" class="form-control" name="actividad" placeholder="Ingresar Actividad">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Datos Laborales -->
+
 <!-- Inicio: Datos de Facturacion -->
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading titulo-espaciado">
-                MODIFICAR DATOS DE FACTURACIÓN
+                DATOS DE FACTURACIÓN
             </div>
             <div class="panel panel-body">
                 <div class="row form-row">
@@ -147,46 +189,22 @@ $this->headTitle($title);
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading titulo-espaciado">
-                AGREGAR DATOS GANADEROS
+                DATOS GANADEROS
             </div>
                 <div class="panel panel-body">
                     <!-- Fila 1 -->
                     <div class="row form-row">
                         <div class="form-group col-md-4">
-                            <label>Profesión</label>
-                            <select class="form-control" id="profesion" name="profesion">
-                                <option value="" hidden="">Seleccionar Profesión</option>
-                                <option value="-1">NO DEFINIDO</option>
-                                <?php foreach ($profesiones as $profesion) : ?>
-                                    <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <label>Raza de Manejo</label>
+                            <input type="text" class="form-control" name="raza_manejo" placeholder="Ingresar Raza">
                         </div>
                         <div class="form-group col-md-4">
                             <label>Nro. de Animales</label>
                             <input type="text" class="form-control" name="animales" placeholder="Ingresar Nro. Animales">
                         </div>
-                    </div>
-                    <!-- Fila 2 -->
-                    <div class="row form-row">
-                        <div class="form-group col-md-4">
-                            <label>Actividad</label>
-                            <input type="text" class="form-control" name="actividad" placeholder="Ingresar Actividad">
-                        </div>
                         <div class="form-group col-md-4">
                             <label>Nro. de Establecimientos</label>
                             <input type="text" class="form-control" name="establecimientos" placeholder="Ingresar Nro. Establecimientos">
-                        </div>
-                    </div>
-                    <!-- Fila 3 -->
-                    <div class="row form-row">
-                        <div class="form-group col-md-4">
-                            <label>Empresa</label>
-                            <input type="text" class="form-control" name="empresa" placeholder="Ingresar Empresa">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Raza de Manejo</label>
-                            <input type="text" class="form-control" name="raza_manejo" placeholder="Ingresar Raza">
                         </div>
                     </div>
                 <div>

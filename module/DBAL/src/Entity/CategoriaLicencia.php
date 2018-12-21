@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * This class represents a registered categoriaProducto.
  * @ORM\Entity()
- * @ORM\Table(name="CATEGORIA_SERVICIO")
+ * @ORM\Table(name="CATEGORIA_LICENCIA")
  */
 class CategoriaLicencia
 {

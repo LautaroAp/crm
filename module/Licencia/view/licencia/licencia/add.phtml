@@ -1,25 +1,6 @@
-<?php
-$this->headTitle('Agregar Licencia');
-$form->get('nombre_licencia')->setAttributes([
-    'class' => 'form-control',
-    'required' => "",
-]);
-$form->get('precio_local')->setAttributes([
-    'class' => 'form-control',
-]);
-$form->get('precio_extranjero')->setAttributes([
-    'class' => 'form-control',
-]);
-$form->get('descuento')->setAttributes([
-    'class' => 'form-control',
-]);
-$form->get('iva')->setAttributes([
-    'class' => 'form-control',
-]);
-$form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
-$form->prepare();
-?>
-
+<!-- scripts -->
+<script src="/js/licencia.js"></script>
+<!-- Formulario -->
 <form method="post">
     <div class="container margen">
         <div class="row">
@@ -91,7 +72,7 @@ $form->prepare();
                     <div class="row form-row">
                         <div class="form-group col-md-4">
                             <label>Precio</label>
-                            <input type="text" class="form-control" name="precio_venta" id="precio_venta" 
+                            <input type="text" class="form-control" name="precio" id="precio_venta" 
                                 value=0 onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
                         </div>
                         <div class="form-group col-md-2">
@@ -113,7 +94,7 @@ $form->prepare();
                         </div>
                         <div class="form-group col-md-4">
                             <label>Total IVA $</label>
-                            <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
+                            <input type="text" class="form-control" name="iva_gravado" id="iva_total" value=0 readonly>
                         </div>
                     
                     </div>
@@ -121,15 +102,15 @@ $form->prepare();
                     <div class="row form-row">
                         <div class="form-group col-md-4">
                             <label>Precio Público con Dto.</label>
-                            <input type="text" class="form-control" name="precio_publico_dto" id="precio_publico_dto" value=0 readonly>
+                            <input type="text" class="form-control" name="precio_final_dto" id="precio_publico_dto" value=0 readonly>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Precio Público + IVA</label>
-                            <input type="text" class="form-control" name="precio_publico_iva" id="precio_publico_iva" value=0 readonly>
+                            <input type="text" class="form-control" name="precio_final_iva" id="precio_publico_iva" value=0 readonly>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Precio Público +IVA con Dto.</label>
-                            <input type="text" class="form-control" name="precio_publico_iva_dto" id="precio_publico_iva_dto" value=0 readonly>
+                            <input type="text" class="form-control" name="precio_final_iva_dto" id="precio_publico_iva_dto" value=0 readonly>
                         </div>
                     </div>
                 </div>

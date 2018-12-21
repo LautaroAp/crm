@@ -122,7 +122,6 @@ class Producto
      */
     protected $descuento;
 
-
      /**
      * Many Products have One Product.
      * @ORM\ManyToOne(targetEntity="Iva")
