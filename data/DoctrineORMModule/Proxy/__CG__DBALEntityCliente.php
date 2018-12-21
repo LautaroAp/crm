@@ -833,4 +833,26 @@ class Cliente extends \DBAL\Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
         return parent::setCbu($cbu);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getCargo()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCargo', []);
+
+        return parent::getCargo();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setCargo($cargo)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCargo', [$cargo]);
+
+        return parent::setCargo($cargo);
+    }
+
 }
