@@ -24,8 +24,6 @@ class IndexManager {
 
     public function getResult($data) {
         $result = $this->clientesManager->busquedaPorFiltros($data);
-        print_r($result);
-        die();
         return $result;
     }
 

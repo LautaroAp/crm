@@ -8,6 +8,7 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
     $_SESSION['MENSAJES']['tipo_evento'] = null;
     $_SESSION['MENSAJES']['tipo_evento_msj'] = null;
 }
+
 ?>
 <!--Bloqueo de pantalla + animacion-->
 <div id="bloquea" class="cargando" style="display:none;"></div>
@@ -89,7 +90,7 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
                                         <td><?php echo ($categoria->getNombre()); ?></td>
                                         <td><?php echo ($categoria->getDescripcion()); ?></td>
                                         <td class="pull-right">
-                                            <a class="btn btn-default" href="<?= $this->url('categoria/editar', ['action' => 'edit', 'id' => $categoria->getId()]); ?>">
+                                            <a class="btn btn-default" href="<?= $this->url('categoria/editar', ['action' => 'edit', 'tipo' => $tipo, 'id' => $categoria->getId()]); ?>">
                                                 <span class="glyphicon glyphicon-pencil" ></span> 
                                             </a>
                                             <button name="<?= $categoria->getId() ?>" id="<?= $categoria->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $categoria->getId() ?>">

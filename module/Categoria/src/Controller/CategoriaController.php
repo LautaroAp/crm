@@ -82,7 +82,7 @@ class CategoriaController extends AbstractActionController {
         }elseif ($tipo=="servicio"){
             return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
         }elseif ($tipo=="evento"){
-            return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
+            return $this->redirect()->toRoute('gestionClientes/gestionActividadesClientes/categoriaevento', ['tipo'=>'evento']);
         }elseif ($tipo=="iva"){
             return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
         }else{
@@ -96,6 +96,7 @@ class CategoriaController extends AbstractActionController {
     }
 
     public function procesarEditAction() {
+        $tipo= $this->params()->fromRoute('tipo');
         $id = (int) $this->params()->fromRoute('id', -1);
         $categoriaevento = $this->categoriaManager->getCategoriaId($id);
         $form = $this->categoriaManager->getFormForCategoria($categoriaevento);
@@ -106,14 +107,17 @@ class CategoriaController extends AbstractActionController {
                 $data = $this->params()->fromPost();
                 if ($this->categoriaManager->formValid($form, $data)) {
                     $this->categoriaManager->updateCategoria($categoriaevento, $data);
-                    return $this->redirect()->toRoute('categoriaevento');
+                    // return $this->redirect()->toRoute('categoriaevento');
+                    return $this->redireccionar($tipo);
                 }
             } else {
                 $this->categoriaManager->getFormEdited($form, $categoriaevento);
             }
+            $_SESSION['CATEGORIA']['TIPO'] = $tipo;
             return new ViewModel(array(
                 'categoriaevento' => $categoriaevento,
-                'form' => $form
+                'form' => $form,
+                'tipo'=>$tipo,
             ));
         }
     }
