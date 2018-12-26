@@ -15,7 +15,7 @@ use Application;
 return [ 
    'router' => [
         'routes' => [
-            'categoriaevento' => [
+            'categoriaevento2' => [
                 'type'    => Segment::class,
                 'options' => [
                     'route'    => '/clientes/actividadesCategoriaEvento',
