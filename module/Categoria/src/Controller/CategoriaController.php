@@ -49,8 +49,6 @@ class CategoriaController extends AbstractActionController {
     }
 
     private function procesarAddActionCliente() {
-        // print_r($ruta);
-        //die();
         $tipo= $this->params()->fromRoute('tipo');
         $id=$this->params()->fromRoute('id');
         $form = $this->categoriaManager->createForm();
@@ -81,6 +79,7 @@ class CategoriaController extends AbstractActionController {
                 return $this->redirect()->toRoute('home');
             }
         }
+        $_SESSION['CATEGORIA']['TIPO'] = $tipo;
         return new ViewModel([
             'categorias' => $paginator,
             'tipo'=>$tipo,

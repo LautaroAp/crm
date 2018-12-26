@@ -21,6 +21,7 @@ class IndexController extends AbstractActionController {
         $_SESSION['PARAMETROS_CLIENTE'] = array();
         $_SESSION['PARAMETROS_CLIENTE_INACTIVO'] = array();
         $_SESSION['MENSAJES'] = array();
+        $_SESSION['CATEGORIA'] = array();
         $this->layout()->setTemplate('layout/simple');
         return new ViewModel(array('titulo' => 'Hola mundo',));
     }
