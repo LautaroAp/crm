@@ -39,7 +39,7 @@ class CategoriaController extends AbstractActionController {
     }
 
     public function indexAction() {
-        $view = $this->procesarAddActionCliente();
+        $view = $this->procesarAddAction();
         return $view;
     }
 
@@ -48,7 +48,7 @@ class CategoriaController extends AbstractActionController {
         return $view;
     }
 
-    private function procesarAddActionCliente() {
+    private function procesarAddAction() {
         $tipo= $this->params()->fromRoute('tipo');
         $id=$this->params()->fromRoute('id');
         $form = $this->categoriaManager->createForm();
@@ -62,22 +62,8 @@ class CategoriaController extends AbstractActionController {
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->categoriaManager->addCategoria($data, $tipo);
-            // $this->categoriaManager->getCategoriaFromForm($form, $data);
-            if ($tipo=="cliente"){
-                return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
-            }elseif ($tipo=="producto"){
-                return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
-            }elseif ($tipo=="licencia"){
-                return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
-            }elseif ($tipo=="servicio"){
-                return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
-            }elseif ($tipo=="evento"){
-                return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
-            }elseif ($tipo=="iva"){
-                return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
-            }else{
-                return $this->redirect()->toRoute('home');
-            }
+            return $this->redireccionar($tipo);
+            
         }
         $_SESSION['CATEGORIA']['TIPO'] = $tipo;
         return new ViewModel([
@@ -86,6 +72,23 @@ class CategoriaController extends AbstractActionController {
         ]);
     }
 
+    private function redireccionar($tipo){
+        if ($tipo=="cliente"){
+            return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
+        }elseif ($tipo=="producto"){
+            return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
+        }elseif ($tipo=="licencia"){
+            return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
+        }elseif ($tipo=="servicio"){
+            return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
+        }elseif ($tipo=="evento"){
+            return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
+        }elseif ($tipo=="iva"){
+            return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
+        }else{
+            return $this->redirect()->toRoute('home');
+        }
+    }
 
     public function editAction() {
         $view = $this->procesarEditAction();
@@ -122,13 +125,13 @@ class CategoriaController extends AbstractActionController {
 
     public function procesarRemoveAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
-        $categoriaevento = $this->categoriaManager->getCategoriaId($id);
+        $categoria = $this->categoriaManager->getCategoriaId($id);
 
-        if ($categoriaevento == null) {
+        if ($categoria == null) {
             $this->reportarError();
         } else {
             $this->tipoEventoManager->eliminarCategorias($id);
-            $this->categoriaManager->removeCategoria($categoriaevento);
+            $this->categoriaManager->removeCategoria($categoria);
             return $this->redirect()->toRoute('categoriaevento');
         }
     }
