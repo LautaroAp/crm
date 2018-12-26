@@ -39,7 +39,7 @@ class CategoriaController extends AbstractActionController {
     }
 
     public function indexAction() {
-        $view = $this->procesarAddActionCliente();
+        $view = $this->procesarAddAction();
         return $view;
     }
 
@@ -48,7 +48,7 @@ class CategoriaController extends AbstractActionController {
         return $view;
     }
 
-    private function procesarAddActionCliente() {
+    private function procesarAddAction() {
         $tipo= $this->params()->fromRoute('tipo');
         $id=$this->params()->fromRoute('id');
         $form = $this->categoriaManager->createForm();
@@ -72,7 +72,7 @@ class CategoriaController extends AbstractActionController {
             }elseif ($tipo=="servicio"){
                 return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
             }elseif ($tipo=="evento"){
-                return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
+                return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'evento']);
             }elseif ($tipo=="iva"){
                 return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
             }else{

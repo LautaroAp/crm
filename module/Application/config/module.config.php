@@ -133,9 +133,10 @@ return [
                             'categoriaevento' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/categoriaevento',
+                                    'route' => '/categoriaevento[/:tipo[/:id]]',
                                     'defaults' => [
-                                        'controller' => \CategoriaEvento\Controller\CategoriaEventoController::class,
+                                        // 'controller' => \CategoriaEvento\Controller\CategoriaEventoController::class,
+                                        'controller' => \Categoria\Controller\CategoriaController::class,
                                         'action' => 'index',
                                     ],
                                 ],
