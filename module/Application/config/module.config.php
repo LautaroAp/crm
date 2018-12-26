@@ -34,7 +34,7 @@ return [
                 ],
             ],
             // Gestion Clientes
-             'gestionClientes' => [
+            'gestionClientes' => [
                 'type' => Literal::class,
                 'options' => [
                     'route' => '/clientes',
@@ -53,7 +53,7 @@ return [
                                 'controller' => \Clientes\Controller\ClientesController::class,
                                 'action' => 'index',
                             ],
-                        ], 
+                        ],
                     ],
                     'agregar' => [
                         'type' => Segment::class,
@@ -73,20 +73,20 @@ return [
                                 'controller' => \ProfesionCliente\Controller\ProfesionClienteController::class,
                                 'action' => 'index',
                             ],
-                        ], 
-                     ],
-                     'categoriacliente' => [
-                        'type' => Literal::class,
+                        ],
+                    ],
+                    'categoriacliente' => [
+                        'type' => Segment::class,
                         'options' => [
-                            'route' => '/categoriacliente',
+                            'route' => '/categoriacliente[/:tipo[/:id]]',
                             'defaults' => [
-                                'controller' => \CategoriaCliente\Controller\CategoriaClienteController::class,
+                                'controller' => \Categoria\Controller\CategoriaController::class,
                                 'action' => 'index',
                             ],
-                        ], 
-                     ],
+                        ],
+                    ],
                     //  Gestion Actividades
-                     'gestionActividadesClientes' => [
+                    'gestionActividadesClientes' => [
                         'type' => Literal::class,
                         'options' => [
                             'route' => '/gestionActividadesClientes',
@@ -153,9 +153,9 @@ return [
                         ],
                     ],
                 ],
-             ],
+            ],
              // Gestion Proveedores
-             'gestionProveedores' => [
+            'gestionProveedores' => [
                 'type' => Literal::class,
                 'options' => [
                     'route' => '/proveedores',
@@ -174,22 +174,22 @@ return [
                                 'controller' => \Clientes\Controller\ClientesController::class,
                                 'action' => 'index',
                             ],
-                        ], 
+                        ],
                     ],
                 ],
-             ],
+            ],
              // Gestion Empresa
-             'gestionEmpresa' => [
-                 'type' => Literal::class,
-                 'options' => [
-                     'route' => '/empresa',
-                     'defaults' => [
-                         'controller' => Controller\IndexController::class,
-                         'action' => 'gestionEmpresa',
-                     ],
-                 ],
-                 'may_terminate' => true,
-                 'child_routes' => [
+            'gestionEmpresa' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/empresa',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action' => 'gestionEmpresa',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
                     'configuracion' => [
                         'type' => Literal::class,
                         'options' => [
@@ -198,8 +198,8 @@ return [
                                 'controller' => \Empresa\Controller\EmpresaController::class,
                                 'action' => 'index',
                             ],
-                        ], 
-                     ],
+                        ],
+                    ],
                     'ventas' => [
                         'type' => Literal::class,
                         'options' => [
@@ -208,9 +208,9 @@ return [
                                 'controller' => \Evento\Controller\EventoVentaController::class,
                                 'action' => 'index',
                             ],
-                        ], 
-                     ],
-                     'backup' => [
+                        ],
+                    ],
+                    'backup' => [
                         'type' => Segment::class,
                         'options' => [
                             'route' => '/backup',
@@ -221,7 +221,7 @@ return [
                         ],
                     ],
                      // Gestion Licencias
-                     'gestionLicencias' => [
+                    'gestionLicencias' => [
                         'type' => Literal::class,
                         'options' => [
                             'route' => '/licencias',
@@ -272,7 +272,7 @@ return [
                                     ],
                                 ],
                             ],
-                        ], 
+                        ],
                     ],
                     // Gestion Productos
                     'gestionProductos' => [
@@ -352,7 +352,7 @@ return [
                                     ],
                                 ],
                             ],
-                        ], 
+                        ],
                     ],
                     // Gestion Servicios
                     'gestionServicios' => [
@@ -432,12 +432,12 @@ return [
                                     ],
                                 ],
                             ],
-                        ], 
+                        ],
                     ],
-                 ],
-              ],
+                ],
+            ],
               // Herramientas
-              'herramientas' => [
+            'herramientas' => [
                 'type' => Literal::class,
                 'options' => [
                     'route' => '/herramientas',
@@ -479,10 +479,19 @@ return [
                         ],
                     ],
                 ],
-             ],
-        
             ],
-            
+            'categoria' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/categoria[/:tipo[/:id]]',
+                    'defaults' => [
+                        'controller' => \Categoria\Controller\CategoriaController::class,
+                        'action' => 'index',
+                    ],
+                ],
+            ],
+        ],
+
     ],
     'controllers' => [
         'factories' => [

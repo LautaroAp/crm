@@ -60,7 +60,9 @@
             "Moneda\\": "module/Moneda/src/",
             "Ganaderia\\": "module/Ganaderia/src/",
             "Iva\\": "module/Iva/src/",
-            "CategoriaLicencia\\": "module/CategoriaLicencia/src/"
+            "CategoriaLicencia\\": "module/CategoriaLicencia/src/",
+            "Categoria\\": "module/Categoria/src/"
+
 
         }
     },

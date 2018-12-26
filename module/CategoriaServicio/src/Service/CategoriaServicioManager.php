@@ -48,10 +48,7 @@ class CategoriaServicioManager {
      * This method adds a new categoriaServicio.
      */
     public function addCategoriaServicio($data) {
-        $categoriaServicio = new CategoriaServicio();
-        $categoriaServicio->setNombre($data['nombre']);
-        $categoriaServicio->setDescripcion($data['descripcion']);
-
+        $categoriaServicio=$this->setData($data);       
         if ($this->tryAddCategoriaServicio($categoriaServicio)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría agregada correctamente';
@@ -62,35 +59,17 @@ class CategoriaServicioManager {
         return $categoriaServicio;
     }
 
-    public function createForm() {
-        return new CategoriaServicioForm('create', $this->entityManager, null);
+    private function setData($data){
+        $categoriaServicio = new CategoriaServicio();
+        $categoriaServicio->setNombre($data['nombre']);
+        $categoriaServicio->setDescripcion($data['descripcion']);
+        return $categoriaServicio;
     }
-
-    public function formValid($form, $data) {
-        $form->setData($data);
-        return $form->isValid();
-    }
-
-    public function getFormForCategoriaServicio($categoriaServicio) {
-        if ($categoriaServicio == null) {
-            return null;
-        }
-        $form = new CategoriaServicioForm('update', $this->entityManager, $categoriaServicio);
-        return $form;
-    }
-
-    public function getFormEdited($form, $categoriaServicio) {
-        $form->setData(array(
-            'nombre' => $categoriaServicio->getNombre(),
-        ));
-    }
-
     /**
      * This method updates data of an existing categoriaServicio.
      */
-    public function updateCategoriaServicio($categoriaServicio, $form) {
-        $data = $form->getData();
-        $categoriaServicio->setNombre($data['nombre']);
+    public function updateCategoriaServicio($categoriaServicio, $data) {
+        $categoriaServicio=$this->setData($data);       
         if ($this->tryUpdateCategoriaServicio($categoriaServicio)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría editada correctamente';

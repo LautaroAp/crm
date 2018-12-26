@@ -5,23 +5,22 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace CategoriaCliente;
+namespace Categoria;
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Application;
 
-
-return [
+return [ 
    'router' => [
         'routes' => [
-            'categoriacliente2' => [
+            'categoria' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/clientes/categoriacliente2',
+                    'route'    => '/clientes/actividadesCategoria',
                     'defaults' => [
-                        'controller'    => Controller\CategoriaClienteController::class,
+                        'controller'    => Controller\CategoriaController::class,
                         'action'        => 'index',
                     ],
                 ],
@@ -36,6 +35,15 @@ return [
                             ],
                             'constraints' => [
                                 'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'agregar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/add',
+                            'defaults' => [
+                                'action' => 'add',
                             ],
                         ],
                     ],
@@ -54,7 +62,7 @@ return [
                     'page' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/page[/:id[/:estado]]',
+                            'route' => '/page[/:tipo[/:id]]',
                             'defaults' => [
                                 'action' => 'index',
                             ],
@@ -68,20 +76,19 @@ return [
         ],
     ],       
     
-    
  'controllers' => array(
         'factories' => [
-            Controller\CategoriaClienteController::class => Controller\Factory\CategoriaClienteControllerFactory::class,
+            Controller\CategoriaController::class => Controller\Factory\CategoriaControllerFactory::class,
         ],
      ),
      'view_manager' => array(
          'template_path_stack' => array(
-             'categoriacliente' => __DIR__ . '/../view',
+             'categoriaevento' => __DIR__ . '/../view',
          ),
      ),
     'service_manager' => array(
         'factories' => array(
-            Service\CategoriaClienteManager::class => Service\Factory\CategoriaClienteManagerFactory::class,
+            Service\CategoriaManager::class => Service\Factory\CategoriaManagerFactory::class,
         ),
     )
  ];

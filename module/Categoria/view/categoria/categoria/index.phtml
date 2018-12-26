@@ -1,0 +1,153 @@
+<?php
+if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
+    if ($_SESSION['MENSAJES']['tipo_evento']) {
+        echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['tipo_evento_msj'] . "', 'success');});</script>";
+    } else {
+        echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['tipo_evento_msj'] . "', 'error');});</script>";
+    }
+    $_SESSION['MENSAJES']['tipo_evento'] = null;
+    $_SESSION['MENSAJES']['tipo_evento_msj'] = null;
+}
+?>
+<!--Bloqueo de pantalla + animacion-->
+<div id="bloquea" class="cargando" style="display:none;"></div>
+<div class="" id="loader"></div>
+<!-- Inicio: Tabla Tipo-Evento -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                LISTADO CATEGORÍAS DE ACTIVIDADES
+                <a data-toggle="collapse" data-parent="#accordion" href="#add_tipo_evento" 
+                    aria-expanded="true" aria-controls="add_tipo_evento">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
+                </a>
+            </div>
+        <div class="panel panel-body">
+            <div class="collapse" id="add_tipo_evento">
+                <form method="post">
+                    <div class="row form-row">
+                        <div class="form-group col-md-4">
+                            <label>Nombre de Categoria</label>
+                            <input type="text" class="form-control form-margen" name="nombre" placeholder="Nombre de Categoría">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Descripción</label>
+                            <input type="text" class="form-control form-margen" name="descripcion" placeholder="Descripción">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
+                                <span class="glyphicon glyphicon-plus" ></span> Agregar categoría
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Agregar categoría</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>¿Está seguro que desea agregar esta categoría?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-default">Aceptar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id="tabla_tipoevento" class="table table-bordred table-striped">
+                        <thead>
+                            <tr>
+                                <th class="th-sm" onclick="sortTableString(1, 'tabla_tipoevento')" style="width:35%;">
+                                    Nombre de Categoría <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                                </th>
+                                <th class="th-sm" onclick="sortTableString(1, 'tabla_tipoevento')" style="width:55%;">
+                                    Descripción <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                                </th>
+                                <th style="width:10%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if (isset($categorias)) {
+                                foreach ($categorias as $categoria) :
+                                ?>
+                                    <tr>
+                                        <td><?php echo ($categoria->getNombre()); ?></td>
+                                        <td><?php echo ($categoria->getDescripcion()); ?></td>
+                                        <td class="pull-right">
+                                            <a class="btn btn-default" href="<?= $this->url('categoria/editar', ['action' => 'edit', 'id' => $categoria->getId()]); ?>">
+                                                <span class="glyphicon glyphicon-pencil" ></span> 
+                                            </a>
+                                            <button name="<?= $categoria->getId() ?>" id="<?= $categoria->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $categoria->getId() ?>">
+                                                <span class="glyphicon glyphicon-remove" ></span>
+                                            </button>
+                                        </td>
+                                        <!-- Modal -->
+                                <div id="myModal<?= $categoria->getId() ?>" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Borrar cliente</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    ¿Está seguro que desea eliminar el tipo de actividad: 
+                                                    "<?= $this->escapeHtml($categoria->getNombre()) ?>"?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= $this->url('categoria/borrar', ['action' => 'remove', 'id' => $categoria->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
+                                                <span class="btn btn-default">Aceptar</span></a>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table> 
+                </div>
+            </div> 
+        </div>
+        <?php
+            echo $this->paginationControl(
+                $categorias,
+                'Sliding', // All, Elastic, Jumping, Sliding
+                'search_pagination_categoria.phtml',
+                $this->url('categoria/page', ['action' => 'index', 'tipo'=>$tipo, 'id' => 1])
+            );
+        }
+        ?>          
+    </div>
+</div>
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row img-centrar">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('gestionClientes') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->

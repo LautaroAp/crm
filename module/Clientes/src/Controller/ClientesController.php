@@ -117,10 +117,11 @@ class ClientesController extends AbstractActionController
         $licencia = $this->clientesManager->getLicencia();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
-            $cliente = $this->clientesManager->updateCliente($data);
             $id_persona = $this->params()->fromRoute('id');
-            $cliente_ficha = $this->clientesManager->getClienteIdPersona($id_persona);
-            $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $cliente_ficha->getId()]);
+            $id_cliente = $this->params()->fromRoute('id');
+            $cliente = $this->clientesManager->getCliente($id_cliente);
+            $this->clientesManager->updateCliente($data);
+            $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $id_persona]);
         } else {
             $id_persona = $this->params()->fromRoute('id');
             $persona = $this->personaManager->getPersona($id_persona);
@@ -172,6 +173,7 @@ class ClientesController extends AbstractActionController
 
     public function fichaAction(){
         $id_persona = (int)$this->params()->fromRoute('id', -1);
+        $persona = $this->personaManager->getPersona($id_persona);
         $data = $this->clientesManager->getDataFicha($id_persona);
         return new ViewModel([
             'cliente' => $data['cliente'],

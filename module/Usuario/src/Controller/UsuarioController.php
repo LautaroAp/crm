@@ -89,7 +89,7 @@ class UsuarioController extends AbstractActionController {
             if ($form->isValid()) {
                 $this->usuarioManager->updateUsuario($usuario, $data);
                 $idCliente = $this->usuarioManager->getIdCliente($id);
-                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $idCliente]);
+                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $usuario->getCliente()->getPersona()->getId()]);
             }
         } else {
             $this->setDataToForm($id,$form);

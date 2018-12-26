@@ -69,6 +69,7 @@ class PersonaManager {
     
     public function updatePersona($persona, $data) {
         $persona=$this->setData($persona, $data);
+
         if ($this->tryUpdatePersona($persona)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Datos editados correctamente';

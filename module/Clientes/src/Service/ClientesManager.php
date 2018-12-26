@@ -223,7 +223,7 @@ class ClientesManager {
     }
 
     public function updateCliente($data) {
-        $cliente = $this->getClienteIdPersona($data['id']);
+        $cliente = $this->getCliente($data['id']);
         $this->addDatosParticulares($cliente, $data);
         $this->addDatosLaborales($cliente, $data);
         $this->addDatosFacturacion($cliente, $data);

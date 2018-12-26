@@ -17,7 +17,7 @@ return [
             'categoriaServicio' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/productos/categoriaServicio',
+                    'route'    => '/categoriaServicio',
                     'defaults' => [
                         'controller'    => Controller\CategoriaServicioController::class,
                         'action'        => 'index',

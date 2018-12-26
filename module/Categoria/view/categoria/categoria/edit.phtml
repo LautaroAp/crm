@@ -1,26 +1,31 @@
 <?php
-$this->headTitle('Editar Categoria');
+$this->headTitle('Editar Tipo de Evento');
+$form->get('nombre')->setAttributes([
+    'class' => 'form-control',
+    'value' => $categoriaevento->getNombre()
+]);
+$form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
+$form->prepare();
 ?>
 
 <?= $this->form()->openTag($form); ?>
-
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading titulo-espaciado">
-                EDITAR CATEGORÍA
+            EDITAR CATEGORÍA
             </div>
             <div class="panel-body">
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label>Nombre de Categoría</label>
                         <input type="text" class="form-control" name="nombre"
-                            value="<?= $categoriaProducto->getNombre(); ?>">
+                            value="<?= $categoriaevento->getNombre(); ?>">
                     </div>
                     <div class="form-group col-md-4">
-                    <label>Descripción de Categoría</label>
-                    <input type="text" class="form-control" name="descripcion"
-                        value="<?= $categoriaProducto->getDescripcion(); ?>">
+                        <label>Descripción</label>
+                        <input type="text" class="form-control" name="descripcion"
+                            value="<?= $categoriaevento->getDescripcion(); ?>">
                     </div>
                 </div>
             </div>
@@ -40,7 +45,7 @@ $this->headTitle('Editar Categoria');
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>¿Está seguro que desea editar los datos de este categoría?</p>
+                    <p>¿Está seguro que desea editar los datos de esta categoría?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-default">Aceptar</button>
@@ -69,7 +74,7 @@ $this->headTitle('Editar Categoria');
 
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionEmpresa/gestionProductos/categorias') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                <a href="<?= $this->url('gestionClientes/gestionActividadesClientes/categoriaevento') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Volver</label>
@@ -79,5 +84,5 @@ $this->headTitle('Editar Categoria');
 </div>
 <!-- Fin: Panel Botones -->
 
-<?= $this->form()->closeTag(); ?>
+<?= $this->form()->closeTag(); ?>    
 

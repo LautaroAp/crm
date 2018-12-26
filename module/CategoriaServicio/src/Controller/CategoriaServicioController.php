@@ -80,7 +80,7 @@ class CategoriaServicioController extends AbstractActionController {
 
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
-        $categoriaServicio = $this->categoriaServicioManager->getCategoriaServicio($id);
+        $categoriaServicio = $this->categoriaServicioManager->getCategoriaServicioId($id);
         $form = $this->categoriaServicioManager->getFormForCategoriaServicio($categoriaServicio);
         if ($form == null) {
             $this->reportarError();
@@ -89,7 +89,7 @@ class CategoriaServicioController extends AbstractActionController {
                 $data = $this->params()->fromPost();
                 if ($this->categoriaServicioManager->formValid($form, $data)) {
                     $this->categoriaServicioManager->updateCategoriaServicio($categoriaServicio, $form);
-                    return $this->redirect()->toRoute('categoriaServicio');
+                    return $this->redirect()->toRoute('gestionEmpresa/gestionServicios/categorias');
                 }
             } else {
                 $this->categoriaServicioManager->getFormEdited($form, $categoriaServicio);
@@ -100,6 +100,7 @@ class CategoriaServicioController extends AbstractActionController {
             ));
         }
     }
+
 
     public function removeAction() {
         $view = $this->procesarRemoveAction();

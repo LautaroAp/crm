@@ -43,5 +43,6 @@ return [
     'Moneda',
     'Ganaderia',
     'Iva',
-    'CategoriaLicencia'
+    'CategoriaLicencia',
+    'Categoria'
 ];
