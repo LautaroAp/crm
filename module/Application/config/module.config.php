@@ -135,7 +135,6 @@ return [
                                 'options' => [
                                     'route' => '/categoriaevento[/:tipo[/:id]]',
                                     'defaults' => [
-                                        // 'controller' => \CategoriaEvento\Controller\CategoriaEventoController::class,
                                         'controller' => \Categoria\Controller\CategoriaController::class,
                                         'action' => 'index',
                                     ],
@@ -263,12 +262,12 @@ return [
                                     ],
                                 ],
                             ],
-                            'categorias' => [
+                            'categorialicencia' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/categorias',
+                                    'route' => '/categorias[/:tipo[/:id]]',
                                     'defaults' => [
-                                        'controller' => \CategoriaLicencia\Controller\CategoriaLicenciaController::class,
+                                        'controller' => \Categoria\Controller\CategoriaController::class,
                                         'action' => 'index',
                                     ],
                                 ],
@@ -333,12 +332,12 @@ return [
                                     ],
                                 ],
                             ],
-                            'categorias' => [
+                            'categoriaproducto' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/categorias',
+                                    'route' => '/categorias[/:tipo[/:id]]',
                                     'defaults' => [
-                                        'controller' => \CategoriaProducto\Controller\CategoriaProductoController::class,
+                                        'controller' => \Categoria\Controller\CategoriaController::class,
                                         'action' => 'index',
                                     ],
                                 ],
@@ -413,12 +412,12 @@ return [
                                     ],
                                 ],
                             ],
-                            'categorias' => [
+                            'categoriaservicio' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/categorias',
+                                    'route' => '/categorias[/:tipo[/:id]]',
                                     'defaults' => [
-                                        'controller' => \CategoriaServicio\Controller\CategoriaServicioController::class,
+                                        'controller' => \Categoria\Controller\CategoriaController::class,
                                         'action' => 'index',
                                     ],
                                 ],

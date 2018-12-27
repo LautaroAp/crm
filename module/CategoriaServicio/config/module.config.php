@@ -14,7 +14,7 @@ use Application;
 return [
    'router' => [
         'routes' => [
-            'categoriaServicio' => [
+            'categoriaServicio2' => [
                 'type'    => Segment::class,
                 'options' => [
                     'route'    => '/categoriaServicio',

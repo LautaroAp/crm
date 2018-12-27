@@ -16,7 +16,7 @@ use Application;
 return [
    'router' => [
         'routes' => [
-            'categoriaProducto' => [
+            'categoriaProducto2' => [
                 'type'    => Segment::class,
                 'options' => [
                     'route'    => '/productos/categoriaProducto',

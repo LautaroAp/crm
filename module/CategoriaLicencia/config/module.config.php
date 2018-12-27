@@ -14,7 +14,7 @@ use Application;
 return [
    'router' => [
         'routes' => [
-            'categoriaLicencia' => [
+            'categoriaLicencia2' => [
                 'type'    => Segment::class,
                 'options' => [
                     'route'    => '/productos/categoriaLicencia',
