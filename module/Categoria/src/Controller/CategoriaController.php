@@ -124,7 +124,7 @@ class CategoriaController extends AbstractActionController {
         }elseif ($tipo=="evento"){
             return $this->redirect()->toRoute('gestionClientes/gestionActividadesClientes/categoriaevento', ['tipo'=>'evento']);
         }elseif ($tipo=="iva"){
-            return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
+            return $this->redirect()->toRoute('herramientas/condicioniva', ['tipo'=>'iva']);
         }else{
             return $this->redirect()->toRoute('home');
         }

@@ -255,7 +255,7 @@ return [
                             'agregar' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/add',
+                                    'route' => '/add[/:tipo]',
                                     'defaults' => [
                                         'controller' => \Licencia\Controller\LicenciaController::class,
                                         'action' => 'add',
@@ -464,6 +464,16 @@ return [
                             'route' => '/inactivos',
                             'defaults' => [
                                 'controller' => \Ejecutivo\Controller\EjecutivoInactivoController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'condicioniva' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/condicionIva[/:tipo[/:id]]',
+                            'defaults' => [
+                                'controller' => \Categoria\Controller\CategoriaController::class,
                                 'action' => 'index',
                             ],
                         ],
