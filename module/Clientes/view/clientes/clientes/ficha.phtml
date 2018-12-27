@@ -115,7 +115,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     <div class="col-md-5 ficha-cliente-p">
                         <p><label>Razón Social:</label> <?= $cliente->getRazon_social(); ?></p>
                         <p><label>Dirección de Facturación:</label> <?= $cliente->getDireccion_facturacion(); ?></p>
-                        <p><label>Condición de IVA:</label> <?= $cliente->getCondicion_iva(); ?></p>
+                        <p><label>Condición de IVA:</label> <?= $cliente->getNombreCondicionIva(); ?></p>
                     </div>
                     <div class="col-md-4 ficha-cliente-p">
                         <p><label>Banco:</label> <?= $cliente->getBanco(); ?></p>

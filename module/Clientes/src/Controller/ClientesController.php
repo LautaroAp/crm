@@ -43,6 +43,7 @@ class ClientesController extends AbstractActionController
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
         $categorias = $this->clientesManager->getCategoriasCliente($tipo);
+        $condiciones_iva = $this->clientesManager->getCondicionIva('iva');
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
             $_SESSION['PARAMETROS_CLIENTE'] = $parametros;
@@ -60,6 +61,7 @@ class ClientesController extends AbstractActionController
             'paises' => $pais,
             'provincias' => $provincia,
             'categorias' => $categorias,
+            'condiciones_iva' => $condiciones_iva,
             'parametros' => $parametros,
             'total_clientes' => $total_clientes,
             'tipo' => $tipo,
@@ -85,6 +87,7 @@ class ClientesController extends AbstractActionController
         $request = $this->getRequest();
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->clientesManager->getCategoriasCliente($tipo);
+        $condiciones_iva = $this->clientesManager->getCondicionIva('iva');
         $ProfesionCliente = $this->clientesManager->getProfesionCliente();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
@@ -96,6 +99,7 @@ class ClientesController extends AbstractActionController
         }
         return new ViewModel([
             'categorias' => $categorias,
+            'condiciones_iva' => $condiciones_iva,
             'profesiones' => $ProfesionCliente,
             'paises' => $pais,
             'provincias' => $provincia,
@@ -113,6 +117,7 @@ class ClientesController extends AbstractActionController
         $request = $this->getRequest();
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->clientesManager->getCategoriasCliente($tipo);
+        $condiciones_iva = $this->clientesManager->getCondicionIva('iva');
         $ProfesionCliente = $this->clientesManager->getProfesionCliente();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
@@ -134,6 +139,7 @@ class ClientesController extends AbstractActionController
             'persona' => $persona,
             'mensaje' => $mensaje,
             'categorias' => $categorias,
+            'condiciones_iva' => $condiciones_iva,
             'profesiones' => $ProfesionCliente,
             'paises' => $pais,
             'provincias' => $provincia,

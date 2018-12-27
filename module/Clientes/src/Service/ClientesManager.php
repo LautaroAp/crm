@@ -11,6 +11,7 @@ use DBAL\Entity\Provincia;
 use DBAL\Entity\ProfesionCliente;
 use DBAL\Entity\CategoriaCliente;
 use DBAL\Entity\Categoria;
+use DBAL\Entity\Iva;
 use DBAL\Entity\Ganaderia;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
@@ -369,6 +370,17 @@ class ClientesManager {
         }
         return $this->entityManager
                         ->getRepository(ProfesionCliente::class)
+                        ->findAll();
+    }
+
+    public function getCondicionIva($tipo = null) {
+        if (isset($tipo)) {
+            return $this->entityManager
+                            ->getRepository(Categoria::class)
+                            ->findBy(['tipo' => $tipo]);
+        }
+        return $this->entityManager
+                        ->getRepository(Categoria::class)
                         ->findAll();
     }
     

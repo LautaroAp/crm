@@ -15,6 +15,7 @@ $categoria = $cliente->getCategoria();
 $licencia = $cliente->getLicencia();
 $version = $cliente->getVersion();
 $profesion = $cliente->getProfesion();
+$condicion_iva = $cliente->getCondicion_iva();
 $actividad = $cliente->getActividad();
 $animales = $cliente->getAnimales();
 $establecimientos = $cliente->getEstablecimientos();
@@ -188,12 +189,12 @@ $raza_manejo = $cliente->getRazaManejo();
                     <div class="form-group col-md-4">
                         <label>Condición de IVA</label>
                         <select class="form-control" id="condicion_iva" name="condicion_iva">
-                            <option value="<?php if(isset($profesion)){ echo ($profesion->getId()); }?>" hidden="">  
-                                <?php if(isset($profesion)){ echo($profesion->getNombre()); } else {echo ("Seleccionar Profesión");}?>
+                            <option value="<?php if(isset($condicion_iva)){ echo ($condicion_iva->getId()); }?>" hidden="">  
+                                <?php if(isset($condicion_iva)){ echo($condicion_iva->getNombre()); } else {echo ("Seleccionar");}?>
                             </option>
                             <option value="-1">NO DEFINIDO</option>
-                            <?php foreach ($profesiones as $profesion) : ?>
-                                <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
+                            <?php foreach ($condiciones_iva as $condicion_iva) : ?>
+                                <option value="<?php echo ($condicion_iva->getId()); ?>"><?php echo ($condicion_iva->getNombre()); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
