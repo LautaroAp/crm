@@ -120,7 +120,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url("gestionClientes/agregar", ["action" => "add"]); ?>">
+                <a href="<?= $this->url("gestionClientes/agregar", ['tipo'=>'cliente']); ?>">
                     <img src="<?= $this->basePath('img/crm/cliente_add_a.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha img-submenu">
                     </a>

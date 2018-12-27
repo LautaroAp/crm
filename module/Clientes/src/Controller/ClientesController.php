@@ -39,9 +39,10 @@ class ClientesController extends AbstractActionController
 
     public function indexAction(){
         $request = $this->getRequest();
+        $tipo= $this->params()->fromRoute('tipo');
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
-        $CategoriaCliente = $this->clientesManager->getCategoriaCliente();
+        $categorias = $this->clientesManager->getCategoriasCliente($tipo);
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
             $_SESSION['PARAMETROS_CLIENTE'] = $parametros;
@@ -58,9 +59,10 @@ class ClientesController extends AbstractActionController
             'personas' => $pag,
             'paises' => $pais,
             'provincias' => $provincia,
-            'categorias' => $CategoriaCliente,
+            'categorias' => $categorias,
             'parametros' => $parametros,
             'total_clientes' => $total_clientes,
+            'tipo' => $tipo,
         ]);
     }
 
@@ -81,8 +83,8 @@ class ClientesController extends AbstractActionController
 
     private function processAdd(){
         $request = $this->getRequest();
-        $mensaje = "";
-        $CategoriaCliente = $this->clientesManager->getCategoriaCliente();
+        $tipo= $this->params()->fromRoute('tipo');
+        $categorias = $this->clientesManager->getCategoriasCliente($tipo);
         $ProfesionCliente = $this->clientesManager->getProfesionCliente();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
@@ -93,12 +95,12 @@ class ClientesController extends AbstractActionController
             $this->redirect()->toRoute('clientes');
         }
         return new ViewModel([
-            'mensaje' => $mensaje,
-            'categorias' => $CategoriaCliente,
+            'categorias' => $categorias,
             'profesiones' => $ProfesionCliente,
             'paises' => $pais,
             'provincias' => $provincia,
             'licencias' => $licencia,
+            'tipo' => $tipo,
         ]);
     }
 
@@ -109,8 +111,8 @@ class ClientesController extends AbstractActionController
 
     private function processEdit(){
         $request = $this->getRequest();
-        $mensaje = "";
-        $CategoriaCliente = $this->clientesManager->getCategoriaCliente();
+        $tipo= $this->params()->fromRoute('tipo');
+        $categorias = $this->clientesManager->getCategoriasCliente($tipo);
         $ProfesionCliente = $this->clientesManager->getProfesionCliente();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
@@ -131,11 +133,12 @@ class ClientesController extends AbstractActionController
             'cliente' => $cliente,
             'persona' => $persona,
             'mensaje' => $mensaje,
-            'categorias' => $CategoriaCliente,
+            'categorias' => $categorias,
             'profesiones' => $ProfesionCliente,
             'paises' => $pais,
             'provincias' => $provincia,
             'licencias' => $licencia,
+            'tipo' => $tipo,
         ]);
     }
 

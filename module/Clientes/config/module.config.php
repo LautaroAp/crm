@@ -29,7 +29,7 @@ return [
                     'editar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/edit[/:id]',
+                            'route' => '/edit[/:tipo[/:id]]',
                             'defaults' => [
                                 'controller' => Controller\ClientesController::class,
                                 'action' => 'edit',
@@ -56,7 +56,7 @@ return [
                     'agregar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/add',
+                            'route' => '/add[/:tipo]',
                             'defaults' => [
                                 'controller' => Controller\ClientesController::class,
                                 'action' => 'add',

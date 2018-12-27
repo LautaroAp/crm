@@ -144,7 +144,7 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <?php if ($tipo=="cliente"){ ?> 
-                <a href="<?= $this->url('gestionClientes/categoriacliente', ['tipo'=>'cliente']) ?>">
+                <a href="<?= $this->url('gestionClientes', ['tipo'=>'cliente']) ?>">
                     <?php }elseif ($tipo=="producto"){ ?>
                         <a href="<?= $this->url('gestionEmpresa/gestionProductos', ['tipo'=>'producto']) ?>">
                     <?php }elseif ($tipo=="licencia"){ ?>
