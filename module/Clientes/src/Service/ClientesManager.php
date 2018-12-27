@@ -418,16 +418,14 @@ class ClientesManager {
     }
 
     public function eliminarCategoriaClientes($id) {
-        $entityManager = $this->entityManager;
         $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['categoria'=>$id]);
         foreach ($clientes as $cliente) {
             $cliente->setCategoria(null);
         }
-        $entityManager->flush();
+        $this->entityManager->flush();
     }
 
     public function eliminarProfesionClientes($id) {
-        $entityManager = $this->entityManager;
         $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['profesion'=>$id]);
         foreach ($clientes as $cliente) {
              $cliente->setProfesion(null);
@@ -441,4 +439,6 @@ class ClientesManager {
                     ->findOneBy(['persona' => $id_persona]);
         return $cliente;
     }
+
+   
 }

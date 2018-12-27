@@ -96,7 +96,7 @@ class ServicioManager {
         $this->entityManager->flush();
     }
 
-    public function eliminarCategoriaServicio($id){
+    public function eliminarCategoriaServicios($id){
         $entityManager = $this->entityManager;
         $servicios = $this->entityManager->getRepository(Servicio::class)->findBy(['categoria'=>$id]);
         foreach ($servicios as $s) {

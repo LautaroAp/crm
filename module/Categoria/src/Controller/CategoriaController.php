@@ -31,11 +31,21 @@ class CategoriaController extends AbstractActionController {
      * @var Doctrine\ORM\EntityManager
      */
     private $tipoEventoManager;
+    private $clientesManager;
+    private $productoManager;
+    private $servicioManager;
+    private $licenciaManager;
 
-    public function __construct($entityManager, $categoriaManager, $tipoEventoManager) {
+
+    public function __construct($entityManager, $categoriaManager, $tipoEventoManager,  $clientesManager
+    , $productoManager, $servicioManager, $licenciaManager) {
         $this->entityManager = $entityManager;
         $this->categoriaManager = $categoriaManager;
         $this->tipoEventoManager = $tipoEventoManager;
+        $this->clientesManager= $clientesManager;
+        $this->productoManager = $productoManager;
+        $this->servicioManager= $servicioManager;
+        $this->licenciaManager=$licenciaManager;
     }
 
     public function indexAction() {
@@ -123,16 +133,34 @@ class CategoriaController extends AbstractActionController {
         return $view;
     }
 
-    public function procesarRemoveAction() {
+    private function removerDependencias($tipo, $id){
+        if (strtoupper($tipo)==strtoupper("cliente")){
+            $this->clientesManager->eliminarCategoriaClientes($id);
+        }elseif (strtoupper($tipo)==strtoupper("producto")){
+            $this->productoManager-> eliminarCategoriaProductos($id);
+        }elseif (strtoupper($tipo)==strtoupper("licencia")){
+            $this->licenciaManager->eliminarCategoriaLicencia($id);
+        }elseif (strtoupper($tipo)==strtoupper("servicio")){
+            $this->servicioManager->eliminarCategoriaServicios($id);
+        }elseif (strtoupper($tipo)==strtoupper("evento")){
+            $this->tipoEventoManager->eliminarCategoriaEventos($id);
+        //}elseif ($tipo=="iva"){
+            //return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
+        //}else{
+            //return $this->redirect()->toRoute('home');
+        }
+    }
+
+    //TERMINAR ESTOOOOO 
+    private function procesarRemoveAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $categoria = $this->categoriaManager->getCategoriaId($id);
-
         if ($categoria == null) {
             $this->reportarError();
-        } else {
-            $this->tipoEventoManager->eliminarCategorias($id);
+        } else { 
+            $this->removerDependencias($categoria->getTipo(), $id);
             $this->categoriaManager->removeCategoria($categoria);
-            return $this->redirect()->toRoute('categoriaevento');
+            return $this->redireccionar($categoria->getTipo());
         }
     }
 
