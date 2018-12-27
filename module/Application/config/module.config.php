@@ -135,7 +135,6 @@ return [
                                 'options' => [
                                     'route' => '/categoriaevento[/:tipo[/:id]]',
                                     'defaults' => [
-                                        // 'controller' => \CategoriaEvento\Controller\CategoriaEventoController::class,
                                         'controller' => \Categoria\Controller\CategoriaController::class,
                                         'action' => 'index',
                                     ],
@@ -256,19 +255,19 @@ return [
                             'agregar' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/add',
+                                    'route' => '/add[/:tipo]',
                                     'defaults' => [
                                         'controller' => \Licencia\Controller\LicenciaController::class,
                                         'action' => 'add',
                                     ],
                                 ],
                             ],
-                            'categorias' => [
+                            'categorialicencia' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/categorias',
+                                    'route' => '/categorias[/:tipo[/:id]]',
                                     'defaults' => [
-                                        'controller' => \CategoriaLicencia\Controller\CategoriaLicenciaController::class,
+                                        'controller' => \Categoria\Controller\CategoriaController::class,
                                         'action' => 'index',
                                     ],
                                 ],
@@ -333,12 +332,12 @@ return [
                                     ],
                                 ],
                             ],
-                            'categorias' => [
+                            'categoriaproducto' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/categorias',
+                                    'route' => '/categorias[/:tipo[/:id]]',
                                     'defaults' => [
-                                        'controller' => \CategoriaProducto\Controller\CategoriaProductoController::class,
+                                        'controller' => \Categoria\Controller\CategoriaController::class,
                                         'action' => 'index',
                                     ],
                                 ],
@@ -413,12 +412,12 @@ return [
                                     ],
                                 ],
                             ],
-                            'categorias' => [
+                            'categoriaservicio' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/categorias',
+                                    'route' => '/categorias[/:tipo[/:id]]',
                                     'defaults' => [
-                                        'controller' => \CategoriaServicio\Controller\CategoriaServicioController::class,
+                                        'controller' => \Categoria\Controller\CategoriaController::class,
                                         'action' => 'index',
                                     ],
                                 ],
@@ -465,6 +464,26 @@ return [
                             'route' => '/inactivos',
                             'defaults' => [
                                 'controller' => \Ejecutivo\Controller\EjecutivoInactivoController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'tipoiva' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/tipoIva',
+                            'defaults' => [
+                                'controller' => \Iva\Controller\IvaController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'condicioniva' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/condicionIva[/:tipo[/:id]]',
+                            'defaults' => [
+                                'controller' => \Categoria\Controller\CategoriaController::class,
                                 'action' => 'index',
                             ],
                         ],

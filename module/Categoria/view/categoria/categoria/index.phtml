@@ -8,6 +8,7 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
     $_SESSION['MENSAJES']['tipo_evento'] = null;
     $_SESSION['MENSAJES']['tipo_evento_msj'] = null;
 }
+
 ?>
 <!--Bloqueo de pantalla + animacion-->
 <div id="bloquea" class="cargando" style="display:none;"></div>
@@ -17,7 +18,7 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading text-center titulo-espaciado">
-                LISTADO CATEGORÍAS DE ACTIVIDADES
+                LISTADO DE CATEGORÍAS
                 <a data-toggle="collapse" data-parent="#accordion" href="#add_tipo_evento" 
                     aria-expanded="true" aria-controls="add_tipo_evento">
                     <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
@@ -89,7 +90,7 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
                                         <td><?php echo ($categoria->getNombre()); ?></td>
                                         <td><?php echo ($categoria->getDescripcion()); ?></td>
                                         <td class="pull-right">
-                                            <a class="btn btn-default" href="<?= $this->url('categoria/editar', ['action' => 'edit', 'id' => $categoria->getId()]); ?>">
+                                            <a class="btn btn-default" href="<?= $this->url('categoria/editar', ['action' => 'edit', 'tipo' => $tipo, 'id' => $categoria->getId()]); ?>">
                                                 <span class="glyphicon glyphicon-pencil" ></span> 
                                             </a>
                                             <button name="<?= $categoria->getId() ?>" id="<?= $categoria->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $categoria->getId() ?>">
@@ -142,7 +143,24 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionClientes') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                <?php if ($tipo=="cliente"){ ?> 
+                <a href="<?= $this->url('gestionClientes/categoriacliente', ['tipo'=>'cliente']) ?>">
+                    <?php }elseif ($tipo=="producto"){ ?>
+                        <a href="<?= $this->url('gestionEmpresa/gestionProductos', ['tipo'=>'producto']) ?>">
+                    <?php }elseif ($tipo=="licencia"){ ?>
+                        <a href="<?= $this->url('gestionEmpresa/gestionLicencias', ['tipo'=>'licencia']) ?>">
+                    <?php }elseif ($tipo=="servicio"){ ?>
+                        <a href="<?= $this->url('gestionEmpresa/gestionServicios', ['tipo'=>'servicio']) ?>">
+                    <?php }elseif ($tipo=="evento"){ ?>
+                        <a href="<?= $this->url('gestionClientes/gestionActividadesClientes', ['tipo'=>'evento']) ?>">
+                    <?php }elseif ($tipo=="iva"){ ?>
+                        <a href="<?= $this->url('herramientas', ['tipo'=>'iva']) ?>">
+                    <?php }else{ ?>
+                        <a href="<?= $this->url('home') ?>">
+                    <?php } ?>
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                    class="img-rounded img-responsive img-texto-derecha">
+                </a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Volver</label>

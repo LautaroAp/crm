@@ -47,7 +47,7 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
                                         <td><?php echo money_format("$ %n", $licencia->getPrecio_final_iva()); ?></td>
                                         <td><?php echo money_format("$ %n", $licencia->getPrecio_final_iva_dto()); ?></td>
                                         <td class="table-items-right"> 
-                                            <a class="btn btn-default" href="<?= $this->url('licencia/editar', ['action' => 'edit', 'id' => $licencia->getId()]); ?>">
+                                            <a class="btn btn-default" href="<?= $this->url('licencia/editar', ['tipo' => 'licencia', 'id' => $licencia->getId()]); ?>">
                                                 <span class="glyphicon glyphicon-pencil" ></span> 
                                             </a>
                                             <button name="<?= $licencia->getId() ?>" id="<?= $licencia->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $licencia->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>

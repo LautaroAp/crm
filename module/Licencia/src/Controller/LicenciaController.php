@@ -61,7 +61,8 @@ class LicenciaController extends AbstractActionController {
 
     private function procesarAddAction() {
         $request = $this->getRequest();
-        // $categoriaProductos = $this->licenciaManager->getCategoriaProducto();
+        $tipo= $this->params()->fromRoute('tipo');
+        $categorias = $this->licenciaManager->getCategoriasLicencia($tipo);
         $ivas = $this->ivaManager->getIvas();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
@@ -69,8 +70,9 @@ class LicenciaController extends AbstractActionController {
             $this->redirect()->toRoute('gestionEmpresa/gestionLicencias/listado');
         }
         return new ViewModel([
-            // 'categorias' => $categoriaProductos,
-            'ivas'=>$ivas
+            'categorias' => $categorias,
+            'ivas'=>$ivas,
+            'tipo' => $tipo,
         ]);
     }
 
@@ -82,8 +84,9 @@ class LicenciaController extends AbstractActionController {
     public function procesarEditAction() {
         $request = $this->getRequest();
         $id = (int) $this->params()->fromRoute('id', -1);
+        $tipo= $this->params()->fromRoute('tipo');
+        $categorias = $this->licenciaManager->getCategoriasLicencia($tipo);
         $licencia = $this->licenciaManager->getLicenciaId($id);
-        // $categoriaProductos = $this->licenciaManager->getCategoriaProducto();
         $ivas = $this->ivaManager->getIvas();
 
         if ($request->isPost()) {
@@ -93,8 +96,9 @@ class LicenciaController extends AbstractActionController {
         }
         return new ViewModel([
             'licencia' => $licencia,
-            // 'categorias' => $categoriaProductos,
-            'ivas'=>$ivas
+            'categorias' => $categorias,
+            'ivas'=>$ivas,
+            'tipo' => $tipo,
         ]);
     }
 

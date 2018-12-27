@@ -3,6 +3,7 @@
 namespace Licencia\Service;
 
 use DBAL\Entity\Licencia;
+use DBAL\Entity\Categoria;
 use Licencia\Form\LicenciaForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
@@ -210,6 +211,17 @@ class LicenciaManager {
             $this->entityManager->rollBack();
             return false;
         }
+    }
+
+    public function getCategoriasLicencia($tipo = null) {
+        if (isset($tipo)) {
+            return $this->entityManager
+                            ->getRepository(Categoria::class)
+                            ->findBy(['tipo' => $tipo]);
+        }
+        return $this->entityManager
+                        ->getRepository(Categoria::class)
+                        ->findAll();
     }
 
     public function eliminarCategoriaLicencia($id){

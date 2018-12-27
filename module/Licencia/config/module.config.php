@@ -30,7 +30,7 @@ return [
                     'editar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/edit[/:id]',
+                            'route' => '/edit[/:tipo[/:id]]',
                             'defaults' => [
                                 'action' => 'edit',
                             ],
@@ -42,7 +42,7 @@ return [
                     'agregar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/add',
+                            'route' => '/add[/:tipo[/:id]]',
                             'defaults' => [
                                 'action' => 'add',
                             ],

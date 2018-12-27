@@ -106,8 +106,9 @@ if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
                                         <a class="btn btn-default" href="<?= $this->url('ejecutivos/editar', ['action' => 'edit', 'id' => $ejecutivo->getId()]); ?>">
                                             <span class="glyphicon glyphicon-pencil" ></span> 
                                         </a>
-                                        <button name="<?= $ejecutivo->getId() ?>" id="<?= $ejecutivo->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $ejecutivo->getId() ?>">
-                                            <span class="glyphicon glyphicon-remove" ></span
+                                        <button name="<?= $ejecutivo->getId() ?>" id="<?= $ejecutivo->getId() ?>" type="button" class="btn btn-default" 
+                                            data-toggle="modal" data-target="#myModal<?= $ejecutivo->getId() ?>">
+                                            <span class="glyphicon glyphicon-remove" ></span>
                                         </button>
                                     </td>
                                     <!-- Modal -->
@@ -157,6 +158,17 @@ if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
     <!-- Inicio: Panel Botones -->
     <div class="container margen">
         <div class="row img-centrar">
+            <div class="col ficha-cliente-p img-centrar">
+                <div>
+                <a href="<?= $this->url('herramientas/inactivos'); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
+                        class="img-rounded img-responsive img-texto-derecha img-submenu">
+                    </a>
+                </div>
+                <div class="ficha-cliente-label">
+                    <label>Inactivos</label>
+                </div>
+            </div>
             <div class="col ficha-cliente-p img-centrar">
                 <div>
                     <a href="<?= $this->url('herramientas') ?>">

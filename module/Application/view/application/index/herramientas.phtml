@@ -13,11 +13,20 @@
             </li>
             <li>
                 <figure>
-                    <a href="<?= $this->url('herramientas/inactivos'); ?>" > 
+                    <a href="<?= $this->url('herramientas/tipoiva'); ?>" > 
                         <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
                         class="img-rounded img-responsive img-menu img-centrar">
                     </a>
-                    <figcaption>Inactivos</figcaption>
+                    <figcaption>Tipos de IVA</figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <a href="<?= $this->url('herramientas/condicioniva', ['tipo'=>'iva']); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
+                        class="img-rounded img-responsive img-menu img-centrar">
+                    </a>
+                    <figcaption>Condición de IVA</figcaption>
                 </figure>
             </li>
             <li>
