@@ -289,7 +289,7 @@ class Empresa {
 
     public function getNombreMoneda(){
         if(is_null($this->moneda)){
-            return "No definido";
+            return null;
         }
         return $this->moneda->getNombre();
     }

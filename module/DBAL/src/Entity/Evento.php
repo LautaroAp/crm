@@ -61,15 +61,15 @@ class Evento {
             $this->nombre_cliente = $cliente->getNombre();
             $this->apellido_cliente = $cliente->getApellido();
         } else {
-            $this->nombre_cliente = "NO DEFINIDO";
-            $this->apellido_cliente = "NO DEFINIDO";
+            $this->nombre_cliente = null;
+            $this->apellido_cliente = null;
         }
 
         $ejecutivo = $this->ejecutivo;
         if (!is_null($ejecutivo)) {
             $this->usuario_ejecutivo = $ejecutivo->getUsuario();
         } else {
-            $this->usuario_ejecutivo = "NO DEFINIDO";
+            $this->usuario_ejecutivo = null;
         }
     }
 
@@ -132,7 +132,7 @@ class Evento {
 
     public function getNombreCliente() {
         if (is_null($this->cliente)) {
-            return "NO DEFINIDO";
+            return null;
         } else {
             return $this->cliente->getPersona()->getNombre();      
         }
@@ -140,7 +140,7 @@ class Evento {
 
     public function getUsuarioEjecutivo() {
         if (is_null($this->ejecutivo)) {
-            return "NO DEFINIDO";
+            return null;
         } else {
             return $this->ejecutivo->getUsuario();
         }

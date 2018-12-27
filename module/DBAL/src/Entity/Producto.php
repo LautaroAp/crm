@@ -503,7 +503,7 @@ class Producto
 
     public function getValorIva(){
         if (is_null($this->iva)){
-            return "No definido";
+            return null;
         }
         return $this->iva->getValor();
     }
@@ -587,7 +587,7 @@ class Producto
 
     public function getCategoriaNombre(){
         if (is_null($this->categoria)){
-            return "No definido";
+            return null;
         }
         else{
             return $this->categoria->getNombre();

@@ -192,7 +192,7 @@ class Licencia
 
     public function getNombreCategoria(){
         if (is_null($this->categoria)){
-            return "No definido";
+            return null;
         }
         return $this->categoria->getNombre();
     }
