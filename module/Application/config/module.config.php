@@ -58,7 +58,7 @@ return [
                     'agregar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/add',
+                            'route' => '/add[/:tipo]',
                             'defaults' => [
                                 'controller' => \Clientes\Controller\ClientesController::class,
                                 'action' => 'add',

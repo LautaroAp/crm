@@ -142,7 +142,9 @@ class Cliente {
     private $razon_social;
 
     /**
-     * @ORM\Column(name="ID_CONDICION_IVA_CLIENTE", nullable=true, type="string")
+     * Many Clientes have One Categoria.
+     * @ORM\ManyToOne(targetEntity="Categoria")
+     * @ORM\JoinColumn(name="ID_CONDICION_IVA_CLIENTE", referencedColumnName="ID")
      */
     private $condicion_iva;
 
@@ -501,8 +503,7 @@ class Cliente {
     /**
      * Get the value of condicion_iva
      */ 
-    public function getCondicion_iva()
-    {
+    public function getCondicion_iva() {
         return $this->condicion_iva;
     }
 
@@ -511,11 +512,18 @@ class Cliente {
      *
      * @return  self
      */ 
-    public function setCondicion_iva($condicion_iva)
-    {
+    public function setCondicion_iva($condicion_iva) {
         $this->condicion_iva = $condicion_iva;
-
         return $this;
+    }
+
+    public function getNombreCondicionIva() {
+        $condicion_iva = $this->getCondicion_iva();
+        if (is_null($condicion_iva)) {
+            return null;
+        } else {
+            return $condicion_iva->getNombre();
+        }
     }
 
     /**

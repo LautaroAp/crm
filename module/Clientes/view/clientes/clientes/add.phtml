@@ -152,10 +152,10 @@ $this->headTitle($title);
                     <div class="form-group col-md-4">
                         <label>Condición de IVA</label>
                         <select class="form-control" id="condicion_iva" name="condicion_iva">
-                            <option value="" hidden="">Seleccionar Profesión</option>
+                            <option value="" hidden="">Seleccionar</option>
                             <option value="-1">NO DEFINIDO</option>
-                            <?php foreach ($profesiones as $profesion) : ?>
-                                <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
+                            <?php foreach ($condiciones_iva as $condicion_iva) : ?>
+                                <option value="<?php echo ($condicion_iva->getId()); ?>"><?php echo ($condicion_iva->getNombre()); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

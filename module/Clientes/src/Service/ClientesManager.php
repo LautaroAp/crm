@@ -10,6 +10,8 @@ use DBAL\Entity\Pais;
 use DBAL\Entity\Provincia;
 use DBAL\Entity\ProfesionCliente;
 use DBAL\Entity\CategoriaCliente;
+use DBAL\Entity\Categoria;
+use DBAL\Entity\Iva;
 use DBAL\Entity\Ganaderia;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
@@ -200,6 +202,7 @@ class ClientesManager {
         $this->addDatosGanaderos($cliente, $data);        
         $persona = $this->personaManager->addPersona($data, $this->tipo);
         $cliente->setPersona($persona);
+
         if ($this->tryAddCliente($cliente)) {
             $_SESSION['MENSAJES']['listado_clientes'] = 1;
             $_SESSION['MENSAJES']['listado_clientes_msj'] = 'Cliente agregado correctamente';
@@ -230,6 +233,7 @@ class ClientesManager {
         $this->addDatosLicencia($cliente, $data);
         $this->addDatosGanaderos($cliente, $data);
         $this->personaManager->updatePersona($cliente->getPersona(), $data);
+
         if ($this->tryUpdateCliente($cliente)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Cliente modificado correctamente';
@@ -237,6 +241,7 @@ class ClientesManager {
             $_SESSION['MENSAJES']['ficha_cliente'] = 0;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al modificar cliente';
         }
+
         return true;
     }
 
@@ -254,6 +259,7 @@ class ClientesManager {
         $pais = $this->getPais($data['pais']);
         $provincia = $this->getProvincia($data['provincia']);
         $categoria = $this->getCategoriaCliente($data['categoria']);
+
         $cliente->setSkype($data['skype'])
                 ->setPais($pais)
                 ->setProvincia($provincia)
@@ -337,11 +343,22 @@ class ClientesManager {
     public function getCategoriaCliente($id = null) {
         if (isset($id)) {
             return $this->entityManager
-                            ->getRepository(CategoriaCliente::class)
-                            ->findOneBy(['id_categoria_cliente' => $id]);
+                            ->getRepository(Categoria::class)
+                            ->findOneBy(['id' => $id]);
         }
         return $this->entityManager
-                        ->getRepository(CategoriaCliente::class)
+                        ->getRepository(Categoria::class)
+                        ->findAll();
+    }
+
+    public function getCategoriasCliente($tipo = null) {
+        if (isset($tipo)) {
+            return $this->entityManager
+                            ->getRepository(Categoria::class)
+                            ->findBy(['tipo' => $tipo]);
+        }
+        return $this->entityManager
+                        ->getRepository(Categoria::class)
                         ->findAll();
     }
 
@@ -353,6 +370,17 @@ class ClientesManager {
         }
         return $this->entityManager
                         ->getRepository(ProfesionCliente::class)
+                        ->findAll();
+    }
+
+    public function getCondicionIva($tipo = null) {
+        if (isset($tipo)) {
+            return $this->entityManager
+                            ->getRepository(Categoria::class)
+                            ->findBy(['tipo' => $tipo]);
+        }
+        return $this->entityManager
+                        ->getRepository(Categoria::class)
                         ->findAll();
     }
     

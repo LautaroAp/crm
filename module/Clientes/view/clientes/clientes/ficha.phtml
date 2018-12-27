@@ -115,7 +115,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     <div class="col-md-5 ficha-cliente-p">
                         <p><label>Razón Social:</label> <?= $cliente->getRazon_social(); ?></p>
                         <p><label>Dirección de Facturación:</label> <?= $cliente->getDireccion_facturacion(); ?></p>
-                        <p><label>Condición de IVA:</label> <?= $cliente->getCondicion_iva(); ?></p>
+                        <p><label>Condición de IVA:</label> <?= $cliente->getNombreCondicionIva(); ?></p>
                     </div>
                     <div class="col-md-4 ficha-cliente-p">
                         <p><label>Banco:</label> <?= $cliente->getBanco(); ?></p>
@@ -452,7 +452,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
         <!-- Modificar Datos -->
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('clientes/editar', ['action' => 'edit', 'id' => (int) $persona->getId()]) ?>" role="button">
+                <a href="<?= $this->url('clientes/editar', ['tipo' => 'cliente', 'id' => (int) $persona->getId()]) ?>" role="button">
                     <img src="<?= $this->basePath('img/crm/cliente_update_a.png') ?>" 
                     class="img-rounded img-responsive img-texto-derecha img-submenu">
                 </a>
