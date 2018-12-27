@@ -41,9 +41,12 @@ class Licencia
      */
     protected $codigo_barras;
 
-    /**
-     * @ORM\Column(name="ID_CATEGORIA", nullable=true, type="integer")
+     /**
+     * Many Licencias have One Categoria.
+     * @ORM\ManyToOne(targetEntity="Categoria")
+     * @ORM\JoinColumn(name="ID_CATEGORIA", referencedColumnName="ID")
      */
+
     protected $categoria;
 
     /**
@@ -185,6 +188,13 @@ class Licencia
      */
     public function getCategoria() {
         return $this->categoria;
+    }
+
+    public function getNombreCategoria(){
+        if (is_null($this->categoria)){
+            return "No definido";
+        }
+        return $this->categoria->getNombre();
     }
 
     /**

@@ -84,8 +84,8 @@ class Cliente {
 
     /**
      * Many Clientes have One Categoria.
-     * @ORM\ManyToOne(targetEntity="CategoriaCliente")
-     * @ORM\JoinColumn(name="ID_CATEGORIA_CLIENTE", referencedColumnName="ID_CATEGORIA_CLIENTE")
+     * @ORM\ManyToOne(targetEntity="Categoria")
+     * @ORM\JoinColumn(name="ID_CATEGORIA_CLIENTE", referencedColumnName="ID")
      */
     private $categoria;
 

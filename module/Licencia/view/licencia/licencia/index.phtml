@@ -42,7 +42,7 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
                                     <tr>
                                         <td><?php echo ($licencia->getNombre()); ?></td>
                                         <td><?php echo ($licencia->getDescripcion()); ?></td>
-                                        <td><?php echo ($licencia->getCategoria()); ?></td>
+                                        <td><?php echo ($licencia->getNombreCategoria()); ?></td>
                                         <td><?php echo money_format("$ %n", $licencia->getPrecio()); ?></td>
                                         <td><?php echo money_format("$ %n", $licencia->getPrecio_final_iva()); ?></td>
                                         <td><?php echo money_format("$ %n", $licencia->getPrecio_final_iva_dto()); ?></td>

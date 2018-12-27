@@ -4,6 +4,7 @@ namespace Licencia\Service\Factory;
 use Interop\Container\ContainerInterface;
 use Licencia\Service\LicenciaManager;
 use Iva\Service\IvaManager;
+use Categoria\Service\CategoriaManager;
 
 /**
  * This is the factory class for LicenciaManager service. The purpose of the factory
@@ -20,7 +21,8 @@ class LicenciaManagerFactory
         $viewRenderer = $container->get('ViewRenderer');
         $config = $container->get('Config');
         $ivaManager = $container->get(IvaManager::class);
-                        
-        return new LicenciaManager($entityManager, $viewRenderer, $config, $ivaManager);
+        $categoriaManager = $container->get(CategoriaManager::class);
+
+        return new LicenciaManager($entityManager, $viewRenderer, $config, $ivaManager, $categoriaManager);
     }
 }

@@ -3,6 +3,7 @@
 namespace Servicio\Service;
 
 use DBAL\Entity\Servicio;
+use DBAL\Entity\Categoria;
 use Servicio\Form\ServicioForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
@@ -19,14 +20,14 @@ class ServicioManager {
     private $entityManager;
 
     protected $ivaManager;
-    protected $categoriaServicioManager;
+    protected $categoriaManager;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $ivaManager, $categoriaServicioManager) {
+    public function __construct($entityManager, $ivaManager, $categoriaManager) {
         $this->entityManager = $entityManager;
         $this->ivaManager=$ivaManager;
-        $this->categoriaServicioManager=$categoriaServicioManager;
+        $this->categoriaManager=$categoriaManager;
     }
 
     public function getServicios() {
@@ -64,8 +65,7 @@ class ServicioManager {
             $servicio->setCategoria(null);
         } else {
             // Obtener Entidad con id y pasarla
-            $servicio->setCategoria($this->categoriaServicioManager
-                                    ->getCategoriaServicio($data['categoria']));
+            $servicio->setCategoria($this->categoriaManager->getCategoriaId($data['categoria']));
         }
         // $servicio->setProveedor($data['proveedor']);
         $servicio->setPrecio($data['precio_venta']);
@@ -104,4 +104,17 @@ class ServicioManager {
         }
         $entityManager->flush();
     }
+
+
+    public function getCategoriasServicio($tipo = null) {
+        if (isset($tipo)) {
+            return $this->entityManager
+                            ->getRepository(Categoria::class)
+                            ->findBy(['tipo' => $tipo]);
+        }
+        return $this->entityManager
+                        ->getRepository(Categoria::class)
+                        ->findAll();
+    }
+
 }

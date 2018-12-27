@@ -31,7 +31,7 @@ class Servicio {
     
     /**
      * Many Services have One Type.
-     * @ORM\ManyToOne(targetEntity="CategoriaServicio")
+     * @ORM\ManyToOne(targetEntity="Categoria")
      * @ORM\JoinColumn(name="ID_CATEGORIA", referencedColumnName="ID")
      */
     private $categoria;

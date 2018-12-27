@@ -379,7 +379,7 @@ return [
                             'agregar' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/add',
+                                    'route' => '/add[/:tipo]',
                                     'defaults' => [
                                         'controller' => \Servicio\Controller\ServicioController::class,
                                         'action' => 'add',
@@ -389,7 +389,7 @@ return [
                             'editar' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/edit[/:id]',
+                                    'route' => '/edit[/:tipo[/:id]]',
                                     'defaults' => [
                                         'controller' => \Servicio\Controller\ServicioController::class,
                                         'action' => 'edit',

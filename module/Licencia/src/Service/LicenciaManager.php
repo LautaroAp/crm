@@ -34,6 +34,7 @@ class LicenciaManager {
 
     private $ivaManager;
 
+    private $categoriaManager;
     /**
      * Constructs the service.
      */
@@ -132,7 +133,7 @@ class LicenciaManager {
         } else {
             // $licencia->setCategoria($this->categoriaProductoManager
             //                         ->getCategoriaProductoId($data['categoria']));
-            $licencia->setCategoria($data['categoria']);
+            $licencia->setCategoria($this->categoriaManager->getCategoriaId($data['categoria']));
         }
         if($data['proveedor'] == "-1"){
             $licencia->setProveedor(null);
@@ -226,7 +227,7 @@ class LicenciaManager {
 
     public function eliminarCategoriaLicencia($id){
         $licencias = $this->entityManager->getRepository(Licencia::class)->findBy(['categoria'=>$id]);
-        foreach($licencias as $licenccia){
+        foreach($licencias as $licencia){
             $licencia->setCategoria(null);
         }
     }

@@ -22,15 +22,15 @@ class ServicioController extends AbstractActionController {
      */
     protected $servicioManager;
     private $ivaManager;
-    private $categoriaServicioManager;
+    private $categoriaManager;
 
 
     public function __construct($entityManager, $servicioManager, $ivaManager,
-    $categoriaServicioManager) {
+    $categoriaManager) {
         $this->entityManager = $entityManager;
         $this->servicioManager = $servicioManager;
         $this->ivaManager= $ivaManager;
-        $this->categoriaServicioManager = $categoriaServicioManager;
+        $this->categoriaManager = $categoriaManager;
     }
 
     public function indexAction() {
@@ -62,8 +62,10 @@ class ServicioController extends AbstractActionController {
             $this->redirect()->toRoute('gestionEmpresa/gestionServicios/listado');
         }
         $ivas = $this->ivaManager->getIvas();
-        $categorias = $this->categoriaServicioManager->getCategoriaServicios();
+        $tipo= $this->params()->fromRoute('tipo');
+        $categorias = $this->servicioManager->getCategoriasServicio($tipo);
         return new ViewModel([
+            'tipo'=>$tipo,
             'ivas'=>$ivas,
             'categorias'=>$categorias
         ]);
@@ -77,7 +79,8 @@ class ServicioController extends AbstractActionController {
     public function procesarEditAction() {
         $id = $this->params()->fromRoute('id', -1);
         $servicio = $this->servicioManager->getServicioId($id);
-        $categorias = $this->categoriaServicioManager->getCategoriaServicios();
+        $tipo = $this->params()->fromRoute('tipo');
+        $categorias = $this->servicioManager->getCategoriasServicio($tipo);
         $ivas = $this->ivaManager->getIvas();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
@@ -87,7 +90,8 @@ class ServicioController extends AbstractActionController {
         return new ViewModel([
             'servicio' => $servicio,
             'categorias'=>$categorias,
-            'ivas'=>$ivas
+            'ivas'=>$ivas,
+            'tipo'=>"servicio"
         ]);
     }
 
@@ -119,4 +123,6 @@ class ServicioController extends AbstractActionController {
             'resultado' => $resultado
         ]);
     }
+
+
 }

@@ -4,7 +4,7 @@ namespace Servicio\Service\Factory;
 use Interop\Container\ContainerInterface;
 use Servicio\Service\ServicioManager;
 use Iva\Service\IvaManager;
-use CategoriaServicio\Service\CategoriaServicioManager;
+use Categoria\Service\CategoriaManager;
 
 
 /**
@@ -20,7 +20,7 @@ class ServicioManagerFactory
     {        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $ivaManager = $container->get(IvaManager::class);   
-        $categoriaServicioManager = $container->get(CategoriaServicioManager::class);         
-        return new ServicioManager($entityManager, $ivaManager, $categoriaServicioManager);
+        $categoriaManager = $container->get(CategoriaManager::class);         
+        return new ServicioManager($entityManager, $ivaManager, $categoriaManager);
     }
 }
