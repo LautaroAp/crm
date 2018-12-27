@@ -14,10 +14,10 @@ use Application;
 return [
    'router' => [
         'routes' => [
-            'Iva' => [
+            'tipoiva' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/productos/Iva',
+                    'route'    => '/tiposIva',
                     'defaults' => [
                         'controller'    => Controller\IvaController::class,
                         'action'        => 'index',

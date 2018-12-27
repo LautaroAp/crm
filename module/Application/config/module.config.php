@@ -468,6 +468,16 @@ return [
                             ],
                         ],
                     ],
+                    'tipoiva' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/tipoIva',
+                            'defaults' => [
+                                'controller' => \Iva\Controller\IvaController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
                     'condicioniva' => [
                         'type' => Segment::class,
                         'options' => [
