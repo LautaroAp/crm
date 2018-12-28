@@ -80,7 +80,6 @@ class LicenciaController extends AbstractActionController {
         $view = $this->procesarEditAction();
         return $view;
     }
-
     public function procesarEditAction() {
         $request = $this->getRequest();
         $id = (int) $this->params()->fromRoute('id', -1);

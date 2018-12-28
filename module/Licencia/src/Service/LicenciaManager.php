@@ -112,7 +112,6 @@ class LicenciaManager {
      */
     public function updateLicencia($licencia, $data) {
         $this->addData($licencia, $data);
-        
         if ($this->tryUpdateLicencia($licencia)) {
             $_SESSION['MENSAJES']['licencia'] = 1;
             $_SESSION['MENSAJES']['licencia_msj'] = 'Licencia editada correctamente';
@@ -133,6 +132,7 @@ class LicenciaManager {
         } else {
             // $licencia->setCategoria($this->categoriaProductoManager
             //                         ->getCategoriaProductoId($data['categoria']));
+            // $categoria= $this->categoriaManager->getCategoriaId($data['categoria']);
             $licencia->setCategoria($this->categoriaManager->getCategoriaId($data['categoria']));
         }
         if($data['proveedor'] == "-1"){
