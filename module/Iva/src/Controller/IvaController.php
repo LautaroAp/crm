@@ -40,7 +40,6 @@ class IvaController extends AbstractActionController {
 
         $ivas = $this->ivaManager->getIvas();
         return new ViewModel([
-            // 'ivas' => $ivas,
             'ivas' => $paginator,
         ]);
     }
@@ -52,7 +51,6 @@ class IvaController extends AbstractActionController {
 
     private function procesarAddAction() {
         $request = $this->getRequest();
-        
         $paginator = $this->ivaManager->getTabla();
         $page = 1;
         if ($this->params()->fromRoute('id')) {
@@ -60,15 +58,13 @@ class IvaController extends AbstractActionController {
         }
         $paginator->setCurrentPageNumber((int) $page)
                 ->setItemCountPerPage(3);
-
         $ivas = $this->ivaManager->getIvas();
-
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            return $this->redirect()->toRoute('iva');
+            $this->ivaManager->addIva($data);
+            return $this->redirect()->toRoute('herramientas/tipoiva');
         }
         return new ViewModel([
-            // 'form' => $form,
             'ivas' => $paginator,
         ]);
     }
@@ -80,23 +76,15 @@ class IvaController extends AbstractActionController {
 
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
-        $iva = $this->ivaManager->getIvaId($id);
-        $form = $this->ivaManager->getFormForIva($iva);
-        if ($form == null) {
-            $this->reportarError();
-        } else {
-            if ($this->getRequest()->isPost()) {
-                $data = $this->params()->fromPost();
-                $this->ivaManager->updateIva($iva, $form);
-                return $this->redirect()->toRoute('iva');
-            } else {
-                $this->ivaManager->getFormEdited($form, $iva);
-            }
-            return new ViewModel(array(
-                'iva' => $iva,
-                'form' => $form
-            ));
+        $iva = $this->ivaManager->getIva($id);
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $this->ivaManager->updateIva($iva, $data);
+            return $this->redirect()->toRoute('herramientas/tipoiva');
         }
+        return new ViewModel(array(
+            'iva' => $iva,
+        ));
     }
 
     public function removeAction() {
@@ -106,12 +94,12 @@ class IvaController extends AbstractActionController {
 
     public function procesarRemoveAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
-        $iva = $this->ivaManager->getIvaId($id);
+        $iva = $this->ivaManager->getIva($id);
         if ($iva == null) {
             $this->reportarError();
         } else {
             $this->ivaManager->removeIva($id);
-            return $this->redirect()->toRoute('iva');
+            return $this->redirect()->toRoute('herramientas/tipoiva');
         }
     }
 

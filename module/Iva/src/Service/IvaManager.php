@@ -59,48 +59,24 @@ class IvaManager {
      * This method adds a new categoriaProducto.
      */
     public function addIva($data) {
-        $categoriaProducto = new Iva();
-        $categoriaProducto->setNombre($data['nombre']);
-        if ($this->tryAddIva($categoriaProducto)) {
+        $iva = new Iva();
+        $this->addData($iva, $data);
+        if ($this->tryAddIva($iva)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría agregada correctamente';
         } else {
             $_SESSION['MENSAJES']['categoria_cliente'] = 0;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Error al agregar categoría';
         }
-        return $categoriaProducto;
-    }
-
-    public function createForm() {
-        return new IvaForm('create', $this->entityManager, null);
-    }
-
-    public function formValid($form, $data) {
-        $form->setData($data);
-        return $form->isValid();
-    }
-
-    public function getFormForIva($categoriaProducto) {
-        if ($categoriaProducto == null) {
-            return null;
-        }
-        $form = new IvaForm('update', $this->entityManager, $categoriaProducto);
-        return $form;
-    }
-
-    public function getFormEdited($form, $categoriaProducto) {
-        $form->setData(array(
-            'nombre' => $categoriaProducto->getNombre(),
-        ));
+        return $iva;
     }
 
     /**
      * This method updates data of an existing categoriaProducto.
      */
-    public function updateIva($categoriaProducto, $form) {
-        $data = $form->getData();
-        $categoriaProducto->setNombre($data['nombre']);
-        if ($this->tryUpdateIva($categoriaProducto)) {
+    public function updateIva($iva, $data) {
+        $this->addData($iva, $data);        
+        if ($this->tryUpdateIva($iva)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría editada correctamente';
         } else {
@@ -110,10 +86,16 @@ class IvaManager {
         return true;
     }
 
+    private function addData($iva, $data) {
+        $iva->setNombre($data['nombre']);
+        $iva->setDescripcion($data['descripcion']);
+        $iva->setValor($data['valor']);
+    }
+
     public function removeIva($id) {
-        $categoriaProducto= $this->entityManager->getRepository(Iva::class)
+        $iva= $this->entityManager->getRepository(Iva::class)
                         ->find($id);
-        if ($this->tryRemoveIva($categoriaProducto)) {
+        if ($this->tryRemoveIva($iva)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría eliminada correctamente';
         } else {
@@ -130,9 +112,9 @@ class IvaManager {
         return ($paginator);
     }
 
-    private function tryAddIva($categoriaProducto) {
+    private function tryAddIva($iva) {
         try {
-            $this->entityManager->persist($categoriaProducto);
+            $this->entityManager->persist($iva);
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {
@@ -141,7 +123,7 @@ class IvaManager {
         }
     }
 
-    private function tryUpdateIva($categoriaProducto) {
+    private function tryUpdateIva($iva) {
         try {
             $this->entityManager->flush();
             return true;
@@ -151,9 +133,9 @@ class IvaManager {
         }
     }
 
-    private function tryRemoveIva($categoriaProducto) {
+    private function tryRemoveIva($iva) {
         try {
-            $this->entityManager->remove($categoriaProducto);
+            $this->entityManager->remove($iva);
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {
@@ -161,5 +143,28 @@ class IvaManager {
             return false;
         }
     }
+
+    // public function createForm() {
+    //     return new IvaForm('create', $this->entityManager, null);
+    // }
+
+    // public function formValid($form, $data) {
+    //     $form->setData($data);
+    //     return $form->isValid();
+    // }
+
+    // public function getFormForIva($iva) {
+    //     if ($iva == null) {
+    //         return null;
+    //     }
+    //     $form = new IvaForm('update', $this->entityManager, $iva);
+    //     return $form;
+    // }
+
+    // public function getFormEdited($form, $iva) {
+    //     $form->setData(array(
+    //         'nombre' => $iva->getNombre(),
+    //     ));
+    // }
 
 }
