@@ -18,9 +18,32 @@ class IvaController extends AbstractActionController {
      */
     protected $ivaManager;
 
-    public function __construct($entityManager, $ivaManager, $servicioManager) {
+    /**
+     * Iva manager.
+     * @var User\Service\LicenciaManager 
+     */
+    private $licenciaManager;
+
+    /**
+     * Iva manager.
+     * @var User\Service\ProductoManager 
+     */
+    private $productoManager;
+
+    /**
+     * Iva manager.
+     * @var User\Service\SevicioManager 
+     */
+    private $servicioManager;
+
+    
+
+    public function __construct($entityManager, $ivaManager, $licenciaManager, $productoManager, $servicioManager) {
         $this->entityManager = $entityManager;
         $this->ivaManager = $ivaManager;
+        $this->licenciaManager = $licenciaManager;
+        $this->productoManager = $productoManager;
+        $this->servicioManager = $servicioManager;
     }
 
     public function indexAction() {
@@ -98,6 +121,13 @@ class IvaController extends AbstractActionController {
         if ($iva == null) {
             $this->reportarError();
         } else {
+            // Eliminar de Licencias
+            $this->licenciaManager->eliminarIvas($id);
+            // Eliminar de Productos
+            $this->productoManager->eliminarIvas($id);
+            // Eliminar de Servicios
+            $this->servicioManager->eliminarIvas($id);
+            // Eliminar Tipo IVA
             $this->ivaManager->removeIva($id);
             return $this->redirect()->toRoute('herramientas/tipoiva');
         }

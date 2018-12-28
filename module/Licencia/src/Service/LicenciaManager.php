@@ -229,4 +229,11 @@ class LicenciaManager {
             $licencia->setCategoria(null);
         }
     }
+
+    public function eliminarIvas($id){
+        $licencias = $this->entityManager->getRepository(Licencia::class)->findBy(['iva'=>$id]);
+        foreach($licencias as $licencia){
+            $licencia->setIva(null);
+        }
+    }
 }

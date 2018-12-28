@@ -105,7 +105,6 @@ class ServicioManager {
         $entityManager->flush();
     }
 
-
     public function getCategoriasServicio($tipo = null) {
         if (isset($tipo)) {
             return $this->entityManager
@@ -115,6 +114,13 @@ class ServicioManager {
         return $this->entityManager
                         ->getRepository(Categoria::class)
                         ->findAll();
+    }
+
+    public function eliminarIvas($id){
+        $servicios = $this->entityManager->getRepository(Servicio::class)->findBy(['iva'=>$id]);
+        foreach($servicios as $servicio){
+            $servicio->setIva(null);
+        }
     }
 
 }
