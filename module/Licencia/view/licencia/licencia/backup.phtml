@@ -11,14 +11,23 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 
 <table>
     <tbody>
+        <tr>
+            <td><?php echo(utf8_decode("Licencia")); ?></td>
+            <td><?php echo(utf8_decode("Precio"));?></td>
+            <td><?php echo(utf8_decode("IVA (%)"));?></td>
+            <td><?php echo(utf8_decode("Precio final con iva"));?></td>
+            <td><?php echo(utf8_decode("Descuento (%)"));?></td>
+            <td><?php echo(utf8_decode("Precio final con Iva y Dto."));?></td>
+        </tr>
         <?php foreach ($resultado as $licencia): 
         ?>
             <tr>
                 <td><?php echo(utf8_decode($licencia->getNombre())); ?></td>
-                <td><?php echo(utf8_decode($licencia->getPrecio_local()));?></td>
-                <td><?php echo(utf8_decode($licencia->getPrecio_extranjero()));?></td>
-                <td><?php echo(utf8_decode($licencia->getIva()));?></td>
+                <td><?php echo(utf8_decode($licencia->getPrecio()));?></td>
+                <td><?php echo(utf8_decode($licencia->getValorIva()));?></td>
+                <td><?php echo(utf8_decode($licencia->getPrecio_final_iva()));?></td>
                 <td><?php echo(utf8_decode($licencia->getDescuento()));?></td>
+                <td><?php echo(utf8_decode($licencia->getPrecio_final_iva_dto()));?></td>
             </tr>
         <?php endforeach;?>
     </tbody>

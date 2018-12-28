@@ -131,8 +131,7 @@ class LicenciaManager {
         if($data['categoria'] == "-1"){
             $licencia->setCategoria(null);
         } else {
-            $licencia->setCategoria($this->categoriaManager
-                                        ->getCategoriaId($data['categoria']));
+            $licencia->setCategoria($this->categoriaManager->getCategoriaId($data['categoria']));
         }
         if($data['proveedor'] == "-1"){
             $licencia->setProveedor(null);

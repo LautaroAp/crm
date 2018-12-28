@@ -359,4 +359,11 @@ class Licencia
         $this->precio_final_dto = $precio_final_dto;
         return $this;
     }
+
+    public function getValorIva(){
+        if (is_null($this->iva)){
+            return null;
+        }
+        return $this->iva->getValor();
+    }
 }
