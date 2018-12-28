@@ -84,13 +84,12 @@
                         <label>% IVA</label>
                             <select class="form-control" name="iva" id="iva"
                             onkeypress="return justNumbers(event);" onchange="calcularPrecios()">
-                            <option value="0" hidden="">Seleccionar IVA</option>
-                            <?php foreach ($ivas as $iva) : ?>
-                                <option value="<?php  echo  ($iva->getValor()); ?>">
-                                <?php if ($iva->getId()==1){echo ("Excento");} 
-                                    else {echo ($iva->getValor());} ?></option>
-                            <?php endforeach; ?>
-                            </select>
+                            <option value="-1" hidden="">Seleccionar IVA</option>
+                        <?php foreach ($ivas as $iva) : ?>
+                            <option value="<?php  echo  ($iva->getValor()); ?>">
+                            <?php echo ($iva->getValor()) ?></option>
+                        <?php endforeach; ?>
+                        </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Total IVA $</label>
