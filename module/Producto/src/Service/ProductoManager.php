@@ -2,7 +2,7 @@
 namespace Producto\Service;
 
 use DBAL\Entity\Producto;
-use DBAL\Entity\CategoriaProducto;
+use DBAL\Entity\Categoria;
 use Producto\Form\ProductoForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
@@ -21,15 +21,15 @@ class ProductoManager
     
     private $ivaManager;
 
-    private $categoriaProductoManager;
+    private $categoria;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $ivaManager, $categoriaProductoManager) 
+    public function __construct($entityManager, $ivaManager, $categoriaManager) 
     {
         $this->entityManager = $entityManager;
         $this->ivaManager= $ivaManager;
-        $this->categoriaProductoManager= $categoriaProductoManager;
+        $this->categoriaManager= $categoriaManager;
     }
     
      public function getProductos(){
@@ -73,8 +73,7 @@ class ProductoManager
             $producto->setCategoria(null);
         } else {
             // Obtener Entidad con id y pasarla
-            $producto->setCategoria($this->categoriaProductoManager
-                                    ->getCategoriaProductoId($data['categoria']));
+            $producto->setCategoria($this->categoriaManager->getCategoriaId($data['categoria']));
         }
         if($data['proveedor'] == "-1"){
             $producto->setProveedor(null);
@@ -157,14 +156,14 @@ class ProductoManager
         return ($paginator);
     }
 
-    public function getCategoriaProducto($id = null) {
+    public function getCategoriaProducto($id = null, $tipo) {
         if (isset($id)) {
             return $this->entityManager
-                            ->getRepository(CategoriaProducto::class)
-                            ->findOneBy(['id' => $id]);
+                            ->getRepository(Categoria::class)
+                            ->findOneBy(['id' => $id, 'tipo'=>$tipo]);
         }
         return $this->entityManager
-                        ->getRepository(CategoriaProducto::class)
-                        ->findAll();
+                        ->getRepository(Categoria::class)
+                        ->findBy(['tipo'=>$tipo]);
     }
 } 

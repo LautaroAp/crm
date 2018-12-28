@@ -1,6 +1,6 @@
 function justNumbers(e) {
     var keynum = window.event ? window.event.keyCode : e.which;
-    if ((keynum == 8) || (keynum == 46))
+    if ((keynum == 0) || (keynum == 8) || (keynum == 46))
         return true;
 
     return /\d/.test(String.fromCharCode(keynum));
@@ -8,6 +8,13 @@ function justNumbers(e) {
 
 // Precio Venta
 function calculaCostoTotalCompra() {
+
+    // Setea el precios en caso de Null & NaN
+    if (($("#precio_compra").val()) == "") {
+        $("#precio_compra").val("0");
+        calculaCostoTotalCompra();
+    }
+
     // Precio Total de Compra
     $total = parseFloat($('#precio_compra').val());
     $total = $total + parseFloat($('#costos_directos').val());

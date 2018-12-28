@@ -24,6 +24,7 @@ class IvaController extends AbstractActionController {
     }
 
     public function indexAction() {
+        // $view = $this->procesarIndexAction();
         $view = $this->procesarAddAction();
         return $view;
     }
@@ -39,8 +40,8 @@ class IvaController extends AbstractActionController {
 
         $ivas = $this->ivaManager->getIvas();
         return new ViewModel([
-            'ivas' => $ivas,
-            'categorias_pag' => $paginator
+            // 'ivas' => $ivas,
+            'ivas' => $paginator,
         ]);
     }
 
@@ -50,24 +51,25 @@ class IvaController extends AbstractActionController {
     }
 
     private function procesarAddAction() {
-        $form = $this->ivaManager->createForm();
+        $request = $this->getRequest();
+        
         $paginator = $this->ivaManager->getTabla();
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
+                ->setItemCountPerPage(3);
+
+        $ivas = $this->ivaManager->getIvas();
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            // $this->ivaManager->addIva($data);
-            $iva = $this->ivaManager->getIvaFromForm($form, $data);
             return $this->redirect()->toRoute('iva');
         }
         return new ViewModel([
-            'form' => $form,
-            'categorias_pag' => $paginator
+            // 'form' => $form,
+            'ivas' => $paginator,
         ]);
     }
 

@@ -53,7 +53,8 @@ class ProductoController extends AbstractActionController {
     
     private function procesarAddAction() {
         $request = $this->getRequest();
-        $categoriaProductos = $this->productoManager->getCategoriaProducto();
+        $tipo= $this->params()->fromRoute('tipo');
+        $categoriaProductos = $this->productoManager->getCategoriaProducto(null,$tipo);
         $ivas = $this->ivaManager->getIvas();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
@@ -74,8 +75,9 @@ class ProductoController extends AbstractActionController {
     public function procesarEditAction() {
         $request = $this->getRequest();
         $id = (int) $this->params()->fromRoute('id', -1);
+        $tipo =  $this->params()->fromRoute('tipo');
         $producto = $this->productoManager->getProductoId($id);
-        $categoriaProductos = $this->productoManager->getCategoriaProducto();
+        $categoriaProductos = $this->productoManager->getCategoriaProducto(null, $tipo);
         $ivas = $this->ivaManager->getIvas();
 
         if ($request->isPost()) {

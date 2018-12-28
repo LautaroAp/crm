@@ -37,7 +37,7 @@ class Producto
 
     /**
      * Many Services have One Type.
-     * @ORM\ManyToOne(targetEntity="CategoriaProducto")
+     * @ORM\ManyToOne(targetEntity="Categoria")
      * @ORM\JoinColumn(name="ID_CATEGORIA", referencedColumnName="ID")
      */
     protected $categoria;

@@ -1,12 +1,17 @@
 function justNumbers(e) {
     var keynum = window.event ? window.event.keyCode : e.which;
-    if ((keynum == 8) || (keynum == 46))
+    if ((keynum == 0) || (keynum == 8) || (keynum == 46))
         return true;
 
     return /\d/.test(String.fromCharCode(keynum));
 }
 
 function calcularPrecios() {
+    // Setea el precios en caso de Null & NaN
+    if (($("#precio_venta").val()) == "") {
+        $("#precio_venta").val("0");
+        calcularPrecios();
+    }
     $precio = (parseFloat($('#precio_venta').val()));
     $descuento = (parseFloat($('#descuento').val()));
     $iva = (parseFloat($('#iva').val()));
@@ -15,21 +20,20 @@ function calcularPrecios() {
     $precio_dto_iva = ($precio_dto + (($iva * $precio_dto) / 100));
     $total_iva = ($precio_iva - $precio);
     $precio = ($precio).toFixed(2);
-    //setea el precio publico
-
+    // Setea el precio publico
     if ($precio) {
         $("#precio_publico").val($precio);
     } else {
         $("#precio_publico").val("0");
     }
-    //setea el precio publico con descuento
+    // Setea el precio publico con descuento
     if ($descuento) {
         $precio_dto_f = ($precio_dto).toFixed(2);
         $("#precio_publico_dto").val($precio_dto_f);
     } else {
         $("#precio_publico_dto").val($precio);
     }
-    //setea el precio publico con iva
+    // Setea el precio publico con iva
     $precio_publico_sin_iva = (parseFloat($('#precio_publico_dto').val())).toFixed(2);
     if ($iva) {
         $precio_iva_f = ($precio_iva).toFixed(2);
@@ -37,8 +41,7 @@ function calcularPrecios() {
     } else {
         $("#precio_publico_iva").val($precio);
     }
-    //setea el precio publico con iva y descuento
-
+    // Setea el precio publico con iva y descuento
     if ($iva) {
         $precio_dto_iva_f = ($precio_dto_iva).toFixed(2);
         $("#precio_publico_iva_dto").val($precio_dto_iva_f);

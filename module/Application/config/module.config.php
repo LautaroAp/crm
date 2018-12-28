@@ -299,7 +299,7 @@ return [
                             'agregar' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/add',
+                                    'route' => '/add[/:tipo]',
                                     'defaults' => [
                                         'controller' => \Producto\Controller\ProductoController::class,
                                         'action' => 'add',
@@ -309,7 +309,7 @@ return [
                             'editar' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/edit[/:id]',
+                                    'route' => '/edit[/:tipo[/:id]]',
                                     'defaults' => [
                                         'controller' => \Producto\Controller\ProductoController::class,
                                         'action' => 'edit',
