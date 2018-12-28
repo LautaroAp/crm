@@ -142,7 +142,11 @@ class LicenciaManager {
         $licencia->setPrecio_final_iva($data['precio_final_iva']);
         $licencia->setPrecio_final_dto($data['precio_final_dto']);
         $licencia->setPrecio_final_iva_dto($data['precio_final_iva_dto']);
-        $licencia->setIva($this->ivaManager->getIvaPorValor($data['iva']));
+        if($data['categoria'] == "-1"){
+            $licencia->setIva(null);
+        } else {
+            $licencia->setIva($this->ivaManager->getIva($data['iva']));
+        }
         $licencia->setIva_gravado($data['iva_gravado']);
         $licencia->setDescuento($data['descuento']);
     }
@@ -196,6 +200,7 @@ class LicenciaManager {
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {
+            echo 'ERROR: ', $e->getMessage(),"\n" ;
             $this->entityManager->rollBack();
             return false;
         }

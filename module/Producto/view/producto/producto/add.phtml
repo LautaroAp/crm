@@ -148,7 +148,7 @@
                         onkeypress="return justNumbers(event);" onchange="calculaDescuentoIVA()">
                         <option value="-1" hidden="">Seleccionar IVA</option>
                         <?php foreach ($ivas as $iva) : ?>
-                            <option value="<?php  echo  ($iva->getValor()); ?>">
+                            <option value="<?php  echo  ($iva->getId()); ?>">
                             <?php echo ($iva->getValor()) ?></option>
                         <?php endforeach; ?>
                         </select>

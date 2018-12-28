@@ -3,6 +3,8 @@
 
 <?php
 $categoria = $licencia->getCategoria();
+$iva = $licencia->getIva();
+
 // $proveedor = $licencia->getProveedor();
 ?>
 
@@ -62,8 +64,8 @@ $categoria = $licencia->getCategoria();
                                 <option value="<?php if(isset($proveedor)){ echo ($proveedor->getId()); }?>" hidden="">  
                                     <?php if(isset($proveedor)){ echo $proveedor->getNombre(); } else {echo ("Seleccionar Proveedor");}?>
                                 </option>
-                                <option value="1">...</option>
-                                <option value="2">...</option>
+                                <option value="1">.1..</option>
+                                <option value="2">.2..</option>
                                 <option value="-1">NO DEFINIDO</option>
                             </select>
                         </div>
@@ -94,13 +96,15 @@ $categoria = $licencia->getCategoria();
                         </div>
                         <div class="form-group col-md-2">
                         <label>% IVA</label>
-                            <select class="form-control" name="iva" id="iva"
-                            onkeypress="return justNumbers(event);" onchange="calcularPrecios()">
-                            <option value="-1" hidden="">Seleccionar IVA</option>
-                        <?php foreach ($ivas as $iva) : ?>
-                            <option value="<?php  echo  ($iva->getValor()); ?>">
-                            <?php echo ($iva->getValor()) ?></option>
-                        <?php endforeach; ?>
+                        <select class="form-control" name="iva" id="iva"
+                        onkeypress="return justNumbers(event);" onchange="calcularPrecios()">
+                            <option value="<?php if(isset($iva)){ echo ($iva->getId()); }?>" hidden="">  
+                                    <?php if(isset($iva)){ echo $iva->getValor(); } else {echo ("Seleccionar Iva");}?>
+                            </option>
+                            <?php foreach ($ivas as $iva) : ?>
+                                <option value="<?php  echo  ($iva->getId()); ?>">
+                                <?php echo ($iva->getValor()) ?></option>
+                            <?php endforeach; ?>
                         </select>
                         </div>
                         <div class="form-group col-md-4">
@@ -169,7 +173,7 @@ $categoria = $licencia->getCategoria();
         </div>                   
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionEmpresa/gestionLicencias') ?>">
+                <a href="<?= $this->url('gestionEmpresa/gestionLicencias/listado') ?>">
                 <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
                 class="img-rounded img-responsive img-texto-derecha"></a>
             </div>

@@ -70,7 +70,7 @@ class ServicioManager {
         // $servicio->setProveedor($data['proveedor']);
         $servicio->setPrecio($data['precio_venta']);
         $servicio->setIva_gravado($data['iva_total']);
-        $iva=$this->ivaManager->getIvaPorValor($data['iva']);
+        $iva=$this->ivaManager->getIva($data['iva']);
         $servicio->setIva($iva);
         $servicio->setPrecio($data['precio_venta']);
         $servicio->setDescuento($data['descuento']);

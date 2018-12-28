@@ -1,5 +1,10 @@
 <!-- scripts -->
 <script src="/js/servicio.js"></script>
+<?php
+$categoria = $servicio->getCategoria();
+$iva = $servicio->getIva();
+// $proveedor = $licencia->getProveedor();
+?>
 <!-- Formulario -->
 <form method="post">
 <div class="container margen">
@@ -75,11 +80,13 @@
                         <label>% IVA</label>
                         <select class="form-control" name="iva" id="iva"
                         onkeypress="return justNumbers(event);" onchange="calcularPrecios()">
-                        <option value="-1" hidden="">Seleccionar IVA</option>
-                        <?php foreach ($ivas as $iva) : ?>
-                            <option value="<?php  echo  ($iva->getValor()); ?>">
-                            <?php echo ($iva->getValor()) ?></option>
-                        <?php endforeach; ?>
+                            <option value="<?php if(isset($iva)){ echo ($iva->getId()); }?>" hidden="">  
+                                    <?php if(isset($iva)){ echo $iva->getValor(); } else {echo ("Seleccionar Iva");}?>
+                            </option>
+                            <?php foreach ($ivas as $iva) : ?>
+                                <option value="<?php  echo  ($iva->getId()); ?>">
+                                <?php echo ($iva->getValor()) ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
