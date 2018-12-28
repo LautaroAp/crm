@@ -167,4 +167,11 @@ class ProductoManager
                         ->getRepository(CategoriaProducto::class)
                         ->findAll();
     }
+
+    public function eliminarIvas($id){
+        $productos = $this->entityManager->getRepository(Producto::class)->findBy(['iva'=>$id]);
+        foreach($productos as $producto){
+            $producto->setIva(null);
+        }
+    }
 } 
