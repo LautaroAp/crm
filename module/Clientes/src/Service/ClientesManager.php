@@ -280,9 +280,11 @@ class ClientesManager {
     }
 
     private function addDatosFacturacion($cliente, $data) {
+        $condicion_iva = $this->getCategoriaCliente($data['condicion_iva']);
+
         $cliente->setRazon_social($data['razon_social'])
                 ->setDireccion_facturacion($data['direccion_facturacion'])
-                // ->setCondicion_iva($data['condicion_iva'])
+                ->setCondicion_iva($condicion_iva)
                 ->setBanco($data['banco'])
                 ->setCbu($data['cbu'])
                 ->setCuit_cuil($data['cuit_cuil']);

@@ -20,9 +20,19 @@ class Iva
     protected $id;
 
     /**
+     * @ORM\Column(name="NOMBRE", nullable=true, type="string")
+     */
+    protected $nombre;
+
+    /**
      * @ORM\Column(name="VALOR", nullable=true, type="decimal")
      */
     protected $valor;
+
+    /**
+     * @ORM\Column(name="DESCRIPCION", nullable=true, type="string")
+     */
+    protected $descripcion;
 
     /**
      * Get the value of id
@@ -58,6 +68,46 @@ class Iva
     public function setValor($valor)
     {
         $this->valor = $valor;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of nombre
+     */ 
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set the value of nombre
+     *
+     * @return  self
+     */ 
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of descripcion
+     */ 
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set the value of descripcion
+     *
+     * @return  self
+     */ 
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
 
         return $this;
     }

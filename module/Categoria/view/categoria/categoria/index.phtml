@@ -126,17 +126,17 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
                     </table> 
                 </div>
             </div> 
-        </div>
-        <?php
-            echo $this->paginationControl(
-                $categorias,
-                'Sliding', // All, Elastic, Jumping, Sliding
-                'search_pagination_categoria.phtml',
-                $this->url('categoria/page', ['action' => 'index', 'tipo'=>$tipo, 'id' => 1])
-            );
-        }
-        ?>          
+        </div>         
     </div>
+    <?php
+        echo $this->paginationControl(
+            $categorias,
+            'Sliding', // All, Elastic, Jumping, Sliding
+            'search_pagination_categoria.phtml',
+            $this->url('categoria/page', ['action' => 'index', 'tipo'=>$tipo, 'id' => 1])
+        );
+    }
+    ?> 
 </div>
 <!-- Inicio: Panel Botones -->
 <div class="container margen">

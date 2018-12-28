@@ -38,11 +38,12 @@ class LicenciaManager {
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config, $ivaManager) {
+    public function __construct($entityManager, $viewRenderer, $config, $ivaManager, $categoriaManager) {
         $this->entityManager = $entityManager;
         $this->viewRenderer = $viewRenderer;
         $this->config = $config;
         $this->ivaManager= $ivaManager;
+        $this->categoriaManager= $categoriaManager;
     }
 
     //retorna todas las licencias sin paginator para el backup
@@ -131,9 +132,8 @@ class LicenciaManager {
         if($data['categoria'] == "-1"){
             $licencia->setCategoria(null);
         } else {
-            // $licencia->setCategoria($this->categoriaProductoManager
-            //                         ->getCategoriaProductoId($data['categoria']));
-            $licencia->setCategoria($this->categoriaManager->getCategoriaId($data['categoria']));
+            $licencia->setCategoria($this->categoriaManager
+                                        ->getCategoriaId($data['categoria']));
         }
         if($data['proveedor'] == "-1"){
             $licencia->setProveedor(null);
