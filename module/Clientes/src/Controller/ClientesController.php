@@ -88,7 +88,7 @@ class ClientesController extends AbstractActionController
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->clientesManager->getCategoriasCliente($tipo);
         $condiciones_iva = $this->clientesManager->getCondicionIva('iva');
-        $ProfesionCliente = $this->clientesManager->getProfesionCliente();
+        $profesion = $this->clientesManager->getProfesion();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
         $licencia = $this->clientesManager->getLicencia();
@@ -100,7 +100,7 @@ class ClientesController extends AbstractActionController
         return new ViewModel([
             'categorias' => $categorias,
             'condiciones_iva' => $condiciones_iva,
-            'profesiones' => $ProfesionCliente,
+            'profesiones' => $profesion,
             'paises' => $pais,
             'provincias' => $provincia,
             'licencias' => $licencia,
@@ -118,7 +118,7 @@ class ClientesController extends AbstractActionController
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->clientesManager->getCategoriasCliente($tipo);
         $condiciones_iva = $this->clientesManager->getCondicionIva('iva');
-        $ProfesionCliente = $this->clientesManager->getProfesionCliente();
+        $profesion = $this->clientesManager->getProfesion();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
         $licencia = $this->clientesManager->getLicencia();
@@ -140,7 +140,7 @@ class ClientesController extends AbstractActionController
             'mensaje' => $mensaje,
             'categorias' => $categorias,
             'condiciones_iva' => $condiciones_iva,
-            'profesiones' => $ProfesionCliente,
+            'profesiones' => $profesion,
             'paises' => $pais,
             'provincias' => $provincia,
             'licencias' => $licencia,

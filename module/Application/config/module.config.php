@@ -65,12 +65,12 @@ return [
                             ],
                         ],
                     ],
-                    'profesioncliente' => [
+                    'profesion' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/profesioncliente',
+                            'route' => '/profesion',
                             'defaults' => [
-                                'controller' => \ProfesionCliente\Controller\ProfesionClienteController::class,
+                                'controller' => \Profesion\Controller\ProfesionController::class,
                                 'action' => 'index',
                             ],
                         ],

@@ -51,7 +51,7 @@
             "CategoriaCliente\\": "module/CategoriaCliente/src/",
             "CategoriaProducto\\": "module/CategoriaProducto/src/",
             "Usuario\\": "module/Usuario/src/",
-            "ProfesionCliente\\": "module/ProfesionCliente/src/",
+            "Profesion\\": "module/Profesion/src/",
             "Empresa\\": "module/Empresa/src/",
             "Servicio\\": "module/Servicio/src/",
             "Producto\\": "module/Producto/src/",

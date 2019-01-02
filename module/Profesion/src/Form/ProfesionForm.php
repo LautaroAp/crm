@@ -1,9 +1,9 @@
 <?php
-namespace ProfesionCliente\Form;
+namespace Profesion\Form;
 
 use Zend\Form\Form;
 
-class ProfesionClienteForm extends Form
+class ProfesionForm extends Form
 {
     /**
      * Scenario ('create' or 'update').
@@ -18,20 +18,20 @@ class ProfesionClienteForm extends Form
     private $entityManager = null;
     
     /**
-     * Current profesioncliente.
-     * @var ProfesionCliente\Entity\ProfesionCliente 
+     * Current profesion.
+     * @var Profesion\Entity\Profesion 
      */
-    private $profesioncliente = null;
+    private $profesion = null;
     
     
     
     /**
      * Constructor.     
      */
-    public function __construct($scenario = 'create', $entityManager = null, $profesioncliente = null)
+    public function __construct($scenario = 'create', $entityManager = null, $profesion = null)
     {
         // Define form name
-        parent::__construct('profesioncliente-form');
+        parent::__construct('profesion-form');
      
         // Set POST method for this form
         $this->setAttribute('method', 'post');
@@ -39,7 +39,7 @@ class ProfesionClienteForm extends Form
         // Save parameters for internal use.
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
-        $this->profesioncliente = $profesioncliente;
+        $this->profesion = $profesion;
         
         $this->addElements();
         $this->addInputFilter();          

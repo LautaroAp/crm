@@ -8,7 +8,6 @@ use Zend\View\Model\ViewModel;
 class IndexController extends AbstractActionController {
 
     private $entityManager;
-    private $profesionclienteManager;
     protected $result;
 
     public function __construct($entityManager, $clientesManager) {

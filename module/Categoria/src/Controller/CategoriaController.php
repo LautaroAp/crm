@@ -46,6 +46,7 @@ class CategoriaController extends AbstractActionController {
         $this->productoManager = $productoManager;
         $this->servicioManager= $servicioManager;
         $this->licenciaManager=$licenciaManager;
+
     }
 
     public function indexAction() {
@@ -120,14 +121,11 @@ class CategoriaController extends AbstractActionController {
             $this->servicioManager->eliminarCategoriaServicios($id);
         }elseif (strtoupper($tipo)==strtoupper("evento")){
             $this->tipoEventoManager->eliminarCategoriaEventos($id);
-        //}elseif ($tipo=="iva"){
-            //return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
-        //}else{
-            //return $this->redirect()->toRoute('home');
+        }elseif (strtoupper($tipo)==strtoupper("iva")){
+            $this->clientesManager->eliminarCondicionIva($id);
         }
     }
 
-    //TERMINAR ESTOOOOO 
     private function procesarRemoveAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $categoria = $this->categoriaManager->getCategoriaId($id);

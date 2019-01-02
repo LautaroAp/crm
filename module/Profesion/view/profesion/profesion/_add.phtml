@@ -4,7 +4,7 @@ $form->get('nombre')->setAttributes([
     'class' => 'form-control',
     'value' => ''
 ]);
-$form->get('version')->setAttributes([
+$form->get('profesion')->setAttributes([
     'class' => 'form-control',
     'value' => ''
 ]);
@@ -27,10 +27,17 @@ $form->prepare();
                         <?= $this->formElement($form->get('nombre')); ?>
                         <?= $this->formElementErrors($form->get('nombre')); ?>                  
                     </div>
-                    <?= $this->formElement($form->get('submit')); ?>
-                    <?= $this->form()->closeTag(); ?>
+                    <div class="form-group">
+                        <?= $this->formLabel($form->get('descripcion')); ?>
+                        <?= $this->formElement($form->get('descripcion')); ?>
+                        <?= $this->formElementErrors($form->get('descripcion')); ?>                  
+                    </div>
                 </div>    
-            </div>  
+            </div> 
+            <div class="row">
+                <?= $this->formElement($form->get('submit')); ?>
+                <?= $this->form()->closeTag(); ?>
+            </div>
         </div>
     </div>
 </div>

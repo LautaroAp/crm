@@ -8,7 +8,7 @@ use DBAL\Entity\Licencia;
 use DBAL\Entity\Persona;
 use DBAL\Entity\Pais;
 use DBAL\Entity\Provincia;
-use DBAL\Entity\ProfesionCliente;
+use DBAL\Entity\Profesion;
 use DBAL\Entity\CategoriaCliente;
 use DBAL\Entity\Categoria;
 use DBAL\Entity\Iva;
@@ -274,7 +274,7 @@ class ClientesManager {
         if ($data['profesion'] == "-1") {
             $cliente->setProfesion(null);
         } else {
-            $profesion = $this->getProfesionCliente($data['profesion']);
+            $profesion = $this->getProfesion($data['profesion']);
             $cliente->setProfesion($profesion);
         }
     }
@@ -364,14 +364,14 @@ class ClientesManager {
                         ->findAll();
     }
 
-    public function getProfesionCliente($id = null) {
+    public function getProfesion($id = null) {
         if (isset($id)) {
             return $this->entityManager
-                            ->getRepository(ProfesionCliente::class)
+                            ->getRepository(Profesion::class)
                             ->findOneBy(['id_profesion' => $id]);
         }
         return $this->entityManager
-                        ->getRepository(ProfesionCliente::class)
+                        ->getRepository(Profesion::class)
                         ->findAll();
     }
 
@@ -455,12 +455,12 @@ class ClientesManager {
         $this->entityManager->flush();
     }
 
-    public function eliminarProfesionClientes($id) {
+    public function eliminarProfesiones($id) {
         $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['profesion'=>$id]);
         foreach ($clientes as $cliente) {
              $cliente->setProfesion(null);
         }
-        $entityManager->flush();
+        $this->entityManager->flush();
     }
 
     public function getClienteIdPersona($id_persona){
@@ -470,5 +470,12 @@ class ClientesManager {
         return $cliente;
     }
 
+    public function eliminarCondicionIva($id){
+        $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['condicion_iva'=>$id]);
+        foreach ($clientes as $cliente) {
+             $cliente->setCondicion_iva(null);
+        }
+        $this->entityManager->flush();
+    }
    
 }

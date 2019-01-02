@@ -297,12 +297,12 @@ class Cliente extends \DBAL\Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getNombreProfesionCliente()
+    public function getNombreProfesion()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNombreProfesionCliente', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNombreProfesion', []);
 
-        return parent::getNombreProfesionCliente();
+        return parent::getNombreProfesion();
     }
 
     /**
@@ -765,6 +765,17 @@ class Cliente extends \DBAL\Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCondicion_iva', [$condicion_iva]);
 
         return parent::setCondicion_iva($condicion_iva);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getNombreCondicionIva()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNombreCondicionIva', []);
+
+        return parent::getNombreCondicionIva();
     }
 
     /**
