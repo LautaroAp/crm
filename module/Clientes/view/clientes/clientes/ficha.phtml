@@ -229,7 +229,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <tr>
                             <td>
                                 <br>
-                                <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $cliente->getId()]); ?>" type="button">
+                                <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $cliente->getPersona()->getId()]); ?>" type="button">
                                     <span class="btn btn-default">
                                         <span class="glyphicon glyphicon-plus" ></span> Agregar Datos Adicionales
                                     </span>
