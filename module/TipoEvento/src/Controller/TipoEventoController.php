@@ -37,13 +37,13 @@ class TipoEventoController extends AbstractActionController {
      * Doctrine entity manager.
      * @var Doctrine\ORM\EntityManager
      */
-    private $categoriaEventoManager;
+    private $categoriaManager;
 
-    public function __construct($entityManager, $tipoeventoManager, $eventoManager, $categoriaEventoManager) {
+    public function __construct($entityManager, $tipoeventoManager, $eventoManager, $categoriaManager) {
         $this->entityManager = $entityManager;
         $this->tipoeventoManager = $tipoeventoManager;
         $this->eventoManager = $eventoManager;
-        $this->categoriaEventoManager = $categoriaEventoManager;
+        $this->categoriaManager = $categoriaManager;
     }
 
     public function indexAction() {
@@ -60,7 +60,7 @@ class TipoEventoController extends AbstractActionController {
     private function procesarAddAction() {
         $form = $this->tipoeventoManager->createForm();
         $tipoeventos = $this->tipoeventoManager->getTipoEventos();
-        $categoriaeventos = $this->categoriaEventoManager->getCategoriaEventos();
+        $categorias= $this->tipoeventoManager->getCategoriaEventos();
         $paginator = $this->tipoeventoManager->getTabla();
         $page = 1;
         if ($this->params()->fromRoute('id')) {
@@ -78,7 +78,7 @@ class TipoEventoController extends AbstractActionController {
             'form' => $form,
             'tipoeventos' => $tipoeventos,
             'tipoeventos_pag' => $paginator,
-            'categoriaeventos' => $categoriaeventos,
+            'categoriaeventos' => $categorias,
         ]);
     }
 
@@ -90,7 +90,7 @@ class TipoEventoController extends AbstractActionController {
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $tipoevento = $this->tipoeventoManager->getTipoEventoId($id);
-        $categoriaeventos = $this->categoriaEventoManager->getCategoriaEventos();
+        $categoriaeventos = $this->categoriaManager->getCategoriaEventos();
         $form = $this->tipoeventoManager->getFormForTipoEvento($tipoevento);
         if ($form == null) {
             $this->reportarError();

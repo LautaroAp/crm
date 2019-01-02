@@ -33,8 +33,8 @@ class TipoEvento
     protected $descripcion;
 
     /**
-     * Many TipoEvento have One CategoriaEvento.
-     * @ORM\ManyToOne(targetEntity="CategoriaEvento")
+     * Many TipoEvento have One Categoria.
+     * @ORM\ManyToOne(targetEntity="Categoria")
      * @ORM\JoinColumn(name="ID_CATEGORIA_EVENTO", referencedColumnName="ID")
      */
     private $categoria_evento;
