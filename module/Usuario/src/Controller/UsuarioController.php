@@ -20,10 +20,14 @@ class UsuarioController extends AbstractActionController {
     protected $entityManager;
 
     private $usuarioManager;
+    private $clienteManager;
 
-    public function __construct($entityManager, $usuarioManager) {
+
+    public function __construct($entityManager, $usuarioManager, $clienteManager) {
         $this->entityManager = $entityManager;
         $this->usuarioManager = $usuarioManager;
+        $this->clienteManager = $clienteManager;
+
     }
 
     public function getEntityManager() {
@@ -50,20 +54,21 @@ class UsuarioController extends AbstractActionController {
         ]);
     }
     private function procesarAddAction() {
-        $id = (int) $this->params()->fromRoute('id', -1);
+        $id_persona = (int) $this->params()->fromRoute('id', -1);
+        $cliente = $this->clienteManager->getClienteIdPersona($id_persona);
         $form = new UsuarioForm('create', $this->entityManager);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $form->setData($data);
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->usuarioManager->addUsuario($data);
-                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $id]);
+                $this->usuarioManager->addUsuario($data, $cliente);
+                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $id_persona]);
             }
         }
         return new ViewModel([
             'form' => $form,
-            'id' => $id,
+            'id' => $id_persona,
         ]);
     }
 
@@ -118,7 +123,7 @@ class UsuarioController extends AbstractActionController {
 
     private function procesarDeleteAction() {
         if (!$this->getRequest()->isPost()) {
-            $id = $this->params()->fromRoute('id', -1);
+            $id= $this->params()->fromRoute('id', -1);
             if ($id < 1) {
                 $this->getResponse()->setStatusCode(404);
                 return;
@@ -128,9 +133,10 @@ class UsuarioController extends AbstractActionController {
                 $this->getResponse()->setStatusCode(404);
                 return;
             } 
-            $idCliente = $this->usuarioManager->getIdCliente($id);
+            $cliente = $this->usuarioManager->getCliente($id);
+            $idPersona =$cliente->getPersona()->getId();
             $this->usuarioManager->removeUsuario($usuario);           
-            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $idCliente]);
+            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $idPersona]);
         } else {
             $view = new ViewModel();
             return $view;

@@ -45,7 +45,7 @@ class UsuarioManager {
         $this->entityManager = $entityManager;
         $this->viewRenderer = $viewRenderer;
         $this->personaManager = $personaManager;
-        $this->tipo = $tipo;
+        $this->tipo = "USUARIO";
         $this->config = $config;
     }
 
@@ -59,16 +59,12 @@ class UsuarioManager {
         return ($paginator);
     }
 
-    public function addUsuario($data) {
+    public function addUsuario($data, $cliente) {
         $usuario = new Usuario();
         $persona = $this->personaManager->addPersona($data, $this->tipo);
         $usuario->setSkype($data['skype']);
         
         $idCliente = $data['id'];     
-        $cliente = $this->entityManager
-                ->getRepository(Cliente::class)
-                ->findOneBy(['Id' => $idCliente]);
-        
         $usuario->setId_cliente($cliente);
         $usuario->setPersona($persona);
         if ($this->tryAddUsuario($usuario)) {
@@ -231,6 +227,10 @@ class UsuarioManager {
         return $usuario->getCliente()->getId();
     }
 
+    public function getCliente($id){
+        $usuario = $this->recuperarUsuario($id);
+        return $usuario->getCliente();
+    }
     public function getData($id){
         $usuario = $this->getUsuario($id);
         $persona = $usuario->getPersona();

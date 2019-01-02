@@ -6,7 +6,7 @@ use DBAL\Entity\TipoEvento;
 use TipoEvento\Form\TipoEventoForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
-use DBAL\Entity\CategoriaEvento;
+use DBAL\Entity\Categoria;
 
 
 /**
@@ -96,22 +96,22 @@ class TipoEventoManager {
         if ($data['categoria'] == "-1") {
             $tipoevento->setCategoria_evento(null);
         } else {
-            $categoria_eve = $this->getCategoria_evento($data['categoria']);
+            $categoria_eve = $this->getCategoriaEventos($data['categoria']);
             $tipoevento->setCategoria_evento($categoria_eve);
         }
         $tipoevento->setDescripcion($data['descripcion']);
     }
 
-    public function getCategoria_evento($id = null) {
-        if (isset($id)) {
-            return $this->entityManager
-                            ->getRepository(CategoriaEvento::class)
-                            ->findOneBy(['id' => $id]);
-        }
-        return $this->entityManager
-                        ->getRepository(CategoriaEvento::class)
-                        ->findAll();
-    }
+    // public function getCategoria_evento($id = null) {
+    //     if (isset($id)) {
+    //         return $this->entityManager
+    //                         ->getRepository(Categoria::class)
+    //                         ->findOneBy(['id' => $id]);
+    //     }
+    //     return $this->entityManager
+    //                     ->getRepository(Categoria::class)
+    //                     ->findAll();
+    // }
 
     public function createForm() {
         return new TipoEventoForm('create', $this->entityManager, null);
@@ -208,4 +208,14 @@ class TipoEventoManager {
         }
     }
 
+    public function getCategoriaEventos($id = null) {
+        if (isset($id)) {
+            return $this->entityManager
+                            ->getRepository(Categoria::class)
+                            ->findOneBy(['id' => $id, 'tipo'=>'evento']);
+        }
+        return $this->entityManager
+                        ->getRepository(Categoria::class)
+                        ->findBy(['tipo'=>'evento']);
+    }
 }
