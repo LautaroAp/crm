@@ -90,7 +90,7 @@ class TipoEventoController extends AbstractActionController {
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $tipoevento = $this->tipoeventoManager->getTipoEventoId($id);
-        $categoriaeventos = $this->categoriaManager->getCategoriaEventos();
+        $categorias= $this->tipoeventoManager->getCategoriaEventos();
         $form = $this->tipoeventoManager->getFormForTipoEvento($tipoevento);
         if ($form == null) {
             $this->reportarError();
@@ -106,7 +106,7 @@ class TipoEventoController extends AbstractActionController {
             }
             return new ViewModel(array(
                 'tipoevento' => $tipoevento,
-                'categoriaeventos' => $categoriaeventos,
+                'categoriaeventos' => $categorias,
                 'form' => $form
             ));
         }
