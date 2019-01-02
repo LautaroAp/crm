@@ -29,8 +29,15 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
                     <form method="post">
                         <div class="row form-row">
                             <div class="form-group col-md-4">
+                                <label>Nombre de Profesión</label>
                                 <input type="text" class="form-control form-margen" name="nombre" placeholder="Ingresar Profesión">
                             </div>
+                            <div class="form-group col-md-4">
+                                <label>Descripción</label>
+                                <input type="text" class="form-control form-margen" name="descripcion" placeholder="Descripción">
+                            </div>
+                        </div>
+                        <div class="row form-row">
                             <div class="form-group col-md-4">
                                 <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
                                     <span class="glyphicon glyphicon-plus" ></span> Agregar Profesión
@@ -63,32 +70,32 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table id="tabla_profesioncliente" class="table table-bordred table-striped">
+                            <table id="tabla_profesion" class="table table-bordred table-striped">
                                 <thead>
                                     <tr>
-                                        <th class="th-sm" onclick="sortTableString(1, 'tabla_profesioncliente')">Profesión
-                                            <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                                        </th>
+                                        <th>Nombre de Profesión</th>
+                                        <th>Descripción</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
                                     if (isset($profesiones_pag)) {
-                                        foreach ($profesionclientes as $profesioncliente):
+                                        foreach ($profesiones as $profesion):
                                             ?>
                                             <tr>
-                                                <td><?php echo ($profesioncliente->getNombre()); ?></td>
+                                                <td><?php echo ($profesion->getNombre()); ?></td>
+                                                <td><?php echo ($profesion->getDescripcion()); ?></td>
                                                 <td class="table-items-right">
-                                                    <a class="btn btn-default" href="<?= $this->url('profesioncliente/editar', ['action' => 'edit', 'id' => $profesioncliente->getId()]); ?>">
+                                                    <a class="btn btn-default" href="<?= $this->url('profesion/editar', ['action' => 'edit', 'id' => $profesion->getId()]); ?>">
                                                         <span class="glyphicon glyphicon-pencil" ></span> 
                                                     </a>
-                                                    <button name="<?= $profesioncliente->getId() ?>" id="<?= $profesioncliente->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $profesioncliente->getId() ?>">
+                                                    <button name="<?= $profesion->getId() ?>" id="<?= $profesion->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $profesion->getId() ?>">
                                                         <span class="glyphicon glyphicon-remove" ></span>
                                                     </button>
                                                 </td>
                                                 <!-- Modal -->
-                                        <div id="myModal<?= $profesioncliente->getId() ?>" class="modal fade" role="dialog">
+                                        <div id="myModal<?= $profesion->getId() ?>" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
@@ -99,11 +106,11 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
                                                     <div class="modal-body">
                                                         <p>
                                                             ¿Está seguro que desea eliminar la profesión: 
-                                                            "<?= $this->escapeHtml($profesioncliente->getNombre()) ?>"?
+                                                            "<?= $this->escapeHtml($profesion->getNombre()) ?>"?
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="<?= $this->url('profesioncliente/borrar', ['action' => 'remove', 'id' => $profesioncliente->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
+                                                        <a href="<?= $this->url('profesion/borrar', ['action' => 'remove', 'id' => $profesion->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
                                                         <span class="btn btn-default">Aceptar</span></a>
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                                     </div>
@@ -122,7 +129,7 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
         </div>
         <?php
         echo $this->paginationControl($profesiones_pag, 'Sliding', // All, Elastic, Jumping, Sliding
-                'search_pagination_prof.phtml', $this->url('profesioncliente/page', ['action' => 'index', 'id' => 1]));
+                'search_pagination_prof.phtml', $this->url('profesion/page', ['action' => 'index', 'id' => 1]));
     }
     ?>                 
 </div>

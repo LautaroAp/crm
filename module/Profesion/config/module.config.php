@@ -5,7 +5,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace ProfesionCliente;
+namespace Profesion;
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Zend\Router\Http\Literal;
@@ -17,12 +17,12 @@ return [
    
    'router' => [
         'routes' => [
-            'profesioncliente' => [
+            'profesion' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/clientes/profesioncliente',
+                    'route'    => '/clientes/profesion',
                     'defaults' => [
-                        'controller'    => Controller\ProfesionClienteController::class,
+                        'controller'    => Controller\ProfesionController::class,
                         'action'        => 'index',
                     ],
                 ],
@@ -81,17 +81,17 @@ return [
     
  'controllers' => array(
         'factories' => [
-            Controller\ProfesionClienteController::class => Controller\Factory\ProfesionClienteControllerFactory::class,
+            Controller\ProfesionController::class => Controller\Factory\ProfesionControllerFactory::class,
         ],
      ),
      'view_manager' => array(
          'template_path_stack' => array(
-             'profesioncliente' => __DIR__ . '/../view',
+             'Profesion' => __DIR__ . '/../view',
          ),
      ),
     'service_manager' => array(
         'factories' => array(
-            Service\ProfesionClienteManager::class => Service\Factory\ProfesionClienteManagerFactory::class,
+            Service\ProfesionManager::class => Service\Factory\ProfesionManagerFactory::class,
         ),
     )
  ];

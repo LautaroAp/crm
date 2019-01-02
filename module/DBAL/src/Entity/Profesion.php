@@ -7,14 +7,14 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * This class represents a registered categoriacliente.
  * @ORM\Entity()
- * @ORM\Table(name="PROFESION_CLIENTE")
+ * @ORM\Table(name="PROFESION")
  */
-class ProfesionCliente {
+class Profesion {
     //put your code here
     
     /**
      * @ORM\Id
-     * @ORM\Column(name="ID_TIPO_CLIENTE", type="integer")
+     * @ORM\Column(name="ID", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
    
@@ -22,9 +22,14 @@ class ProfesionCliente {
     protected $id_profesion;   
     
     /**
-     * @ORM\Column(name="NOMBRE_TIPO_CLIENTE", nullable=true, type="string", length=255)
+     * @ORM\Column(name="NOMBRE", nullable=true, type="string", length=255)
      */
     protected $nombre;
+ 
+    /**
+     * @ORM\Column(name="DESCRIPCION", nullable=true, type="string", length=255)
+     */
+    protected $descripcion;
 
      
     function getId() {
@@ -44,4 +49,24 @@ class ProfesionCliente {
     }
 
 
+
+    /**
+     * Get the value of descripcion
+     */ 
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set the value of descripcion
+     *
+     * @return  self
+     */ 
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
 }

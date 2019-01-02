@@ -1,13 +1,13 @@
 <?php
-namespace ProfesionCliente\Service;
+namespace Profesion\Service;
 
-use DBAL\Entity\ProfesionCliente;
-use ProfesionCliente\Form\ProfesionClienteForm;
+use DBAL\Entity\Profesion;
+use Profesion\Form\ProfesionForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
 
-class ProfesionClienteManager
+class ProfesionManager
 {
     /**
      * Doctrine entity manager.
@@ -37,75 +37,42 @@ class ProfesionClienteManager
         $this->config = $config;
     }
     
-     public function getProfesionClientes(){
-        $profesionclientes=$this->entityManager->getRepository(ProfesionCliente::class)->findAll();
-        return $profesionclientes;
+     public function getProfesiones(){
+        $profesiones=$this->entityManager->getRepository(Profesion::class)->findAll();
+        return $profesiones;
     }
     
-    public function getProfesionClienteId($id){
-       return $this->entityManager->getRepository(ProfesionCliente::class)
+    public function getProfesionId($id){
+       return $this->entityManager->getRepository(Profesion::class)
                 ->find($id);
     }
   
-    public function getProfesionClienteFromForm($form, $data){
-        $form->setData($data);
-            if($form->isValid()) {
-                $data = $form->getData();
-                $profesioncliente = $this->addProfesionCliente($data);
-            }
-        return $profesioncliente;
-    }
+   
     /**
      * This method adds a new profesioncliente.
      */
-    public function addProfesionCliente($data) 
+    public function addProfesion($data) 
     {
-        $profesioncliente = new ProfesionCliente();
-        $profesioncliente->setNombre($data['nombre']);
-        if ($this->tryAddProfesionCliente($profesioncliente)) {
+        $profesion = new Profesion();
+        $this->addData($profesion, $data);
+        if ($this->tryAddProfesion($profesion)) {
             $_SESSION['MENSAJES']['profesion_cliente'] = 1;
             $_SESSION['MENSAJES']['profesion_cliente_msj'] = 'Profesión agregada correctamente';
         } else {
             $_SESSION['MENSAJES']['profesion_cliente'] = 0;
             $_SESSION['MENSAJES']['profesion_cliente_msj'] = 'Error al agregar profesión';
         }
-        return $profesioncliente;
+        return $profesion;
     }
     
-    public function createForm(){
-        return new ProfesionClienteForm('create', $this->entityManager,null);
-    }
-    
-   public function formValid($form, $data){
-       $form->setData($data);
-       return $form->isValid();  
-    }
-       
-   
-   public function getFormForProfesionCliente($profesioncliente) {
-
-        if ($profesioncliente == null) {
-            return null;
-        }
-        $form = new ProfesionClienteForm('update', $this->entityManager, $profesioncliente);
-        return $form;
-    }
-    
-    
-    public function getFormEdited($form, $profesioncliente){
-        $form->setData(array(
-                    'nombre'=>$profesioncliente->getNombre()                  
-                ));
-    }
 
     /**
      * This method updates data of an existing profesioncliente.
      */
-    public function updateProfesionCliente($profesioncliente, $form) 
+    public function updateProfesion($profesion, $data) 
     {       
-        $data = $form->getData();
-        $profesioncliente->setNombre($data['nombre']);
-        if ($this->tryUpdateProfesionCliente($profesioncliente)) {
+        $this->addData($profesion, $data);
+        if ($this->tryUpdateProfesion($profesion)) {
             $_SESSION['MENSAJES']['profesion_cliente'] = 1;
             $_SESSION['MENSAJES']['profesion_cliente_msj'] = 'Profesión editada correctamente';
         } else {
@@ -115,8 +82,14 @@ class ProfesionClienteManager
         return true;
     }
     
-    public function removeProfesionCliente($profesioncliente){
-       if ($this->tryRemoveProfesionCliente($profesioncliente)) {
+    private function addData($profesion, $data){
+        $profesion->setNombre($data['nombre']);
+        $profesion->setDescripcion($data['descripcion']);
+        return $profesion;
+    }
+
+    public function removeProfesion($profesion){
+       if ($this->tryRemoveProfesion($profesion)) {
             $_SESSION['MENSAJES']['profesion_cliente'] = 1;
             $_SESSION['MENSAJES']['profesion_cliente_msj'] = 'Profesión eliminada correctamente';
         } else {
@@ -127,16 +100,16 @@ class ProfesionClienteManager
     
     public function getTabla() {
         // Create the adapter
-        $adapter = new SelectableAdapter($this->entityManager->getRepository(ProfesionCliente::class)); // An object repository implements Selectable
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(Profesion::class)); // An object repository implements Selectable
         // Create the paginator itself
         $paginator = new Paginator($adapter);
 
         return ($paginator);
     }
     
-    private function tryAddProfesionCliente($profesioncliente) {
+    private function tryAddProfesion($profesion) {
         try {
-            $this->entityManager->persist($profesioncliente);
+            $this->entityManager->persist($profesion);
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {
@@ -145,7 +118,7 @@ class ProfesionClienteManager
         }
     }
 
-    private function tryUpdateProfesionCliente() {
+    private function tryUpdateProfesion() {
         try {
             $this->entityManager->flush();
             return true;
@@ -155,9 +128,9 @@ class ProfesionClienteManager
         }
     }
     
-    private function tryRemoveProfesionCliente($profesioncliente) {
+    private function tryRemoveProfesion($profesion) {
         try {
-            $this->entityManager->remove($profesioncliente);
+            $this->entityManager->remove($profesion);
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {

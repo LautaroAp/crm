@@ -34,7 +34,7 @@ return [
     'CategoriaCliente',
     'CategoriaProducto',
     'Usuario',
-    'ProfesionCliente',
+    'Profesion',
     'Empresa',
     'Servicio',
     'Producto',

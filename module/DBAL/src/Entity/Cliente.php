@@ -47,8 +47,8 @@ class Cliente {
 
     /**
      * Many Clientes have One Profesion.
-     * @ORM\ManyToOne(targetEntity="ProfesionCliente")
-     * @ORM\JoinColumn(name="ID_PROFESION_CLIENTE", referencedColumnName="ID_TIPO_CLIENTE")
+     * @ORM\ManyToOne(targetEntity="Profesion")
+     * @ORM\JoinColumn(name="ID_PROFESION_CLIENTE", referencedColumnName="ID")
      */
     private $profesion;
 
@@ -248,7 +248,7 @@ class Cliente {
         return $this;
     }
 
-    public function getNombreProfesionCliente() {
+    public function getNombreProfesion() {
         $profesion = $this->getProfesion();
         if (is_null($profesion)) {
             return null;

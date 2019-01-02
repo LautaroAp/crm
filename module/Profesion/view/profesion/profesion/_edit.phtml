@@ -17,18 +17,27 @@ $form->prepare();
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-4">
                                     <?= $this->form()->openTag($form); ?>
-                                <div class="form-group">
+                                     <div class="form-group">
                                         <?= $this->formLabel($form->get('nombre')); ?>
                                         <?= $this->formElement($form->get('nombre')); ?>
                                         <?= $this->formElementErrors($form->get('nombre')); ?>                  
                                     </div>
-                                    <button type="submit" class="btn btn-default">Aceptar</button>
-                                    <a href="<?= $this->url('profesioncliente', ['action' => 'index']);?>" type="button">
-                                        <span class="btn btn-default">Cancelar</span></a>
-                                    <?= $this->form()->closeTag(); ?>
-                                </div>    
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <?= $this->formLabel($form->get('descripcion')); ?>
+                                        <?= $this->formElement($form->get('descripcion')); ?>
+                                        <?= $this->formElementErrors($form->get('descripcion')); ?>                  
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button type="submit" class="btn btn-default">Aceptar</button>
+                                <a href="<?= $this->url('profesion', ['action' => 'index']);?>" type="button">
+                                    <span class="btn btn-default">Cancelar</span></a>
+                                <?= $this->form()->closeTag(); ?>
                             </div>   
                         </div>
                     </div>

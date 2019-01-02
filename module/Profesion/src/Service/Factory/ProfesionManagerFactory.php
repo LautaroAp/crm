@@ -1,17 +1,17 @@
 <?php
-namespace ProfesionCliente\Service\Factory;
+namespace Profesion\Service\Factory;
 
 use Interop\Container\ContainerInterface;
-use ProfesionCliente\Service\ProfesionClienteManager;
+use Profesion\Service\ProfesionManager;
 
 /**
- * This is the factory class for ProfesionClienteManager service. The purpose of the factory
+ * This is the factory class for ProfesionManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
  */
-class ProfesionClienteManagerFactory
+class ProfesionManagerFactory
 {
     /**
-     * This method creates the ProfesionClienteManager service and returns its instance. 
+     * This method creates the ProfesionManager service and returns its instance. 
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
@@ -19,6 +19,6 @@ class ProfesionClienteManagerFactory
         $viewRenderer = $container->get('ViewRenderer');
         $config = $container->get('Config');
                         
-        return new ProfesionClienteManager($entityManager, $viewRenderer, $config);
+        return new ProfesionManager($entityManager, $viewRenderer, $config);
     }
 }
