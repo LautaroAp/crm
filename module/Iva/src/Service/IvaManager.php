@@ -41,7 +41,7 @@ class IvaManager {
     }
 
     public function getIvas() {
-        $iva = $this->entityManager->getRepository(Iva::class)->findAll();
+        $iva = $this->entityManager->getRepository(Iva::class)->findBy( array(), array('valor' => 'ASC') );
         return $iva;
     }
 
@@ -118,6 +118,7 @@ class IvaManager {
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {
+            echo 'ERROR: ', $e->getMessage(),"\n" ;
             $this->entityManager->rollBack();
             return false;
         }
@@ -128,6 +129,7 @@ class IvaManager {
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {
+            echo 'ERROR: ', $e->getMessage(),"\n" ;
             $this->entityManager->rollBack();
             return false;
         }
@@ -139,6 +141,7 @@ class IvaManager {
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {
+            echo 'ERROR: ', $e->getMessage(),"\n" ;
             $this->entityManager->rollBack();
             return false;
         }
