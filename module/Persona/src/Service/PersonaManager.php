@@ -55,14 +55,6 @@ class PersonaManager {
     public function addPersona($data, $tipo) {
         $persona = new Persona();
         $persona=$this->setData($persona, $data,$tipo, "S");
-        if ($this->tryAddPersona($persona)) {
-            $_SESSION['MENSAJES']['ficha_cliente'] = 1;
-            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Persona agregada correctamente';
-        } else {
-            $_SESSION['MENSAJES']['ficha_cliente'] = 0;
-            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al guardar datos';
-
-        }
         return $persona;
 
     }

@@ -104,7 +104,7 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionEmpresa/gestionLicencias/agregar') ?>">
+                <a href="<?= $this->url('gestionEmpresa/gestionLicencias/agregar', ['tipo'=>'licencia']) ?>">
                     <img src="<?= $this->basePath('img/crm/billete_add_n.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha img-submenu">
                     </a>
