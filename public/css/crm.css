@@ -99,11 +99,6 @@
     overflow-y:auto;
 }
 
-.table-scroll-head{
-    /*display: block;*/
-    /*min-width: 10% !important;*/
-}
-
 .detalle-width{
     width: 75% !important;
 }
@@ -149,6 +144,24 @@
 
 .padding-cero {
     padding: 0px !important;
+}
+
+.padding-sm {
+    padding: 5px !important;
+}
+
+.marging-cero {
+    margin: 0px !important;
+}
+
+.margin-padding-cero {
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+.margin-padding-sm {
+    margin: 5px !important;
+    padding: 5px !important;
 }
 
 .licencia-sm{

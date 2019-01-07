@@ -473,7 +473,8 @@
 
 	#header {
 		/*background: #d9d9d9 url("../img/crm/tope.jpg") no-repeat;*/
-		background:#d9d9d9 url("../img/crm/tope.jpg") no-repeat;
+		background:rgb(68,68,68);
+		/* background: url("../img/crm/fondo_grid.png") no-repeat; */
 		background-size: cover;
 		color: #fff;
 		padding: 2%;
@@ -489,7 +490,7 @@
 			top: 0;
 			width: 100%;
 			height: 100%;
-			background: rgba(16, 32, 48, 0.25);
+			/* background: rgba(16, 32, 48, 0.25); */
 		}
 
 		#header > * {
