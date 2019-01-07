@@ -1,0 +1,70 @@
+<div id="header" >
+    <div class="container" >
+        <!-- Logo -->
+        <h1>
+            <a href="<?= $this->url('application', ['action' => 'index']); ?>" id="logo" class="titulo">Huella CRM</a>
+            <small id="crm_version" style="font-size: 12px;">v1.1.0</small>
+        </h1>
+        <header class="major">
+            <span class="byline">Sistema de Administración de Clientes, Stock y Ventas </span>
+        </header>                 
+        <!-- Nav -->      
+        <nav class="navbar" id="nav">
+            <ul>
+                <li>
+                    <figure>
+                        <a href="<?= $this->url('gestionClientes'); ?>">
+                            <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" 
+                            class="img-rounded img-responsive img-centrar">
+                        </a>
+                        <figcaption>Clientes</figcaption>
+                    </figure>
+                </li>
+                <li>
+                    <figure>
+                        <a href="<?= $this->url('gestionProveedores'); ?>">
+                            <img src="<?= $this->basePath('img/crm/proveedor_v.png') ?>" 
+                            class="img-rounded img-responsive img-centrar">
+                        </a>
+                        <figcaption>Proveedores</figcaption>
+                    </figure>
+                </li>
+                <li>
+                    <figure>
+                        <a href="<?= $this->url('gestionEmpresa'); ?>">
+                            <img src="<?= $this->basePath('img/crm/empresa_n.png') ?>" 
+                            class="img-rounded img-responsive img-centrar">
+                        </a>
+                        <figcaption>Empresa</figcaption>
+                    </figure>
+                </li>
+                <li>
+                    <figure>
+                        <a href="<?= $this->url('herramientas'); ?>">
+                            <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
+                            class="img-rounded img-responsive img-centrar">
+                        </a>
+                        <figcaption>Herramientas</figcaption>
+                    </figure>
+                </li>
+            </ul>
+            <ul> 
+                <li>
+                        <img src="<?= $this->basePath('img/crm/bienvenido_g.png') ?>" 
+                        class="img-rounded img-responsive img-centrar">
+                    </li>
+            </ul>
+            <ul> 
+                <li>
+                    <figure>
+                        <a href="<?= $this->url('logout') ?>" role="button">
+                            <img src="<?= $this->basePath('img/crm/salir_b.png') ?>" 
+                            class="img-rounded img-responsive img-centrar">
+                        </a>
+                        <figcaption>Salir</figcaption>
+                    </figure>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
