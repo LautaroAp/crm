@@ -22,10 +22,14 @@ class IndexController extends AbstractActionController {
         $_SESSION['MENSAJES'] = array();
         $_SESSION['CATEGORIA'] = array();
         $this->layout()->setTemplate('layout/simple');
-        return new ViewModel(array('titulo' => 'Hola mundo',));
+        return new ViewModel();
     }
 
     public function viewAction() {
+        return new ViewModel();
+    }
+
+    public function menuAction(){
         return new ViewModel();
     }
 

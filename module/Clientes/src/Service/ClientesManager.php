@@ -202,14 +202,6 @@ class ClientesManager {
         $this->addDatosGanaderos($cliente, $data);        
         $persona = $this->personaManager->addPersona($data, $this->tipo);
         $cliente->setPersona($persona);
-
-        if ($this->tryAddCliente($cliente)) {
-            $_SESSION['MENSAJES']['listado_clientes'] = 1;
-            $_SESSION['MENSAJES']['listado_clientes_msj'] = 'Cliente agregado correctamente';
-        } else {
-            $_SESSION['MENSAJES']['listado_clientes'] = 0;
-            $_SESSION['MENSAJES']['listado_clientes_msj'] = 'Error al agregar cliente';
-        }
         return $cliente;
     }
 
