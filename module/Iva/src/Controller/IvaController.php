@@ -59,7 +59,7 @@ class IvaController extends AbstractActionController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(3);
+                ->setItemCountPerPage(10);
 
         $ivas = $this->ivaManager->getIvas();
         return new ViewModel([
@@ -80,7 +80,7 @@ class IvaController extends AbstractActionController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(3);
+                ->setItemCountPerPage(10);
         $ivas = $this->ivaManager->getIvas();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
