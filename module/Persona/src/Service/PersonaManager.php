@@ -55,9 +55,7 @@ class PersonaManager {
     public function addPersona($data, $tipo) {
         $persona = new Persona();
         $persona=$this->setData($persona, $data,$tipo, "S");
-        $this->tryAddPersona($persona);
         return $persona;
-
     }
     
     public function updatePersona($persona, $data) {
@@ -76,7 +74,7 @@ class PersonaManager {
     private function setData($persona, $data, $tipo= null, $estado=null){
         $persona->setNombre($data['nombre'])
         ->setTelefono($data['telefono'])
-        ->setEmail($data['mail']);
+        ->setEmail($data['email']);
         if (isset($tipo)){
             $persona->setTipo($tipo);
         }
