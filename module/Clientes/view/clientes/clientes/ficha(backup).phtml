@@ -25,106 +25,115 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <!-- Inicio: Datos de Cliente -->
 <div class="container margen">
     <div class="row">
-        <!-- Datos de Perfil --> 
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading text-center titulo-espaciado">
-                    DATOS DE PERFIL
-                </div>
-                <div class="panel-body padding-top-cero" style="min-height: 325px;">                
-                    <div class="ficha-cliente-p img-centrar ">
-                        <div>
-                            <figure>
-                                <a href="<?= $this->url('clientes/editar', ['tipo' => 'cliente', 'id' => (int) $persona->getId()]) ?>" role="button">
-                                    <img src="<?= $this->basePath('img/crm/perfil.png') ?>" 
-                                    class="img-circle img-responsive img-texto-derecha" width="150px" height="150px" style="margin-left:0px;">
-                                </a>
-                                <figcaption class="text-center"></figcaption>
-                            </figure><br>
-                        </div>
-                        <div class="ficha-cliente-label padding-md">
-                            <h4><?= $persona->getNombre(); ?></h4>
-                            <p><i><?php echo ($cliente->getNombreCategoriaCliente());?></i></p>
-                            <p><span class="glyphicon glyphicon-earphone"></span>&nbsp; <?php echo ($persona->getTelefono()); ?></p>
-                            <p><span class="glyphicon glyphicon-envelope"></span>&nbsp; <?php echo ($persona->getEmail()); ?></p>
-                            <p><span class="glyphicon glyphicon-tags"></span>&nbsp; <?php echo ($cliente->getSkype()); ?></p>
-                        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                DATOS GENERALES
+            </div>
+            <div class="panel-body padding-top-cero">
+                <!-- Header -->
+                
+                <div class="row ficha-cliente-titulo">
+                    <div class="form-group col-md-5">
+                        <h4><?php echo($persona->getNombre()); ?></h4>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-6 ficha-cliente-p margen-bot-cero">
-                            <p><label>Empresa:</label> <?= $cliente->getEmpresa(); ?></p>
-                            <p><label>Cargo:</label> <?= $cliente->getCargo(); ?></p>
-                            <p><label>Profesión:</label> <?php echo ($cliente->getNombreProfesion()); ?></p>
-                            <p><label>Tipo de Negocio:</label> <?php echo ($cliente->getActividad()); ?></p>
-                        </div>
-                        
-                        <div class="col-sm-6 ficha-cliente-p">
-                            <p><label>
-                                <?php
-                                echo ($cliente->getNombreLicenciaCliente());
-                                if (!is_null($cliente->getVersion())) {
-                                    echo (" - " . $cliente->getVersion());
-                                }
-                                ?>
-                            </label></p>
-                            <p><label>Fecha de Compra:</label> <?php
-                                if (!is_null($cliente->getFechaCompra())) {
-                                    echo ($cliente->getFechaCompra()->format('d/m/Y'));
-                                }
-                                ?>
-                            </p>
-                            <p><label>Último Pago:</label> <?php
-                                if (!is_null($cliente->getFechaUltimoPago())) {
-                                    echo ($cliente->getFechaUltimoPago()->format('d/m/Y'));
-                                }
-                                ?>
-                            </p>
-                            <p><label>Fecha Vencimiento:</label> <?php
-                                if (!is_null($cliente->getVencimiento())) {
-                                    echo ($cliente->getVencimiento()->format('d/m/Y'));
-                                }
-                                ?>
-                            </p>
-
-                            <!-- <button class="btn btn-default pull-right">
-                                <span class="clickable glyphicon glyphicon-plus btn-collapse"></span>
-                                Repositorio
-                            </button> -->
-                        </div>
+                    <div class="form-group col-md-3">
+                        <h4><?php echo ($cliente->getNombreCategoriaCliente()); ?></h4>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <h4>
+                            <?php
+                            echo ($cliente->getNombreLicenciaCliente());
+                            if (!is_null($cliente->getVersion())) {
+                                echo (" - " . $cliente->getVersion());
+                            }
+                            ?>
+                        </h4>
+                    </div>
+                </div>
+                <!-- Datos de Cliente -->
+                <div class="row">
+                    <div class="col-md-5 ficha-cliente-p">
+                        <p><label>Teléfono:</label> <?php echo ($persona->getTelefono()); ?></p>
+                        <p><label>Email:</label> <?php echo ($persona->getEmail()); ?></p>
+                        <p><label>Skype:</label> <?php echo ($cliente->getSkype()); ?></p>
+                    </div>
+                    <div class="col-md-3 ficha-cliente-p">
+                        <p><label>Ciudad:</label> <?php echo ($cliente->getCiudad()); ?></p>
+                        <p><label>Provincia:</label> <?php echo ($cliente->getNombreProvinciaCliente()); ?></p>
+                        <p><label>País:</label> <?php echo ($cliente->getNombrePaisCliente()); ?></p>
+                    </div>
+                    <div class="col-md-4 ficha-cliente-p">
+                        <p><label>Fecha de Compra:</label> <?php
+                            if (!is_null($cliente->getFechaCompra())) {
+                                echo ($cliente->getFechaCompra()->format('d/m/Y'));
+                            }
+                            ?>
+                        </p>
+                        <p><label>Último Pago:</label> <?php
+                            if (!is_null($cliente->getFechaUltimoPago())) {
+                                echo ($cliente->getFechaUltimoPago()->format('d/m/Y'));
+                            }
+                            ?>
+                        </p>
+                        <p><label>Fecha Vencimiento:</label> <?php
+                            if (!is_null($cliente->getVencimiento())) {
+                                echo ($cliente->getVencimiento()->format('d/m/Y'));
+                            }
+                            ?>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Datos Generales -->
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading text-center titulo-espaciado">
-                    DATOS GENERALES
+        
+        <!-- Datos Laborales -->
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                DATOS LABORALES
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-5 ficha-cliente-p">
+                        <p><label>Empresa:</label> <?= $cliente->getEmpresa(); ?></p>
+                        <p><label>Cargo:</label> <?= $cliente->getCargo(); ?></p>
+                    </div>
+                    <div class="col-md-4 ficha-cliente-p">
+                        <p><label>Profesión:</label> <?php echo ($cliente->getNombreProfesion()); ?></p>
+                        <p><label>Tipo de Negocio:</label> <?php echo ($cliente->getActividad()); ?></p>
+                    </div>
                 </div>
-                <div class="panel-body" style="min-height: 325px;">
-                    <div class="ficha-cliente-p margen">
-                        <p><label>Ciudad:</label> <?php echo ($cliente->getCiudad()); ?></p>
-                        <p><label>Provincia:</label> <?php echo ($cliente->getNombreProvinciaCliente()); ?></p>
-                        <p><label>País:</label> <?php echo ($cliente->getNombrePaisCliente()); ?></p>
-                        
-                        <hr>
+            </div>
+        </div>
 
+        <!-- Datos de Facturacion -->
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                DATOS DE FACTURACIÓN
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-5 ficha-cliente-p">
                         <p><label>Razón Social:</label> <?= $cliente->getRazon_social(); ?></p>
                         <p><label>Dirección de Facturación:</label> <?= $cliente->getDireccion_facturacion(); ?></p>
                         <p><label>Condición de IVA:</label> <?= $cliente->getNombreCondicionIva(); ?></p>
+                    </div>
+                    <div class="col-md-4 ficha-cliente-p">
                         <p><label>Banco:</label> <?= $cliente->getBanco(); ?></p>
                         <p><label>CBU:</label> <?= $cliente->getCbu(); ?></p>
                         <p><label>CUIT/CUIL:</label> <?= $cliente->getCuit_cuil(); ?></p>
                     </div>
+                    <div class="col-md-3 ficha-cliente-p">
+                        <button class="btn btn-default pull-right">
+                            <span class="clickable glyphicon glyphicon-plus btn-collapse"></span>
+                            Repositorio
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Datos Ganaderos -->
-    <div class="container row">
+        <!-- Datos Ganaderos -->
         <div class="panel panel-default">
             <div class="panel-heading text-center titulo-espaciado">
                 DATOS GANADEROS
@@ -134,7 +143,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     onclick="cambiaIconoCollapse(event)"></i></span>
                 </a>
             </div>
-            <div class="collapse" id="collapseModulosAdicionales">
+            <div class="collapse " id="collapseModulosAdicionales">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-5 ficha-cliente-p">
@@ -150,10 +159,8 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Datos de Usuarios Adicionales -->
-    <div class="container row">
+        <!-- Datos de Usuarios Adicionales -->
         <div class="panel panel-default">
             <div class="panel-heading text-center titulo-espaciado">
                 USUARIOS Y DATOS ADICIONALES
@@ -164,7 +171,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                 </a>
             </div>   
 
-            <div class="collapse" id="collapseUsuariosDatosAdicionales">
+            <div class="collapse " id="collapseUsuariosDatosAdicionales">
                 <div class="panel panel-body">
                     <table id="tabla_evento" class="table table-condensed">            
                         <thead>
@@ -241,7 +248,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 
 <!-- Inicio: Actividades -->
 <div class="container margen">
-    <div class="container row">
+    <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading text-center titulo-espaciado">
                 REGISTRO DE ACTIVIDADES
@@ -249,11 +256,40 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
                 </a>
             </div>
-            <div class="panel-body padding-top-cero">
-                <div class="collapse in" id="collapseActividades">
-
-
-                <div class="row" style="padding:0px;">
+            <div class="panel-body">
+                <div class="collapse" id="collapseActividades">
+                    <table id="table_id" class="display">
+                        <thead>
+                            <tr> 
+                                <th class="" id="fila">Fecha</th>
+                                <th class="">Responsable</th>
+                                <th class="">Tipo</th>
+                                <th class="detalle-width">Detalle</th>     
+                            </tr>
+                        </thead>
+                        <tbody role="button" class="">
+                            <?php foreach ($eventos as $evento): ?>
+                                <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
+                                    <td id="<?= $evento->getId() ?>" class=""><?php
+                                        if (!is_null($evento->getFecha())) {
+                                            echo($evento->getFecha()->format('Y/m/d'));
+                                        }
+                                        ?></td>
+                                    <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getUsuarioEjecutivo()); ?></td>
+                                    <td id="<?= $evento->getId() ?>" class=""><?php
+                                        if (!is_null($evento->getTipo())) {
+                                            echo($evento->getTipo());
+                                        } else {
+                                            echo('No definido');
+                                        }
+                                        ?></td>
+                                    <td id="<?= $evento->getId() ?>" class="table-scroll-description"><?php echo(nl2br($evento->getDescripcion())); ?></td>
+                                </tr> 
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    
+                    <div class="row img-centrar margen">
                         <!-- Accion Comercial -->
                         <div class="col-md-3 img-centrar">
                             <div>
@@ -263,7 +299,8 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                 </a>
                             </div>
                             <div class="ficha-cliente-label">
-                                <label>Acción Comercial</label>
+                                <label>Acción</label><br>
+                                <label>Comercial</label>
                             </div>
                         </div>
                         <!-- Transaccion-->
@@ -343,43 +380,11 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                 </a>
                             </div>
                             <div class="ficha-cliente-label">
-                                <label>Eliminar Actividad</label>
+                                <label>Eliminar</label><br>
+                                <label>Actividad</label>
                             </div>
                         </div>
                     </div>
-
-
-                    <table id="table_id" class="display">
-                        <thead>
-                            <tr> 
-                                <th class="" id="fila">Fecha</th>
-                                <th class="">Responsable</th>
-                                <th class="">Tipo</th>
-                                <th class="detalle-width">Detalle</th>     
-                            </tr>
-                        </thead>
-                        <tbody role="button" class="">
-                            <?php foreach ($eventos as $evento): ?>
-                                <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
-                                    <td id="<?= $evento->getId() ?>" class=""><?php
-                                        if (!is_null($evento->getFecha())) {
-                                            echo($evento->getFecha()->format('Y/m/d'));
-                                        }
-                                        ?></td>
-                                    <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getUsuarioEjecutivo()); ?></td>
-                                    <td id="<?= $evento->getId() ?>" class=""><?php
-                                        if (!is_null($evento->getTipo())) {
-                                            echo($evento->getTipo());
-                                        } else {
-                                            echo('No definido');
-                                        }
-                                        ?></td>
-                                    <td id="<?= $evento->getId() ?>" class="table-scroll-description"><?php echo(nl2br($evento->getDescripcion())); ?></td>
-                                </tr> 
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-
                 </div>
             </div>
         </div>

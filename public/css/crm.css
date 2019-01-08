@@ -32,13 +32,13 @@
 }
 
 .img-submenu{
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
 }
 
 .img-submenu-add{
-    width: 90px;
-    height: 90px;
+    width: 70px;
+    height: 70px;
 }
 
 .img-submenu-sm{
@@ -65,7 +65,7 @@
 }
 
 .ficha-cliente-p{
-    line-height: 10px;
+    line-height: 14px;
 }
 
 .ficha-empresa-p{
@@ -150,6 +150,10 @@
     padding: 5px !important;
 }
 
+.padding-md {
+    padding: 10px !important;
+}
+
 .marging-cero {
     margin: 0px !important;
 }
@@ -185,6 +189,10 @@
 }
 
 .licencia-margen-bot{
+    margin-bottom: 0px !important;
+}
+
+.margen-bot-cero{
     margin-bottom: 0px !important;
 }
 
@@ -351,4 +359,20 @@
 		line-height: 1.8;
     }
     
+
+    hr {
+
+        height: 2px !important;
+    
+        background-color:#555 !important;
+    
+        margin-top: 20px !important;
+    
+        margin-bottom: 20px !important;
+    
+        width: 75% !important;
+    
+    }
+
+
 }
