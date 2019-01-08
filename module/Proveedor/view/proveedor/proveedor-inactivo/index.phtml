@@ -1,0 +1,122 @@
+<!-- MODULE CLIENTES -->
+<script src="js/functions.js"></script>
+<!-- Inicio: Tabla Clientes -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                CLIENTES INACTIVOS (<?php echo($total_inactivos); ?>)
+            </div>
+            <div class="panel-body">
+            <form method="post">
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="nombre" placeholder="Nombre" value="<?php if (count($parametros)>0){echo($parametros['nombre']);} ?>">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="email" placeholder="Email" value="<?php if (count($parametros)>0){echo($parametros['email']);} ?>">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="telefono" placeholder="Telefono" value="<?php if (count($parametros)>0){echo($parametros['telefono']);} ?>">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <button type="submit" class="btn btn-default"> 
+                                <i class="glyphicon glyphicon-search"></i> Buscar
+                            </button>                    
+                        </div>                        
+                    </div>
+                    <label>
+                        <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion" data-target="#collapseBusquedaAvanzada" 
+                            aria-expanded="true" aria-controls="collapseBusquedaAvanzada" name="busquedaAvanzada" id="busquedaAvanzada">
+                            Búsqueda avanzada
+                    </label>
+                    <div class="row form-row collapse" id="collapseBusquedaAvanzada">
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="empresa" placeholder="Empresa" value="<?php if (count($parametros)>0){echo($parametros['empresa']);} ?>">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <select class="form-control" id="categoria" name="categoria">
+                                <option value="" hidden="">Seleccionar Categoría</option>
+                                <?php foreach ($categorias as $categoria) : ?>
+                                <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
+                                <option value="" hidden="">Seleccionar País</option>
+                                <?php foreach ($paises as $pais) : ?>
+                                    <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3" id="div_provincias">
+                            <select class="form-control" id="ops_provincias" name="provincia">
+                            </select>
+                        </div>
+                    </div>  
+                </form>
+            </div>
+        <div class="panel-body">
+            <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
+                <thead>
+                    <tr> 
+                        <th class="th-sm">Cliente</th>
+                        <th class="th-sm">Teléfono</th>
+                        <th class="th-sm">Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if (isset($clientes)) {
+                        foreach ($clientes as $cliente) {
+                            echo('<tr>');
+                            echo ('<td>');
+                            echo ($cliente->getNombre());
+                            echo ('</td>');
+                            echo ('<td>');
+                            echo ($cliente->getTelefono());
+                            echo ('</td>');
+                            echo ('<td>');
+                            echo ($cliente->getEmail());
+                            echo ('</td>');      
+                            ?>
+                        <td class="table-items-right">
+                            <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $cliente->getId()]); ?>">
+                                <span class="glyphicon glyphicon-share-alt" ></span>
+                            </a>
+                        </td>
+                        <?php }
+                        ?>
+                     </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <?php
+    echo $this->paginationControl($clientes, 'Sliding', // All, Elastic, Jumping, Sliding
+            'search_pagination_4.phtml', $this->url('clientes/pageinactivos', ['action' => 'index', 'id' => 1]));
+    }
+    ?>
+    </div>
+</div>
+<!-- Fin: Tabla Clientes -->
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row img-centrar">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('gestionClientes') ?>">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->

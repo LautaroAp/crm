@@ -1,0 +1,507 @@
+<?php
+$this->headTitle('Detalles del Cliente');
+$id_cliente = $this->cliente->getId();
+
+if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
+    if ($_SESSION['MENSAJES']['ficha_cliente']) {
+        echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['ficha_cliente_msj'] . "', 'success');});</script>";
+    } else {
+        echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['ficha_cliente_msj'] . "', 'error');});</script>";
+    }
+    $_SESSION['MENSAJES']['ficha_cliente'] = null;
+    $_SESSION['MENSAJES']['ficha_cliente_msj'] = null;
+}
+?>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+</script>
+
+<!-- Inicio: Datos de Cliente -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                DATOS GENERALES
+            </div>
+            <div class="panel-body padding-top-cero">
+                <!-- Header -->
+                
+                <div class="row ficha-cliente-titulo">
+                    <div class="form-group col-md-5">
+                        <h4><?php echo($persona->getNombre()); ?></h4>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <h4><?php echo ($cliente->getNombreCategoriaCliente()); ?></h4>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <h4>
+                            <?php
+                            echo ($cliente->getNombreLicenciaCliente());
+                            if (!is_null($cliente->getVersion())) {
+                                echo (" - " . $cliente->getVersion());
+                            }
+                            ?>
+                        </h4>
+                    </div>
+                </div>
+                <!-- Datos de Cliente -->
+                <div class="row">
+                    <div class="col-md-5 ficha-cliente-p">
+                        <p><label>Teléfono:</label> <?php echo ($persona->getTelefono()); ?></p>
+                        <p><label>Email:</label> <?php echo ($persona->getEmail()); ?></p>
+                    </div>
+                    <div class="col-md-3 ficha-cliente-p">
+                        <p><label>Ciudad:</label> <?php echo ($cliente->getCiudad()); ?></p>
+                        <p><label>Provincia:</label> <?php echo ($cliente->getNombreProvinciaCliente()); ?></p>
+                        <p><label>País:</label> <?php echo ($cliente->getNombrePaisCliente()); ?></p>
+                    </div>
+                    <div class="col-md-4 ficha-cliente-p">
+                        <p><label>Fecha de Compra:</label> <?php
+                            if (!is_null($cliente->getFechaCompra())) {
+                                echo ($cliente->getFechaCompra()->format('d/m/Y'));
+                            }
+                            ?>
+                        </p>
+                        <p><label>Último Pago:</label> <?php
+                            if (!is_null($cliente->getFechaUltimoPago())) {
+                                echo ($cliente->getFechaUltimoPago()->format('d/m/Y'));
+                            }
+                            ?>
+                        </p>
+                        <p><label>Fecha Vencimiento:</label> <?php
+                            if (!is_null($cliente->getVencimiento())) {
+                                echo ($cliente->getVencimiento()->format('d/m/Y'));
+                            }
+                            ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Datos Laborales -->
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                DATOS LABORALES
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-5 ficha-cliente-p">
+                        <p><label>Empresa:</label> <?= $cliente->getEmpresa(); ?></p>
+                        <p><label>Cargo:</label> <?= $cliente->getCargo(); ?></p>
+                    </div>
+                    <div class="col-md-4 ficha-cliente-p">
+                        <p><label>Profesión:</label> <?php echo ($cliente->getNombreProfesion()); ?></p>
+                        <p><label>Tipo de Negocio:</label> <?php echo ($cliente->getActividad()); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Datos de Facturacion -->
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                DATOS DE FACTURACIÓN
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-5 ficha-cliente-p">
+                        <p><label>Razón Social:</label> <?= $cliente->getRazon_social(); ?></p>
+                        <p><label>Dirección de Facturación:</label> <?= $cliente->getDireccion_facturacion(); ?></p>
+                        <p><label>Condición de IVA:</label> <?= $cliente->getNombreCondicionIva(); ?></p>
+                    </div>
+                    <div class="col-md-4 ficha-cliente-p">
+                        <p><label>Banco:</label> <?= $cliente->getBanco(); ?></p>
+                        <p><label>CBU:</label> <?= $cliente->getCbu(); ?></p>
+                        <p><label>CUIT/CUIL:</label> <?= $cliente->getCuit_cuil(); ?></p>
+                    </div>
+                    <div class="col-md-3 ficha-cliente-p">
+                        <button class="btn btn-default pull-right">
+                            <span class="clickable glyphicon glyphicon-plus btn-collapse"></span>
+                            Repositorio
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Datos Ganaderos -->
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                DATOS GANADEROS
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseModulosAdicionales" 
+                aria-expanded="true" aria-controls="collapseModulosAdicionales">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse" 
+                    onclick="cambiaIconoCollapse(event)"></i></span>
+                </a>
+            </div>
+            <div class="collapse " id="collapseModulosAdicionales">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-5 ficha-cliente-p">
+                            <p><label>Raza de Manejo:</label> <?= $cliente->getRazaManejo(); ?></p>
+                        </div>
+                        <div class="col-md-4 ficha-cliente-p">
+                            <p><label>Nro. Animales:</label> <?= $cliente->getAnimales(); ?></p>
+                        </div>
+                        <div class="col-md-3 ficha-cliente-p">
+                            <p><label>Nro. Establecimientos:</label> <?= $cliente->getEstablecimientos(); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Datos de Usuarios Adicionales -->
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                USUARIOS Y DATOS ADICIONALES
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseUsuariosDatosAdicionales" 
+                aria-expanded="true" aria-controls="collapseUsuariosDatosAdicionales">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="ud_adicionales" 
+                    onclick="cambiaIconoCollapse(event)"></i></span>
+                </a>
+            </div>   
+
+            <div class="collapse " id="collapseUsuariosDatosAdicionales">
+                <div class="panel panel-body">
+                    <table id="tabla_evento" class="table table-condensed">            
+                        <thead>
+                            <tr> 
+                                <th class="th-sm">U/Dato Adicional</th>
+                                <th class="th-sm">Teléfono</th>
+                                <th class="th-sm">Email</th>
+                                <th></th>      
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($usuarios as $usuario) : 
+                                $persona_usuario = $usuario->getPersona(); ?>
+                                    <tr>
+                                    <td><?php echo($persona_usuario->getNombre()); ?></td>
+                                    <td><?php echo($persona_usuario->getTelefono()); ?></td>
+                                    <td><?php echo($persona_usuario->getEmail()); ?></td>
+                                    <td> 
+                                        <a class="btn btn-default pull-right" href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
+                                            <span class="glyphicon glyphicon-pencil" ></span> 
+                                        </a>
+                                        <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>" type="button"
+                                            class="btn btn-default pull-right" data-toggle="modal" data-target="#usuarioModal<?= $usuario->getId() ?>">
+                                            <span class="glyphicon glyphicon-remove" ></span>
+                                        </button>
+                                    </td>
+                                    <!-- Modal Usuario Adicional -->
+                            <div id="usuarioModal<?= $usuario->getId() ?>" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Eliminar usuario</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                ¿Está seguro que desea eliminar el usuario:
+                                                "<?= $this->escapeHtml($persona_usuario->getNombre()) ?>"
+                                                de forma permanente?
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="<?= $this->url('usuarios', ['action' => 'delete', 'id' => $usuario->getId()]); ?>" type="button">
+                                            <span class="btn btn-default">Aceptar</span></a>
+                                        
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </tr>
+                        <?php endforeach; ?>
+                        <tr>
+                            <td>
+                                <br>
+                                <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $cliente->getPersona()->getId()]); ?>" type="button">
+                                    <span class="btn btn-default">
+                                        <span class="glyphicon glyphicon-plus" ></span> Agregar Datos Adicionales
+                                    </span>
+                                </a> 
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Datos de Cliente -->
+
+<!-- Inicio: Actividades -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                REGISTRO DE ACTIVIDADES
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
+                </a>
+            </div>
+            <div class="panel-body">
+                <div class="collapse" id="collapseActividades">
+                    <table id="table_id" class="display">
+                        <thead>
+                            <tr> 
+                                <th class="" id="fila">Fecha</th>
+                                <th class="">Responsable</th>
+                                <th class="">Tipo</th>
+                                <th class="detalle-width">Detalle</th>     
+                            </tr>
+                        </thead>
+                        <tbody role="button" class="">
+                            <?php foreach ($eventos as $evento): ?>
+                                <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
+                                    <td id="<?= $evento->getId() ?>" class=""><?php
+                                        if (!is_null($evento->getFecha())) {
+                                            echo($evento->getFecha()->format('Y/m/d'));
+                                        }
+                                        ?></td>
+                                    <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getUsuarioEjecutivo()); ?></td>
+                                    <td id="<?= $evento->getId() ?>" class=""><?php
+                                        if (!is_null($evento->getTipo())) {
+                                            echo($evento->getTipo());
+                                        } else {
+                                            echo('No definido');
+                                        }
+                                        ?></td>
+                                    <td id="<?= $evento->getId() ?>" class="table-scroll-description"><?php echo(nl2br($evento->getDescripcion())); ?></td>
+                                </tr> 
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    
+                    <div class="row img-centrar margen">
+                        <!-- Accion Comercial -->
+                        <div class="col-md-3 img-centrar">
+                            <div>
+                                <a href="<?= $this->url('evento', ['action' => 'add', 'id' => (int) $cliente->getId()]) ?>" role="button">
+                                    <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                </a>
+                            </div>
+                            <div class="ficha-cliente-label">
+                                <label>Acción</label><br>
+                                <label>Comercial</label>
+                            </div>
+                        </div>
+                        <!-- Transaccion-->
+                        <div class="col-md-3 img-centrar">
+                            <div class="btn-group dropup">
+                                <a role="button" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                </a>
+                                <ul class="dropdown-menu" role="menu" style="width:300px;">
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Presupuesto
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Pedido
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Remito
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Factura
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Nota de Crédito
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Nota de Débito
+                                            </div> 
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="ficha-cliente-label">
+                                <label>Transacciones</label>
+                            </div>
+                        </div>
+                        <!-- Eliminar Actividad -->
+                        <div class="col-md-3 img-centrar">
+                            <div>
+                                <a role="button" data-toggle="modal" data-target="#actividadModal">
+                                    <img src="<?= $this->basePath('img/crm/remove_carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                </a>
+                            </div>
+                            <div class="ficha-cliente-label">
+                                <label>Eliminar</label><br>
+                                <label>Actividad</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Actividades -->
+
+<!-- Modal Ciente -->
+<div class="modal fade" id="exampleModal<?= $cliente->getId() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Eliminar cliente</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    ¿Está seguro que desea eliminar el cliente:
+                    "<?= $this->escapeHtml($persona->getNombre()) ?>"
+                    ?<br>
+                    <?php
+                    if ($persona->getEstado() == "S") {
+                        echo('Se establecerá como Inactivo.');
+                    } else {
+                        echo('Se establecerá como Activo.');
+                    }
+                    ?>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <a href="<?= $this->url('clientes/modificarEstado', ['action' => 'modificarEstado', 'id' => (int) $cliente->getId()]) ?>" type="button">
+                <span class="btn btn-default">Aceptar</span></a>
+               
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Actividad -->
+<div class="modal fade" id="actividadModal" tabindex="-1" role="dialog" aria-labelledby="actividadModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="actividadModalLabel">Eliminar actividad</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que desea eliminar las actividades seleccionadas?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="eliminaEventos()">Aceptar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row img-centrar">
+        <!-- Modificar Datos -->
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('clientes/editar', ['tipo' => 'cliente', 'id' => (int) $persona->getId()]) ?>" role="button">
+                    <img src="<?= $this->basePath('img/crm/cliente_update_a.png') ?>" 
+                    class="img-rounded img-responsive img-texto-derecha img-submenu">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Modificar</label><br>
+                <label>Datos</label>
+            </div>
+        </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a role="button" name="<?= $cliente->getId() ?>" id="<?= $cliente->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $cliente->getId() ?>">
+                    <img src="<?php
+                    if ($persona->getEstado() == "S") {
+                        echo($this->basePath('img/crm/cliente_remove_a.png'));
+                    } else {
+                        echo($this->basePath('img/crm/cliente_add_a.png'));
+                    }
+                    ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <?php
+                if ($persona->getEstado() == "S") {
+                    echo('<label>Eliminar</label><br>'
+                    . '<label>Cliente</label>');
+                } else {
+                    echo('<label>Agregar</label><br>'
+                    . '<label>Cliente</label>');
+                }
+                ?>
+            </div>
+        </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>   
+                <?php
+                $ruta = "";
+                if ($persona->getEstado() == "S") {
+                    $ruta = 'gestionClientes/listado';
+                } else {
+                    $ruta = 'clientes/inactivos';
+                }
+                ?>
+                <a href="<?= $this->url($ruta) ?>" role="button">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
+            </div>
+        </div>
+    </div>   
+</div>
+<!-- Fin: Panel Botones -->

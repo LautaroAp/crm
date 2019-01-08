@@ -1,0 +1,27 @@
+<?php 
+header("Pragma: public");
+header("Expires: 0");
+$filename = "Backup_Proveedores.xls";
+//header("Content-type: application/x-msdownload; charset=utf8");
+header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+header("Content-Disposition: attachment; filename=$filename");
+header("Pragma: no-cache");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+?>
+
+<table>
+    <tbody>
+        <?php foreach ($resultado as $proveedor): 
+             $persona=$proveedor->getPersona(); 
+        ?>
+            <tr>
+                <td><?php echo(utf8_decode($persona->getNombre())); ?></td>
+                <td><?php echo(utf8_decode($persona->getTelefono()));?></td>
+                <td><?php echo(utf8_decode($persona->getEmail()));?></td>
+                <td><?php echo(utf8_decode($proveedor->getNombreCategoriaProveedor()));?></td>
+                <td><?php echo($persona->getEstadoNombre());?></td>
+            </tr>
+        <?php  endforeach;?>
+    </tbody>
+</table>
+

@@ -1,0 +1,146 @@
+<?php
+if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
+    if ($_SESSION['MENSAJES']['listado_clientes']) {
+        echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['listado_clientes_msj'] . "', 'success');});</script>";
+    } else {
+        echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['listado_clientes_msj'] . "', 'error');});</script>";
+    }
+    $_SESSION['MENSAJES']['listado_clientes'] = null;
+    $_SESSION['MENSAJES']['listado_clientes_msj'] = null;
+}
+?>
+
+<script src="js/functions.js"></script>
+<!-- Inicio: Tabla Proveedores -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                LISTADO DE PROVEEDORES (<?php echo($total_proveedor); ?>)
+            </div>
+            <div class="panel-body">
+                <form method="post">
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="nombre" placeholder="Nombre" value="<?php if (count($parametros)>0){echo($parametros['nombre']);} ?>">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="email" placeholder="Email" value="<?php if (count($parametros)>0){echo($parametros['email']);} ?>">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="telefono" placeholder="Telefono" value="<?php if (count($parametros)>0){echo($parametros['telefono']);} ?>">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <button type="submit" class="btn btn-default"> 
+                                <i class="glyphicon glyphicon-search"></i> Buscar
+                            </button>                    
+                        </div>                        
+                    </div>
+                    <label>
+                        <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion" data-target="#collapseBusquedaAvanzada" 
+                            aria-expanded="true" aria-controls="collapseBusquedaAvanzada" name="busquedaAvanzada" id="busquedaAvanzada">
+                            Búsqueda avanzada
+                    </label>
+                    <div class="row form-row collapse" id="collapseBusquedaAvanzada">
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="empresa" placeholder="Empresa" value="<?php if (count($parametros)>0){echo($parametros['empresa']);} ?>">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <select class="form-control" id="categoria" name="categoria">
+                                <option value="" hidden="">Seleccionar Categoría</option>
+                                <?php foreach ($categorias as $categoria) : ?>
+                                <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
+                                <option value="" hidden="">Seleccionar País</option>
+                                <?php foreach ($paises as $pais) : ?>
+                                    <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3" id="div_provincias">
+                            <select class="form-control" id="ops_provincias" name="provincia">
+                            </select>
+                        </div>
+                    </div>  
+                </form>
+            </div>
+        <div class="panel-body">
+        <table id="tabla_evento" class="table table-bordred table-hover table-condensed" style="vertical-align: center;">            
+            <thead>
+                <tr> 
+                    <th class="th-md">Proveedor</th>
+                    <th class="th-md">Teléfono</th>
+                    <th class="th-md">Email</th>   
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if (isset($personas)) {
+                    foreach ($personas as $persona) {
+                            echo('<tr>');
+                            echo ('<td>');
+                            echo ($persona->getNombre());
+                            echo ('</td>');
+                            echo ('<td>');
+                            echo ($persona->getTelefono());
+                            echo ('</td>');
+                            echo ('<td>');
+                            echo ($persona->getEmail());
+                            echo ('</td>'); 
+                ?>
+                <td class="table-items-right">
+                    <a class="btn btn-default" href="<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $persona->getId()]); ?>">
+                        <span class="glyphicon glyphicon-share-alt" ></span>
+                    </a>
+                </td>
+                <?php 
+                } ?>
+                    
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+            <?php
+            echo $this->paginationControl($personas, 'Sliding', // All, Elastic, Jumping, Sliding
+                    'search_pagination_2.phtml', $this->url('proveedores/page', ['action' => 'index', 'id' => 1]));
+        }
+        ?>
+    </div>
+</div>
+<!-- Fin: Tabla Proveedores -->
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row img-centrar">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url("gestionProveedores/agregar", ['tipo'=>'proveedor']); ?>">
+                    <img src="<?= $this->basePath('img/crm/cliente_add_a.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha img-submenu">
+                    </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Agregar</label><br>
+                <label>Proveedor</label>
+            </div>
+        </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('gestionProveedores') ?>">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
+                        class="img-rounded img-responsive img-texto-derecha">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
+            </div>
+        </div>
+    </div>       
+</div>
+<!-- Fin: Panel Botones -->

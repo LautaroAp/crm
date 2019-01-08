@@ -1,15 +1,15 @@
 <?php
 
-namespace Clientes\Service;
+namespace Proveedor\Service;
 
-use DBAL\Entity\Cliente;
+use DBAL\Entity\Proveedor;
 use DBAL\Entity\Usuario;
 use DBAL\Entity\Licencia;
 use DBAL\Entity\Persona;
 use DBAL\Entity\Pais;
 use DBAL\Entity\Provincia;
 use DBAL\Entity\Profesion;
-use DBAL\Entity\CategoriaCliente;
+use DBAL\Entity\CategoriaProveedor;
 use DBAL\Entity\Categoria;
 use DBAL\Entity\Iva;
 use DBAL\Entity\Ganaderia;
@@ -22,7 +22,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
  * This service is responsible for adding/editing users
  * and changing user password.
  */
-class ClientesManager {
+class ProveedorManager {
 
     /**
      * Doctrine entity manager.
@@ -43,37 +43,31 @@ class ClientesManager {
         $this->usuarioManager = $usuarioManager;
         $this->personaManager = $personaManager;
         $this->ganaderiaManager = $ganaderiaManager;
-        $this->tipo = "CLIENTE";
+        $this->tipo = "PROVEEDOR";
 
     }
 
-    private function getUsuarios($id_cliente) {
-        $usuarios = $this->entityManager
-                ->getRepository(Usuario::class)
-                ->findBy(['id_cliente' => $id_cliente]);
-        return $usuarios;
-    }
 
-    private function borrarUsuariosFromCliente($cliente) {
-        $usuarios = $this->getUsuarios($cliente->getId());
+    private function borrarUsuariosFromProveedor($proveedor) {
+        $usuarios = $this->getUsuarios($proveedor->getId());
         foreach ($usuarios as $usuario) {
             $this->entityManager->remove($usuario);
         }
         $this->entityManager->flush();
     }
 
-    public function getCliente($Id) {
+    public function getProveedor($Id) {
         return $this->entityManager
-                        ->getRepository(Cliente::class)
+                        ->getRepository(Proveedor::class)
                         ->findOneBy(['Id' => $Id]);
     }
 
 
-    //esta funcion es usada por el controller para obtener todos los clientes
+    //esta funcion es usada por el controller para obtener todos los proveedors
     //que cumplen con los parametros
     public function getTablaFiltrado($parametros, $estado) {
         $filtros = $this->limpiarParametros($parametros);
-        $query = $this->getClientes($filtros, $estado);
+        $query = $this->getProveedores($filtros, $estado);
         $pag = new ORMPaginator($query);
         $pag->setUseOutputWalkers(true);
         $adapter = new DoctrineAdapter($pag);
@@ -83,15 +77,15 @@ class ClientesManager {
         return $paginator;
     }
 
-    public function getClientes($parametros, $estado){
-        $tipos= ['CLIENTE','USUARIO'];
+    public function getProveedores($parametros, $estado){
+        $tipos= ['PROVEEDOR'];
         $parametros+=['estado'=>$estado];
-        $params_cliente=$this->diferenciarParametros($parametros,"CLIENTE");
+        $params_proveedor=$this->diferenciarParametros($parametros,"PROVEEDOR");
         $params_persona=$this->diferenciarParametros($parametros,"PERSONA");
         if (in_array('busquedaAvanzada', $parametros)){
             // unset($parametros['busquedaAvanzada']);
-            $clientes= $this->buscarClientes($params_cliente)->getResult();
-            $personas=$this->getPersonasFromClientes($clientes);
+            $proveedors= $this->buscarProveedor($params_proveedor)->getResult();
+            $personas=$this->getPersonasFromProveedor($proveedors);
             $query = $this->personaManager->buscarPersonas($params_persona,$tipos,$personas);
         }
         else{
@@ -100,20 +94,20 @@ class ClientesManager {
         return $query;
     }
 
-    protected function getPersonasFromClientes($clientes){
+    protected function getPersonasFromProveedor($proveedors){
         $salida=Array();
-        foreach ($clientes as $cliente){
-            array_push($salida,$cliente->getPersona()->getId());
+        foreach ($proveedors as $proveedor){
+            array_push($salida,$proveedor->getPersona()->getId());
         }
         return $salida;
     }
     protected function diferenciarParametros($parametros, $tipo){
-        $cliente= ['empresa', 'categoria', 'pais'];
+        $proveedor= ['empresa', 'categoria', 'pais'];
         $persona=['nombre', 'telefono', 'email', 'estado', 'tipo'];
         $salida=Array();
         foreach ($parametros as $filtro => $valor) {
-            if ($tipo=='CLIENTE'){
-                if (in_array($filtro,$cliente)){
+            if ($tipo=='PROVEEDOR'){
+                if (in_array($filtro,$proveedor)){
                     $salida+=[$filtro=>$valor];
                 } 
             }else {
@@ -143,19 +137,12 @@ class ClientesManager {
 
     public function getDataFicha($id_persona){
         $persona = $this->personaManager->getPersona($id_persona);
-        $cliente=null;
-        if($persona->getTipo()=="CLIENTE"){
-            $cliente = $this->getClienteIdPersona($persona->getId());
-        }
-        else{
-            $usuario= $this->usuarioManager->getUsuarioIdPersona($persona->getId());
-            $cliente =$usuario->getCliente(); 
-        }
+        $proveedor = $this->getProveedorIdPersona($persona->getId());
         $data = [
-            'cliente' =>$cliente,
-            'eventos' =>$cliente->getEventos(),
-            'usuarios' => $cliente->getUsuarios(),
-            'persona'=>$cliente->getPersona()
+            'proveedor' =>$proveedor,
+            'eventos' =>$proveedor->getEventos(),
+            'usuarios' => $proveedor->getUsuarios(),
+            'persona'=>$proveedor->getPersona()
         ];
         return $data;
     }
@@ -164,11 +151,11 @@ class ClientesManager {
         return $this->total;
     }
 
-    public function buscarClientes($parametros) {
+    public function buscarProveedores($parametros) {
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('C')
-                ->from(Cliente::class, 'C');
+                ->from(Proveedor::class, 'C');
         $indices = array_keys($parametros);
         for ($i = 0; $i < count($indices); $i++) {
             $p = $i + 1;
@@ -193,52 +180,49 @@ class ClientesManager {
         return $queryBuilder->getQuery();
     }
 
-    public function addCliente($data) {
-        $cliente = new Cliente();
-        $this->addDatosParticulares($cliente, $data);
-        $this->addDatosLaborales($cliente, $data);
-        $this->addDatosFacturacion($cliente, $data);
-        $this->addDatosLicencia($cliente, $data);
-        $this->addDatosGanaderos($cliente, $data);        
+    public function addProveedor($data) {
+        $proveedor = new Proveedor();
+        $this->addDatosParticulares($proveedor, $data);
+        $this->addDatosLaborales($proveedor, $data);
+        $this->addDatosFacturacion($proveedor, $data);
         $persona = $this->personaManager->addPersona($data, $this->tipo);
-        $cliente->setPersona($persona);
-        $this->tryAddCliente($cliente);
-        return $cliente;
+        $proveedor->setPersona($persona);
+        $this->tryAddProveedor($proveedor);
+        return $proveedor;
     }
 
 
-    private function tryAddCliente($cliente) {
+    private function tryAddProveedor($proveedor) {
         try {
-            $this->entityManager->persist($cliente);
+            $this->entityManager->persist($proveedor);
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {
+            echo $e;
             $this->entityManager->rollBack();
             return false;
         }
     }
 
-    public function updateCliente($data) {
-        $cliente = $this->getCliente($data['id']);
-        $this->addDatosParticulares($cliente, $data);
-        $this->addDatosLaborales($cliente, $data);
-        $this->addDatosFacturacion($cliente, $data);
-        $this->addDatosLicencia($cliente, $data);
-        $this->addDatosGanaderos($cliente, $data);
-        $this->personaManager->updatePersona($cliente->getPersona(), $data);
+    public function updateProveedor($data) {
+        $proveedor = $this->getProveedor($data['id']);
+        $this->addDatosParticulares($proveedor, $data);
+        $this->addDatosLaborales($proveedor, $data);
+        $this->addDatosFacturacion($proveedor, $data);
+        $this->personaManager->updatePersona($proveedor->getPersona(), $data);
 
-        if ($this->tryUpdateCliente($cliente)) {
-            $_SESSION['MENSAJES']['ficha_cliente'] = 1;
-            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Cliente modificado correctamente';
+        if ($this->tryUpdateProveedor($proveedor)) {
+            $_SESSION['MENSAJES']['ficha_proveedor'] = 1;
+            $_SESSION['MENSAJES']['ficha_proveedor_msj'] = 'Proveedor modificado correctamente';
         } else {
-            $_SESSION['MENSAJES']['ficha_cliente'] = 0;
-            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al modificar cliente';
+            $_SESSION['MENSAJES']['ficha_proveedor'] = 0;
+            $_SESSION['MENSAJES']['ficha_proveedor_msj'] = 'Error al modificar proveedor';
         }
 
         return true;
     }
 
-    private function tryUpdateCliente($cliente) {
+    private function tryUpdateProveedor($proveedor) {
         try {
             $this->entityManager->flush();
             return true;
@@ -248,34 +232,33 @@ class ClientesManager {
         }
     }
 
-    private function addDatosParticulares($cliente, $data) {
+    private function addDatosParticulares($proveedor, $data) {
         $pais = $this->getPais($data['pais']);
         $provincia = $this->getProvincia($data['provincia']);
-        $categoria = $this->getCategoriaCliente($data['categoria']);
+        $categoria = $this->getCategoriaProveedor($data['categoria']);
 
-        $cliente->setSkype($data['skype'])
-                ->setPais($pais)
+        $proveedor->setPais($pais)
                 ->setProvincia($provincia)
                 ->setCiudad($data['ciudad'])
                 ->setCategoria($categoria);
     }
 
-    private function addDatosLaborales($cliente, $data) {
-        $cliente->setEmpresa($data['empresa'])
+    private function addDatosLaborales($proveedor, $data) {
+        $proveedor->setEmpresa($data['empresa'])
                 ->setCargo($data['cargo'])
                 ->setActividad($data['actividad']);
         if ($data['profesion'] == "-1") {
-            $cliente->setProfesion(null);
+            $proveedor->setProfesion(null);
         } else {
             $profesion = $this->getProfesion($data['profesion']);
-            $cliente->setProfesion($profesion);
+            $proveedor->setProfesion($profesion);
         }
     }
 
-    private function addDatosFacturacion($cliente, $data) {
-        $condicion_iva = $this->getCategoriaCliente($data['condicion_iva']);
+    private function addDatosFacturacion($proveedor, $data) {
+        $condicion_iva = $this->getCategoriaProveedor($data['condicion_iva']);
 
-        $cliente->setRazon_social($data['razon_social'])
+        $proveedor->setRazon_social($data['razon_social'])
                 ->setDireccion_facturacion($data['direccion_facturacion'])
                 ->setCondicion_iva($condicion_iva)
                 ->setBanco($data['banco'])
@@ -283,59 +266,40 @@ class ClientesManager {
                 ->setCuit_cuil($data['cuit_cuil']);
     }
 
-    private function addDatosLicencia($cliente, $data) {
-        if ($data['licencia'] == "-1") {
-            $cliente->setLicencia(null);
-        } else {
-            $licencia = $this->getLicencia($data['licencia']);
-            $cliente->setLicencia($licencia);
-        }
-        if ($data['version'] == "-1") {
-            $cliente->setVersion(null);
-        } else {
-            $cliente->setVersion($data['version']);
-        }
-    }
-
-    private function addDatosGanaderos($cliente, $data) {
-        $cliente->setAnimales($data['animales'])
-                ->setEstablecimientos($data['establecimientos'])
-                ->setRazaManejo($data['raza_manejo']);
-    }
-
-    public function deleteCliente($id) {
+   
+    public function deleteProveedor($id) {
         $entityManager = $this->entityManager;
-        $cliente = $this->entityManager
-                ->getRepository(Cliente::class)
+        $proveedor = $this->entityManager
+                ->getRepository(Proveedor::class)
                 ->findOneBy(['Id' => $id]);
-        $this->borrarUsuariosFromCliente($cliente);
-        $entityManager->remove($cliente);
+        $this->borrarUsuariosFromProveedor($proveedor);
+        $entityManager->remove($proveedor);
         $entityManager->flush();
     }
 
     public function modificarEstado($id) {
         $entityManager = $this->entityManager;
-        $cliente = $this->entityManager
-                ->getRepository(Cliente::class)
+        $proveedor = $this->entityManager
+                ->getRepository(Proveedor::class)
                 ->findOneBy(['Id' => $id]);
-        $estado_nuevo = $this->personaManager->cambiarEstado($cliente->getPersona());
+        $estado_nuevo = $this->personaManager->cambiarEstado($proveedor->getPersona());
         if ($estado_nuevo == "N"){
-            $_SESSION['MENSAJES']['listado_clientes_msj'] = 'Cliente dado de Baja correctamente';
+            $_SESSION['MENSAJES']['listado_proveedors_msj'] = 'Proveedor dado de Baja correctamente';
         } else if ($estado_nuevo == "S") {
-            $_SESSION['MENSAJES']['listado_clientes_msj'] = 'Cliente dado de Alta correctamente';
+            $_SESSION['MENSAJES']['listado_proveedors_msj'] = 'Proveedor dado de Alta correctamente';
         }
-        $_SESSION['MENSAJES']['listado_clientes'] = 1;
+        $_SESSION['MENSAJES']['listado_proveedors'] = 1;
         return $estado_nuevo;
     }
 
-    //La funcion getListaClientes() devuelve lista de clientes sin paginado
+    //La funcion getListaProveedor() devuelve lista de proveedors sin paginado
     //Usada en la generacion de backup
-    public function getListaClientes() {
-        $lista = $this->entityManager->getRepository(Cliente::class)->findAll();
+    public function getListaProveedor() {
+        $lista = $this->entityManager->getRepository(Proveedor::class)->findAll();
         return $lista;
     }
 
-    public function getCategoriaCliente($id = null) {
+    public function getCategoriaProveedor($id = null) {
         if (isset($id)) {
             return $this->entityManager
                             ->getRepository(Categoria::class)
@@ -346,7 +310,7 @@ class ClientesManager {
                         ->findAll();
     }
 
-    public function getCategoriasCliente($tipo = null) {
+    public function getCategoriasProveedor($tipo = null) {
         if (isset($tipo)) {
             return $this->entityManager
                             ->getRepository(Categoria::class)
@@ -381,10 +345,10 @@ class ClientesManager {
     
     public function getEventos($id = null) {
         if (isset($id)) {
-            $cliente= $this->entityManager
-                            ->getRepository(Cliente::class)
+            $proveedor= $this->entityManager
+                            ->getRepository(Proveedor::class)
                             ->findOneBy(['Id' => $id]);
-            return $cliente->getEventos();
+            return $proveedor->getEventos();
         }
         return array();
         
@@ -430,43 +394,34 @@ class ClientesManager {
         return $provincias;
     }
 
-    public function eliminarLicenciaClientes($id) {
-        $entityManager = $this->entityManager;
-        $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['licencia'=>$id]);
-        foreach ($clientes as $cliente) {
-            $cliente->setLicencia(null)
-                     ->setVersion(null);
-        }
-        $entityManager->flush();
-    }
 
-    public function eliminarCategoriaClientes($id) {
-        $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['categoria'=>$id]);
-        foreach ($clientes as $cliente) {
-            $cliente->setCategoria(null);
+    public function eliminarCategoriaProveedor($id) {
+        $proveedors = $this->entityManager->getRepository(Proveedor::class)->findBy(['categoria'=>$id]);
+        foreach ($proveedors as $proveedor) {
+            $proveedor->setCategoria(null);
         }
         $this->entityManager->flush();
     }
 
     public function eliminarProfesiones($id) {
-        $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['profesion'=>$id]);
-        foreach ($clientes as $cliente) {
-             $cliente->setProfesion(null);
+        $proveedors = $this->entityManager->getRepository(Proveedor::class)->findBy(['profesion'=>$id]);
+        foreach ($proveedors as $proveedor) {
+             $proveedor->setProfesion(null);
         }
         $this->entityManager->flush();
     }
 
-    public function getClienteIdPersona($id_persona){
-        $cliente= $this->entityManager
-                    ->getRepository(Cliente::class)
+    public function getProveedorIdPersona($id_persona){
+        $proveedor= $this->entityManager
+                    ->getRepository(Proveedor::class)
                     ->findOneBy(['persona' => $id_persona]);
-        return $cliente;
+        return $proveedor;
     }
 
     public function eliminarCondicionIva($id){
-        $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['condicion_iva'=>$id]);
-        foreach ($clientes as $cliente) {
-             $cliente->setCondicion_iva(null);
+        $proveedors = $this->entityManager->getRepository(Proveedor::class)->findBy(['condicion_iva'=>$id]);
+        foreach ($proveedors as $proveedor) {
+             $proveedor->setCondicion_iva(null);
         }
         $this->entityManager->flush();
     }

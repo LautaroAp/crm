@@ -61,7 +61,9 @@
             "Ganaderia\\": "module/Ganaderia/src/",
             "Iva\\": "module/Iva/src/",
             "CategoriaLicencia\\": "module/CategoriaLicencia/src/",
-            "Categoria\\": "module/Categoria/src/"
+            "Categoria\\": "module/Categoria/src/",
+            "Proveedor\\": "module/Proveedor/src/"
+
 
 
         }

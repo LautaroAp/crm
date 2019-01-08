@@ -1,0 +1,382 @@
+<?php
+$this->headTitle('Detalles del Proveedor');
+$id_cliente = $this->proveedor->getId();
+
+if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
+    if ($_SESSION['MENSAJES']['ficha_cliente']) {
+        echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['ficha_cliente_msj'] . "', 'success');});</script>";
+    } else {
+        echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['ficha_cliente_msj'] . "', 'error');});</script>";
+    }
+    $_SESSION['MENSAJES']['ficha_cliente'] = null;
+    $_SESSION['MENSAJES']['ficha_cliente_msj'] = null;
+}
+?>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+</script>
+
+<!-- Inicio: Datos de Proveedor -->
+<div class="container margen">
+    <div class="row">
+        <!-- Datos de Perfil --> 
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center titulo-espaciado">
+                    DATOS DE PERFIL
+                </div>
+                <div class="panel-body padding-top-cero" style="min-height: 325px;">                
+                    <div class="ficha-cliente-p img-centrar ">
+                        <div>
+                            <figure>
+                                <a href="<?= $this->url('proveedores/editar', ['tipo' => 'proveedor', 'id' => (int) $persona->getId()]) ?>" role="button">
+                                    <img src="<?= $this->basePath('img/crm/perfil.png') ?>" 
+                                    class="img-circle img-responsive img-texto-derecha" width="150px" height="150px" style="margin-left:0px;">
+                                </a>
+                                <figcaption class="text-center"></figcaption>
+                            </figure><br>
+                        </div>
+                        <div class="ficha-cliente-label padding-md">
+                            <h4><?= $persona->getNombre(); ?></h4>
+                            <p><i><?php echo ($proveedor->getNombreCategoriaProveedor());?></i></p>
+                            <p><span class="glyphicon glyphicon-earphone"></span>&nbsp; <?php echo ($persona->getTelefono()); ?></p>
+                            <p><span class="glyphicon glyphicon-envelope"></span>&nbsp; <?php echo ($persona->getEmail()); ?></p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-6 ficha-cliente-p margen-bot-cero">
+                            <p><label>Empresa:</label> <?= $proveedor->getEmpresa(); ?></p>
+                            <p><label>Cargo:</label> <?= $proveedor->getCargo(); ?></p>
+                            <p><label>Profesión:</label> <?php echo ($proveedor->getNombreProfesion()); ?></p>
+                            <p><label>Tipo de Negocio:</label> <?php echo ($proveedor->getActividad()); ?></p>
+                        </div>
+                        
+                        <div class="col-sm-6 ficha-cliente-p">    
+                            <p><label>Fecha de Compra:</label> <?php
+                                if (!is_null($proveedor->getFechaCompra())) {
+                                    echo ($proveedor->getFechaCompra()->format('d/m/Y'));
+                                }
+                                ?>
+                            </p>
+                            <p><label>Último Pago:</label> <?php
+                                if (!is_null($proveedor->getFechaUltimoPago())) {
+                                    echo ($proveedor->getFechaUltimoPago()->format('d/m/Y'));
+                                }
+                                ?>
+                            </p>
+                            <p><label>Fecha Vencimiento:</label> <?php
+                                if (!is_null($proveedor->getVencimiento())) {
+                                    echo ($proveedor->getVencimiento()->format('d/m/Y'));
+                                }
+                                ?>
+                            </p>
+
+                            <!-- <button class="btn btn-default pull-right">
+                                <span class="clickable glyphicon glyphicon-plus btn-collapse"></span>
+                                Repositorio
+                            </button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Datos Generales -->
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center titulo-espaciado">
+                    DATOS GENERALES
+                </div>
+                <div class="panel-body" style="min-height: 325px;">
+                    <div class="ficha-cliente-p margen">
+                        <p><label>Ciudad:</label> <?php echo ($proveedor->getCiudad()); ?></p>
+                        <p><label>Provincia:</label> <?php echo ($proveedor->getNombreProvinciaProveedor()); ?></p>
+                        <p><label>País:</label> <?php echo ($proveedor->getNombrePaisProveedor()); ?></p>
+                        
+                        <hr>
+
+                        <p><label>Razón Social:</label> <?= $proveedor->getRazon_social(); ?></p>
+                        <p><label>Dirección de Facturación:</label> <?= $proveedor->getDireccion_facturacion(); ?></p>
+                        <p><label>Condición de IVA:</label> <?= $proveedor->getNombreCondicionIva(); ?></p>
+                        <p><label>Banco:</label> <?= $proveedor->getBanco(); ?></p>
+                        <p><label>CBU:</label> <?= $proveedor->getCbu(); ?></p>
+                        <p><label>CUIT/CUIL:</label> <?= $proveedor->getCuit_cuil(); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Datos de Proveedor -->
+
+<!-- Inicio: Actividades -->
+<div class="container margen">
+    <div class="container row">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center titulo-espaciado">
+                REGISTRO DE ACTIVIDADES
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
+                </a>
+            </div>
+            <div class="panel-body padding-top-cero">
+                <div class="collapse in" id="collapseActividades">
+
+
+                <div class="row" style="padding:0px;">
+                        <!-- Accion Comercial -->
+                        <div class="col-md-3 img-centrar">
+                            <div>
+                                <a href="<?= $this->url('evento', ['action' => 'add', 'id' => (int) $proveedor->getId()]) ?>" role="button">
+                                    <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                </a>
+                            </div>
+                            <div class="ficha-cliente-label">
+                                <label>Acción Comercial</label>
+                            </div>
+                        </div>
+                        <!-- Transaccion-->
+                        <div class="col-md-3 img-centrar">
+                            <div class="btn-group dropup">
+                                <a role="button" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                </a>
+                                <ul class="dropdown-menu" role="menu" style="width:300px;">
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Presupuesto
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Pedido
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Remito
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Factura
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Nota de Crédito
+                                            </div> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="padding-cero">
+                                            <div class="col img-centrar">
+                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                                Nota de Débito
+                                            </div> 
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="ficha-cliente-label">
+                                <label>Transacciones</label>
+                            </div>
+                        </div>
+                        <!-- Eliminar Actividad -->
+                        <div class="col-md-3 img-centrar">
+                            <div>
+                                <a role="button" data-toggle="modal" data-target="#actividadModal">
+                                    <img src="<?= $this->basePath('img/crm/remove_carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                </a>
+                            </div>
+                            <div class="ficha-cliente-label">
+                                <label>Eliminar Actividad</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <table id="table_id" class="display">
+                        <thead>
+                            <tr> 
+                                <th class="" id="fila">Fecha</th>
+                                <th class="">Responsable</th>
+                                <th class="">Tipo</th>
+                                <th class="detalle-width">Detalle</th>     
+                            </tr>
+                        </thead>
+                        <tbody role="button" class="">
+                            <?php foreach ($eventos as $evento): ?>
+                                <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
+                                    <td id="<?= $evento->getId() ?>" class=""><?php
+                                        if (!is_null($evento->getFecha())) {
+                                            echo($evento->getFecha()->format('Y/m/d'));
+                                        }
+                                        ?></td>
+                                    <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getUsuarioEjecutivo()); ?></td>
+                                    <td id="<?= $evento->getId() ?>" class=""><?php
+                                        if (!is_null($evento->getTipo())) {
+                                            echo($evento->getTipo());
+                                        } else {
+                                            echo('No definido');
+                                        }
+                                        ?></td>
+                                    <td id="<?= $evento->getId() ?>" class="table-scroll-description"><?php echo(nl2br($evento->getDescripcion())); ?></td>
+                                </tr> 
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Actividades -->
+
+<!-- Modal Ciente -->
+<div class="modal fade" id="exampleModal<?= $proveedor->getId() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Eliminar cliente</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    ¿Está seguro que desea eliminar el cliente:
+                    "<?= $this->escapeHtml($persona->getNombre()) ?>"
+                    ?<br>
+                    <?php
+                    if ($persona->getEstado() == "S") {
+                        echo('Se establecerá como Inactivo.');
+                    } else {
+                        echo('Se establecerá como Activo.');
+                    }
+                    ?>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <a href="<?= $this->url('proveedores/modificarEstado', ['action' => 'modificarEstado', 'id' => (int) $proveedor->getId()]) ?>" type="button">
+                <span class="btn btn-default">Aceptar</span></a>
+               
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Actividad -->
+<div class="modal fade" id="actividadModal" tabindex="-1" role="dialog" aria-labelledby="actividadModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="actividadModalLabel">Eliminar actividad</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que desea eliminar las actividades seleccionadas?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="eliminaEventos()">Aceptar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row img-centrar">
+        <!-- Modificar Datos -->
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('proveedores/editar', ['tipo' => 'proveedor', 'id' => (int) $persona->getId()]) ?>" role="button">
+                    <img src="<?= $this->basePath('img/crm/cliente_update_a.png') ?>" 
+                    class="img-rounded img-responsive img-texto-derecha img-submenu">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Modificar</label><br>
+                <label>Datos</label>
+            </div>
+        </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a role="button" name="<?= $proveedor->getId() ?>" id="<?= $proveedor->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $proveedor->getId() ?>">
+                    <img src="<?php
+                    if ($persona->getEstado() == "S") {
+                        echo($this->basePath('img/crm/cliente_remove_a.png'));
+                    } else {
+                        echo($this->basePath('img/crm/cliente_add_a.png'));
+                    }
+                    ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <?php
+                if ($persona->getEstado() == "S") {
+                    echo('<label>Eliminar</label><br>'
+                    . '<label>Proveedor</label>');
+                } else {
+                    echo('<label>Agregar</label><br>'
+                    . '<label>Proveedor</label>');
+                }
+                ?>
+            </div>
+        </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>   
+                <?php
+                $ruta = "";
+                if ($persona->getEstado() == "S") {
+                    $ruta = 'gestionProveedores/listado';
+                } else {
+                    $ruta = 'proveedores/inactivos';
+                }
+                ?>
+                <a href="<?= $this->url($ruta) ?>" role="button">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha">
+                </a>
+            </div>
+            <div class="ficha-proveedor-label">
+                <label>Volver</label>
+            </div>
+        </div>
+    </div>   
+</div>
+<!-- Fin: Panel Botones -->

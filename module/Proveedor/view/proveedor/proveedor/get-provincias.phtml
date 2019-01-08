@@ -1,0 +1,9 @@
+<select class="form-control" id="ops_provincias" name="provincia">
+    <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); }?>" hidden="">  
+        <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
+    </option> 
+    <?php foreach ($provincias as $provincia ) : ?>
+        <option value="<?php echo ($provincia->getId()); ?>"><?php echo ($provincia->getNombre_provincia()); ?></option>
+    <?php endforeach; ?>
+</select>
+

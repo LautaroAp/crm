@@ -165,7 +165,7 @@ return [
                 ],
             ],
              // Gestion Proveedores
-            'gestionProveedores' => [
+             'gestionProveedores' => [
                 'type' => Literal::class,
                 'options' => [
                     'route' => '/proveedores',
@@ -181,8 +181,18 @@ return [
                         'options' => [
                             'route' => '/listado',
                             'defaults' => [
-                                'controller' => \Clientes\Controller\ClientesController::class,
+                                'controller' => \Proveedor\Controller\ProveedorController::class,
                                 'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'agregar' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/add[/:tipo]',
+                            'defaults' => [
+                                'controller' => \Proveedor\Controller\ProveedorController::class,
+                                'action' => 'add',
                             ],
                         ],
                     ],
