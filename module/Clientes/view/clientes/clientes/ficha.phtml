@@ -29,7 +29,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <div class="container margen">
     <div class="row">
         <!-- Datos de Perfil --> 
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="panel panel-default">
                 <div class="panel-heading text-center titulo-espaciado">
                     DATOS DE PERFIL
@@ -48,10 +48,10 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <div class="ficha-cliente-label padding-md">
                             <h4><?= $persona->getNombre(); ?></h4>
                             <p><i><?php echo ($cliente->getNombreCategoriaCliente());?></i></p>
-                            <p><span class="glyphicon glyphicon-earphone"></span>&nbsp; <?php echo ($persona->getTelefono()); ?></p>
-                            <p><span class="glyphicon glyphicon-envelope"></span>&nbsp; <?php echo ($persona->getEmail()); ?></p>
-                            <p><span><img src="<?= $this->basePath('img/crm/skype.png') ?>" width="16" height="16"></span>
-                                <?php echo ($cliente->getSkype()); ?>
+                            <p><span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp; <?php echo ($persona->getTelefono()); ?></p>
+                            <p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp; <?php echo ($persona->getEmail()); ?></p>
+                            <p><span><img src="<?= $this->basePath('img/crm/skype.png') ?>" width="15" height="15"></span>
+                                &nbsp;<?php echo ($cliente->getSkype()); ?>
                             </p> 
                         </div>
                     </div>
@@ -103,7 +103,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
         </div>
 
         <!-- Datos Generales -->
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading text-center titulo-espaciado">
                     DATOS GENERALES
