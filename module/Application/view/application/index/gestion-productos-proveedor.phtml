@@ -1,0 +1,60 @@
+<div class="container margen text-center" >         
+    <nav class="navbar" id="nav" >
+        <ul>
+            <li>
+                <figure>
+                    <a href="<?= $this->url('gestionProveedores/gestionProductos/listado'); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/producto_v.png') ?>" 
+                        class="img-rounded img-responsive img-menu img-centrar">
+                    </a>
+                    <figcaption>Listado</figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <a href="<?= $this->url("gestionProveedores/gestionProductos/agregar", ['tipo' => 'producto']); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/producto_add_v.png') ?>" 
+                        class="img-rounded img-responsive img-menu img-centrar">
+                    </a>
+                    <figcaption>Agregar Producto</figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <a href="<?= $this->url('gestionProveedores/gestionProductos/categoriaproducto', ['tipo'=>'producto']); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/consulta_v.png') ?>" 
+                        class="img-rounded img-responsive img-menu img-centrar">
+                    </a>
+                    <figcaption>Categorias</figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <a href="<?= $this->url('gestionProveedores/gestionProductos/backup'); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/producto_excel_v.png') ?>" 
+                        class="img-rounded img-responsive img-menu img-centrar">
+                    </a>
+                    <figcaption>Exportar a Excel</figcaption>
+                </figure>
+            </li>
+        </ul>
+    </nav>
+    <nav id="nav" >
+        <ul>
+            <li>
+                <div class="img-centrar">
+                    <div>
+                        <a href="<?= $this->url('gestionProveedores') ?>">
+                            <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                                class="img-rounded img-responsive img-texto-derecha">
+                        </a>
+                    </div>
+                    <div class="ficha-cliente-label">
+                        <label>Volver</label>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </nav>
+</div>

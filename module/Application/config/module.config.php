@@ -196,6 +196,233 @@ return [
                             ],
                         ],
                     ],
+                    'categoriaproveedor' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/categoriaproveedor[/:tipo[/:id]]',
+                            'defaults' => [
+                                'controller' => \Categoria\Controller\CategoriaController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    //  Gestion Actividades
+                    'gestionActividadesProveedores' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/gestionActividadesProveedores',
+                            'defaults' => [
+                                'controller' => \Application\Controller\IndexController::class,
+                                'action' => 'gestionActividadesProveedores',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'tipoevento' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/actividades',
+                                    'defaults' => [
+                                        'controller' => \TipoEvento\Controller\TipoEventoController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                            ],
+                            'agregar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/add',
+                                    'defaults' => [
+                                        'controller' => \Producto\Controller\ProductoController::class,
+                                        'action' => 'add',
+                                    ],
+                                ],
+                            ],
+                            'editar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/edit[/:id]',
+                                    'defaults' => [
+                                        'controller' => \Producto\Controller\ProductoController::class,
+                                        'action' => 'edit',
+                                    ],
+                                    'constraints' => [
+                                        'id' => '[0-9]\d*',
+                                    ],
+                                ],
+                            ],
+                            'categoriaevento' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/categoriaevento[/:tipo[/:id]]',
+                                    'defaults' => [
+                                        'controller' => \Categoria\Controller\CategoriaController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    // Gestion Productos
+                    'gestionProductos' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/productos',
+                            'defaults' => [
+                                'controller' => \Application\Controller\IndexController::class,
+                                'action' => 'gestionProductosProveedor',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'listado' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/listado',
+                                    'defaults' => [
+                                        'controller' => \Producto\Controller\ProductoController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                            ],
+                            'agregar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/add[/:tipo]',
+                                    'defaults' => [
+                                        'controller' => \Producto\Controller\ProductoController::class,
+                                        'action' => 'add',
+                                    ],
+                                ],
+                            ],
+                            'editar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/edit[/:tipo[/:id]]',
+                                    'defaults' => [
+                                        'controller' => \Producto\Controller\ProductoController::class,
+                                        'action' => 'edit',
+                                    ],
+                                    'constraints' => [
+                                        'id' => '[0-9]\d*',
+                                    ],
+                                ],
+                            ],
+                            'eliminar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/remove[/:id]',
+                                    'defaults' => [
+                                        'controller' => \Producto\Controller\ProductoController::class,
+                                        'action' => 'remove',
+                                    ],
+                                    'constraints' => [
+                                        'id' => '[0-9]\d*',
+                                    ],
+                                ],
+                            ],
+                            'categoriaproducto' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/categorias[/:tipo[/:id]]',
+                                    'defaults' => [
+                                        'controller' => \Categoria\Controller\CategoriaController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                            ],
+                            'backup' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/backup',
+                                    'defaults' => [
+                                        'controller' => \Producto\Controller\ProductoController::class,
+                                        'action' => 'backup',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    // Gestion Servicios
+                    'gestionServicios' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/servicios',
+                            'defaults' => [
+                                'controller' => \Application\Controller\IndexController::class,
+                                'action' => 'gestionServiciosProveedor',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'listado' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/listado',
+                                    'defaults' => [
+                                        'controller' => \Servicio\Controller\ServicioController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                            ],
+                            'agregar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/add[/:tipo]',
+                                    'defaults' => [
+                                        'controller' => \Servicio\Controller\ServicioController::class,
+                                        'action' => 'add',
+                                    ],
+                                ],
+                            ],
+                            'editar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/edit[/:tipo[/:id]]',
+                                    'defaults' => [
+                                        'controller' => \Servicio\Controller\ServicioController::class,
+                                        'action' => 'edit',
+                                    ],
+                                    'constraints' => [
+                                        'id' => '[0-9]\d*',
+                                    ],
+                                ],
+                            ],
+                            'eliminar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/remove[/:id]',
+                                    'defaults' => [
+                                        'controller' => \Servicio\Controller\ServicioController::class,
+                                        'action' => 'remove',
+                                    ],
+                                    'constraints' => [
+                                        'id' => '[0-9]\d*',
+                                    ],
+                                ],
+                            ],
+                            'categoriaservicio' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/categorias[/:tipo[/:id]]',
+                                    'defaults' => [
+                                        'controller' => \Categoria\Controller\CategoriaController::class,
+                                        'action' => 'index',
+                                    ],
+                                ],
+                            ],
+                            'backup' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/backup',
+                                    'defaults' => [
+                                        'controller' => \Servicio\Controller\ServicioController::class,
+                                        'action' => 'backup',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ],
              // Gestion Empresa
