@@ -78,13 +78,14 @@ class EventoController extends AbstractActionController {
     private function procesarAddAction() {
         $Id = (int) $this->params()->fromRoute('id', -1);
         $cliente = $this->clienteManager->getCliente($Id);
+        $id_persona= $cliente->getPersona()->getId();
         $tipoEventos = $this->getArrayTipos();
         $transacciones = $this->tipoEventoManager->getTipoEventos();
         $form = $this->eventoManager->createForm($tipoEventos);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->eventoManager->addEvento($data);
-            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $data['id_cliente']]);
+            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' =>$id_persona]);
         }
         return new ViewModel([
             'form' => $form,
