@@ -20,11 +20,7 @@ return [
             'evento' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route' => '/evento[/:action[/:id]]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
-                    ],
+                    'route' => '/evento[/:action[/:tipo[/:id]]]',
                     'defaults' => [
                         'controller' => Controller\EventoController::class,
                         'action' => 'index',
@@ -47,7 +43,7 @@ return [
                     'agregar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/add[/:id]',
+                            'route' => '/add[/:tipo[/:id]]',
                             'defaults' => [
                                 'action' => 'add',
                             ],

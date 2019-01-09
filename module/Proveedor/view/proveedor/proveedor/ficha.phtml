@@ -134,7 +134,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <!-- Accion Comercial -->
                         <div class="col-md-3 img-centrar">
                             <div>
-                                <a href="<?= $this->url('evento', ['action' => 'add', 'id' => (int) $proveedor->getId()]) ?>" role="button">
+                                <a href="<?= $this->url('evento', ['action' => 'add', 'tipo'=>'proveedor','id' => (int) $proveedor->getId()]) ?>" role="button">
                                     <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
                                     class="img-rounded img-responsive img-texto-derecha img-submenu-add">
                                 </a>

@@ -153,7 +153,7 @@ class ClientesManager {
         }
         $data = [
             'cliente' =>$cliente,
-            'eventos' =>$cliente->getEventos(),
+            'eventos' =>$persona->getEventos(),
             'usuarios' => $cliente->getUsuarios(),
             'persona'=>$cliente->getPersona()
         ];

@@ -94,8 +94,9 @@ class ProveedorController extends AbstractActionController
         $licencia = $this->proveedorManager->getLicencia();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
-            $this->proveedorManager->addProveedor($data);
-            $this->redirect()->toRoute('proveedores');
+            $proveedor = $this->proveedorManager->addProveedor($data);
+            $id_persona = $proveedor->getPersona()->getId();
+            $this->redirect()->toRoute('gestionProveedores/listado', ['id' => $id_persona]);
         }
         return new ViewModel([
             'categorias' => $categorias,
@@ -186,7 +187,6 @@ class ProveedorController extends AbstractActionController
         $data = $this->proveedorManager->getDataFicha($id_persona);
         return new ViewModel([
             'proveedor' => $data['proveedor'],
-            'usuarios' => $data['usuarios'],
             'eventos' => $data['eventos'],
             'tipo_eventos' => $this->tipoEventosManager->getTipoEventos(),
             'persona' => $data['persona']

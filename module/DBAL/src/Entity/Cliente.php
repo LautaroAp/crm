@@ -170,13 +170,6 @@ class Cliente {
     private $usuarios;
 
     /**
-     * 
-     * @ORM\OneToMany(targetEntity="\DBAL\Entity\Evento", mappedBy="cliente")
-     * @ORM\OrderBy({"fecha" = "desc"})
-     */
-    private $eventos;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Persona")
      * @ORM\JoinColumn(name="ID_PERSONA", referencedColumnName="ID")
      */
@@ -402,9 +395,7 @@ class Cliente {
         return $this->usuarios;
     }
 
-    public function getEventos() {
-        return $this->eventos;
-    }
+
 
     public function isPrimeraVenta() {
         $array_eventos = $this->getEventos();

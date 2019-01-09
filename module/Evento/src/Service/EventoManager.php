@@ -6,6 +6,7 @@ use DBAL\Entity\Evento;
 use DBAL\Entity\TipoEvento;
 use Evento\Form\EventoForm;
 use DBAL\Entity\Cliente;
+use DBAL\Entity\Proveedor;
 use DBAL\Entity\Ejecutivo;
 use DBAL\Entity\Empresa;
 use Zend\Paginator\Paginator;
@@ -86,32 +87,30 @@ class EventoManager {
     /**
      * This method adds a new evento.
      */
-    public function addEvento($data) {
+    public function addEvento($data, $persona, $tipo_persona) {
         $evento = new Evento();
         $fecha_evento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
         $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
         $tipo_evento = $this->entityManager->getRepository(TipoEvento::class)
                         ->findOneBy(['id_tipo_evento' => $data['accion_comercial']]);
-        $cliente = $this->entityManager->getRepository(Cliente::class)
-                ->findOneBy(['Id' => $data['id_cliente']]);
         $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
                 ->findOneBy(['usuario' => $data['ejecutivo']]);     
-        
-        $this->actualizaFechas($evento, $cliente, $tipo_evento, $fecha_evento, $fecha_vencimiento);
-        
         $evento->setFecha($fecha_evento)
                 ->setTipo($tipo_evento)
-                ->setId_cliente($cliente)
+                ->setId_persona($persona)
                 ->setId_ejecutivo($ejecutivo)
-                ->setDescripcion($data['detalle']);
+                ->setDescripcion($data['detalle'])
+                ->setTipo_persona($tipo_persona);
         
-        if ($this->tryAddEvento($evento)) {
-            $_SESSION['MENSAJES']['ficha_cliente'] = 1;
-            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Actividad guardada correctamente';
-        } else {
-            $_SESSION['MENSAJES']['ficha_cliente'] = 0;
-            $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al guardar actividad';
-        }
+        // if ($this->tryAddEvento($evento)) {
+        //     $_SESSION['MENSAJES']['ficha_cliente'] = 1;
+        //     $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Actividad guardada correctamente';
+        // } else {
+        //     $_SESSION['MENSAJES']['ficha_cliente'] = 0;
+        //     $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al guardar actividad';
+        // }
+        $this->entityManager->persist($evento);
+        $this->entityManager->flush();
         return $evento;
     }
 

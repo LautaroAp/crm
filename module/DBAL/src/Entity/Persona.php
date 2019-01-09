@@ -51,6 +51,15 @@ class Persona {
     /**
      * Get the value of id
      */ 
+
+
+    /**
+     * 
+     * @ORM\OneToMany(targetEntity="\DBAL\Entity\Evento", mappedBy="persona")
+     * @ORM\OrderBy({"fecha" = "desc"})
+     */
+    private $eventos;
+
     public function getId()
     {
         return $this->id;
@@ -150,5 +159,9 @@ class Persona {
         $this->tipo = $tipo;
 
         return $this;
+    }
+
+    public function getEventos() {
+        return $this->eventos;
     }
 }
