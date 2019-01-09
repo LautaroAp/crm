@@ -4,7 +4,7 @@ namespace Proveedor\Controller\Factory;
 
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Proveedor\Controller\ProveedorInactivosController;
+use Proveedor\Controller\ProveedorInactivoController;
 use Proveedor\Service\ProveedorManager;
 
 class ProveedorInactivoControllerFactory implements FactoryInterface {

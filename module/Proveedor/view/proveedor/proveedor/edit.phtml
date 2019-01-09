@@ -74,18 +74,6 @@ $raza_manejo = $proveedor->getRazaManejo();
                                 </option>
                             </select>
                         </div> 
-                        <div class="form-group col-md-4">
-                            <label>Licencia</label>
-                            <select class="form-control" id="licencia" name="licencia">
-                                <option value="<?php if(isset($licencia)){ echo ($licencia->getId()); }?>" hidden="">  
-                                    <?php if(isset($licencia)){ echo($licencia->getNombre()); } else {echo ("Seleccionar Licencia");}?>
-                                </option>
-                                <option value="-1">NO DEFINIDO</option>
-                                <?php foreach ($licencias as $licencia) : ?>
-                                    <option value="<?php echo ($licencia->getId()); ?>"><?php echo ($licencia->getNombre()); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
                     </div>
                     <!-- 3ra fila -->
                     <div class="row form-row">
@@ -97,17 +85,6 @@ $raza_manejo = $proveedor->getRazaManejo();
                         <div class="form-group col-md-4">
                             <label>Ciudad</label>
                             <input type="text" class="form-control" name="ciudad" value="<?php echo($ciudad); ?>" placeholder="Ingresar Ciudad">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Versión</label>
-                            <select class="form-control" id="version" name="version">
-                                <option value="<?php if(isset($version)){ echo ($version); }?>" hidden="">  
-                                    <?php if(isset($version)){ echo($version); } else {echo ("Seleccionar Versión");}?>
-                                </option>
-                                <option value="Productores">Productores</option>
-                                <option value="Veterinarios">Veterinarios</option>
-                                <option value="-1">NO DEFINIDO</option>
-                            </select>
                         </div>
                     </div>
             </div>
@@ -218,37 +195,6 @@ $raza_manejo = $proveedor->getRazaManejo();
 </div>
 <!-- Fin: Datos de Facturacion -->
 
-<!-- Inicio: Datos Ganaderos -->
-<div class="container margen">
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading titulo-espaciado">
-                DATOS GANADEROS
-            </div>
-            <div class="panel panel-body">
-                <!-- Fila 1 -->
-                <div class="row form-row">
-                    <div class="form-group col-md-4">
-                        <label>Raza de Manejo</label>
-                        <input type="text" class="form-control" name="raza_manejo"
-                            value="<?php echo($raza_manejo); ?>" placeholder="Ingresar Raza">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Nro. de Animales</label>
-                        <input type="text" class="form-control" name="animales" 
-                            value="<?php echo($animales); ?>" placeholder="Ingresar Nro. Animales">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Nro. de Establecimientos</label>
-                        <input type="text" class="form-control" name="establecimientos"
-                            value="<?php echo($establecimientos); ?>" placeholder="Ingresar Nro. Establecimientos">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Fin: Datos Ganaderos -->
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
