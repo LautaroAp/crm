@@ -44,6 +44,20 @@ class IndexController extends AbstractActionController {
     }
 
     public function gestionProveedoresAction() {
+        $_SESSION['PARAMETROS_PROVEEDOR'] = array();
+        $_SESSION['PARAMETROS_PROVEEDOR_INACTIVO'] = array();
+        return new ViewModel();
+    }
+
+    public function gestionActividadesProveedoresAction() {
+        return new ViewModel();
+    }
+
+    public function gestionProductosProveedorAction() {
+        return new ViewModel();
+    }
+
+    public function gestionServiciosProveedorAction() {
         return new ViewModel();
     }
 
