@@ -55,6 +55,7 @@ class PersonaManager {
     public function addPersona($data, $tipo) {
         $persona = new Persona();
         $persona=$this->setData($persona, $data,$tipo, "S");
+        $this->tryAddPersona($persona);
         return $persona;
     }
     
