@@ -96,9 +96,6 @@ class CategoriaManager {
         $categoria->setNombre($data['nombre']);
         $categoria->setDescripcion($data['descripcion']);
         $categoria->setTipo($tipo);
-        // print_r($data);
-        // die();
-
         $this->entityManager->persist($categoria);
         $this->entityManager->flush();
 

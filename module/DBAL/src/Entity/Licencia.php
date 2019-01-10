@@ -50,8 +50,11 @@ class Licencia
     protected $categoria;
 
     /**
-     * @ORM\Column(name="ID_PROVEEDOR", nullable=true, type="integer")
+     * Many Licencias have One Categoria.
+     * @ORM\ManyToOne(targetEntity="Proveedor")
+     * @ORM\JoinColumn(name="ID_PROVEEDOR", referencedColumnName="ID_PROVEEDOR")
      */
+
     protected $proveedor;
 
     /**

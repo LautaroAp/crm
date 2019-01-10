@@ -20,16 +20,18 @@ class ProductoManager
     private $entityManager;  
     
     private $ivaManager;
-
-    private $categoria;
+    private $proveedorManager;
+    private $categoriaManager;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $ivaManager, $categoriaManager) 
+    public function __construct($entityManager, $ivaManager, $categoriaManager, $proveedorManager) 
     {
         $this->entityManager = $entityManager;
         $this->ivaManager= $ivaManager;
         $this->categoriaManager= $categoriaManager;
+        $this->proveedorManager= $proveedorManager;
+
     }
     
      public function getProductos(){
@@ -78,8 +80,8 @@ class ProductoManager
         if($data['proveedor'] == "-1"){
             $producto->setProveedor(null);
         } else {
-            // Obtener Entidad con id y pasarla
-            $producto->setProveedor($data['proveedor']);
+            $proveedor= $this->proveedorManager->getProveedor($data['proveedor']);            
+            $producto->setProveedor($this->proveedorManager->getProveedor($data['proveedor']));
         }
         $producto->setMarca($data['marca']);
         $producto->setPresentacion($data['presentacion']);
@@ -105,6 +107,10 @@ class ProductoManager
         $producto->setPrecio_final_iva_dto($data['precio_final_iva_dto']);
         // Entidad
         // $producto->setMoneda($data['moneda']);
+    }
+
+    public function getListaProveedores(){
+        return $this->proveedorManager->getListaProveedores();
     }
 
     public function createForm(){

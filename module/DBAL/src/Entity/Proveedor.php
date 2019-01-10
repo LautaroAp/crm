@@ -46,6 +46,16 @@ class Proveedor {
     private $empresa;
 
     /**
+     * @ORM\Column(name="ACTIVIDAD", nullable=true, type="string", length=255)
+     */
+    private $actividad;
+    /**
+     * @ORM\Column(name="CARGO", nullable=true, type="string", length=255)
+     */
+    private $cargo;
+
+
+    /**
      * Many Proveedors have One Categoria.
      * @ORM\ManyToOne(targetEntity="Categoria")
      * @ORM\JoinColumn(name="ID_CATEGORIA", referencedColumnName="ID")
@@ -62,7 +72,10 @@ class Proveedor {
      */
     private $fecha_ultimo_pago;
 
-   
+       /**
+     * @ORM\Column(name="FECHA_COMPRA", type="datetime")
+     */
+    private $fecha_compra;
 
     /**
      * @ORM\Column(name="DNI", nullable=true, type="string")
@@ -95,6 +108,8 @@ class Proveedor {
      * @ORM\Column(name="CBU", nullable=true, type="string")
      */
     private $cbu;
+
+   
 
     //VER COMO HACER CON LOS EVENTOS-->OTRA TABLA DE EVENTOS PARA PROVEEDORES O LA MISMA? SI ES LA MISMA
     //HAY QUE HACER UNA JERARQUIA ENTRE CLIENTE Y EJECUTIVO QUE TENGA ATTS EN COMUM
@@ -194,16 +209,6 @@ class Proveedor {
         $this->empresa = $empresa;
         return $this;
     }
-
-    public function getActividad() {
-        return $this->actividad;
-    }
-
-    public function setActividad($actividad) {
-        $this->actividad = $actividad;
-        return $this;
-    }
-
     public function getAnimales() {
         return $this->animales;
     }
@@ -516,6 +521,26 @@ class Proveedor {
     }
 
     /**
+     * Get the value of actividad
+     */ 
+    public function getActividad()
+    {
+        return $this->actividad;
+    }
+
+    /**
+     * Set the value of actividad
+     *
+     * @return  self
+     */ 
+    public function setActividad($actividad)
+    {
+        $this->actividad = $actividad;
+
+        return $this;
+    }
+
+    /**
      * Get the value of cargo
      */ 
     public function getCargo()
@@ -534,4 +559,6 @@ class Proveedor {
 
         return $this;
     }
+
+
 }

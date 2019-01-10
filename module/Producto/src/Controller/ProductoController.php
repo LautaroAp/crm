@@ -55,6 +55,7 @@ class ProductoController extends AbstractActionController {
         $request = $this->getRequest();
         $tipo= $this->params()->fromRoute('tipo');
         $categoriaProductos = $this->productoManager->getCategoriaProducto(null,$tipo);
+        $proveedores = $this->productoManager->getListaProveedores();
         $ivas = $this->ivaManager->getIvas();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
@@ -63,6 +64,7 @@ class ProductoController extends AbstractActionController {
         }
         return new ViewModel([
             'categorias' => $categoriaProductos,
+            'proveedores'=>$proveedores,
             'ivas'=>$ivas
         ]);
     }
@@ -79,6 +81,7 @@ class ProductoController extends AbstractActionController {
         $producto = $this->productoManager->getProductoId($id);
         $categoriaProductos = $this->productoManager->getCategoriaProducto(null, $tipo);
         $ivas = $this->ivaManager->getIvas();
+        $proveedores = $this->productoManager->getListaProveedores();
 
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
@@ -88,6 +91,7 @@ class ProductoController extends AbstractActionController {
         return new ViewModel([
             'producto' => $producto,
             'categorias' => $categoriaProductos,
+            'proveedores'=>$proveedores,
             'ivas'=>$ivas
         ]);
     }

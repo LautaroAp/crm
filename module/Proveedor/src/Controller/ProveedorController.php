@@ -88,7 +88,6 @@ class ProveedorController extends AbstractActionController
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->proveedorManager->getCategoriasProveedor($tipo);
         $condiciones_iva = $this->proveedorManager->getCondicionIva('iva');
-        $profesion = $this->proveedorManager->getProfesion();
         $pais = $this->proveedorManager->getPais();
         $provincia = $this->proveedorManager->getProvincia();
         $licencia = $this->proveedorManager->getLicencia();
@@ -119,7 +118,6 @@ class ProveedorController extends AbstractActionController
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->proveedorManager->getCategoriasProveedor($tipo);
         $condiciones_iva = $this->proveedorManager->getCondicionIva('iva');
-        $profesion = $this->proveedorManager->getProfesion();
         $pais = $this->proveedorManager->getPais();
         $provincia = $this->proveedorManager->getProvincia();
         $licencia = $this->proveedorManager->getLicencia();

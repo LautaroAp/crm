@@ -4,8 +4,7 @@
 <?php
 $categoria = $licencia->getCategoria();
 $iva = $licencia->getIva();
-
-// $proveedor = $licencia->getProveedor();
+$proveedor = $licencia->getProveedor();
 ?>
 
 <!-- Formulario -->
@@ -62,11 +61,13 @@ $iva = $licencia->getIva();
                             <label>Proveedor</label>
                             <select class="form-control" id="proveedor" name="proveedor" required>
                                 <option value="<?php if(isset($proveedor)){ echo ($proveedor->getId()); }?>" hidden="">  
-                                    <?php if(isset($proveedor)){ echo $proveedor->getNombre(); } else {echo ("Seleccionar Proveedor");}?>
+                                    <?php if(isset($proveedor)){ echo $proveedor->getPersona()->getNombre(); } else {echo ("Seleccionar Proveedor");}?>
                                 </option>
-                                <option value="1">.1..</option>
-                                <option value="2">.2..</option>
-                                <option value="-1">NO DEFINIDO</option>
+                                <?php foreach ($proveedores as $proveedor) : ?>
+                                    <option value="<?= $proveedor->getId(); ?>">
+                                        <?= $proveedor->getPersona()->getNombre(); ?>
+                                    </option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>

@@ -64,6 +64,8 @@ class LicenciaController extends AbstractActionController {
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->licenciaManager->getCategoriasLicencia($tipo);
         $ivas = $this->ivaManager->getIvas();
+        $proveedores = $this->licenciaManager->getListaProveedores();
+
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $this->licenciaManager->addLicencia($data);
@@ -72,6 +74,7 @@ class LicenciaController extends AbstractActionController {
         return new ViewModel([
             'categorias' => $categorias,
             'ivas'=>$ivas,
+            'proveedores' =>$proveedores,
             'tipo' => $tipo,
         ]);
     }

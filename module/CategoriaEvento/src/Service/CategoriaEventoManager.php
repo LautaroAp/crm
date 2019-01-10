@@ -69,10 +69,6 @@ class CategoriaEventoManager {
         $categoriaEvento = new CategoriaEvento();
         $categoriaEvento->setNombre($data['nombre']);
         $categoriaEvento->setDescripcion($data['descripcion']);
-
-        // print_r($data);
-        // die();
-
         $this->entityManager->persist($categoriaEvento);
         $this->entityManager->flush();
 

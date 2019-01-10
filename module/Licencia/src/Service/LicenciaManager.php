@@ -20,30 +20,18 @@ class LicenciaManager {
      */
     private $entityManager;
 
-    /**
-     * PHP template renderer.
-     * @var type 
-     */
-    private $viewRenderer;
-
-    /**
-     * Application config.
-     * @var type 
-     */
-    private $config;
-
     private $ivaManager;
 
     private $categoriaManager;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config, $ivaManager, $categoriaManager) {
+    public function __construct($entityManager, $ivaManager, $categoriaManager,
+    $proveedorManager) {
         $this->entityManager = $entityManager;
-        $this->viewRenderer = $viewRenderer;
-        $this->config = $config;
         $this->ivaManager= $ivaManager;
         $this->categoriaManager= $categoriaManager;
+        $this->proveedorManager= $proveedorManager;
     }
 
     //retorna todas las licencias sin paginator para el backup
@@ -136,7 +124,7 @@ class LicenciaManager {
         if($data['proveedor'] == "-1"){
             $licencia->setProveedor(null);
         } else {
-            $licencia->setProveedor($data['proveedor']);
+            $licencia->setProveedor($this->proveedorManager->getProveedor($data['proveedor']));
         }
         $licencia->setPrecio($data['precio']);
         $licencia->setPrecio_final_iva($data['precio_final_iva']);
@@ -175,6 +163,10 @@ class LicenciaManager {
                         ->getRepository(Cliente::class)
                 ->findAll;
         return $clientes;
+    }
+
+    public function getListaProveedores(){
+        return $this->proveedorManager->getListaProveedores();
     }
 
     private function borrarLicenciaCliente($cliente) {

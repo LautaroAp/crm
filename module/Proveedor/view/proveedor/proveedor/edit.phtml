@@ -9,13 +9,13 @@ $pais = $proveedor->getPais();
 $provincia = $proveedor->getProvincia();
 $ciudad = $proveedor->getCiudad();
 $empresa = $proveedor->getEmpresa();
-$cargo = $proveedor->getCargo();
 $categoria = $proveedor->getCategoria();
 $licencia = $proveedor->getLicencia();
 $version = $proveedor->getVersion();
 $profesion = $proveedor->getProfesion();
 $condicion_iva = $proveedor->getCondicion_iva();
 $actividad = $proveedor->getActividad();
+$cargo = $proveedor->getCargo();
 $animales = $proveedor->getAnimales();
 $establecimientos = $proveedor->getEstablecimientos();
 $raza_manejo = $proveedor->getRazaManejo();
@@ -109,24 +109,9 @@ $raza_manejo = $proveedor->getRazaManejo();
                             value="<?php echo($empresa); ?>" placeholder="Ingresar Empresa">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Profesión</label>
-                        <select class="form-control" id="profesion" name="profesion">
-                            <option value="<?php if(isset($profesion)){ echo ($profesion->getId()); }?>" hidden="">  
-                                <?php if(isset($profesion)){ echo($profesion->getNombre()); } else {echo ("Seleccionar Profesión");}?>
-                            </option>
-                            <option value="-1">NO DEFINIDO</option>
-                            <?php foreach ($profesiones as $profesion) : ?>
-                                <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-                <!-- Fila 2 -->
-                <div class="row form-row">
-                    <div class="form-group col-md-4">
                         <label>Cargo</label>
                         <input type="text" class="form-control" name="cargo"
-                            value="<?php echo($cargo); ?>" placeholder="Ingresar Cargo">
+                            value="<?php echo($cargo); ?>" placeholder="Ingresar Actividad">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Tipo de Negocio</label>

@@ -35,7 +35,8 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     <div class="ficha-cliente-p img-centrar ">
                         <div>
                             <figure>
-                                <a href="<?= $this->url('proveedores/editar', ['tipo' => 'proveedor', 'id' => (int) $persona->getId()]) ?>" role="button">
+                                <a href="<?= $this->url('proveedores/editar', 
+                                        ['tipo' => 'proveedor', 'id' => (int) $persona->getId()]) ?>" role="button">
                                     <img src="<?= $this->basePath('img/crm/perfil.png') ?>" 
                                     class="img-circle img-responsive img-texto-derecha" width="150px" height="150px" style="margin-left:0px;">
                                 </a>
@@ -45,21 +46,19 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <div class="ficha-cliente-label padding-md">
                             <h4><?= $persona->getNombre(); ?></h4>
                             <p><i><?php echo ($proveedor->getNombreCategoriaProveedor());?></i></p>
-                            <p><span class="glyphicon glyphicon-earphone"></span>&nbsp; <?php echo ($persona->getTelefono()); ?></p>
-                            <p><span class="glyphicon glyphicon-envelope"></span>&nbsp; <?php echo ($persona->getEmail()); ?></p>
+                            <p><span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp; <?php echo ($persona->getTelefono()); ?></p>
+                            <p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp; <?php echo ($persona->getEmail()); ?></p>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-sm-6 ficha-cliente-p margen-bot-cero">
                             <p><label>Empresa:</label> <?= $proveedor->getEmpresa(); ?></p>
+                            <p><label>Actividad:</label> <?= $proveedor->getActividad(); ?></p>
                             <p><label>Cargo:</label> <?= $proveedor->getCargo(); ?></p>
-                            <p><label>Profesión:</label> <?php echo ($proveedor->getNombreProfesion()); ?></p>
-                            <p><label>Tipo de Negocio:</label> <?php echo ($proveedor->getActividad()); ?></p>
                         </div>
-                        
-                        <div class="col-sm-6 ficha-cliente-p">    
-                            <p><label>Fecha de Compra:</label> <?php
+                        <div class="col-sm-6 ficha-cliente-p">
+                            <p><label>Fecha Compra:</label> <?php
                                 if (!is_null($proveedor->getFechaCompra())) {
                                     echo ($proveedor->getFechaCompra()->format('d/m/Y'));
                                 }
@@ -71,17 +70,12 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                 }
                                 ?>
                             </p>
-                            <p><label>Fecha Vencimiento:</label> <?php
-                                if (!is_null($proveedor->getVencimiento())) {
-                                    echo ($proveedor->getVencimiento()->format('d/m/Y'));
+                            <p><label>Último Contacto:</label> <?php
+                                if (!is_null($proveedor->getFechaUltimoContacto())) {
+                                    echo ($proveedor->getFechaUltimoContacto()->format('d/m/Y'));
                                 }
                                 ?>
                             </p>
-
-                            <!-- <button class="btn btn-default pull-right">
-                                <span class="clickable glyphicon glyphicon-plus btn-collapse"></span>
-                                Repositorio
-                            </button> -->
                         </div>
                     </div>
                 </div>
@@ -89,7 +83,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
         </div>
 
         <!-- Datos Generales -->
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading text-center titulo-espaciado">
                     DATOS GENERALES
@@ -113,7 +107,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             </div>
         </div>
     </div>
-</div>
+
 <!-- Fin: Datos de Proveedor -->
 
 <!-- Inicio: Actividades -->

@@ -22,6 +22,7 @@ class LicenciaControllerFactory implements FactoryInterface {
         $licenciaManager = $container->get(LicenciaManager::class);
         $clientesManager = $container->get(ClientesManager::class);
         $ivaManager = $container->get(IvaManager::class); 
+
         // Instantiate the service and inject dependencies
         return new LicenciaController($entityManager, $licenciaManager, $clientesManager, $ivaManager);
     }

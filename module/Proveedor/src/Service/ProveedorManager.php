@@ -47,15 +47,6 @@ class ProveedorManager {
 
     }
 
-
-    private function borrarUsuariosFromProveedor($proveedor) {
-        $usuarios = $this->getUsuarios($proveedor->getId());
-        foreach ($usuarios as $usuario) {
-            $this->entityManager->remove($usuario);
-        }
-        $this->entityManager->flush();
-    }
-
     public function getProveedor($Id) {
         return $this->entityManager
                         ->getRepository(Proveedor::class)
@@ -94,13 +85,7 @@ class ProveedorManager {
         return $query;
     }
 
-    protected function getPersonasFromProveedor($proveedors){
-        $salida=Array();
-        foreach ($proveedors as $proveedor){
-            array_push($salida,$proveedor->getPersona()->getId());
-        }
-        return $salida;
-    }
+   
     protected function diferenciarParametros($parametros, $tipo){
         $proveedor= ['empresa', 'categoria', 'pais'];
         $persona=['nombre', 'telefono', 'email', 'estado', 'tipo'];
@@ -244,14 +229,8 @@ class ProveedorManager {
 
     private function addDatosLaborales($proveedor, $data) {
         $proveedor->setEmpresa($data['empresa'])
-                ->setCargo($data['cargo'])
-                ->setActividad($data['actividad']);
-        if ($data['profesion'] == "-1") {
-            $proveedor->setProfesion(null);
-        } else {
-            $profesion = $this->getProfesion($data['profesion']);
-            $proveedor->setProfesion($profesion);
-        }
+                ->setActividad($data['actividad'])
+                ->setCargo($data['cargo']);
     }
 
     private function addDatosFacturacion($proveedor, $data) {
@@ -271,7 +250,6 @@ class ProveedorManager {
         $proveedor = $this->entityManager
                 ->getRepository(Proveedor::class)
                 ->findOneBy(['Id' => $id]);
-        $this->borrarUsuariosFromProveedor($proveedor);
         $entityManager->remove($proveedor);
         $entityManager->flush();
     }
@@ -283,17 +261,17 @@ class ProveedorManager {
                 ->findOneBy(['Id' => $id]);
         $estado_nuevo = $this->personaManager->cambiarEstado($proveedor->getPersona());
         if ($estado_nuevo == "N"){
-            $_SESSION['MENSAJES']['listado_proveedors_msj'] = 'Proveedor dado de Baja correctamente';
+            $_SESSION['MENSAJES']['listado_proveedores_msj'] = 'Proveedor dado de Baja correctamente';
         } else if ($estado_nuevo == "S") {
-            $_SESSION['MENSAJES']['listado_proveedors_msj'] = 'Proveedor dado de Alta correctamente';
+            $_SESSION['MENSAJES']['listado_proveedores_msj'] = 'Proveedor dado de Alta correctamente';
         }
-        $_SESSION['MENSAJES']['listado_proveedors'] = 1;
+        $_SESSION['MENSAJES']['listado_proveedores'] = 1;
         return $estado_nuevo;
     }
 
     //La funcion getListaProveedor() devuelve lista de proveedors sin paginado
     //Usada en la generacion de backup
-    public function getListaProveedor() {
+    public function getListaProveedores() {
         $lista = $this->entityManager->getRepository(Proveedor::class)->findAll();
         return $lista;
     }
@@ -320,16 +298,6 @@ class ProveedorManager {
                         ->findAll();
     }
 
-    public function getProfesion($id = null) {
-        if (isset($id)) {
-            return $this->entityManager
-                            ->getRepository(Profesion::class)
-                            ->findOneBy(['id_profesion' => $id]);
-        }
-        return $this->entityManager
-                        ->getRepository(Profesion::class)
-                        ->findAll();
-    }
 
     public function getCondicionIva($tipo = null) {
         if (isset($tipo)) {

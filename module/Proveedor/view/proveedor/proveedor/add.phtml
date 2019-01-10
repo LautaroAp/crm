@@ -69,7 +69,7 @@ $this->headTitle($title);
 <!-- Fin: Datos Generales -->
 
 <!-- Inicio: Datos Laborales -->
-<!-- <div class="container margen">
+<div class="container margen">
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading titulo-espaciado">
@@ -82,30 +82,18 @@ $this->headTitle($title);
                         <input type="text" class="form-control" name="empresa" placeholder="Ingresar Empresa">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Profesión</label>
-                        <select class="form-control" id="profesion" name="profesion">
-                            <option value="" hidden="">Seleccionar Profesión</option>
-                            <option value="-1">NO DEFINIDO</option>
-                            <?php foreach ($profesiones as $profesion) : ?>
-                                <option value="<?php //echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="row form-row">
-                    <div class="form-group col-md-4">
                         <label>Cargo</label>
                         <input type="text" class="form-control" name="cargo" placeholder="Ingresar Cargo">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Tipo de Nogocio</label>
-                        <input type="text" class="form-control" name="actividad" placeholder="Ingresar Actividad">
+                        <input type="text" class="form-control" name="actividad" placeholder="Ingresar Tipo de Negocio">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div> -->
+</div> 
 <!-- Fin: Datos Laborales -->
 
 <!-- Inicio: Datos de Facturacion -->
