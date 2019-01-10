@@ -34,11 +34,11 @@ class Evento {
     protected $tipo;
 
     /**
-     * Many Eventos have One Cliente.
-     * @ORM\ManyToOne(targetEntity="Cliente")
-     * @ORM\JoinColumn(name="CLIENTE", referencedColumnName="ID_CLIENTE")
+     * Many Eventos have One Persona.
+     * @ORM\ManyToOne(targetEntity="Persona")
+     * @ORM\JoinColumn(name="PERSONA", referencedColumnName="ID")
      */
-    protected $cliente;
+    protected $persona;
 
     /**
      * Many Eventos have One Ejecutivo.
@@ -51,18 +51,20 @@ class Evento {
      * @ORM\Column(name="DESCRIPCION", nullable=true, type="string")
      */
     protected $descripcion;
-    protected $nombre_cliente;
-    protected $apellido_cliente;
+
+     /**
+     * @ORM\Column(name="TIPO_PERSONA", nullable=true, type="string")
+     */
+    protected $tipo_persona;
+    protected $nombre_persona;
     protected $usuario_ejecutivo;
 
     public function __construct() {
-        $cliente = $this->cliente;
-        if (!is_null($cliente)) {
-            $this->nombre_cliente = $cliente->getNombre();
-            $this->apellido_cliente = $cliente->getApellido();
+        $persona = $this->persona;
+        if (!is_null($persona)) {
+            $this->nombre_persona = $persona->getNombre();
         } else {
-            $this->nombre_cliente = null;
-            $this->apellido_cliente = null;
+            $this->nombre_persona= null;
         }
 
         $ejecutivo = $this->ejecutivo;
@@ -97,8 +99,8 @@ class Evento {
         }
     }
 
-    function getId_cliente() {
-        return $this->cliente;
+    function getId_persona() {
+        return $this->persona;
     }
 
     function getId_ejecutivo() {
@@ -120,8 +122,8 @@ class Evento {
         return $this;
     }
 
-    function setId_cliente($id_cliente) {
-        $this->cliente = $id_cliente;
+    function setId_persona($id_persona) {
+        $this->persona = $id_persona;
         return $this;
     }
 
@@ -130,11 +132,11 @@ class Evento {
         return $this;
     }
 
-    public function getNombreCliente() {
-        if (is_null($this->cliente)) {
+    public function getNombrePersona() {
+        if (is_null($this->persona)) {
             return null;
         } else {
-            return $this->cliente->getPersona()->getNombre();      
+            return $this->persona->getNombre();      
         }
     }
 
@@ -152,6 +154,26 @@ class Evento {
 
     function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
+        return $this;
+    }
+
+    /**
+     * Get the value of tipo_persona
+     */ 
+    public function getTipo_persona()
+    {
+        return $this->tipo_persona;
+    }
+
+    /**
+     * Set the value of tipo_persona
+     *
+     * @return  self
+     */ 
+    public function setTipo_persona($tipo_persona)
+    {
+        $this->tipo_persona = $tipo_persona;
+
         return $this;
     }
 }

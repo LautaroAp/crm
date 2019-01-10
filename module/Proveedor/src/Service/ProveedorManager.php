@@ -140,8 +140,7 @@ class ProveedorManager {
         $proveedor = $this->getProveedorIdPersona($persona->getId());
         $data = [
             'proveedor' =>$proveedor,
-            'eventos' =>$proveedor->getEventos(),
-            'usuarios' => $proveedor->getUsuarios(),
+            'eventos' =>$persona->getEventos(),
             'persona'=>$proveedor->getPersona()
         ];
         return $data;

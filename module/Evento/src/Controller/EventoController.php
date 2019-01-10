@@ -29,13 +29,16 @@ class EventoController extends AbstractActionController {
     protected $eventoManager;
     
     protected $clienteManager;
+    protected $proveedorManager;
     protected $tipoEventoManager;
 //    private $tipos;
 
-    public function __construct($entityManager, $eventoManager, $clienteManager, $tipoEventoManager) {
+    public function __construct($entityManager, $eventoManager, $clienteManager, $proveedorManager,
+     $tipoEventoManager) {
         $this->entityManager = $entityManager;
         $this->eventoManager = $eventoManager;
         $this->clienteManager= $clienteManager;
+        $this->proveedorManager= $proveedorManager;
         $this->tipoEventoManager= $tipoEventoManager;
 //        $this->tipos = $this->getArrayTipos();
     }
@@ -77,14 +80,25 @@ class EventoController extends AbstractActionController {
 
     private function procesarAddAction() {
         $Id = (int) $this->params()->fromRoute('id', -1);
+        $tipo_persona = $this->params()->fromRoute('tipo');
+        if(strtoupper($tipo_persona)==("CLIENTE")){
+            return $this->procesarAddCliente($Id);
+        }
+        else{
+            return $this->procesarAddProveedor($Id);
+        }
+    }
+
+    private function procesarAddCliente($Id){
         $cliente = $this->clienteManager->getCliente($Id);
+        $id_persona= $cliente->getPersona()->getId();
         $tipoEventos = $this->getArrayTipos();
         $transacciones = $this->tipoEventoManager->getTipoEventos();
         $form = $this->eventoManager->createForm($tipoEventos);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $this->eventoManager->addEvento($data);
-            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $data['id_cliente']]);
+            $this->eventoManager->addEvento($data,$cliente->getPersona(), $tipo_persona);
+                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' =>$id_persona]);
         }
         return new ViewModel([
             'form' => $form,
@@ -93,6 +107,26 @@ class EventoController extends AbstractActionController {
             'transacciones' => $transacciones
         ]);
     }
+
+    private function procesarAddProveedor($Id){
+        $proveedor = $this->proveedorManager->getProveedor($Id);
+        $id_persona= $proveedor->getPersona()->getId();
+        $tipoEventos = $this->getArrayTipos();
+        $transacciones = $this->tipoEventoManager->getTipoEventos();
+        $form = $this->eventoManager->createForm($tipoEventos);
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $this->eventoManager->addEvento($data, $proveedor->getPersona(), $tipo_persona);
+            return $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' =>$id_persona]);
+        }
+        return new ViewModel([
+            'form' => $form,
+            'cliente' => $proveedor,
+            'tipos' => $tipoEventos,
+            'transacciones' => $transacciones
+        ]);
+    }
+
 
     public function getTablaFiltrado($filtro) {
         $listaEventos = $this->getSearch($filtro);
