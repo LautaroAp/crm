@@ -47,6 +47,7 @@ class AuthController extends AbstractActionController {
     public function loginAction() {
         // Retrieve the redirect URL (if passed). We will redirect the user to this
         // URL after successfull login.
+        $this->layout()->setTemplate('layout/layout-login');
         $redirectUrl = (string) $this->params()->fromQuery('redirectUrl', '');
         if (strlen($redirectUrl) > 2048) {
             throw new \Exception("Too long redirectUrl argument passed");

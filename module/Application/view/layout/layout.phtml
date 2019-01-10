@@ -2,6 +2,7 @@
 
 <html lang="es">
     <head>
+
         <title>HUELLA CRM</title>
         <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/> 
         <meta name="description" content="" />
@@ -33,66 +34,68 @@
         <!-- Sweet Alert Styles -->
         <link href="/css/sweetalert.css" rel="stylesheet">
 
+        
     </head>
-    <body class="homepage">
-        <article>
-            <!-- Header -->
-            <div id="header" class="padding-sm">
-                <div class="container" style="display: flex; align-items: flex-end;">
-
-                    <div class="container pull-left">
-                        <a href="<?= $this->url('home'); ?>"><img src= <?=$this->basePath("/img/crm/logo_huella_negocios.png")?> 
-                            class="img-rounded img-responsive img-texto-derecha" style="width: 157px; height: 75px;"
-                            ></a>
-                    </div>
-                    
-                    <div class="container">
-                        <p>
-                            <a href="<?= $this->url('menu'); ?>">HOME</a>
-                            .
-                            <a href="<?= $this->url('gestionClientes'); ?>">CLIENTES</a>
-                            .
-                            <a href="<?= $this->url('gestionProveedores'); ?>">PROVEEDORES</a>
-                            .
-                            <a href="<?= $this->url('gestionEmpresa'); ?>">EMPRESA</a>
-                            .
-                            <a href="<?= $this->url('herramientas'); ?>">HERRAMIENTAS</a>
-                        </p>
-                    </div>
-
-
-                    <div class="container">
-                        <div class="col-md-4 pull-right">
-                            Usuario: <label><?= $this->identity() ?></label>
-                        </div>
-                        <div class="col-md-4 pull-right">
-                            Empresa: <label>**************</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <main>
-                <div id="content">
-                    <?= $this->content; ?>
-                </div> 
-            </main>
     
-            <!--Footer-->
-            <div id="footer-layout" >
-                <div class="container ">
-                    <div class="row align-center">
-                        <div class="col-xs-6 align-left">
-                            <section>
-                                <p><i class="fa fa-copyright" aria-hidden="true">Tandil - Provincia de Buenos Aires - Argentina</i></p>
-                                <p><small><i class="fa fa-copyright" aria-hidden="true">Coryright Software Huella 2019 - Todos los derechos reservados</i></small></p>
-                            </section>
-                        </div>
-                        <div class="col-xs-1">
-                        </div>
+    <body class="homepage">
+        
+        <!-- Navigation -->
+        <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> Acciones <i class="fa fa-bars"></i>
+                    </button>
+                    
+                    <a class="navbar-brand page-scroll" data-toggle="collapse" data-parent="#accordion" 
+                        href="#menu" aria-expanded="true" aria-controls="menu">Huella CRM
+                    </a>
+
+                </div>
+
+
+                <div class="collapse pull-left" id="menu">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden"><a href="#page-top"></a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('menu'); ?>"><small>Inicio</small></a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionClientes'); ?>"><small>Clientes</small></a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionProveedores'); ?>"><small>Proveedores</small></a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa'); ?>"><small>Empresa</small></a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('herramientas'); ?>"><small>Herramientas</small></a></li>
+                    </ul>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden"><a href="#page-top"></a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('menu'); ?>">Inicio</a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionProveedores'); ?>">Proveedores</a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa'); ?>">Empresa</a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <main class="margen-main">
+            <div id="content">
+                <?= $this->content; ?>
+            </div> 
+        </main>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6 align-left">
+                        <section>
+                            <p><i class="fa fa-copyright" aria-hidden="true">Tandil - Provincia de Buenos Aires - Argentina</i></p>
+                            <p><small><i class="copyright" aria-hidden="true">Coryright &copy; Software Huella 2019 - Todos los derechos reservados</i></small></p>
+                        </section>
                     </div>
                 </div>
             </div>
-        </article>
+        </footer>
+
     </body>
 </html>
