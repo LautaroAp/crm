@@ -54,10 +54,9 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                         <thead>
                             <tr>
                                 <th>Fecha</th>
-                                <th>Tipo</th>
+                                <th>Evento</th>
                                 <th>Cliente</th>
-                                <!-- <th>Categoria</th> -->
-                                <th></th>
+                                <th>Tipo</th>
                             </tr>
                         </thead>
                         <?php foreach ($eventos as $evento) : ?>
@@ -65,7 +64,7 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                             <td><?php if(!is_null($evento->getFecha())) {echo ($evento->getFecha()->format('d/m/Y'));} ?></td>
                             <td><?php echo ($evento->getTipo()); ?></td>
                             <td><?php echo ($evento->getNombrePersona()); ?></td>
-                            <!-- <td><?phecho ($evento->getPersona()->getNombreCategoriaCliente()); ?> </td> -->
+                            <td><?php echo ($evento->getPersona()->getTipo()); ?></td>
 
                             <td class="table-items-right">
                                 <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?>">
