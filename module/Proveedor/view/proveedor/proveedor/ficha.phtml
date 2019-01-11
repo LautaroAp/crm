@@ -129,7 +129,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <div class="col-md-3 img-centrar">
                             <div>
                                 <a href="<?= $this->url('evento', ['action' => 'add', 'tipo'=>'proveedor','id' => (int) $proveedor->getId()]) ?>" role="button">
-                                    <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
+                                    <img src="<?= $this->basePath('img/crm/add_carrito_v.png') ?>" 
                                     class="img-rounded img-responsive img-texto-derecha img-submenu-add">
                                 </a>
                             </div>
@@ -141,14 +141,14 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <div class="col-md-3 img-centrar">
                             <div class="btn-group dropup">
                                 <a role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
+                                <img src="<?= $this->basePath('img/crm/add_carrito_v.png') ?>" 
                                     class="img-rounded img-responsive img-texto-derecha img-submenu-add">
                                 </a>
                                 <ul class="dropdown-menu" role="menu" style="width:300px;">
                                     <li>
                                         <a href="#" class="padding-cero">
                                             <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
                                                     class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
                                                 Presupuesto
                                             </div> 
@@ -157,7 +157,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                     <li>
                                         <a href="#" class="padding-cero">
                                             <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
                                                     class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
                                                 Pedido
                                             </div> 
@@ -166,7 +166,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                     <li>
                                         <a href="#" class="padding-cero">
                                             <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
                                                     class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
                                                 Remito
                                             </div> 
@@ -175,7 +175,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                     <li>
                                         <a href="#" class="padding-cero">
                                             <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
                                                     class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
                                                 Factura
                                             </div> 
@@ -184,7 +184,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                     <li>
                                         <a href="#" class="padding-cero">
                                             <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
                                                     class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
                                                 Nota de Crédito
                                             </div> 
@@ -193,7 +193,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                     <li>
                                         <a href="#" class="padding-cero">
                                             <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
                                                     class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
                                                 Nota de Débito
                                             </div> 
@@ -209,7 +209,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <div class="col-md-3 img-centrar">
                             <div>
                                 <a role="button" data-toggle="modal" data-target="#actividadModal">
-                                    <img src="<?= $this->basePath('img/crm/remove_carrito_a.png') ?>" 
+                                    <img src="<?= $this->basePath('img/crm/remove_carrito_v.png') ?>" 
                                     class="img-rounded img-responsive img-texto-derecha img-submenu-add">
                                 </a>
                             </div>
@@ -320,7 +320,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <a href="<?= $this->url('proveedores/editar', ['tipo' => 'proveedor', 'id' => (int) $persona->getId()]) ?>" role="button">
-                    <img src="<?= $this->basePath('img/crm/cliente_update_a.png') ?>" 
+                    <img src="<?= $this->basePath('img/crm/proveedor_update_v.png') ?>" 
                     class="img-rounded img-responsive img-texto-derecha img-submenu">
                 </a>
             </div>
@@ -334,9 +334,9 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                 <a role="button" name="<?= $proveedor->getId() ?>" id="<?= $proveedor->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $proveedor->getId() ?>">
                     <img src="<?php
                     if ($persona->getEstado() == "S") {
-                        echo($this->basePath('img/crm/cliente_remove_a.png'));
+                        echo($this->basePath('img/crm/proveedor_remove_v.png'));
                     } else {
-                        echo($this->basePath('img/crm/cliente_add_a.png'));
+                        echo($this->basePath('img/crm/proveedor_add_v.png'));
                     }
                     ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
                 </a>

@@ -37,78 +37,72 @@
         
     </head>
 
-    <article>
+    <!-- <div id="container"> -->
+        <body class="homepage">
+            <!-- Navigation -->
+            <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header page-scroll">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span> Acciones <i class="fa fa-bars"></i>
+                        </button>
+                        
+                        <a class="navbar-brand page-scroll" data-toggle="collapse" data-parent="#accordion" 
+                            href="#menu" aria-expanded="true" aria-controls="menu">Huella CRM
+                        </a>
 
-    <body class="homepage">
-        
-    <article>
-
-        <!-- Navigation -->
-        <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header page-scroll">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span> Acciones <i class="fa fa-bars"></i>
-                    </button>
-                    
-                    <a class="navbar-brand page-scroll" data-toggle="collapse" data-parent="#accordion" 
-                        href="#menu" aria-expanded="true" aria-controls="menu">Huella CRM
-                    </a>
-
-                </div>
+                    </div>
 
 
-                <div class="collapse pull-left" id="menu">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="hidden"><a href="#page-top"></a></li>
-                        <li><a class="page-scroll" href="<?= $this->url('herramientas/ejecutivos'); ?>">
-                                <small>Usuario: <label><?= $this->identity() ?></label></small>
-                            </a>
-                        </li>
-                        <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa/configuracion'); ?>">
-                                <small>Empresa: <label>****</label></small>
-                            </a>
-                        </li>
-                        <li><a class="page-scroll" href="<?= $this->url('logout'); ?>">
-                                <small>Salir</small>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    <div class="collapse pull-left" id="menu">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="hidden"><a href="#page-top"></a></li>
+                            <li><a class="page-scroll" href="<?= $this->url('herramientas/ejecutivos'); ?>">
+                                    <small>Usuario: <label><?= $this->identity() ?></label></small>
+                                </a>
+                            </li>
+                            <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa/configuracion'); ?>">
+                                    <small>Empresa: <label>****</label></small>
+                                </a>
+                            </li>
+                            <li><a class="page-scroll" href="<?= $this->url('logout'); ?>">
+                                    <small>Salir</small>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="hidden"><a href="#page-top"></a></li> 
-                        <li><a class="page-scroll" href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
-                        <li><a class="page-scroll" href="<?= $this->url('gestionProveedores'); ?>">Proveedores</a></li>
-                        <li><a class="page-scroll" href="<?= $this->url('gestionProductosServicios'); ?>">Productos y Servicios</a></li>
-                        <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa'); ?>">Empresa</a></li>
-                        <li><a class="page-scroll" href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="margen-main">
-            <div id="content">
-                <?= $this->content; ?>
-            </div> 
-        </main>
-
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-6 align-left">
-                        <section>
-                            <p><i class="fa fa-copyright" aria-hidden="true">Tandil - Provincia de Buenos Aires - Argentina</i></p>
-                            <p><small><i class="copyright" aria-hidden="true">Coryright &copy; Software Huella 2019 - Todos los derechos reservados</i></small></p>
-                        </section>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="hidden"><a href="#page-top"></a></li> 
+                            <li><a class="page-scroll" href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+                            <li><a class="page-scroll" href="<?= $this->url('gestionProveedores'); ?>">Proveedores</a></li>
+                            <li><a class="page-scroll" href="<?= $this->url('gestionProductosServicios'); ?>">Productos y Servicios</a></li>
+                            <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa'); ?>">Empresa</a></li>
+                            <li><a class="page-scroll" href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-        </footer>
+            </nav>
 
-    </article>
+            <main class="margen-main">
+                <div id="content">
+                    <?= $this->content; ?>
+                </div> 
+            </main>
 
-    </body>
+            <footer class="footer" id="">
+                <div class="container">
+                    <div class="row" style="padding: 10px;">
+                        <div class="col-xs-6 align-left">
+                            <section>
+                                <p><i class="fa fa-copyright" aria-hidden="true">Tandil - Provincia de Buenos Aires - Argentina</i></p>
+                                <p><small><i class="copyright" aria-hidden="true">Coryright &copy; Software Huella 2019 - Todos los derechos reservados</i></small></p>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </body>
+    <!-- </div> -->
 </html>
