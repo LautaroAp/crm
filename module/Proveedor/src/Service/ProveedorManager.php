@@ -243,17 +243,7 @@ class ProveedorManager {
                 ->setCbu($data['cbu'])
                 ->setCuit_cuil($data['cuit_cuil']);
     }
-
-   
-    public function deleteProveedor($id) {
-        $entityManager = $this->entityManager;
-        $proveedor = $this->entityManager
-                ->getRepository(Proveedor::class)
-                ->findOneBy(['Id' => $id]);
-        $entityManager->remove($proveedor);
-        $entityManager->flush();
-    }
-
+    
     public function modificarEstado($id) {
         $entityManager = $this->entityManager;
         $proveedor = $this->entityManager

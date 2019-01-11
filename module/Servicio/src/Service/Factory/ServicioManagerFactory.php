@@ -5,7 +5,7 @@ use Interop\Container\ContainerInterface;
 use Servicio\Service\ServicioManager;
 use Iva\Service\IvaManager;
 use Categoria\Service\CategoriaManager;
-use Proveedor\Service\ProveedoraManager;
+use Proveedor\Service\ProveedorManager;
 
 
 /**

@@ -103,7 +103,7 @@ class ServicioManager {
     }
 
     public function getListaProveedores(){
-        return $proveedorManager->getListaProveedores();
+        return $this->proveedorManager->getListaProveedores();
     }
     public function eliminarCategoriaServicios($id){
         $entityManager = $this->entityManager;

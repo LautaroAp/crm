@@ -33,67 +33,84 @@ class IndexController extends AbstractActionController {
         return new ViewModel();
     }
 
-    public function gestionClientesAction() {
+    private function reiniciarParametros(){
+        $_SESSION['PARAMETROS_VENTA'] = array();
         $_SESSION['PARAMETROS_CLIENTE'] = array();
         $_SESSION['PARAMETROS_CLIENTE_INACTIVO'] = array();
+    }
+
+    public function gestionClientesAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionActividadesClientesAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionProveedoresAction() {
-        $_SESSION['PARAMETROS_PROVEEDOR'] = array();
-        $_SESSION['PARAMETROS_PROVEEDOR_INACTIVO'] = array();
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionActividadesProveedoresAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionProductosProveedorAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionServiciosProveedorAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionEmpresaAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionProductosServiciosAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionLicenciasAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionProductosAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionServiciosAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function herramientasAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function utilidadesAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }  
 
     public function backupmenuAction() {
+        $this->reiniciarParametros();
         $request = $this->getRequest();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();

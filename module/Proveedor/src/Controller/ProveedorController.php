@@ -147,22 +147,7 @@ class ProveedorController extends AbstractActionController
         ]);
     }
 
-    public function deleteAction() {
-        $view = $this->processDelete();
-        return $view;
-    }
-
-    private function processDelete(){
-        $request = $this->getRequest();
-        if (!$request->isPost()) {
-            $id = $this->params()->fromRoute('id');
-            $this->proveedorManager->deleteProveedor($id);
-            $this->redirect()->toRoute('proveedores/listado');
-        } else {
-            return new ViewModel();
-        }
-    }
-
+    
     public function modificarEstadoAction(){
         $view = $this->processModificarEstado();
         return $view;
