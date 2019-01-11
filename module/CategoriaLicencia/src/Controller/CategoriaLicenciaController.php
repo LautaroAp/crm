@@ -65,7 +65,7 @@ class CategoriaLicenciaController extends AbstractActionController {
             $data = $this->params()->fromPost();
             // $this->categoriaLicenciaManager->addCategoriaLicencia($data);
             $categoriaLicencia = $this->categoriaLicenciaManager->getCategoriaLicenciaFromForm($form, $data);
-            return $this->redirect()->toRoute('gestionEmpresa/gestionLicencias/categorias');
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionLicencias/categorias');
         }
         return new ViewModel([
             'form' => $form,

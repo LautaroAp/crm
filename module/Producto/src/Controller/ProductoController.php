@@ -60,7 +60,7 @@ class ProductoController extends AbstractActionController {
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $this->productoManager->addProducto($data);
-            $this->redirect()->toRoute('gestionEmpresa/gestionProductos/listado');
+            $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/listado');
         }
         return new ViewModel([
             'categorias' => $categoriaProductos,
@@ -86,7 +86,7 @@ class ProductoController extends AbstractActionController {
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $this->productoManager->updateProducto($producto, $data);
-            $this->redirect()->toRoute('gestionEmpresa/gestionProductos/listado');
+            $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/listado');
         }
         return new ViewModel([
             'producto' => $producto,
@@ -109,7 +109,7 @@ class ProductoController extends AbstractActionController {
             $this->reportarError();
         } else {
             $this->productoManager->removeProducto($producto);
-            return $this->redirect()->toRoute('gestionEmpresa/gestionProductos/listado');
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/listado');
         }
     }
     

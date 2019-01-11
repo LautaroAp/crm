@@ -69,7 +69,7 @@ class GanaderiaController extends AbstractActionController {
             $data = $this->params()->fromPost();
             // $this->ganaderiaManager->addGanaderia($data);
             $ganaderia = $this->ganaderiaManager->getGanaderiaFromForm($form, $data);
-            return $this->redirect()->toRoute('gestionEmpresa/gestionProductos/categorias');
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/categorias');
         }
         return new ViewModel([
             'form' => $form,
@@ -93,7 +93,7 @@ class GanaderiaController extends AbstractActionController {
                 $data = $this->params()->fromPost();
                 if ($this->ganaderiaManager->formValid($form, $data)) {
                     $this->ganaderiaManager->updateGanaderia($ganaderia, $form);
-                    return $this->redirect()->toRoute('gestionEmpresa/gestionProductos/categorias');
+                    return $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/categorias');
                 }
             } else {
                 $this->ganaderiaManager->getFormEdited($form, $ganaderia);

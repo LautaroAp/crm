@@ -70,7 +70,7 @@ class CategoriaProductoController extends AbstractActionController {
             $data = $this->params()->fromPost();
             // $this->categoriaProductoManager->addCategoriaProducto($data);
             $categoriaProducto = $this->categoriaProductoManager->getCategoriaProductoFromForm($form, $data);
-            return $this->redirect()->toRoute('gestionEmpresa/gestionProductos/categorias');
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/categorias');
         }
         return new ViewModel([
             'form' => $form,
@@ -94,7 +94,7 @@ class CategoriaProductoController extends AbstractActionController {
                 $data = $this->params()->fromPost();
                 if ($this->categoriaProductoManager->formValid($form, $data)) {
                     $this->categoriaProductoManager->updateCategoriaProducto($categoriaProducto, $form);
-                    return $this->redirect()->toRoute('gestionEmpresa/gestionProductos/categorias');
+                    return $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/categorias');
                 }
             } else {
                 $this->categoriaProductoManager->getFormEdited($form, $categoriaProducto);

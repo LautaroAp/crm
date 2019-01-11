@@ -142,11 +142,11 @@ class CategoriaController extends AbstractActionController {
         if (strtoupper($tipo)==strtoupper("cliente")){
             return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
         }elseif (strtoupper($tipo)==strtoupper("producto")){
-            return $this->redirect()->toRoute('gestionEmpresa/gestionProductos/categoriaproducto', ['tipo'=>'producto']);
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/categoriaproducto', ['tipo'=>'producto']);
         }elseif (strtoupper($tipo)==strtoupper("licencia")){
-            return $this->redirect()->toRoute('gestionEmpresa/gestionLicencias/categorialicencia', ['tipo'=>'licencia']);
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionLicencias/categorialicencia', ['tipo'=>'licencia']);
         }elseif (strtoupper($tipo)==strtoupper("servicio")){
-            return $this->redirect()->toRoute('gestionEmpresa/gestionServicios/categoriaservicio', ['tipo'=>'servicio']);
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/categoriaservicio', ['tipo'=>'servicio']);
         }elseif (strtoupper($tipo)==strtoupper("evento")){
             return $this->redirect()->toRoute('gestionClientes/gestionActividadesClientes/categoriaevento', ['tipo'=>'evento']);
         }elseif (strtoupper($tipo)==strtoupper("iva")){

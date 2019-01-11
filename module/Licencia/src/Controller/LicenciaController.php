@@ -69,7 +69,7 @@ class LicenciaController extends AbstractActionController {
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $this->licenciaManager->addLicencia($data);
-            $this->redirect()->toRoute('gestionEmpresa/gestionLicencias/listado');
+            $this->redirect()->toRoute('gestionProductosServicios/gestionLicencias/listado');
         }
         return new ViewModel([
             'categorias' => $categorias,
@@ -94,7 +94,7 @@ class LicenciaController extends AbstractActionController {
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $this->licenciaManager->updateLicencia($licencia, $data);
-            $this->redirect()->toRoute('gestionEmpresa/gestionLicencias/listado');
+            $this->redirect()->toRoute('gestionProductosServicios/gestionLicencias/listado');
         }
         return new ViewModel([
             'licencia' => $licencia,
