@@ -99,7 +99,7 @@ class Evento {
         }
     }
 
-    function getId_persona() {
+    function getPersona() {
         return $this->persona;
     }
 

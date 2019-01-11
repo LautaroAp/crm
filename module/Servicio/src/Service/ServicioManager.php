@@ -24,10 +24,11 @@ class ServicioManager {
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $ivaManager, $categoriaManager) {
+    public function __construct($entityManager, $ivaManager, $categoriaManager, $proveedorManager) {
         $this->entityManager = $entityManager;
         $this->ivaManager=$ivaManager;
         $this->categoriaManager=$categoriaManager;
+        $this->proveedorManager= $proveedorManager;
     }
 
     public function getServicios() {
@@ -67,7 +68,12 @@ class ServicioManager {
             // Obtener Entidad con id y pasarla
             $servicio->setCategoria($this->categoriaManager->getCategoriaId($data['categoria']));
         }
-        // $servicio->setProveedor($data['proveedor']);
+        if($data['proveedor'] == "-1"){
+            $servicio->setProveedor(null);
+        } else {            
+            $prov=$this->proveedorManager->getProveedor($data['proveedor']);
+            $servicio->setProveedor($prov);
+        }
         $servicio->setPrecio($data['precio_venta']);
         $servicio->setIva_gravado($data['iva_total']);
         $iva=$this->ivaManager->getIva($data['iva']);
@@ -96,6 +102,9 @@ class ServicioManager {
         $this->entityManager->flush();
     }
 
+    public function getListaProveedores(){
+        return $proveedorManager->getListaProveedores();
+    }
     public function eliminarCategoriaServicios($id){
         $entityManager = $this->entityManager;
         $servicios = $this->entityManager->getRepository(Servicio::class)->findBy(['categoria'=>$id]);

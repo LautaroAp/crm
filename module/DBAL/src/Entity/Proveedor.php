@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  *
- * This class represents a client.
+ * This class represents a proveedor.
  * @ORM\Entity()
  * @ORM\Table(name="PROVEEDOR")
  */

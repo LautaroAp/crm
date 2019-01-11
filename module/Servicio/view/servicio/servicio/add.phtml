@@ -37,11 +37,14 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label>Proveedor</label>
-                        <select class="form-control" id="proveedor" name="proveedor">
+                        <select class="form-control" id="proveedor" name="proveedor" required>
                             <option value="" hidden="">Seleccionar Proveedor</option>
-                            <option value="1">...</option>
-                            <option value="2">...</option>
                             <option value="-1">NO DEFINIDO</option>
+                            <?php foreach ($proveedores as $proveedor) : ?>
+                                <option value="<?= $proveedor->getId(); ?>">
+                                    <?= $proveedor->getPersona()->getNombre(); ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>

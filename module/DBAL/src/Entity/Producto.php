@@ -42,12 +42,13 @@ class Producto
      */
     protected $categoria;
 
-   /**
-     * Many Services have One Type.
+    /**
+     * Many Proveedor have One PRoveedor.
      * @ORM\ManyToOne(targetEntity="Proveedor")
      * @ORM\JoinColumn(name="ID_PROVEEDOR", referencedColumnName="ID_PROVEEDOR")
      */
-    protected $proveddor;
+
+    protected $proveedor;
 
     /**
      * @ORM\Column(name="MARCA", nullable=true, type="string")

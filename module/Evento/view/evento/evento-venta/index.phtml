@@ -56,7 +56,7 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                                 <th>Fecha</th>
                                 <th>Tipo</th>
                                 <th>Cliente</th>
-                                <th>Categoria</th>
+                                <!-- <th>Categoria</th> -->
                                 <th></th>
                             </tr>
                         </thead>
@@ -64,11 +64,11 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                         <tr>
                             <td><?php if(!is_null($evento->getFecha())) {echo ($evento->getFecha()->format('d/m/Y'));} ?></td>
                             <td><?php echo ($evento->getTipo()); ?></td>
-                            <td><?php echo ($evento->getNombreCliente()); ?></td>
-                            <td><?php echo ($evento->getId_cliente()->getNombreCategoriaCliente()); ?> </td>
+                            <td><?php echo ($evento->getNombrePersona()); ?></td>
+                            <!-- <td><?phecho ($evento->getPersona()->getNombreCategoriaCliente()); ?> </td> -->
 
                             <td class="table-items-right">
-                                <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getId_cliente()->getPersona()->getId()]); ?>">
+                                <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?>">
                                     <span class="glyphicon glyphicon-share-alt" ></span>
                                 </a>
                             </td>
