@@ -31,7 +31,7 @@
                                     <td><?php echo money_format("$ %n", $producto->getPrecio_venta() * $producto->getStock()); ?></td>
                                     <td>
                                         <div class="pull-right">
-                                            <a class="btn btn-default" href="<?= $this->url('gestionEmpresa/gestionProductos/editar',
+                                            <a class="btn btn-default" href="<?= $this->url('gestionProductosServicios/gestionProductos/editar',
                                                                                  ['action' => 'edit', 'tipo'=>'producto','id' => $producto->getId()]); ?>">
                                                 <span class="glyphicon glyphicon-pencil" ></span> 
                                             </a>
@@ -58,7 +58,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="<?= $this->url('gestionEmpresa/gestionProductos/eliminar', ['action' => 'remove', 'id' => $producto->getId()]); ?>" class="btn btn-default">Borrar</a>
+                                                    <a href="<?= $this->url('gestionProductosServicios/gestionProductos/eliminar', ['action' => 'remove', 'id' => $producto->getId()]); ?>" class="btn btn-default">Borrar</a>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                                 </div>
                                             </div>
@@ -82,7 +82,7 @@
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionEmpresa/gestionProductos/agregar', ['tipo'=>'producto']); ?>">
+                <a href="<?= $this->url('gestionProductosServicios/gestionProductos/agregar', ['tipo'=>'producto']); ?>">
                     <img src="<?= $this->basePath('img/crm/producto_add_n.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha img-submenu">
                 </a>
@@ -95,7 +95,7 @@
         
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionEmpresa/gestionProductos') ?>">
+                <a href="<?= $this->url('gestionProductosServicios/gestionProductos') ?>">
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha">
                 </a>

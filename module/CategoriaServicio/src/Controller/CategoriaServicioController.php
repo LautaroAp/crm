@@ -65,7 +65,7 @@ class CategoriaServicioController extends AbstractActionController {
             $data = $this->params()->fromPost();
             // $this->categoriaServicioManager->addCategoriaServicio($data);
             $categoriaServicio = $this->categoriaServicioManager->getCategoriaServicioFromForm($form, $data);
-            return $this->redirect()->toRoute('gestionEmpresa/gestionServicios/categorias');
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/categorias');
         }
         return new ViewModel([
             'form' => $form,
@@ -89,7 +89,7 @@ class CategoriaServicioController extends AbstractActionController {
                 $data = $this->params()->fromPost();
                 if ($this->categoriaServicioManager->formValid($form, $data)) {
                     $this->categoriaServicioManager->updateCategoriaServicio($categoriaServicio, $form);
-                    return $this->redirect()->toRoute('gestionEmpresa/gestionServicios/categorias');
+                    return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/categorias');
                 }
             } else {
                 $this->categoriaServicioManager->getFormEdited($form, $categoriaServicio);

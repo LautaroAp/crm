@@ -59,7 +59,7 @@ class ServicioController extends AbstractActionController {
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->servicioManager->addServicio($data);
-            $this->redirect()->toRoute('gestionEmpresa/gestionServicios/listado');
+            $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/listado');
         }
         $ivas = $this->ivaManager->getIvas();
         $tipo= $this->params()->fromRoute('tipo');
@@ -88,7 +88,7 @@ class ServicioController extends AbstractActionController {
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->servicioManager->updateServicio($servicio, $data);
-            return $this->redirect()->toRoute('gestionEmpresa/gestionServicios/listado');
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/listado');
         }
         return new ViewModel([
             'servicio' => $servicio,
@@ -112,7 +112,7 @@ class ServicioController extends AbstractActionController {
             return;
         } else {
             $this->servicioManager->removeServicio($servicio);
-            return $this->redirect()->toRoute('gestionEmpresa/gestionServicios/listado');
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/listado');
         }
     }
 
