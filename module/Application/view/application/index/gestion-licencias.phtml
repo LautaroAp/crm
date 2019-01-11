@@ -3,8 +3,8 @@
         <ul>
             <li>
                 <figure>
-                    <a href="<?= $this->url('gestionProveedores/gestionProductos/listado'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/producto_v.png') ?>" 
+                    <a href="<?= $this->url('gestionProductosServicios/gestionLicencias/listado'); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/billete_n.png') ?>" 
                         class="img-rounded img-responsive img-menu img-centrar">
                     </a>
                     <figcaption>Listado</figcaption>
@@ -12,26 +12,26 @@
             </li>
             <li>
                 <figure>
-                    <a href="<?= $this->url("gestionProveedores/gestionProductos/agregar", ['tipo' => 'producto']); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/producto_add_v.png') ?>" 
+                    <a href="<?= $this->url("gestionProductosServicios/gestionLicencias/agregar", ['tipo'=>'licencia']); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/billete_add_n.png') ?>" 
                         class="img-rounded img-responsive img-menu img-centrar">
                     </a>
-                    <figcaption>Agregar Producto</figcaption>
+                    <figcaption>Agregar Licencia</figcaption>
                 </figure>
             </li>
             <li>
                 <figure>
-                    <a href="<?= $this->url('gestionProveedores/gestionProductos/categoriaproducto', ['tipo'=>'producto']); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/consulta_v.png') ?>" 
+                    <a href="<?= $this->url("gestionProductosServicios/gestionLicencias/categorialicencia", ['tipo'=>'licencia']); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>" 
                         class="img-rounded img-responsive img-menu img-centrar">
                     </a>
-                    <figcaption>Categorias</figcaption>
+                    <figcaption>Categorías</figcaption>
                 </figure>
             </li>
             <li>
                 <figure>
-                    <a href="<?= $this->url('gestionProveedores/gestionProductos/backup'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/producto_excel_v.png') ?>" 
+                    <a href="<?= $this->url('gestionProductosServicios/gestionLicencias/backup'); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/billete_excel_n.png') ?>" 
                         class="img-rounded img-responsive img-menu img-centrar">
                     </a>
                     <figcaption>Exportar a Excel</figcaption>
@@ -44,10 +44,10 @@
             <li>
                 <div class="img-centrar">
                     <div>
-                        <a href="<?= $this->url('gestionProveedores') ?>">
+                        <a href="<?= $this->url('gestionProductosServicios') ?>">
                             <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
                                 class="img-rounded img-responsive img-texto-derecha">
-                        </a>
+                            </a>
                     </div>
                     <div class="ficha-cliente-label">
                         <label>Volver</label>
