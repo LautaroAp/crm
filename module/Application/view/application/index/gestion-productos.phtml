@@ -3,8 +3,8 @@
         <ul>
             <li>
                 <figure>
-                    <a href="<?= $this->url('gestionEmpresa/gestionServicios/listado'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/servicio_n.png') ?>" 
+                    <a href="<?= $this->url('gestionProductosServicios/gestionProductos/listado'); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/producto_n.png') ?>" 
                         class="img-rounded img-responsive img-menu img-centrar">
                     </a>
                     <figcaption>Listado</figcaption>
@@ -12,16 +12,16 @@
             </li>
             <li>
                 <figure>
-                    <a href="<?= $this->url("gestionEmpresa/gestionServicios/agregar",  ['tipo'=>'servicio']); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/servicio_add_n.png') ?>" 
+                    <a href="<?= $this->url("gestionProductosServicios/gestionProductos/agregar", ['tipo' => 'producto']); ?>" > 
+                        <img src="<?= $this->basePath('img/crm/producto_add_n.png') ?>" 
                         class="img-rounded img-responsive img-menu img-centrar">
                     </a>
-                    <figcaption>Agregar Servicio</figcaption>
+                    <figcaption>Agregar Producto</figcaption>
                 </figure>
             </li>
             <li>
                 <figure>
-                    <a href="<?= $this->url('gestionEmpresa/gestionServicios/categoriaservicio', ['tipo'=>'servicio']); ?>" > 
+                    <a href="<?= $this->url('gestionProductosServicios/gestionProductos/categoriaproducto', ['tipo'=>'producto']); ?>" > 
                         <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>" 
                         class="img-rounded img-responsive img-menu img-centrar">
                     </a>
@@ -30,20 +30,21 @@
             </li>
             <li>
                 <figure>
-                    <a href="<?= $this->url('gestionEmpresa/gestionServicios/backup'); ?>" > 
+                    <a href="<?= $this->url('gestionProductosServicios/gestionProductos/backup'); ?>" > 
                         <img src="<?= $this->basePath('img/crm/producto_excel_n.png') ?>" 
                         class="img-rounded img-responsive img-menu img-centrar">
                     </a>
                     <figcaption>Exportar a Excel</figcaption>
                 </figure>
             </li>
+        </ul>
     </nav>
     <nav id="nav" >
         <ul>
             <li>
                 <div class="img-centrar">
                     <div>
-                        <a href="<?= $this->url('gestionEmpresa') ?>">
+                        <a href="<?= $this->url('gestionProductosServicios') ?>">
                             <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
                                 class="img-rounded img-responsive img-texto-derecha">
                         </a>

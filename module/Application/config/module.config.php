@@ -263,166 +263,6 @@ return [
                             ],
                         ],
                     ],
-                    // Gestion Productos
-                    'gestionProductos' => [
-                        'type' => Literal::class,
-                        'options' => [
-                            'route' => '/productos',
-                            'defaults' => [
-                                'controller' => \Application\Controller\IndexController::class,
-                                'action' => 'gestionProductosProveedor',
-                            ],
-                        ],
-                        'may_terminate' => true,
-                        'child_routes' => [
-                            'listado' => [
-                                'type' => Literal::class,
-                                'options' => [
-                                    'route' => '/listado',
-                                    'defaults' => [
-                                        'controller' => \Producto\Controller\ProductoController::class,
-                                        'action' => 'index',
-                                    ],
-                                ],
-                            ],
-                            'agregar' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/add[/:tipo]',
-                                    'defaults' => [
-                                        'controller' => \Producto\Controller\ProductoController::class,
-                                        'action' => 'add',
-                                    ],
-                                ],
-                            ],
-                            'editar' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/edit[/:tipo[/:id]]',
-                                    'defaults' => [
-                                        'controller' => \Producto\Controller\ProductoController::class,
-                                        'action' => 'edit',
-                                    ],
-                                    'constraints' => [
-                                        'id' => '[0-9]\d*',
-                                    ],
-                                ],
-                            ],
-                            'eliminar' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/remove[/:id]',
-                                    'defaults' => [
-                                        'controller' => \Producto\Controller\ProductoController::class,
-                                        'action' => 'remove',
-                                    ],
-                                    'constraints' => [
-                                        'id' => '[0-9]\d*',
-                                    ],
-                                ],
-                            ],
-                            'categoriaproducto' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/categorias[/:tipo[/:id]]',
-                                    'defaults' => [
-                                        'controller' => \Categoria\Controller\CategoriaController::class,
-                                        'action' => 'index',
-                                    ],
-                                ],
-                            ],
-                            'backup' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/backup',
-                                    'defaults' => [
-                                        'controller' => \Producto\Controller\ProductoController::class,
-                                        'action' => 'backup',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                    // Gestion Servicios
-                    'gestionServicios' => [
-                        'type' => Literal::class,
-                        'options' => [
-                            'route' => '/servicios',
-                            'defaults' => [
-                                'controller' => \Application\Controller\IndexController::class,
-                                'action' => 'gestionServiciosProveedor',
-                            ],
-                        ],
-                        'may_terminate' => true,
-                        'child_routes' => [
-                            'listado' => [
-                                'type' => Literal::class,
-                                'options' => [
-                                    'route' => '/listado',
-                                    'defaults' => [
-                                        'controller' => \Servicio\Controller\ServicioController::class,
-                                        'action' => 'index',
-                                    ],
-                                ],
-                            ],
-                            'agregar' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/add[/:tipo]',
-                                    'defaults' => [
-                                        'controller' => \Servicio\Controller\ServicioController::class,
-                                        'action' => 'add',
-                                    ],
-                                ],
-                            ],
-                            'editar' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/edit[/:tipo[/:id]]',
-                                    'defaults' => [
-                                        'controller' => \Servicio\Controller\ServicioController::class,
-                                        'action' => 'edit',
-                                    ],
-                                    'constraints' => [
-                                        'id' => '[0-9]\d*',
-                                    ],
-                                ],
-                            ],
-                            'eliminar' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/remove[/:id]',
-                                    'defaults' => [
-                                        'controller' => \Servicio\Controller\ServicioController::class,
-                                        'action' => 'remove',
-                                    ],
-                                    'constraints' => [
-                                        'id' => '[0-9]\d*',
-                                    ],
-                                ],
-                            ],
-                            'categoriaservicio' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/categorias[/:tipo[/:id]]',
-                                    'defaults' => [
-                                        'controller' => \Categoria\Controller\CategoriaController::class,
-                                        'action' => 'index',
-                                    ],
-                                ],
-                            ],
-                            'backup' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/backup',
-                                    'defaults' => [
-                                        'controller' => \Servicio\Controller\ServicioController::class,
-                                        'action' => 'backup',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
                 ],
             ],
              // Gestion Empresa
@@ -467,14 +307,28 @@ return [
                             ],
                         ],
                     ],
+                ],
+            ],
+            // Gestion Productos y Servicios
+           'gestionProductosServicios' => [
+               'type' => Literal::class,
+               'options' => [
+                   'route' => '/productosservicios',
+                   'defaults' => [
+                       'controller' => Controller\IndexController::class,
+                       'action' => 'gestionProductosServicios',
+                   ],
+               ],
+               'may_terminate' => true,
+               'child_routes' => [
                      // Gestion Licencias
-                    'gestionLicencias' => [
+                     'gestionLicencias' => [
                         'type' => Literal::class,
                         'options' => [
                             'route' => '/licencias',
                             'defaults' => [
                                 'controller' => \Application\Controller\IndexController::class,
-                                'action' => 'gestionLicenciasEmpresa',
+                                'action' => 'gestionLicencias',
                             ],
                         ],
                         'may_terminate' => true,
@@ -521,169 +375,169 @@ return [
                             ],
                         ],
                     ],
-                    // Gestion Productos
-                    'gestionProductos' => [
-                        'type' => Literal::class,
-                        'options' => [
-                            'route' => '/productos',
-                            'defaults' => [
-                                'controller' => \Application\Controller\IndexController::class,
-                                'action' => 'gestionProductosEmpresa',
-                            ],
-                        ],
-                        'may_terminate' => true,
-                        'child_routes' => [
-                            'listado' => [
-                                'type' => Literal::class,
-                                'options' => [
-                                    'route' => '/listado',
-                                    'defaults' => [
-                                        'controller' => \Producto\Controller\ProductoController::class,
-                                        'action' => 'index',
-                                    ],
-                                ],
-                            ],
-                            'agregar' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/add[/:tipo]',
-                                    'defaults' => [
-                                        'controller' => \Producto\Controller\ProductoController::class,
-                                        'action' => 'add',
-                                    ],
-                                ],
-                            ],
-                            'editar' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/edit[/:tipo[/:id]]',
-                                    'defaults' => [
-                                        'controller' => \Producto\Controller\ProductoController::class,
-                                        'action' => 'edit',
-                                    ],
-                                    'constraints' => [
-                                        'id' => '[0-9]\d*',
-                                    ],
-                                ],
-                            ],
-                            'eliminar' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/remove[/:id]',
-                                    'defaults' => [
-                                        'controller' => \Producto\Controller\ProductoController::class,
-                                        'action' => 'remove',
-                                    ],
-                                    'constraints' => [
-                                        'id' => '[0-9]\d*',
-                                    ],
-                                ],
-                            ],
-                            'categoriaproducto' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/categorias[/:tipo[/:id]]',
-                                    'defaults' => [
-                                        'controller' => \Categoria\Controller\CategoriaController::class,
-                                        'action' => 'index',
-                                    ],
-                                ],
-                            ],
-                            'backup' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/backup',
-                                    'defaults' => [
-                                        'controller' => \Producto\Controller\ProductoController::class,
-                                        'action' => 'backup',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                    // Gestion Servicios
-                    'gestionServicios' => [
-                        'type' => Literal::class,
-                        'options' => [
-                            'route' => '/servicios',
-                            'defaults' => [
-                                'controller' => \Application\Controller\IndexController::class,
-                                'action' => 'gestionServiciosEmpresa',
-                            ],
-                        ],
-                        'may_terminate' => true,
-                        'child_routes' => [
-                            'listado' => [
-                                'type' => Literal::class,
-                                'options' => [
-                                    'route' => '/listado',
-                                    'defaults' => [
-                                        'controller' => \Servicio\Controller\ServicioController::class,
-                                        'action' => 'index',
-                                    ],
-                                ],
-                            ],
-                            'agregar' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/add[/:tipo]',
-                                    'defaults' => [
-                                        'controller' => \Servicio\Controller\ServicioController::class,
-                                        'action' => 'add',
-                                    ],
-                                ],
-                            ],
-                            'editar' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/edit[/:tipo[/:id]]',
-                                    'defaults' => [
-                                        'controller' => \Servicio\Controller\ServicioController::class,
-                                        'action' => 'edit',
-                                    ],
-                                    'constraints' => [
-                                        'id' => '[0-9]\d*',
-                                    ],
-                                ],
-                            ],
-                            'eliminar' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/remove[/:id]',
-                                    'defaults' => [
-                                        'controller' => \Servicio\Controller\ServicioController::class,
-                                        'action' => 'remove',
-                                    ],
-                                    'constraints' => [
-                                        'id' => '[0-9]\d*',
-                                    ],
-                                ],
-                            ],
-                            'categoriaservicio' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/categorias[/:tipo[/:id]]',
-                                    'defaults' => [
-                                        'controller' => \Categoria\Controller\CategoriaController::class,
-                                        'action' => 'index',
-                                    ],
-                                ],
-                            ],
-                            'backup' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/backup',
-                                    'defaults' => [
-                                        'controller' => \Servicio\Controller\ServicioController::class,
-                                        'action' => 'backup',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-              // Herramientas
+                   // Gestion Productos
+                   'gestionProductos' => [
+                       'type' => Literal::class,
+                       'options' => [
+                           'route' => '/productos',
+                           'defaults' => [
+                               'controller' => \Application\Controller\IndexController::class,
+                               'action' => 'gestionProductos',
+                           ],
+                       ],
+                       'may_terminate' => true,
+                       'child_routes' => [
+                           'listado' => [
+                               'type' => Literal::class,
+                               'options' => [
+                                   'route' => '/listado',
+                                   'defaults' => [
+                                       'controller' => \Producto\Controller\ProductoController::class,
+                                       'action' => 'index',
+                                   ],
+                               ],
+                           ],
+                           'agregar' => [
+                               'type' => Segment::class,
+                               'options' => [
+                                   'route' => '/add[/:tipo]',
+                                   'defaults' => [
+                                       'controller' => \Producto\Controller\ProductoController::class,
+                                       'action' => 'add',
+                                   ],
+                               ],
+                           ],
+                           'editar' => [
+                               'type' => Segment::class,
+                               'options' => [
+                                   'route' => '/edit[/:tipo[/:id]]',
+                                   'defaults' => [
+                                       'controller' => \Producto\Controller\ProductoController::class,
+                                       'action' => 'edit',
+                                   ],
+                                   'constraints' => [
+                                       'id' => '[0-9]\d*',
+                                   ],
+                               ],
+                           ],
+                           'eliminar' => [
+                               'type' => Segment::class,
+                               'options' => [
+                                   'route' => '/remove[/:id]',
+                                   'defaults' => [
+                                       'controller' => \Producto\Controller\ProductoController::class,
+                                       'action' => 'remove',
+                                   ],
+                                   'constraints' => [
+                                       'id' => '[0-9]\d*',
+                                   ],
+                               ],
+                           ],
+                           'categoriaproducto' => [
+                               'type' => Segment::class,
+                               'options' => [
+                                   'route' => '/categorias[/:tipo[/:id]]',
+                                   'defaults' => [
+                                       'controller' => \Categoria\Controller\CategoriaController::class,
+                                       'action' => 'index',
+                                   ],
+                               ],
+                           ],
+                           'backup' => [
+                               'type' => Segment::class,
+                               'options' => [
+                                   'route' => '/backup',
+                                   'defaults' => [
+                                       'controller' => \Producto\Controller\ProductoController::class,
+                                       'action' => 'backup',
+                                   ],
+                               ],
+                           ],
+                       ],
+                   ],
+                   // Gestion Servicios
+                   'gestionServicios' => [
+                       'type' => Literal::class,
+                       'options' => [
+                           'route' => '/servicios',
+                           'defaults' => [
+                               'controller' => \Application\Controller\IndexController::class,
+                               'action' => 'gestionServicios',
+                           ],
+                       ],
+                       'may_terminate' => true,
+                       'child_routes' => [
+                           'listado' => [
+                               'type' => Literal::class,
+                               'options' => [
+                                   'route' => '/listado',
+                                   'defaults' => [
+                                       'controller' => \Servicio\Controller\ServicioController::class,
+                                       'action' => 'index',
+                                   ],
+                               ],
+                           ],
+                           'agregar' => [
+                               'type' => Segment::class,
+                               'options' => [
+                                   'route' => '/add[/:tipo]',
+                                   'defaults' => [
+                                       'controller' => \Servicio\Controller\ServicioController::class,
+                                       'action' => 'add',
+                                   ],
+                               ],
+                           ],
+                           'editar' => [
+                               'type' => Segment::class,
+                               'options' => [
+                                   'route' => '/edit[/:tipo[/:id]]',
+                                   'defaults' => [
+                                       'controller' => \Servicio\Controller\ServicioController::class,
+                                       'action' => 'edit',
+                                   ],
+                                   'constraints' => [
+                                       'id' => '[0-9]\d*',
+                                   ],
+                               ],
+                           ],
+                           'eliminar' => [
+                               'type' => Segment::class,
+                               'options' => [
+                                   'route' => '/remove[/:id]',
+                                   'defaults' => [
+                                       'controller' => \Servicio\Controller\ServicioController::class,
+                                       'action' => 'remove',
+                                   ],
+                                   'constraints' => [
+                                       'id' => '[0-9]\d*',
+                                   ],
+                               ],
+                           ],
+                           'categoriaservicio' => [
+                               'type' => Segment::class,
+                               'options' => [
+                                   'route' => '/categorias[/:tipo[/:id]]',
+                                   'defaults' => [
+                                       'controller' => \Categoria\Controller\CategoriaController::class,
+                                       'action' => 'index',
+                                   ],
+                               ],
+                           ],
+                           'backup' => [
+                               'type' => Segment::class,
+                               'options' => [
+                                   'route' => '/backup',
+                                   'defaults' => [
+                                       'controller' => \Servicio\Controller\ServicioController::class,
+                                       'action' => 'backup',
+                                   ],
+                               ],
+                           ],
+                       ],
+                   ],
+               ],
+           ],
+            // Herramientas
             'herramientas' => [
                 'type' => Literal::class,
                 'options' => [
