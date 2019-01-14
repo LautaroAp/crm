@@ -31,26 +31,24 @@ class EventoController extends AbstractActionController {
     protected $clienteManager;
     protected $proveedorManager;
     protected $tipoEventoManager;
-//    private $tipos;
+    private $personaManager;
+
 
     public function __construct($entityManager, $eventoManager, $clienteManager, $proveedorManager,
-     $tipoEventoManager) {
+     $tipoEventoManager, $personaManager) {
         $this->entityManager = $entityManager;
         $this->eventoManager = $eventoManager;
         $this->clienteManager= $clienteManager;
         $this->proveedorManager= $proveedorManager;
         $this->tipoEventoManager= $tipoEventoManager;
-//        $this->tipos = $this->getArrayTipos();
+        $this->personaManager= $personaManager;
     }
 
-    private function getArrayTipos() {
-        $tipos = $this->tipoEventoManager->getTipoEventos();
-        $array = array();
-        foreach ($tipos as $tipo) {
-            $array2 = array($tipo->getId() => $tipo->getNombre());
-            $array = $array + $array2;
-        }
-        return $array;
+    //esta funcion recibe un tipo de persona y le pide al manager los tipos de eventos 
+    //correspondientes segun si el tipo de persona es cliente o proveedor
+    private function getArrayTipos($tipo) {
+        $tipos = $this->tipoEventoManager->getTipoEventos($tipo);
+        return $tipos;
     }
 
     public function indexAction() {
@@ -66,7 +64,6 @@ class EventoController extends AbstractActionController {
         }
         $paginator->setCurrentPageNumber((int) $page)
                 ->setItemCountPerPage(10);
-
         return new ViewModel([
             'eventos' => $paginator,
             'mensaje' => $mensaje
@@ -80,58 +77,72 @@ class EventoController extends AbstractActionController {
 
     private function procesarAddAction() {
         $Id = (int) $this->params()->fromRoute('id', -1);
-        $tipo_persona = $this->params()->fromRoute('tipo');
-        if(strtoupper($tipo_persona)==("CLIENTE")){
-            return $this->procesarAddCliente($Id);
-        }
-        else{
-            return $this->procesarAddProveedor($Id);
-        }
-    }
-
-    private function procesarAddCliente($Id){
-        $cliente = $this->clienteManager->getCliente($Id);
-        $id_persona= $cliente->getPersona()->getId();
-        $tipoEventos = $this->getArrayTipos();
-        $transacciones = $this->tipoEventoManager->getTipoEventos();
+        $tipo= $_SESSION['TIPOEVENTO']['TIPO'];    
+        $persona= $this->personaManager->getPersona($Id);
+        $tipoEventos = $this->getArrayTipos($tipo);
         $form = $this->eventoManager->createForm($tipoEventos);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $this->eventoManager->addEvento($data,$cliente->getPersona(), $tipo_persona);
-                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' =>$id_persona]);
+            $this->eventoManager->addEvento($data,$persona);
+                return $this->redireccionar($tipo, $Id);
         }
         return new ViewModel([
             'form' => $form,
-            'cliente' => $cliente,
+            'persona' => $persona,
+            'tipoPersona'=>$tipo,
             'tipos' => $tipoEventos,
-            'transacciones' => $transacciones
         ]);
     }
 
-    private function procesarAddProveedor($Id){
-        $proveedor = $this->proveedorManager->getProveedor($Id);
-        $id_persona= $proveedor->getPersona()->getId();
-        $tipoEventos = $this->getArrayTipos();
-        $transacciones = $this->tipoEventoManager->getTipoEventos();
+    private function redireccionar($tipo, $id){
+        if (strtoupper($tipo)=="CLIENTE"){
+            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' =>$id]);
+        }elseif (strtoupper($tipo)=="PROVEEDOR"){
+            return $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' =>$id]);
+        }
+        return $this->redirect()->toRoute('home');
+    }
+
+
+
+    private function procesarAddCliente($Id, $tipo){
+        $persona= $this->personaManager->getPersona($Id);
+        $tipoEventos = $this->getArrayTipos($tipo);
         $form = $this->eventoManager->createForm($tipoEventos);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $this->eventoManager->addEvento($data, $proveedor->getPersona(), $tipo_persona);
-            return $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' =>$id_persona]);
+            $this->eventoManager->addEvento($data,$persona);
+                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' =>$Id]);
         }
         return new ViewModel([
             'form' => $form,
-            'cliente' => $proveedor,
+            'persona' => $persona,
             'tipos' => $tipoEventos,
-            'transacciones' => $transacciones
         ]);
     }
 
+    // private function procesarAddProveedor($Id, $tipo){
+    //     $proveedor = $this->proveedorManager->getProveedor($Id);
+    //     $id_persona= $proveedor->getPersona()->getId();
+    //     $tipoEventos = $this->getArrayTipos($tipo);
+    //     $form = $this->eventoManager->createForm($tipoEventos);
+    //     if ($this->getRequest()->isPost()) {
+    //         $data = $this->params()->fromPost();
+    //         $this->eventoManager->addEvento($data, $proveedor->getPersona(), $tipo_persona);
+    //         return $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' =>$id_persona]);
+    //     }
+    //     return new ViewModel([
+    //         'form' => $form,
+    //         'cliente' => $proveedor,
+    //         'tipos' => $tipoEventos,
+    //     ]);
+    // }
 
-    public function getTablaFiltrado($filtro) {
-        $listaEventos = $this->getSearch($filtro);
-        return ($listaEventos);
-    }
+
+    // public function getTablaFiltrado($filtro) {
+    //     $listaEventos = $this->getSearch($filtro);
+    //     return ($listaEventos);
+    // }
 
     public function editAction() {
         $view = $this->procesarEditAction();

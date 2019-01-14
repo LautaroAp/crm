@@ -42,12 +42,6 @@ class CategoriaManager {
         $this->config = $config;
     }
 
-
-    // public function getCategoriaCliente(){
-    //     // $categoriaClientes = $this->entityManager
-    //     // ->getRepository(Categoria::class)->findBy(['tipo'=>"CLIENTE"]);
-    //     return $this->getTabla("CLIENTE");
-    // }
     
     public function getTabla($tipo) {
         $query = $this->getCategorias($tipo);
@@ -55,7 +49,6 @@ class CategoriaManager {
         $pag->setUseOutputWalkers(true);
         $adapter = new DoctrineAdapter($pag);
         $this->total = COUNT($adapter);
-
         $paginator = new Paginator($adapter);
         return $paginator;
     }
@@ -137,10 +130,8 @@ class CategoriaManager {
      * This method updates data of an existing Categoriaevento.
      */
     public function updateCategoria($categoria, $data) {
-        // $data = $form->getData();
         $categoria->setNombre($data['nombre']);
         $categoria->setDescripcion($data['descripcion']);
-
         if ($this->tryUpdateCategoria($categoria)) {
             $_SESSION['MENSAJES']['categoria_evento'] = 1;
             $_SESSION['MENSAJES']['categoria_evento_msj'] = 'Tipo de actividad editada correctamente';
@@ -161,14 +152,6 @@ class CategoriaManager {
         }
     }
 
-    // public function getTabla($tipo) {
-    //     // Create the adapter
-    //     $adapter = new SelectableAdapter($this->entityManager->getRepository(Categoria::class)); // An object repository implements Selectable
-    //     // Create the paginator itself
-    //     $paginator = new Paginator($adapter);
-
-    //     return ($paginator);
-    // }
 
     private function tryAddCategoria($categoria) {
         try {

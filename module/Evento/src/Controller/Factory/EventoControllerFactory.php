@@ -8,7 +8,7 @@ use Evento\Service\EventoManager;
 use TipoEvento\Service\TipoEventoManager;
 use Clientes\Service\ClientesManager;
 use Proveedor\Service\ProveedorManager;
-
+use Persona\Service\PersonaManager;
 /**
  * Description of EventoControllerFactory
  *
@@ -25,8 +25,10 @@ class EventoControllerFactory implements FactoryInterface {
         $clienteManager = $container->get(ClientesManager::class);
         $proveedorManager = $container->get(ProveedorManager::class);
         $tipoEventoManager = $container->get(TipoEventoManager::class);
+        $personaManager = $container->get(PersonaManager::class);
+
         // Instantiate the service and inject dependencies
         return new EventoController($entityManager, $eventoManager, $clienteManager, $proveedorManager,
-         $tipoEventoManager);
+         $tipoEventoManager, $personaManager);
     }    
 }

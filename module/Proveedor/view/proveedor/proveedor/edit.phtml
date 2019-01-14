@@ -1,7 +1,7 @@
 <?php
 $title = 'Editar Proveedor';
 $this->headTitle($title);
-$id = $proveedor->getId();
+$id = $proveedor->getPersona()->getId();
 $nombre = $persona->getNombre();
 $telefono = $persona->getTelefono();
 $email = $persona->getEmail();
@@ -16,9 +16,7 @@ $profesion = $proveedor->getProfesion();
 $condicion_iva = $proveedor->getCondicion_iva();
 $actividad = $proveedor->getActividad();
 $cargo = $proveedor->getCargo();
-$animales = $proveedor->getAnimales();
-$establecimientos = $proveedor->getEstablecimientos();
-$raza_manejo = $proveedor->getRazaManejo();
+$skype = $proveedor->getSkype();
 ?>
 
 <!-- Inicio: Datos Generales -->
@@ -73,6 +71,10 @@ $raza_manejo = $proveedor->getRazaManejo();
                                     <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
                                 </option>
                             </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Skype</label>
+                            <input type="text" class="form-control" name="skype" value="<?php echo($skype); ?>" placeholder="Ingresar Skype">
                         </div> 
                     </div>
                     <!-- 3ra fila -->
@@ -221,7 +223,7 @@ $raza_manejo = $proveedor->getRazaManejo();
 
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $id]) ?>">
+                <a href="<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $id]) ?>">
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha">
                 </a>
             </div>

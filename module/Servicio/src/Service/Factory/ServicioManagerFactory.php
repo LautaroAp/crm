@@ -5,6 +5,7 @@ use Interop\Container\ContainerInterface;
 use Servicio\Service\ServicioManager;
 use Iva\Service\IvaManager;
 use Categoria\Service\CategoriaManager;
+use Proveedor\Service\ProveedorManager;
 
 
 /**
@@ -21,6 +22,7 @@ class ServicioManagerFactory
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $ivaManager = $container->get(IvaManager::class);   
         $categoriaManager = $container->get(CategoriaManager::class);         
-        return new ServicioManager($entityManager, $ivaManager, $categoriaManager);
+        $proveedorManager = $container->get(ProveedorManager::class);         
+        return new ServicioManager($entityManager, $ivaManager, $categoriaManager, $proveedorManager);
     }
 }

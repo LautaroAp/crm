@@ -15,10 +15,10 @@ use Application;
 return [ 
    'router' => [
         'routes' => [
-            'tipoevento' => [
+            'actividades' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/clientes/actividades',
+                    'route'    => '/clientes/actividadesCliente',
                     'defaults' => [
                         'controller'    => Controller\TipoEventoController::class,
                         'action'        => 'index',
@@ -29,7 +29,7 @@ return [
                     'editar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/edit[/:id]',
+                            'route' => '/edit[/:tipo[/:id]]',
                             'defaults' => [
                                 'action' => 'edit',
                             ],
@@ -62,7 +62,7 @@ return [
                     'page' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/page[/:id[/:estado]]',
+                            'route' => '/page[/:tipo[/:id]]',
                             'defaults' => [
                                 'action' => 'index',
                             ],

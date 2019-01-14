@@ -31,7 +31,6 @@ class ProductoManager
         $this->ivaManager= $ivaManager;
         $this->categoriaManager= $categoriaManager;
         $this->proveedorManager= $proveedorManager;
-
     }
     
      public function getProductos(){
@@ -79,9 +78,9 @@ class ProductoManager
         }
         if($data['proveedor'] == "-1"){
             $producto->setProveedor(null);
-        } else {
-            $proveedor= $this->proveedorManager->getProveedor($data['proveedor']);            
-            $producto->setProveedor($this->proveedorManager->getProveedor($data['proveedor']));
+        } else {            
+            $prov=$this->proveedorManager->getProveedor($data['proveedor']);
+            $producto->setProveedor($prov);
         }
         $producto->setMarca($data['marca']);
         $producto->setPresentacion($data['presentacion']);

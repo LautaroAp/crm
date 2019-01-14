@@ -126,7 +126,7 @@ class ProveedorManager {
         $data = [
             'proveedor' =>$proveedor,
             'eventos' =>$persona->getEventos(),
-            'persona'=>$proveedor->getPersona()
+            'persona'=>$persona
         ];
         return $data;
     }
@@ -188,13 +188,11 @@ class ProveedorManager {
         }
     }
 
-    public function updateProveedor($data) {
-        $proveedor = $this->getProveedor($data['id']);
+    public function updateProveedor($proveedor, $data) {
         $this->addDatosParticulares($proveedor, $data);
         $this->addDatosLaborales($proveedor, $data);
         $this->addDatosFacturacion($proveedor, $data);
         $this->personaManager->updatePersona($proveedor->getPersona(), $data);
-
         if ($this->tryUpdateProveedor($proveedor)) {
             $_SESSION['MENSAJES']['ficha_proveedor'] = 1;
             $_SESSION['MENSAJES']['ficha_proveedor_msj'] = 'Proveedor modificado correctamente';
@@ -202,8 +200,7 @@ class ProveedorManager {
             $_SESSION['MENSAJES']['ficha_proveedor'] = 0;
             $_SESSION['MENSAJES']['ficha_proveedor_msj'] = 'Error al modificar proveedor';
         }
-
-        return true;
+        return $proveedor;
     }
 
     private function tryUpdateProveedor($proveedor) {
@@ -220,11 +217,11 @@ class ProveedorManager {
         $pais = $this->getPais($data['pais']);
         $provincia = $this->getProvincia($data['provincia']);
         $categoria = $this->getCategoriaProveedor($data['categoria']);
-
         $proveedor->setPais($pais)
                 ->setProvincia($provincia)
                 ->setCiudad($data['ciudad'])
-                ->setCategoria($categoria);
+                ->setCategoria($categoria)
+                ->setSkype($data['skype']);
     }
 
     private function addDatosLaborales($proveedor, $data) {
@@ -243,17 +240,7 @@ class ProveedorManager {
                 ->setCbu($data['cbu'])
                 ->setCuit_cuil($data['cuit_cuil']);
     }
-
-   
-    public function deleteProveedor($id) {
-        $entityManager = $this->entityManager;
-        $proveedor = $this->entityManager
-                ->getRepository(Proveedor::class)
-                ->findOneBy(['Id' => $id]);
-        $entityManager->remove($proveedor);
-        $entityManager->flush();
-    }
-
+    
     public function modificarEstado($id) {
         $entityManager = $this->entityManager;
         $proveedor = $this->entityManager

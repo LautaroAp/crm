@@ -3,7 +3,7 @@
 <?php
 $categoria = $servicio->getCategoria();
 $iva = $servicio->getIva();
-// $proveedor = $licencia->getProveedor();
+$proveedor = $servicio->getProveedor();
 ?>
 <!-- Formulario -->
 <form method="post">
@@ -44,11 +44,15 @@ $iva = $servicio->getIva();
                     </div>
                     <div class="form-group col-md-6">
                         <label>Proveedor</label>
-                        <select class="form-control" id="proveedor" name="proveedor">
-                            <option value="" hidden="">Seleccionar Proveedor</option>
-                            <option value="1">...</option>
-                            <option value="2">...</option>
-                            <option value="-1">NO DEFINIDO</option>
+                        <select class="form-control" id="proveedor" name="proveedor" required>
+                            <option value="<?php if(isset($proveedor)){ echo ($proveedor->getId()); }?>" hidden="">  
+                                <?php if(isset($proveedor)){ echo $proveedor->getPersona()->getNombre(); } else {echo ("Seleccionar Proveedor");}?>
+                            </option>
+                            <?php foreach ($proveedores as $proveedor) : ?>
+                                <option value="<?= $proveedor->getId(); ?>">
+                                    <?= $proveedor->getPersona()->getNombre(); ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>

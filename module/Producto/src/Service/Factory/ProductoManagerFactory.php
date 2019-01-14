@@ -21,7 +21,7 @@ class ProductoManagerFactory
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $ivaManager = $container->get(IvaManager::class);
         $categoriaManager = $container->get(CategoriaManager::class);         
-        $proveedorManager = $container->get(ProveedorManager::class);         
+        $proveedorManager = $container->get(ProveedorManager::class);
      
         return new ProductoManager($entityManager, $ivaManager, $categoriaManager, $proveedorManager);
     }

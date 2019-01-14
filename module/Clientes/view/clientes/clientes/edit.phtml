@@ -1,7 +1,7 @@
 <?php
 $title = 'Editar Cliente';
 $this->headTitle($title);
-$id = $cliente->getId();
+$id = $cliente->getPersona()->getId();
 $nombre = $persona->getNombre();
 $telefono = $persona->getTelefono();
 $email = $persona->getEmail();

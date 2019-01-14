@@ -44,6 +44,7 @@ class ProveedorController extends AbstractActionController
         $provincia = $this->proveedorManager->getProvincia();
         $categorias = $this->proveedorManager->getCategoriasProveedor($tipo);
         $condiciones_iva = $this->proveedorManager->getCondicionIva('iva');
+        $_SESSION['TIPOEVENTO']['TIPO']=$tipo;
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
             $_SESSION['PARAMETROS_PROVEEDOR'] = $parametros;
@@ -91,6 +92,7 @@ class ProveedorController extends AbstractActionController
         $pais = $this->proveedorManager->getPais();
         $provincia = $this->proveedorManager->getProvincia();
         $licencia = $this->proveedorManager->getLicencia();
+        $_SESSION['TIPOEVENTO']['TIPO']=$tipo;
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $proveedor = $this->proveedorManager->addProveedor($data);
@@ -121,12 +123,13 @@ class ProveedorController extends AbstractActionController
         $pais = $this->proveedorManager->getPais();
         $provincia = $this->proveedorManager->getProvincia();
         $licencia = $this->proveedorManager->getLicencia();
+        $_SESSION['TIPOEVENTO']['TIPO']=$tipo;
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $id_persona = $this->params()->fromRoute('id');
-            $id_proveedor = $this->params()->fromRoute('id');
-            $proveedor = $this->proveedorManager->getProveedor($id_proveedor);
-            $this->proveedorManager->updateProveedor($data);
+            $persona = $this->personaManager->getPersona($id_persona);
+            $proveedor = $this->proveedorManager->getProveedorIdPersona($id_persona);
+            $this->proveedorManager->updateProveedor($proveedor, $data);
             $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $id_persona]);
         } else {
             $id_persona = $this->params()->fromRoute('id');
@@ -147,22 +150,7 @@ class ProveedorController extends AbstractActionController
         ]);
     }
 
-    public function deleteAction() {
-        $view = $this->processDelete();
-        return $view;
-    }
-
-    private function processDelete(){
-        $request = $this->getRequest();
-        if (!$request->isPost()) {
-            $id = $this->params()->fromRoute('id');
-            $this->proveedorManager->deleteProveedor($id);
-            $this->redirect()->toRoute('proveedores/listado');
-        } else {
-            return new ViewModel();
-        }
-    }
-
+    
     public function modificarEstadoAction(){
         $view = $this->processModificarEstado();
         return $view;
@@ -183,10 +171,11 @@ class ProveedorController extends AbstractActionController
         $id_persona = (int)$this->params()->fromRoute('id', -1);
         $persona = $this->personaManager->getPersona($id_persona);
         $data = $this->proveedorManager->getDataFicha($id_persona);
+        $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();
         return new ViewModel([
             'proveedor' => $data['proveedor'],
             'eventos' => $data['eventos'],
-            'tipo_eventos' => $this->tipoEventosManager->getTipoEventos(),
+            'tipo_eventos' => $this->tipoEventosManager->getTipoEventos($persona->getTipo()),
             'persona' => $data['persona']
         ]);
     }

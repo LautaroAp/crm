@@ -218,15 +218,13 @@ class ClientesManager {
         }
     }
 
-    public function updateCliente($data) {
-        $cliente = $this->getCliente($data['id']);
+    public function updateCliente($cliente, $data) {
         $this->addDatosParticulares($cliente, $data);
         $this->addDatosLaborales($cliente, $data);
         $this->addDatosFacturacion($cliente, $data);
         $this->addDatosLicencia($cliente, $data);
         $this->addDatosGanaderos($cliente, $data);
         $this->personaManager->updatePersona($cliente->getPersona(), $data);
-
         if ($this->tryUpdateCliente($cliente)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Cliente modificado correctamente';

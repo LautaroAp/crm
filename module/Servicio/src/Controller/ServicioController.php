@@ -64,9 +64,11 @@ class ServicioController extends AbstractActionController {
         $ivas = $this->ivaManager->getIvas();
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->servicioManager->getCategoriasServicio($tipo);
+        $proveedores = $this->servicioManager->getListaProveedores($tipo);
         return new ViewModel([
             'tipo'=>$tipo,
             'ivas'=>$ivas,
+            'proveedores'=>$proveedores,
             'categorias'=>$categorias
         ]);
 
@@ -81,6 +83,7 @@ class ServicioController extends AbstractActionController {
         $servicio = $this->servicioManager->getServicioId($id);
         $tipo = $this->params()->fromRoute('tipo');
         $categorias = $this->servicioManager->getCategoriasServicio($tipo);
+        $proveedores = $this->servicioManager->getListaProveedores($tipo);
         $ivas = $this->ivaManager->getIvas();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
@@ -91,6 +94,7 @@ class ServicioController extends AbstractActionController {
             'servicio' => $servicio,
             'categorias'=>$categorias,
             'ivas'=>$ivas,
+            'proveedores'=>$proveedores,
             'tipo'=>"servicio"
         ]);
     }

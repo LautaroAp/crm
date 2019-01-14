@@ -107,10 +107,10 @@ return [
                         ],
                         'may_terminate' => true,
                         'child_routes' => [
-                            'tipoevento' => [
-                                'type' => Literal::class,
+                            'tipoeventoCliente' => [
+                                'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/actividades',
+                                    'route' => '/actividades[/:tipo[/:id]]',
                                     'defaults' => [
                                         'controller' => \TipoEvento\Controller\TipoEventoController::class,
                                         'action' => 'index',
@@ -218,10 +218,10 @@ return [
                         ],
                         'may_terminate' => true,
                         'child_routes' => [
-                            'tipoevento' => [
-                                'type' => Literal::class,
+                            'tipoeventoProveedor' => [
+                                'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/actividades',
+                                    'route' => '/actividades[/:tipo[/:id]]',
                                     'defaults' => [
                                         'controller' => \TipoEvento\Controller\TipoEventoController::class,
                                         'action' => 'index',
@@ -607,6 +607,16 @@ return [
                     'route' => '/categoria[/:tipo[/:id]]',
                     'defaults' => [
                         'controller' => \Categoria\Controller\CategoriaController::class,
+                        'action' => 'index',
+                    ],
+                ],
+            ],
+            'actividades' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/actividades[/:tipo[/:id]]',
+                    'defaults' => [
+                        'controller' => \TipoEvento\Controller\TipoEventoController::class,
                         'action' => 'index',
                     ],
                 ],

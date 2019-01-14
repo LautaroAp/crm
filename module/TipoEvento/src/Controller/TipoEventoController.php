@@ -59,9 +59,9 @@ class TipoEventoController extends AbstractActionController {
 
     private function procesarAddAction() {
         $form = $this->tipoeventoManager->createForm();
-        $tipoeventos = $this->tipoeventoManager->getTipoEventos();
+        $tipoPersona = $this->params()->fromRoute('tipo');
+        $paginator = $this->tipoeventoManager->getTabla($tipoPersona);
         $categorias= $this->tipoeventoManager->getCategoriaEventos();
-        $paginator = $this->tipoeventoManager->getTabla();
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
@@ -71,17 +71,30 @@ class TipoEventoController extends AbstractActionController {
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $this->tipoeventoManager->getTipoEventoFromForm($form, $data);
-            return $this->redirect()->toRoute('tipoevento');
+            $this->tipoeventoManager->addTipoEvento($data, $tipoPersona);
+            return $this->redireccionar($tipoPersona);
         }
+        $_SESSION['TIPOEVENTO']['TIPO'] = $tipoPersona;
         return new ViewModel([
             'form' => $form,
             'tipoeventos' => $tipoeventos,
             'tipoeventos_pag' => $paginator,
+            'tipoPersona'=> $tipoPersona,
             'categoriaeventos' => $categorias,
         ]);
     }
 
+    private function redireccionar($tipo){
+        if (strtoupper($tipo)==strtoupper("proveedor")){
+            return $this->redirect()->toRoute('gestionProveedores/gestionActividadesProveedores/tipoeventoProveedor', ['tipo'=>'proveedor']);
+        }elseif (strtoupper($tipo)==strtoupper("cliente")){
+            return $this->redirect()->toRoute('gestionClientes/gestionActividadesClientes/tipoeventoCliente', ['tipo'=>'cliente']);
+        }else{
+            return $this->redirect()->toRoute('home');
+        }
+    }
+
+    
     public function editAction() {
         $view = $this->procesarEditAction();
         return $view;
@@ -90,6 +103,7 @@ class TipoEventoController extends AbstractActionController {
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $tipoevento = $this->tipoeventoManager->getTipoEventoId($id);
+        $tipoPersona = $this->params()->fromRoute('tipo');
         $categorias= $this->tipoeventoManager->getCategoriaEventos();
         $form = $this->tipoeventoManager->getFormForTipoEvento($tipoevento);
         if ($form == null) {
@@ -99,14 +113,16 @@ class TipoEventoController extends AbstractActionController {
                 $data = $this->params()->fromPost();
                 if ($this->tipoeventoManager->formValid($form, $data)) {
                     $this->tipoeventoManager->updateTipoEvento($tipoevento, $data);
-                    return $this->redirect()->toRoute('tipoevento');
+                    return $this->redireccionar($tipoPersona);
                 }
             } else {
                 $this->tipoeventoManager->getFormEdited($form, $tipoevento);
             }
+            $_SESSION['TIPOEVENTO']['TIPO'] = $tipoPersona;
             return new ViewModel(array(
                 'tipoevento' => $tipoevento,
                 'categoriaeventos' => $categorias,
+                'tipoPersona'=> $tipoPersona,
                 'form' => $form
             ));
         }
@@ -120,15 +136,14 @@ class TipoEventoController extends AbstractActionController {
     public function procesarRemoveAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $tipoevento = $this->tipoeventoManager->getTipoEventoId($id);
-
         if ($tipoevento == null) {
             $this->reportarError();
         } else {
-                    
+            $this->removerDependencias($categoria->getTipo(), $id);
             $this->eventoManager->eliminarTipoEventos($id);
             
             $this->tipoeventoManager->removeTipoEvento($tipoevento);
-            return $this->redirect()->toRoute('gestionClientes/gestionActividadesClientes/tipoevento');
+            return $this->redireccionar($tipoevento->getTipo());
         }
     }
 

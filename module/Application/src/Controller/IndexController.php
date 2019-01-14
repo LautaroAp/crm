@@ -16,11 +16,10 @@ class IndexController extends AbstractActionController {
     }
 
     public function indexAction() {
-        $_SESSION['PARAMETROS_VENTA'] = array();
-        $_SESSION['PARAMETROS_CLIENTE'] = array();
-        $_SESSION['PARAMETROS_CLIENTE_INACTIVO'] = array();
+        $this->reiniciarParametros();
         $_SESSION['MENSAJES'] = array();
         $_SESSION['CATEGORIA'] = array();
+        $_SESSION['TIPOEVENTO'] = array();
         $this->layout()->setTemplate('layout/simple');
         return new ViewModel();
     }
@@ -33,75 +32,79 @@ class IndexController extends AbstractActionController {
         return new ViewModel();
     }
 
-    public function gestionClientesAction() {
+    private function reiniciarParametros(){
+        $_SESSION['PARAMETROS_VENTA'] = array();
         $_SESSION['PARAMETROS_CLIENTE'] = array();
         $_SESSION['PARAMETROS_CLIENTE_INACTIVO'] = array();
+    }
+
+    public function gestionClientesAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionActividadesClientesAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionProveedoresAction() {
-        $_SESSION['PARAMETROS_PROVEEDOR'] = array();
-        $_SESSION['PARAMETROS_PROVEEDOR_INACTIVO'] = array();
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionActividadesProveedoresAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionProductosProveedorAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionServiciosProveedorAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionEmpresaAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionProductosServiciosAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionLicenciasAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionProductosAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionServiciosAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function herramientasAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function utilidadesAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
     }
 
     public function gestionAction() {
+        $this->reiniciarParametros();
         return new ViewModel();
-    }  
-
-    public function backupmenuAction() {
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $data = $this->params()->fromPost();
-            $_SESSION['PARAMETROS_BACKUP'] = $data;
-            $this->redirect()->toRoute("backup");
-        }
-        return new ViewModel();
-    }
-
-   
+    }     
 }

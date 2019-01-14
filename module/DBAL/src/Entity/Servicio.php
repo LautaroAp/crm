@@ -36,17 +36,12 @@ class Servicio {
      */
     private $categoria;
     
-    // /**
-    //  * Many Services have One Proveedor.
-    //  * @ORM\ManyToOne(targetEntity="Proveedor")
-    //  * @ORM\JoinColumn(name="ID_PROVEEDOR", referencedColumnName="ID_PROVEEDOR")
-    //  */
-    // private $proveedor;
-
-     /**
-     * @ORM\Column(name="ID_PROVEEDOR", nullable=true, type="integer")
+    /**
+     * Many Services have One Proveedor.
+     * @ORM\ManyToOne(targetEntity="Proveedor")
+     * @ORM\JoinColumn(name="ID_PROVEEDOR", referencedColumnName="ID_PROVEEDOR")
      */
-    protected $proveedor;
+    private $proveedor;
 
     /**
      * @ORM\Column(name="PRECIO", nullable=true, type="decimal")

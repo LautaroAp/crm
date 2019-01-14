@@ -9,7 +9,7 @@
 
     <div class="container">
         <div class="row">
-            <h2>Listado de Ejecutivos</h2><br>
+            <h2>Listado de usuarios</h2><br>
         </div>
 
         <div class="row">
@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="table-responsive">
-                    <table class="table table-hover table-condensed" id="t-ejecutivos">
+                    <table class="table table-hover table-condensed" id="t-usuarios">
                         <thead>
                             <tr>
                                 <th class="th-sm" onclick="sortTableString(1, 'tabla_evento')">
@@ -47,17 +47,17 @@
                         </thead>
                         <tbody> 
                             <?php
-                            if (isset($ejecutivos)) {
-                                foreach ($ejecutivos as $ejecutivo) {
+                            if (isset($usuarios)) {
+                                foreach ($usuarios as $usuario) {
                                     echo ('<tr>');
                                     echo ('<td>');
-                                    echo ($ejecutivo->getApellido());
+                                    echo ($usuario->getApellido());
                                     echo ('</td>');
                                     echo ('<td>');
-                                    echo ($ejecutivo->getNombre());
+                                    echo ($usuario->getNombre());
                                     echo ('</td>');
                                     echo ('<td>');
-                                    echo ($ejecutivo->getMail());
+                                    echo ($usuario->getMail());
                                     echo ('</td>');
                                     echo ('<td>');
                                     echo ($ejecutivo->getUsuario());
@@ -67,7 +67,7 @@
                                     echo ('</td>');
                                     ?>    
                                 <td> 
-                                    <a class="btn btn-default" href="<?= $this->url('ejecutivos', ['action' => 'edit', 'id' => $ejecutivo->getId_ejecutivo()]); ?>">
+                                    <a class="btn btn-default" href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $ejecutivo->getId_ejecutivo()]); ?>">
                                         <span class="glyphicon glyphicon-pencil" ></span> 
                                     </a>
                                     <button name="<?= $ejecutivo->getId_ejecutivo() ?>" id="<?= $ejecutivo->getId_ejecutivo() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $ejecutivo->getId_ejecutivo() ?>">
@@ -93,7 +93,7 @@
                                                 </p>
                                             </div>
                                             <div class="modal-footer">
-                                                <a class="btn btn-default" href="<?= $this->url('ejecutivos', ['action' => 'delete', 'id' => $ejecutivo->getId_ejecutivo()]); ?>">
+                                                <a class="btn btn-default" href="<?= $this->url('usuarios', ['action' => 'delete', 'id' => $ejecutivo->getId_ejecutivo()]); ?>">
                                                     Aceptar
                                                 </a>
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -110,8 +110,8 @@
                             </tbody>
                         </table>
                         <?php
-                        echo $this->paginationControl($ejecutivos, 'Sliding', // All, Elastic, Jumping, Sliding
-                                'search_pagination.phtml', $this->url('ejecutivos/page', ['action' => 'index', 'id' => 1]));
+                        echo $this->paginationControl($usuarios, 'Sliding', // All, Elastic, Jumping, Sliding
+                                'search_pagination.phtml', $this->url('usuarios/page', ['action' => 'index', 'id' => 1]));
                     }
                     ?>
                 </div>
@@ -123,7 +123,7 @@
                 <a class="btn btn-default" href="<?= $this->url('home') ?>">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                 </a>
-                <a class="btn btn-default" href="<?= $this->url('ejecutivos', ['action' => 'add']); ?>">
+                <a class="btn btn-default" href="<?= $this->url('usuarios', ['action' => 'add']); ?>">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuevo Ejecutivo
                 </a>
             </div>

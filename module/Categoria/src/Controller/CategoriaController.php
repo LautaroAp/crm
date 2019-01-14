@@ -32,13 +32,14 @@ class CategoriaController extends AbstractActionController {
      */
     private $tipoEventoManager;
     private $clientesManager;
+    private $proveedorManager;
     private $productoManager;
     private $servicioManager;
     private $licenciaManager;
 
 
     public function __construct($entityManager, $categoriaManager, $tipoEventoManager,  $clientesManager
-    , $productoManager, $servicioManager, $licenciaManager) {
+    , $productoManager, $servicioManager, $licenciaManager, $proveedorManager) {
         $this->entityManager = $entityManager;
         $this->categoriaManager = $categoriaManager;
         $this->tipoEventoManager = $tipoEventoManager;
@@ -46,7 +47,7 @@ class CategoriaController extends AbstractActionController {
         $this->productoManager = $productoManager;
         $this->servicioManager= $servicioManager;
         $this->licenciaManager=$licenciaManager;
-
+        $this->proveedorManager=$proveedorManager;
     }
 
     public function indexAction() {
@@ -69,7 +70,7 @@ class CategoriaController extends AbstractActionController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
+                ->setItemCountPerPage(3);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->categoriaManager->addCategoria($data, $tipo);
@@ -113,6 +114,8 @@ class CategoriaController extends AbstractActionController {
     private function removerDependencias($tipo, $id){
         if (strtoupper($tipo)==strtoupper("cliente")){
             $this->clientesManager->eliminarCategoriaClientes($id);
+        }elseif (strtoupper($tipo)==strtoupper("proveedor")){
+            $this->proveedorManager-> eliminarCategoriaProveedor($id);
         }elseif (strtoupper($tipo)==strtoupper("producto")){
             $this->productoManager-> eliminarCategoriaProductos($id);
         }elseif (strtoupper($tipo)==strtoupper("licencia")){
@@ -141,6 +144,8 @@ class CategoriaController extends AbstractActionController {
     private function redireccionar($tipo){
         if (strtoupper($tipo)==strtoupper("cliente")){
             return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
+        }elseif (strtoupper($tipo)==strtoupper("proveedor")){
+            return $this->redirect()->toRoute('gestionProveedores/categoriaproveedor', ['tipo'=>'proveedor']);
         }elseif (strtoupper($tipo)==strtoupper("producto")){
             return $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/categoriaproducto', ['tipo'=>'producto']);
         }elseif (strtoupper($tipo)==strtoupper("licencia")){
