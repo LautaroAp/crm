@@ -87,7 +87,7 @@ class EventoManager {
     /**
      * This method adds a new evento.
      */
-    public function addEvento($data, $persona, $tipo_persona) {
+    public function addEvento($data, $persona) {
         $evento = new Evento();
         $fecha_evento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
         $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
@@ -100,7 +100,7 @@ class EventoManager {
                 ->setId_persona($persona)
                 ->setId_ejecutivo($ejecutivo)
                 ->setDescripcion($data['detalle'])
-                ->setTipo_persona($tipo_persona);
+                ->setTipo_persona($persona->getTipo());
         
         // if ($this->tryAddEvento($evento)) {
         //     $_SESSION['MENSAJES']['ficha_cliente'] = 1;

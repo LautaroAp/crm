@@ -1,7 +1,5 @@
 <?php
 $this->headTitle('Detalles del Cliente');
-$id_cliente = $this->cliente->getId();
-
 if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
     if ($_SESSION['MENSAJES']['ficha_cliente']) {
         echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['ficha_cliente_msj'] . "', 'success');});</script>";
@@ -92,10 +90,6 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                 ?>
                             </p>
 
-                            <!-- <button class="btn btn-default pull-right">
-                                <span class="clickable glyphicon glyphicon-plus btn-collapse"></span>
-                                Repositorio
-                            </button> -->
                         </div>
                     </div>
                 </div>
@@ -187,12 +181,12 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                     <td><?php echo($persona_usuario->getTelefono()); ?></td>
                                     <td><?php echo($persona_usuario->getEmail()); ?></td>
                                     <td><?php echo($usuario->getSkype()); ?></td>
-                                    <td> 
-                                        <a class="btn btn-default pull-right" href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
+                                    <td class="pull-right"> 
+                                        <a class="btn btn-default" href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
                                             <span class="glyphicon glyphicon-pencil" ></span> 
                                         </a>
                                         <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>" type="button"
-                                            class="btn btn-default pull-right" data-toggle="modal" data-target="#usuarioModal<?= $usuario->getId() ?>">
+                                            class="btn btn-default" data-toggle="modal" data-target="#usuarioModal<?= $usuario->getId() ?>">
                                             <span class="glyphicon glyphicon-remove" ></span>
                                         </button>
                                     </td>
@@ -226,7 +220,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <tr>
                             <td>
                                 <br>
-                                <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $cliente->getPersona()->getId()]); ?>" type="button">
+                                <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $persona->getId()]); ?>" type="button">
                                     <span class="btn btn-default">
                                         <span class="glyphicon glyphicon-plus" ></span> Agregar Datos Adicionales
                                     </span>
@@ -260,7 +254,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <!-- Accion Comercial -->
                         <div class="col-md-3 img-centrar">
                             <div>
-                                <a href="<?= $this->url('evento', ['action' => 'add','tipo'=>'cliente','id' => (int) $cliente->getId()]) ?>" role="button">
+                                <a href="<?= $this->url('evento', ['action' => 'add','tipo'=>'cliente','id' => $persona->getId()]) ?>" role="button">
                                     <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
                                     class="img-rounded img-responsive img-texto-derecha img-submenu-add">
                                 </a>

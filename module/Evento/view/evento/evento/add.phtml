@@ -1,6 +1,6 @@
 <?php
 $this->headTitle('Agregar Evento');
-$id_cliente = $this->cliente->getId();
+$id_persona = $this->persona->getId();
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 
@@ -20,8 +20,8 @@ $form->get('tipo_evento')->setAttributes([
 
 $form->get('id_cliente')->setAttributes([
     'class' => 'form-control',
-    'value' => $id_cliente,
-    'placeholder' => $id_cliente
+    'value' => $id_persona,
+    'placeholder' => $id_persona
 ]);
 
 $form->get('id_ejecutivo')->setAttributes([
@@ -54,7 +54,7 @@ $form->prepare();
             </div>
             <div class="panel-body">
                 <?= $this->form()->openTag($form); ?>
-                <input hidden="" name="id_cliente" value="<?= $id_cliente ?>">
+                <input hidden="" name="id_cliente" value="<?= $id_persona ?>">
                 <input hidden="" name="ejecutivo" value="<?= $this->identity() ?>">
                 <div class="row form-row">
                     <div class="form-group col-md-2">
@@ -76,7 +76,7 @@ $form->prepare();
                         <select class="form-control" id="accion_comercial" name="accion_comercial" required>
                             <option value="" hidden="">Seleccionar</option>
                             <option value="-1">NO DEFINIDO</option>
-                            <?php foreach ($transacciones as $tipo) : ?>
+                            <?php foreach ($tipos as $tipo) : ?>
                                 <option value="<?php echo ($tipo->getId()); ?>"><?php echo ($tipo->getNombre()); ?></option>
                             <?php endforeach; ?>
                         </select>
@@ -132,7 +132,11 @@ $form->prepare();
 
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $id_cliente]) ?>">
+                <?php if (strtoupper($tipoPersona)=="CLIENTE"){ ?> 
+                    <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $id_persona]) ?>">
+                <?php }else{ ?>
+                     <a href="<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $id_persona]) ?>">
+                <?php } ?>
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
                      class="img-rounded img-responsive img-texto-derecha">
                 </a>

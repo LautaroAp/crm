@@ -74,10 +74,10 @@ class UsuarioForm extends Form
             ],
         ]);
         
-        // Add "mail" field
+        // Add "email" field
         $this->add([            
             'type'  => 'text',
-            'name' => 'mail',
+            'name' => 'email',
             'options' => [
                 'label' => 'Mail',
             ],
@@ -163,9 +163,9 @@ class UsuarioForm extends Form
                 ],
             ]);
         
-        // Add input for "mail" field
+        // Add input for "email" field
         $inputFilter->add([
-                'name'     => 'mail',
+                'name'     => 'email',
                 'required' => false,
                 'filters'  => [                    
                     ['name' => 'StringTrim'],
@@ -181,7 +181,7 @@ class UsuarioForm extends Form
                 ],
             ]);
         
-        // Add input for "mail" field
+        // Add input for "email" field
         $inputFilter->add([
                 'name'     => 'skype',
                 'required' => false,

@@ -69,21 +69,21 @@
                 </thead>
                 <tbody>
                     <?php
-                    if (isset($clientes)) {
-                        foreach ($clientes as $cliente) {
+                    if (isset($proveedores)) {
+                        foreach ($proveedores as $proveedor) {
                             echo('<tr>');
                             echo ('<td>');
-                            echo ($cliente->getNombre());
+                            echo ($proveedor->getNombre());
                             echo ('</td>');
                             echo ('<td>');
-                            echo ($cliente->getTelefono());
+                            echo ($proveedor->getTelefono());
                             echo ('</td>');
                             echo ('<td>');
-                            echo ($cliente->getEmail());
+                            echo ($proveedor->getEmail());
                             echo ('</td>');      
                             ?>
                         <td class="table-items-right">
-                            <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $cliente->getId()]); ?>">
+                            <a class="btn btn-default" href="<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $proveedor->getId()]); ?>">
                                 <span class="glyphicon glyphicon-share-alt" ></span>
                             </a>
                         </td>
@@ -95,8 +95,8 @@
         </div>
     </div>
     <?php
-    echo $this->paginationControl($clientes, 'Sliding', // All, Elastic, Jumping, Sliding
-            'search_pagination_4.phtml', $this->url('clientes/pageinactivos', ['action' => 'index', 'id' => 1]));
+    echo $this->paginationControl($proveedores, 'Sliding', // All, Elastic, Jumping, Sliding
+            'search_pagination_prov.phtml', $this->url('proveedores/pageinactivos', ['action' => 'index', 'id' => 1]));
     }
     ?>
     </div>

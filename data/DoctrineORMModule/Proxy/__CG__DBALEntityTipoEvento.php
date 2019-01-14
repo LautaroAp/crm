@@ -64,10 +64,10 @@ class TipoEvento extends \DBAL\Entity\TipoEvento implements \Doctrine\ORM\Proxy\
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id_tipo_evento', 'nombre', 'descripcion', '' . "\0" . 'DBAL\\Entity\\TipoEvento' . "\0" . 'categoria_evento'];
+            return ['__isInitialized__', 'id_tipo_evento', 'nombre', 'descripcion', '' . "\0" . 'DBAL\\Entity\\TipoEvento' . "\0" . 'categoria_evento', 'tipoPersona'];
         }
 
-        return ['__isInitialized__', 'id_tipo_evento', 'nombre', 'descripcion', '' . "\0" . 'DBAL\\Entity\\TipoEvento' . "\0" . 'categoria_evento'];
+        return ['__isInitialized__', 'id_tipo_evento', 'nombre', 'descripcion', '' . "\0" . 'DBAL\\Entity\\TipoEvento' . "\0" . 'categoria_evento', 'tipoPersona'];
     }
 
     /**
@@ -281,6 +281,28 @@ class TipoEvento extends \DBAL\Entity\TipoEvento implements \Doctrine\ORM\Proxy\
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCategoriaId', []);
 
         return parent::getCategoriaId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTipoPersona()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTipoPersona', []);
+
+        return parent::getTipoPersona();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setTipoPersona($tipoPersona)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTipoPersona', [$tipoPersona]);
+
+        return parent::setTipoPersona($tipoPersona);
     }
 
 }

@@ -105,7 +105,7 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
                                             <td><?php echo ($tipo->getNombreCategoriaEvento()); ?></td>
                                             <td><?php echo ($tipo->getDescripcion()); ?></td>
                                             <td class="table-items-right">
-                                                <a class="btn btn-default" href="<?= $this->url('tipoevento/editar', ['action' => 'edit', 'id' => $tipo->getId()]); ?>">
+                                                <a class="btn btn-default" href="<?= $this->url('actividades/editar', ['action' => 'edit', 'tipo'=>$tipoPersona, 'id' => $tipo->getId()]); ?>">
                                                     <span class="glyphicon glyphicon-pencil" ></span> 
                                                 </a>
                                                 <button name="<?= $tipo->getId() ?>" id="<?= $tipo->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $tipo->getId() ?>">
@@ -128,7 +128,7 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
                                                     </p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="<?= $this->url('tipoevento/borrar', ['action' => 'remove', 'id' => $tipo->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
+                                                    <a href="<?= $this->url('actividades/borrar', ['action' => 'remove', 'id' => $tipo->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
                                                     <span class="btn btn-default">Aceptar</span></a>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                                 </div>
@@ -146,7 +146,7 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
         </div>
                 <?php
                 echo $this->paginationControl($tipoeventos_pag, 'Sliding', // All, Elastic, Jumping, Sliding
-                        'search_pagination_tipo.phtml', $this->url('tipoevento/page', ['action' => 'index', 'id' => 1]));
+                        'search_pagination_tipo.phtml', $this->url('actividades/page', ['action' => 'index', 'tipo'=>$tipoPersona, 'id' => 1]));
                 }
                 ?>          
     </div>

@@ -6,6 +6,8 @@ use DBAL\Entity\TipoEvento;
 use TipoEvento\Form\TipoEventoForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use DBAL\Entity\Categoria;
 
 
@@ -42,10 +44,8 @@ class TipoEventoManager {
         $this->config = $config;
     }
 
-    public function getTipoEventos() {
-        $tipoeventos = $this->entityManager
-                        ->getRepository(TipoEvento::class)->findAll();
-        return $tipoeventos;
+    public function getTipoEventos($tipo) {
+        return  $this->getTipos($tipo)->getResult();
     }
 
     public function getTipoEventoId($id) {
@@ -53,18 +53,13 @@ class TipoEventoManager {
                         ->find($id);
     }
 
-    public function getTipoEventoFromForm($form, $data) {
-        $tipoevento = $this->addTipoEvento($data);
-        return $tipoevento;
-    }
 
     /**
      * This method adds a new tipoevento.
      */
-    public function addTipoEvento($data) {
+    public function addTipoEvento($data, $tipoPersona) {
         $tipoevento = new TipoEvento();
-        $this->addData($tipoevento, $data);
-
+        $this->addData($tipoevento, $data, $tipoPersona);
         if ($this->tryAddTipoEvento($tipoevento)) {
             $_SESSION['MENSAJES']['tipo_evento'] = 1;
             $_SESSION['MENSAJES']['tipo_evento_msj'] = 'Tipo de actividad agregada correctamente';
@@ -91,7 +86,7 @@ class TipoEventoManager {
         return true;
     }
 
-    private function addData($tipoevento, $data) {
+    private function addData($tipoevento, $data, $tipoPersona=null) {
         $tipoevento->setNombre($data['nombre']);
         if ($data['categoria'] == "-1") {
             $tipoevento->setCategoria_evento(null);
@@ -99,19 +94,11 @@ class TipoEventoManager {
             $categoria_eve = $this->getCategoriaEventos($data['categoria']);
             $tipoevento->setCategoria_evento($categoria_eve);
         }
+        if (isset($tipoPersona)){
+            $tipoevento->setTipoPersona($tipoPersona);
+        }
         $tipoevento->setDescripcion($data['descripcion']);
     }
-
-    // public function getCategoria_evento($id = null) {
-    //     if (isset($id)) {
-    //         return $this->entityManager
-    //                         ->getRepository(Categoria::class)
-    //                         ->findOneBy(['id' => $id]);
-    //     }
-    //     return $this->entityManager
-    //                     ->getRepository(Categoria::class)
-    //                     ->findAll();
-    // }
 
     public function createForm() {
         return new TipoEventoForm('create', $this->entityManager, null);
@@ -167,13 +154,24 @@ class TipoEventoManager {
         $entityManager->flush();
     }
 
-    public function getTabla() {
-        // Create the adapter
-        $adapter = new SelectableAdapter($this->entityManager->getRepository(TipoEvento::class)); // An object repository implements Selectable
-        // Create the paginator itself
+    public function getTabla($tipoPersona) {
+        $query = $this->getTipos($tipoPersona);
+        $pag = new ORMPaginator($query);
+        $pag->setUseOutputWalkers(true);
+        $adapter = new DoctrineAdapter($pag);
+        $this->total = COUNT($adapter);
         $paginator = new Paginator($adapter);
-
-        return ($paginator);
+        return $paginator;
+    }
+    public function getTipos($tipoPersona){
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+        $queryBuilder->select('T')
+                ->from(TipoEvento::class, 'T');
+        $nombreCampo="tipoPersona";
+        $t=1;
+        $queryBuilder->where("T.$nombreCampo  LIKE ?$t");
+        $queryBuilder->setParameter("$t",'%'.$tipoPersona.'%');
+        return $queryBuilder->getQuery();
     }
 
     private function tryAddTipoEvento($tipoevento) {

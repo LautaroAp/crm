@@ -110,6 +110,10 @@ class Proveedor {
     private $cbu;
 
    
+    /**
+     * @ORM\Column(name="SKYPE", nullable=true, type="string")
+     */
+    private $skype;
 
     //VER COMO HACER CON LOS EVENTOS-->OTRA TABLA DE EVENTOS PARA PROVEEDORES O LA MISMA? SI ES LA MISMA
     //HAY QUE HACER UNA JERARQUIA ENTRE CLIENTE Y EJECUTIVO QUE TENGA ATTS EN COMUM
@@ -235,17 +239,6 @@ class Proveedor {
         $this->raza_manejo = $raza_manejo;
         return $this;
     }
-
-   
-    public function getSkype() {
-        return $this->skype;
-    }
-
-    public function setSkype($skype) {
-        $this->skype = $skype;
-        return $this;
-    }
-
    
     public function getCategoria() {
         return $this->categoria;
@@ -561,4 +554,24 @@ class Proveedor {
     }
 
 
+
+    /**
+     * Get the value of skype
+     */ 
+    public function getSkype()
+    {
+        return $this->skype;
+    }
+
+    /**
+     * Set the value of skype
+     *
+     * @return  self
+     */ 
+    public function setSkype($skype)
+    {
+        $this->skype = $skype;
+
+        return $this;
+    }
 }

@@ -39,6 +39,10 @@ class TipoEvento
      */
     private $categoria_evento;
 
+    /**
+     * @ORM\Column(name="TIPO_PERSONA", nullable=true, type="string")
+     */
+    protected $tipoPersona;
 
     function getId()
     {
@@ -119,4 +123,23 @@ class TipoEvento
         }
     }
 
+
+    /**
+     * Get the value of tipoPersona
+     */ 
+    public function getTipoPersona()
+    {
+        return $this->tipoPersona;
+    }
+
+    /**
+     * Set the value of tipoPersona
+     *
+     * @return  self
+     */ 
+    public function setTipoPersona($tipoPersona)
+    {
+        $this->tipoPersona = $tipoPersona;
+        return $this;
+    }
 }

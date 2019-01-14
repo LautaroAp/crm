@@ -16,11 +16,10 @@ class IndexController extends AbstractActionController {
     }
 
     public function indexAction() {
-        $_SESSION['PARAMETROS_VENTA'] = array();
-        $_SESSION['PARAMETROS_CLIENTE'] = array();
-        $_SESSION['PARAMETROS_CLIENTE_INACTIVO'] = array();
+        $this->reiniciarParametros();
         $_SESSION['MENSAJES'] = array();
         $_SESSION['CATEGORIA'] = array();
+        $_SESSION['TIPOEVENTO'] = array();
         $this->layout()->setTemplate('layout/simple');
         return new ViewModel();
     }
@@ -107,18 +106,5 @@ class IndexController extends AbstractActionController {
     public function gestionAction() {
         $this->reiniciarParametros();
         return new ViewModel();
-    }  
-
-    public function backupmenuAction() {
-        $this->reiniciarParametros();
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $data = $this->params()->fromPost();
-            $_SESSION['PARAMETROS_BACKUP'] = $data;
-            $this->redirect()->toRoute("backup");
-        }
-        return new ViewModel();
-    }
-
-   
+    }     
 }

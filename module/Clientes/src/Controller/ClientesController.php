@@ -125,9 +125,9 @@ class ClientesController extends AbstractActionController
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $id_persona = $this->params()->fromRoute('id');
-            $id_cliente = $this->params()->fromRoute('id');
-            $cliente = $this->clientesManager->getCliente($id_cliente);
-            $this->clientesManager->updateCliente($data);
+            $persona = $this->personaManager->getPersona($id_persona);
+            $cliente = $this->clientesManager->getClienteIdPersona($id_persona);
+            $this->clientesManager->updateCliente($cliente, $data);
             $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $id_persona]);
         } else {
             $id_persona = $this->params()->fromRoute('id');
@@ -184,11 +184,12 @@ class ClientesController extends AbstractActionController
         $id_persona = (int)$this->params()->fromRoute('id', -1);
         $persona = $this->personaManager->getPersona($id_persona);
         $data = $this->clientesManager->getDataFicha($id_persona);
+        $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();
         return new ViewModel([
             'cliente' => $data['cliente'],
             'usuarios' => $data['usuarios'],
             'eventos' => $data['eventos'],
-            'tipo_eventos' => $this->tipoEventosManager->getTipoEventos(),
+            'tipo_eventos' => $this->tipoEventosManager->getTipoEventos($persona->getTipo()),
             'persona' => $data['persona']
         ]);
     }

@@ -238,7 +238,7 @@ class UsuarioManager {
             'nombre' =>$persona->getNombre(),
             'telefono' =>$persona->getTelefono(),
             'skype' => $usuario->getSkype(),
-            'mail' => $persona->getEmail(),
+            'email' => $persona->getEmail(),
         ];
         return $arr;
     }

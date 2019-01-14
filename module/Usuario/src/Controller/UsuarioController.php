@@ -111,7 +111,7 @@ class UsuarioController extends AbstractActionController {
        $form->setData(array(
                 'nombre' => $data['nombre'],
                 'telefono' => $data['telefono'],
-                'mail' => $data['mail'],
+                'email' => $data['email'],
                 'skype'=> $data['skype'],
             ));
     }

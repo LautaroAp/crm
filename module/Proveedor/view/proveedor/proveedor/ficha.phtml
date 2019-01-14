@@ -26,7 +26,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <div class="container margen">
     <div class="row">
         <!-- Datos de Perfil --> 
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="panel panel-default">
                 <div class="panel-heading text-center titulo-espaciado">
                     DATOS DE PERFIL
@@ -48,6 +48,8 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             <p><i><?php echo ($proveedor->getNombreCategoriaProveedor());?></i></p>
                             <p><span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp; <?php echo ($persona->getTelefono()); ?></p>
                             <p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp; <?php echo ($persona->getEmail()); ?></p>
+                            <p><span><img src="<?= $this->basePath('img/crm/skype.png') ?>" width="15" height="15"></span>
+                            &nbsp;<?php echo ($proveedor->getSkype()); ?>
                         </div>
                     </div>
                     <br>
@@ -90,14 +92,12 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                 </div>
                 <div class="panel-body" style="min-height: 325px;">
                     <div class="ficha-cliente-p margen">
+                        <p><label>Razón Social:</label> <?= $proveedor->getRazon_social(); ?></p>
+                        <p><label>Dirección de Facturación:</label> <?= $proveedor->getDireccion_facturacion(); ?></p>
                         <p><label>Ciudad:</label> <?php echo ($proveedor->getCiudad()); ?></p>
                         <p><label>Provincia:</label> <?php echo ($proveedor->getNombreProvinciaProveedor()); ?></p>
                         <p><label>País:</label> <?php echo ($proveedor->getNombrePaisProveedor()); ?></p>
-                        
                         <hr>
-
-                        <p><label>Razón Social:</label> <?= $proveedor->getRazon_social(); ?></p>
-                        <p><label>Dirección de Facturación:</label> <?= $proveedor->getDireccion_facturacion(); ?></p>
                         <p><label>Condición de IVA:</label> <?= $proveedor->getNombreCondicionIva(); ?></p>
                         <p><label>Banco:</label> <?= $proveedor->getBanco(); ?></p>
                         <p><label>CBU:</label> <?= $proveedor->getCbu(); ?></p>
@@ -107,7 +107,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             </div>
         </div>
     </div>
-
+</div>
 <!-- Fin: Datos de Proveedor -->
 
 <!-- Inicio: Actividades -->
@@ -128,7 +128,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <!-- Accion Comercial -->
                         <div class="col-md-3 img-centrar">
                             <div>
-                                <a href="<?= $this->url('evento', ['action' => 'add', 'tipo'=>'proveedor','id' => (int) $proveedor->getId()]) ?>" role="button">
+                                <a href="<?= $this->url('evento', ['action' => 'add', 'tipo'=>'proveedor','id' => $persona->getId()]) ?>" role="button">
                                     <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
                                     class="img-rounded img-responsive img-texto-derecha img-submenu-add">
                                 </a>
