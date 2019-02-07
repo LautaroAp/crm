@@ -20,7 +20,7 @@ class IndexController extends AbstractActionController {
         $_SESSION['MENSAJES'] = array();
         $_SESSION['CATEGORIA'] = array();
         $_SESSION['TIPOEVENTO'] = array();
-        $this->layout()->setTemplate('layout/simple');
+        // $this->layout()->setTemplate('layout/simple');
         return new ViewModel();
     }
 

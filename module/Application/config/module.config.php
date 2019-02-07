@@ -19,7 +19,7 @@ return [
                     'route' => '/',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
-                        'action' => 'index',
+                        'action' => 'menu',
                     ],
                 ],
             ],
@@ -36,10 +36,10 @@ return [
             'home' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/',
+                    'route' => '/menu',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
-                        'action' => 'index',
+                        'action' => 'menu',
                     ],
                 ],
             ],
