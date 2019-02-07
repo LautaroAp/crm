@@ -2,10 +2,10 @@
 
 namespace Proveedor\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class ProveedorController extends AbstractActionController
+class ProveedorController extends HuellaController
 {
 
     /**
@@ -39,6 +39,7 @@ class ProveedorController extends AbstractActionController
 
     public function indexAction(){
         $request = $this->getRequest();
+        $this->prepararBreadcrumbs("Listado", "/listado", "Proveedores");
         $tipo= $this->params()->fromRoute('tipo');
         $pais = $this->proveedorManager->getPais();
         $provincia = $this->proveedorManager->getProvincia();
@@ -85,6 +86,7 @@ class ProveedorController extends AbstractActionController
     }
 
     private function processAdd(){
+        $this->prepararBreadcrumbs("Agregar Proveedor", "/add/proveedor", "Proveedores");
         $request = $this->getRequest();
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->proveedorManager->getCategoriasProveedor($tipo);
@@ -117,7 +119,14 @@ class ProveedorController extends AbstractActionController
 
     private function processEdit(){
         $request = $this->getRequest();
+        //obtener proveedor y persona desde la ruta
+        $id_persona = $this->params()->fromRoute('id');
+        $persona = $this->personaManager->getPersona($id_persona);
+        $proveedor = $this->proveedorManager->getProveedorIdPersona($id_persona);
         $tipo= $this->params()->fromRoute('tipo');
+        //preparar breadcrum con el id de la persona
+        $this->prepararBreadcrumbs("Editar Proveedor", "/edit/".$tipo."/".$id_persona, "Ficha Proveedor");
+        //obtener opciones para los clientes
         $categorias = $this->proveedorManager->getCategoriasProveedor($tipo);
         $condiciones_iva = $this->proveedorManager->getCondicionIva('iva');
         $pais = $this->proveedorManager->getPais();
@@ -126,15 +135,8 @@ class ProveedorController extends AbstractActionController
         $_SESSION['TIPOEVENTO']['TIPO']=$tipo;
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
-            $id_persona = $this->params()->fromRoute('id');
-            $persona = $this->personaManager->getPersona($id_persona);
-            $proveedor = $this->proveedorManager->getProveedorIdPersona($id_persona);
             $this->proveedorManager->updateProveedor($proveedor, $data);
             $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $id_persona]);
-        } else {
-            $id_persona = $this->params()->fromRoute('id');
-            $persona = $this->personaManager->getPersona($id_persona);
-            $proveedor = $this->proveedorManager->getProveedorIdPersona($id_persona);
         }
         return new ViewModel([
             'proveedor' => $proveedor,
@@ -170,6 +172,14 @@ class ProveedorController extends AbstractActionController
     public function fichaAction(){
         $id_persona = (int)$this->params()->fromRoute('id', -1);
         $persona = $this->personaManager->getPersona($id_persona);
+        $limite = "";
+        if ($persona->getEstado() == "S") {
+            $limite = "Listado";
+        }
+        else{
+            $limite = "Inactivos";
+        }
+        $this->prepararBreadcrumbs("Ficha Proveedor", "/ficha/".$id_persona, $limite);
         $data = $this->proveedorManager->getDataFicha($id_persona);
         $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();
         return new ViewModel([

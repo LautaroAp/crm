@@ -16,9 +16,9 @@ return [
     'router' => [
         'routes' => [
             'ejecutivos' => [
-                'type' => Segment::class,
+                'type' => Literal::class,
                 'options' => [
-                    'route' => '/ejecutivos',
+                    'route' => '/herramientas/ejecutivos',
                     'defaults' => [
                         'controller' => Controller\EjecutivoController::class,
                         'action' => 'index',

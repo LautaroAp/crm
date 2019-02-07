@@ -2,10 +2,10 @@
 
 namespace Empresa\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class EmpresaController extends AbstractActionController {
+class EmpresaController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager
@@ -31,6 +31,7 @@ class EmpresaController extends AbstractActionController {
     }
 
     private function procesarIndexAction() {
+        $this->prepararBreadcrumbs("Configuracion", "/configuracion", "Empresa");
         $empresas = $this->empresaManager->getEmpresas();
         $empresa = $empresas[0];
         return new ViewModel([
@@ -44,6 +45,8 @@ class EmpresaController extends AbstractActionController {
 
     public function procesarEditAction() {
         $empresa = $this->getEmpresa();
+        $this->prepararBreadcrumbs("Editar Empresa", "/editar/".$empresa->getId(), "Configuracion");
+
         $form = $this->empresaManager->getFormForEmpresa($empresa);
         $monedas=$this->monedaManager->getMonedas();
         if ($form == null) {

@@ -2,10 +2,10 @@
 
 namespace CategoriaLicencia\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class CategoriaLicenciaController extends AbstractActionController {
+class CategoriaLicenciaController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager

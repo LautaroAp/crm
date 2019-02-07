@@ -2,11 +2,11 @@
 
 namespace Ejecutivo\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 use Ejecutivo\Form\EjecutivoForm;
 
-class EjecutivoController extends AbstractActionController {
+class EjecutivoController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager
@@ -35,6 +35,7 @@ class EjecutivoController extends AbstractActionController {
         return $view;
     }
     public function procesarIndexAction(){
+        $this->prepararBreadcrumbs("Ejecutivos", "/ejecutivos", "Herramientas");
         $paginator = $this->ejecutivoManager->getTabla();
         $pag = $this->getPaginator($paginator);
         if ($this->getRequest()->isPost()) {
@@ -82,14 +83,22 @@ class EjecutivoController extends AbstractActionController {
         return $view;
     }
     
-    private function procesarEditAction()
-    {
+    private function procesarEditAction(){
         $id = (int)$this->params()->fromRoute('id', -1);  
         $ejecutivo = $this->ejecutivoManager->recuperarEjecutivo($id);
         if ($ejecutivo == null) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
+        $limite = "";
+        if ($ejecutivo->isActivo()){
+            $limite= "Ejecutivos";
+        }
+        else{
+            $limite = "Inactivos";
+        }
+        $this->prepararBreadcrumbs("Editar Ejecutivo", "/edit/".$id, $limite);
+
         $form = new EjecutivoForm('update', $this->entityManager, $ejecutivo);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();

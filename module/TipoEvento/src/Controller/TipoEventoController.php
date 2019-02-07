@@ -8,13 +8,13 @@
 
 namespace TipoEvento\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 use DBAL\Entity\CategoriaEvento;
 use DBAL\Entity\Evento;
 
 
-class TipoEventoController extends AbstractActionController {
+class TipoEventoController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager
@@ -57,9 +57,19 @@ class TipoEventoController extends AbstractActionController {
         return $view;
     }
 
+    private function getRuta($tipo){
+        if ($tipo== "cliente"){
+            return "/cliente";
+        }
+        if ($tipo =="proveedor"){
+            return "/actividades/proveedor";
+        }
+    }
     private function procesarAddAction() {
         $form = $this->tipoeventoManager->createForm();
         $tipoPersona = $this->params()->fromRoute('tipo');
+        $url = $this->getRuta($tipoPersona);
+        $this->prepararBreadcrumbs("Actividades", $url);
         $paginator = $this->tipoeventoManager->getTabla($tipoPersona);
         $categorias= $this->tipoeventoManager->getCategoriaEventos();
         $page = 1;
@@ -101,9 +111,11 @@ class TipoEventoController extends AbstractActionController {
     }
 
     public function procesarEditAction() {
-        $id = (int) $this->params()->fromRoute('id', -1);
+        $id = (int) $this->params()->fromRoute('id');
         $tipoevento = $this->tipoeventoManager->getTipoEventoId($id);
         $tipoPersona = $this->params()->fromRoute('tipo');
+        $url = $this->getRuta($tipo);
+        $this->prepararBreadcrumbs("Editar","/edit/".$id);
         $categorias= $this->tipoeventoManager->getCategoriaEventos();
         $form = $this->tipoeventoManager->getFormForTipoEvento($tipoevento);
         if ($form == null) {
@@ -134,7 +146,7 @@ class TipoEventoController extends AbstractActionController {
     }
 
     public function procesarRemoveAction() {
-        $id = (int) $this->params()->fromRoute('id', -1);
+        $id = (int) $this->params()->fromRoute('id');
         $tipoevento = $this->tipoeventoManager->getTipoEventoId($id);
         if ($tipoevento == null) {
             $this->reportarError();

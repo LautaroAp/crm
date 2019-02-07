@@ -8,11 +8,11 @@
 
 namespace Provincia\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
 
-class ProvinciaController extends AbstractActionController {
+class ProvinciaController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager

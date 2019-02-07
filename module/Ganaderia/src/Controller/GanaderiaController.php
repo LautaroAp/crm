@@ -2,10 +2,10 @@
 
 namespace Ganaderia\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class GanaderiaController extends AbstractActionController {
+class GanaderiaController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager

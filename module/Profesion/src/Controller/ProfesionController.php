@@ -8,10 +8,10 @@
 
 namespace Profesion\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class ProfesionController extends AbstractActionController {
+class ProfesionController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager

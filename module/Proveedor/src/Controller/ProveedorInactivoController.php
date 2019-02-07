@@ -16,6 +16,7 @@ class ProveedorInactivoController extends ProveedorController {
     }
 
     public function indexAction() {
+        $this->prepararBreadcrumbs("Inactivos", "/inactivos", "Proveedores");
         $request = $this->getRequest();
         $pais = $this->proveedorManager->getPais();
         $provincia = $this->proveedorManager->getProvincia();

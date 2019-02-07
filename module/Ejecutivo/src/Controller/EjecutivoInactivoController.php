@@ -31,6 +31,7 @@ class EjecutivoInactivoController extends EjecutivoController
         return $view;
     }
     public function procesarIndexAction(){
+        $this->prepararBreadcrumbs("Inactivos", "/inactivos", "Ejecutivos");
         $paginator = $this->ejecutivoInactivoManager->getTabla();
         $pag = $this->getPaginator($paginator);
         if ($this->getRequest()->isPost()) {

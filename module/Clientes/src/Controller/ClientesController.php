@@ -2,10 +2,11 @@
 
 namespace Clientes\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class ClientesController extends AbstractActionController
+
+class ClientesController extends HuellaController
 {
 
     /**
@@ -38,6 +39,7 @@ class ClientesController extends AbstractActionController
     }
 
     public function indexAction(){
+        $this->prepararBreadcrumbs("Listado", "/listado", "Clientes");
         $request = $this->getRequest();
         $tipo= $this->params()->fromRoute('tipo');
         $pais = $this->clientesManager->getPais();
@@ -84,6 +86,7 @@ class ClientesController extends AbstractActionController
     }
 
     private function processAdd(){
+        $this->prepararBreadcrumbs("Agregar Cliente", "/add/cliente", "Clientes");
         $request = $this->getRequest();
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->clientesManager->getCategoriasCliente($tipo);
@@ -115,25 +118,25 @@ class ClientesController extends AbstractActionController
 
     private function processEdit(){
         $request = $this->getRequest();
+        //obtener cliente y persona desde la ruta
+        $id_persona = $this->params()->fromRoute('id');
+        $persona = $this->personaManager->getPersona($id_persona);
+        $cliente = $this->clientesManager->getClienteIdPersona($id_persona);
         $tipo= $this->params()->fromRoute('tipo');
+        //preparar breadcrum con el id de la persona
+        $this->prepararBreadcrumbs("Editar Cliente", "/edit/".$tipo."/".$id_persona, "Ficha Cliente");
+        //obtener opciones para los clientes
         $categorias = $this->clientesManager->getCategoriasCliente($tipo);
         $condiciones_iva = $this->clientesManager->getCondicionIva('iva');
         $profesion = $this->clientesManager->getProfesion();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
-        $licencia = $this->clientesManager->getLicencia();
+        $licencia = $this->clientesManager->getLicencia(); 
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
-            $id_persona = $this->params()->fromRoute('id');
-            $persona = $this->personaManager->getPersona($id_persona);
-            $cliente = $this->clientesManager->getClienteIdPersona($id_persona);
             $this->clientesManager->updateCliente($cliente, $data);
             $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $id_persona]);
-        } else {
-            $id_persona = $this->params()->fromRoute('id');
-            $persona = $this->personaManager->getPersona($id_persona);
-            $cliente = $this->clientesManager->getClienteIdPersona($id_persona);
-        }
+        } 
         return new ViewModel([
             'cliente' => $cliente,
             'persona' => $persona,
@@ -183,6 +186,14 @@ class ClientesController extends AbstractActionController
     public function fichaAction(){
         $id_persona = (int)$this->params()->fromRoute('id', -1);
         $persona = $this->personaManager->getPersona($id_persona);
+        $limite = "";
+        if ($persona->getEstado() == "S") {
+            $limite = "Listado";
+        }
+        else{
+            $limite = "Inactivos";
+        }
+        $this->prepararBreadcrumbs("Ficha Cliente", "/ficha/".$id_persona, $limite);
         $data = $this->clientesManager->getDataFicha($id_persona);
         $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();
         return new ViewModel([

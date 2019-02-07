@@ -18,7 +18,7 @@ return [
             'categoriaevento2' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/clientes/actividadesCategoriaEvento',
+                    'route'    => '/clientes/categoria',
                     'defaults' => [
                         'controller'    => Controller\CategoriaEventoController::class,
                         'action'        => 'index',

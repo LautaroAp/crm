@@ -33,7 +33,7 @@ return [
                     'user'     => 'root',
                     'password' => 'root',
                     //'dbname'   => 'crm',
-                    'dbname'   => 'crm_produccion',
+                    'dbname'   => 'crm_prod',
                     'charset' => 'utf8', 
                 ]
             ],

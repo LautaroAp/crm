@@ -16,19 +16,28 @@ return [
    
    'router' => [
         'routes' => [
-            'editarempresa' => [
+            'empresa2' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/empresa/edit[/:action[/:id]]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
-                    ],
+                    'route'    => '/empresa2',
                     'defaults' => [
                         'controller'    => Controller\EmpresaController::class,
                         'action'        => 'index',
                     ],
                 ],
+                // 'may_terminate' => true,
+                // 'child_routes' => [
+                //     'editar' => [
+                //         'type' => Segment::class,
+                //         'options' => [
+                //             'route' => '/editar[/:id]',
+                //             'defaults' => [
+                //                 'controller' => \Empresa\Controller\EmpresaController::class,
+                //                 'action' => 'edit',
+                //             ],
+                //         ],
+                //     ],
+                // ],
             ],
         ],
     ],       
@@ -41,7 +50,7 @@ return [
      ),
      'view_manager' => array(
          'template_path_stack' => array(
-             'empresa' => __DIR__ . '/../view',
+             'empresa2' => __DIR__ . '/../view',
          ),
      ),
     'service_manager' => array(

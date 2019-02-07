@@ -130,7 +130,7 @@ if (isset($_SESSION['MENSAJES']['empresa'])) {
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('editarempresa', ['action' => 'edit', 'id' => $empresa->getId()]) ?>">
+                <a href="<?= $this->url('gestionEmpresa/configuracion/editar', ['action' => 'edit', 'id' => $empresa->getId()]) ?>">
                     <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha img-submenu">
                 </a>

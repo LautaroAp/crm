@@ -8,11 +8,11 @@
 
 namespace Usuario\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 use Usuario\Form\UsuarioForm;
 
-class UsuarioController extends AbstractActionController {
+class UsuarioController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager

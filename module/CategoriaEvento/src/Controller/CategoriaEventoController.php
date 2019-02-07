@@ -8,12 +8,12 @@
 
 namespace CategoriaEvento\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 use CategoriaEvento\Service\CategoriaEventoManager;
 
 
-class CategoriaEventoController extends AbstractActionController {
+class CategoriaEventoController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager

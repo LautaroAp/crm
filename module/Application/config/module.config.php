@@ -85,10 +85,10 @@ return [
                             ],
                         ],
                     ],
-                    'categoriacliente' => [
+                    'categorias' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/categoriacliente[/:tipo[/:id]]',
+                            'route' => '/categorias[/:tipo[/:id]]',
                             'defaults' => [
                                 'controller' => \Categoria\Controller\CategoriaController::class,
                                 'action' => 'index',
@@ -99,7 +99,7 @@ return [
                     'gestionActividadesClientes' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/gestionActividadesClientes',
+                            'route' => '/actividades',
                             'defaults' => [
                                 'controller' => \Application\Controller\IndexController::class,
                                 'action' => 'gestionActividadesClientes',
@@ -110,7 +110,7 @@ return [
                             'tipoeventoCliente' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/actividades[/:tipo[/:id]]',
+                                    'route' => '[/:tipo[/:id]]',
                                     'defaults' => [
                                         'controller' => \TipoEvento\Controller\TipoEventoController::class,
                                         'action' => 'index',
@@ -140,10 +140,10 @@ return [
                                     ],
                                 ],
                             ],
-                            'categoriaevento' => [
+                            'categorias' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/categoriaevento[/:tipo[/:id]]',
+                                    'route' => '/categorias[/:tipo[/:id]]',
                                     'defaults' => [
                                         'controller' => \Categoria\Controller\CategoriaController::class,
                                         'action' => 'index',
@@ -196,10 +196,10 @@ return [
                             ],
                         ],
                     ],
-                    'categoriaproveedor' => [
+                    'categorias' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/categoriaproveedor[/:tipo[/:id]]',
+                            'route' => '/categorias[/:tipo[/:id]]',
                             'defaults' => [
                                 'controller' => \Categoria\Controller\CategoriaController::class,
                                 'action' => 'index',
@@ -210,7 +210,7 @@ return [
                     'gestionActividadesProveedores' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/gestionActividadesProveedores',
+                            'route' => '/actividades',
                             'defaults' => [
                                 'controller' => \Application\Controller\IndexController::class,
                                 'action' => 'gestionActividadesProveedores',
@@ -221,7 +221,7 @@ return [
                             'tipoeventoProveedor' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/actividades[/:tipo[/:id]]',
+                                    'route' => '[/:tipo[/:id]]',
                                     'defaults' => [
                                         'controller' => \TipoEvento\Controller\TipoEventoController::class,
                                         'action' => 'index',
@@ -251,10 +251,10 @@ return [
                                     ],
                                 ],
                             ],
-                            'categoriaevento' => [
+                            'categorias' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/categoriaevento[/:tipo[/:id]]',
+                                    'route' => '/categorias[/:tipo[/:id]]',
                                     'defaults' => [
                                         'controller' => \Categoria\Controller\CategoriaController::class,
                                         'action' => 'index',
@@ -284,6 +284,19 @@ return [
                             'defaults' => [
                                 'controller' => \Empresa\Controller\EmpresaController::class,
                                 'action' => 'index',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'editar' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/editar[/:id]',
+                                    'defaults' => [
+                                        'controller' => \Empresa\Controller\EmpresaController::class,
+                                        'action' => 'edit',
+                                    ],
+                                ],
                             ],
                         ],
                     ],
@@ -433,7 +446,7 @@ return [
                                    ],
                                ],
                            ],
-                           'categoriaproducto' => [
+                           'categorias' => [
                                'type' => Segment::class,
                                'options' => [
                                    'route' => '/categorias[/:tipo[/:id]]',
@@ -555,16 +568,6 @@ return [
                             'route' => '/ejecutivos',
                             'defaults' => [
                                 'controller' => \Ejecutivo\Controller\EjecutivoController::class,
-                                'action' => 'index',
-                            ],
-                        ],
-                    ],
-                    'inactivos' => [
-                        'type' => Literal::class,
-                        'options' => [
-                            'route' => '/inactivos',
-                            'defaults' => [
-                                'controller' => \Ejecutivo\Controller\EjecutivoInactivoController::class,
                                 'action' => 'index',
                             ],
                         ],

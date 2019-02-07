@@ -2,10 +2,10 @@
 
 namespace CategoriaProducto\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class CategoriaProductoController extends AbstractActionController {
+class CategoriaProductoController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager

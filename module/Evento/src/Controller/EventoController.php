@@ -8,14 +8,14 @@
 
 namespace Evento\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator;
 use DBAL\Entity\Evento;
 use DBAL\Entity\Cliente;
 use DBAL\Entity\TipoEvento;
 
-class EventoController extends AbstractActionController {
+class EventoController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager

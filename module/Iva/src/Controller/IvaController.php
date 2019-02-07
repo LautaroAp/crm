@@ -2,10 +2,10 @@
 
 namespace Iva\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class IvaController extends AbstractActionController {
+class IvaController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager

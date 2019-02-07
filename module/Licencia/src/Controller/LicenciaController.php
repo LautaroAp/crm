@@ -2,10 +2,10 @@
 
 namespace Licencia\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class LicenciaController extends AbstractActionController {
+class LicenciaController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager
@@ -38,6 +38,7 @@ class LicenciaController extends AbstractActionController {
     }
 
     private function procesarIndexAction() {
+        $this->prepararBreadcrumbs("Listado", "/listado", "Licencias");
         $paginator = $this->licenciaManager->getTabla();
         $mensaje = "";
 
@@ -60,6 +61,7 @@ class LicenciaController extends AbstractActionController {
     }
 
     private function procesarAddAction() {
+        $this->prepararBreadcrumbs("Agregar Licencia", "/add/licencia", "Licencia");
         $request = $this->getRequest();
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->licenciaManager->getCategoriasLicencia($tipo);
@@ -87,6 +89,7 @@ class LicenciaController extends AbstractActionController {
         $request = $this->getRequest();
         $id = (int) $this->params()->fromRoute('id', -1);
         $tipo= $this->params()->fromRoute('tipo');
+        $this->prepararBreadcrumbs("Editar Licencia", "/edit/".$tipo."/".$id, "Listado");
         $categorias = $this->licenciaManager->getCategoriasLicencia($tipo);
         $licencia = $this->licenciaManager->getLicenciaId($id);
         $ivas = $this->ivaManager->getIvas();
@@ -103,30 +106,6 @@ class LicenciaController extends AbstractActionController {
             'tipo' => $tipo,
         ]);
     }
-
-    // public function procesarEditAction() {
-    //     $id = (int) $this->params()->fromRoute('id', -1);
-    //     $licencia = $this->licenciaManager->getLicenciaId($id);
-
-    //     $form = $this->licenciaManager->getFormForLicencia($licencia);
-    //     if ($form == null) {
-    //         $this->reportarError();
-    //     } else {
-    //         if ($this->getRequest()->isPost()) {
-    //             $data = $this->params()->fromPost();
-    //             if ($this->licenciaManager->formValid($form, $data)) {
-    //                 $this->licenciaManager->updateLicencia($licencia, $form);
-    //                 return $this->redirect()->toRoute('licencia', ['action' => 'index']);
-    //             }
-    //         } else {
-    //             $this->licenciaManager->getFormEdited($form, $licencia);
-    //         }
-    //         return new ViewModel(array(
-    //             'licencia' => $licencia,
-    //             'form' => $form
-    //         ));
-    //     }
-    // }
 
     public function removeAction() {
         $view = $this->procesarRemoveAction();

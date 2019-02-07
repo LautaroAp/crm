@@ -6,10 +6,10 @@
 
 namespace Servicio\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class ServicioController extends AbstractActionController {
+class ServicioController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager
@@ -38,6 +38,7 @@ class ServicioController extends AbstractActionController {
     }
 
     private function procesarIndexAction() {
+        $this->prepararBreadcrumbs("Listado", "/listado", "Servicios");
         $paginator = $this->servicioManager->getTabla();
         $page = 1;
         if ($this->params()->fromRoute('id')) {
@@ -56,6 +57,7 @@ class ServicioController extends AbstractActionController {
     }
 
     private function procesarAddAction() {
+        $this->prepararBreadcrumbs("Agregar Servicios", "/add/servicio", "Servicios");
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->servicioManager->addServicio($data);
@@ -82,6 +84,7 @@ class ServicioController extends AbstractActionController {
         $id = $this->params()->fromRoute('id', -1);
         $servicio = $this->servicioManager->getServicioId($id);
         $tipo = $this->params()->fromRoute('tipo');
+        $this->prepararBreadcrumbs("Editar Servicio", "/edit/".$tipo."/".$id, "Listado");
         $categorias = $this->servicioManager->getCategoriasServicio($tipo);
         $proveedores = $this->servicioManager->getListaProveedores($tipo);
         $ivas = $this->ivaManager->getIvas();

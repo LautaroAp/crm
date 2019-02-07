@@ -18,7 +18,8 @@ return [
             'actividades' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/clientes/actividadesCliente',
+                    // 'route'    => '/clientes/actividadesCliente',
+                    'route' =>'/actividades',
                     'defaults' => [
                         'controller'    => Controller\TipoEventoController::class,
                         'action'        => 'index',
@@ -29,7 +30,7 @@ return [
                     'editar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/edit[/:tipo[/:id]]',
+                            'route' => '[/:tipo]/edit[/:id]',
                             'defaults' => [
                                 'action' => 'edit',
                             ],

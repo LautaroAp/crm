@@ -2,10 +2,10 @@
 
 namespace Pais\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class PaisController extends AbstractActionController {
+class PaisController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager

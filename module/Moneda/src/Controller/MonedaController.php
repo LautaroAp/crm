@@ -2,10 +2,10 @@
 
 namespace Moneda\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class MonedaController extends AbstractActionController {
+class MonedaController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager

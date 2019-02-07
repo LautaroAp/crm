@@ -8,12 +8,12 @@
 
 namespace Categoria\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 use Categoria\Service\CategoriaManager;
 
 
-class CategoriaController extends AbstractActionController {
+class CategoriaController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager
@@ -60,8 +60,32 @@ class CategoriaController extends AbstractActionController {
         return $view;
     }
 
+    private function getRuta($tipo){
+        if ($tipo=="cliente"){
+            return "/categorias/cliente";
+        }
+        elseif($tipo=="proveedor"){
+            return "/categorias/proveedor";
+        }
+        elseif($tipo=="licencia"){
+            return "/categorias/licencia";
+        }
+        elseif($tipo=="producto"){
+            return "/categorias/producto";
+        }
+        elseif($tipo=="servicio"){
+            return "/categorias/servicio";
+        }
+        elseif($tipo=="evento"){
+            return "/categorias/evento";
+        }
+    }
+
+
     private function procesarAdd() {
         $tipo= $this->params()->fromRoute('tipo');
+        $url = $this->getRuta($tipo);
+        $this->prepararBreadcrumbs("Categorias", $url);
         $id=$this->params()->fromRoute('id');
         $form = $this->categoriaManager->createForm();
         $paginator = $this->categoriaManager->getTabla($tipo);
@@ -93,6 +117,8 @@ class CategoriaController extends AbstractActionController {
         $request = $this->getRequest();
         $tipo= $this->params()->fromRoute('tipo');
         $id = (int) $this->params()->fromRoute('id', -1);
+        $url = $this->getRuta($tipo);
+        $this->prepararBreadcrumbs("Editar","/edit/".$id);
         $categoriaevento = $this->categoriaManager->getCategoriaId($id);
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
@@ -143,9 +169,9 @@ class CategoriaController extends AbstractActionController {
 
     private function redireccionar($tipo){
         if (strtoupper($tipo)==strtoupper("cliente")){
-            return $this->redirect()->toRoute('gestionClientes/categoriacliente', ['tipo'=>'cliente']);
+            return $this->redirect()->toRoute('gestionClientes/categorias', ['tipo'=>'cliente']);
         }elseif (strtoupper($tipo)==strtoupper("proveedor")){
-            return $this->redirect()->toRoute('gestionProveedores/categoriaproveedor', ['tipo'=>'proveedor']);
+            return $this->redirect()->toRoute('gestionProveedores/categorias', ['tipo'=>'proveedor']);
         }elseif (strtoupper($tipo)==strtoupper("producto")){
             return $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/categoriaproducto', ['tipo'=>'producto']);
         }elseif (strtoupper($tipo)==strtoupper("licencia")){
@@ -153,7 +179,7 @@ class CategoriaController extends AbstractActionController {
         }elseif (strtoupper($tipo)==strtoupper("servicio")){
             return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/categoriaservicio', ['tipo'=>'servicio']);
         }elseif (strtoupper($tipo)==strtoupper("evento")){
-            return $this->redirect()->toRoute('gestionClientes/gestionActividadesClientes/categoriaevento', ['tipo'=>'evento']);
+            return $this->redirect()->toRoute('gestionClientes/gestionActividadesClientes/categorias', ['tipo'=>'evento']);
         }elseif (strtoupper($tipo)==strtoupper("iva")){
             return $this->redirect()->toRoute('herramientas/condicioniva', ['tipo'=>'iva']);
         }else{

@@ -2,10 +2,10 @@
 
 namespace CategoriaServicio\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class CategoriaServicioController extends AbstractActionController {
+class CategoriaServicioController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager

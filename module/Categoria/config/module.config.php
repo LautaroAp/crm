@@ -18,7 +18,7 @@ return [
             'categoria' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/clientes/actividadesCategoria',
+                    'route'    => '/clientes/categorias',
                     'defaults' => [
                         'controller'    => Controller\CategoriaController::class,
                         'action'        => 'index',
@@ -29,7 +29,7 @@ return [
                     'editar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/edit[/:tipo[/:id]]',
+                            'route' => '[/:tipo]/edit[/:id]',
                             'defaults' => [
                                 'action' => 'edit',
                             ],
@@ -62,7 +62,7 @@ return [
                     'page' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/page[/:tipo[/:id]]',
+                            'route' => '[/:tipo]/page[/:id]',
                             'defaults' => [
                                 'action' => 'index',
                             ],

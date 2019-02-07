@@ -156,7 +156,12 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('gestionClientes/gestionActividadesClientes') ?>">
+                <?php if ($tipoPersona=="cliente"){ ?>
+                    <a href="<?= $this->url('gestionClientes/gestionActividadesClientes') ?>">
+                <?php } elseif ($tipoPersona == "proveedor"){ ?>
+                    <a href="<?= $this->url('gestionProveedores/gestionActividadesProveedores') ?>">
+
+                <?php } ?>              
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
                     class="img-rounded img-responsive img-texto-derecha">
                 </a>
@@ -164,7 +169,6 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
             <div class="ficha-cliente-label">
                 <label>Volver</label>
             </div>
-        </div>
     </div>
 </div>
 <!-- Fin: Panel Botones -->

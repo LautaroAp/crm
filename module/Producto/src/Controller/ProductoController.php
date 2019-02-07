@@ -2,10 +2,10 @@
 
 namespace Producto\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class ProductoController extends AbstractActionController {
+class ProductoController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager
@@ -31,6 +31,7 @@ class ProductoController extends AbstractActionController {
     }
 
     private function procesarIndexAction() {
+        $this->prepararBreadcrumbs("Listado", "/listado", "Productos");
         $paginator = $this->productoManager->getTabla();
         $page = 1;
         if ($this->params()->fromRoute('id')) {
@@ -52,6 +53,7 @@ class ProductoController extends AbstractActionController {
     }
     
     private function procesarAddAction() {
+        $this->prepararBreadcrumbs("Agregar Producto", "/add/producto", "Productos");
         $request = $this->getRequest();
         $tipo= $this->params()->fromRoute('tipo');
         $categoriaProductos = $this->productoManager->getCategoriaProducto(null,$tipo);
@@ -78,6 +80,7 @@ class ProductoController extends AbstractActionController {
         $request = $this->getRequest();
         $id = (int) $this->params()->fromRoute('id', -1);
         $tipo =  $this->params()->fromRoute('tipo');
+        $this->prepararBreadcrumbs("Editar Producto", "/edit/".$tipo."/".$id, "Listado");
         $producto = $this->productoManager->getProductoId($id);
         $categoriaProductos = $this->productoManager->getCategoriaProducto(null, $tipo);
         $ivas = $this->ivaManager->getIvas();

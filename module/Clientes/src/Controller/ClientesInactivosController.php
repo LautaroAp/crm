@@ -16,6 +16,7 @@ class ClientesInactivosController extends ClientesController {
     }
 
     public function indexAction() {
+        $this->prepararBreadcrumbs("Inactivos", "/inactivos", "Clientes");
         $request = $this->getRequest();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
