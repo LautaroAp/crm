@@ -8,7 +8,7 @@
 namespace User;
 
 use Zend\Mvc\MvcEvent;
-use Application\Controller\HuellaController;
+use Zend\Mvc\Controller\AbstractActionController;
 use User\Controller\AuthController;
 use User\Service\AuthManager;
 

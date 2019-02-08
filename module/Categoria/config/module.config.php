@@ -18,7 +18,7 @@ return [
             'categoria' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/clientes/categorias',
+                    'route'    => '/categorias',
                     'defaults' => [
                         'controller'    => Controller\CategoriaController::class,
                         'action'        => 'index',

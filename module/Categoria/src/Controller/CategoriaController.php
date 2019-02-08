@@ -79,6 +79,9 @@ class CategoriaController extends HuellaController {
         elseif($tipo=="evento"){
             return "/categorias/evento";
         }
+        elseif($tipo=="iva"){
+            return "/categorias/iva";
+        }
     }
 
 

@@ -33,6 +33,7 @@ class EventoVentaController extends EventoController
     }
 
     private function procesarIndexAction() {
+        $this->prepararBreadcrumbs("Movimientos", "/ventas");
         $request = $this->getRequest();
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();

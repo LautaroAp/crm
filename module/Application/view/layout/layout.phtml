@@ -28,7 +28,10 @@
             ->prependFile($this->basePath('js/ajax.js'))
             ->prependFile($this->basePath('js/sweetalert.js'))
             ->prependFile($this->basePath('js/sweetalert.min.js'))
+            ->prependFile($this->basePath('js/breadcrumb.js'))
+
         ?>
+
 
     </head>
 
@@ -80,10 +83,32 @@
                 </div>
             </nav>
 
-            <main class="margen-main">
-                <div id="content">
+ 
+            <main class="margen-main"> 
+                <nav aria-label="breadcrumb">
+                <ol class="breadcrumb secondary-color">
+                <li class="breadcrumb-item"><a class="white-text" href="#">Home</a></li>
+                <li class="breadcrumb-item"><a class="white-text" href="#">Library</a></li>
+                <li class="breadcrumb-item active">Data</li>
+                </ol>
+                
+                </nav>
+                <div id="breadcrumb"></div>
+                <ul id="navigation_links">
+                    <li><a href="#">Page 1</a></li>
+                    <li><a href="#">Page 2</a></li>
+                    <li><a href="#">Page 3</a></li>
+                </ul>
+                 </ul>
+                    <div id="content">
                     <?= $this->content; ?>
                 </div> 
+                <script>
+                    var myJson = '<?= $rutas ?>';
+                    for (var i = 0; i < myJson.length; i+=1) {
+                        console.log("En el índice '" + i + "' hay este valor: " + myJson[i]['label']);
+                    }
+                </script>
             </main>
 
             <footer class="footer" id="">

@@ -15,27 +15,30 @@ class IndexController extends HuellaController {
         $this->clientesManager = $clientesManager;
     }
 
-    public function indexAction() {
-        $label = "Home";
-        $url = "/";
-        $this->reiniciarBreadcrumbs($label, $url);
-        $this->reiniciarParametros();
-        $_SESSION['MENSAJES'] = array();
-        $_SESSION['CATEGORIA'] = array();
-        $_SESSION['TIPOEVENTO'] = array();
-        // $this->layout()->setTemplate('layout/simple');
-        return new ViewModel();
-    }
+    // public function indexAction() {
+    //     $label = "Home";
+    //     $url = "";
+    //     $this->reiniciarBreadcrumbs($label, $url);
+    //     $this->reiniciarParametros();
+    //     $_SESSION['MENSAJES'] = array();
+    //     $_SESSION['CATEGORIA'] = array();
+    //     $_SESSION['TIPOEVENTO'] = array();
+    //     // $this->layout()->setTemplate('layout/simple');
+    //     return new ViewModel();
+    // }
 
     public function viewAction() {
         return new ViewModel();
     }
 
     public function menuAction(){
-        $label = "Menu";
-        $url = "/menu";
-        $limite = "Home";
-        $this->prepararBreadcrumbs($label, $url, $limite);
+        $label = "Home";
+        $url = "/home";
+        $this->reiniciarBreadcrumbs($label, $url);
+        $this->reiniciarParametros();
+        $_SESSION['MENSAJES'] = array();
+        $_SESSION['CATEGORIA'] = array();
+        $_SESSION['TIPOEVENTO'] = array();        
         return new ViewModel();
     }
 
@@ -48,7 +51,7 @@ class IndexController extends HuellaController {
     public function gestionClientesAction() {
         $label = "Clientes";
         $url = "/clientes";
-        $limite = "Menu";
+        $limite = "Home";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
         return new ViewModel();
@@ -66,7 +69,7 @@ class IndexController extends HuellaController {
     public function gestionProveedoresAction() {
         $label = "Proveedores";
         $url = "/proveedores";       
-        $limite = "Menu";
+        $limite = "Home";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
         return new ViewModel();
@@ -94,7 +97,7 @@ class IndexController extends HuellaController {
     public function gestionEmpresaAction() {
         $label = "Empresa";
         $url = "/empresa";
-        $limite = "Menu";
+        $limite = "Home";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
         $this->reiniciarParametros();
@@ -104,7 +107,7 @@ class IndexController extends HuellaController {
     public function gestionProductosServiciosAction() {
         $label = "Productos y Servicios";
         $url = "/productosservicios";
-        $limite = "Menu";
+        $limite = "Home";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
         return new ViewModel();
@@ -140,7 +143,7 @@ class IndexController extends HuellaController {
     public function herramientasAction() {
         $label = "Herramientas";
         $url = "/herramientas";
-        $limite ="Menu";
+        $limite ="Home";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
         return new ViewModel();

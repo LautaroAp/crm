@@ -193,7 +193,7 @@ class ClientesController extends HuellaController
         else{
             $limite = "Inactivos";
         }
-        $this->prepararBreadcrumbs("Ficha Cliente", "/ficha/".$id_persona, $limite);
+        $this->prepararBreadcrumbs("Ficha Cliente", "/ficha/".$id_persona);
         $data = $this->clientesManager->getDataFicha($id_persona);
         $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();
         return new ViewModel([

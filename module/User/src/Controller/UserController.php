@@ -1,7 +1,7 @@
 <?php
 namespace User\Controller;
 
-use Application\Controller\HuellaController;
+use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
@@ -15,7 +15,7 @@ use User\Form\PasswordResetForm;
  * This controller is responsible for user management (adding, editing, 
  * viewing users and changing user's password).
  */
-class UserController extends HuellaController 
+class UserController extends AbstractActionController 
 {
     /**
      * Entity manager.

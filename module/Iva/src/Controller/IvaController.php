@@ -53,6 +53,7 @@ class IvaController extends HuellaController {
     }
 
     private function procesarIndexAction() {
+        $this->prepararBreadcrumbs("Tipo de IVA", "/tipoiva", "Herramientas");
         $paginator = $this->ivaManager->getTabla();
         $page = 1;
         if ($this->params()->fromRoute('id')) {
@@ -73,6 +74,7 @@ class IvaController extends HuellaController {
     }
 
     private function procesarAddAction() {
+        $this->prepararBreadcrumbs("Tipo de IVA", "/tipoiva", "Herramientas");
         $request = $this->getRequest();
         $paginator = $this->ivaManager->getTabla();
         $page = 1;
@@ -99,6 +101,7 @@ class IvaController extends HuellaController {
 
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
+        $this->prepararBreadcrumbs("Editar", "/edit/".$id, "Tipo de IVA");
         $iva = $this->ivaManager->getIva($id);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();

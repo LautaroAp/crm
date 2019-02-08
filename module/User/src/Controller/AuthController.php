@@ -2,7 +2,7 @@
 
 namespace User\Controller;
 
-use Application\Controller\HuellaController;
+use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Authentication\Result;
 use Zend\Uri\Uri;
@@ -12,7 +12,7 @@ use User\Entity\User;
 /**
  * This controller is responsible for letting the user to log in and log out.
  */
-class AuthController extends HuellaController {
+class AuthController extends AbstractActionController {
 
     /**
      * Entity manager.

@@ -13,30 +13,30 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 return [
     'router' => [
         'routes' => [
-            'application' => [
-                'type' => Literal::class,
-                'options' => [
-                    'route' => '/',
-                    'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action' => 'menu',
-                    ],
-                ],
-            ],
-            'menu' => [
-                'type' => Literal::class,
-                'options' => [
-                    'route' => '/menu',
-                    'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action' => 'menu',
-                    ],
-                ],
-            ],
+            // 'application' => [
+            //     'type' => Literal::class,
+            //     'options' => [
+            //         'route' => '/',
+            //         'defaults' => [
+            //             'controller' => Controller\IndexController::class,
+            //             'action' => 'menu',
+            //         ],
+            //     ],
+            // ],
+            // 'menu' => [
+            //     'type' => Literal::class,
+            //     'options' => [
+            //         'route' => '/menu',
+            //         'defaults' => [
+            //             'controller' => Controller\IndexController::class,
+            //             'action' => 'menu',
+            //         ],
+            //     ],
+            // ],
             'home' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/menu',
+                    'route' => '/home',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action' => 'menu',
@@ -585,7 +585,7 @@ return [
                     'condicioniva' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/condicionIva[/:tipo[/:id]]',
+                            'route' => '/categorias[/:tipo[/:id]]',
                             'defaults' => [
                                 'controller' => \Categoria\Controller\CategoriaController::class,
                                 'action' => 'index',
