@@ -50,7 +50,12 @@ class HuellaController extends AbstractActionController {
             $rutas = $this->eliminarUltimos($rutas, $agregar['label']);
             $this->guardarJson($rutas, $data_decoded);
         }  
-        $this->layout()->rutas = $rutas;
+        print_r("<br>");
+        print_r("<br>");
+        print_r("<br>");
+        print_r("<br>");
+        print_r($rutas);
+        $this->layout()->setVariable('rutas', $rutas);
     }
     
     private function guardarJson($rutas,$data_decoded){
