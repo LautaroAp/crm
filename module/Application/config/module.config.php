@@ -36,7 +36,7 @@ return [
             'home' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/home',
+                    'route' => '/',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action' => 'menu',

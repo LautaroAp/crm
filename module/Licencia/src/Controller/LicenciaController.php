@@ -61,7 +61,7 @@ class LicenciaController extends HuellaController {
     }
 
     private function procesarAddAction() {
-        $this->prepararBreadcrumbs("Agregar Licencia", "/add/licencia", "Licencia");
+        $this->prepararBreadcrumbs("Agregar Licencia", "/add/licencia", "Licencias");
         $request = $this->getRequest();
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->licenciaManager->getCategoriasLicencia($tipo);

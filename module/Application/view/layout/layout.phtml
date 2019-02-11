@@ -84,32 +84,33 @@
             </nav>
 
  
-            <main class="margen-main"> 
-                <nav aria-label="breadcrumb">
+             
+                 <nav aria-label="breadcrumb">
                 <ol class="breadcrumb secondary-color">
                 <li class="breadcrumb-item"><a class="white-text" href="#">Home</a></li>
                 <li class="breadcrumb-item"><a class="white-text" href="#">Library</a></li>
-                <li class="breadcrumb-item active">Data</li>
-                </ol>
-                
+                <li class="breadcrumb-item active">Data</li> 
+                </ol>    
                 </nav>
-                <div id="breadcrumb"></div>
-                <ul id="navigation_links">
-                    <li><a href="#">Page 1</a></li>
-                    <li><a href="#">Page 2</a></li>
-                    <li><a href="#">Page 3</a></li>
-                </ul>
-                 </ul>
+
+                <main class="margen-main"> 
+                    
+                        <ol class="breadcrumb">
+
+                <div id="breadcrumb_contenido">
+                        <script> var obj = <?php echo json_encode($rutas); ?>;
+                                    armar_breadcrumb(obj);
+                        </script> 
+                    
+                    
+                </div>
+</ol>
+
+            
                     <div id="content">
                     <?= $this->content; ?>
                 </div> 
-                <script>
-                    var myJson = '<?= $rutas ?>';
-                    for (var i = 0; i < myJson.length; i+=1) {
-                        console.log("En el índice '" + i + "' hay este valor: " + myJson[i]['label']);
-                    }
-                </script>
-                <?php print_r ($rutas) ?>
+             
             </main>
 
             <footer class="footer" id="">

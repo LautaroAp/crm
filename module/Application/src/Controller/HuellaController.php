@@ -32,23 +32,23 @@ class HuellaController extends AbstractActionController {
         // print_r("<br>");
         // // print_r($data_decoded);
         // print_r("<br>");
-        $agregar = array('label' => $label, 'url' => $url);
+        $agregar = ['label' => $label, 'url' => $url];
         $rutas=$data_decoded['route'];   
         //solo agrega rutas si no estan agregadas
         if ((!$this->pertenece($rutas, $agregar))){
              //si tiene un limite pasado con el ultimo valor posible eliminar las sig migas   
             if (isset($limite)){
-                $rutas=$this->eliminarUltimos($rutas, $limite);
+                $json= $rutas=$this->eliminarUltimos($rutas, $limite);
             }
             //con la ultima miga valida agregar al arreglo la nueva miga
             array_push($rutas, $agregar);
             //reemplazo el arreglo de rutas del archivo json por el nuevo arreglo modificado
-            $this->guardarJson($rutas, $data_decoded);
+            $json = $this->guardarJson($rutas, $data_decoded);
             
         }
         else{
             $rutas = $this->eliminarUltimos($rutas, $agregar['label']);
-            $this->guardarJson($rutas, $data_decoded);
+            $json = $this->guardarJson($rutas, $data_decoded);
         }  
         print_r("<br>");
         print_r("<br>");
@@ -56,6 +56,8 @@ class HuellaController extends AbstractActionController {
         print_r("<br>");
         print_r($rutas);
         $this->layout()->setVariable('rutas', $rutas);
+        $this->layout()->setVariable('json', $json); 
+        // print_r($json);
     }
     
     private function guardarJson($rutas,$data_decoded){
@@ -66,6 +68,7 @@ class HuellaController extends AbstractActionController {
         // $data_decoded =  json_decode($data, true);
         // // print_r($data_decoded);
         // // print_r("<br>");
+        return $json;
 
     }
 
