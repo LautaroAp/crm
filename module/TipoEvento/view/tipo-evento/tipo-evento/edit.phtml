@@ -89,9 +89,9 @@ $categoria_eve = $tipoevento->getCategoria_evento();
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <?php if ($tipoPersona=="cliente"){ ?> 
-                    <a href="<?= $this->url('gestionClientes/gestionActividadesClientes/tipoeventoCliente', ['tipo'=>'cliente']); ?>" > 
+                    <a href="<?= $this->url('gestionClientes/gestionEventosClientes/tipoeventoCliente', ['tipo'=>'cliente']); ?>" > 
                     <?php }elseif ($tipo=="proveedor"){ ?>
-                    <a href="<?= $this->url('gestionProveedores/gestionActividadesProveedores/tipoeventoProveedor', ['tipo'=>'proveedor']); ?>" > 
+                    <a href="<?= $this->url('gestionProveedores/gestionEventosProveedores/tipoeventoProveedor', ['tipo'=>'proveedor']); ?>" > 
                     <?php } ?>
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
                     class="img-rounded img-responsive img-texto-derecha">

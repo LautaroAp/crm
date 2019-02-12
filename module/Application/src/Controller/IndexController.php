@@ -57,7 +57,7 @@ class IndexController extends HuellaController {
         return new ViewModel();
     }
 
-    public function gestionActividadesClientesAction() {
+    public function gestionEventosClientesAction() {
         $label = "Actividades";
         $url = "/actividades";
         $limite = "Clientes";
@@ -75,7 +75,7 @@ class IndexController extends HuellaController {
         return new ViewModel();
     }
 
-    public function gestionActividadesProveedoresAction() {
+    public function gestionEventosProveedoresAction() {
         $label = "Actividades";
         $url = "/actividades";
         $limite = "Proveedores";

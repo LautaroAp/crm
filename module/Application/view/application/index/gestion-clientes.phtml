@@ -1,87 +1,87 @@
-<!-- MODULE APPLICATION -->
-<div class="container margen text-center">         
-    <nav class="navbar" id="nav" >
-        <ul>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('gestionClientes/listado'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Listado</figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <a href="<?= $this->url("gestionClientes/agregar", ['tipo'=>'cliente']); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/cliente_add_a.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Agregar Cliente</figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('clientes/inactivos'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/cliente_exclamation_a.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Inactivos</figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('gestionClientes/gestionActividadesClientes'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Actividades</figcaption>
-                </figure>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('gestionClientes/categorias', ['tipo'=>'cliente']); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/consulta_a.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Categorías de Cliente</small>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('gestionClientes/profesion'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/consulta_a.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Profesiones de Cliente</figcaption>
-                <figure>
-            </li>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('gestionClientes/backup'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/cliente_excel_a.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>&nbsp;&nbsp;Exportar a Excel&nbsp;&nbsp;</figcaption>
-                </figure>
-            </li>
-        </ul>
-    </nav>
-    <nav id="nav" >
-        <ul>
-            <li>
-                <div class="img-centrar">
-                    <div>
-                        <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+<div class="container margen">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center titulo-espaciado">
+            GESTIÓN DE CLIENTES
+        </div>
+        <div class="panel-body">
+            <div class="container margen text-center">         
+                <nav class="navbar" id="nav" >
+                    <ul>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionClientes/listado'); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Listado de Clientes</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url("gestionClientes/agregar", ['tipo'=>'cliente']); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/cliente_add_a.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Agregar Cliente</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionClientes/gestionEventosClientes'); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Eventos</figcaption>
+                            </figure>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionClientes/categorias', ['tipo'=>'cliente']); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/consulta_a.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Categorías de Cliente</small>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionClientes/profesion'); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/consulta_a.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Profesiones de Cliente</figcaption>
+                            <figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionClientes/backup'); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/cliente_excel_a.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>&nbsp;&nbsp;Exportar a Excel&nbsp;&nbsp;</figcaption>
+                            </figure>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container margen text-center"> 
+        <nav id="nav" >
+            <ul>
+                <li>
+                    <div class="img-centrar">
+                        <div>
+                            <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
                     </div>
-                    <div class="ficha-cliente-label">
-                        <label>Volver</label>
-                    </div>
-                </div>
-            </li>
-
-        </ul>
-    </nav>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>

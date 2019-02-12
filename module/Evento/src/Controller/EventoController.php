@@ -84,6 +84,7 @@ class EventoController extends HuellaController {
 
         }
         $persona= $this->personaManager->getPersona($Id);
+        $cliente = $this->clienteManager->getClienteIdPersona($persona->getId());
         $tipoEventos = $this->getArrayTipos($tipo);
         $form = $this->eventoManager->createForm($tipoEventos);
         if ($this->getRequest()->isPost()) {

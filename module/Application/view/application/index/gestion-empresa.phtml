@@ -1,49 +1,62 @@
-<div class="container margen text-center" >         
-    <nav class="navbar" id="nav" >
-        <ul>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('gestionEmpresa/ventas'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/carrito_n.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Movimientos</figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('gestionEmpresa/configuracion'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Configuración</figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('gestionEmpresa/backup'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>"
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Exportar</figcaption>
-                </figure>
-            </li>
-        </ul>
-    </nav>
-    <nav id="nav" >
-        <ul>
-            <li>
-                <div class="img-centrar">
-                    <div>
-                        <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
-                        class="img-rounded img-responsive img-texto-derecha"></a>
-                    </div>
-                    <div class="ficha-cliente-label">
-                        <label>Volver</label>
-                    </div>
+<div class="container margen">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center titulo-espaciado">
+            GESTIÓN EMPRESA
+        </div>
+        <div class="panel-body" style="min-height: 325px;">
+            <div class="ficha-cliente-p margen">
+                <div class="container margen text-center" >         
+                    <nav class="navbar" id="nav" >
+                        <ul>
+                            <li>
+                                <figure>
+                                    <a href="<?= $this->url('gestionEmpresa/ventas'); ?>" > 
+                                        <img src="<?= $this->basePath('img/crm/carrito_n.png') ?>" 
+                                        class="img-rounded img-responsive img-menu img-centrar">
+                                    </a>
+                                    <figcaption>Movimientos</figcaption>
+                                </figure>
+                            </li>
+                            <li>
+                                <figure>
+                                    <a href="<?= $this->url('gestionEmpresa/configuracion'); ?>" > 
+                                        <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>" 
+                                        class="img-rounded img-responsive img-menu img-centrar">
+                                    </a>
+                                    <figcaption>Configuración</figcaption>
+                                </figure>
+                            </li>
+                            <li>
+                                <figure>
+                                    <a href="<?= $this->url('gestionEmpresa/backup'); ?>" > 
+                                        <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>"
+                                        class="img-rounded img-responsive img-menu img-centrar">
+                                    </a>
+                                    <figcaption>Exportar</figcaption>
+                                </figure>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-            </li>
+            </div>
+        </div>
+    </div>
+    <div class="container margen text-center" >
+        <nav id="nav" >
+            <ul>
+                <li>
+                    <div class="img-centrar">
+                        <div>
+                            <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
+                            class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
+                </li>
 
-        </ul>
-    </nav>
+            </ul>
+        </nav>
+    </div>
 </div>

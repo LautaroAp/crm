@@ -96,9 +96,9 @@ class TipoEventoController extends HuellaController {
 
     private function redireccionar($tipo){
         if (strtoupper($tipo)==strtoupper("proveedor")){
-            return $this->redirect()->toRoute('gestionProveedores/gestionActividadesProveedores/tipoeventoProveedor', ['tipo'=>'proveedor']);
+            return $this->redirect()->toRoute('gestionProveedores/gestionEventosProveedores/tipoeventoProveedor', ['tipo'=>'proveedor']);
         }elseif (strtoupper($tipo)==strtoupper("cliente")){
-            return $this->redirect()->toRoute('gestionClientes/gestionActividadesClientes/tipoeventoCliente', ['tipo'=>'cliente']);
+            return $this->redirect()->toRoute('gestionClientes/gestionEventosClientes/tipoeventoCliente', ['tipo'=>'cliente']);
         }else{
             return $this->redirect()->toRoute('home');
         }

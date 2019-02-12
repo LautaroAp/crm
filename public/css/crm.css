@@ -62,6 +62,21 @@
     margin: 5px;
 }
 
+.navbar-color{
+    background-image: linear-gradient(to bottom,#000c 0,#545454 100%) !important;
+}
+
+.navbar-titulo-font{
+    font-size: 30px !important;
+    font-weight: bold;
+}
+
+.navbar-menu-font{
+    font-size: 16px !important;
+    color: white !important;
+    font-weight: bold;
+}
+
 .titulo-espaciado {
     letter-spacing: 0.3em;
     font-weight: bold;

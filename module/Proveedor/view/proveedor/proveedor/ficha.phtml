@@ -97,7 +97,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <p><label>Ciudad:</label> <?php echo ($proveedor->getCiudad()); ?></p>
                         <p><label>Provincia:</label> <?php echo ($proveedor->getNombreProvinciaProveedor()); ?></p>
                         <p><label>País:</label> <?php echo ($proveedor->getNombrePaisProveedor()); ?></p>
-                        <hr>
+                        <br>
                         <p><label>Condición de IVA:</label> <?= $proveedor->getNombreCondicionIva(); ?></p>
                         <p><label>Banco:</label> <?= $proveedor->getBanco(); ?></p>
                         <p><label>CBU:</label> <?= $proveedor->getCbu(); ?></p>
@@ -115,7 +115,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
     <div class="container row">
         <div class="panel panel-default">
             <div class="panel-heading text-center titulo-espaciado">
-                REGISTRO DE ACTIVIDADES
+                REGISTRO DE EVENTOS
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
                     <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
                 </a>
@@ -219,7 +219,6 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         </div>
                     </div>
 
-
                     <table id="table_id" class="display">
                         <thead>
                             <tr> 
@@ -285,7 +284,6 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             <div class="modal-footer">
                 <a href="<?= $this->url('proveedores/modificarEstado', ['action' => 'modificarEstado', 'id' => (int) $proveedor->getId()]) ?>" type="button">
                 <span class="btn btn-default">Aceptar</span></a>
-               
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -297,13 +295,13 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="actividadModalLabel">Eliminar actividad</h4>
+                <h4 class="modal-title" id="actividadModalLabel">Eliminar evento</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>¿Está seguro que desea eliminar las actividades seleccionadas?</p>
+                <p>¿Está seguro que desea eliminar los eventos seleccionados?</p>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-default" onclick="eliminaEventos()">Aceptar</button>

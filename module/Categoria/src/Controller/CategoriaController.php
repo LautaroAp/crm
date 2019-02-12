@@ -182,7 +182,7 @@ class CategoriaController extends HuellaController {
         }elseif (strtoupper($tipo)==strtoupper("servicio")){
             return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/categoriaservicio', ['tipo'=>'servicio']);
         }elseif (strtoupper($tipo)==strtoupper("evento")){
-            return $this->redirect()->toRoute('gestionClientes/gestionActividadesClientes/categorias', ['tipo'=>'evento']);
+            return $this->redirect()->toRoute('gestionClientes/gestionEventosClientes/categorias', ['tipo'=>'evento']);
         }elseif (strtoupper($tipo)==strtoupper("iva")){
             return $this->redirect()->toRoute('herramientas/condicioniva', ['tipo'=>'iva']);
         }else{
