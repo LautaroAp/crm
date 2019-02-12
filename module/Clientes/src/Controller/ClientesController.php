@@ -135,7 +135,7 @@ class ClientesController extends HuellaController
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $this->clientesManager->updateCliente($cliente, $data);
-            $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $id_persona]);
+            $this->redirect()->toRoute('clientes/listado/ficha', ['action' => 'ficha', 'id' => $id_persona]);
         } 
         return new ViewModel([
             'cliente' => $cliente,

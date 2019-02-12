@@ -26,12 +26,6 @@ class HuellaController extends AbstractActionController {
     public function prepararBreadcrumbs($label, $url, $limite = null){
         $data = file_get_contents("public/json/breadcrumbs.json");
         $data_decoded =  json_decode($data, true);
-        // print_r("<br>");
-        // print_r("<br>");
-        // print_r("<br>");
-        // print_r("<br>");
-        // // print_r($data_decoded);
-        // print_r("<br>");
         $agregar = ['label' => $label, 'url' => $url];
         $rutas=$data_decoded['route'];   
         //solo agrega rutas si no estan agregadas
@@ -50,11 +44,6 @@ class HuellaController extends AbstractActionController {
             $rutas = $this->eliminarUltimos($rutas, $agregar['label']);
             $json = $this->guardarJson($rutas, $data_decoded);
         }  
-        print_r("<br>");
-        print_r("<br>");
-        print_r("<br>");
-        print_r("<br>");
-        print_r($rutas);
         $this->layout()->setVariable('rutas', $rutas);
         $this->layout()->setVariable('json', $json); 
         // print_r($json);
@@ -64,10 +53,7 @@ class HuellaController extends AbstractActionController {
         $data_decoded['route'] = $rutas;
         $json = json_encode($data_decoded);
         file_put_contents("public/json/breadcrumbs.json", $json);
-        // $data = file_get_contents("public/json/breadcrumbs.json");
-        // $data_decoded =  json_decode($data, true);
-        // // print_r($data_decoded);
-        // // print_r("<br>");
+
         return $json;
 
     }
@@ -96,6 +82,9 @@ class HuellaController extends AbstractActionController {
             file_put_contents("public/json/breadcrumbs.json", $json);
             $data = file_get_contents("public/json/breadcrumbs.json");
             $data_decoded =  json_decode($data, true);
+            print_r("<br>");
+            print_r("<br>");
+            $this->layout()->setVariable('rutas', $data_decoded);
         }
     }
 }

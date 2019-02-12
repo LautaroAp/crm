@@ -21,8 +21,11 @@
 //         console.log(actual_JSON);
 //     });
     
-function esUltimo(lista, i){
-    document.write(i == lista.length);
+function esUltimo(lista, label){
+    // document.write(i);
+    // document.write(lista.lenght);
+    bread = lista[lista.length-1];
+    document.write(bread['label']);
     return i == lista.length;
 }    
 function getUrl(lista, i){
@@ -31,11 +34,13 @@ function getUrl(lista, i){
         bread = lista[j];
         url = url + bread['url'];
     }
-    return "<a href=\""+ url+ "\">";
+    return "<a  class=\"white-text\" href=\""+ url+ "\">";
 }
 
 function armar_breadcrumb(lista){
     breadTxt = '';
+    ultimo= lista[lista.length-1];
+    ultimo_label = ultimo['label'];
     for (i = 0; i < lista.length; i++)
     {
         bread = lista[i];
@@ -46,8 +51,12 @@ function armar_breadcrumb(lista){
         else {
             resultado = getUrl(lista, i) + bread_label + "</a>" ;
         }
-        breadTxt= breadTxt + '<li class="breadcrumb-item" >' + resultado + '</li>'
-
+        if (bread_label == ultimo_label){
+            breadTxt= breadTxt + '<li class="breadcrumb-item active" >' + bread_label + '</li>';
+        }
+        else{
+            breadTxt= breadTxt + '<li class="breadcrumb-item active" >'+ resultado+'</li>';
+        }
    } 
     $('#breadcrumb_contenido').append(breadTxt);
 }

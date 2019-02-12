@@ -57,6 +57,7 @@ class UsuarioController extends HuellaController {
         $id_persona = (int) $this->params()->fromRoute('id', -1);
         $cliente = $this->clienteManager->getClienteIdPersona($id_persona);
         $form = new UsuarioForm('create', $this->entityManager);
+        $this->prepararBreadcrumbs("Agregar Usuario", "usuarios/add/".$id_persona);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $form->setData($data);
@@ -87,6 +88,7 @@ class UsuarioController extends HuellaController {
             $this->getResponse()->setStatusCode(404);
             return;
         }
+        $this->prepararBreadcrumbs("Editar Usuario", "usuarios/edit".$id);
         $form = new UsuarioForm('update', $this->entityManager, $usuario);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
