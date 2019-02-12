@@ -92,7 +92,7 @@ return [
                     'ficha' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/ficha[/:id]',
+                            'route' => '/listado/ficha[/:id]',
                             'defaults' => [
                                 'controller' => Controller\ClientesController::class,
                                 'action' => 'ficha',

@@ -1,15 +1,16 @@
 <?= $this->doctype() ?>
 
 <html lang="es">
-    <head>
 
-        <title>HUELLA CRM</title>
-        <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/> 
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
+<head>
 
-        <!-- Le styles -->
-        <?=
+    <title>HUELLA CRM</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Le styles -->
+    <?=
         $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/VetIcon.png'])
             ->prependStylesheet($this->basePath('css/style.css'))
             ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
@@ -18,9 +19,9 @@
             ->prependStylesheet($this->basePath('css/sweetalert.css'))
         ?>
 
-        <!-- Scripts -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <?=
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <?=
         $this->headScript()
             ->prependFile($this->basePath('js/bootstrap.min.js'))
             ->prependFile($this->basePath('js/jquery-2.2.4.min.js'))
@@ -33,91 +34,81 @@
     </head>
 
     <!-- <div id="container"> -->
-        <body class="homepage">
-            <!-- Navigation -->
-            <nav id="mainNav" class="navbar navbar-default navbar-inverse navbar-fixed-top navbar-color">
-                <div class="container">
-                    <div class="navbar-header page-scroll">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
-                        </button>
-                        <a class="navbar-brand page-scroll navbar-titulo-font" data-toggle="collapse" data-parent="#accordion" 
-                            href="#menu" aria-expanded="true" aria-controls="menu"><p class="navbar-titulo-font">Huella CRM</p>
-                        </a>
-                    </div>
-
-                    <div class="collapse pull-left" id="menu">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="hidden"><a href="#page-top"></a></li>
-                            <li><a class="page-scroll" href="<?= $this->url('herramientas/ejecutivos'); ?>">
-                                    <small>Usuario: <label><?= $this->identity() ?></label></small>
-                                </a>
-                            </li>
-                            <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa/configuracion'); ?>">
-                                    <small>Empresa: <label>****</label></small>
-                                </a>
-                            </li>
-                            <li><a class="page-scroll" href="<?= $this->url('logout'); ?>">
-                                    <small>Salir</small>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right navbar-menu-font">
-                            <li class="hidden"><a href="#page-top"></a></li> 
-                            <li><a class="page-scroll" href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
-                            <li><a class="page-scroll" href="<?= $this->url('gestionProveedores'); ?>">Proveedores</a></li>
-                            <li><a class="page-scroll" href="<?= $this->url('gestionProductosServicios'); ?>">Productos y Servicios</a></li>
-                            <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa'); ?>">Empresa</a></li>
-                            <li><a class="page-scroll" href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
-                        </ul>
-                    </div>
+    <body class="homepage">
+        <!-- Navigation -->
+        <nav id="mainNav" class="navbar navbar-default navbar-inverse navbar-fixed-top navbar-color">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand page-scroll navbar-titulo-font" data-toggle="collapse" data-parent="#accordion" 
+                        href="#menu" aria-expanded="true" aria-controls="menu"><p class="navbar-titulo-font">Huella CRM</p>
+                    </a>
                 </div>
-            </nav>
 
- 
-            <main class="margen-main"> 
-                <nav aria-label="breadcrumb">
-                <ol class="breadcrumb secondary-color">
-                <li class="breadcrumb-item"><a class="white-text" href="#">Home</a></li>
-                <li class="breadcrumb-item"><a class="white-text" href="#">Library</a></li>
-                <li class="breadcrumb-item active">Data</li>
+                <div class="collapse pull-left" id="menu">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden"><a href="#page-top"></a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('herramientas/ejecutivos'); ?>">
+                                <small>Usuario: <label><?= $this->identity() ?></label></small>
+                            </a>
+                        </li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa/configuracion'); ?>">
+                                <small>Empresa: <label>****</label></small>
+                            </a>
+                        </li>
+                        <li><a class="page-scroll" href="<?= $this->url('logout'); ?>">
+                                <small>Salir</small>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right navbar-menu-font">
+                        <li class="hidden"><a href="#page-top"></a></li> 
+                        <li><a class="page-scroll" href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionProveedores'); ?>">Proveedores</a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionProductosServicios'); ?>">Productos y Servicios</a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa'); ?>">Empresa</a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+           
+    <main class="margen-main">
+        <div class="container" style="padding: 0px; marging:0px;">
+            <nav aria-label="breadcrumb">
+                <ol id="breadcrumb_contenido" class="breadcrumb secondary-color">
+                    <script>
+                    var obj = <?php echo json_encode($rutas); ?>;
+                    armar_breadcrumb(obj);
+                    </script>
                 </ol>
-                
-                </nav>
-                <div id="breadcrumb"></div>
-                <ul id="navigation_links">
-                    <li><a href="#">Page 1</a></li>
-                    <li><a href="#">Page 2</a></li>
-                    <li><a href="#">Page 3</a></li>
-                </ul>
-                 </ul>
-                    <div id="content">
-                    <?= $this->content; ?>
-                </div> 
-                <script>
-                    var myJson = '<?= $rutas ?>';
-                    for (var i = 0; i < myJson.length; i+=1) {
-                        console.log("En el índice '" + i + "' hay este valor: " + myJson[i]['label']);
-                    }
-                </script>
-                <?php print_r ($rutas) ?>
-            </main>
+            </nav>
+        </div>
+        <div id="content">
+            <?= $this->content; ?>
+        </div>
+    </main>
 
-            <footer class="footer" id="">
-                <div class="container">
-                    <div class="row" style="padding: 10px;">
-                        <div class="col-xs-6 align-left">
-                            <section>
-                                <p><i class="fa fa-copyright" aria-hidden="true">Tandil - Provincia de Buenos Aires - Argentina</i></p>
-                                <p><small><i class="copyright" aria-hidden="true">Coryright &copy; Software Huella 2019 - Todos los derechos reservados</i></small></p>
-                            </section>
-                        </div>
-                    </div>
+    <footer class="footer" id="">
+        <div class="container">
+            <div class="row" style="padding: 10px;">
+                <div class="col-xs-6 align-left">
+                    <section>
+                        <p><i class="fa fa-copyright" aria-hidden="true">Tandil - Provincia de Buenos Aires -
+                                Argentina</i></p>
+                        <p><small><i class="copyright" aria-hidden="true">Coryright &copy; Software Huella 2019 - Todos
+                                    los derechos reservados</i></small></p>
+                    </section>
                 </div>
-            </footer>
-        </body>
-    <!-- </div> -->
+            </div>
+        </div>
+    </footer>
+</body>
+<!-- </div> -->
+
 </html>

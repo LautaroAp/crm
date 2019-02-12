@@ -69,7 +69,7 @@ class TipoEventoController extends HuellaController {
         $form = $this->tipoeventoManager->createForm();
         $tipoPersona = $this->params()->fromRoute('tipo');
         $url = $this->getRuta($tipoPersona);
-        $this->prepararBreadcrumbs("Actividades", $url);
+        $this->prepararBreadcrumbs("Listado", $url);
         $paginator = $this->tipoeventoManager->getTabla($tipoPersona);
         $categorias= $this->tipoeventoManager->getCategoriaEventos();
         $page = 1;

@@ -33,7 +33,7 @@ class IndexController extends HuellaController {
 
     public function menuAction(){
         $label = "Home";
-        $url = "/home";
+        $url = "/";
         $this->reiniciarBreadcrumbs($label, $url);
         $this->reiniciarParametros();
         $_SESSION['MENSAJES'] = array();

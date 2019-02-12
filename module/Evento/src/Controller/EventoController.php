@@ -14,6 +14,7 @@ use Zend\Paginator\Paginator;
 use DBAL\Entity\Evento;
 use DBAL\Entity\Cliente;
 use DBAL\Entity\TipoEvento;
+use Zend\Filter\StringToLower;
 
 class EventoController extends HuellaController {
 
@@ -77,7 +78,11 @@ class EventoController extends HuellaController {
 
     private function procesarAddAction() {
         $Id = (int) $this->params()->fromRoute('id', -1);
-        $tipo= $_SESSION['TIPOEVENTO']['TIPO'];    
+        $tipo= $_SESSION['TIPOEVENTO']['TIPO']; 
+        if ($tipo=="CLIENTE"){
+            $this->prepararBreadcrumbs("Agregar Evento", "/evento/add/cliente/".$Id, "Ficha Cliente");
+
+        }
         $persona= $this->personaManager->getPersona($Id);
         $cliente = $this->clienteManager->getClienteIdPersona($persona->getId());
         $tipoEventos = $this->getArrayTipos($tipo);
@@ -97,9 +102,9 @@ class EventoController extends HuellaController {
 
     private function redireccionar($tipo, $id){
         if (strtoupper($tipo)=="CLIENTE"){
-            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' =>$id]);
+            return $this->redirect()->toRoute('clientes/listado/ficha', ['action' => 'ficha', 'id' =>$id]);
         }elseif (strtoupper($tipo)=="PROVEEDOR"){
-            return $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' =>$id]);
+            return $this->redirect()->toRoute('proveedores/listado/ficha', ['action' => 'ficha', 'id' =>$id]);
         }
         return $this->redirect()->toRoute('home');
     }
@@ -113,7 +118,7 @@ class EventoController extends HuellaController {
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->eventoManager->addEvento($data,$persona);
-                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' =>$Id]);
+                return $this->redirect()->toRoute('clientes/listado/ficha', ['action' => 'ficha', 'id' =>$Id]);
         }
         return new ViewModel([
             'form' => $form,
@@ -130,7 +135,7 @@ class EventoController extends HuellaController {
     //     if ($this->getRequest()->isPost()) {
     //         $data = $this->params()->fromPost();
     //         $this->eventoManager->addEvento($data, $proveedor->getPersona(), $tipo_persona);
-    //         return $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' =>$id_persona]);
+    //         return $this->redirect()->toRoute('proveedores/listado/ficha', ['action' => 'ficha', 'id' =>$id_persona]);
     //     }
     //     return new ViewModel([
     //         'form' => $form,
