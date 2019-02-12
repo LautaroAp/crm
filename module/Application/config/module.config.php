@@ -96,13 +96,13 @@ return [
                         ],
                     ],
                     //  Gestion Actividades
-                    'gestionActividadesClientes' => [
+                    'gestionEventosClientes' => [
                         'type' => Literal::class,
                         'options' => [
                             'route' => '/actividades',
                             'defaults' => [
                                 'controller' => \Application\Controller\IndexController::class,
-                                'action' => 'gestionActividadesClientes',
+                                'action' => 'gestionEventosClientes',
                             ],
                         ],
                         'may_terminate' => true,
@@ -207,13 +207,13 @@ return [
                         ],
                     ],
                     //  Gestion Actividades
-                    'gestionActividadesProveedores' => [
+                    'gestionEventosProveedores' => [
                         'type' => Literal::class,
                         'options' => [
                             'route' => '/actividades',
                             'defaults' => [
                                 'controller' => \Application\Controller\IndexController::class,
-                                'action' => 'gestionActividadesProveedores',
+                                'action' => 'gestionEventosProveedores',
                             ],
                         ],
                         'may_terminate' => true,

@@ -71,14 +71,14 @@ class EventoManager {
                         ->find($id);
     }
 
-    public function getEventoFromForm($form, $data) {
-        $form->setData($data);
-        if ($form->isValid()) {
-            $data = $form->getData();
-            $evento = $this->addEvento($data);
-        }
-        return $evento;
-    }
+    // public function getEventoFromForm($form, $data) {
+    //     $form->setData($data);
+    //     if ($form->isValid()) {
+    //         $data = $form->getData();
+    //         $evento = $this->addEvento($data);
+    //     }
+    //     return $evento;
+    // }
 
     public function getEstado() {
         return $this->estado;
@@ -102,6 +102,10 @@ class EventoManager {
                 ->setDescripcion($data['detalle'])
                 ->setTipo_persona($persona->getTipo());
         
+        $cliente= $this->entityManager
+                ->getRepository(Cliente::class)->findOneBy(['persona' => $persona->getId()]);
+        $this->actualizaFechas($evento, $cliente, $tipo_evento, $fecha_evento, $fecha_vencimiento);     
+
         // if ($this->tryAddEvento($evento)) {
         //     $_SESSION['MENSAJES']['ficha_cliente'] = 1;
         //     $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Actividad guardada correctamente';

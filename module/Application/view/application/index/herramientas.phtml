@@ -1,59 +1,70 @@
-<!-- MODULE APPLICATION -->
-<div class="container margen text-center" >         
-    <nav class="navbar" id="nav" >
-        <ul>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('herramientas/ejecutivos'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Ejecutivos</figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('herramientas/tipoiva'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Tipos de IVA</figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('herramientas/condicioniva', ['tipo'=>'iva']); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Condición de IVA</figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('herramientas/backup'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Exportar a Excel</figcaption>
-                </figure>
-            </li>
-        </ul>
-    </nav>
-    <nav id="nav" >
-        <ul>
-            <li>
-                <div class="img-centrar">
-                    <div>
-                        <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
-                        class="img-rounded img-responsive img-texto-derecha"></a>
-                    </div>
-                    <div class="ficha-cliente-label">
-                        <label>Volver</label>
-                    </div>
+<div class="container margen">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center titulo-espaciado">
+            HERRAMIENTAS
+        </div>
+        <div class="panel-body" style="min-height: 325px;">
+            <div class="ficha-cliente-p margen">
+                <div class="container margen text-center" >         
+                    <nav class="navbar" id="nav" >
+                        <ul>
+                            <li>
+                                <figure>
+                                    <a href="<?= $this->url('herramientas/ejecutivos'); ?>" > 
+                                        <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
+                                        class="img-rounded img-responsive img-menu img-centrar">
+                                    </a>
+                                    <figcaption>Ejecutivos</figcaption>
+                                </figure>
+                            </li>
+                            <li>
+                                <figure>
+                                    <a href="<?= $this->url('herramientas/tipoiva'); ?>" > 
+                                        <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
+                                        class="img-rounded img-responsive img-menu img-centrar">
+                                    </a>
+                                    <figcaption>Tipos de IVA</figcaption>
+                                </figure>
+                            </li>
+                            <li>
+                                <figure>
+                                    <a href="<?= $this->url('herramientas/condicioniva', ['tipo'=>'iva']); ?>" > 
+                                        <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
+                                        class="img-rounded img-responsive img-menu img-centrar">
+                                    </a>
+                                    <figcaption>Condición de IVA</figcaption>
+                                </figure>
+                            </li>
+                            <li>
+                                <figure>
+                                    <a href="<?= $this->url('herramientas/backup'); ?>" > 
+                                        <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
+                                        class="img-rounded img-responsive img-menu img-centrar">
+                                    </a>
+                                    <figcaption>Exportar a Excel</figcaption>
+                                </figure>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-            </li>
-
-        </ul>
-    </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container margen text-center" >
+        <nav id="nav" >
+            <ul>
+                <li>
+                    <div class="img-centrar">
+                        <div>
+                            <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
+                            class="img-rounded img-responsive img-texto-derecha"></a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>

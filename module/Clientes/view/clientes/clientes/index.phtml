@@ -131,6 +131,18 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
         </div>
         <div class="col ficha-cliente-p img-centrar">
             <div>
+                <a href="<?= $this->url("gestionClientes/agregar", ['tipo'=>'cliente']); ?>" > 
+                    <img src="<?= $this->basePath('img/crm/cliente_exclamation_a.png') ?>" 
+                    class="img-rounded img-responsive img-menu img-texto-derecha img-submenu">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Clientes</label><br>
+                <label>Inactivos</label>
+            </div>
+        </div>
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
                 <a href="<?= $this->url('gestionClientes') ?>">
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
                         class="img-rounded img-responsive img-texto-derecha">

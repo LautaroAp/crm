@@ -38,19 +38,18 @@
     <!-- <div id="container"> -->
         <body class="homepage">
             <!-- Navigation -->
-            <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+            <nav id="mainNav" class="navbar navbar-default navbar-inverse navbar-fixed-top navbar-color">
                 <div class="container">
                     <div class="navbar-header page-scroll">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                             <span class="sr-only">Toggle navigation</span> Acciones <i class="fa fa-bars"></i>
                         </button>
                         
-                        <a class="navbar-brand page-scroll" data-toggle="collapse" data-parent="#accordion" 
-                            href="#menu" aria-expanded="true" aria-controls="menu">Huella CRM
+                        <a class="navbar-brand page-scroll navbar-titulo-font" data-toggle="collapse" data-parent="#accordion" 
+                            href="#menu" aria-expanded="true" aria-controls="menu"><p class="navbar-titulo-font">Huella CRM</p>
                         </a>
 
                     </div>
-
 
                     <div class="collapse pull-left" id="menu">
                         <ul class="nav navbar-nav navbar-right">
@@ -71,7 +70,7 @@
                     </div>
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav navbar-right navbar-menu-font">
                             <li class="hidden"><a href="#page-top"></a></li> 
                             <li><a class="page-scroll" href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
                             <li><a class="page-scroll" href="<?= $this->url('gestionProveedores'); ?>">Proveedores</a></li>
