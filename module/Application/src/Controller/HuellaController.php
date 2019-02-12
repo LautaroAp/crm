@@ -46,7 +46,6 @@ class HuellaController extends AbstractActionController {
         }  
         $this->layout()->setVariable('rutas', $rutas);
         $this->layout()->setVariable('json', $json); 
-        // print_r($json);
     }
     
     private function guardarJson($rutas,$data_decoded){
@@ -82,8 +81,6 @@ class HuellaController extends AbstractActionController {
             file_put_contents("public/json/breadcrumbs.json", $json);
             $data = file_get_contents("public/json/breadcrumbs.json");
             $data_decoded =  json_decode($data, true);
-            print_r("<br>");
-            print_r("<br>");
             $this->layout()->setVariable('rutas', $data_decoded);
         }
     }
