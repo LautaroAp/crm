@@ -3,6 +3,7 @@ namespace Evento\Service\Factory;
 
 use Interop\Container\ContainerInterface;
 use Evento\Service\EventoVentaManager;
+use Persona\Service\PersonaManager;
 
 /**
  * This is the factory class for EventoManager service. The purpose of the factory
@@ -16,9 +17,7 @@ class EventoVentaManagerFactory
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
-        $viewRenderer = $container->get('ViewRenderer');
-        $config = $container->get('Config');
-                        
-        return new EventoVentaManager($entityManager, $viewRenderer, $config);
+        $personaManager = $container->get(PersonaManager::class);
+        return new EventoVentaManager($entityManager, $personaManager);
     }
 }

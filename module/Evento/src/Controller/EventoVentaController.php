@@ -14,16 +14,20 @@ class EventoVentaController extends EventoController
 
     /**
      * Evento manager.
-     * @var User\Service\EventoManager 
+     * @var User\Service\eventoVentaManager 
      */
-    protected $eventoManager;
+    protected $eventoVentaManager;
 
+    protected $tipoEventoManager;
     
-    public function __construct($entityManager, $eventoManager)
-    {
+    public function __construct($entityManager, $eventoVentaManager, $tipoEventoManager){
+
+        // super de java -> usar parent::__construct .... y pasar el tipoEventoManager como parametro
+        // parent::__construct(...);
 
         $this->entityManager = $entityManager;
-        $this->eventoManager = $eventoManager;
+        $this->eventoVentaManager = $eventoVentaManager;
+        $this->tipoEventoManager= $tipoEventoManager;
     }
     
     
@@ -44,8 +48,23 @@ class EventoVentaController extends EventoController
         } else {
             $parametros = array();
         }
-        $paginator = $this->eventoManager->getEventosFiltrados($parametros);
-        $total = $this->eventoManager->getTotalFiltrados($parametros);
+        $tipo= $_SESSION['TIPOEVENTO']['TIPO']; 
+        $tipoEventos = $this->tipoEventoManager->getTipoEventos($tipo);
+        $tipoPersona = $parametros['tipo_persona'];
+        if ($tipoPersona == '-1'){
+            $tipoPersona = null;
+            unset($parametros['tipo_persona']);
+        }
+        $accionComercial = $parametros['accion_comercial']; 
+        if ((is_null($accionComercial)) or ($accionComercial== '-1')){
+            $accionComercial =null;
+            unset($parametros['accion_comercial']);
+        }
+        else {
+            $accionComercial= $this->tipoEventoManager->getTipoEventoId($parametros['accion_comercial']);
+        }
+        $paginator = $this->eventoVentaManager->getEventosFiltrados($parametros);
+        $total = $this->eventoVentaManager->getTotalFiltrados($parametros);
         $mensaje = "";
         $page = 1;
         if ($this->params()->fromRoute('id')) {
@@ -58,7 +77,10 @@ class EventoVentaController extends EventoController
             'eventos' => $paginator,
             'mensaje' => $mensaje,
             'parametros' => $parametros,
+            'accionComercial' =>$accionComercial,
+            'tipoPersona' =>$tipoPersona,
             'total' => $total,
+            'tipos' => $tipoEventos,
         ]);
     }
 
@@ -69,19 +91,19 @@ class EventoVentaController extends EventoController
 
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
-        $evento = $this->eventoManager->getEventoId($id);
-        $form = $this->eventoManager->getFormForEvento($evento);
+        $evento = $this->eventoVentaManager->getEventoId($id);
+        $form = $this->eventoVentaManager->getFormForEvento($evento);
         if ($form == null) {
             $this->reportarError();
         } else {
             if ($this->getRequest()->isPost()) {
                 $data = $this->params()->fromPost();
-                if ($this->eventoManager->formValid($form, $data)) {
-                    $this->eventoManager->updateEvento($evento, $form);
+                if ($this->eventoVentaManager->formValid($form, $data)) {
+                    $this->eventoVentaManager->updateEvento($evento, $form);
                     return $this->redirect()->toRoute('application', ['action' => 'view']);
                 }
             } else {
-                $this->eventoManager->getFormEdited($form, $evento);
+                $this->eventoVentaManager->getFormEdited($form, $evento);
             }
             return new ViewModel(array(
                 'evento' => $evento,

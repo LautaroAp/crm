@@ -26,18 +26,7 @@ class EventoManager {
      */
     private $entityManager;
 
-    /**
-     * PHP template renderer.
-     * @var type 
-     */
-    private $viewRenderer;
-
-    /**
-     * Application config.
-     * @var type 
-     */
-    private $config;
-
+    protected $personaManager;
     /**
      * Application config.
      * @var type 
@@ -47,10 +36,9 @@ class EventoManager {
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) {
+    public function __construct($entityManager, $personaManager) {
         $this->entityManager = $entityManager;
-        $this->viewRenderer = $viewRenderer;
-        $this->config = $config;
+        $this->personaManager = $personaManager;
     }
 
     public function getEventos() {

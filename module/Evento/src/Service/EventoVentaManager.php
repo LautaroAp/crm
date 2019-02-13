@@ -26,26 +26,14 @@ class EventoVentaManager extends EventoManager
      */
     private $entityManager;  
     
-    /**
-     * PHP template renderer.
-     * @var type 
-     */
-    private $viewRenderer;
-    
-    /**
-     * Application config.
-     * @var type 
-     */
-    private $config;
     
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) 
+    public function __construct($entityManager, $personaManager) 
     {
         $this->entityManager = $entityManager;
-        $this->viewRenderer = $viewRenderer;
-        $this->config = $config;
+        parent::__construct($entityManager, $personaManager);
     }
     
     
@@ -62,7 +50,6 @@ class EventoVentaManager extends EventoManager
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros($filtros);
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
-       
         return $adapter;
     }
 
@@ -78,23 +65,14 @@ class EventoVentaManager extends EventoManager
         $indices = array_keys($parametros);
         for ($i = 0; $i < count($indices); $i++) {
             $p = $i + 1;
-            $nombreCampo = $indices[$i];
-            if ($nombreCampo == "tipo") {
-                $valorCampo=$parametros['tipo'];
-                if ($valorCampo=="Ventas"){   
-                    $queryBuilder->where('E.tipo = :tipo1')->setParameter('tipo1', 10);
-                    $queryBuilder->orWhere('E.tipo = :tipo2')->setParameter('tipo2', 11);
-                }
-                elseif ($valorCampo=="Cotizaciones"){
-                    $queryBuilder->where('E.tipo = :tipo3')->setParameter('tipo3', 6);
-                }
-                 elseif ($valorCampo=="Soportes"){
-                    $queryBuilder->where('E.tipo = :tipo4')->setParameter('tipo4', 7);
-                    $queryBuilder->orWhere('E.tipo = :tipo5')->setParameter('tipo5', 8);
-                    $queryBuilder->orWhere('E.tipo = :tipo6')->setParameter('tipo6', 9);
-
-                }
-                $valorCampo = $this->entityManager->getRepository(TipoEvento::class)->findOneBy(array('id_tipo_evento' => $parametros[$nombreCampo]));
+            $nombreCampo = $indices[$i]; 
+            if($nombreCampo=="accion_comercial"){
+                $valorCampo=$parametros['accion_comercial'];
+                $queryBuilder->andWhere('E.tipo = :tipo')->setParameter('tipo',$valorCampo);
+            }
+            if($nombreCampo=="tipo_persona"){
+                $valorCampo=$parametros['tipo_persona'];
+                $queryBuilder->andWhere('E.tipo_persona = :tipoP')->setParameter('tipoP',$valorCampo);
             }
             if($nombreCampo=="ventas_m"){
                 $valorCampo=$parametros['ventas_m'];
@@ -109,6 +87,16 @@ class EventoVentaManager extends EventoManager
         return $queryBuilder->getQuery();
     }
 
+    private function getEventosParticulares($result, $tipo){
+        $salida = Array();
+        foreach ($result as $evento):
+            if ($evento->getPersona()->getTipo()==$tipo){
+                array_push($salida, $evento);
+            }
+        endforeach;
+        return $salida;
+    }
+   
     public function limpiarParametros($param) {
         foreach ($param as $filtro => $valor) {
             if (empty($valor)) {

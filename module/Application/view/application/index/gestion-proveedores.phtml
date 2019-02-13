@@ -4,60 +4,67 @@
             GESTIÓN DE PROVEEDORES
         </div>
         <div class="panel-body">
-            <div class="ficha-cliente-p margen">
-                <div class="container margen text-center" >         
-                    <nav class="navbar" id="nav" >
-                        <ul>
-                            <li>
-                                <figure>
-                                    <a href="<?= $this->url('gestionProveedores/listado'); ?>" > 
-                                        <img src="<?= $this->basePath('img/crm/proveedor_v.png') ?>" 
-                                        class="img-rounded img-responsive img-menu img-centrar">
-                                    </a>
-                                    <figcaption>Listado de Proveedores</figcaption>
-                                </figure>
-                            </li>
-                            <li>
-                                <figure>
-                                    <a href="<?= $this->url("proveedores/agregar", ['tipo'=>'proveedor']); ?>">
-                                        <img src="<?= $this->basePath('img/crm/proveedor_add_v.png') ?>" 
-                                        class="img-rounded img-responsive img-menu img-centrar">
-                                    </a>
-                                    <figcaption>Agregar Proveedor</figcaption>
-                                </figure>
-                            </li>
-                            <li>
-                                <figure>
-                                    <a href="<?= $this->url('gestionProveedores/gestionEventosProveedores', ['tipo'=>'proveedor']); ?>" > 
-                                        <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
-                                        class="img-rounded img-responsive img-menu img-centrar">
-                                    </a>
-                                    <figcaption>Eventos</figcaption>
-                                </figure>
-                            </li>
-                        </ul>
-                        <ul>
-                            <li>
-                                <figure>
-                                    <a href="<?= $this->url('gestionProveedores/categorias', ['tipo'=>'proveedor']); ?>" > 
-                                        <img src="<?= $this->basePath('img/crm/consulta_v.png') ?>" 
-                                        class="img-rounded img-responsive img-menu img-centrar">
-                                    </a>
-                                    <figcaption>Categorias de Proveedor</figcaption>
-                                </figure>
-                            </li>
-                            <li>
-                                <figure>
-                                    <a href="<?= $this->url('gestionProveedores'); ?>" > 
-                                        <img src="<?= $this->basePath('img/crm/proveedor_excel_v.png') ?>" 
-                                        class="img-rounded img-responsive img-menu img-centrar">
-                                    </a>
-                                    <figcaption>Exportar a Excel</figcaption>
-                                </figure>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+            <div class="container margen text-center" >         
+                <nav class="navbar" id="nav" >
+                    <ul>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionProveedores/listado'); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/proveedor_v.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Listado de Proveedores</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url("proveedores/agregar", ['tipo'=>'proveedor']); ?>">
+                                    <img src="<?= $this->basePath('img/crm/proveedor_add_v.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Agregar Proveedor</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionProveedores/gestionEventosProveedores', ['tipo'=>'proveedor']); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Eventos</figcaption>
+                            </figure>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionProveedores/categorias', ['tipo'=>'proveedor']); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/consulta_v.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Categorias de Proveedor</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionEmpresa/ventas'); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/consulta_v.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Resumen de Eventos</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionProveedores'); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/proveedor_excel_v.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Exportar a Excel</figcaption>
+                            </figure>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

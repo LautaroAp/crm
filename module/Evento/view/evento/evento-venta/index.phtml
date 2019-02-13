@@ -8,17 +8,43 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading text-center titulo-espaciado">
-                    LISTADO MOVIMIENTOS
+                    RESUMEN DE EVENTOS
                 </div>
                 <div class="panel-body">
                     <form method="post">
                         <div class="row form-row">
-                            <div class="form-group col-sm-4">
-                                <select class="form-control" id="tipo" name="tipo" placeholder="Tipo de evento" value="<?php if (count($parametros)>0){echo($parametros['tipo']);} ?>">
+                            <!-- <div class="form-group col-sm-4">
+                                <select class="form-control" id="tipo" name="tipo" placeholder="Tipo de evento" value="<?php //if (count($parametros)>0){echo($parametros['tipo']);} ?>">
                                     <option value="" hidden="">-Seleccionar-</option>
                                     <option value="Cotizaciones">Cotizaciones</option>
                                     <option value="Soportes">Soportes</option>
                                     <option value="Ventas">Ventas</option>
+                                </select>
+                            </div> -->
+
+                            <div class="form-group col-md-3">
+                                <!-- <label>Acción Comercial</label> -->
+                                <select class="form-control" id="accion_comercial" name="accion_comercial" required = true>
+                                    <option value="<?php if(!is_null($accionComercial)){ echo ($accionComercial->getId());} else { echo ("-1");} ?>" hidden=""> 
+                                        <?php if(!is_null($accionComercial)){ echo ($accionComercial->getNombre());}
+                                        else {echo ("Seleccionar Accion Comercial");} ?> 
+                                    </option>
+                                    <?php foreach ($tipos as $tipo) : ?>
+                                        <option value="<?php echo ($tipo->getId()); ?>"><?php echo ($tipo->getNombre()); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <!-- <label>Acción Comercial</label> -->
+                                <select class="form-control" id="tipo_persona" name="tipo_persona">
+                                <option value="<?php if(!is_null($tipoPersona)){ echo ($tipoPersona);} 
+                                        else { echo ("-1");} ?>" hidden=""> <?php if(!is_null($tipoPersona)){ echo (ucwords(strtolower($tipoPersona)));}
+                                        else {echo ("Seleccionar Cliente o Proveedor");} ?> 
+                                </option>
+                                <option value=-1>Todos</option>
+                                <option value="CLIENTE">Cliente</option>
+                                <option value="PROVEEDOR">Proveedor</option>
                                 </select>
                             </div>
                             <div class="form-group col-sm-2">
@@ -27,7 +53,7 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                             <div class="form-group col-sm-2">
                                 <input type="number" class="form-control" name="ventas_y" min="2010" max="<?php echo date("Y"); ?>" placeholder="Año" value="<?php if (count($parametros)>0){echo($parametros['ventas_y']);} ?>">                        
                             </div>
-                            <div class="form-group col-sm-2">
+                            <div class="form-group col-sm-1">
                                 <button type="submit" class="btn btn-default"> 
                                     <i class="glyphicon glyphicon-search"></i> Buscar
                                 </button>  

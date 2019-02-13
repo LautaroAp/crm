@@ -132,6 +132,10 @@ class PersonaManager {
                 ->find($id);
     }
 
+    public function getPersonasTipo($tipo){
+        return $this->entityManager->findBy(['tipo' => $tipo]);
+    }
+
     public function buscarPersonas($parametros, $tipos=null, $personas=null) {      
         $entityManager = $this->entityManager;
         $queryBuilder = $entityManager->createQueryBuilder();
