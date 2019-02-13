@@ -39,35 +39,77 @@
         <nav id="mainNav" class="navbar navbar-default navbar-inverse navbar-fixed-top navbar-color">
             <div class="container">
                 <div class="navbar-header page-scroll">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
                     </button>
                     <a class="navbar-brand page-scroll navbar-titulo-font" data-toggle="collapse" data-parent="#accordion" 
-                        href="#menu" aria-expanded="true" aria-controls="menu"><p class="navbar-titulo-font">Huella CRM</p>
+                        href="#navbar-collapse-2" aria-expanded="true" aria-controls="navbar-collapse-2">
+                        <p class="navbar-titulo-font">Huella CRM&nbsp;
+                            <span class="glyphicon glyphicon-chevron-down" style="font-size: 18px;"></span></p>
                     </a>
                 </div>
 
-                <div class="collapse pull-left" id="menu">
-                    <ul class="nav navbar-nav navbar-right">
+                <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right navbar-menu-font">
                         <li class="hidden"><a href="#page-top"></a></li>
-                        <li><a class="page-scroll" href="<?= $this->url('herramientas/ejecutivos'); ?>">
-                                <small>Usuario: <label><?= $this->identity() ?></label></small>
+                        <li>
+                            <a class="page-scroll dropdown-toggle" href="#" id="dropdownTasks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-tasks"></span>
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownTasks">
+                                <li class="dropdown-header">Tareas</li>
+                                <li class="divider"></li> 
+                                <li><a href="#">. . .</a></li>
+                                <li><a href="#">. . .</a></li> 
+                                <li><a href="#">. . .</a></li>
+                            </ul>
                         </li>
-                        <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa/configuracion'); ?>">
-                                <small>Empresa: <label>****</label></small>
+                        <li>
+                            <a class="page-scroll dropdown-toggle" href="#" id="dropdownEnvelope" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-envelope"></span>
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownEnvelope">
+                                <li class="dropdown-header">Mensajes</li>
+                                <li class="divider"></li> 
+                                <li><a href="#">. . .</a></li>
+                                <li><a href="#">. . .</a></li> 
+                                <li><a href="#">. . .</a></li>
+                            </ul>
                         </li>
-                        <li><a class="page-scroll" href="<?= $this->url('logout'); ?>">
-                                <small>Salir</small>
+                        <li>
+                            <a class="page-scroll dropdown-toggle" href="#" id="dropdownBell" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-bell"></span>
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownBell">
+                                <li class="dropdown-header">Notificaciones</li>
+                                <li class="divider"></li> 
+                                <li><a href="#">. . .</a></li>
+                                <li><a href="#">. . .</a></li> 
+                                <li><a href="#">. . .</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="page-scroll dropdown-toggle" href="#" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;
+                                <small><?= $this->identity() ?>&nbsp;</small><span 
+                                class="glyphicon glyphicon-chevron-down" style="font-size: 10px;"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownUser">
+                                <li><a href="#">Configuración</a></li>
+                                <li><a href="#">Empresa</a></li>
+                                <li class="divider"></li> 
+                                <li><a href="<?= $this->url('logout'); ?>">Salir</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
 
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right navbar-menu-font">
-                        <li class="hidden"><a href="#page-top"></a></li> 
+            </div>
+            <div class="container">
+                <div class="collapse" id="navbar-collapse-2">
+                    <ul class="nav navbar-nav navbar-menu-font">
+                        <li class="hidden"><a href="#page-top"></a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('home'); ?>"><span class="glyphicon glyphicon-home"></span></a></li>
                         <li><a class="page-scroll" href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
                         <li><a class="page-scroll" href="<?= $this->url('gestionProveedores'); ?>">Proveedores</a></li>
                         <li><a class="page-scroll" href="<?= $this->url('gestionProductosServicios'); ?>">Productos y Servicios</a></li>
@@ -78,6 +120,7 @@
             </div>
         </nav>
            
+        
     <main class="margen-main">
         <div class="container" style="padding: 0px;">
             <nav aria-label="breadcrumb">
