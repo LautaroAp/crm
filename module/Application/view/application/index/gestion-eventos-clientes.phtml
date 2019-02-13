@@ -1,51 +1,61 @@
-<div class="container margen text-center" >         
-    <nav class="navbar" id="nav" >
-        <ul>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('gestionClientes/gestionEventosClientes/tipoeventoCliente', ['tipo'=>'cliente']); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Listado de Eventos</figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('gestionClientes/gestionEventosClientes/categorias', ['tipo'=>'evento']); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Categorias de Eventos</figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <a href="<?= $this->url('gestionClientes'); ?>" > 
-                        <img src="<?= $this->basePath('img/crm/carrito_excel_a.png') ?>" 
-                        class="img-rounded img-responsive img-menu img-centrar">
-                    </a>
-                    <figcaption>Exportar a Excel</figcaption>
-                </figure>
-            </li>
-        </ul>
-    </nav>
-    <nav id="nav" >
-        <ul>
-            <li>
-                <div class="img-centrar">
-                    <div>
-                        <a href="<?= $this->url('gestionClientes') ?>">
-                            <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
-                                class="img-rounded img-responsive img-texto-derecha">
-                        </a>
+<div class="container margen">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center titulo-espaciado">
+            GESTIÓN DE EVENTOS
+        </div>
+        <div class="panel-body">
+            <div class="container margen text-center" >         
+                <nav class="navbar" id="nav" >
+                    <ul>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionClientes/gestionEventosClientes/tipoeventoCliente', ['tipo'=>'cliente']); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Listado de Eventos</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionClientes/gestionEventosClientes/categorias', ['tipo'=>'evento']); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Categorias de Eventos</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionClientes'); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/carrito_excel_a.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Exportar a Excel</figcaption>
+                            </figure>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container margen text-center" >
+        <nav id="nav" >
+            <ul>
+                <li>
+                    <div class="img-centrar">
+                        <div>
+                            <a href="<?= $this->url('gestionClientes') ?>">
+                                <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                                    class="img-rounded img-responsive img-texto-derecha">
+                            </a>
+                        </div>
+                        <div class="ficha-cliente-label">
+                            <label>Volver</label>
+                        </div>
                     </div>
-                    <div class="ficha-cliente-label">
-                        <label>Volver</label>
-                    </div>
-                </div>
-            </li>
-
-        </ul>
-    </nav>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>

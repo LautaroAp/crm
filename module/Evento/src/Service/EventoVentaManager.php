@@ -80,7 +80,8 @@ class EventoVentaManager extends EventoManager
             $p = $i + 1;
             $nombreCampo = $indices[$i];
             if ($nombreCampo == "tipo") {
-                $valorCampo=$parametros['tipo'];
+                // $valorCampo=$parametros['tipo'];
+                $valorCampo=$parametros['accion_comercial'];
                 if ($valorCampo=="Ventas"){   
                     $queryBuilder->where('E.tipo = :tipo1')->setParameter('tipo1', 10);
                     $queryBuilder->orWhere('E.tipo = :tipo2')->setParameter('tipo2', 11);

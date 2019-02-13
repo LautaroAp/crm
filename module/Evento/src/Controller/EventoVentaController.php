@@ -18,12 +18,16 @@ class EventoVentaController extends EventoController
      */
     protected $eventoManager;
 
+    protected $tipoEventoManager;
     
-    public function __construct($entityManager, $eventoManager)
-    {
+    public function __construct($entityManager, $eventoManager, $tipoEventoManager){
+
+        // super de java -> usar parent::__construct .... y pasar el tipoEventoManager como parametro
+        // parent::__construct(...);
 
         $this->entityManager = $entityManager;
         $this->eventoManager = $eventoManager;
+        $this->tipoEventoManager= $tipoEventoManager;
     }
     
     
@@ -44,6 +48,8 @@ class EventoVentaController extends EventoController
         } else {
             $parametros = array();
         }
+        $tipo= $_SESSION['TIPOEVENTO']['TIPO']; 
+        $tipoEventos = $this->tipoEventoManager->getTipoEventos($tipo);
         $paginator = $this->eventoManager->getEventosFiltrados($parametros);
         $total = $this->eventoManager->getTotalFiltrados($parametros);
         $mensaje = "";
@@ -59,6 +65,7 @@ class EventoVentaController extends EventoController
             'mensaje' => $mensaje,
             'parametros' => $parametros,
             'total' => $total,
+            'tipos' => $tipoEventos,
         ]);
     }
 

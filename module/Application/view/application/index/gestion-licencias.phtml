@@ -3,50 +3,48 @@
         <div class="panel-heading text-center titulo-espaciado">
             GESTIÓN DE LICENCIAS
         </div>
-        <div class="panel-body" style="min-height: 325px;">
-            <div class="ficha-cliente-p margen">
-                <div class="container margen text-center" >         
-                    <nav class="navbar" id="nav" >
-                        <ul>
-                            <li>
-                                <figure>
-                                    <a href="<?= $this->url('gestionProductosServicios/gestionLicencias/listado'); ?>" > 
-                                        <img src="<?= $this->basePath('img/crm/billete_n.png') ?>" 
-                                        class="img-rounded img-responsive img-menu img-centrar">
-                                    </a>
-                                    <figcaption>Listado de Licencias</figcaption>
-                                </figure>
-                            </li>
-                            <li>
-                                <figure>
-                                    <a href="<?= $this->url("gestionProductosServicios/gestionLicencias/agregar", ['tipo'=>'licencia']); ?>" > 
-                                        <img src="<?= $this->basePath('img/crm/billete_add_n.png') ?>" 
-                                        class="img-rounded img-responsive img-menu img-centrar">
-                                    </a>
-                                    <figcaption>Agregar Licencia</figcaption>
-                                </figure>
-                            </li>
-                            <li>
-                                <figure>
-                                    <a href="<?= $this->url("gestionProductosServicios/gestionLicencias/categorialicencia", ['tipo'=>'licencia']); ?>" > 
-                                        <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>" 
-                                        class="img-rounded img-responsive img-menu img-centrar">
-                                    </a>
-                                    <figcaption>Categorías de Licencia</figcaption>
-                                </figure>
-                            </li>
-                            <li>
-                                <figure>
-                                    <a href="<?= $this->url('gestionProductosServicios/gestionLicencias/backup'); ?>" > 
-                                        <img src="<?= $this->basePath('img/crm/billete_excel_n.png') ?>" 
-                                        class="img-rounded img-responsive img-menu img-centrar">
-                                    </a>
-                                    <figcaption>Exportar a Excel</figcaption>
-                                </figure>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+        <div class="panel-body">
+            <div class="container margen text-center" >         
+                <nav class="navbar" id="nav" >
+                    <ul>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionProductosServicios/gestionLicencias/listado'); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/billete_n.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Listado de Licencias</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url("gestionProductosServicios/gestionLicencias/agregar", ['tipo'=>'licencia']); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/billete_add_n.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Agregar Licencia</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url("gestionProductosServicios/gestionLicencias/categorialicencia", ['tipo'=>'licencia']); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Categorías de Licencia</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
+                                <a href="<?= $this->url('gestionProductosServicios/gestionLicencias/backup'); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/billete_excel_n.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar">
+                                </a>
+                                <figcaption>Exportar a Excel</figcaption>
+                            </figure>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
