@@ -30,3 +30,6 @@ data/DoctrineORMModule/cache/
 demos/
 extras/documentation
 /nbproject/private/
+
+
+crm/public/json/breadcrumbs.json

@@ -81,6 +81,8 @@ class HuellaController extends AbstractActionController {
             file_put_contents("public/json/breadcrumbs.json", $json);
             $data = file_get_contents("public/json/breadcrumbs.json");
             $data_decoded =  json_decode($data, true);
+            print_r("<br>");
+            print_r("<br>");
             $this->layout()->setVariable('rutas', $data_decoded);
         }
     }

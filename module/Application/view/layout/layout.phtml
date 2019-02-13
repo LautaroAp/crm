@@ -30,64 +30,58 @@
             ->prependFile($this->basePath('js/sweetalert.js'))
             ->prependFile($this->basePath('js/sweetalert.min.js'))
             ->prependFile($this->basePath('js/breadcrumb.js'))
-
         ?>
+    </head>
 
+    <!-- <div id="container"> -->
+    <body class="homepage">
+        <!-- Navigation -->
+        <nav id="mainNav" class="navbar navbar-default navbar-inverse navbar-fixed-top navbar-color">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand page-scroll navbar-titulo-font" data-toggle="collapse" data-parent="#accordion" 
+                        href="#menu" aria-expanded="true" aria-controls="menu"><p class="navbar-titulo-font">Huella CRM</p>
+                    </a>
+                </div>
 
-</head>
+                <div class="collapse pull-left" id="menu">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden"><a href="#page-top"></a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('herramientas/ejecutivos'); ?>">
+                                <small>Usuario: <label><?= $this->identity() ?></label></small>
+                            </a>
+                        </li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa/configuracion'); ?>">
+                                <small>Empresa: <label>****</label></small>
+                            </a>
+                        </li>
+                        <li><a class="page-scroll" href="<?= $this->url('logout'); ?>">
+                                <small>Salir</small>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-<!-- <div id="container"> -->
-
-<body class="homepage">
-    <!-- Navigation -->
-    <nav id="mainNav" class="navbar navbar-default navbar-inverse navbar-fixed-top navbar-color">
-               <div class="container">
-                   <div class="navbar-header page-scroll">
-                       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                           <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
-                       </button>
-                      
-                       <a class="navbar-brand page-scroll navbar-titulo-font" data-toggle="collapse" data-parent="#accordion"
-                           href="#menu" aria-expanded="true" aria-controls="menu"><p class="navbar-titulo-font">Huella CRM</p>
-                       </a>
-
-                   </div>
-
-                   <div class="collapse pull-left" id="menu">
-                       <ul class="nav navbar-nav navbar-right">
-                           <li class="hidden"><a href="#page-top"></a></li>
-                           <li><a class="page-scroll" href="<?= $this->url('herramientas/ejecutivos'); ?>">
-                                   <small>Usuario: <label><?= $this->identity() ?></label></small>
-                               </a>
-                           </li>
-                           <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa/configuracion'); ?>">
-                                   <small>Empresa: <label>****</label></small>
-                               </a>
-                           </li>
-                           <li><a class="page-scroll" href="<?= $this->url('logout'); ?>">
-                                   <small>Salir</small>
-                               </a>
-                           </li>
-                       </ul>
-                   </div>
-
-                   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                       <ul class="nav navbar-nav navbar-right navbar-menu-font">
-                           <li class="hidden"><a href="#page-top"></a></li>
-                           <li><a class="page-scroll" href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
-                           <li><a class="page-scroll" href="<?= $this->url('gestionProveedores'); ?>">Proveedores</a></li>
-                           <li><a class="page-scroll" href="<?= $this->url('gestionProductosServicios'); ?>">Productos y Servicios</a></li>
-                           <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa'); ?>">Empresa</a></li>
-                           <li><a class="page-scroll" href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
-                       </ul>
-                   </div>
-               </div>
-           </nav>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right navbar-menu-font">
+                        <li class="hidden"><a href="#page-top"></a></li> 
+                        <li><a class="page-scroll" href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionProveedores'); ?>">Proveedores</a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionProductosServicios'); ?>">Productos y Servicios</a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('gestionEmpresa'); ?>">Empresa</a></li>
+                        <li><a class="page-scroll" href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
            
     <main class="margen-main">
-        <div class="container" style="padding: 0px; marging:0px;">
+        <div class="container" style="padding: 0px;">
             <nav aria-label="breadcrumb">
-                <ol id="breadcrumb_contenido" class="breadcrumb secondary-color">
+                <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font" style="marging:0px;">
                     <script>
                     var obj = <?php echo json_encode($rutas); ?>;
                     armar_breadcrumb(obj);
@@ -98,7 +92,6 @@
         <div id="content">
             <?= $this->content; ?>
         </div>
-
     </main>
 
     <footer class="footer" id="">
