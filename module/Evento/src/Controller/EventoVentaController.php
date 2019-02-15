@@ -39,6 +39,7 @@ class EventoVentaController extends EventoController
     private function procesarIndexAction() {
         $this->prepararBreadcrumbs("Movimientos", "/ventas");
         $request = $this->getRequest();
+        $persona= $this->params()->fromRoute('tipo');
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
             $_SESSION['PARAMETROS_VENTA'] = $parametros;
@@ -50,7 +51,11 @@ class EventoVentaController extends EventoController
         }
         $tipo= $_SESSION['TIPOEVENTO']['TIPO']; 
         $tipoEventos = $this->tipoEventoManager->getTipoEventos($tipo);
-        $tipoPersona = $parametros['tipo_persona'];
+        $tipoPersona = $parametros['tipo_persona'];       
+        if(is_null($tipoPersona)){
+            $tipoPersona = $persona;
+            $parametros['tipo_persona'] = $persona;
+        }
         if ($tipoPersona == '-1'){
             $tipoPersona = null;
             unset($parametros['tipo_persona']);
@@ -78,6 +83,7 @@ class EventoVentaController extends EventoController
             'mensaje' => $mensaje,
             'parametros' => $parametros,
             'accionComercial' =>$accionComercial,
+            'persona' => $persona,
             'tipoPersona' =>$tipoPersona,
             'total' => $total,
             'tipos' => $tipoEventos,

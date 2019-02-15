@@ -95,6 +95,16 @@ return [
                             ],
                         ],
                     ],
+                    'ventas' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/ventas[/:tipo]',
+                            'defaults' => [
+                                'controller' => \Evento\Controller\EventoVentaController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
                     //  Gestion Actividades
                     'gestionEventosClientes' => [
                         'type' => Literal::class,
@@ -202,6 +212,16 @@ return [
                             'route' => '/categorias[/:tipo[/:id]]',
                             'defaults' => [
                                 'controller' => \Categoria\Controller\CategoriaController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'ventas' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/ventas[/:tipo]',
+                            'defaults' => [
+                                'controller' => \Evento\Controller\EventoVentaController::class,
                                 'action' => 'index',
                             ],
                         ],
