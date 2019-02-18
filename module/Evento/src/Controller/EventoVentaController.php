@@ -37,31 +37,41 @@ class EventoVentaController extends EventoController
     }
 
     private function procesarIndexAction() {
-        $this->prepararBreadcrumbs("Movimientos", "/ventas");
+        $this->prepararBreadcrumbs("Eventos", "/ventas");
         $request = $this->getRequest();
+        //SE OBTIENE LA PERSONA DE LA RUTA POR SI SE LO LLAMA DE CLIENTE/PROVEEDOR
         $persona= $this->params()->fromRoute('tipo');
         if ($request->isPost()) {
+            //SI SE COMPLETO EL FORMULARIO DE BUSQUEDA TOMO ESOS PARAMETROS Y LOS GUARDO EN LA SESION 
             $parametros = $this->params()->fromPost();
             $_SESSION['PARAMETROS_VENTA'] = $parametros;
         }
         if (!is_null($_SESSION['PARAMETROS_VENTA'])) {
+            //SI HAY PARAMETROS GUARDADOS EN LA SESION TOMAR ESOS PARAMETROS 
             $parametros = $_SESSION['PARAMETROS_VENTA'];
         } else {
+            //SI NO HAY PARAMETROS CREAR NUEVOS
             $parametros = array();
         }
+        //SE OBTIENEN LOS TIPOS DE EVENTOS DE LA SESION PARA MOSTRAR EN LA BUSQUEDA
         $tipo= $_SESSION['TIPOEVENTO']['TIPO']; 
         $tipoEventos = $this->tipoEventoManager->getTipoEventos($tipo);
         $tipoPersona = $parametros['tipo_persona'];       
-        if(is_null($tipoPersona)){
+        if((is_null($tipoPersona) and (!is_null($persona)))){ 
+            //SI SE MANDO UN TIPO DE PERSONA POR RUTA Y NO SE TIENE NINGUN TIPO DE PERSONA GUARDADO EN LA SESION
+            //AGREGARLO AL ARREGLO DE PARAMETROS Y GUARDARLO EN LA SESION
             $tipoPersona = $persona;
             $parametros['tipo_persona'] = $persona;
+            $_SESSION['PARAMETROS_VENTA'] = $parametros;
         }
         if ($tipoPersona == '-1'){
+            //SI SE SELECCIONO "TODOS" EN PERSONA (MOSTRAR EVENTOS DE CLIENTES Y DE PROVEEDORES)
             $tipoPersona = null;
             unset($parametros['tipo_persona']);
         }
         $accionComercial = $parametros['accion_comercial']; 
         if ((is_null($accionComercial)) or ($accionComercial== '-1')){
+            //SI NO SE SELECCIONO ACCION COMERCIAL MOSTRAR TODO TIPO DE EVENTO
             $accionComercial =null;
             unset($parametros['accion_comercial']);
         }
