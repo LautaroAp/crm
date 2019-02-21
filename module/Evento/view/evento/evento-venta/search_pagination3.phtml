@@ -7,7 +7,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
             <!-- Previous page link -->
             <?php if (isset($this->previous)): ?>
            
-                <a href="<?php echo $this->url($this->route, array('id' => $this->previous)); ?>">
+                <a href="<?php echo $this->url('pageventas', array('id' => $this->previous)); ?>">
                     &lt; Previous
                 </a> |
             <?php else: ?>
@@ -28,7 +28,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 
             <!-- Next page link -->
             <?php if (isset($this->next)): ?>
-                <a href="<?php echo $this->url($this->route,['id' => $this->next]); ?>">
+                <a href="<?php echo $this->url('pageventas',['id' => $this->next]); ?>">
                     Next &gt;
                 </a>
             <?php else: ?>

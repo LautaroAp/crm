@@ -102,9 +102,9 @@ class EventoController extends HuellaController {
 
     private function redireccionar($tipo, $id){
         if (strtoupper($tipo)=="CLIENTE"){
-            return $this->redirect()->toRoute('clientes/listado/ficha', ['action' => 'ficha', 'id' =>$id]);
+            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' =>$id]);
         }elseif (strtoupper($tipo)=="PROVEEDOR"){
-            return $this->redirect()->toRoute('proveedores/listado/ficha', ['action' => 'ficha', 'id' =>$id]);
+            return $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' =>$id]);
         }
         return $this->redirect()->toRoute('home');
     }
@@ -118,7 +118,7 @@ class EventoController extends HuellaController {
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->eventoManager->addEvento($data,$persona);
-                return $this->redirect()->toRoute('clientes/listado/ficha', ['action' => 'ficha', 'id' =>$Id]);
+                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' =>$Id]);
         }
         return new ViewModel([
             'form' => $form,

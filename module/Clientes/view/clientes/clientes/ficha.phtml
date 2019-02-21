@@ -60,7 +60,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             <p><label>Cargo:</label> <?= $cliente->getCargo(); ?></p>
                             <p><label>Profesión:</label> <?php echo ($cliente->getNombreProfesion()); ?></p>
                             <p><label>Tipo de Negocio:</label> <?php echo ($cliente->getActividad()); ?></p>
-                            <p><label>Último Contacto:</label> <?php echo ($cliente->getFechaUltimoContacto()->format('d/m/Y')); ?></p>
+                            <p><label>Último Contacto:</label> <?php if(!is_null($cliente->getFechaUltimoContacto())){ echo ($cliente->getFechaUltimoContacto()->format('d/m/Y'));} ?></p>
                         </div>
                         
                         <div class="col-sm-6 ficha-cliente-p">

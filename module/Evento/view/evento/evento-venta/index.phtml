@@ -35,13 +35,13 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                                 </select>
                             </div>
 
-                            <div class="form-group col-md-3" <?php if(!is_null($tipoPersona)) { echo ("hidden"); } ?> >
+                            <div class="form-group col-md-3">
                                 <!-- <label>Acción Comercial</label> -->
                                 <select class="form-control" id="tipo_persona" name="tipo_persona">
                                 <option value="<?php if(!is_null($tipoPersona)){ echo ($tipoPersona);}
                                                         else { echo ("-1");} ?>" hidden=""> 
                                     <?php if(!is_null($tipoPersona)){ echo (ucwords(strtolower($tipoPersona)));} 
-                                            else {echo ("Seleccionar Cliente o Proveedor");} ?> 
+                                            else {echo ("Todos");} ?> 
                                 </option>
                                 <option value=-1>Todos</option>
                                 <option value="CLIENTE">Cliente</option>
