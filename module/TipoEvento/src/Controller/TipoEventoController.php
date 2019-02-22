@@ -87,7 +87,6 @@ class TipoEventoController extends HuellaController {
         $_SESSION['TIPOEVENTO']['TIPO'] = $tipoPersona;
         return new ViewModel([
             'form' => $form,
-            'tipoeventos' => $tipoeventos,
             'tipoeventos_pag' => $paginator,
             'tipoPersona'=> $tipoPersona,
             'categoriaeventos' => $categorias,
@@ -145,19 +144,36 @@ class TipoEventoController extends HuellaController {
         return $view;
     }
 
+    // public function procesarRemoveAction() {
+    //     $id = (int) $this->params()->fromRoute('id');
+    //     $tipoevento = $this->tipoeventoManager->getTipoEventoId($id);
+    //     if ($tipoevento == null) {
+    //         $this->reportarError();
+    //     } else {
+    //         $this->removerDependencias($tipoevento->getTipo(), $id);
+    //         $this->eventoManager->eliminarTipoEventos($id);
+            
+    //         $this->tipoeventoManager->removeTipoEvento($tipoevento);
+    //         return $this->redireccionar($tipoevento->getTipo());
+    //     }
+    // }
+
     public function procesarRemoveAction() {
-        $id = (int) $this->params()->fromRoute('id');
+        $id = (int) $this->params()->fromRoute('id', -1);
         $tipoevento = $this->tipoeventoManager->getTipoEventoId($id);
         if ($tipoevento == null) {
             $this->reportarError();
         } else {
-            $this->removerDependencias($categoria->getTipo(), $id);
+                    
             $this->eventoManager->eliminarTipoEventos($id);
             
             $this->tipoeventoManager->removeTipoEvento($tipoevento);
-            return $this->redireccionar($tipoevento->getTipo());
+            return $this->redirect()->toRoute('gestionClientes/gestionEventosClientes/tipoeventoCliente');
+
         }
     }
+
+
 
     public function viewAction() {
         return new ViewModel();

@@ -57,7 +57,7 @@ class UsuarioController extends HuellaController {
         $id_persona = (int) $this->params()->fromRoute('id', -1);
         $cliente = $this->clienteManager->getClienteIdPersona($id_persona);
         $form = new UsuarioForm('create', $this->entityManager);
-        $this->prepararBreadcrumbs("Agregar Usuario", "usuarios/add/".$id_persona);
+        $this->prepararBreadcrumbs("Agregar Usuario", "usuarios/add/".$id_persona, "Ficha Cliente");
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $form->setData($data);

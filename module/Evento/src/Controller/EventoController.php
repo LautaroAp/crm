@@ -117,7 +117,7 @@ class EventoController extends HuellaController {
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->eventoManager->addEvento($data,$persona);
-                return $this->redirect()->toRoute('clientes/listado/ficha', ['action' => 'ficha', 'id' =>$Id]);
+                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' =>$Id]);
         }
         return new ViewModel([
             'form' => $form,

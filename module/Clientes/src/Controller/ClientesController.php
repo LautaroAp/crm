@@ -98,7 +98,7 @@ class ClientesController extends HuellaController
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $this->clientesManager->addCliente($data);
-            $this->redirect()->toRoute('clientes');
+            $this->redirect()->toRoute('gestionClientes/listado');
         }
         return new ViewModel([
             'categorias' => $categorias,
@@ -193,7 +193,7 @@ class ClientesController extends HuellaController
         else{
             $limite = "Inactivos";
         }
-        $this->prepararBreadcrumbs("Ficha Cliente", "/ficha/".$id_persona);
+        $this->prepararBreadcrumbs("Ficha Cliente", "/ficha/".$id_persona, $limite);
         $data = $this->clientesManager->getDataFicha($id_persona);
         $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();
         return new ViewModel([
