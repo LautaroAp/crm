@@ -14,7 +14,7 @@ if (isset($_SESSION['MENSAJES']['empresa'])) {
 <!-- Inicio: Datos de Empresa -->
 <div class="container margen">
     <div class="row">
-        <div class="panel panel-default">
+        <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 DATOS DE EMPRESA
             </div>
@@ -49,7 +49,7 @@ if (isset($_SESSION['MENSAJES']['empresa'])) {
 <!-- Modulos Adicionales -->
 <div class="container margen">
     <div class="row">
-        <div class="panel panel-default">
+        <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 MÓDULOS ADICIONALES
             </div>
@@ -103,7 +103,7 @@ if (isset($_SESSION['MENSAJES']['empresa'])) {
 <!-- Parametros de Empresa-->
 <div class="container margen">
     <div class="row">
-        <div class="panel panel-default">
+        <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 PARÁMETROS DE EMPRESA
             </div>
@@ -132,7 +132,7 @@ if (isset($_SESSION['MENSAJES']['empresa'])) {
             <div>
                 <a href="<?= $this->url('gestionEmpresa/configuracion/editar', ['action' => 'edit', 'id' => $empresa->getId()]) ?>">
                     <img src="<?= $this->basePath('img/crm/consulta_n.png') ?>"
-                        class="img-rounded img-responsive img-texto-derecha img-submenu">
+                        class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">

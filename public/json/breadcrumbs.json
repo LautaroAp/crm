@@ -1,1 +1,1 @@
-{"route":[{"label":"Home","url":"\/"}]}
+{"route":[{"label":"Home","url":"\/"},{"label":"Clientes","url":"\/clientes"},{"label":"Listado","url":"\/listado"},{"label":"Ficha Cliente","url":"\/ficha\/1"}]}

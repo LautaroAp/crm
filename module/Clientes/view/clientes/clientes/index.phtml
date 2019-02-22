@@ -13,7 +13,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
 <!-- Inicio: Tabla Clientes -->
 <div class="container margen">
     <div class="row">
-        <div class="panel panel-default">
+        <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 LISTADO DE CLIENTES (<?php echo($total_clientes); ?>)
             </div>
@@ -121,7 +121,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
             <div>
                 <a href="<?= $this->url("gestionClientes/agregar", ['tipo'=>'cliente']); ?>">
                     <img src="<?= $this->basePath('img/crm/cliente_add_a.png') ?>"
-                        class="img-rounded img-responsive img-texto-derecha img-submenu">
+                        class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
                     </a>
             </div>
             <div class="ficha-cliente-label">
@@ -133,7 +133,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
             <div>
                 <a href="<?= $this->url("clientes/inactivos"); ?>" > 
                     <img src="<?= $this->basePath('img/crm/cliente_exclamation_a.png') ?>" 
-                    class="img-rounded img-responsive img-menu img-texto-derecha img-submenu">
+                    class="img-rounded img-responsive img-menu img-texto-derecha img-submenu zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">

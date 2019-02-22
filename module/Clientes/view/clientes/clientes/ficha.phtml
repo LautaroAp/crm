@@ -29,7 +29,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
     <div class="row">
         <!-- Datos de Perfil --> 
         <div class="col-md-7">
-            <div class="panel panel-default">
+            <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading text-center titulo-espaciado">
                     DATOS DE PERFIL
                 </div>
@@ -100,7 +100,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 
         <!-- Datos Generales -->
         <div class="col-md-5">
-            <div class="panel panel-default">
+            <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading text-center titulo-espaciado">
                     DATOS GENERALES
                 </div>
@@ -125,7 +125,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 
     <!-- Datos Ganaderos -->
     <div class="container row">
-        <div class="panel panel-default">
+        <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 DATOS GANADEROS
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseModulosAdicionales" 
@@ -154,7 +154,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 
     <!-- Datos de Usuarios Adicionales -->
     <div class="container row">
-        <div class="panel panel-default">
+        <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 USUARIOS Y DATOS ADICIONALES
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseUsuariosDatosAdicionales" 
@@ -242,7 +242,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <!-- Inicio: Actividades -->
 <div class="container margen">
     <div class="container row">
-        <div class="panel panel-default">
+        <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 REGISTRO DE EVENTOS
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
@@ -447,7 +447,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             <div>
                 <a href="<?= $this->url('clientes/editar', ['tipo' => 'cliente', 'id' => (int) $persona->getId()]) ?>" role="button">
                     <img src="<?= $this->basePath('img/crm/cliente_update_a.png') ?>" 
-                    class="img-rounded img-responsive img-texto-derecha img-submenu">
+                    class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">
@@ -464,7 +464,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     } else {
                         echo($this->basePath('img/crm/cliente_add_a.png'));
                     }
-                    ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
+                    ?>" class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">
