@@ -78,14 +78,13 @@ class EventoController extends HuellaController {
 
     private function procesarAddAction() {
         $Id = (int) $this->params()->fromRoute('id', -1);
-        $tipo= $_SESSION['TIPOEVENTO']['TIPO']; 
+        $tipo = $this->params()->fromRoute('tipo');
         if ($tipo=="CLIENTE"){
             $this->prepararBreadcrumbs("Agregar Evento", "/evento/add/cliente/".$Id, "Ficha Cliente");
-
         }
         $persona= $this->personaManager->getPersona($Id);
         $cliente = $this->clienteManager->getClienteIdPersona($persona->getId());
-        $tipoEventos = $this->getArrayTipos($tipo);
+        $tipoEventos = $this->getArrayTipos(strtoupper($tipo));
         $form = $this->eventoManager->createForm($tipoEventos);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
@@ -102,9 +101,9 @@ class EventoController extends HuellaController {
 
     private function redireccionar($tipo, $id){
         if (strtoupper($tipo)=="CLIENTE"){
-            return $this->redirect()->toRoute('clientes/listado/ficha', ['action' => 'ficha', 'id' =>$id]);
+            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' =>$id]);
         }elseif (strtoupper($tipo)=="PROVEEDOR"){
-            return $this->redirect()->toRoute('proveedores/listado/ficha', ['action' => 'ficha', 'id' =>$id]);
+            return $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' =>$id]);
         }
         return $this->redirect()->toRoute('home');
     }
@@ -127,28 +126,7 @@ class EventoController extends HuellaController {
         ]);
     }
 
-    // private function procesarAddProveedor($Id, $tipo){
-    //     $proveedor = $this->proveedorManager->getProveedor($Id);
-    //     $id_persona= $proveedor->getPersona()->getId();
-    //     $tipoEventos = $this->getArrayTipos($tipo);
-    //     $form = $this->eventoManager->createForm($tipoEventos);
-    //     if ($this->getRequest()->isPost()) {
-    //         $data = $this->params()->fromPost();
-    //         $this->eventoManager->addEvento($data, $proveedor->getPersona(), $tipo_persona);
-    //         return $this->redirect()->toRoute('proveedores/listado/ficha', ['action' => 'ficha', 'id' =>$id_persona]);
-    //     }
-    //     return new ViewModel([
-    //         'form' => $form,
-    //         'cliente' => $proveedor,
-    //         'tipos' => $tipoEventos,
-    //     ]);
-    // }
 
-
-    // public function getTablaFiltrado($filtro) {
-    //     $listaEventos = $this->getSearch($filtro);
-    //     return ($listaEventos);
-    // }
 
     public function editAction() {
         $view = $this->procesarEditAction();

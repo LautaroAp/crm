@@ -37,10 +37,17 @@ class EventoVentaController extends EventoController
     }
 
     private function procesarIndexAction() {
-        $this->prepararBreadcrumbs("Eventos", "/ventas");
+        $this->prepararBreadcrumbs("Resumen de Eventos", "/eventos");
         $request = $this->getRequest();
-        //SE OBTIENE LA PERSONA DE LA RUTA POR SI SE LO LLAMA DE CLIENTE/PROVEEDOR
+       //SE OBTIENE LA PERSONA DE LA RUTA POR SI SE LO LLAMA DE CLIENTE/PROVEEDOR
         $persona= $this->params()->fromRoute('tipo');
+        if (isset($persona)){
+            //si llego una persona por ruta se la guarda en la sesion para paginator
+            $_SESSION['EVENTO']['tipo_persona'] = $persona;
+        }
+        else{
+            $_SESSION['EVENTO']['tipo_persona'] = "empresa";
+        }
         if ($request->isPost()) {
             //SI SE COMPLETO EL FORMULARIO DE BUSQUEDA TOMO ESOS PARAMETROS Y LOS GUARDO EN LA SESION 
             $parametros = $this->params()->fromPost();
@@ -53,48 +60,51 @@ class EventoVentaController extends EventoController
             //SI NO HAY PARAMETROS CREAR NUEVOS
             $parametros = array();
         }
-        //SE OBTIENEN LOS TIPOS DE EVENTOS DE LA SESION PARA MOSTRAR EN LA BUSQUEDA
-        $tipo= $_SESSION['TIPOEVENTO']['TIPO']; 
-        $tipoEventos = $this->tipoEventoManager->getTipoEventos($tipo);
-        $tipoPersona = $parametros['tipo_persona'];       
-        if((is_null($tipoPersona) and (!is_null($persona)))){ 
-            //SI SE MANDO UN TIPO DE PERSONA POR RUTA Y NO SE TIENE NINGUN TIPO DE PERSONA GUARDADO EN LA SESION
-            //AGREGARLO AL ARREGLO DE PARAMETROS Y GUARDARLO EN LA SESION
-            $tipoPersona = $persona;
-            $parametros['tipo_persona'] = $persona;
-            $_SESSION['PARAMETROS_VENTA'] = $parametros;
+        if ($_SESSION['EVENTO']['tipo_persona'] == "empresa"){
+            //SI LLEGO DESDE EMPRESA TOMO EL TIPO DE PERSONA DEL FORMULARIO
+            $tipoPersona = $parametros['tipo_persona'];       
         }
-        if ($tipoPersona == '-1'){
-            //SI SE SELECCIONO "TODOS" EN PERSONA (MOSTRAR EVENTOS DE CLIENTES Y DE PROVEEDORES)
+        else {
+            //SI LLEGO DESDE CLIENTE O PROVEEDOR TOMO EL TIPO DE PERSONA DE LA RUTA
+            $tipoPersona= $persona;
+            $parametros['tipo_persona'] = $persona;
+        }
+        if (($tipoPersona == '-1') and ($_SESSION['EVENTO']['tipo_persona'] == "empresa")){
+            //SI SE SELECCIONO "TODOS" EN PERSONA (MOSTRAR EVENTOS DE CLIENTES Y DE PROVEEDORES SI SE ESTA EN LA EMPRESA)
             $tipoPersona = null;
             unset($parametros['tipo_persona']);
+            // $_SESSION['PARAMETROS_VENTA'] = $parametros;
         }
-        $accionComercial = $parametros['accion_comercial']; 
+        $accionComercial = $parametros['tipo']; 
         if ((is_null($accionComercial)) or ($accionComercial== '-1')){
             //SI NO SE SELECCIONO ACCION COMERCIAL MOSTRAR TODO TIPO DE EVENTO
             $accionComercial =null;
-            unset($parametros['accion_comercial']);
+            unset($parametros['tipo']);
         }
         else {
-            $accionComercial= $this->tipoEventoManager->getTipoEventoId($parametros['accion_comercial']);
+            $accionComercial= $this->tipoEventoManager->getTipoEventoId($parametros['tipo']);
         }
         $paginator = $this->eventoVentaManager->getEventosFiltrados($parametros);
         $total = $this->eventoVentaManager->getTotalFiltrados($parametros);
-        $mensaje = "";
         $page = 1;
+        if (!is_null($tipoPersona) and ($tipoPersona!="-1")){
+            $tipoEventos = $this->tipoEventoManager->getTipoEventos($tipoPersona);
+        }
+        else {
+            $tipoEventos = $this->tipoEventoManager->getTodosTipos();
+        }
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
                 ->setItemCountPerPage(10);
-
         return new ViewModel([
             'eventos' => $paginator,
-            'mensaje' => $mensaje,
             'parametros' => $parametros,
             'accionComercial' =>$accionComercial,
             'persona' => $persona,
             'tipoPersona' =>$tipoPersona,
+            'personaParametro' => $persona_parametro,
             'total' => $total,
             'tipos' => $tipoEventos,
         ]);
@@ -126,5 +136,19 @@ class EventoVentaController extends EventoController
                 'form' => $form
             ));
         }
+    }
+
+    public function getTiposAction(){ 
+        $this->layout()->setTemplate('layout/nulo');
+        $tipo = $this->params()->fromRoute('tipo');
+        $tipos= Array();
+        if ($tipo!="todos"){
+            $tipos = $this->tipoEventoManager->getTipoEventos($tipo);
+        }
+        else{
+            $tipos = $this->tipoEventoManager->getTodosTipos();
+        }
+        $view = new ViewModel(['tipos' => $tipos]);
+        return $view;
     }
 }

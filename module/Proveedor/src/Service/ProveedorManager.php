@@ -75,8 +75,8 @@ class ProveedorManager {
         $params_persona=$this->diferenciarParametros($parametros,"PERSONA");
         if (in_array('busquedaAvanzada', $parametros)){
             // unset($parametros['busquedaAvanzada']);
-            $proveedors= $this->buscarProveedor($params_proveedor)->getResult();
-            $personas=$this->getPersonasFromProveedor($proveedors);
+            $proveedores= $this->buscarProveedores($params_proveedor)->getResult();
+            $personas=$this->getPersonasFromProveedores($proveedores);
             $query = $this->personaManager->buscarPersonas($params_persona,$tipos,$personas);
         }
         else{
@@ -85,6 +85,13 @@ class ProveedorManager {
         return $query;
     }
 
+    protected function getPersonasFromProveedores($proveedores){
+        $salida = array();
+        foreach ($proveedores as $proveedor){
+            array_push($salida, $proveedor->getPersona());
+        }
+        return $salida;
+    }
    
     protected function diferenciarParametros($parametros, $tipo){
         $proveedor= ['empresa', 'categoria', 'pais'];

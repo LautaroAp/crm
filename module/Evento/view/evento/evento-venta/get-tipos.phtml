@@ -1,0 +1,9 @@
+<select class="form-control" id="ops_tipos" name="tipo">
+    <option value="<?php if(isset($tipo)){ echo ($tipo->getId()); }?>" hidden="">  
+        <?php if(isset($tipo)){ echo($tipo->getNombre()); } else {echo ("Seleccionar Accion Comercial");}?>
+    </option> 
+     <?php foreach ($tipos as $tipo ) : ?>
+        <option value="<?php echo ($tipo->getId()); ?>"><?php echo ($tipo->getNombre()); ?></option>
+    <?php endforeach; ?> 
+</select>
+

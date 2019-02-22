@@ -97,7 +97,7 @@ class CategoriaController extends HuellaController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(3);
+                ->setItemCountPerPage(10);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->categoriaManager->addCategoria($data, $tipo);

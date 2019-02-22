@@ -44,7 +44,9 @@ class IndexController extends HuellaController {
 
     private function reiniciarParametros(){
         $_SESSION['PARAMETROS_VENTA'] = array();
+        $_SESION['EVENTO'] = array();
         $_SESSION['PARAMETROS_CLIENTE'] = array();
+        $_SESSION['PARAMETROS_PROVEEDOR'] = array();
         $_SESSION['PARAMETROS_CLIENTE_INACTIVO'] = array();
     }
 
@@ -58,7 +60,7 @@ class IndexController extends HuellaController {
     }
 
     public function gestionEventosClientesAction() {
-        $label = "Actividades";
+        $label = "Eventos";
         $url = "/actividades";
         $limite = "Clientes";
         $this->prepararBreadcrumbs($label, $url, $limite);
@@ -76,7 +78,7 @@ class IndexController extends HuellaController {
     }
 
     public function gestionEventosProveedoresAction() {
-        $label = "Actividades";
+        $label = "Eventos";
         $url = "/actividades";
         $limite = "Proveedores";
         $this->prepararBreadcrumbs($label, $url, $limite);

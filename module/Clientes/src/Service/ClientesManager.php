@@ -150,6 +150,7 @@ class ClientesManager {
         else{
             $usuario= $this->usuarioManager->getUsuarioIdPersona($persona->getId());
             $cliente =$usuario->getCliente(); 
+            $persona = $cliente->getPersona();
         }
         $data = [
             'cliente' =>$cliente,

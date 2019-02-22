@@ -89,10 +89,18 @@ class EventoManager {
                 ->setId_ejecutivo($ejecutivo)
                 ->setDescripcion($data['detalle'])
                 ->setTipo_persona($persona->getTipo());
-        
-        $cliente= $this->entityManager
+        $cliente_proveedor =null;
+        if ($persona->getTipo()=="CLIENTE"){
+              $cliente_proveedor= $this->entityManager
                 ->getRepository(Cliente::class)->findOneBy(['persona' => $persona->getId()]);
-        $this->actualizaFechas($evento, $cliente, $tipo_evento, $fecha_evento, $fecha_vencimiento);     
+        }
+        else {
+            $cliente_proveedor= $this->entityManager
+            ->getRepository(Proveedor::class)->findOneBy(['persona' => $persona->getId()]);
+        }
+      
+        
+        $this->actualizaFechas($evento, $cliente_proveedor, $tipo_evento, $fecha_evento, $fecha_vencimiento);     
 
         // if ($this->tryAddEvento($evento)) {
         //     $_SESSION['MENSAJES']['ficha_cliente'] = 1;

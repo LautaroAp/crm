@@ -109,7 +109,7 @@ function calculaPrecioVenta() {
 function calculaDescuentoIVA() {
     $p_venta = parseFloat($('#precio_venta').val());
     $descuento = parseFloat($('#descuento').val()) / 100;
-    $iva = parseFloat($('#iva').val()) / 100;
+    $iva = ((parseFloat($("#iva option:selected").html()))/100);
     // Precio Venta con Dto.
     $p_venta_dto = ($p_venta - ($p_venta * $descuento)).toFixed(2);
     if ($p_venta_dto) {
