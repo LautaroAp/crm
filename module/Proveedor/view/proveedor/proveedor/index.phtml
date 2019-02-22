@@ -14,7 +14,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
 <!-- Inicio: Tabla Proveedores -->
 <div class="container margen">
     <div class="row">
-        <div class="panel panel-default">
+        <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 LISTADO DE PROVEEDORES (<?php echo($total_proveedor); ?>)
             </div>
@@ -121,8 +121,8 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <a href="<?= $this->url("proveedores/agregar", ['tipo'=>'proveedor']); ?>">
-                    <img src="<?= $this->basePath('img/crm/cliente_add_a.png') ?>"
-                        class="img-rounded img-responsive img-texto-derecha img-submenu">
+                    <img src="<?= $this->basePath('img/crm/proveedor_add_v.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
                     </a>
             </div>
             <div class="ficha-cliente-label">
@@ -134,7 +134,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
             <div>
                 <a href="<?= $this->url('proveedores/inactivos'); ?>" > 
                     <img src="<?= $this->basePath('img/crm/proveedor_exclamation_v.png') ?>" 
-                        class="img-rounded img-responsive img-texto-derecha img-submenu">
+                        class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">

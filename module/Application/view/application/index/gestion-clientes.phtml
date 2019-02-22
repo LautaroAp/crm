@@ -1,5 +1,5 @@
 <div class="container margen">
-    <div class="panel panel-default">
+    <div class="panel panel-default sombra-ficha">
         <div class="panel-heading text-center titulo-espaciado">
             GESTIÓN DE CLIENTES
         </div>
@@ -11,7 +11,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionClientes/listado'); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Listado de Clientes</figcaption>
                             </figure>
@@ -20,7 +20,7 @@
                             <figure>
                                 <a href="<?= $this->url("gestionClientes/agregar", ['tipo'=>'cliente']); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/cliente_add_a.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Agregar Cliente</figcaption>
                             </figure>
@@ -29,7 +29,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionClientes/gestionEventosClientes'); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Eventos</figcaption>
                             </figure>
@@ -40,7 +40,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionClientes/categorias', ['tipo'=>'cliente']); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/consulta_a.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Categorías de Cliente</small>
                             </figure>
@@ -49,7 +49,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionClientes/profesion'); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/consulta_a.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Profesiones de Cliente</figcaption>
                             <figure>
@@ -58,7 +58,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionClientes/ventas', ['tipo'=>'cliente']); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/consulta_a.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Resumen de Eventos</small>
                             </figure>
@@ -67,7 +67,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionClientes/backup'); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/cliente_excel_a.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>&nbsp;&nbsp;Exportar a Excel&nbsp;&nbsp;</figcaption>
                             </figure>
@@ -83,7 +83,8 @@
                 <li>
                     <div class="img-centrar">
                         <div>
-                            <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha"></a>
+                            <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                                class="img-rounded img-responsive img-texto-derecha zoom"></a>
                         </div>
                         <div class="ficha-cliente-label">
                             <label>Volver</label>

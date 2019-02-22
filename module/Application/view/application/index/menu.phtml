@@ -1,5 +1,5 @@
 <div class="container margen">
-    <div class="panel panel-default">
+    <div class="panel panel-default sombra-ficha">
         <div class="panel-heading text-center titulo-espaciado">
             MENÚ PRICIPAL
         </div>
@@ -8,19 +8,21 @@
                 <nav class="navbar" id="nav" >
                     <ul>
                         <li>
+                            <div class="contenedor">
                             <figure>
                                 <a href="<?= $this->url('gestionClientes'); ?>">
                                     <img src="<?= $this->basePath('img/crm/cliente_a.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                        class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Clientes</figcaption>
                             </figure>
+                         </div>
                         </li>
                         <li>
                             <figure>
                                 <a href="<?= $this->url('gestionProveedores'); ?>">
                                     <img src="<?= $this->basePath('img/crm/proveedor_v.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                        class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Proveedores</figcaption>
                             </figure>
@@ -29,7 +31,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionProductosServicios'); ?>">
                                     <img src="<?= $this->basePath('img/crm/bolsa_n.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                        class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Productos y Servicios</figcaption>
                             </figure>
@@ -38,7 +40,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionEmpresa'); ?>">
                                     <img src="<?= $this->basePath('img/crm/empresa_n.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                        class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Empresa</figcaption>
                             </figure>
@@ -47,7 +49,7 @@
                             <figure>
                                 <a href="<?= $this->url('herramientas'); ?>">
                                     <img src="<?= $this->basePath('img/crm/herramienta_r.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                        class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Herramientas</figcaption>
                             </figure>

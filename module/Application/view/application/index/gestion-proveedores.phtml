@@ -1,5 +1,5 @@
 <div class="container margen">
-    <div class="panel panel-default">
+    <div class="panel panel-default sombra-ficha">
         <div class="panel-heading text-center titulo-espaciado">
             GESTIÓN DE PROVEEDORES
         </div>
@@ -11,7 +11,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionProveedores/listado'); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/proveedor_v.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Listado de Proveedores</figcaption>
                             </figure>
@@ -20,7 +20,7 @@
                             <figure>
                                 <a href="<?= $this->url("proveedores/agregar", ['tipo'=>'proveedor']); ?>">
                                     <img src="<?= $this->basePath('img/crm/proveedor_add_v.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Agregar Proveedor</figcaption>
                             </figure>
@@ -29,7 +29,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionProveedores/gestionEventosProveedores', ['tipo'=>'proveedor']); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Eventos</figcaption>
                             </figure>
@@ -40,7 +40,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionProveedores/categorias', ['tipo'=>'proveedor']); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/consulta_v.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Categorias de Proveedor</figcaption>
                             </figure>
@@ -49,7 +49,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionProveedores/ventas', ['tipo'=>'proveedor']); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/consulta_v.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Resumen de Eventos</figcaption>
                             </figure>
@@ -58,7 +58,7 @@
                             <figure>
                                 <a href="<?= $this->url('gestionProveedores'); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/proveedor_excel_v.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar">
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
                                 <figcaption>Exportar a Excel</figcaption>
                             </figure>
@@ -75,7 +75,7 @@
                     <div class="img-centrar">
                         <div>
                             <a href="<?= $this->url('home') ?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
-                            class="img-rounded img-responsive img-texto-derecha"></a>
+                            class="img-rounded img-responsive img-texto-derecha zoom"></a>
                         </div>
                         <div class="ficha-cliente-label">
                             <label>Volver</label>

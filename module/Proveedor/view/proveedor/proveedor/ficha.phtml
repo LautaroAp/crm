@@ -27,7 +27,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
     <div class="row">
         <!-- Datos de Perfil --> 
         <div class="col-md-7">
-            <div class="panel panel-default">
+            <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading text-center titulo-espaciado">
                     DATOS DE PERFIL
                 </div>
@@ -86,7 +86,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 
         <!-- Datos Generales -->
         <div class="col-md-5">
-            <div class="panel panel-default">
+            <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading text-center titulo-espaciado">
                     DATOS GENERALES
                 </div>
@@ -113,7 +113,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <!-- Inicio: Actividades -->
 <div class="container margen">
     <div class="container row">
-        <div class="panel panel-default">
+        <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 REGISTRO DE EVENTOS
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
@@ -129,7 +129,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <div class="col-md-3 img-centrar">
                             <div>
                                 <a href="<?= $this->url('evento', ['action' => 'add', 'tipo'=>'proveedor','id' => $persona->getId()]) ?>" role="button">
-                                    <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
+                                    <img src="<?= $this->basePath('img/crm/add_carrito_v.png') ?>" 
                                     class="img-rounded img-responsive img-texto-derecha img-submenu-add">
                                 </a>
                             </div>
@@ -319,7 +319,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             <div>
                 <a href="<?= $this->url('proveedores/editar', ['tipo' => 'proveedor', 'id' => (int) $persona->getId()]) ?>" role="button">
                     <img src="<?= $this->basePath('img/crm/proveedor_update_v.png') ?>" 
-                    class="img-rounded img-responsive img-texto-derecha img-submenu">
+                    class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">
@@ -336,7 +336,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     } else {
                         echo($this->basePath('img/crm/proveedor_add_v.png'));
                     }
-                    ?>" class="img-rounded img-responsive img-texto-derecha img-submenu">
+                    ?>" class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">
