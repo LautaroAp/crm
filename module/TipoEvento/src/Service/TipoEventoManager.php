@@ -53,7 +53,9 @@ class TipoEventoManager {
                         ->find($id);
     }
 
-
+    public function getTodosTipos(){
+        return $this->entityManager->getRepository(TipoEvento::class)->findAll();
+    }
     /**
      * This method adds a new tipoevento.
      */

@@ -1,13 +1,17 @@
 <!--
 See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 -->
+<?php
+    $tipo= $_SESSION['EVENTO']['tipo_persona'];
+
+?>
 <div style="text-align: center">
     <?php if ($this->pageCount): ?>
         <div class="paginationControl">
             <!-- Previous page link -->
             <?php if (isset($this->previous)): ?>
            
-                <a href="<?php echo $this->url('pageventas', array('id' => $this->previous)); ?>">
+                <a href="<?php echo $this->url('pageventas', array('tipo'=>$tipo, 'id' => $this->previous)); ?>">
                     &lt; Previous
                 </a> |
             <?php else: ?>
@@ -18,7 +22,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
             <?php foreach ($this->pagesInRange as $page): ?>
                 <?php if ($page != $this->current): ?>
             
-                    <a href="<?php echo $this->url('pageventas', ['id' => $page]); ?>">
+                    <a href="<?php echo $this->url('pageventas', ['tipo'=>$tipo,'id' => $page]); ?>">
                         <?php echo $page; ?>
                     </a> |
                 <?php else: ?>
@@ -28,7 +32,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 
             <!-- Next page link -->
             <?php if (isset($this->next)): ?>
-                <a href="<?php echo $this->url('pageventas',['id' => $this->next]); ?>">
+                <a href="<?php echo $this->url('pageventas',['tipo'=>$tipo,'id' => $this->next]); ?>">
                     Next &gt;
                 </a>
             <?php else: ?>

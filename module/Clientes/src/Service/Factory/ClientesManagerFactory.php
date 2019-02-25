@@ -7,7 +7,6 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 use Clientes\Service\ClientesManager;
 use Usuario\Service\UsuarioManager;
 use Persona\Service\PersonaManager;
-use Ganaderia\Service\GanaderiaManager;
 
 class ClientesManagerFactory implements FactoryInterface {
 
@@ -15,8 +14,7 @@ class ClientesManagerFactory implements FactoryInterface {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $usuarioManager = $container->get(UsuarioManager::class);
         $personaManager = $container->get(PersonaManager::class);
-        $ganaderiaManager = $container->get(GanaderiaManager::class);
-        return new ClientesManager($entityManager, $usuarioManager, $personaManager, $ganaderiaManager);
+        return new ClientesManager($entityManager, $usuarioManager, $personaManager);
     }
 
 }

@@ -124,14 +124,6 @@ class LicenciaManager {
         if($data['proveedor'] == "-1"){
             $licencia->setProveedor(null);
         } else {
-            $prov=$this->proveedorManager->getProveedor($data['proveedor']);
-            if (is_null($prov)){
-                print_r("es nulo");
-            }
-            else{
-                print_r("no es nulo");
-            }
-            die();
             $licencia->setProveedor($this->proveedorManager->getProveedor($data['proveedor']));
         }
         $licencia->setPrecio($data['precio']);

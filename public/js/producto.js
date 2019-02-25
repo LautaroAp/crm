@@ -33,6 +33,11 @@ function calculaCostoTotalCompra() {
 // Contribucion Marginal Valor
 function calculaCMValor() {
     $("#cm_valor").removeClass("prod-imput-gray");
+    // Setea el precios en caso de Null & NaN
+    if (($("#cm_valor").val()) == "") {
+        $("#cm_valor").val("0");
+        calculaCMValor();
+    }
     // Precio de Venta
     $c_total = parseFloat($('#precio_compra_total').val());
     $cm_valor = parseFloat($('#cm_valor').val());
@@ -53,14 +58,20 @@ function calculaCMValor() {
     }
     // Precio Final
     calculaDescuentoIVA();
+
 }
 
 // Contribucion Marginal Porcentual
 function calculaCMPorcentual() {
     $("#cm_porcentual").removeClass("prod-imput-gray");
+    if (($("#cm_porcentual").val()) == "") {
+        $("#cm_porcentual").val("0");
+        calculaCMPorcentual();
+    }
     // Precio de Venta
     $c_total = parseFloat($('#precio_compra_total').val());
-    $cm_porcentual = parseFloat($('#cm_porcentual').val()) / 100;
+    $cm_porcentual = parseFloat($('#cm_porcentual').val())
+    $cm_porcentual = parseFloat($cm_porcentual / 100);
     $p_venta = (($c_total * $cm_porcentual) + $c_total).toFixed(2);
     if ($p_venta) {
         $("#precio_venta").val($p_venta);
@@ -83,8 +94,13 @@ function calculaCMPorcentual() {
 // Precio de Venta
 function calculaPrecioVenta() {
     $("#precio_venta").removeClass("prod-imput-gray");
+    if (($("#precio_venta").val()) == "") {
+        $("#precio_venta").val("0");
+        calculaPrecioVenta();
+    }
     $c_total = parseFloat($('#precio_compra_total').val());
     $p_venta = parseFloat($('#precio_venta').val());
+
     // Contribucion Marginal Valor
     $cm_valor = ($p_venta - $c_total).toFixed(2);
     if ($cm_valor) {
@@ -108,8 +124,12 @@ function calculaPrecioVenta() {
 // Descuento y IVA
 function calculaDescuentoIVA() {
     $p_venta = parseFloat($('#precio_venta').val());
+    if (($("#descuento").val()) == "") {
+        $("#descuento").val("0");
+        calculaDescuentoIVA();
+    }
     $descuento = parseFloat($('#descuento').val()) / 100;
-    $iva = parseFloat($('#iva').val()) / 100;
+    $iva = ((parseFloat($("#iva option:selected").html())) / 100);
     // Precio Venta con Dto.
     $p_venta_dto = ($p_venta - ($p_venta * $descuento)).toFixed(2);
     if ($p_venta_dto) {

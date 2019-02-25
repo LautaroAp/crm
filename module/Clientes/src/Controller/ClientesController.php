@@ -98,7 +98,7 @@ class ClientesController extends HuellaController
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $this->clientesManager->addCliente($data);
-            $this->redirect()->toRoute('clientes');
+            $this->redirect()->toRoute('gestionClientes/listado');
         }
         return new ViewModel([
             'categorias' => $categorias,
@@ -140,7 +140,6 @@ class ClientesController extends HuellaController
         return new ViewModel([
             'cliente' => $cliente,
             'persona' => $persona,
-            'mensaje' => $mensaje,
             'categorias' => $categorias,
             'condiciones_iva' => $condiciones_iva,
             'profesiones' => $profesion,
@@ -186,14 +185,16 @@ class ClientesController extends HuellaController
     public function fichaAction(){
         $id_persona = (int)$this->params()->fromRoute('id', -1);
         $persona = $this->personaManager->getPersona($id_persona);
-        $limite = "";
-        if ($persona->getEstado() == "S") {
-            $limite = "Listado";
-        }
-        else{
-            $limite = "Inactivos";
-        }
-        $this->prepararBreadcrumbs("Ficha Cliente", "/ficha/".$id_persona);
+        // $limite = "";
+        // if ($persona->getEstado() == "S") {
+        //     $limite = "Listado";
+        // }
+        // else{
+        //     $limite = "Inactivos";
+        // }
+        // $limite = (end(($_SESSION['breadcrumb']))['label']);
+        $limite = $this->getAnterior();
+        $this->prepararBreadcrumbs("Ficha Cliente", "/ficha/".$id_persona, $limite);
         $data = $this->clientesManager->getDataFicha($id_persona);
         $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();
         return new ViewModel([

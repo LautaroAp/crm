@@ -14,7 +14,7 @@ function calcularPrecios() {
     }
     $precio = (parseFloat($('#precio_venta').val()));
     $descuento = (parseFloat($('#descuento').val()));
-    $iva = (parseFloat($('#iva').val()));
+    $iva = (parseFloat($("#iva option:selected").html()));
     $precio_dto = ($precio - (($descuento * $precio) / 100));
     $precio_iva = ($precio + (($iva * $precio) / 100));
     $precio_dto_iva = ($precio_dto + (($iva * $precio_dto) / 100));

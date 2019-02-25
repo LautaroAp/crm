@@ -6,6 +6,11 @@ function justNumbers(e) {
     return /\d/.test(String.fromCharCode(keynum));
 }
 
+function actualizarIva(){
+    alert(parseFloat($('#iva').String));
+}
+
+
 function calcularPrecios() {
     // Setea el precios en caso de Null & NaN
     if (($("#precio_venta").val()) == "") {
@@ -14,7 +19,9 @@ function calcularPrecios() {
     }
     $precio = (parseFloat($('#precio_venta').val()));
     $descuento = (parseFloat($('#descuento').val()));
-    $iva = (parseFloat($('#iva').val()));
+    $iva = (parseFloat($("#iva option:selected").html()));
+
+
     $precio_dto = ($precio - (($descuento * $precio) / 100));
     $precio_iva = ($precio + (($iva * $precio) / 100));
     $precio_dto_iva = ($precio_dto + (($iva * $precio_dto) / 100));

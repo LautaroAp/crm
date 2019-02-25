@@ -1,8 +1,13 @@
 <script src="js/functions.js"></script>
 <?php
-$meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
-        'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+$meses = [
+    'N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+    'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+];
+
+
 ?>
+
 <div class="container margen">
     <div class="row">
         <div class="col-md-12">
@@ -22,37 +27,72 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                                 </select>
                             </div> -->
 
-                            <div class="form-group col-md-3">
+                            <!-- <div class="form-group col-md-3"> -->
                                 <!-- <label>Acción Comercial</label> -->
-                                <select class="form-control" id="accion_comercial" name="accion_comercial" required = true>
-                                    <option value="<?php if(!is_null($accionComercial)){ echo ($accionComercial->getId());} else { echo ("-1");} ?>" hidden=""> 
-                                        <?php if(!is_null($accionComercial)){ echo ($accionComercial->getNombre());}
-                                        else {echo ("Seleccionar Accion Comercial");} ?> 
+                                <!-- <select class="form-control" id="accion_comercial" name="accion_comercial" required = true>
+                                    <option value="<?php //if(!is_null($accionComercial)){ echo ($accionComercial->getId());} else { echo ("-1");} ?>" hidden=""> 
+                                        <?php //if(!is_null($accionComercial)){ echo ($accionComercial->getNombre());}
+                                        //else {echo ("Seleccionar Accion Comercial");} ?> 
                                     </option>
-                                    <?php foreach ($tipos as $tipo) : ?>
-                                        <option value="<?php echo ($tipo->getId()); ?>"><?php echo ($tipo->getNombre()); ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <!-- <label>Acción Comercial</label> -->
-                                <select class="form-control" id="tipo_persona" name="tipo_persona">
-                                <option value="<?php if(!is_null($tipoPersona)){ echo ($tipoPersona);}
-                                                        else { echo ("-1");} ?>" hidden=""> 
-                                    <?php if(!is_null($tipoPersona)){ echo (ucwords(strtolower($tipoPersona)));} 
-                                            else {echo ("Todos");} ?> 
+                                    <?php //foreach ($tipos as $tipo) : ?>
+                                        <option value="<?php //echo ($tipo->getId()); ?>"><?php //echo ($tipo->getNombre()); ?></option>
+                                    <?php //endforeach; ?>
+                                </select> -->
+                            <!-- </div> -->
+                            
+                            <div class="form-group col-md-3" <?php if (($persona=="cliente") or ($persona=="proveedor")) {echo("hidden");} ?>>
+                                <!-- <label>Tipo de persona</label> -->
+                                <select class="form-control" id="tipo_persona" name="tipo_persona" onchange="actualizarDatosTipoEvento(this.value)" >
+                                <option value="<?php if (!is_null($tipoPersona)) {
+                                                    echo ($tipoPersona);
+                                                } else {
+                                                    echo ("-1");
+                                                } ?>" hidden=""> 
+                                    <?php if (!is_null($tipoPersona)) {
+                                        echo (ucwords(strtolower($tipoPersona)));
+                                    } else {
+                                        echo ("Todos");
+                                    } ?> 
                                 </option>
                                 <option value=-1>Todos</option>
                                 <option value="CLIENTE">Cliente</option>
                                 <option value="PROVEEDOR">Proveedor</option>
                                 </select>
                             </div>
-                            <div class="form-group col-sm-2">
-                                <input type="number" class="form-control" name="ventas_m" min="1" max="12" placeholder="Mes" value="<?php if (count($parametros)>0){echo($parametros['ventas_m']);} ?>">                        
+                            <div class="form-group col-md-3" >
+                                <div id="div_tipo_eve">
+                                <select class="form-control" id="ops_tipos" name="tipo" required="">
+                                    <!-- <option value=-1> Seleccionar Acción Comercial </option>  -->
+                                    <option value="<?php if ((!is_null($tipoPersona)) and (!is_null($accionComercial))) {
+                                                    echo ($accionComercial->getId());
+                                                } else {
+                                                    echo ("-1");
+                                                } ?>" hidden=""> 
+                                    <?php if ((!is_null($tipoPersona)) and (!is_null($accionComercial))) {
+                                        echo (ucwords(strtolower($accionComercial->getNombre())));
+                                    } else {
+                                        echo ("Seleccionar Accion Comercial");
+                                    } ?> 
+                                </option>
+                                    <?php if ($tipoPersona){
+                                        foreach ($tipos as $tipo){ ?>
+                                            <option value="<?php echo $tipo->getId(); ?>"> <?php echo $tipo->getNombre();?> </option> 
+                                        <?php }
+                                    }?>
+                                </select>
+                                </div>
                             </div>
                             <div class="form-group col-sm-2">
-                                <input type="number" class="form-control" name="ventas_y" min="2010" max="<?php echo date("Y"); ?>" placeholder="Año" value="<?php if (count($parametros)>0){echo($parametros['ventas_y']);} ?>">                        
+                                <input type="number" class="form-control" name="ventas_m" min="1" max="12" placeholder="Mes" 
+                                value="<?php if (isset($parametros['ventas_m'])) {
+                                        echo ($parametros['ventas_m']);
+                                    } ?>">                        
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <input type="number" class="form-control" name="ventas_y" min="2000" max="<?php echo date("Y"); ?>" 
+                                placeholder="Año" value="<?php if (isset($parametros['ventas_m'])) {
+                                                                    echo ($parametros['ventas_y']);
+                                                                } ?>">                        
                             </div>
                             <div class="form-group col-sm-1">
                                 <button type="submit" class="btn btn-default"> 
@@ -64,15 +104,18 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                     <div class="container row">
                             Total
                             <?php
-                                if(isset($parametros['tipo'])){
-                                    echo($parametros['tipo']);}
-                                if(isset($parametros['ventas_m'])){
-                                    if(($parametros['ventas_m']) != 0){
-                                        echo(' ' . $meses[$parametros['ventas_m']]);}
+                            if (isset($parametros['tipo'])) {
+                                echo ($parametros['tipo']);
+                            }
+                            if (isset($parametros['ventas_m'])) {
+                                if (($parametros['ventas_m']) != 0) {
+                                    echo (' ' . $meses[$parametros['ventas_m']]);
                                 }
-                                if(isset($parametros['ventas_y'])){
-                                    echo(' ' . $parametros['ventas_y'] . ' ');}
-                                echo(': ' . count($total));
+                            }
+                            if (isset($parametros['ventas_y'])) {
+                                echo (' ' . $parametros['ventas_y'] . ' ');
+                            }
+                            echo (': ' . count($total));
                             ?>
                     </div>
                     <p>
@@ -88,18 +131,22 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
                         </thead>
                         <?php foreach ($eventos as $evento) : ?>
                         <tr>
-                            <td><?php if(!is_null($evento->getFecha())) {echo ($evento->getFecha()->format('d/m/Y'));} ?></td>
+                            <td><?php if (!is_null($evento->getFecha())) {
+                                    echo ($evento->getFecha()->format('d/m/Y'));
+                                } ?></td>
                             <td><?php echo ($evento->getTipo()); ?></td>
                             <td><?php echo ($evento->getNombrePersona()); ?></td>
                             <td><?php echo ($evento->getPersona()->getTipo()); ?></td>
 
                             <td class="table-items-right">
                                 <a class="btn btn-default" 
-                                <?php if (strtoupper($evento->getPersona()->getTipo())=="CLIENTE"){ ?>
-                                    href=<?=$this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]);?> 
-                                <?php } elseif (strtoupper($evento->getPersona()->getTipo())=="PROVEEDOR"){ ?>
-                                    href=<?=$this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]);?>
-                                <?php } ?>>
+                                <?php if (strtoupper($evento->getPersona()->getTipo()) == "CLIENTE") { ?>
+                                    href=<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?> 
+                                <?php 
+                            } elseif (strtoupper($evento->getPersona()->getTipo()) == "PROVEEDOR") { ?>
+                                    href=<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?>
+                                <?php 
+                            } ?>>
                                 <span class="glyphicon glyphicon-share-alt" ></span>
                                 </a>
                             </td>
@@ -111,8 +158,12 @@ $meses = ['N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
         </div>
     </div>  
     <?php
-    echo $this->paginationControl($eventos, 'Sliding', // All, Elastic, Jumping, Sliding
-            'search_pagination3.phtml', $this->url('pageventas', ['action' => 'index', 'id' => 1, 'tipo'=> $tipoPersona]));
+    echo $this->paginationControl(
+        $eventos,
+        'Sliding', // All, Elastic, Jumping, Sliding
+        'search_pagination3.phtml',
+        $this->url('pageventas', ['action' => 'index', 'id' => 1])
+    );
     ?>     
 </div>
 

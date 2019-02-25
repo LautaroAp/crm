@@ -47,4 +47,10 @@ function actualizarDatosProvincias(id_pais)
     });
 }
 
+function actualizarDatosTipoEvento(tipo){
+    if (tipo==-1)
+        tipo="todos";
+    $.post('/getTipos/' + tipo, function (data) {$('#div_tipo_eve').html(data);
+        });
+}
 

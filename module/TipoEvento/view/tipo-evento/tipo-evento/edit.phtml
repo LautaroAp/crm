@@ -90,7 +90,7 @@ $categoria_eve = $tipoevento->getCategoria_evento();
             <div>
                 <?php if ($tipoPersona=="cliente"){ ?> 
                     <a href="<?= $this->url('gestionClientes/gestionEventosClientes/tipoeventoCliente', ['tipo'=>'cliente']); ?>" > 
-                    <?php }elseif ($tipo=="proveedor"){ ?>
+                    <?php }elseif ($tipoPersona=="proveedor"){ ?>
                     <a href="<?= $this->url('gestionProveedores/gestionEventosProveedores/tipoeventoProveedor', ['tipo'=>'proveedor']); ?>" > 
                     <?php } ?>
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 

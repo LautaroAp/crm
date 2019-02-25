@@ -42,7 +42,6 @@ class EventoVentaManager extends EventoManager
         $query = $this->busquedaPorFiltros($filtros);
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
         $paginator = new Paginator($adapter);
-       
         return $paginator;
     }
     
@@ -66,12 +65,14 @@ class EventoVentaManager extends EventoManager
         for ($i = 0; $i < count($indices); $i++) {
             $p = $i + 1;
             $nombreCampo = $indices[$i]; 
-            if($nombreCampo=="accion_comercial"){
-                $valorCampo=$parametros['accion_comercial'];
+            if($nombreCampo=="tipo"){
+                $valorCampo=$parametros['tipo']; 
                 $queryBuilder->andWhere('E.tipo = :tipo')->setParameter('tipo',$valorCampo);
             }
             if($nombreCampo=="tipo_persona"){
                 $valorCampo=$parametros['tipo_persona'];
+
+
                 $queryBuilder->andWhere('E.tipo_persona = :tipoP')->setParameter('tipoP',$valorCampo);
             }
             if($nombreCampo=="ventas_m"){

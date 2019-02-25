@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
@@ -14,13 +15,14 @@ use Application;
 
 
 return [
-   
-   'router' => [
+
+    'router' => [
         'routes' => [
             'evento' => [
-                'type'    => Segment::class,
+                'type' => Segment::class,
                 'options' => [
-                    'route' => '/evento[/:action[/:tipo[/:id]]]',
+                    //'route' => '/evento',
+                     'route' => '/evento[/:action[/:tipo[/:id]]]',
                     'defaults' => [
                         'controller' => Controller\EventoController::class,
                         'action' => 'index',
@@ -70,6 +72,7 @@ return [
                             ],
                         ],
                     ],
+
                     'page' => [
                         'type' => Segment::class,
                         'options' => [
@@ -82,78 +85,77 @@ return [
                             ],
                         ],
                     ],
-//                    'pageventas' => [
-//                        'type' => Segment::class,
-//                        'options' => [
-//                            'route' => '/pageventas[/:id]',
-//                            'defaults' => [
-//                                'controller' => Controller\EventoVentaController::class,
-//                                'action' => 'index',
-//                            ],
-//                            'constraints' => [
-//                                'id' => '[0-9]\d*',
-//                            ],
-//                        ],
-//                    ],
-//                    'ventas' => [
-//                        'type' => Segment::class,
-//                        'options' => [
-//                            'route' => '/ventas[/:id]',
-//                            'defaults' => [
-//                                'controller' => Controller\EventoVentaController::class,
-//                                'action' => 'index',
-//                            ],
-//                            'constraints' => [
-//                                'id' => '[0-9]\d*',
-//                            ],
-//                        ],
-//                    ],
-//                ],
                 ],
-                        
-                ],
+
+            ],
             'pageventas' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/pageventas[/:id]',
-                            'defaults' => [
-                                'controller' => Controller\EventoVentaController::class,
-                                'action' => 'index',
-                            ],
-                            'constraints' => [
-                                'id' => '[0-9]\d*',
-                            ],
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/pageventas[/:tipo[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\EventoVentaController::class,
+                        'action' => 'index',
+                    ],
+                    'constraints' => [
+                        'id' => '[0-9]\d*',
+                    ],
+                ],
+            ],
+                // 'may_terminate' => true,
+                // 'child_routes' => [
+                //     'ajax' => [
+                //         'type' => Segment::class,
+                //         'options' => [
+                //             'route' => '/ajax[/:action[/:tipo]]',
+                //             'defaults' => [
+                //                 'controller' => Controller\EventoVentaController::class,
+                //             ],
+                //         ],
+                //     ],
+                // ],
+
+            'ventas' => [
+                    'type' => Segment::class,
+                    'options' => [
+                        'route' => 'eventos/ventas[/:id]',
+                        'defaults' => [
+                            'controller' => Controller\EventoVentaController::class,
+                            'action' => 'index',
+                        ],
+                        'constraints' => [
+                            'id' => '[0-9]\d*',
                         ],
                     ],
-                    'ventas' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/ventas[/:id]',
-                            'defaults' => [
-                                'controller' => Controller\EventoVentaController::class,
-                                'action' => 'index',
-                            ],
-                            'constraints' => [
-                                'id' => '[0-9]\d*',
-                            ],
-                        ],
-                    ],
+                    // 'may_terminate' => true,
+                    // 'child_routes' => [
+                    //     'ajax' => [
+                    //         'type' => Segment::class,
+                    //         'options' => [
+                    //             'route' => '/ajax/:action[/:tipo]',
+                    //             'defaults' => [
+                    //                 'controller' => Controller\EventoVentaController::class,
+                    //             ],
+                    //         ],
+                    //     ],
+                    // ],
+                // ],
+
             ],
         ],
-   
-   
- 'controllers' => array(
+    ],
+
+    'controllers' => array(
         'factories' => [
             Controller\EventoController::class => Controller\Factory\EventoControllerFactory::class,
             Controller\EventoVentaController::class => Controller\Factory\EventoVentaControllerFactory::class,
 
         ],
-     ),
-     'view_manager' => array(
-         'template_path_stack' => array(
-             'evento' => __DIR__ . '/../view',
-         ),
-     ),
+    ),
+    'view_manager' => array(
+        'template_path_stack' => array(
+            'evento' => __DIR__ . '/../view',
+        ),
+    ),
     'service_manager' => array(
         'factories' => array(
             Service\EventoManager::class => Service\Factory\EventoManagerFactory::class,
@@ -161,5 +163,5 @@ return [
 
         ),
     )
- ];
+];
 

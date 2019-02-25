@@ -1,9 +1,6 @@
 <?php
 
 /**
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Profesion\Controller;
@@ -49,6 +46,7 @@ class ProfesionController extends HuellaController {
     }
 
     private function procesarIndexAction() {
+        $this->prepararBreadcrumbs("Profesiones", "/profesion", "Clientes");
         $profesiones = $this->profesionManager->getProfesiones();
         return new ViewModel([
             'profesiones' => $profesiones
@@ -61,11 +59,9 @@ class ProfesionController extends HuellaController {
     }
 
     private function procesarAddAction() {
+        $this->prepararBreadcrumbs("Profesiones", "/profesion", "Clientes");
         $profesiones = $this->profesionManager->getProfesiones();
-        
         $paginator = $this->profesionManager->getTabla();
-        $mensaje = "";
-
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
@@ -81,7 +77,6 @@ class ProfesionController extends HuellaController {
         return new ViewModel([
             'profesiones' => $profesiones,
             'profesiones_pag' => $paginator,
-            'mensaje' => $mensaje
         ]);
     }
 
@@ -93,7 +88,7 @@ class ProfesionController extends HuellaController {
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $profesion = $this->profesionManager->getProfesionId($id);
-        
+        $this->prepararBreadcrumbs("Editar", "/edit/".$id, "Profesiones");
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->profesionManager->updateProfesion($profesion, $data);

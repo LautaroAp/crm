@@ -95,10 +95,10 @@ return [
                             ],
                         ],
                     ],
-                    'ventas' => [
+                    'eventos' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/ventas[/:tipo]',
+                            'route' => '/eventos[/:tipo]',
                             'defaults' => [
                                 'controller' => \Evento\Controller\EventoVentaController::class,
                                 'action' => 'index',
@@ -216,10 +216,10 @@ return [
                             ],
                         ],
                     ],
-                    'ventas' => [
+                    'eventos' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/ventas[/:tipo]',
+                            'route' => '/eventos[/:tipo]',
                             'defaults' => [
                                 'controller' => \Evento\Controller\EventoVentaController::class,
                                 'action' => 'index',
@@ -320,10 +320,10 @@ return [
                             ],
                         ],
                     ],
-                    'ventas' => [
+                    'eventos' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/ventas',
+                            'route' => '/eventos',
                             'defaults' => [
                                 'controller' => \Evento\Controller\EventoVentaController::class,
                                 'action' => 'index',
@@ -339,6 +339,26 @@ return [
                                 'action' => 'backup',
                             ],
                         ],
+                    ],
+                ],
+            ],
+            // 'ventas' => [
+            //     'type' => Literal::class,
+            //     'options' => [
+            //         'route' => '/ventas',
+            //         'defaults' => [
+            //             'controller' => \Evento\Controller\EventoVentaController::class,
+            //             'action' => 'index',
+            //         ],
+            //     ],
+            // ],
+            'getTipos'=>[
+                'type' => Segment::class,
+                'options' => [
+                    'route' => '/getTipos[/:tipo]',
+                    'defaults' => [
+                        'controller' => \Evento\Controller\EventoVentaController::class,
+                        'action' => 'getTipos',
                     ],
                 ],
             ],
@@ -396,7 +416,7 @@ return [
                                     ],
                                 ],
                             ],
-                            'categorialicencia' => [
+                            'categorias' => [
                                 'type' => Segment::class,
                                 'options' => [
                                     'route' => '/categorias[/:tipo[/:id]]',
@@ -466,16 +486,17 @@ return [
                                    ],
                                ],
                            ],
+
                            'categorias' => [
-                               'type' => Segment::class,
-                               'options' => [
-                                   'route' => '/categorias[/:tipo[/:id]]',
-                                   'defaults' => [
-                                       'controller' => \Categoria\Controller\CategoriaController::class,
-                                       'action' => 'index',
-                                   ],
-                               ],
-                           ],
+                            'type' => Segment::class,
+                            'options' => [
+                                'route' => '/categorias[/:tipo[/:id]]',
+                                'defaults' => [
+                                    'controller' => \Categoria\Controller\CategoriaController::class,
+                                    'action' => 'index',
+                                    ],
+                                ],
+                            ],
                            'backup' => [
                                'type' => Segment::class,
                                'options' => [
@@ -546,7 +567,7 @@ return [
                                    ],
                                ],
                            ],
-                           'categoriaservicio' => [
+                           'categorias' => [
                                'type' => Segment::class,
                                'options' => [
                                    'route' => '/categorias[/:tipo[/:id]]',

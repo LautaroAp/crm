@@ -31,18 +31,16 @@ class ClientesManager {
     protected $entityManager;
     protected $usuarioManager;
     protected $personaManager;
-    protected $ganaderiaManager;
     protected $total;
     protected $tipo;
     
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $usuarioManager, $personaManager, $ganaderiaManager) {
+    public function __construct($entityManager, $usuarioManager, $personaManager) {
         $this->entityManager = $entityManager;
         $this->usuarioManager = $usuarioManager;
         $this->personaManager = $personaManager;
-        $this->ganaderiaManager = $ganaderiaManager;
         $this->tipo = "CLIENTE";
 
     }
@@ -150,6 +148,7 @@ class ClientesManager {
         else{
             $usuario= $this->usuarioManager->getUsuarioIdPersona($persona->getId());
             $cliente =$usuario->getCliente(); 
+            $persona = $cliente->getPersona();
         }
         $data = [
             'cliente' =>$cliente,

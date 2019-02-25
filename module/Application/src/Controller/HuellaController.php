@@ -24,14 +24,16 @@ class HuellaController extends AbstractActionController {
     }
 
     public function prepararBreadcrumbs($label, $url, $limite = null){
-        $data = file_get_contents("public/json/breadcrumbs.json");
+        $data = $_SESSION['breadcrumb'];
         $data_decoded =  json_decode($data, true);
         $agregar = ['label' => $label, 'url' => $url];
         $rutas=$data_decoded['route'];   
+      
         //solo agrega rutas si no estan agregadas
         if ((!$this->pertenece($rutas, $agregar))){
              //si tiene un limite pasado con el ultimo valor posible eliminar las sig migas   
-            if (isset($limite)){
+            if (isset($limite)){  
+                
                 $json= $rutas=$this->eliminarUltimos($rutas, $limite);
             }
             //con la ultima miga valida agregar al arreglo la nueva miga
@@ -44,6 +46,10 @@ class HuellaController extends AbstractActionController {
             $rutas = $this->eliminarUltimos($rutas, $agregar['label']);
             $json = $this->guardarJson($rutas, $data_decoded);
         }  
+        // print_r("<br>");
+        // print_r("<br>");
+        // print_r("<br>");
+        // print_r($rutas);
         $this->layout()->setVariable('rutas', $rutas);
         $this->layout()->setVariable('json', $json); 
     }
@@ -51,8 +57,8 @@ class HuellaController extends AbstractActionController {
     private function guardarJson($rutas,$data_decoded){
         $data_decoded['route'] = $rutas;
         $json = json_encode($data_decoded);
-        file_put_contents("public/json/breadcrumbs.json", $json);
-
+        // file_put_contents("public/json/breadcrumbs.json", $json);
+        $_SESSION['breadcrumb']=$json;
         return $json;
 
     }
@@ -60,7 +66,7 @@ class HuellaController extends AbstractActionController {
     protected function eliminarUltimos($arr, $limite){
         //EXTRAE ELEMENTOS DEL ARREGLO HASTA QUE SE LLEGA AL ULTIMO QUE SE QUIERE DEJAR
         //O EL ARREGLO QUEDA VACIO.  -->sino hacerlo parar en home
-        while (((end(($arr))['label'])!= $limite)){
+        while (((end(($arr))['label'])!= $limite)){    
             $eliminado = array_pop($arr);
         }
         return $arr;
@@ -70,20 +76,38 @@ class HuellaController extends AbstractActionController {
         //este metodo borra el arreglo de breadcrums acumulados y genera uno nuevo 
         //con la ruta inicial Home.
         if ($label=="Home"){
-            $data = file_get_contents("public/json/breadcrumbs.json");
-            $data_decoded =  json_decode($data, true);
-            //lo vuelvo un nuevo arreglo vacio
-            $data_decoded['route']= Array();
-            $arr = array('label' => $label, 'url' => $url);
-            //le agrego la ruta y label de home
-            array_push($data_decoded['route'], $arr);
-            $json = json_encode($data_decoded);
-            file_put_contents("public/json/breadcrumbs.json", $json);
-            $data = file_get_contents("public/json/breadcrumbs.json");
-            $data_decoded =  json_decode($data, true);
-            print_r("<br>");
-            print_r("<br>");
-            $this->layout()->setVariable('rutas', $data_decoded);
+            $nuevo = ['route'=>[['label'=>$label, 'url'=>$url]]];
+            $json= json_encode($nuevo);
+            // $data= $_SESSION['breadcrumb'];
+            // // $data = file_get_contents("public/json/breadcrumbs.json");
+            // $data_decoded =  json_decode($data, true);
+            // //lo vuelvo un nuevo arreglo vacio
+            // $data_decoded['route']= Array();
+            // $arr = array('label' => $label, 'url' => $url);
+            // // //le agrego la ruta y label de home
+            // array_push($data_decoded['route'], $arr);
+            // $json = json_encode($data_decoded);
+            // // file_put_contents("public/json/breadcrumbs.json", $json);
+            // // $data = file_get_contents("public/json/breadcrumbs.json");
+            // // $data_decoded =  json_decode($data, true);
+            // $data = $_SESSION['breadcrumb'];
+            // $data_decoded =  json_decode($data, true);
+            // $agregar = ['label' => $label, 'url' => $url];
+            // $rutas=$data_decoded['route']; 
+            $_SESSION['breadcrumb']= $json;  
+            // print_r("<br>");
+            // print_r("<br>");
+            // print_r("<br>");
+            // print_r($nuevo);
+
+            $this->layout()->setVariable('rutas', $nuevo);
         }
+    }
+
+    public function getAnterior(){
+        $bread= ((array)(json_decode($_SESSION['breadcrumb'])));
+        $ultimo = ((array)end($bread['route']));
+        $limite= $ultimo['label'];
+        return $limite;
     }
 }
