@@ -42,7 +42,6 @@ class EjecutivoInactivoController extends EjecutivoController
         }
         return new ViewModel([
             'ejecutivos' => $pag,
-            'mensaje' => $mensaje
             ]);
     }
    

@@ -106,7 +106,9 @@ class EmpresaManager {
         $empresa->setVencimiento_cai($vencimiento_cai);
         $empresa->setRazon_social($data['razon_social']);
         $empresa->setTipo_iva('tipo_iva');
-        $empresa->setMoneda($data['moneda']);
+        if (isset($data['moneda'])){
+            $empresa->setMoneda($data['moneda']);
+        }
         $empresa->setLocalidad($data['localidad']);
         $empresa->setProvincia($data['provincia']);
         $empresa->setPais($data['pais']);

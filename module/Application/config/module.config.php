@@ -416,7 +416,7 @@ return [
                                     ],
                                 ],
                             ],
-                            'categorialicencia' => [
+                            'categorias' => [
                                 'type' => Segment::class,
                                 'options' => [
                                     'route' => '/categorias[/:tipo[/:id]]',
@@ -487,7 +487,7 @@ return [
                                ],
                            ],
 
-                           'categoriaproducto' => [
+                           'categorias' => [
                             'type' => Segment::class,
                             'options' => [
                                 'route' => '/categorias[/:tipo[/:id]]',
@@ -567,7 +567,7 @@ return [
                                    ],
                                ],
                            ],
-                           'categoriaservicio' => [
+                           'categorias' => [
                                'type' => Segment::class,
                                'options' => [
                                    'route' => '/categorias[/:tipo[/:id]]',

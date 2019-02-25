@@ -140,7 +140,6 @@ class ClientesController extends HuellaController
         return new ViewModel([
             'cliente' => $cliente,
             'persona' => $persona,
-            'mensaje' => $mensaje,
             'categorias' => $categorias,
             'condiciones_iva' => $condiciones_iva,
             'profesiones' => $profesion,
@@ -186,13 +185,15 @@ class ClientesController extends HuellaController
     public function fichaAction(){
         $id_persona = (int)$this->params()->fromRoute('id', -1);
         $persona = $this->personaManager->getPersona($id_persona);
-        $limite = "";
-        if ($persona->getEstado() == "S") {
-            $limite = "Listado";
-        }
-        else{
-            $limite = "Inactivos";
-        }
+        // $limite = "";
+        // if ($persona->getEstado() == "S") {
+        //     $limite = "Listado";
+        // }
+        // else{
+        //     $limite = "Inactivos";
+        // }
+        // $limite = (end(($_SESSION['breadcrumb']))['label']);
+        $limite = $this->getAnterior();
         $this->prepararBreadcrumbs("Ficha Cliente", "/ficha/".$id_persona, $limite);
         $data = $this->clientesManager->getDataFicha($id_persona);
         $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();

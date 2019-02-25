@@ -46,10 +46,10 @@ class HuellaController extends AbstractActionController {
             $rutas = $this->eliminarUltimos($rutas, $agregar['label']);
             $json = $this->guardarJson($rutas, $data_decoded);
         }  
-        print_r("<br>");
-        print_r("<br>");
-        print_r("<br>");
-        print_r($rutas);
+        // print_r("<br>");
+        // print_r("<br>");
+        // print_r("<br>");
+        // print_r($rutas);
         $this->layout()->setVariable('rutas', $rutas);
         $this->layout()->setVariable('json', $json); 
     }
@@ -95,12 +95,19 @@ class HuellaController extends AbstractActionController {
             // $agregar = ['label' => $label, 'url' => $url];
             // $rutas=$data_decoded['route']; 
             $_SESSION['breadcrumb']= $json;  
-            print_r("<br>");
-            print_r("<br>");
-            print_r("<br>");
-            print_r($nuevo);
+            // print_r("<br>");
+            // print_r("<br>");
+            // print_r("<br>");
+            // print_r($nuevo);
 
             $this->layout()->setVariable('rutas', $nuevo);
         }
+    }
+
+    public function getAnterior(){
+        $bread= ((array)(json_decode($_SESSION['breadcrumb'])));
+        $ultimo = ((array)end($bread['route']));
+        $limite= $ultimo['label'];
+        return $limite;
     }
 }

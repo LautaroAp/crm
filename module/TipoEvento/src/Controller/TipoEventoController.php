@@ -62,14 +62,15 @@ class TipoEventoController extends HuellaController {
             return "/cliente";
         }
         if ($tipo =="proveedor"){
-            return "/actividades/proveedor";
+            return "/proveedor";
         }
     }
     private function procesarAddAction() {
         $form = $this->tipoeventoManager->createForm();
         $tipoPersona = $this->params()->fromRoute('tipo');
         $url = $this->getRuta($tipoPersona);
-        $this->prepararBreadcrumbs("Listado", $url);
+        $limite= $this->getAnterior();
+        $this->prepararBreadcrumbs("Listado", $url, $limite);
         $paginator = $this->tipoeventoManager->getTabla($tipoPersona);
         $categorias= $this->tipoeventoManager->getCategoriaEventos();
         $page = 1;
@@ -113,7 +114,7 @@ class TipoEventoController extends HuellaController {
         $id = (int) $this->params()->fromRoute('id');
         $tipoevento = $this->tipoeventoManager->getTipoEventoId($id);
         $tipoPersona = $this->params()->fromRoute('tipo');
-        $url = $this->getRuta($tipo);
+        $url = $this->getRuta($tipoPersona);
         $this->prepararBreadcrumbs("Editar","/edit/".$id);
         $categorias= $this->tipoeventoManager->getCategoriaEventos();
         $form = $this->tipoeventoManager->getFormForTipoEvento($tipoevento);

@@ -37,10 +37,11 @@ class EventoVentaController extends EventoController
     }
 
     private function procesarIndexAction() {
-        $this->prepararBreadcrumbs("Resumen de Eventos", "/eventos");
         $request = $this->getRequest();
        //SE OBTIENE LA PERSONA DE LA RUTA POR SI SE LO LLAMA DE CLIENTE/PROVEEDOR
         $persona= $this->params()->fromRoute('tipo');
+        $this->prepararBreadcrumbs("Resumen de Eventos", "/eventos/".$persona);
+
         if (isset($persona)){
             //si llego una persona por ruta se la guarda en la sesion para paginator
             $_SESSION['EVENTO']['tipo_persona'] = $persona;
@@ -60,7 +61,7 @@ class EventoVentaController extends EventoController
             //SI NO HAY PARAMETROS CREAR NUEVOS
             $parametros = array();
         }
-        if ($_SESSION['EVENTO']['tipo_persona'] == "empresa"){
+        if (($_SESSION['EVENTO']['tipo_persona'] == "empresa") and isset($parametros['tipo_persona'])){
             //SI LLEGO DESDE EMPRESA TOMO EL TIPO DE PERSONA DEL FORMULARIO
             $tipoPersona = $parametros['tipo_persona'];       
         }
@@ -75,7 +76,10 @@ class EventoVentaController extends EventoController
             unset($parametros['tipo_persona']);
             // $_SESSION['PARAMETROS_VENTA'] = $parametros;
         }
-        $accionComercial = $parametros['tipo']; 
+        $accionComercial=null;
+        if (isset($parametros['tipo'])){
+            $accionComercial = $parametros['tipo']; 
+        }
         if ((is_null($accionComercial)) or ($accionComercial== '-1')){
             //SI NO SE SELECCIONO ACCION COMERCIAL MOSTRAR TODO TIPO DE EVENTO
             $accionComercial =null;
@@ -104,7 +108,6 @@ class EventoVentaController extends EventoController
             'accionComercial' =>$accionComercial,
             'persona' => $persona,
             'tipoPersona' =>$tipoPersona,
-            'personaParametro' => $persona_parametro,
             'total' => $total,
             'tipos' => $tipoEventos,
         ]);

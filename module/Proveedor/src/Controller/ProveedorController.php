@@ -141,7 +141,6 @@ class ProveedorController extends HuellaController
         return new ViewModel([
             'proveedor' => $proveedor,
             'persona' => $persona,
-            'mensaje' => $mensaje,
             'categorias' => $categorias,
             'condiciones_iva' => $condiciones_iva,
             'profesiones' => $profesion,
@@ -172,13 +171,10 @@ class ProveedorController extends HuellaController
     public function fichaAction(){
         $id_persona = (int)$this->params()->fromRoute('id', -1);
         $persona = $this->personaManager->getPersona($id_persona);
-        $limite = "";
-        if ($persona->getEstado() == "S") {
-            $limite = "Listado";
-        }
-        else{
-            $limite = "Inactivos";
-        }
+        // $bread= ((array)(json_decode($_SESSION['breadcrumb'])));
+        // $ultimo = ((array)end($bread['route']));
+        // $limite= $ultimo['label'];
+        $limite = $this->getAnterior();
         $this->prepararBreadcrumbs("Ficha Proveedor", "/ficha/".$id_persona, $limite);
         $data = $this->proveedorManager->getDataFicha($id_persona);
         $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();

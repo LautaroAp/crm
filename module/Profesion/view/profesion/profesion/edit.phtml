@@ -65,21 +65,7 @@
 
             <div class="col ficha-cliente-p img-centrar">
                 <div>
-                    <?php if ($tipo=="cliente"){ ?> 
-                    <a href="<?= $this->url('gestionClientes/categorias', ['tipo'=>'cliente']) ?>">
-                        <?php }elseif ($tipo=="producto"){ ?>
-                            <a href="<?= $this->url('gestionProductosServicios/gestionProductos', ['tipo'=>'producto']) ?>">
-                        <?php }elseif ($tipo=="licencia"){ ?>
-                            <a href="<?= $this->url('gestionProductosServicios/gestionLicencias', ['tipo'=>'licencia']) ?>">
-                        <?php }elseif ($tipo=="servicio"){ ?>
-                            <a href="<?= $this->url('gestionProductosServicios/gestionServicios', ['tipo'=>'servicio']) ?>">
-                        <?php }elseif ($tipo=="evento"){ ?>
-                            <a href="<?= $this->url('gestionClientes/actividades/profesion', ['tipo'=>'evento']) ?>">
-                        <?php }elseif ($tipo=="iva"){ ?>
-                            <a href="<?= $this->url('herramientas/categorias', ['tipo'=>'iva']) ?>">
-                        <?php }else{ ?>
-                            <a href="<?= $this->url('home') ?>">
-                        <?php } ?>
+                    <a href="<?= $this->url('gestionClientes/profesion')?>">
                         <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha">
                     </a>

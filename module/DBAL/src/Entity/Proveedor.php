@@ -41,6 +41,10 @@ class Proveedor {
 
 
     /**
+     * @ORM\Column(name="DIRECCION_FACTURACION", nullable=true, type="string", length=255)
+     */
+    private $direccion_facturacion;
+    /**
      * @ORM\Column(name="EMPRESA", nullable=true, type="string", length=255)
      */
     private $empresa;

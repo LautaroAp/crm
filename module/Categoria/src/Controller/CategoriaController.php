@@ -176,11 +176,11 @@ class CategoriaController extends HuellaController {
         }elseif (strtoupper($tipo)==strtoupper("proveedor")){
             return $this->redirect()->toRoute('gestionProveedores/categorias', ['tipo'=>'proveedor']);
         }elseif (strtoupper($tipo)==strtoupper("producto")){
-            return $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/categoriaproducto', ['tipo'=>'producto']);
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/categorias', ['tipo'=>'producto']);
         }elseif (strtoupper($tipo)==strtoupper("licencia")){
-            return $this->redirect()->toRoute('gestionProductosServicios/gestionLicencias/categorialicencia', ['tipo'=>'licencia']);
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionLicencias/categorias', ['tipo'=>'licencia']);
         }elseif (strtoupper($tipo)==strtoupper("servicio")){
-            return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/categoriaservicio', ['tipo'=>'servicio']);
+            return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/categorias', ['tipo'=>'servicio']);
         }elseif (strtoupper($tipo)==strtoupper("evento")){
             return $this->redirect()->toRoute('gestionClientes/gestionEventosClientes/categorias', ['tipo'=>'evento']);
         }elseif (strtoupper($tipo)==strtoupper("iva")){

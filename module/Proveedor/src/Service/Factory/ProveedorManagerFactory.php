@@ -14,7 +14,7 @@ class ProveedorManagerFactory implements FactoryInterface {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $usuarioManager = $container->get(UsuarioManager::class);
         $personaManager = $container->get(PersonaManager::class);
-        return new ProveedorManager($entityManager, $usuarioManager, $personaManager, $ganaderiaManager);
+        return new ProveedorManager($entityManager, $usuarioManager, $personaManager);
     }
 
 }

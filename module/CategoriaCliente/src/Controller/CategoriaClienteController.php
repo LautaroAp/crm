@@ -37,8 +37,6 @@ class CategoriaClienteController extends HuellaController {
 
     private function procesarIndexAction() {
         $paginator = $this->categoriaclienteManager->getTabla();
-        $mensaje = "";
-
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
@@ -50,7 +48,6 @@ class CategoriaClienteController extends HuellaController {
         return new ViewModel([
             'categoriaclientes' => $categoriaclientes,
             'categorias_pag' => $paginator,
-            'mensaje' => $mensaje
         ]);
     }
 
@@ -62,7 +59,6 @@ class CategoriaClienteController extends HuellaController {
     private function procesarAddAction() {
         $form = $this->categoriaclienteManager->createForm();
         $paginator = $this->categoriaclienteManager->getTabla();
-        $mensaje = "";
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
@@ -78,7 +74,6 @@ class CategoriaClienteController extends HuellaController {
         return new ViewModel([
             'form' => $form,
             'categorias_pag' => $paginator,
-            'mensaje' => $mensaje
         ]);
     }
 

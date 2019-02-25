@@ -58,7 +58,6 @@ class EventoController extends HuellaController {
 
     private function procesarIndexAction() {
         $paginator = $this->eventoManager->getTabla();
-        $mensaje = "";
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
@@ -67,7 +66,6 @@ class EventoController extends HuellaController {
                 ->setItemCountPerPage(10);
         return new ViewModel([
             'eventos' => $paginator,
-            'mensaje' => $mensaje
         ]);
     }
 
