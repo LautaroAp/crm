@@ -6,7 +6,6 @@ vendor/
 config/*.conf
 config/autoload/*.local.php
 config/autoload/*.global.php
-public/json/breadcrumbs.json
 
 # Private files 
 nbproject/private/private.properties
@@ -32,5 +31,3 @@ demos/
 extras/documentation
 /nbproject/private/
 
-
-crm/public/json/breadcrumbs.json
