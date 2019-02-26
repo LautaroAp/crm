@@ -112,7 +112,6 @@ class EjecutivoController extends HuellaController {
             $data = $this->ejecutivoManager->getData($id);
             $form->setData(array(
                     'id_ejecutivo'=>$id,
-                    'apellido'=>$data['apellido'],
                     'nombre'=>$data['nombre'],
                     'mail'=>$data['mail'],
                     'usuario'=>$data['usuario'],

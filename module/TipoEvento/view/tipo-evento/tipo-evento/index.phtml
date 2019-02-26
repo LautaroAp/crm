@@ -108,7 +108,11 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
                                                 <a class="btn btn-default" href="<?= $this->url('actividades/editar', ['action' => 'edit', 'tipo'=>$tipoPersona, 'id' => $tipo->getId()]); ?>">
                                                     <span class="glyphicon glyphicon-pencil" ></span> 
                                                 </a>
-                                                <button name="<?= $tipo->getId() ?>" id="<?= $tipo->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $tipo->getId() ?>">
+                                                <button   <?php if ((($tipo->getCategoria_evento())!=null) and 
+                                                ($tipo->getCategoria_evento()->getId()==16)){echo ("disabled");} ?>
+                                                name="<?= $tipo->getId() ?>" id="<?= $tipo->getId() ?>"
+                                                type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $tipo->getId() ?>"
+                                                >
                                                     <span class="glyphicon glyphicon-remove" ></span>
                                                 </button>
                                             </td>
