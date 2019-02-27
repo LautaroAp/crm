@@ -85,7 +85,7 @@ $proveedor = $bien->getProveedor();
                     <div class="form-group col-md-6">
                         <label>Stock</label>
                         <input type="text" class="form-control" name="stock"
-                            value="<?= $producto->getStock(); ?>">
+                            value="<?= $producto->getStock(); ?>"  onkeypress="return justNumbers(event);">
                     </div>
                 </div>
                 <!-- 5ta fila -->
@@ -189,7 +189,7 @@ $proveedor = $bien->getProveedor();
                     <div class="form-group col-md-4">
                         <label>Total IVA $</label>
                         <input type="text" class="form-control" name="iva_total" id="iva_total"
-                            value="<?= $bien->getIva_gravado(); ?>">
+                            value="<?= $bien->getIva_gravado(); ?>" readonly >
                     </div>
                 </div>
                 <!-- 4ta fila -->

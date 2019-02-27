@@ -14,6 +14,15 @@ function calculaCostoTotalCompra() {
         $("#precio_compra").val("0");
         calculaCostoTotalCompra();
     }
+    if (($("#costos_directos").val()) == "") {
+        $("#costos_directos").val("0");
+        calculaCostoTotalCompra();
+    }
+        if (($("#gastos_directos").val()) == "") {
+        $("#gastos_directos").val("0");
+        calculaCostoTotalCompra();
+    }
+   
 
     // Precio Total de Compra
     $total = parseFloat($('#precio_compra').val());

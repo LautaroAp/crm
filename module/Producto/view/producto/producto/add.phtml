@@ -67,7 +67,8 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label>Stock</label>
-                        <input type="text" class="form-control" name="stock" placeholder="Ingresar stock inicial" required="True">
+                        <input type="text" class="form-control" name="stock" placeholder="Ingresar stock inicial" required="True" 
+                        onkeypress="return justNumbers(event);">
                     </div>
                 </div>
                 <!-- 5ta fila -->
@@ -157,7 +158,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label>Total IVA $</label>
-                        <input type="text" class="form-control" name="iva_total" id="iva_total" value=0>
+                        <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
                     </div>
                 </div>
                 <!-- 4ta fila -->
