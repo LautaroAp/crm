@@ -21,14 +21,19 @@ class ServicioManager {
 
     protected $ivaManager;
     protected $categoriaManager;
+    protected $bienesManager;
+    private $tipo;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $ivaManager, $categoriaManager, $proveedorManager) {
+    public function __construct($entityManager, $ivaManager, $categoriaManager, $proveedorManager,
+    $bienesManager) {
         $this->entityManager = $entityManager;
         $this->ivaManager=$ivaManager;
         $this->categoriaManager=$categoriaManager;
         $this->proveedorManager= $proveedorManager;
+        $this->bienesManager = $bienesManager;
+        $this->tipo = "SERVICIO";
     }
 
     public function getServicios() {
@@ -48,6 +53,7 @@ class ServicioManager {
         $paginator = new Paginator($adapter);
         return ($paginator);
     }
+
     /**
      * This method adds a new servicio.
      */
@@ -60,30 +66,9 @@ class ServicioManager {
     }
 
     private function setData($servicio, $data){
-        $servicio->setNombre($data['nombre']);
-        $servicio->setDescripcion($data['descripcion']);
-        if($data['categoria'] == "-1"){
-            $servicio->setCategoria(null);
-        } else {
-            // Obtener Entidad con id y pasarla
-            $servicio->setCategoria($this->categoriaManager->getCategoriaId($data['categoria']));
-        }
-        if($data['proveedor'] == "-1"){
-            $servicio->setProveedor(null);
-        } else {            
-            $prov=$this->proveedorManager->getProveedor($data['proveedor']);
-            $servicio->setProveedor($prov);
-        }
-        $servicio->setPrecio($data['precio_venta']);
-        $servicio->setIva_gravado($data['iva_total']);
-        $iva=$this->ivaManager->getIva($data['iva']);
-        $servicio->setIva($iva);
-        $servicio->setPrecio($data['precio_venta']);
-        $servicio->setDescuento($data['descuento']);
-        $servicio->setPrecio_final_dto($data['precio_publico_dto']);
-        $servicio->setPrecio_final_iva($data['precio_publico_iva']);
-        $servicio->setPrecio_final_iva_dto($data['precio_publico_iva_dto']);
-        //MONEDA
+        $data['tipo']=$this->tipo;
+        $bien = $this->bienesManager->addBien($data);
+        $servicio->setBien($bien);
         return $servicio;
     }
 
@@ -91,13 +76,17 @@ class ServicioManager {
      * This method updates data of an existing servicio.
      */
     public function updateServicio($servicio, $data) {
-        $servicio=$this->setData($servicio, $data);
+        $bien = $servicio->getBien();
+        $data['tipo']=$this->tipo;
+        $this->bienesManager->updateBien($bien, $data);
         // Apply changes to database.
         $this->entityManager->flush();
         return true;
     }
 
     public function removeServicio($servicio) {
+        $bien = $servicio->getBien();
+        $this->bienesManager->removeBien($bien);
         $this->entityManager->remove($servicio);
         $this->entityManager->flush();
     }

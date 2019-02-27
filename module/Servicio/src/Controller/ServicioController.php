@@ -23,14 +23,15 @@ class ServicioController extends HuellaController {
     protected $servicioManager;
     private $ivaManager;
     private $categoriaManager;
-
+    private $bienesManager;
 
     public function __construct($entityManager, $servicioManager, $ivaManager,
-    $categoriaManager) {
+    $categoriaManager, $bienesManager) {
         $this->entityManager = $entityManager;
         $this->servicioManager = $servicioManager;
         $this->ivaManager= $ivaManager;
         $this->categoriaManager = $categoriaManager;
+        $this->bienesManager = $bienesManager;
     }
 
     public function indexAction() {

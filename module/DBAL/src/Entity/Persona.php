@@ -4,7 +4,7 @@ namespace DBAL\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Description of Ejecutivo
+ * Description of Persona
  *
  * This class represents a registered user.
  * @ORM\Entity()
@@ -56,7 +56,7 @@ class Persona {
     /**
      * 
      * @ORM\OneToMany(targetEntity="\DBAL\Entity\Evento", mappedBy="persona")
-     * @ORM\OrderBy({"fecha" = "desc"})
+     * @ORM\OrderBy({"id" = "desc"})
      */
     private $eventos;
 

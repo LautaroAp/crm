@@ -6,6 +6,7 @@ use Producto\Service\ProductoManager;
 use Iva\Service\IvaManager;
 use Categoria\Service\CategoriaManager;
 use Proveedor\Service\ProveedorManager;
+use Bienes\Service\BienesManager;
 
 /**
  * This is the factory class for ProductoManager service. The purpose of the factory
@@ -22,7 +23,9 @@ class ProductoManagerFactory
         $ivaManager = $container->get(IvaManager::class);
         $categoriaManager = $container->get(CategoriaManager::class);         
         $proveedorManager = $container->get(ProveedorManager::class);
-     
-        return new ProductoManager($entityManager, $ivaManager, $categoriaManager, $proveedorManager);
+        $bienesManager = $container->get(BienesManager::class);
+
+        return new ProductoManager($entityManager, $ivaManager, $categoriaManager, $proveedorManager,
+        $bienesManager);
     }
 }

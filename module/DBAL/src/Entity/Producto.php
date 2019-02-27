@@ -152,6 +152,12 @@ class Producto
      */
     protected $moneda;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Bienes")
+     * @ORM\JoinColumn(name="ID_BIEN", referencedColumnName="ID")
+     */
+    private $bien;
+
     public function getId(){
         return $this->id_producto;
     }
@@ -596,5 +602,25 @@ class Producto
             return $this->categoria->getNombre();
         }
 
+    }
+
+    /**
+     * Get the value of bien
+     */ 
+    public function getBien()
+    {
+        return $this->bien;
+    }
+
+    /**
+     * Set the value of bien
+     *
+     * @return  self
+     */ 
+    public function setBien($bien)
+    {
+        $this->bien = $bien;
+
+        return $this;
     }
 }

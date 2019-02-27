@@ -3,20 +3,22 @@ namespace DBAL\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Description of Servicio
+ * Description of Bienes
  *
  * This class represents a registered servicio.
  * @ORM\Entity()
- * @ORM\Table(name="SERVICIO")
+ * @ORM\Table(name="BIENES_DE_CAMBIO")
  */
-class Servicio {
-
+class Bienes {
+    //put your code here
+    
+    
     /**
      * @ORM\Id
-     * @ORM\Column(name="ID_SERVICIO", type="integer")
+     * @ORM\Column(name="ID", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id_servicio;
+    protected $id;
     
     /**
      * @ORM\Column(name="NOMBRE", nullable=true, type="string", length=255)
@@ -85,12 +87,10 @@ class Servicio {
     protected $moneda;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bienes")
-     * @ORM\JoinColumn(name="ID_BIEN", referencedColumnName="ID")
+     * @ORM\Column(name="TIPO", nullable=true, type="integer")
      */
-    private $bien;
-
-
+    protected $tipo;
+    
     /**
      * Get the value of id_servicio
      */ 
@@ -358,21 +358,21 @@ class Servicio {
     }
 
     /**
-     * Get the value of bien
+     * Get the value of tipo
      */ 
-    public function getBien()
+    public function getTipo()
     {
-        return $this->bien;
+        return $this->tipo;
     }
 
     /**
-     * Set the value of bien
+     * Set the value of tipo
      *
      * @return  self
      */ 
-    public function setBien($bien)
+    public function setTipo($tipo)
     {
-        $this->bien = $bien;
+        $this->tipo = $tipo;
 
         return $this;
     }

@@ -45,5 +45,6 @@ return [
     'Iva',
     'CategoriaLicencia',
     'Categoria',
-    'Proveedor'
+    'Proveedor',
+    'Bienes'
 ];

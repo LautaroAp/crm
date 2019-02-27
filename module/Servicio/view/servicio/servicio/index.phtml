@@ -26,14 +26,16 @@ $this->headTitle('Servicios');
                             
                             </thead>
 
-                            <?php foreach ($servicios as $servicio) : ?>
+                            <?php foreach ($servicios as $servicio) :
+                                $bien = $servicio->getBien();
+                            ?>
                                 <tr>
-                                    <td><?php echo ($servicio->getNombre()); ?></td>
-                                    <td><?php echo ($servicio->getCategoriaNombre()); ?></td>
-                                    <td><?php echo  money_format("$ %n",($servicio->getPrecio())); ?></td>
-                                    <td><?php echo ($servicio->getDescuento()); ?></td>
-                                    <td><?php echo  money_format("$ %n",($servicio->getPrecio_final_iva())); ?></td>
-                                    <td><?php echo  money_format("$ %n",($servicio->getPrecio_final_iva_dto())); ?></td>
+                                    <td><?php echo ($bien->getNombre()); ?></td>
+                                    <td><?php echo ($bien->getCategoriaNombre()); ?></td>
+                                    <td><?php echo  money_format("$ %n",($bien->getPrecio())); ?></td>
+                                    <td><?php echo ($bien->getDescuento()); ?></td>
+                                    <td><?php echo  money_format("$ %n",($bien->getPrecio_final_iva())); ?></td>
+                                    <td><?php echo  money_format("$ %n",($bien->getPrecio_final_iva_dto())); ?></td>
                                     <td class="table-items-right"> 
                                     <a class="btn btn-default" href="<?= $this->url('gestionProductosServicios/gestionServicios/editar', ['action' => 'edit', 'tipo'=>'servicio','id' => $servicio->getId()]); ?>">
                                         <span class="glyphicon glyphicon-pencil" ></span> 

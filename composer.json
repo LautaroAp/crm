@@ -62,7 +62,8 @@
             "Iva\\": "module/Iva/src/",
             "CategoriaLicencia\\": "module/CategoriaLicencia/src/",
             "Categoria\\": "module/Categoria/src/",
-            "Proveedor\\": "module/Proveedor/src/"
+            "Proveedor\\": "module/Proveedor/src/",
+            "Bienes\\": "module/Bienes/src/"
 
 
 

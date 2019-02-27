@@ -21,14 +21,16 @@
                     </thead>
                     <tbody>
                         <?php if (isset($productos_pag)) { 
-                            foreach ($productos_pag as $producto) : ?>
+                            foreach ($productos_pag as $producto) : 
+                                $bien = $producto->getBien();
+                        ?>
                                 <tr>
-                                    <td><?php echo ($producto->getNombre()); ?></td>
-                                    <td><?php echo ($producto->getDescripcion()); ?></td>
-                                    <td><?php echo ($producto->getCategoriaNombre()); ?></td>
+                                    <td><?php echo ($bien->getNombre()); ?></td>
+                                    <td><?php echo ($bien->getDescripcion()); ?></td>
+                                    <td><?php echo ($bien->getCategoriaNombre()); ?></td>
                                     <td><?php echo ($producto->getStock()); ?></td>
-                                    <td><?php echo money_format("$ %n", $producto->getPrecio_venta()); ?></td>
-                                    <td><?php echo money_format("$ %n", $producto->getPrecio_venta() * $producto->getStock()); ?></td>
+                                    <td><?php echo money_format("$ %n", $bien->getPrecio()); ?></td>
+                                    <td><?php echo money_format("$ %n", $bien->getPrecio() * $producto->getStock()); ?></td>
                                     <td>
                                         <div class="pull-right">
                                             <a class="btn btn-default" href="<?= $this->url('gestionProductosServicios/gestionProductos/editar',

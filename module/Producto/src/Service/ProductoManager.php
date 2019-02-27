@@ -22,15 +22,20 @@ class ProductoManager
     private $ivaManager;
     private $proveedorManager;
     private $categoriaManager;
+    private $bienesManager;
+    private $tipo;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $ivaManager, $categoriaManager, $proveedorManager) 
+    public function __construct($entityManager, $ivaManager, $categoriaManager, $proveedorManager,
+    $bienesManager) 
     {
         $this->entityManager = $entityManager;
         $this->ivaManager= $ivaManager;
         $this->categoriaManager= $categoriaManager;
         $this->proveedorManager= $proveedorManager;
+        $this->tipo = "PRODUCTO";
+        $this->bienesManager= $bienesManager;
     }
     
      public function getProductos(){
@@ -48,8 +53,8 @@ class ProductoManager
      */
     public function addProducto($data) {
         $producto = new Producto();
-        $this->addDatosParticularesProducto($producto, $data);
-        $this->addDatosEconomicosProducto($producto, $data);
+        $this->addDatosParticularesProducto($producto, $data, $producto->getBien());
+        $this->addDatosEconomicosProducto($producto, $data, $producto->getBien());
         // Apply changes to database.
         $this->entityManager->persist($producto);
         $this->entityManager->flush();
@@ -67,20 +72,14 @@ class ProductoManager
         return true;
     }
 
-    private function addDatosParticularesProducto($producto, $data){
-        $producto->setNombre($data['nombre']);
-        $producto->setDescripcion($data['descripcion']);
-        if($data['categoria'] == "-1"){
-            $producto->setCategoria(null);
-        } else {
-            // Obtener Entidad con id y pasarla
-            $producto->setCategoria($this->categoriaManager->getCategoriaId($data['categoria']));
+    private function addDatosParticularesProducto($producto, $data, $bien =null){
+        $data['tipo'] = $this->tipo;
+        if (isset($bien)){
+            $this->bienesManager->updateBien($bien, $data);
         }
-        if($data['proveedor'] == "-1"){
-            $producto->setProveedor(null);
-        } else {            
-            $prov=$this->proveedorManager->getProveedor($data['proveedor']);
-            $producto->setProveedor($prov);
+        else{
+            $bien = $this->bienesManager->addBien($data);
+            $producto->setBien($bien);
         }
         $producto->setMarca($data['marca']);
         $producto->setPresentacion($data['presentacion']);
@@ -97,13 +96,14 @@ class ProductoManager
         $producto->setPrecio_compra_total($data['precio_compra_total']);
         $producto->setContribucion_marginal_valor($data['cm_valor']);
         $producto->setContribucion_marginal_porcentual($data['cm_porcentual']);
-        $producto->setPrecio_venta($data['precio_venta']);
-        $producto->setPrecio_venta_dto($data['precio_venta_dto']);
-        $producto->setDescuento($data['descuento']);
-        $producto->setIva($this->ivaManager->getIva($data['iva']));
-        $producto->setIva_gravado($data['iva_gravado']);
-        $producto->setPrecio_final_iva($data['precio_final_iva']);
-        $producto->setPrecio_final_iva_dto($data['precio_final_iva_dto']);
+        /////TODO ESTO YA VA A ESTAR EN BIENES
+        // $producto->setPrecio_venta($data['precio_venta']);
+        // $producto->setPrecio_venta_dto($data['precio_venta_dto']);
+        // $producto->setDescuento($data['descuento']);
+        // $producto->setIva($this->ivaManager->getIva($data['iva']));
+        // $producto->setIva_gravado($data['iva_gravado']);
+        // $producto->setPrecio_final_iva($data['precio_final_iva']);
+        // $producto->setPrecio_final_iva_dto($data['precio_final_iva_dto']);
         // Entidad
         // $producto->setMoneda($data['moneda']);
     }

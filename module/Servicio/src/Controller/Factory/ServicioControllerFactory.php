@@ -7,6 +7,7 @@ use Servicio\Controller\ServicioController;
 use Servicio\Service\ServicioManager;
 use Iva\Service\IvaManager;
 use Categoria\Service\CategoriaManager;
+use Bienes\Service\BienesManager;
 
 /**
  * Description of ServicioControllerFactory
@@ -23,8 +24,10 @@ class ServicioControllerFactory implements FactoryInterface {
         $servicioManager = $container->get(ServicioManager::class);
         $ivaManager = $container->get(IvaManager::class);            
         $categoriaManager = $container->get(CategoriaManager::class);
+        $bienesManager = $container->get(BienesManager::class);
+
         // Instantiate the service and inject dependencies
         return new ServicioController($entityManager, $servicioManager, $ivaManager,
-        $categoriaManager);
+        $categoriaManager, $bienesManager);
     }    
 }

@@ -133,29 +133,29 @@ function calculaDescuentoIVA() {
     // Precio Venta con Dto.
     $p_venta_dto = ($p_venta - ($p_venta * $descuento)).toFixed(2);
     if ($p_venta_dto) {
-        $("#precio_venta_dto").val($p_venta_dto);
+        $("#precio_publico_dto").val($p_venta_dto);
     } else {
-        $("#precio_venta_dto").val("0");
+        $("#precio_publico_dto").val("0");
     }
     // Total IVA.
     $iva_gravado = ($p_venta * $iva).toFixed(2);
     if ($p_venta_dto) {
-        $("#iva_gravado").val($iva_gravado);
+        $("#iva_total").val($iva_gravado);
     } else {
-        $("#iva_gravado").val("0");
+        $("#iva_total").val("0");
     }
     // Precio Publico + IVA
     $p_final_iva = ($p_venta + ($p_venta * $iva)).toFixed(2);
     if ($p_final_iva) {
-        $("#precio_final_iva").val($p_final_iva);
+        $("#precio_publico_iva").val($p_final_iva);
     } else {
-        $("#precio_final_iva").val("0");
+        $("#precio_publico_iva").val("0");
     }
     // Precio Publico + IVA + Dto.
     $p_final_iva_dto = (($p_venta - ($p_venta * $descuento)) + (($p_venta - ($p_venta * $descuento)) * $iva)).toFixed(2);
     if ($p_final_iva_dto) {
-        $("#precio_final_iva_dto").val($p_final_iva_dto);
+        $("#precio_publico_iva_dto").val($p_final_iva_dto);
     } else {
-        $("#precio_final_iva_dto").val("0");
+        $("#precio_publico_iva_dto").val("0");
     }
 }

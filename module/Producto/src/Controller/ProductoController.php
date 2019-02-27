@@ -54,12 +54,11 @@ class ProductoController extends HuellaController {
     
     private function procesarAddAction() {
         $this->prepararBreadcrumbs("Agregar Producto", "/add/producto", "Productos");
-        $request = $this->getRequest();
         $tipo= $this->params()->fromRoute('tipo');
         $categoriaProductos = $this->productoManager->getCategoriaProducto(null,$tipo);
         $proveedores = $this->productoManager->getListaProveedores();
         $ivas = $this->ivaManager->getIvas();
-        if ($request->isPost()) {
+        if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->productoManager->addProducto($data);
             $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/listado');

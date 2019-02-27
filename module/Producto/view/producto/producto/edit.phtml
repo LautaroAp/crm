@@ -2,9 +2,11 @@
 <script src="/js/producto.js"></script>
 <!-- Formulario -->
 <?php
-$categoria = $producto->getCategoria();
-$iva = $producto->getIva();
-$proveedor = $producto->getProveedor();
+$bien = $producto->getBien();
+$categoria = $bien->getCategoria();
+$iva = $bien->getIva();
+$proveedor = $bien->getProveedor();
+
 ?>
 <form method="post">
 <div class="container margen">
@@ -20,7 +22,7 @@ $proveedor = $producto->getProveedor();
                     <div class="form-group col-md-6">
                         <label>Nombre</label>
                         <input type="text" class="form-control" name="nombre"
-                            value="<?= $producto->getNombre(); ?>">
+                            value="<?= $bien->getNombre(); ?>">
                     </div>
                     <div class="form-group col-md-6">
                         <label>Presentación</label>
@@ -33,7 +35,7 @@ $proveedor = $producto->getProveedor();
                     <div class="form-group col-md-6">
                         <label>Descripción</label>
                         <input type="text" class="form-control" name="descripcion"
-                            value="<?= $producto->getDescripcion(); ?>">
+                            value="<?= $bien->getDescripcion(); ?>">
                     </div>
                     <div class="form-group col-md-6">
                         <label>Marca</label>
@@ -63,6 +65,7 @@ $proveedor = $producto->getProveedor();
                                 <option value="<?php if(isset($proveedor)){ echo ($proveedor->getId()); }?>" hidden="">  
                                     <?php if(isset($proveedor)){ echo $proveedor->getPersona()->getNombre(); } else {echo ("Seleccionar Proveedor");}?>
                                 </option>
+                                <option value="-1">NO DEFINIDO</option>
                                 <?php foreach ($proveedores as $proveedor) : ?>
                                     <option value="<?= $proveedor->getId(); ?>">
                                         <?= $proveedor->getPersona()->getNombre(); ?>
@@ -153,13 +156,13 @@ $proveedor = $producto->getProveedor();
                     <div class="form-group col-md-4">
                         <label>Precio de Venta</label>
                         <input type="text" class="form-control" name="precio_venta" id="precio_venta"
-                            value="<?= $producto->getPrecio_venta(); ?>"
+                            value="<?= $bien->getPrecio(); ?>"
                             onkeypress="return justNumbers(event);" onkeyup="calculaPrecioVenta()">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Precio Venta con Dto.</label>
-                        <input type="text" class="form-control" name="precio_venta_dto" id="precio_venta_dto"
-                            value="<?= $producto->getPrecio_venta_dto(); ?>" readonly>
+                        <input type="text" class="form-control" name="precio_publico_dto" id="precio_publico_dto"
+                            value="<?= $bien->getPrecio_final_dto(); ?>" readonly>
                     </div>
                 </div>
                 <!-- 3ra fila -->
@@ -167,7 +170,7 @@ $proveedor = $producto->getProveedor();
                     <div class="form-group col-md-2">
                         <label>% Descuento</label>
                         <input type="text" class="form-control" name="descuento" id="descuento"
-                            value="<?= $producto->getDescuento(); ?>"
+                            value="<?= $bien->getDescuento(); ?>"
                             onkeypress="return justNumbers(event);" onkeyup="calculaDescuentoIVA()">
                     </div>
                     <div class="form-group col-md-2">
@@ -185,21 +188,21 @@ $proveedor = $producto->getProveedor();
                     </div>
                     <div class="form-group col-md-4">
                         <label>Total IVA $</label>
-                        <input type="text" class="form-control" name="iva_gravado" id="iva_gravado"
-                            value="<?= $producto->getIva_gravado(); ?>">
+                        <input type="text" class="form-control" name="iva_total" id="iva_total"
+                            value="<?= $bien->getIva_gravado(); ?>">
                     </div>
                 </div>
                 <!-- 4ta fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>Precio Publico + IVA</label>
-                        <input type="text" class="form-control" name="precio_final_iva" id="precio_final_iva"
-                            value="<?= $producto->getPrecio_final_iva(); ?>" readonly>
+                        <input type="text" class="form-control" name="precio_publico_iva" id="precio_publico_iva"
+                            value="<?= $bien->getPrecio_final_iva(); ?>" readonly>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Precio Publico +IVA con Dto.</label>
-                        <input type="text" class="form-control" name="precio_final_iva_dto" id="precio_final_iva_dto"
-                            value="<?= $producto->getPrecio_final_iva_dto(); ?>" readonly>
+                        <input type="text" class="form-control" name="precio_publico_iva_dto" id="precio_publico_iva_dto"
+                            value="<?= $bien->getPrecio_final_iva_dto(); ?>" readonly>
                     </div>
                 </div>
             </div>
