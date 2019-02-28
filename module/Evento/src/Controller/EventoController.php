@@ -10,11 +10,6 @@ namespace Evento\Controller;
 
 use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
-use Zend\Paginator\Paginator;
-use DBAL\Entity\Evento;
-use DBAL\Entity\Cliente;
-use DBAL\Entity\TipoEvento;
-use Zend\Filter\StringToLower;
 
 class EventoController extends HuellaController {
 

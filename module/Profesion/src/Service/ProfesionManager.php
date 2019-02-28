@@ -2,7 +2,6 @@
 namespace Profesion\Service;
 
 use DBAL\Entity\Profesion;
-use Profesion\Form\ProfesionForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 

@@ -10,8 +10,6 @@ namespace Categoria\Controller;
 
 use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
-use Categoria\Service\CategoriaManager;
-
 
 class CategoriaController extends HuellaController {
 

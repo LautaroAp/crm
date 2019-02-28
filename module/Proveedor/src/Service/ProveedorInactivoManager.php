@@ -2,11 +2,6 @@
 
 namespace Proveedor\Service;
 
-use DBAL\Entity\Proveedor;
-use Zend\Paginator\Paginator;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-
 /**
  * PARECIERA QUE ESTA CLASE NO ES NECESARIA
  */

@@ -10,9 +10,6 @@ namespace TipoEvento\Controller;
 
 use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
-use DBAL\Entity\CategoriaEvento;
-use DBAL\Entity\Evento;
-
 
 class TipoEventoController extends HuellaController {
 

@@ -5,11 +5,7 @@
 
 namespace Moneda;
 
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
-use Application;
-
 
 return [
    'router' => [

@@ -5,7 +5,6 @@ namespace Clientes\Service\Factory;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Clientes\Service\ClientesInactivosManager;
-use Clientes\Service\ClientesManager;
 use Usuario\Service\UsuarioManager;
 use Persona\Service\PersonaManager;
 

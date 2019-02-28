@@ -16,7 +16,10 @@ class IndexController extends HuellaController {
         $this->empresaManager = $empresaManager;
     }
 
+<<<<<<< HEAD
    
+=======
+>>>>>>> db7ddc152466c17d63fa0fecd03bb20eb0b394a1
     public function viewAction() {
         return new ViewModel();
     }
@@ -78,16 +81,6 @@ class IndexController extends HuellaController {
         return new ViewModel();
     }
 
-    // public function gestionProductosProveedorAction() {
-    //     $this->reiniciarParametros();
-    //     return new ViewModel();
-    // }
-
-    // public function gestionServiciosProveedorAction() {
-    //     $this->reiniciarParametros();
-    //     return new ViewModel();
-    // }
-
     public function gestionEmpresaAction() {
         $label = "Empresa";
         $url = "/empresa";
@@ -142,14 +135,5 @@ class IndexController extends HuellaController {
         $this->reiniciarParametros();
         return new ViewModel();
     }
-
-    // public function utilidadesAction() {
-    //     $this->reiniciarParametros();
-    //     return new ViewModel();
-    // }
-
-    // public function gestionAction() {
-    //     $this->reiniciarParametros();
-    //     return new ViewModel();
-    // }     
+ 
 }

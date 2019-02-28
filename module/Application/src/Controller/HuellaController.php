@@ -6,6 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use DBAL\Entity\Empresa;
 
+
 class HuellaController extends AbstractActionController {
 
     protected $breadcrumbs;

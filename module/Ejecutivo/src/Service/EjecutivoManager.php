@@ -3,12 +3,9 @@
 namespace Ejecutivo\Service;
 
 use DBAL\Entity\Ejecutivo;
-use DBAL\Entity\Persona;
 use Zend\Paginator\Paginator;
-use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-
 
 /**
  * This service is responsible for adding/editing ejecutivos

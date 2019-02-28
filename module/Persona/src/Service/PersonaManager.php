@@ -3,7 +3,6 @@
 namespace Persona\Service;
 
 use DBAL\Entity\Persona;
-use DBAL\Entity\Cliente;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
