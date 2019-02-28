@@ -92,8 +92,7 @@ class EmpresaManager {
         ));
     }
 
-    public function updateEmpresa($empresa, $form) {
-        $data = $form->getData();
+    public function updateEmpresa($empresa, $data) {
         $empresa->setNombre($data['nombre']);
         $empresa->setDireccion($data['direccion']);
         $empresa->setTelefono($data['telefono']);
@@ -106,14 +105,18 @@ class EmpresaManager {
         $empresa->setVencimiento_cai($vencimiento_cai);
         $empresa->setRazon_social($data['razon_social']);
         $empresa->setTipo_iva('tipo_iva');
-        if (isset($data['moneda'])){
-            $empresa->setMoneda($data['moneda']);
-        }
+        // if (isset($data['moneda'])){
+        //     $empresa->setMoneda($data['moneda']);
+        // }
         $empresa->setLocalidad($data['localidad']);
         $empresa->setProvincia($data['provincia']);
         $empresa->setPais($data['pais']);
         $empresa->setCP($data['CP']);
         $empresa->setParametro_vencimiento($data['parametro_vencimiento']);
+        $empresa->setParametro_elementos_pagina($data['elems_pagina']);
+
+        $_SESSION['ELEMSPAG']= $data['elems_pagina'];
+        
         if ($this->tryUpdateEmpresa($empresa)) {
             $_SESSION['MENSAJES']['empresa'] = 1;
             $_SESSION['MENSAJES']['empresa_msj'] = 'Datos editados correctamente';
@@ -164,5 +167,17 @@ class EmpresaManager {
             $this->entityManager->rollBack();
             return false;
         }
+    }
+
+    public function getEmpresa()
+    {
+        $empresas = $this->getEmpresas();
+        $empresa = $empresas[0];
+        return $empresa;
+    }
+
+    public function getElemsPag(){
+        $empresa = $this->getEmpresa();
+        return $empresa->getParametro_elementos_pagina();
     }
 }

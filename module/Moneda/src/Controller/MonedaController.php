@@ -38,7 +38,7 @@ class MonedaController extends HuellaController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(3);
+                ->setItemCountPerPage($this->getElemsPag());
 
         $monedas = $this->monedaManager->getMonedas();
         return new ViewModel([
@@ -64,7 +64,7 @@ class MonedaController extends HuellaController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
+                ->setItemCountPerPage($this->getElemsPag());
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();

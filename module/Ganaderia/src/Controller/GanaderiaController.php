@@ -41,7 +41,7 @@ class GanaderiaController extends HuellaController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(3);
+                ->setItemCountPerPage($this->getElemsPag());
 
         $ganaderias = $this->ganaderiaManager->getGanaderias();
         return new ViewModel([
@@ -63,7 +63,7 @@ class GanaderiaController extends HuellaController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(4);
+                ->setItemCountPerPage($this->getElemsPag());
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();

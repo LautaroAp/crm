@@ -4,11 +4,14 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use DBAL\Entity\Empresa;
 
 class HuellaController extends AbstractActionController {
 
     protected $breadcrumbs;
-    private $entityManager;
+    protected $entityManager;
+    protected $elemsPag;
+
 
     public function __construct($entityManager) {
         $this->entityManager = $entityManager;
@@ -24,11 +27,11 @@ class HuellaController extends AbstractActionController {
     }
 
     public function prepararBreadcrumbs($label, $url, $limite = null){
+        
         $data = $_SESSION['breadcrumb'];
         $data_decoded =  json_decode($data, true);
         $agregar = ['label' => $label, 'url' => $url];
         $rutas=$data_decoded['route'];   
-      
         //solo agrega rutas si no estan agregadas
         if ((!$this->pertenece($rutas, $agregar))){
              //si tiene un limite pasado con el ultimo valor posible eliminar las sig migas   
@@ -46,10 +49,7 @@ class HuellaController extends AbstractActionController {
             $rutas = $this->eliminarUltimos($rutas, $agregar['label']);
             $json = $this->guardarJson($rutas, $data_decoded);
         }  
-        // print_r("<br>");
-        // print_r("<br>");
-        // print_r("<br>");
-        // print_r($rutas);
+
         $this->layout()->setVariable('rutas', $rutas);
         $this->layout()->setVariable('json', $json); 
     }
@@ -77,29 +77,8 @@ class HuellaController extends AbstractActionController {
         //con la ruta inicial Home.
         if ($label=="Home"){
             $nuevo = ['route'=>[['label'=>$label, 'url'=>$url]]];
-            $json= json_encode($nuevo);
-            // $data= $_SESSION['breadcrumb'];
-            // // $data = file_get_contents("public/json/breadcrumbs.json");
-            // $data_decoded =  json_decode($data, true);
-            // //lo vuelvo un nuevo arreglo vacio
-            // $data_decoded['route']= Array();
-            // $arr = array('label' => $label, 'url' => $url);
-            // // //le agrego la ruta y label de home
-            // array_push($data_decoded['route'], $arr);
-            // $json = json_encode($data_decoded);
-            // // file_put_contents("public/json/breadcrumbs.json", $json);
-            // // $data = file_get_contents("public/json/breadcrumbs.json");
-            // // $data_decoded =  json_decode($data, true);
-            // $data = $_SESSION['breadcrumb'];
-            // $data_decoded =  json_decode($data, true);
-            // $agregar = ['label' => $label, 'url' => $url];
-            // $rutas=$data_decoded['route']; 
+            $json= json_encode($nuevo);        
             $_SESSION['breadcrumb']= $json;  
-            // print_r("<br>");
-            // print_r("<br>");
-            // print_r("<br>");
-            // print_r($nuevo);
-
             $this->layout()->setVariable('rutas', $nuevo);
         }
     }
@@ -109,5 +88,9 @@ class HuellaController extends AbstractActionController {
         $ultimo = ((array)end($bread['route']));
         $limite= $ultimo['label'];
         return $limite;
+    }
+
+    public function getElemsPag(){
+        return $_SESSION['ELEMSPAG'];
     }
 }

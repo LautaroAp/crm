@@ -60,7 +60,7 @@ class IvaController extends HuellaController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
+                ->setItemCountPerPage($this->getElemsPag());
 
         $ivas = $this->ivaManager->getIvas();
         return new ViewModel([
@@ -82,7 +82,7 @@ class IvaController extends HuellaController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
+                ->setItemCountPerPage($this->getElemsPag());
         $ivas = $this->ivaManager->getIvas();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();

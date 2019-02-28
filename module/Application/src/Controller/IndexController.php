@@ -7,26 +7,16 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends HuellaController {
 
-    private $entityManager;
+    protected $entityManager;
     protected $result;
+    protected $empresaManager;
 
-    public function __construct($entityManager, $clientesManager) {
+    public function __construct($entityManager, $empresaManager) {
         $this->entityManager = $entityManager;
-        $this->clientesManager = $clientesManager;
+        $this->empresaManager = $empresaManager;
     }
 
-    // public function indexAction() {
-    //     $label = "Home";
-    //     $url = "";
-    //     $this->reiniciarBreadcrumbs($label, $url);
-    //     $this->reiniciarParametros();
-    //     $_SESSION['MENSAJES'] = array();
-    //     $_SESSION['CATEGORIA'] = array();
-    //     $_SESSION['TIPOEVENTO'] = array();
-    //     // $this->layout()->setTemplate('layout/simple');
-    //     return new ViewModel();
-    // }
-
+   
     public function viewAction() {
         return new ViewModel();
     }
@@ -38,7 +28,9 @@ class IndexController extends HuellaController {
         $this->reiniciarParametros();
         $_SESSION['MENSAJES'] = array();
         $_SESSION['CATEGORIA'] = array();
-        $_SESSION['TIPOEVENTO'] = array();        
+        $_SESSION['TIPOEVENTO'] = array();         
+        $_SESSION['ELEMSPAG'] = $this->empresaManager->getElemsPag();
+       
         return new ViewModel();
     }
 

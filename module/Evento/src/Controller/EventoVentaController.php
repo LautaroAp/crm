@@ -101,7 +101,7 @@ class EventoVentaController extends EventoController
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
+                ->setItemCountPerPage($this->getElemsPag());
         return new ViewModel([
             'eventos' => $paginator,
             'parametros' => $parametros,

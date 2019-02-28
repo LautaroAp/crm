@@ -5,7 +5,8 @@ namespace Empresa\Controller;
 use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class EmpresaController extends HuellaController {
+class EmpresaController extends HuellaController
+{
 
     /**
      * @var DoctrineORMEntityManager
@@ -26,11 +27,13 @@ class EmpresaController extends HuellaController {
         $this->monedaManager = $monedaManager;
     }
 
-    public function indexAction() {
+    public function indexAction()
+    {
         return $this->procesarIndexAction();
     }
 
-    private function procesarIndexAction() {
+    private function procesarIndexAction()
+    {
         $this->prepararBreadcrumbs("Configuracion", "/configuracion", "Empresa");
         $empresas = $this->empresaManager->getEmpresas();
         $empresa = $empresas[0];
@@ -39,43 +42,38 @@ class EmpresaController extends HuellaController {
         ]);
     }
 
-    public function editAction() {
+    public function editAction()
+    {
         return $this->procesarEditAction();
     }
 
-    public function procesarEditAction() {
-        $empresa = $this->getEmpresa();
-        $this->prepararBreadcrumbs("Editar Empresa", "/editar/".$empresa->getId(), "Configuracion");
-
+    public function procesarEditAction()
+    {
+        $empresa = $this->empresaManager->getEmpresa();
+        $this->prepararBreadcrumbs("Editar Empresa", "/editar/" . $empresa->getId(), "Configuracion");
         $form = $this->empresaManager->getFormForEmpresa($empresa);
-        $monedas=$this->monedaManager->getMonedas();
-        if ($form == null) {
-            $this->getResponse()->setStatusCode(404);
-        } else {
-            if ($this->getRequest()->isPost()) {
-                $data = $this->params()->fromPost();
-                if ($this->empresaManager->formValid($form, $data)) {
-                    $this->empresaManager->updateEmpresa($empresa, $form);
-                    return $this->redirect()->toRoute('gestionEmpresa/configuracion');
-                }
-            } else {
-                $this->empresaManager->getFormEdited($form, $empresa);
-            }
+        $monedas = $this->monedaManager->getMonedas();
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $this->empresaManager->updateEmpresa($empresa, $data);
+            return $this->redirect()->toRoute('gestionEmpresa/configuracion');
+        }
         return new ViewModel(array(
             'empresa' => $empresa,
             'form' => $form,
-            'monedas'=>$monedas
+            'monedas' => $monedas
         ));
-        }
     }
 
-    public function removeAction() {
+    public function removeAction()
+    {
         $view = $this->procesarRemoveAction();
         return $view;
     }
 
-    public function procesarRemoveAction() {
-        $id = (int) $this->params()->fromRoute('id', -1);
+    public function procesarRemoveAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', -1);
         $empresa = $this->empresaManager->getEmpresaId($id);
 
         if ($empresa == null) {
@@ -86,20 +84,17 @@ class EmpresaController extends HuellaController {
             return $this->redirect()->toRoute('application', ['action' => 'view']);
         }
     }
- 
-      public function viewAction() {    
-          return new ViewModel();
+
+    public function viewAction()
+    {
+        return new ViewModel();
     }
 
-    private function getEmpresa(){
-        $empresas = $this->empresaManager->getEmpresas();
-        $empresa = $empresas[0];
-        return $empresa;
-    }
-
-    public function backupAction() {
+    
+    public function backupAction()
+    {
         $this->layout()->setTemplate('layout/nulo');
-        $empresa= $this->getEmpresa();
+        $empresa = $this->empresaManager->getEmpresa();
         return new ViewModel([
             'empresa' => $empresa
         ]);

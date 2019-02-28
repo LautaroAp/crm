@@ -67,7 +67,7 @@ class ProfesionController extends HuellaController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
+                ->setItemCountPerPage($this->getElemsPag());
         
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();

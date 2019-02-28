@@ -38,7 +38,7 @@ class ProductoController extends HuellaController {
             $page = $this->params()->fromRoute('id');
         }
         $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage(10);
+                ->setItemCountPerPage($this->getElemsPag());
 
         $productos = $this->productoManager->getProductos();
         return new ViewModel([
