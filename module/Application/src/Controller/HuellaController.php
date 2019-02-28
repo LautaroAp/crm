@@ -3,7 +3,6 @@
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
 
 class HuellaController extends AbstractActionController {
 
@@ -78,28 +77,7 @@ class HuellaController extends AbstractActionController {
         if ($label=="Home"){
             $nuevo = ['route'=>[['label'=>$label, 'url'=>$url]]];
             $json= json_encode($nuevo);
-            // $data= $_SESSION['breadcrumb'];
-            // // $data = file_get_contents("public/json/breadcrumbs.json");
-            // $data_decoded =  json_decode($data, true);
-            // //lo vuelvo un nuevo arreglo vacio
-            // $data_decoded['route']= Array();
-            // $arr = array('label' => $label, 'url' => $url);
-            // // //le agrego la ruta y label de home
-            // array_push($data_decoded['route'], $arr);
-            // $json = json_encode($data_decoded);
-            // // file_put_contents("public/json/breadcrumbs.json", $json);
-            // // $data = file_get_contents("public/json/breadcrumbs.json");
-            // // $data_decoded =  json_decode($data, true);
-            // $data = $_SESSION['breadcrumb'];
-            // $data_decoded =  json_decode($data, true);
-            // $agregar = ['label' => $label, 'url' => $url];
-            // $rutas=$data_decoded['route']; 
             $_SESSION['breadcrumb']= $json;  
-            // print_r("<br>");
-            // print_r("<br>");
-            // print_r("<br>");
-            // print_r($nuevo);
-
             $this->layout()->setVariable('rutas', $nuevo);
         }
     }

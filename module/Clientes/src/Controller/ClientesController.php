@@ -5,7 +5,6 @@ namespace Clientes\Controller;
 use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-
 class ClientesController extends HuellaController
 {
 

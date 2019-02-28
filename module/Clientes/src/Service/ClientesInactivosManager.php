@@ -2,12 +2,6 @@
 
 namespace Clientes\Service;
 
-use DBAL\Entity\Cliente;
-use DBAL\Entity\Usuario;
-use Zend\Paginator\Paginator;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-
 /**
  * PARECIERA QUE ESTA CLASE NO ES NECESARIA
  */

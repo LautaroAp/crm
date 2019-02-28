@@ -3,7 +3,6 @@
 namespace Moneda\Service;
 
 use DBAL\Entity\Moneda;
-use Moneda\Form\MonedaForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 

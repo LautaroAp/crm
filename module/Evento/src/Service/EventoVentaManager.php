@@ -5,12 +5,7 @@ use DBAL\Entity\Evento;
 use DBAL\Entity\Cliente;
 use DBAL\Entity\Ejecutivo;
 use DBAL\Entity\TipoEvento;
-
-
-
-use Evento\Form\EventoForm;
 use Zend\Paginator\Paginator;
-use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 

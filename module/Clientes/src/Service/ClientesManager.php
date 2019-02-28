@@ -5,16 +5,11 @@ namespace Clientes\Service;
 use DBAL\Entity\Cliente;
 use DBAL\Entity\Usuario;
 use DBAL\Entity\Licencia;
-use DBAL\Entity\Persona;
 use DBAL\Entity\Pais;
 use DBAL\Entity\Provincia;
 use DBAL\Entity\Profesion;
-use DBAL\Entity\CategoriaCliente;
 use DBAL\Entity\Categoria;
-use DBAL\Entity\Iva;
-use DBAL\Entity\Ganaderia;
 use Zend\Paginator\Paginator;
-use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 

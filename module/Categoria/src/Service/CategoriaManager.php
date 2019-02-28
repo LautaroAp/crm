@@ -5,7 +5,6 @@ namespace Categoria\Service;
 use DBAL\Entity\Categoria;
 use Categoria\Form\CategoriaForm;
 use Zend\Paginator\Paginator;
-use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 

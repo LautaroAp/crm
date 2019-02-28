@@ -4,7 +4,6 @@ namespace Servicio\Service;
 
 use DBAL\Entity\Servicio;
 use DBAL\Entity\Categoria;
-use Servicio\Form\ServicioForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 /**

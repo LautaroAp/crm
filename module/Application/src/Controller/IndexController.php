@@ -15,18 +15,6 @@ class IndexController extends HuellaController {
         $this->clientesManager = $clientesManager;
     }
 
-    // public function indexAction() {
-    //     $label = "Home";
-    //     $url = "";
-    //     $this->reiniciarBreadcrumbs($label, $url);
-    //     $this->reiniciarParametros();
-    //     $_SESSION['MENSAJES'] = array();
-    //     $_SESSION['CATEGORIA'] = array();
-    //     $_SESSION['TIPOEVENTO'] = array();
-    //     // $this->layout()->setTemplate('layout/simple');
-    //     return new ViewModel();
-    // }
-
     public function viewAction() {
         return new ViewModel();
     }
@@ -86,16 +74,6 @@ class IndexController extends HuellaController {
         return new ViewModel();
     }
 
-    // public function gestionProductosProveedorAction() {
-    //     $this->reiniciarParametros();
-    //     return new ViewModel();
-    // }
-
-    // public function gestionServiciosProveedorAction() {
-    //     $this->reiniciarParametros();
-    //     return new ViewModel();
-    // }
-
     public function gestionEmpresaAction() {
         $label = "Empresa";
         $url = "/empresa";
@@ -150,14 +128,5 @@ class IndexController extends HuellaController {
         $this->reiniciarParametros();
         return new ViewModel();
     }
-
-    // public function utilidadesAction() {
-    //     $this->reiniciarParametros();
-    //     return new ViewModel();
-    // }
-
-    // public function gestionAction() {
-    //     $this->reiniciarParametros();
-    //     return new ViewModel();
-    // }     
+ 
 }

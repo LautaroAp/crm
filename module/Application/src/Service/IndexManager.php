@@ -2,7 +2,7 @@
 
 namespace Index\Service;
 
-use Clientes\Service\ClientesManager;
+// use Clientes\Service\ClientesManager;
 
 /**
  * This service is responsible for adding/editing users
@@ -19,7 +19,7 @@ class IndexManager {
 
     public function __construct($entityManager) {
         $this->entityManager = $entityManager;
-        $this->clientesManager = new ClientesManager($entityManager);
+        // $this->clientesManager = new ClientesManager($entityManager);
     }
 
     public function getResult($data) {

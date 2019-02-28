@@ -3,7 +3,6 @@
 namespace Iva\Service;
 
 use DBAL\Entity\Iva;
-use Iva\Form\IvaForm;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
