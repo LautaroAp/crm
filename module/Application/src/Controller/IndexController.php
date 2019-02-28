@@ -16,10 +16,6 @@ class IndexController extends HuellaController {
         $this->empresaManager = $empresaManager;
     }
 
-<<<<<<< HEAD
-   
-=======
->>>>>>> db7ddc152466c17d63fa0fecd03bb20eb0b394a1
     public function viewAction() {
         return new ViewModel();
     }
