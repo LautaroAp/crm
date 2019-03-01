@@ -253,8 +253,20 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             </div>
             <div class="panel-body padding-top-cero">
                 <div class="collapse in" id="collapseActividades">
-
                     <div class="row" style="padding:0px;">
+                        <!-- Transacciones -->
+                        <div class="col-md-3 img-centrar">
+                            <div>
+                                <a data-toggle="collapse" data-parent="#accordion" href="#drop" aria-expanded="true" aria-controls="drop">
+                                    <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
+                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                </a>
+                            </div>
+                            <div class="ficha-cliente-label">
+                                <label>Transacciones</label>
+                            </div>
+                        </div>
+
                         <!-- Accion Comercial -->
                         <div class="col-md-3 img-centrar">
                             <div>
@@ -267,74 +279,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                 <label>Acción Comercial</label>
                             </div>
                         </div>
-                        <!-- Transaccion-->
-                        <div class="col-md-3 img-centrar">
-                            <div class="btn-group dropup">
-                                <a role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="<?= $this->basePath('img/crm/add_carrito_a.png') ?>" 
-                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
-                                </a>
-                                <ul class="dropdown-menu" role="menu" style="width:300px;">
-                                    <li>
-                                        <a href="#" class="padding-cero">
-                                            <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                                Presupuesto
-                                            </div> 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="padding-cero">
-                                            <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                                Pedido
-                                            </div> 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="padding-cero">
-                                            <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                                Remito
-                                            </div> 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="padding-cero">
-                                            <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                                Factura
-                                            </div> 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="padding-cero">
-                                            <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                                Nota de Crédito
-                                            </div> 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="padding-cero">
-                                            <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                                Nota de Débito
-                                            </div> 
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="ficha-cliente-label">
-                                <label>Transacciones</label>
-                            </div>
-                        </div>
+
                         <!-- Eliminar Actividad -->
                         <div class="col-md-3 img-centrar">
                             <div>
@@ -346,6 +291,77 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             <div class="ficha-cliente-label">
                                 <label>Eliminar Actividad</label>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Transaccion-->
+                    <div class="row">
+                        <div class="collapse" id="drop">
+                            <ul class="list-inline" style="margin-left: 20px;">
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Presupuesto
+                                        </div> 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Pedido
+                                        </div> 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Remito
+                                        </div> 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Factura
+                                        </div> 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Nota de Crédito
+                                        </div> 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Nota de Débito
+                                        </div> 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
+                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Nota de Crédito Cond. Pago
+                                        </div> 
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
