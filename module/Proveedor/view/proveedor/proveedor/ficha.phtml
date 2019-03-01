@@ -29,54 +29,72 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <!-- Inicio: Datos de Proveedor -->
 <div class="container margen">
     <div class="row">
-        <!-- Datos de Perfil --> 
+        <!-- Datos de Perfil -->
         <div class="col-md-7">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading text-center titulo-espaciado">
                     DATOS DE PERFIL
                 </div>
-                <div class="panel-body padding-top-cero" style="min-height: 325px;">                
+                <div class="panel-body padding-top-cero" style="min-height: 325px;">
                     <div class="ficha-cliente-p img-centrar ">
                         <div>
                             <figure>
-                                <a href="<?= $this->url('proveedores/editar', 
-                                        ['tipo' => 'proveedor', 'id' => (int) $persona->getId()]) ?>" role="button">
-                                    <img src="<?= $this->basePath('img/crm/perfil.png') ?>" 
-                                    class="img-circle img-responsive img-texto-derecha" width="150px" height="150px" style="margin-left:0px;">
+                                <a href="<?= $this->url(
+                                                'proveedores/editar',
+                                                ['tipo' => 'proveedor', 'id' => (int)$persona->getId()]
+                                            ) ?>" role="button">
+                                    <img src="<?= $this->basePath('img/crm/perfil.png') ?>" class="img-circle img-responsive img-texto-derecha" width="150px" height="150px" style="margin-left:0px;">
                                 </a>
                                 <figcaption class="text-center"></figcaption>
                             </figure><br>
                         </div>
                         <div class="ficha-cliente-label padding-md">
-                            <h4><?= $persona->getNombre(); ?></h4>
-                            <p><i><?php echo ($proveedor->getNombreCategoriaProveedor());?></i></p>
-                            <p><span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp; <?php echo ($persona->getTelefono()); ?></p>
-                            <p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp; <?php echo ($persona->getEmail()); ?></p>
+                            <h4>
+                                <?= $persona->getNombre(); ?>
+                            </h4>
+                            <p><i>
+                                    <?php echo ($proveedor->getNombreCategoriaProveedor()); ?></i></p>
+                            <p><span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;
+                                <?php echo ($persona->getTelefono()); ?>
+                            </p>
+                            <p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;
+                                <?php echo ($persona->getEmail()); ?>
+                            </p>
                             <p><span><img src="<?= $this->basePath('img/crm/skype.png') ?>" width="15" height="15"></span>
-                            &nbsp;<?php echo ($proveedor->getSkype()); ?>
+                                &nbsp;
+                                <?php echo ($proveedor->getSkype()); ?>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-sm-6 ficha-cliente-p margen-bot-cero">
-                            <p><label>Empresa:</label> <?= $proveedor->getEmpresa(); ?></p>
-                            <p><label>Actividad:</label> <?= $proveedor->getActividad(); ?></p>
-                            <p><label>Cargo:</label> <?= $proveedor->getCargo(); ?></p>
+                            <p><label>Empresa:</label>
+                                <?= $proveedor->getEmpresa(); ?>
+                            </p>
+                            <p><label>Actividad:</label>
+                                <?= $proveedor->getActividad(); ?>
+                            </p>
+                            <p><label>Cargo:</label>
+                                <?= $proveedor->getCargo(); ?>
+                            </p>
                         </div>
                         <div class="col-sm-6 ficha-cliente-p">
-                            <p><label>Fecha Compra:</label> <?php
+                            <p><label>Fecha Compra:</label>
+                                <?php
                                 if (!is_null($proveedor->getFechaCompra())) {
                                     echo ($proveedor->getFechaCompra()->format('d/m/Y'));
                                 }
                                 ?>
                             </p>
-                            <p><label>Último Pago:</label> <?php
+                            <p><label>Último Pago:</label>
+                                <?php
                                 if (!is_null($proveedor->getFechaUltimoPago())) {
                                     echo ($proveedor->getFechaUltimoPago()->format('d/m/Y'));
                                 }
                                 ?>
                             </p>
-                            <p><label>Último Contacto:</label> <?php
+                            <p><label>Último Contacto:</label>
+                                <?php
                                 if (!is_null($proveedor->getFechaUltimoContacto())) {
                                     echo ($proveedor->getFechaUltimoContacto()->format('d/m/Y'));
                                 }
@@ -96,16 +114,34 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                 </div>
                 <div class="panel-body" style="min-height: 325px;">
                     <div class="ficha-cliente-p margen">
-                        <p><label>Razón Social:</label> <?= $proveedor->getRazon_social(); ?></p>
-                        <p><label>Dirección de Facturación:</label> <?= $proveedor->getDireccion_facturacion(); ?></p>
-                        <p><label>Ciudad:</label> <?php echo ($proveedor->getCiudad()); ?></p>
-                        <p><label>Provincia:</label> <?php echo ($proveedor->getNombreProvinciaProveedor()); ?></p>
-                        <p><label>País:</label> <?php echo ($proveedor->getNombrePaisProveedor()); ?></p>
+                        <p><label>Razón Social:</label>
+                            <?= $proveedor->getRazon_social(); ?>
+                        </p>
+                        <p><label>Dirección de Facturación:</label>
+                            <?= $proveedor->getDireccion_facturacion(); ?>
+                        </p>
+                        <p><label>Ciudad:</label>
+                            <?php echo ($proveedor->getCiudad()); ?>
+                        </p>
+                        <p><label>Provincia:</label>
+                            <?php echo ($proveedor->getNombreProvinciaProveedor()); ?>
+                        </p>
+                        <p><label>País:</label>
+                            <?php echo ($proveedor->getNombrePaisProveedor()); ?>
+                        </p>
                         <br>
-                        <p><label>Condición de IVA:</label> <?= $proveedor->getNombreCondicionIva(); ?></p>
-                        <p><label>Banco:</label> <?= $proveedor->getBanco(); ?></p>
-                        <p><label>CBU:</label> <?= $proveedor->getCbu(); ?></p>
-                        <p><label>CUIT/CUIL:</label> <?= $proveedor->getCuit_cuil(); ?></p>
+                        <p><label>Condición de IVA:</label>
+                            <?= $proveedor->getNombreCondicionIva(); ?>
+                        </p>
+                        <p><label>Banco:</label>
+                            <?= $proveedor->getBanco(); ?>
+                        </p>
+                        <p><label>CBU:</label>
+                            <?= $proveedor->getCbu(); ?>
+                        </p>
+                        <p><label>CUIT/CUIL:</label>
+                            <?= $proveedor->getCuit_cuil(); ?>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -126,95 +162,36 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             </div>
             <div class="panel-body padding-top-cero">
                 <div class="collapse in" id="collapseActividades">
+                    <div class="row" style="padding:0px;">
+                        <!-- Transacciones -->
+                        <div class="col-md-3 img-centrar">
+                            <div>
+                                <a data-toggle="collapse" data-parent="#accordion" href="#drop" aria-expanded="true" aria-controls="drop">
+                                    <img src="<?= $this->basePath('img/crm/add_carrito_v.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                </a>
+                            </div>
+                            <div class="ficha-cliente-label">
+                                <label>Transacciones</label>
+                            </div>
+                        </div>
 
-
-                <div class="row" style="padding:0px;">
                         <!-- Accion Comercial -->
                         <div class="col-md-3 img-centrar">
                             <div>
-                                <a href="<?= $this->url('evento', ['action' => 'add', 'tipo'=>'proveedor','id' => $persona->getId()]) ?>" role="button">
-                                    <img src="<?= $this->basePath('img/crm/add_carrito_v.png') ?>" 
-                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                <a href="<?= $this->url('evento', ['action' => 'add', 'tipo' => 'proveedor', 'id' => $persona->getId()]) ?>" role="button">
+                                    <img src="<?= $this->basePath('img/crm/add_carrito_v.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-add">
                                 </a>
                             </div>
                             <div class="ficha-cliente-label">
                                 <label>Acción Comercial</label>
                             </div>
                         </div>
-                        <!-- Transaccion-->
-                        <div class="col-md-3 img-centrar">
-                            <div class="btn-group dropup">
-                                <a role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="<?= $this->basePath('img/crm/add_carrito_v.png') ?>" 
-                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
-                                </a>
-                                <ul class="dropdown-menu" role="menu" style="width:300px;">
-                                    <li>
-                                        <a href="#" class="padding-cero">
-                                            <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
-                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                                Presupuesto
-                                            </div> 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="padding-cero">
-                                            <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
-                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                                Pedido
-                                            </div> 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="padding-cero">
-                                            <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
-                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                                Remito
-                                            </div> 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="padding-cero">
-                                            <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
-                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                                Factura
-                                            </div> 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="padding-cero">
-                                            <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
-                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                                Nota de Crédito
-                                            </div> 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="padding-cero">
-                                            <div class="col img-centrar">
-                                                <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
-                                                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                                Nota de Débito
-                                            </div> 
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="ficha-cliente-label">
-                                <label>Transacciones</label>
-                            </div>
-                        </div>
+
                         <!-- Eliminar Actividad -->
                         <div class="col-md-3 img-centrar">
                             <div>
                                 <a role="button" data-toggle="modal" data-target="#actividadModal">
-                                    <img src="<?= $this->basePath('img/crm/remove_carrito_v.png') ?>" 
-                                    class="img-rounded img-responsive img-texto-derecha img-submenu-add">
+                                    <img src="<?= $this->basePath('img/crm/remove_carrito_v.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-add">
                                 </a>
                             </div>
                             <div class="ficha-cliente-label">
@@ -223,33 +200,105 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         </div>
                     </div>
 
+                    <!-- Transaccion-->
+                    <div class="row">
+                        <div class="collapse" id="drop">
+                            <ul class="list-inline" style="margin-left: 20px;">
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Presupuesto
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Pedido
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Remito
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Factura
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Nota de Crédito
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Nota de Débito
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="padding-cero">
+                                        <div class="col img-centrar">
+                                            <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
+                                            Nota de Crédito Cond. Pago
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <table id="table_id" class="display">
                         <thead>
-                            <tr> 
+                            <tr>
                                 <th class="" id="fila">Fecha</th>
                                 <th class="">Responsable</th>
                                 <th class="">Tipo</th>
-                                <th class="detalle-width">Detalle</th>     
+                                <th class="detalle-width">Detalle</th>
                             </tr>
                         </thead>
                         <tbody role="button" class="">
-                            <?php foreach ($eventos as $evento): ?>
-                                <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
-                                    <td id="<?= $evento->getId() ?>" class=""><?php
-                                        if (!is_null($evento->getFecha())) {
-                                            echo($evento->getFecha()->format('Y/m/d'));
-                                        }
-                                        ?></td>
-                                    <td id="<?= $evento->getId() ?>" class=""><?php echo($evento->getUsuarioEjecutivo()); ?></td>
-                                    <td id="<?= $evento->getId() ?>" class=""><?php
-                                        if (!is_null($evento->getTipo())) {
-                                            echo($evento->getTipo());
-                                        } else {
-                                            echo('No definido');
-                                        }
-                                        ?></td>
-                                    <td id="<?= $evento->getId() ?>" class="table-scroll-description"><?php echo(nl2br($evento->getDescripcion())); ?></td>
-                                </tr> 
+                            <?php foreach ($eventos as $evento) : ?>
+                            <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)">
+                                <td id="<?= $evento->getId() ?>" class="">
+                                    <?php
+                                    if (!is_null($evento->getFecha())) {
+                                        echo ($evento->getFecha()->format('Y/m/d'));
+                                    }
+                                    ?>
+                                </td>
+                                <td id="<?= $evento->getId() ?>" class="">
+                                    <?php echo ($evento->getUsuarioEjecutivo()); ?>
+                                </td>
+                                <td id="<?= $evento->getId() ?>" class="">
+                                    <?php
+                                    if (!is_null($evento->getTipo())) {
+                                        echo ($evento->getTipo());
+                                    } else {
+                                        echo ('No definido');
+                                    }
+                                    ?>
+                                </td>
+                                <td id="<?= $evento->getId() ?>" class="table-scroll-description">
+                                    <?php echo (nl2br($evento->getDescripcion())); ?>
+                                </td>
+                            </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
@@ -274,20 +323,21 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             <div class="modal-body">
                 <p>
                     ¿Está seguro que desea eliminar el cliente:
-                    "<?= $this->escapeHtml($persona->getNombre()) ?>"
+                    "
+                    <?= $this->escapeHtml($persona->getNombre()) ?>"
                     ?<br>
                     <?php
                     if ($persona->getEstado() == "S") {
-                        echo('Se establecerá como Inactivo.');
+                        echo ('Se establecerá como Inactivo.');
                     } else {
-                        echo('Se establecerá como Activo.');
+                        echo ('Se establecerá como Activo.');
                     }
                     ?>
                 </p>
             </div>
             <div class="modal-footer">
-                <a href="<?= $this->url('proveedores/modificarEstado', ['action' => 'modificarEstado', 'id' => (int) $proveedor->getId()]) ?>" type="button">
-                <span class="btn btn-default">Aceptar</span></a>
+                <a href="<?= $this->url('proveedores/modificarEstado', ['action' => 'modificarEstado', 'id' => (int)$proveedor->getId()]) ?>" type="button">
+                    <span class="btn btn-default">Aceptar</span></a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -321,9 +371,8 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
         <!-- Modificar Datos -->
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('proveedores/editar', ['tipo' => 'proveedor', 'id' => (int) $persona->getId()]) ?>" role="button">
-                    <img src="<?= $this->basePath('img/crm/proveedor_update_v.png') ?>" 
-                    class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
+                <a href="<?= $this->url('proveedores/editar', ['tipo' => 'proveedor', 'id' => (int)$persona->getId()]) ?>" role="button">
+                    <img src="<?= $this->basePath('img/crm/proveedor_update_v.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">
@@ -335,28 +384,28 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             <div>
                 <a role="button" name="<?= $proveedor->getId() ?>" id="<?= $proveedor->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $proveedor->getId() ?>">
                     <img src="<?php
-                    if ($persona->getEstado() == "S") {
-                        echo($this->basePath('img/crm/proveedor_remove_v.png'));
-                    } else {
-                        echo($this->basePath('img/crm/proveedor_add_v.png'));
-                    }
-                    ?>" class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
+                                if ($persona->getEstado() == " S") {
+                                    echo ($this->basePath('img/crm/proveedor_remove_v.png'));
+                                } else {
+                                    echo ($this->basePath('img/crm/proveedor_add_v.png'));
+                                }
+                                ?>" class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">
                 <?php
                 if ($persona->getEstado() == "S") {
-                    echo('<label>Eliminar</label><br>'
-                    . '<label>Proveedor</label>');
+                    echo ('<label>Eliminar</label><br>'
+                        . '<label>Proveedor</label>');
                 } else {
-                    echo('<label>Agregar</label><br>'
-                    . '<label>Proveedor</label>');
+                    echo ('<label>Agregar</label><br>'
+                        . '<label>Proveedor</label>');
                 }
                 ?>
             </div>
         </div>
         <div class="col ficha-cliente-p img-centrar">
-            <div>   
+            <div>
                 <?php
                 $ruta = "";
                 if ($persona->getEstado() == "S") {
@@ -373,6 +422,6 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                 <label>Volver</label>
             </div>
         </div>
-    </div>   
+    </div>
 </div>
-<!-- Fin: Panel Botones -->
+<!-- Fin: Panel Botones --> 

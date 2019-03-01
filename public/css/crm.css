@@ -41,6 +41,11 @@
     height: 70px;
 }
 
+.img-submenu-md{
+    width: 50px;
+    height: 50px;
+}
+
 .img-submenu-sm{
     width: 35px;
     height: 35px;
@@ -175,6 +180,12 @@
 
 .padding-md {
     padding: 10px !important;
+}
+
+.transaccion-css{
+    padding: 10px !important;
+    padding-top: 0px !important;
+    margin: 0px;
 }
 
 .marging-cero {
