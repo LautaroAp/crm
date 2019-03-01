@@ -13,12 +13,14 @@ function getUrl(lista, i) {
     return "<a  class=\"white-text\" href=\"" + url + "\">";
 }
 
-function getUrlAnt(lista, ultimo) {
-    resultado = "";
+function getUrlAnt(lista) {
+    var ultimo = lista[lista.length - 1];
+    var ultimo_label = ultimo['label'];
+    var resultado = "";
     if (lista.length > 2) {
         for (i = 1; i < lista.length - 1; i++) {
             crumb = lista[i];
-            if (crumb['label'] != ultimo) {
+            if (crumb['label'] != ultimo_label) {
                 url = crumb['url'];
                 resultado = resultado + url;
             }
@@ -27,13 +29,13 @@ function getUrlAnt(lista, ultimo) {
         resultado = "/";
     }
     return resultado;
+
 }
 
 function armar_breadcrumb(lista) {
     breadTxt = '';
     ultimo = lista[lista.length - 1];
     ultimo_label = ultimo['label'];
-    url_volver = "";
     for (i = 0; i < lista.length; i++) {
         bread = lista[i];
         bread_label = bread['label'];
@@ -49,8 +51,7 @@ function armar_breadcrumb(lista) {
         }
         if (bread_label != ultimo_label) {}
     }
-    ulr_volver = getUrlAnt(lista, ultimo_label)
-    document.write(url_volver);
-    document.write("<br>");
     $('#breadcrumb_contenido').append(breadTxt);
 }
+
+

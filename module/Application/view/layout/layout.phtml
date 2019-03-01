@@ -135,7 +135,12 @@
             <nav class="col-md-4">
                 <div  class="img-centrar pull-right">
                     <div>
-                        <a href="" id="volver">Volver</a>
+                        <a href="" id="volver" >Volver</a>
+                        <script>
+                            var obj = <?php echo json_encode($rutas); ?>;
+                            var link = getUrlAnt(obj);
+                            $("#volver").attr("href", link);
+                        </script>
                     </div>
                   
                  </div>
