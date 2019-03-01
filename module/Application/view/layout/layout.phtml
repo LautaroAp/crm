@@ -124,26 +124,22 @@
         
     <main class="margen-main">
         <div class="container" style="padding: 0px;">
-            <nav aria-label="breadcrumb" class="col-md-8">
-                <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font" style="marging:0px;">
+            <nav aria-label="breadcrumb" class="">
+                <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
                     <script>
-                    var obj = <?php echo json_encode($rutas); ?>;
-                    armar_breadcrumb(obj);
+                        var obj = <?php echo json_encode($rutas); ?>;
+                        armar_breadcrumb(obj);
                     </script>
                 </ol>
-            </nav>
-            <nav class="col-md-4">
-                <div  class="img-centrar pull-right">
-                    <div>
-                        <a href="" id="volver" >Volver</a>
-                        <script>
+                <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
+                    <li class="pull-right"><a href="" id="volver">Volver</a>
+                     <script>
                             var obj = <?php echo json_encode($rutas); ?>;
                             var link = getUrlAnt(obj);
                             $("#volver").attr("href", link);
                         </script>
-                    </div>
-                  
-                 </div>
+                    </li>
+                </ol>
             </nav>
         </div>
         <div id="content">
@@ -151,6 +147,7 @@
         </div>
     </main>
 
+                       
     <footer class="footer" id="">
         <div class="container">
             <div class="row" style="padding: 10px;">
