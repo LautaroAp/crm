@@ -40,14 +40,14 @@ class EventoVentaController extends EventoController
         $request = $this->getRequest();
        //SE OBTIENE LA PERSONA DE LA RUTA POR SI SE LO LLAMA DE CLIENTE/PROVEEDOR
         $persona= $this->params()->fromRoute('tipo');
-        $this->prepararBreadcrumbs("Resumen de Eventos", "/eventos/".$persona);
-
         if (isset($persona)){
             //si llego una persona por ruta se la guarda en la sesion para paginator
             $_SESSION['EVENTO']['tipo_persona'] = $persona;
+            $this->prepararBreadcrumbs("Resumen de Eventos", "/eventos/".$persona);
         }
         else{
             $_SESSION['EVENTO']['tipo_persona'] = "empresa";
+            $this->prepararBreadcrumbs("Resumen de Eventos", "/eventos");
         }
         if ($request->isPost()) {
             //SI SE COMPLETO EL FORMULARIO DE BUSQUEDA TOMO ESOS PARAMETROS Y LOS GUARDO EN LA SESION 
@@ -102,6 +102,7 @@ class EventoVentaController extends EventoController
         }
         $paginator->setCurrentPageNumber((int) $page)
                 ->setItemCountPerPage($this->getElemsPag());
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'eventos' => $paginator,
             'parametros' => $parametros,
@@ -110,6 +111,7 @@ class EventoVentaController extends EventoController
             'tipoPersona' =>$tipoPersona,
             'total' => $total,
             'tipos' => $tipoEventos,
+            'volver' => $volver,
         ]);
     }
 

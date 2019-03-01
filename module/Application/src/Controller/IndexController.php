@@ -47,7 +47,10 @@ class IndexController extends HuellaController {
         $limite = "Home";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
-        return new ViewModel();
+        $volver = $this->getUltimaUrl();
+        return new ViewModel(
+            ['volver' => $volver]
+        );
     }
 
     public function gestionEventosClientesAction() {
@@ -56,7 +59,10 @@ class IndexController extends HuellaController {
         $limite = "Clientes";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
-        return new ViewModel();
+        $volver = $this->getUltimaUrl();
+        return new ViewModel(
+            ['volver' => $volver]
+        );
     }
 
     public function gestionProveedoresAction() {
@@ -65,7 +71,10 @@ class IndexController extends HuellaController {
         $limite = "Home";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
-        return new ViewModel();
+        $volver = $this->getUltimaUrl();
+        return new ViewModel(
+            ['volver' => $volver]
+        );
     }
 
     public function gestionEventosProveedoresAction() {
@@ -74,7 +83,10 @@ class IndexController extends HuellaController {
         $limite = "Proveedores";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
-        return new ViewModel();
+        $volver = $this->getUltimaUrl();
+        return new ViewModel(
+            ['volver' => $volver]
+        );
     }
 
     public function gestionEmpresaAction() {
@@ -84,7 +96,10 @@ class IndexController extends HuellaController {
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
         $this->reiniciarParametros();
-        return new ViewModel();
+        $volver = $this->getUltimaUrl();
+        return new ViewModel(
+            ['volver' => $volver]
+        );
     }
 
     public function gestionProductosServiciosAction() {
@@ -93,7 +108,10 @@ class IndexController extends HuellaController {
         $limite = "Home";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
-        return new ViewModel();
+        $volver = $this->getUltimaUrl();
+        return new ViewModel(
+            ['volver' => $volver]
+        );
     }
 
     public function gestionLicenciasAction() {
@@ -102,7 +120,10 @@ class IndexController extends HuellaController {
         $limite = "Productos y Servicios";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
-        return new ViewModel();
+        $volver = $this->getUltimaUrl();
+        return new ViewModel(
+            ['volver' => $volver]
+        );
     }
 
     public function gestionProductosAction() {
@@ -111,7 +132,10 @@ class IndexController extends HuellaController {
         $limite = "Productos y Servicios";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
-        return new ViewModel();
+        $volver = $this->getUltimaUrl();
+        return new ViewModel(
+            ['volver' => $volver]
+        );
     }
 
     public function gestionServiciosAction() {
@@ -120,7 +144,10 @@ class IndexController extends HuellaController {
         $limite = "Productos y Servicios";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
-        return new ViewModel();
+        $volver = $this->getUltimaUrl();
+        return new ViewModel(
+            ['volver' => $volver]
+        );
     }
 
     public function herramientasAction() {
@@ -129,7 +156,10 @@ class IndexController extends HuellaController {
         $limite ="Home";
         $this->prepararBreadcrumbs($label, $url, $limite);
         $this->reiniciarParametros();
-        return new ViewModel();
+        $volver = $this->getUltimaUrl();
+        return new ViewModel(
+            ['volver' => $volver]
+        );
     }
  
 }

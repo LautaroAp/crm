@@ -44,8 +44,10 @@ class EjecutivoController extends HuellaController {
             $this->ejecutivoManager->getEjecutivoFromForm($form, $data);
             return $this->redirect()->toRoute('ejecutivos');
         }
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'ejecutivos' => $pag,
+            'volver' => $volver,
             ]);
     }
 
@@ -72,9 +74,11 @@ class EjecutivoController extends HuellaController {
             $this->ejecutivoManager->getEjecutivoFromForm($form, $data);
             return $this->redirect()->toRoute('ejecutivos');
         }
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'form' => $form,
-            'ejecutivos' => $paginator
+            'ejecutivos' => $paginator,
+            'volver' => $volver,
         ]);
     }
     
@@ -113,15 +117,17 @@ class EjecutivoController extends HuellaController {
             $form->setData(array(
                     'id_ejecutivo'=>$id,
                     'nombre'=>$data['nombre'],
-                    'mail'=>$data['mail'],
+                    'email'=>$data['email'],
                     'usuario'=>$data['usuario'],
                     'clave'=>$data['clave'],               
                 ));
         }
+        $volver = $this->getUltimaUrl();
         return new ViewModel(array(
             'ejecutivo' => $ejecutivo,
             'persona'=>$ejecutivo->getPersona(),
-            'form' => $form
+            'form' => $form,
+            'volver' => $volver
         ));
     }
 
@@ -135,7 +141,8 @@ class EjecutivoController extends HuellaController {
             }
             $this->ejecutivoManager->removeEjecutivo($ejecutivo);
             $this->redirect()->toRoute('ejecutivos');
-        } else {
+        } 
+        else {
             $view = new ViewModel();
             return $view;
         }

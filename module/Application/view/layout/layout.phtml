@@ -11,26 +11,26 @@
 
     <!-- Le styles -->
     <?=
-        $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/VetIcon.png'])
-            ->prependStylesheet($this->basePath('css/style.css'))
-            ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
-            ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
-            ->prependStylesheet($this->basePath('css/crm.css'))
-            ->prependStylesheet($this->basePath('css/sweetalert.css'))
-        ?>
+    $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/VetIcon.png'])
+        ->prependStylesheet($this->basePath('css/style.css'))
+        ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+        ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+        ->prependStylesheet($this->basePath('css/crm.css'))
+        ->prependStylesheet($this->basePath('css/sweetalert.css'))
+    ?>
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <?=
-        $this->headScript()
-            ->prependFile($this->basePath('js/bootstrap.min.js'))
-            ->prependFile($this->basePath('js/jquery-2.2.4.min.js'))
-            ->prependFile($this->basePath('js/functions.js'))
-            ->prependFile($this->basePath('js/ajax.js'))
-            ->prependFile($this->basePath('js/sweetalert.js'))
-            ->prependFile($this->basePath('js/sweetalert.min.js'))
-            ->prependFile($this->basePath('js/breadcrumb.js'))
-        ?>
+    $this->headScript()
+        ->prependFile($this->basePath('js/bootstrap.min.js'))
+        ->prependFile($this->basePath('js/jquery-2.2.4.min.js'))
+        ->prependFile($this->basePath('js/functions.js'))
+        ->prependFile($this->basePath('js/ajax.js'))
+        ->prependFile($this->basePath('js/sweetalert.js'))
+        ->prependFile($this->basePath('js/sweetalert.min.js'))
+        ->prependFile($this->basePath('js/breadcrumb.js'))
+    ?>
     </head>
 
     <!-- <div id="container"> -->
@@ -124,13 +124,21 @@
         
     <main class="margen-main">
         <div class="container" style="padding: 0px;">
-            <nav aria-label="breadcrumb">
+            <nav aria-label="breadcrumb" class="col-md-8">
                 <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font" style="marging:0px;">
                     <script>
                     var obj = <?php echo json_encode($rutas); ?>;
                     armar_breadcrumb(obj);
                     </script>
                 </ol>
+            </nav>
+            <nav class="col-md-4">
+                <div  class="img-centrar pull-right">
+                    <div>
+                        <a href="" id="volver">Volver</a>
+                    </div>
+                  
+                 </div>
             </nav>
         </div>
         <div id="content">

@@ -26,13 +26,6 @@ class ProfesionController extends HuellaController {
      * @var Doctrine\ORM\EntityManager
      */
     protected $clientesManager;
-    
-    /* public function __construct($entityManager, $profesionManager)
-      {
-      $this->entityManager = $entityManager;
-      $this->profesionManager = $profesionManager;
-      }
-     */
 
     public function __construct($entityManager, $profesionManager, $clientesManager) {
         $this->entityManager = $entityManager;
@@ -48,8 +41,10 @@ class ProfesionController extends HuellaController {
     private function procesarIndexAction() {
         $this->prepararBreadcrumbs("Profesiones", "/profesion", "Clientes");
         $profesiones = $this->profesionManager->getProfesiones();
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
-            'profesiones' => $profesiones
+            'profesiones' => $profesiones,
+            'volver' => $volver,
         ]);
     }
 
@@ -74,9 +69,11 @@ class ProfesionController extends HuellaController {
             $this->profesionManager->addProfesion($data);
             return $this->redirect()->toRoute('profesion');
         }
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'profesiones' => $profesiones,
             'profesiones_pag' => $paginator,
+            'volver'=> $volver,
         ]);
     }
 
@@ -94,8 +91,10 @@ class ProfesionController extends HuellaController {
             $this->profesionManager->updateProfesion($profesion, $data);
             return $this->redirect()->toRoute('profesion');
         } 
+        $volver = $this->getUltimaUrl();
         return new ViewModel(array(
             'profesion' => $profesion,
+            'volver' => $volver,
         ));
 
     }

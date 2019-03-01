@@ -357,15 +357,15 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
         </div>
         <div class="col ficha-cliente-p img-centrar">
             <div>   
-                <?php
-                $ruta = "";
-                if ($persona->getEstado() == "S") {
-                    $ruta = 'gestionProveedores/listado';
-                } else {
-                    $ruta = 'proveedores/inactivos';
-                }
-                ?>
-                <a href="<?= $this->url($ruta) ?>" role="button">
+                <!-- <?php
+                // $ruta = "";
+                // if ($persona->getEstado() == "S") {
+                //     $ruta = 'gestionProveedores/listado';
+                // } else {
+                //     $ruta = 'proveedores/inactivos';
+                // }
+                ?> -->
+                <a href="<?= $volver ?>" role="button">
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha zoom">
                 </a>
             </div>

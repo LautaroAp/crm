@@ -132,12 +132,7 @@ $form->prepare();
 
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <?php if (strtoupper($tipoPersona)=="CLIENTE"){ ?> 
-                    <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $id_persona]) ?>">
-                <?php }else{ ?>
-                     <a href="<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $id_persona]) ?>">
-                <?php } ?>
-                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+               <a href="<?= $volver?>"><img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
                      class="img-rounded img-responsive img-texto-derecha zoom">
                 </a>
             </div>

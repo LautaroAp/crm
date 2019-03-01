@@ -58,6 +58,7 @@ class ProveedorController extends HuellaController
         $paginator = $this->proveedorManager->getTablaFiltrado($parametros, "S");
         $total_proveedor = $this->proveedorManager->getTotal();
         $pag = $this->getPaginator($paginator);
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'personas' => $pag,
             'paises' => $pais,
@@ -67,6 +68,7 @@ class ProveedorController extends HuellaController
             'parametros' => $parametros,
             'total_proveedor' => $total_proveedor,
             'tipo' => $tipo,
+            'volver' => $volver,
         ]);
     }
 
@@ -101,14 +103,15 @@ class ProveedorController extends HuellaController
             $id_persona = $proveedor->getPersona()->getId();
             $this->redirect()->toRoute('gestionProveedores/listado', ['id' => $id_persona]);
         }
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'categorias' => $categorias,
             'condiciones_iva' => $condiciones_iva,
-            'profesiones' => $profesion,
             'paises' => $pais,
             'provincias' => $provincia,
             'licencias' => $licencia,
             'tipo' => $tipo,
+            'volver' => $volver,
         ]);
     }
 
@@ -138,16 +141,17 @@ class ProveedorController extends HuellaController
             $this->proveedorManager->updateProveedor($proveedor, $data);
             $this->redirect()->toRoute('proveedores/listado/ficha', ['action' => 'ficha', 'id' => $id_persona]);
         }
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'proveedor' => $proveedor,
             'persona' => $persona,
             'categorias' => $categorias,
             'condiciones_iva' => $condiciones_iva,
-            'profesiones' => $profesion,
             'paises' => $pais,
             'provincias' => $provincia,
             'licencias' => $licencia,
             'tipo' => $tipo,
+            'volver' => $volver,
         ]);
     }
 
@@ -171,18 +175,17 @@ class ProveedorController extends HuellaController
     public function fichaAction(){
         $id_persona = (int)$this->params()->fromRoute('id', -1);
         $persona = $this->personaManager->getPersona($id_persona);
-        // $bread= ((array)(json_decode($_SESSION['breadcrumb'])));
-        // $ultimo = ((array)end($bread['route']));
-        // $limite= $ultimo['label'];
         $limite = $this->getAnterior();
         $this->prepararBreadcrumbs("Ficha Proveedor", "/ficha/".$id_persona, $limite);
         $data = $this->proveedorManager->getDataFicha($id_persona);
         $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'proveedor' => $data['proveedor'],
             'eventos' => $data['eventos'],
             'tipo_eventos' => $this->tipoEventosManager->getTipoEventos($persona->getTipo()),
-            'persona' => $data['persona']
+            'persona' => $data['persona'],
+            'volver' => $volver, 
         ]);
     }
 

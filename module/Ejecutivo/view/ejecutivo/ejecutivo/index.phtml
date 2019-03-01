@@ -36,7 +36,7 @@ if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
                                 <div class="row form-row">
                                     <div class="form-group form-inline">
                                         <input type="text" class="form-control ejecutivo-lg form-margen" name="nombre" placeholder="Nombre y Apellido" required="">
-                                        <input type="text" class="form-control ejecutivo-lg form-margen" name="mail" placeholder="Email" required="">
+                                        <input type="text" class="form-control ejecutivo-lg form-margen" name="email" placeholder="Email" required="">
                                         <input type="text" class="form-control ejecutivo-md form-margen" name="usuario" placeholder="Usuario" required="">
                                         <input type="password" class="form-control ejecutivo-md form-margen" name="clave" placeholder="Clave" required="">
                                     </div>
@@ -171,7 +171,7 @@ if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
             </div>
             <div class="col ficha-cliente-p img-centrar">
                 <div>
-                    <a href="<?= $this->url('herramientas') ?>">
+                    <a href="<?= $volver ?>">
                         <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
                         class="img-rounded img-responsive img-texto-derecha zoom">
                     </a>

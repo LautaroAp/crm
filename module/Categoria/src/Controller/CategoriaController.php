@@ -103,9 +103,11 @@ class CategoriaController extends HuellaController {
             
         }
         $_SESSION['CATEGORIA']['TIPO'] = $tipo;
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'categorias' => $paginator,
             'tipo'=>$tipo,
+            'volver'=>$volver
         ]);
     }
 
@@ -127,9 +129,11 @@ class CategoriaController extends HuellaController {
             return $this->redireccionar($tipo);
         }
         $_SESSION['CATEGORIA']['TIPO'] = $tipo;
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'categoriaevento' => $categoriaevento,
             'tipo'=>$tipo,
+            'volver' =>$volver
         ]);
     }
 

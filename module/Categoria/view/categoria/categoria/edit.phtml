@@ -65,23 +65,8 @@
 
             <div class="col ficha-cliente-p img-centrar">
                 <div>
-                    <?php if ($tipo=="cliente"){ ?> 
-                    <a href="<?= $this->url('gestionClientes/categorias', ['tipo'=>'cliente']) ?>">
-                        <?php }elseif ($tipo=="producto"){ ?>
-                            <a href="<?= $this->url('gestionProductosServicios/gestionProductos/categorias', ['tipo'=>'producto']) ?>">
-                        <?php }elseif ($tipo=="licencia"){ ?>
-                            <a href="<?= $this->url('gestionProductosServicios/gestionLicencias/categorias', ['tipo'=>'licencia']) ?>">
-                        <?php }elseif ($tipo=="servicio"){ ?>
-                            <a href="<?= $this->url('gestionProductosServicios/gestionServicios/categorias', ['tipo'=>'servicio']) ?>">
-                        <?php }elseif ($tipo=="evento"){ ?>
-                            <a href="<?= $this->url('gestionClientes/gestionEventosClientes/categorias', ['tipo'=>'evento']) ?>">
-                        <?php }elseif ($tipo=="iva"){ ?>
-                            <a href="<?= $this->url('herramientas/condicioniva', ['tipo'=>'iva']) ?>">
-                        <?php }elseif ($tipo=="proveedor"){ ?>
-                        <a href="<?= $this->url('gestionProveedores/categorias', ['tipo'=>'proveedor']) ?>">
-                        <?php }else{ ?>
-                            <a href="<?= $this->url('home') ?>">
-                        <?php } ?>
+                   
+                        <a href="<?= $volver ?>">
                         <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha zoom">
                     </a>

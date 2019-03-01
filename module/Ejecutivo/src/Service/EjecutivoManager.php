@@ -8,7 +8,7 @@ use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 
 /**
- * This service is responsible for adding/editing ejecutivos
+ * This service is responsible for emailing/editing ejecutivos
  * and changing ejecutivo password.
  */
 class EjecutivoManager {
@@ -63,6 +63,8 @@ class EjecutivoManager {
      */
     public function addEjecutivo($data) {
         $ejecutivo = new Ejecutivo();
+        //se agrega el telefono a los datos para que no de error en add persona
+        $data['telefono']="";
         $persona = $this->personaManager->addPersona($data, $this->tipo);
         $ejecutivo->setUsuario($data['usuario']);
         $ejecutivo->setClave($data['clave']);
@@ -150,7 +152,7 @@ class EjecutivoManager {
         $data = [
             'nombre' =>$persona->getNombre(),
             'telefono' => $persona->getTelefono(),
-            'mail' => $persona->getEmail(),
+            'email' => $persona->getEmail(),
             'usuario' => $ejecutivo->getUsuario(),
             'clave' =>$ejecutivo->getClave()
         ];
@@ -159,10 +161,6 @@ class EjecutivoManager {
 
     public function getEjecutivoFromForm($form, $data) {
         $form->setData($data);
-        // if ($form->isValid()) {
-        //     $data = $form->getData();
-        //     $ejecutivo = $this->addEjecutivo($data);
-        // }
         $ejecutivo = $this->addEjecutivo($data);
         return $ejecutivo;
     }

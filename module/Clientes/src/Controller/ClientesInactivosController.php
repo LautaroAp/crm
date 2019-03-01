@@ -33,6 +33,7 @@ class ClientesInactivosController extends ClientesController {
         $paginator = $this->clientesManager->getTablaFiltrado($parametros, "N");
         $total_inactivos = $this->clientesManager->getTotal();
         $pag = $this->getPaginator($paginator);
+        $volver =$this->getUltimaUrl();
         return new ViewModel([
             'clientes' => $pag,
             'parametros' => $parametros,
@@ -40,6 +41,7 @@ class ClientesInactivosController extends ClientesController {
             'paises' => $pais,
             'provincias' => $provincia,
             'categorias' => $CategoriaCliente,
+            'volver' => $volver
         ]);
     }
 

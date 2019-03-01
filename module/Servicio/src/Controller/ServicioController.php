@@ -47,8 +47,10 @@ class ServicioController extends HuellaController {
         }
         $paginator->setCurrentPageNumber((int) $page)
                 ->setItemCountPerPage($this->getElemsPag());
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
-            'servicios' => $paginator
+            'servicios' => $paginator,
+            'volver' => $volver,
         ]);        
     }
 
@@ -68,11 +70,13 @@ class ServicioController extends HuellaController {
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->servicioManager->getCategoriasServicio($tipo);
         $proveedores = $this->servicioManager->getListaProveedores($tipo);
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'tipo'=>$tipo,
             'ivas'=>$ivas,
             'proveedores'=>$proveedores,
-            'categorias'=>$categorias
+            'categorias'=>$categorias,
+            'volver' => $volver,
         ]);
 
     }
@@ -94,12 +98,14 @@ class ServicioController extends HuellaController {
             $this->servicioManager->updateServicio($servicio, $data);
             return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/listado');
         }
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'servicio' => $servicio,
             'categorias'=>$categorias,
             'ivas'=>$ivas,
             'proveedores'=>$proveedores,
-            'tipo'=>"servicio"
+            'tipo'=>"servicio",
+            'volver' => $volver,
         ]);
     }
 

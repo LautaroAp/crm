@@ -59,8 +59,10 @@ class EventoController extends HuellaController {
         }
         $paginator->setCurrentPageNumber((int) $page)
                 ->setItemCountPerPage(10);
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'eventos' => $paginator,
+            'volver' => $volver,
         ]);
     }
 
@@ -72,8 +74,11 @@ class EventoController extends HuellaController {
     private function procesarAddAction() {
         $Id = (int) $this->params()->fromRoute('id', -1);
         $tipo = $this->params()->fromRoute('tipo');
-        if ($tipo=="CLIENTE"){
+        if ($tipo=="cliente"){
             $this->prepararBreadcrumbs("Agregar Evento", "/evento/add/cliente/".$Id, "Ficha Cliente");
+        }
+        elseif ($tipo== "proveedor"){
+            $this->prepararBreadcrumbs("Agregar Evento", "/evento/add/proveedor/".$Id, "Ficha Proveedor");
         }
         $persona= $this->personaManager->getPersona($Id);
         $cliente = $this->clienteManager->getClienteIdPersona($persona->getId());
@@ -84,11 +89,13 @@ class EventoController extends HuellaController {
             $this->eventoManager->addEvento($data,$persona);
                 return $this->redireccionar($tipo, $Id);
         }
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'form' => $form,
             'persona' => $persona,
             'tipoPersona'=>$tipo,
             'tipos' => $tipoEventos,
+            'volver' => $volver,
         ]);
     }
 
@@ -112,10 +119,12 @@ class EventoController extends HuellaController {
             $this->eventoManager->addEvento($data,$persona);
                 return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' =>$Id]);
         }
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'form' => $form,
             'persona' => $persona,
             'tipos' => $tipoEventos,
+            'volver' => $volver,
         ]);
     }
 
@@ -143,10 +152,12 @@ class EventoController extends HuellaController {
             } else {
                 $this->eventoManager->getFormEdited($form, $evento);
             }
+            $volver = $this->getUltimaUrl();
             return new ViewModel(array(
                 'evento' => $evento,
                 'form' => $form,
-                'tipos' => $this->tipos
+                'tipos' => $this->tipos,
+                'volver' => $volver,
             ));
         }
     }

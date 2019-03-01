@@ -105,34 +105,22 @@ class EventoVentaManager extends EventoManager
     }
     
     private function getValor($parametros, $nombreCampo){
-        if ($nombreCampo=="ejecutivo"){
-                print_r("el ejecutivo es " . $parametros[$nombreCampo]);
-               
+        if ($nombreCampo=="ejecutivo"){              
                return $this->entityManager->getRepository(Ejecutivo::class)->findOneBy(array('nomusr' => $parametros[$nombreCampo]));
         }
-        
         if ($nombreCampo == "apellido_cliente"){
             $valor= $parametros[$nombreCampo];
-
-            print_r("el apellido_cliente es " . $valor );
             $nombreCampo= "cliente";           
-
             return $this->entityManager->getRepository(Cliente::class)->findOneBy(array('apellido' => $parametros["apellido_cliente"]));
         }
         if ($nombreCampo == "nombre_cliente"){
             $nombreCampo="cliente";
-            print_r("el nombre_cliente es " . $parametros[$nombreCampo]);
-
             return $this->entityManager->getRepository(Cliente::class)->findOneBy(array('nombre' => $parametros[$nombreCampo]));
         }
         if ($nombreCampo == "fecha"){
-                print_r("fecha es " . $parametros[$nombreCampo]);
-
             return $parametros[$nombreCampo];
         }
         if ($nombreCampo=="tipo"){
-            print_r("el tipo es " . $parametros[$nombreCampo]);
-
              return $this->entityManager->getRepository(TipoEvento::class)->findOneBy(array('nombre' => $parametros[$nombreCampo]));
         }
         

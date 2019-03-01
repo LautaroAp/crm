@@ -9,7 +9,7 @@ $form->get('nombre')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'Ingresar Nombre'
 ]);
-$form->get('mail')->setAttributes([
+$form->get('email')->setAttributes([
     'class' => 'form-control',
     'placeholder' => 'nombre@ejemplo.com'
 ]);
@@ -50,9 +50,9 @@ $form->prepare();
                 <?= $this->formElementErrors($form->get('nombre')); ?>
             </div>
             <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('mail')); ?>
-                <?= $this->formElement($form->get('mail')); ?>
-                <?= $this->formElementErrors($form->get('mail')); ?>
+                <?= $this->formLabel($form->get('email')); ?>
+                <?= $this->formElement($form->get('email')); ?>
+                <?= $this->formElementErrors($form->get('email')); ?>
             </div>
         </div>
 
@@ -109,7 +109,7 @@ $form->prepare();
 
                     <div class="col ficha-cliente-p img-centrar">
                         <div>
-                            <a href="<?= $this->url('ejecutivos') ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha zoom"></a>
+                            <a href="<?= $volver ?>"><img src="<?= $this->basePath('img/crm/Volver.png') ?>" class="img-rounded img-responsive img-texto-derecha zoom"></a>
                         </div>
                         <div class="ficha-cliente-label">
                             <label>Volver</label>

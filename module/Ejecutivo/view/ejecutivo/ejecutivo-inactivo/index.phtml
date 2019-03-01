@@ -60,7 +60,7 @@ if (isset($_SESSION['MENSAJES']['ejecutivo_inactivo'])) {
                                             <span class="glyphicon glyphicon-pencil" ></span> 
                                         </a>
                                         <button name="<?= $ejecutivo->getId() ?>" id="<?= $ejecutivo->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $ejecutivo->getId() ?>">
-                                            <span class="glyphicon glyphicon-ok" ></span
+                                            <span class="glyphicon glyphicon-ok" ></span>
                                         </button>
                                     </td>
                                     <!-- Modal -->
@@ -110,7 +110,7 @@ if (isset($_SESSION['MENSAJES']['ejecutivo_inactivo'])) {
         <div class="row img-centrar">
             <div class="col ficha-cliente-p img-centrar">
                 <div>
-                    <a href="<?= $this->url('herramientas') ?>">
+                    <a href="<?= $volver ?>">
                         <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
                         class="img-rounded img-responsive img-texto-derecha zoom">
                     </a>

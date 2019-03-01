@@ -83,11 +83,13 @@ class TipoEventoController extends HuellaController {
             return $this->redireccionar($tipoPersona);
         }
         $_SESSION['TIPOEVENTO']['TIPO'] = $tipoPersona;
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'form' => $form,
             'tipoeventos_pag' => $paginator,
             'tipoPersona'=> $tipoPersona,
             'categoriaeventos' => $categorias,
+            'volver' => $volver,
         ]);
     }
 
@@ -128,11 +130,13 @@ class TipoEventoController extends HuellaController {
                 $this->tipoeventoManager->getFormEdited($form, $tipoevento);
             }
             $_SESSION['TIPOEVENTO']['TIPO'] = $tipoPersona;
+            $volver = $this->getUltimaUrl();
             return new ViewModel(array(
                 'tipoevento' => $tipoevento,
                 'categoriaeventos' => $categorias,
                 'tipoPersona'=> $tipoPersona,
-                'form' => $form
+                'form' => $form,
+                'volver' => $volver,
             ));
         }
     }
@@ -142,36 +146,18 @@ class TipoEventoController extends HuellaController {
         return $view;
     }
 
-    // public function procesarRemoveAction() {
-    //     $id = (int) $this->params()->fromRoute('id');
-    //     $tipoevento = $this->tipoeventoManager->getTipoEventoId($id);
-    //     if ($tipoevento == null) {
-    //         $this->reportarError();
-    //     } else {
-    //         $this->removerDependencias($tipoevento->getTipo(), $id);
-    //         $this->eventoManager->eliminarTipoEventos($id);
-            
-    //         $this->tipoeventoManager->removeTipoEvento($tipoevento);
-    //         return $this->redireccionar($tipoevento->getTipo());
-    //     }
-    // }
-
     public function procesarRemoveAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $tipoevento = $this->tipoeventoManager->getTipoEventoId($id);
         if ($tipoevento == null) {
             $this->reportarError();
         } else {
-                    
             $this->eventoManager->eliminarTipoEventos($id);
-            
             $this->tipoeventoManager->removeTipoEvento($tipoevento);
             return $this->redirect()->toRoute('gestionClientes/gestionEventosClientes/tipoeventoCliente');
 
         }
     }
-
-
 
     public function viewAction() {
         return new ViewModel();

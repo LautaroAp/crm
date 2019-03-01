@@ -66,10 +66,10 @@ class EjecutivoForm extends Form
             ],
         ]);
         
-        // Add "mail" field
+        // Add "email" field
         $this->add([            
             'type'  => 'text',
-            'name' => 'mail',
+            'name' => 'email',
             'options' => [
                 'label' => 'Mail',
             ],

@@ -57,6 +57,7 @@ class ClientesController extends HuellaController
         $paginator = $this->clientesManager->getTablaFiltrado($parametros, "S");
         $total_clientes = $this->clientesManager->getTotal();
         $pag = $this->getPaginator($paginator);
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'personas' => $pag,
             'paises' => $pais,
@@ -66,6 +67,7 @@ class ClientesController extends HuellaController
             'parametros' => $parametros,
             'total_clientes' => $total_clientes,
             'tipo' => $tipo,
+            'volver'=>$volver,
         ]);
     }
 
@@ -99,6 +101,7 @@ class ClientesController extends HuellaController
             $this->clientesManager->addCliente($data);
             $this->redirect()->toRoute('gestionClientes/listado');
         }
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'categorias' => $categorias,
             'condiciones_iva' => $condiciones_iva,
@@ -107,6 +110,7 @@ class ClientesController extends HuellaController
             'provincias' => $provincia,
             'licencias' => $licencia,
             'tipo' => $tipo,
+            'volver'=>$volver,
         ]);
     }
 
@@ -136,6 +140,7 @@ class ClientesController extends HuellaController
             $this->clientesManager->updateCliente($cliente, $data);
             $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $id_persona]);
         } 
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'cliente' => $cliente,
             'persona' => $persona,
@@ -146,6 +151,7 @@ class ClientesController extends HuellaController
             'provincias' => $provincia,
             'licencias' => $licencia,
             'tipo' => $tipo,
+            'volver'=>$volver,
         ]);
     }
 
@@ -184,24 +190,18 @@ class ClientesController extends HuellaController
     public function fichaAction(){
         $id_persona = (int)$this->params()->fromRoute('id', -1);
         $persona = $this->personaManager->getPersona($id_persona);
-        // $limite = "";
-        // if ($persona->getEstado() == "S") {
-        //     $limite = "Listado";
-        // }
-        // else{
-        //     $limite = "Inactivos";
-        // }
-        // $limite = (end(($_SESSION['breadcrumb']))['label']);
         $limite = $this->getAnterior();
         $this->prepararBreadcrumbs("Ficha Cliente", "/ficha/".$id_persona, $limite);
         $data = $this->clientesManager->getDataFicha($id_persona);
         $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'cliente' => $data['cliente'],
             'usuarios' => $data['usuarios'],
             'eventos' => $data['eventos'],
             'tipo_eventos' => $this->tipoEventosManager->getTipoEventos($persona->getTipo()),
-            'persona' => $data['persona']
+            'persona' => $data['persona'],
+            'volver'=>$volver,
         ]);
     }
 

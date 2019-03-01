@@ -24,7 +24,7 @@ class ProveedorInactivoController extends ProveedorController {
             $parametros = $this->params()->fromPost();
             $_SESSION['PARAMETROS_PROVEEDOR_INACTIVO'] = $parametros;
         }
-        if (!is_null($_SESSION['PARAMETROS_PROVEEDOR_INACTIVO'])) {
+        if (isset($_SESSION['PARAMETROS_PROVEEDOR_INACTIVO'])) {
             $parametros = $_SESSION['PARAMETROS_PROVEEDOR_INACTIVO'];
         } else {
             $parametros = array();
@@ -32,12 +32,14 @@ class ProveedorInactivoController extends ProveedorController {
         $paginator = $this->proveedorManager->getTablaFiltrado($parametros, "N");
         $total_inactivos = $this->proveedorManager->getTotal();
         $pag = $this->getPaginator($paginator);
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'proveedores' => $pag,
             'parametros' => $parametros,
             'total_inactivos' => $total_inactivos,
             'paises' => $pais,
             'provincias' => $provincia,
+            'volver' => $volver,
         ]);
     }
 
@@ -59,8 +61,10 @@ class ProveedorInactivoController extends ProveedorController {
         $parametros = $this->params()->fromPost();
         $paginator = $this->proveedorManager->getTablaFiltrado($parametros);
         $pag = $this->getPaginator($paginator);
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'proveedores' => $pag,
+            'volver' => $volver,
         ]);
     }
 

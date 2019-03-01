@@ -37,8 +37,10 @@ class EmpresaController extends HuellaController
         $this->prepararBreadcrumbs("Configuracion", "/configuracion", "Empresa");
         $empresas = $this->empresaManager->getEmpresas();
         $empresa = $empresas[0];
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
-            'empresa' => $empresa
+            'empresa' => $empresa,
+            'volver'=>$volver,
         ]);
     }
 
@@ -58,10 +60,12 @@ class EmpresaController extends HuellaController
             $this->empresaManager->updateEmpresa($empresa, $data);
             return $this->redirect()->toRoute('gestionEmpresa/configuracion');
         }
+        $volver = $this->getUltimaUrl();
         return new ViewModel(array(
             'empresa' => $empresa,
             'form' => $form,
-            'monedas' => $monedas
+            'monedas' => $monedas,
+            'volver' => $volver,
         ));
     }
 

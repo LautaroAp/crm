@@ -70,12 +70,6 @@ class BienesManager {
     }
 
     private function setData($bien, $data){
-        print_r("<br>");
-        print_r("<br>");
-        print_r("<br>");
-
-        print_r($data);
-        // die();
         $bien->setNombre($data['nombre']);
         $bien->setDescripcion($data['descripcion']);
         if($data['categoria'] == "-1"){

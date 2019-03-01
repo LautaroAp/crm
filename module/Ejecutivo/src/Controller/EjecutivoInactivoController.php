@@ -40,8 +40,10 @@ class EjecutivoInactivoController extends EjecutivoController
             $this->ejecutivoManager->getEjecutivoFromForm($form, $data);
             return $this->redirect()->toRoute('ejecutivos');
         }
+        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'ejecutivos' => $pag,
+            'volver' => $volver,
             ]);
     }
    
