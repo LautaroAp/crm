@@ -101,7 +101,7 @@ class ProveedorController extends HuellaController
             $data = $this->params()->fromPost();
             $proveedor = $this->proveedorManager->addProveedor($data);
             $id_persona = $proveedor->getPersona()->getId();
-            $this->redirect()->toRoute('gestionProveedores/listado', ['id' => $id_persona]);
+            $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $id_persona]);
         }
         $volver = $this->getUltimaUrl();
         return new ViewModel([
