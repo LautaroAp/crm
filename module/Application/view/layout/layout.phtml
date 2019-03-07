@@ -130,11 +130,15 @@
                         var obj = <?php echo json_encode($rutas); ?>;
                         armar_breadcrumb(obj);
                     </script>
-                    
-                    
                 </ol>
-                <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="">
-                    <li class="pull-right"><a href="" id="volver">Volver</a></li>
+                <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
+                    <li class="pull-right"><a href="" id="volver">Volver</a>
+                     <script>
+                            var obj = <?php echo json_encode($rutas); ?>;
+                            var link = getUrlAnt(obj);
+                            $("#volver").attr("href", link);
+                        </script>
+                    </li>
                 </ol>
             </nav>
         </div>
@@ -143,6 +147,7 @@
         </div>
     </main>
 
+                       
     <footer class="footer" id="">
         <div class="container">
             <div class="row" style="padding: 10px;">
