@@ -98,8 +98,9 @@ class ClientesController extends HuellaController
         $licencia = $this->clientesManager->getLicencia();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
-            $this->clientesManager->addCliente($data);
-            $this->redirect()->toRoute('gestionClientes/listado');
+            $cliente = $this->clientesManager->addCliente($data);
+            $id_persona = $cliente->getPersona()->getId();
+            $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $id_persona]);
         }
         $volver = $this->getUltimaUrl();
         return new ViewModel([

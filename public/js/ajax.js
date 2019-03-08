@@ -13,7 +13,15 @@ function seleccionarFila(e) {
         console.log(eventos);
     }
 }
-;
+
+// Vista previa de Registo de Eventos
+// $(function(){    
+//     $(".vpEvento").dblclick(function(e) {
+//         e.preventDefault();
+//         var data = $(this).attr("data-valor");
+//         alert(data);    
+//     });
+// });
 
 // funcion para eliminar los eventos guardados
 function eliminaEventos() {
