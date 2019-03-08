@@ -1,5 +1,7 @@
 <?php
 $this->headTitle('Sign in');
+$this->headScript()->prependFile($this->basePath('js/tab-window-control.js'));
+
 
 $form->get('email')->setAttributes([
             'class' => 'form-control',
@@ -51,7 +53,7 @@ $form->get('password')->setAttributes([
                 </div>
                 <?= $this->formElement($form->get('redirect_url')); ?>
                 <?= $this->formElement($form->get('csrf')) ?>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+                <button id ="ingresar" class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
             </form>
         </div>
     </div>

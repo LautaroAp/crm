@@ -2,6 +2,16 @@
     color: rgb(110, 111, 111) !important;
 } */
 
+.enlace {
+    display:inline;
+    border:0;
+    padding:0;
+    margin:0;
+    font-size: 1em;
+    line-height:1em;
+    background-color: #FFFFFF;
+  }
+  
 .btn-collapse:hover {
     color: rgb(113, 113, 116) !important;
 }
@@ -62,6 +72,7 @@
 .margen-breadcrumb{
     padding: 6%;
 }
+
 
 .form-margen{
     margin: 5px;

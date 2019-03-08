@@ -57,10 +57,8 @@
             "Iva\\": "module/Iva/src/",
             "Categoria\\": "module/Categoria/src/",
             "Proveedor\\": "module/Proveedor/src/",
-            "Bienes\\": "module/Bienes/src/"
-
-
-
+            "Bienes\\": "module/Bienes/src/",
+            "TipoFactura\\": "module/TipoFactura/src/"
         }
     },
     "autoload-dev": {

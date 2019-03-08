@@ -66,6 +66,7 @@ class IndexController extends HuellaController {
     }
 
     public function gestionProveedoresAction() {
+
         $label = "Proveedores";
         $url = "/proveedores";       
         $limite = "Home";

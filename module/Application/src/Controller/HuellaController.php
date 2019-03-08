@@ -26,6 +26,16 @@ class HuellaController extends AbstractActionController
         return (in_array($nuevo, $arr));
     }
 
+    protected function perteneceLabel($arr, $label)
+    {
+        for ($i = 0; $i < (sizeof($arr)); $i++) {
+            if (($arr[$i]['label']) == $label) {
+                return true;
+            }
+        }
+         return false;
+    }
+
     protected function esUltimo($arr, $label)
     {
         return ((end(($arr))['label']) == $label);
@@ -42,11 +52,10 @@ class HuellaController extends AbstractActionController
         if ((!$this->pertenece($rutas, $agregar))) {
              //si tiene un limite pasado con el ultimo valor posible eliminar las sig migas   
             if (isset($limite)) {
-
                 $json = $rutas = $this->eliminarUltimos($rutas, $limite);
             }
             //con la ultima miga valida agregar al arreglo la nueva miga
-            array_push($rutas, $agregar);
+             array_push($rutas, $agregar);
             //reemplazo el arreglo de rutas del archivo json por el nuevo arreglo modificado
             $json = $this->guardarJson($rutas, $data_decoded);
 
@@ -54,7 +63,6 @@ class HuellaController extends AbstractActionController
             $rutas = $this->eliminarUltimos($rutas, $agregar['label']);
             $json = $this->guardarJson($rutas, $data_decoded);
         }
-
         $this->layout()->setVariable('rutas', $rutas);
         $this->layout()->setVariable('json', $json);
     }
@@ -63,7 +71,7 @@ class HuellaController extends AbstractActionController
     {
         $data_decoded['route'] = $rutas;
         $json = json_encode($data_decoded);
-        // file_put_contents("public/json/breadcrumbs.json", $json);
+       // file_put_contents("public/json/breadcrumbs.json", $json);
         $_SESSION['breadcrumb'] = $json;
         return $json;
 
@@ -73,11 +81,16 @@ class HuellaController extends AbstractActionController
     {
         //EXTRAE ELEMENTOS DEL ARREGLO HASTA QUE SE LLEGA AL ULTIMO QUE SE QUIERE DEJAR
         //O EL ARREGLO QUEDA VACIO.  -->sino hacerlo parar en home
-        while (((end(($arr))['label']) != $limite)) {
-            $eliminado = array_pop($arr);
-        }
+        // if ($this->perteneceLabel($arr, $limite)) {
+            while (((end(($arr))['label']) != $limite) and (end(($arr))['label']) != "Home") {
+                $eliminado = array_pop($arr);
+             }
+        // } else {
+        //     $arr = $this->reiniciarBreadcrumbs("Home", "/");
+        // }
         return $arr;
     }
+
 
     public function reiniciarBreadcrumbs($label, $url)
     {
@@ -89,6 +102,7 @@ class HuellaController extends AbstractActionController
             $_SESSION['breadcrumb'] = $json;
             $this->layout()->setVariable('rutas', $nuevo);
         }
+        return $nuevo;
     }
 
     public function getAnterior()
