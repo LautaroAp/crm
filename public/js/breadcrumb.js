@@ -33,25 +33,28 @@ function getUrlAnt(lista) {
 }
 
 function armar_breadcrumb(lista) {
-    breadTxt = '';
-    ultimo = lista[lista.length - 1];
-    ultimo_label = ultimo['label'];
-    for (i = 0; i < lista.length; i++) {
-        bread = lista[i];
-        bread_label = bread['label'];
-        if (bread_label == "Home") {
-            resultado = "<a href=\"" + bread['url'] + "\">" + bread_label + "</a>";
-        } else {
-            resultado = getUrl(lista, i) + bread_label + "</a>";
+    if (lista.length == null) {
+        var url = "/";
+        breadTxt = '<li class="breadcrumb-item active" >' + "<a href=\"" + url + "\">" + "Home" + "</a>";+ '</li>';
+        $('#breadcrumb_contenido').append(breadTxt);
+    } else {
+        breadTxt = '';
+        ultimo = lista[lista.length - 1];
+        ultimo_label = ultimo['label'];
+        for (i = 0; i < lista.length; i++) {
+            bread = lista[i];
+            bread_label = bread['label'];
+            if (bread_label == "Home") {
+                resultado = "<a href=\"" + bread['url'] + "\">" + bread_label + "</a>";
+            } else {
+                resultado = getUrl(lista, i) + bread_label + "</a>";
+            }
+            if (bread_label == ultimo_label) {
+                breadTxt = breadTxt + '<li class="breadcrumb-item active" >' + bread_label + '</li>';
+            } else {
+                breadTxt = breadTxt + '<li class="breadcrumb-item active" >' + resultado + '</li>';
+            }
         }
-        if (bread_label == ultimo_label) {
-            breadTxt = breadTxt + '<li class="breadcrumb-item active" >' + bread_label + '</li>';
-        } else {
-            breadTxt = breadTxt + '<li class="breadcrumb-item active" >' + resultado + '</li>';
-        }
-        if (bread_label != ultimo_label) {}
+        $('#breadcrumb_contenido').append(breadTxt);
     }
-    $('#breadcrumb_contenido').append(breadTxt);
 }
-
-

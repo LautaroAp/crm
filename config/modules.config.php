@@ -40,5 +40,7 @@ return [
     'Iva',
     'Categoria',
     'Proveedor',
-    'Bienes'
+    'Bienes',
+    'TipoFactura'
+
 ];

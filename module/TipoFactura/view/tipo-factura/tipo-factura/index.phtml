@@ -1,0 +1,73 @@
+<!-- scripts -->
+<?php
+if (isset($_SESSION['MENSAJES']['licencia'])) {
+    if ($_SESSION['MENSAJES']['licencia']) {
+        echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['licencia_msj'] . "', 'success');});</script>";
+    } else {
+        echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['licencia_msj'] . "', 'error');});</script>";
+    }
+    $_SESSION['MENSAJES']['licencia'] = null;
+    $_SESSION['MENSAJES']['licencia_msj'] = null;
+}
+?>
+
+<!--Bloqueo de pantalla + animacion-->
+<div id="bloquea" class="cargando" style="display:none;"></div>
+<div class="" id="loader"></div>
+<!-- Inicio: Tabla Licencias -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default sombra-ficha">
+            <div class="panel-heading text-center titulo-espaciado">
+                LISTADO DE TIPOS DE FACTURA
+                <a data-toggle="collapse" data-parent="#accordion" href="#add_tipo_evento" 
+                    aria-expanded="true" aria-controls="add_tipo_evento">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
+                </a>
+            </div>
+            <div class="container margen">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
+                            <thead>
+                                <tr>
+                                    <th class="th-sm"> Tipo de Factura</th>
+                                    <th class="">Descripción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    foreach ($tipoFacturas as $tipoFactura) : ?>
+                                    <tr>
+                                        <td><?php echo ($tipoFactura->getNombre()); ?></td>
+                                        <td><?php echo ($tipoFactura->getDescripcion()); ?></td>                                 
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Tabla -->
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row img-centrar">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('herramientas') ?>">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha zoom">
+                    </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->
