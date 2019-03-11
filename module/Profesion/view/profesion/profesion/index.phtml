@@ -12,12 +12,17 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
 
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb secondary-color navbar-menu-font">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
             <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
             <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
             <li class="breadcrumb-item active" aria-current="page">Profesiones</li>
         </ol>
     </nav>
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+    style="margin:0px;">
+            <li class="pull-right"><a href="<?= $this->url('gestionClientes/profesion'); ?>" id="volver">Volver</a></li>
+    </ol>
 </div>
 
 <!--Bloqueo de pantalla + animacion-->

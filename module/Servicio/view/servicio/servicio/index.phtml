@@ -4,11 +4,16 @@ $this->headTitle('Servicios');
 ?>
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb secondary-color navbar-menu-font">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="/productosservicios">Productos y Servicios</a></li>
             <li class="breadcrumb-item"><a href="/productosservicios/servicios">Servicios</a></li>
             <li class="breadcrumb-item active" aria-current="page">Listado</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+        style="margin:0px;">
+            <li class="pull-right"><a href="/productosservicios/servicios" id="volver">Volver</a></li>
         </ol>
     </nav>
 </div>

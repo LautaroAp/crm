@@ -12,12 +12,20 @@ $categoria_eve = $tipoevento->getCategoria_evento();
 
 <?php
 
-$url = "";
-
-if (strtoupper($tipoPersona)==strtoupper("proveedor")){
-    $url = "/proveedores/actividades/proveedor";
-}elseif (strtoupper($tipoPersona)==strtoupper("cliente")){
-    $url = "/clientes/actividades/cliente";
+$url1 = ""; $url2=""; $url3="";
+$label1=""; $label2=""; $label3="";
+if ($tipoPersona=="proveedor"){
+    $url1 = '/proveedores';
+    $label1= "Proveedores";
+    $url2 = "/gestionProveedores/gestionEventosProveedores";
+    $label2 = "Eventos";
+    $url3 = "/proveedores/actividades/proveedor";
+}elseif ($tipoPersona=="cliente"){
+    $url1= "/clientes";
+    $label1 = "Clientes";
+    $url2= "/gestionClientes/gestionEventosClientes";
+    $label2= "Eventos";
+    $url3 = "/clientes/actividades/cliente";
 }else{
     $url = "/home";
 }
@@ -26,14 +34,17 @@ if (strtoupper($tipoPersona)==strtoupper("proveedor")){
 
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb secondary-color navbar-menu-font">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
             <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
-            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
-            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes/gestionEventosClientes'); ?>">Eventos</a></li>
-            <li class="breadcrumb-item">
-                <a href="<?php echo ($url); ?>">Listado</a>
-            </li>
+            <li class="breadcrumb-item"><a href="<?= $url1 ?>"><?php echo ($label1);?></a></li>
+            <li class="breadcrumb-item"><a href="<?= $url2 ?>">Eventos</a></li>
+            <li class="breadcrumb-item"><a href="<?php $url3 ?>">Listado</a></li>
             <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+        style="margin:0px;">
+            <li class="pull-right"><a href="<?php $url2 ?>" id="volver">Volver</a></li>
         </ol>
     </nav>
 </div>
