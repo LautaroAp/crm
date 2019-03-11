@@ -9,13 +9,15 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
     $_SESSION['MENSAJES']['listado_clientes_msj'] = null;
 }
 ?>
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
-  </ol>
-</nav>
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb secondary-color navbar-menu-font">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Listado de Clientes</li>
+        </ol>
+    </nav>
+</div>
 <!-- Inicio: Tabla Clientes -->
 <div class="container margen">
     <div class="row">

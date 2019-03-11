@@ -11,6 +11,16 @@ if (isset($_SESSION['MENSAJES']['empresa'])) {
 }
 ?>
 
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb secondary-color navbar-menu-font">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionEmpresa'); ?>">Empresa</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Configuración</li>
+        </ol>
+    </nav>
+</div>
+
 <!-- Inicio: Datos de Empresa -->
 <div class="container margen">
     <div class="row">

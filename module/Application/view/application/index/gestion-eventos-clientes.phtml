@@ -1,3 +1,13 @@
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb secondary-color navbar-menu-font">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Eventos</li>
+        </ol>
+    </nav>
+</div>
+
 <div class="container margen">
     <div class="panel panel-default sombra-ficha">
         <div class="panel-heading text-center titulo-espaciado">
@@ -38,24 +48,5 @@
                 </nav>
             </div>
         </div>
-    </div>
-    <div class="container margen text-center" >
-        <nav id="nav" >
-            <ul>
-                <li>
-                    <div class="img-centrar">
-                        <div>
-                            <a href="<?= $volver ?>">
-                                <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
-                                    class="img-rounded img-responsive img-texto-derecha zoom">
-                            </a>
-                        </div>
-                        <div class="ficha-cliente-label">
-                            <label>Volver</label>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </nav>
     </div>
 </div>

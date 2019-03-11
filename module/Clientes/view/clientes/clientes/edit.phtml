@@ -22,6 +22,18 @@ $establecimientos = $cliente->getEstablecimientos();
 $raza_manejo = $cliente->getRazaManejo();
 ?>
 
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb secondary-color navbar-menu-font">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes/listado'); ?>">Listado</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('clientes/ficha', ['tipo' => 'cliente', 'id' => $id]) ?>">Ficha Cliente</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar Cliente</li>
+        </ol>
+    </nav>
+</div>
+
 <!-- Inicio: Datos Generales -->
 <div class="container margen">
     <div class="row">

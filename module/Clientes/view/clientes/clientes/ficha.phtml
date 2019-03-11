@@ -14,7 +14,6 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
-
 <script>
     $(document).ready( function () {
         $('#table_id').DataTable({
@@ -29,6 +28,17 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 
 <link href="http://twitter.github.com/bootstrap/assets/css/docs.css" rel="stylesheet">
 <link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
+
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb secondary-color navbar-menu-font">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes/listado'); ?>">Listado</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ficha Cliente</li>
+        </ol>
+    </nav>
+</div>
 
 <!-- Inicio: Datos de Cliente -->
 <div class="container margen">
