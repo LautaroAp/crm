@@ -9,9 +9,35 @@ if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
     $_SESSION['MENSAJES']['tipo_evento_msj'] = null;
 }
 $titulo="LISTADO DE CATEGORÍAS";
-if ($tipo == "iva")
-    $titulo= "LISTADO DE CONDICIÓN DE IVA";
+if ($tipo == "iva"){$titulo= "LISTADO DE CONDICIÓN DE IVA";}
+$url =""; $url2=""; $label=""; $label2 ="";
+if ($tipo == "cliente"){
+    $url = "/clientes";
+    $label = "Clientes";
+}
+if ($tipo == "proveedor"){
+    $url = "/proveedores";
+    $label = "Proveedores";
+}
+if ($tipo== "licencia"){
+    $url ="/productosservicios/licencias";
+    $label = "Licencia";
+    $url2="/productosservicios";
+    $label2="Productos y Servicios";
+}
 ?>
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb secondary-color navbar-menu-font">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <?php if ($url2!=""){?>
+                <li class="breadcrumb-item"><a href="<?php echo ($url2);?>"><?php echo ($label2);?></a></li>
+            <?php }?>
+            <li class="breadcrumb-item"><a href="<?php echo ($url);?>"><?php echo ($label);?></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Categorias</li>
+        </ol>
+    </nav>
+</div>
 <!--Bloqueo de pantalla + animacion-->
 <div id="bloquea" class="cargando" style="display:none;"></div>
 <div class="" id="loader"></div>

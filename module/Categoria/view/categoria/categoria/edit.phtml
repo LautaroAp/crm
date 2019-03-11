@@ -1,4 +1,26 @@
-
+<?php 
+$url1 =""; $url2=""; $label="";
+if ($tipo == "cliente"){
+    $url1 = "/clientes";
+    $url2= "/clientes/categoria/cliente";
+    $label = "Clientes";
+}
+if ($tipo == "proveedor"){
+    $url1 = "/proveedores";
+    $url2= "/proveedores/categoria/proveedor";
+    $label = "Proveedores";
+}
+?>
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb secondary-color navbar-menu-font">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?php echo ($url1);?>"><?php echo ($label);?></a></li>
+            <li class="breadcrumb-item"><a href="<?php echo ($url2);?>">Categorias</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        </ol>
+    </nav>
+</div>
 <form method="post">
     <div class="container margen">
         <div class="row">

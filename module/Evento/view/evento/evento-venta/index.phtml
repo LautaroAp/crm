@@ -4,10 +4,30 @@ $meses = [
     'N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
     'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
 ];
-
-
+ 
+$url =""; $label="";
+if ($persona == "cliente"){
+    $url = "/clientes";
+    $label = "Clientes";
+}
+elseif ($persona == "proveedor"){
+    $url = "/proveedores";
+    $label = "Proveedores";
+}
+else{
+    $url = "/empresa";
+    $label = "Empresa";
+}
 ?>
-
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb secondary-color navbar-menu-font">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?php echo ($url);?>"><?php echo ($label);?></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Resumen de eventos</li>
+        </ol>
+    </nav>
+</div>
 <div class="container margen">
     <div class="row">
         <div class="col-md-12">

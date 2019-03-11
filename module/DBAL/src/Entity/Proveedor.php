@@ -191,24 +191,6 @@ class Proveedor {
         return $this;
     }
 
-    public function getProfesion() {
-        return $this->profesion;
-    }
-
-    public function setProfesion($profesion) {
-        $this->profesion = $profesion;
-        return $this;
-    }
-
-    public function getNombreProfesion() {
-        $profesion = $this->getProfesion();
-        if (is_null($profesion)) {
-            return null;
-        } else {
-            return $this->getProfesion()->getNombre();
-        }
-    }
-
     public function getEmpresa() {
         return $this->empresa;
     }
@@ -298,14 +280,6 @@ class Proveedor {
         return $this;
     }
 
-    function getNombreLicenciaProveedor() {
-        if (is_null($this->licencia)) {
-            return null;
-        } else {
-            return $this->licencia->getNombre();
-        }
-    }
-
     function getLicencia() {
         return $this->licencia;
     }
@@ -315,14 +289,6 @@ class Proveedor {
         return $this;
     }
 
-    public function getVersion() {
-        return $this->version;
-    }
-
-    public function setVersion($version) {
-        $this->version = $version;
-        return $this;
-    }
 
    
     public function addUsuario($usuario) {

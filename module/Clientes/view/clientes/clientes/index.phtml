@@ -9,13 +9,15 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
     $_SESSION['MENSAJES']['listado_clientes_msj'] = null;
 }
 ?>
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
-  </ol>
-</nav>
+<div class="container"  style="padding: 0px;">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb secondary-color navbar-menu-font">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Data</li>
+        </ol>
+    </nav>
+</div>
 <!-- Inicio: Tabla Clientes -->
 <div class="container margen">
     <div class="row">
@@ -27,42 +29,50 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                 <form method="post">
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="nombre" placeholder="Nombre" value="<?php if (count($parametros)>0){echo($parametros['nombre']);} ?>">
+                            <input type="text" class="form-control" name="nombre" placeholder="Nombre"
+                                value="<?php if (count($parametros)>0){echo($parametros['nombre']);} ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="email" placeholder="Email" value="<?php if (count($parametros)>0){echo($parametros['email']);} ?>">
+                            <input type="text" class="form-control" name="email" placeholder="Email"
+                                value="<?php if (count($parametros)>0){echo($parametros['email']);} ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="telefono" placeholder="Telefono" value="<?php if (count($parametros)>0){echo($parametros['telefono']);} ?>">
+                            <input type="text" class="form-control" name="telefono" placeholder="Telefono"
+                                value="<?php if (count($parametros)>0){echo($parametros['telefono']);} ?>">
                         </div>
                         <div class="form-group col-md-3">
-                            <button type="submit" class="btn btn-default"> 
+                            <button type="submit" class="btn btn-default">
                                 <i class="glyphicon glyphicon-search"></i> Buscar
-                            </button>                    
-                        </div>                        
+                            </button>
+                        </div>
                     </div>
                     <label>
-                        <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion" data-target="#collapseBusquedaAvanzada" 
-                            aria-expanded="true" aria-controls="collapseBusquedaAvanzada" name="busquedaAvanzada" id="busquedaAvanzada">
-                            Búsqueda avanzada
+                        <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion"
+                            data-target="#collapseBusquedaAvanzada" aria-expanded="true"
+                            aria-controls="collapseBusquedaAvanzada" name="busquedaAvanzada" id="busquedaAvanzada">
+                        Búsqueda avanzada
                     </label>
                     <div class="row form-row collapse" id="collapseBusquedaAvanzada">
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="empresa" placeholder="Empresa" value="<?php if (count($parametros)>0){echo($parametros['empresa']);} ?>">
+                            <input type="text" class="form-control" name="empresa" placeholder="Empresa"
+                                value="<?php if (count($parametros)>0){echo($parametros['empresa']);} ?>">
                         </div>
                         <div class="form-group col-md-3">
                             <select class="form-control" id="categoria" name="categoria">
                                 <option value="" hidden="">Seleccionar Categoría</option>
                                 <?php foreach ($categorias as $categoria) : ?>
-                                <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
+                                <option value="<?php echo ($categoria->getId()); ?>">
+                                    <?php echo ($categoria->getNombre()); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
+                            <select class="form-control" id="pais" name="pais"
+                                onchange="actualizarDatosProvincias(this.value)">
                                 <option value="" hidden="">Seleccionar País</option>
                                 <?php foreach ($paises as $pais) : ?>
-                                    <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
+                                <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?>
+                                </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -70,21 +80,22 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                             <select class="form-control" id="ops_provincias" name="provincia">
                             </select>
                         </div>
-                    </div>  
+                    </div>
                 </form>
             </div>
-        <div class="panel-body">
-        <table id="tabla_evento" class="table table-bordred table-hover table-condensed" style="vertical-align: center;">            
-            <thead>
-                <tr> 
-                    <th class="th-sm">Cliente</th>
-                    <th class="th-sm">Teléfono</th>
-                    <th class="th-sm">Email</th>   
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
+            <div class="panel-body">
+                <table id="tabla_evento" class="table table-bordred table-hover table-condensed"
+                    style="vertical-align: center;">
+                    <thead>
+                        <tr>
+                            <th class="th-sm">Cliente</th>
+                            <th class="th-sm">Teléfono</th>
+                            <th class="th-sm">Email</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
                 if (isset($personas)) {
                     foreach ($personas as $persona) {
                             echo('<tr>');
@@ -98,20 +109,21 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                             echo ($persona->getEmail());
                             echo ('</td>'); 
                 ?>
-                <td class="table-items-right">
-                    <a class="btn btn-default" href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]); ?>">
-                        <span class="glyphicon glyphicon-share-alt" ></span>
-                    </a>
-                </td>
-                <?php 
+                        <td class="table-items-right">
+                            <a class="btn btn-default"
+                                href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]); ?>">
+                                <span class="glyphicon glyphicon-share-alt"></span>
+                            </a>
+                        </td>
+                        <?php 
                 } ?>
-                    
-                </tr>
-                </tbody>
-            </table>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        </div>
-            <?php
+        <?php
             echo $this->paginationControl($personas, 'Sliding', // All, Elastic, Jumping, Sliding
                     'search_pagination_2.phtml', $this->url('clientes/page', ['action' => 'index', 'id' => 1]));
         }
@@ -128,7 +140,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                 <a href="<?= $this->url("gestionClientes/agregar", ['tipo'=>'cliente']); ?>">
                     <img src="<?= $this->basePath('img/crm/cliente_add_a.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
-                    </a>
+                </a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Agregar</label><br>
@@ -137,9 +149,9 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
         </div>
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url("clientes/inactivos"); ?>" > 
-                    <img src="<?= $this->basePath('img/crm/cliente_exclamation_a.png') ?>" 
-                    class="img-rounded img-responsive img-menu img-texto-derecha img-submenu zoom">
+                <a href="<?= $this->url("clientes/inactivos"); ?>">
+                    <img src="<?= $this->basePath('img/crm/cliente_exclamation_a.png') ?>"
+                        class="img-rounded img-responsive img-menu img-texto-derecha img-submenu zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">
@@ -150,7 +162,7 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <a href="<?= $volver ?>">
-                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha zoom">
                 </a>
             </div>
@@ -158,6 +170,6 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                 <label>Volver</label>
             </div>
         </div>
-    </div>       
+    </div>
 </div>
 <!-- Fin: Panel Botones -->

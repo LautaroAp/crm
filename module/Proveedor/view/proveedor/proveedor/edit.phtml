@@ -10,15 +10,23 @@ $provincia = $proveedor->getProvincia();
 $ciudad = $proveedor->getCiudad();
 $empresa = $proveedor->getEmpresa();
 $categoria = $proveedor->getCategoria();
-$licencia = $proveedor->getLicencia();
-$version = $proveedor->getVersion();
-$profesion = $proveedor->getProfesion();
 $condicion_iva = $proveedor->getCondicion_iva();
 $actividad = $proveedor->getActividad();
 $cargo = $proveedor->getCargo();
 $skype = $proveedor->getSkype();
+$url = "/proveedores/listado/ficha/".$id;
 ?>
-
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb secondary-color navbar-menu-font">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/proveedores">Proveedores</a></li>
+            <li class="breadcrumb-item"><a href="/proveedores/listado">Listado</a></li>
+            <li class="breadcrumb-item"><a href="<?php echo ($url)?>">Ficha Proveedor</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar Proveedor</li>
+        </ol>
+    </nav>
+</div>
 <!-- Inicio: Datos Generales -->
 <div class="container margen">
     <div class="row">
