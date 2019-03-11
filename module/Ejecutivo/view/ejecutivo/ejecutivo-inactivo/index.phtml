@@ -17,6 +17,21 @@ if (isset($_SESSION['MENSAJES']['ejecutivo_inactivo'])) {
         <script type="text/javascript" src="crm/ejecutivo.js"></script>
     </head>
 
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('ejecutivos'); ?>">Ejecutivos</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Inactivos</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+                    style="margin:0px;">
+            <li class="pull-right"><a  href="<?= $this->url('ejecutivos'); ?>" id="volver">Volver</a></li>
+        </ol>
+    </nav>
+</div>
     <!-- Inicio: Tabla Ejecutivos -->
     <div class="container margen">
         <div class="row">

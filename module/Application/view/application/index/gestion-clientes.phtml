@@ -1,3 +1,16 @@
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
+                <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Clientes</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+                    style="margin:0px;">
+            <li class="pull-right"><a href="<?= $this->url('home'); ?>" id="volver">Volver</a></li>
+        </ol>
+    </nav>
+</div>
 <div class="container margen">
     <div class="panel panel-default sombra-ficha">
         <div class="panel-heading text-center titulo-espaciado">
@@ -18,7 +31,7 @@
                         </li>
                         <li>
                             <figure>
-                                <a href="<?= $this->url("gestionClientes/agregar", ['tipo'=>'cliente']); ?>" > 
+                                <a href="<?= $this->url("gestionClientes/agregar", ['tipo' => 'cliente']); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/cliente_add_a.png') ?>" 
                                     class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
@@ -38,7 +51,7 @@
                     <ul>
                         <li>
                             <figure>
-                                <a href="<?= $this->url('gestionClientes/categorias', ['tipo'=>'cliente']); ?>" > 
+                                <a href="<?= $this->url('gestionClientes/categorias', ['tipo' => 'cliente']); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/consulta_a.png') ?>" 
                                     class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
@@ -56,7 +69,7 @@
                         </li>
                         <li>
                             <figure>
-                                <a href="<?= $this->url('gestionClientes/eventos', ['tipo'=>'cliente']); ?>" > 
+                                <a href="<?= $this->url('gestionClientes/eventos', ['tipo' => 'cliente']); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/consulta_a.png') ?>" 
                                     class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>

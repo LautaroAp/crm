@@ -1,5 +1,5 @@
 <?php 
-$url1 =""; $url2=""; $label="";
+$url1 =""; $url2=""; $url3=""; $label=""; $label3="";
 if ($tipo == "cliente"){
     $url1 = "/clientes";
     $url2= "/clientes/categoria/cliente";
@@ -10,14 +10,46 @@ if ($tipo == "proveedor"){
     $url2= "/proveedores/categoria/proveedor";
     $label = "Proveedores";
 }
+if ($tipo== "iva"){
+    $url1 ="/herramientas";
+    $label = "Herramientas";
+    $url2= "/herramientas/categorias/iva";
+}
+if ($tipo== "producto"){
+    $url1 ="/productosservicios";
+    $label = "Productos y Servicios";
+    $url3= "/productosservicios/productos";
+    $label3="Productos";
+    $url2= "/productosservicios/productos/categorias/producto";
+}if ($tipo== "servicio"){
+    $url1 ="/productosservicios";
+    $label = "Productos y Servicios";
+    $url3= "/productosservicios/servicios";
+    $label3="Servicios";
+    $url2= "/productosservicios/servicios/categorias/servicio";
+}if ($tipo== "licencia"){
+    $url1 ="/productosservicios";
+    $label = "Productos y Servicios";
+    $url3= "/productosservicios/licencias";
+    $label3="Licencias";
+    $url2= "/productosservicios/licencias/categorias/licencia";
+}
 ?>
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb secondary-color navbar-menu-font">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="<?php echo ($url1);?>"><?php echo ($label);?></a></li>
+            <?php if ($url3 !=""){ ?>
+                <li class="breadcrumb-item"><a href="<?php echo ($url3);?>"><?php echo ($label3);?></a></li>
+            <?php } ?>
             <li class="breadcrumb-item"><a href="<?php echo ($url2);?>">Categorias</a></li>
             <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+                    style="margin:0px;">
+            <li class="pull-right"><a href="<?php echo ($url2);?>" id="volver">Volver</a></li>
         </ol>
     </nav>
 </div>

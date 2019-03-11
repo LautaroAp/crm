@@ -39,7 +39,7 @@
 
 <body class="homepage">
     <!-- Navigation -->
-    <!-- <nav id="mainNav" class="navbar navbar-default navbar-inverse navbar-fixed-top navbar-color">
+    <nav id="mainNav" class="navbar navbar-default navbar-inverse navbar-fixed-top navbar-color">
         <div class="container">
             <div class="navbar-header page-scroll">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
@@ -133,7 +133,7 @@
             </div>
         </div>
     </nav>
- -->
+
 
     <main class="margen-main">
         <div class="container" style="padding: 0px;">
@@ -141,20 +141,20 @@
                 <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
                     style="margin:0px;">
                     <script>
-                    var obj = <?php echo json_encode($rutas); ?>;
-                    armar_breadcrumb(obj);
+                    var obj = <?php //echo json_encode($rutas); ?>;
+                   // armar_breadcrumb(obj);
                     </script>
                 </ol>
-                <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+                <!-- <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
                     style="margin:0px;">
                     <li class="pull-right"><a href="" id="volver">Volver</a>
                         <script>
-                        var obj = <?php echo json_encode($rutas); ?>;
+                        var obj = <?php //echo json_encode($rutas); ?>;
                         var link = getUrlAnt(obj);
                         $("#volver").attr("href", link);
                         </script>
                     </li>
-                </ol>
+                </ol> -->
             </nav>
         </div>
         <div id="content">

@@ -9,6 +9,20 @@ if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
     $_SESSION['MENSAJES']['ejecutivo_msj'] = null;
 }
  ?>
+ <div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ejecutivos</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+                    style="margin:0px;">
+            <li class="pull-right"><a  href="<?= $this->url('herramientas'); ?>" id="volver">Volver</a></li>
+        </ol>
+    </nav>
+</div>
 <html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />

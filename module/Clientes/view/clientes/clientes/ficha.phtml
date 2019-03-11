@@ -14,7 +14,6 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
-
 <script>
     $(document).ready( function () {
         $('#table_id').DataTable({
@@ -32,10 +31,16 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
 
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb secondary-color navbar-menu-font">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/proveedores">Proveedores</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Listado</li>
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes/listado'); ?>">Listado</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ficha Cliente</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+                    style="margin:0px;">
+            <li class="pull-right"><a href="<?= $this->url('gestionClientes/listado'); ?>" id="volver">Volver</a></li>
         </ol>
     </nav>
 </div>
@@ -296,79 +301,52 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     <!-- Menu Transaccion-->
                     <div class="row">
                         <div class="collapse" id="drop">
-                            <ul class="list-inline" style="margin-left: 20px;">
+                            <ul class="list-inline padding-sm" style="margin-left: 20px;">
                                 <li>
-                                    <a href="#" class="padding-cero">
-                                        <div class="col img-centrar">
-                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                            Presupuesto
-                                        </div> 
+                                    <a href="#" class="transaccion-font" style="">
+                                        <span class="glyphicon glyphicon-copy" ></span>&nbsp; Presupuesto
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="padding-cero">
-                                        <div class="col img-centrar">
-                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                            Pedido
-                                        </div> 
+                                    <a href="#" class="transaccion-font">
+                                        <span class="glyphicon glyphicon-shopping-cart" ></span>&nbsp; Pedido
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="padding-cero">
-                                        <div class="col img-centrar">
-                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                            Remito
-                                        </div> 
+                                    <a href="#" class="transaccion-font">
+                                        <span class="glyphicon glyphicon-check" ></span>&nbsp; Remito
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="padding-cero">
-                                        <div class="col img-centrar">
-                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                            Factura
-                                        </div> 
+                                    <a href="#" class="transaccion-font">
+                                        <span class="glyphicon glyphicon-list-alt" ></span>&nbsp; Factura
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="transaccion-font">
+                                        <span class="glyphicon glyphicon-credit-card" ></span>&nbsp; Cobro
                                     </a>
                                 </li>
                             </ul>
-                            <ul class="list-inline" style="margin-left: 20px;">
+                            <ul class="list-inline padding-sm" style="margin-left: 20px;">
                                 <li>
-                                    <a href="#" class="padding-cero">
-                                        <div class="col img-centrar">
-                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                            Pago
-                                        </div> 
+                                    <a href="#" class="transaccion-font">
+                                        <span class="glyphicon glyphicon-exclamation-sign" ></span>&nbsp; Devolución
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="padding-cero">
-                                        <div class="col img-centrar">
-                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                            Nota de Crédito
-                                        </div> 
+                                    <a href="#" class="transaccion-font">
+                                        <span class="glyphicon glyphicon-tags" ></span>&nbsp; Nota de Crédito
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="padding-cero">
-                                        <div class="col img-centrar">
-                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                            Nota de Débito
-                                        </div> 
+                                    <a href="#" class="transaccion-font">
+                                        <span class="glyphicon glyphicon-tags" ></span>&nbsp; Nota de Débito
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="padding-cero">
-                                        <div class="col img-centrar">
-                                            <img src="<?= $this->basePath('img/crm/carrito_a.png') ?>" 
-                                                class="img-rounded img-responsive img-texto-derecha img-submenu-sm">
-                                            Nota de Crédito Cond. Pago
-                                        </div> 
+                                    <a href="#" class="transaccion-font">
+                                        <span class="glyphicon glyphicon-tags" ></span>&nbsp; Nota de Crédito C/Pago
                                     </a>
                                 </li>
                             </ul>

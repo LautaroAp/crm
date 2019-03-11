@@ -189,6 +189,10 @@
     padding: 0px !important;
 }
 
+.padding-xs {
+    padding: 3px !important;
+}
+
 .padding-sm {
     padding: 5px !important;
 }
@@ -201,6 +205,15 @@
     padding: 10px !important;
     padding-top: 0px !important;
     margin: 0px;
+}
+
+.transaccion-font{
+    color: black !important;
+    font-size: 16px;
+}
+
+.transaccion-font:hover {
+    color: rgb(80, 80, 80) !important;
 }
 
 .marging-cero {
@@ -340,8 +353,6 @@
     width:100%;
     height:60px;   /* Height of the footer */
  }
-
- 
 	
 .zoom{
     transition: width 0.3s, height 0.3s, transform 0.3s;

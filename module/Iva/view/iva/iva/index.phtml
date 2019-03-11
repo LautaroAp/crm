@@ -12,7 +12,20 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
     $_SESSION['MENSAJES']['licencia_msj'] = null;
 }
 ?>
-
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tipos de IVA</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+                    style="margin:0px;">
+            <li class="pull-right"><a href="<?= $this->url('herramientas'); ?>" id="volver">Volver</a></li>
+        </ol>
+    </nav>
+</div>
 <!--Bloqueo de pantalla + animacion-->
 <div id="bloquea" class="cargando" style="display:none;"></div>
 <div class="" id="loader"></div>

@@ -6,6 +6,17 @@ $categoria = $bien->getCategoria();
 $iva = $bien->getIva();
 $proveedor = $bien->getProveedor();
 ?>
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb secondary-color navbar-menu-font">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/productosservicios">Productos y Servicios</a></li>
+            <li class="breadcrumb-item"><a href="/productosservicios/productos">Servicio</a></li>
+            <li class="breadcrumb-item"><a href="/productosservicios/servicios/listado">Listado</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar Servicio</li>
+        </ol>
+    </nav>
+</div>
 <!-- Formulario -->
 <form method="post">
 <div class="container margen">

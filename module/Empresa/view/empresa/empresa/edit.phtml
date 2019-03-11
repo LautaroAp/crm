@@ -83,6 +83,22 @@ $form->prepare();
     });
 </script>
 
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionEmpresa'); ?>">Empresa</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionEmpresa/configuracion'); ?>">Configuración</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar Empresa</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+                    style="margin:0px;">
+            <li class="pull-right"><a href="<?= $this->url('gestionEmpresa/configuracion'); ?>" id="volver">Volver</a></li>
+        </ol>
+    </nav>
+</div>
+
 <div class="container margen">
     <div class="panel panel-default sombra-ficha">
         <div class="panel-heading titulo-espaciado">

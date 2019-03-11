@@ -1,5 +1,20 @@
 <!-- MODULE CLIENTES -->
 <script src="js/functions.js"></script>
+
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Inactivos</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+                    style="margin:0px;">
+            <li class="pull-right"><a href="<?= $this->url('gestionClientes'); ?>" id="volver">Volver</a></li>
+        </ol>
+    </nav>
+</div>
 <!-- Inicio: Tabla Clientes -->
 <div class="container margen">
     <div class="row">

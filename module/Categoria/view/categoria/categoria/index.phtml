@@ -25,16 +25,37 @@ if ($tipo== "licencia"){
     $url2="/productosservicios";
     $label2="Productos y Servicios";
 }
+if ($tipo== "producto"){
+    $url ="/productosservicios/productos";
+    $label = "Productos";
+    $url2="/productosservicios";
+    $label2="Productos y Servicios";
+}
+if ($tipo== "servicio"){
+    $url ="/productosservicios/servicios";
+    $label = "Servicios";
+    $url2="/productosservicios";
+    $label2="Productos y Servicios";
+}
+if ($tipo== "iva"){
+    $url="/herramientas";
+    $label="Herramientas";
+}
 ?>
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb secondary-color navbar-menu-font">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <?php if ($url2!=""){?>
                 <li class="breadcrumb-item"><a href="<?php echo ($url2);?>"><?php echo ($label2);?></a></li>
             <?php }?>
             <li class="breadcrumb-item"><a href="<?php echo ($url);?>"><?php echo ($label);?></a></li>
             <li class="breadcrumb-item active" aria-current="page">Categorias</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+                    style="margin:0px;">
+            <li class="pull-right"><a href="<?php echo ($url);?>" id="volver">Volver</a></li>
         </ol>
     </nav>
 </div>
