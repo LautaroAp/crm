@@ -274,7 +274,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                 <div class="collapse in" id="collapseActividades">
                     <div class="row padding-bot-md">
                         <!-- Transacciones -->
-                        <div class="btn-group">
+                        <div class="btn-group padding-md">
                             <button type="button" class="btn btn-default" style="font-weight: bold;">Transacciones</button>
                             <a role="button" class="btn btn-default" data-toggle="collapse" 
                                 data-parent="#accordion" href="#drop" aria-expanded="true" aria-controls="drop">
@@ -282,7 +282,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             </a>
                         </div>
                         <!-- Acción Comercial -->
-                        <div class="btn-group">
+                        <div class="btn-group padding-md">
                             <button role="button" class="btn btn-default" style="font-weight: bold;">Acción Comercial</button>
                             <a href="<?= $this->url('evento', ['action' => 'add','tipo'=>'cliente','id' => $persona->getId()]) ?>" 
                                 class="btn btn-default">
@@ -299,7 +299,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     </div>
 
                     <!-- Menu Transaccion-->
-                    <div class="row">
+                    <div class="row padding-lg">
                         <div class="collapse" id="drop">
                             <ul class="list-inline padding-sm" style="margin-left: 20px;">
                                 <li>
@@ -365,7 +365,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         </thead>
                         <tbody role="button" class="">
                             <?php foreach ($eventos as $evento): ?>
-                                <tr data-valor="<?= $evento->getDescripcion() ?>" id="<?= $evento->getId() ?>" 
+                                <tr id="<?= $evento->getId() ?>" 
                                     onclick="seleccionarFila(event)" class="vpEvento">
                                     <td id="<?= $evento->getId() ?>"><?php
                                         if (!is_null($evento->getFecha())) {
