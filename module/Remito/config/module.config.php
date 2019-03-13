@@ -5,7 +5,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Servicio;
+namespace Remito;
 
 use Zend\Router\Http\Segment;
 use Zend\Router\Http\Literal;
@@ -16,13 +16,13 @@ return [
    
    'router' => [
         'routes' => [
-            'servicio' => [
+            'remito' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/servicio',
+                    'route'    => '/remito',
                     'defaults' => [
                         'controller' => \Application\Controller\IndexController::class,
-                        'action' => 'gestionServicios',
+                        'action' => 'gestionRemitos',
                     ],
                 ],
                 'may_terminate' => true,
@@ -65,7 +65,7 @@ return [
                         'options' => [
                             'route' => '/page[/:id[/:estado]]',
                             'defaults' => [
-                                'controller' => \Servicio\Controller\ServicioController::class,
+                                'controller' => \Remito\Controller\RemitoController::class,
                                 'action' => 'index',
                             ],
                             'constraints' => [
@@ -81,17 +81,17 @@ return [
     
  'controllers' => array(
         'factories' => [
-            Controller\ServicioController::class => Controller\Factory\ServicioControllerFactory::class,
+            Controller\RemitoController::class => Controller\Factory\RemitoControllerFactory::class,
         ],
      ),
      'view_manager' => array(
          'template_path_stack' => array(
-             'servicio' => __DIR__ . '/../view',
+             'remito' => __DIR__ . '/../view',
          ),
      ),
     'service_manager' => array(
         'factories' => array(
-            Service\ServicioManager::class => Service\Factory\ServicioManagerFactory::class,
+            Service\RemitoManager::class => Service\Factory\RemitoManagerFactory::class,
         ),
     )
  ];
