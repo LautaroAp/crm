@@ -41,6 +41,8 @@ return [
     'Categoria',
     'Proveedor',
     'Bienes',
-    'TipoFactura'
+    'TipoFactura',
+    'Presupuesto',
+    'Pedido'
 
 ];
