@@ -1,9 +1,9 @@
 <?php
-namespace Servicio\Form;
+namespace Pedido\Form;
 
 use Zend\Form\Form;
 
-class ServicioForm extends Form
+class PedidoForm extends Form
 {
     /**
      * Scenario ('create' or 'update').
@@ -21,12 +21,12 @@ class ServicioForm extends Form
      * Current pais.
      * @var Pais\Entity\Pais 
      */
-    private $servicio = null;
+    private $Pedido = null;
     
     /**
      * Constructor.     
      */
-    public function __construct($scenario = 'create', $entityManager = null, $servicio = null)
+    public function __construct($scenario = 'create', $entityManager = null, $Pedido = null)
     {
         // Define form name
         parent::__construct('pais-form');
@@ -37,7 +37,7 @@ class ServicioForm extends Form
         // Save parameters for internal use.
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
-        $this->servicio = $servicio;
+        $this->Pedido = $Pedido;
         
         $this->addElements();
         $this->addInputFilter();          

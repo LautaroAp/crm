@@ -4,12 +4,12 @@
  * Clase actualmente sin uso
  */
 
-namespace Servicio\Controller;
+namespace Pedido\Controller;
 
 use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class ServicioController extends HuellaController {
+class PedidoController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager
@@ -17,21 +17,18 @@ class ServicioController extends HuellaController {
     protected $entityManager;
 
     /**
-     * Servicio manager.
-     * @var User\Service\ServicioManager 
+     * Pedido manager.
+     * @var User\Service\PedidoManager 
      */
-    protected $servicioManager;
-    private $ivaManager;
-    private $categoriaManager;
-    private $bienesManager;
+    protected $pedidoManager;
+    private $transaccionManager;
+    private $monedaManager;
 
-    public function __construct($entityManager, $servicioManager, $ivaManager,
-    $categoriaManager, $bienesManager) {
+    public function __construct($entityManager, $pedidoManager, $monedaManager,$transaccionManager) {
         $this->entityManager = $entityManager;
-        $this->servicioManager = $servicioManager;
-        $this->ivaManager= $ivaManager;
-        $this->categoriaManager = $categoriaManager;
-        $this->bienesManager = $bienesManager;
+        $this->pedidoManager = $pedidoManager;
+        $this->monedaManager= $monedaManager;
+        $this->transaccionManager = $transaccionManager;
     }
 
     public function indexAction() {
@@ -39,8 +36,7 @@ class ServicioController extends HuellaController {
     }
 
     private function procesarIndexAction() {
-        $this->prepararBreadcrumbs("Listado", "/listado", "Servicios");
-        $paginator = $this->servicioManager->getTabla();
+        $paginator = $this->pedidoManager->getTabla();
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
@@ -49,7 +45,7 @@ class ServicioController extends HuellaController {
                 ->setItemCountPerPage($this->getElemsPag());
         $volver = $this->getUltimaUrl();
         return new ViewModel([
-            'servicios' => $paginator,
+            'pedidos' => $paginator,
             'volver' => $volver,
         ]);        
     }
@@ -60,22 +56,16 @@ class ServicioController extends HuellaController {
     }
 
     private function procesarAddAction() {
-        $this->prepararBreadcrumbs("Agregar Servicios", "/add/servicio", "Servicios");
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $this->servicioManager->addServicio($data);
+            $this->pedidoManager->addPedido($data);
             $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/listado');
         }
-        $ivas = $this->ivaManager->getIvas();
+        $transacciones = $this->transaccionesManager->getIvas();
         $tipo= $this->params()->fromRoute('tipo');
-        $categorias = $this->servicioManager->getCategoriasServicio($tipo);
-        $proveedores = $this->servicioManager->getListaProveedores($tipo);
         $volver = $this->getUltimaUrl();
         return new ViewModel([
             'tipo'=>$tipo,
-            'ivas'=>$ivas,
-            'proveedores'=>$proveedores,
-            'categorias'=>$categorias,
             'volver' => $volver,
         ]);
 
@@ -87,24 +77,21 @@ class ServicioController extends HuellaController {
 
     public function procesarEditAction() {
         $id = $this->params()->fromRoute('id', -1);
-        $servicio = $this->servicioManager->getServicioId($id);
+        $pedido = $this->pedidoManager->getPedidoId($id);
         $tipo = $this->params()->fromRoute('tipo');
-        $this->prepararBreadcrumbs("Editar Servicio", "/edit/".$tipo."/".$id, "Listado");
-        $categorias = $this->servicioManager->getCategoriasServicio($tipo);
-        $proveedores = $this->servicioManager->getListaProveedores($tipo);
-        $ivas = $this->ivaManager->getIvas();
+        $transacciones = $this->transaccionesManager->getIvas();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $this->servicioManager->updateServicio($servicio, $data);
+            $this->pedidoManager->updatePedido($pedido, $data);
             return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/listado');
         }
         $volver = $this->getUltimaUrl();
         return new ViewModel([
-            'servicio' => $servicio,
+            'pedido' => $pedido,
             'categorias'=>$categorias,
-            'ivas'=>$ivas,
+            'transacciones'=>$transacciones,
             'proveedores'=>$proveedores,
-            'tipo'=>"servicio",
+            'tipo'=>"pedido",
             'volver' => $volver,
         ]);
     }
@@ -116,13 +103,13 @@ class ServicioController extends HuellaController {
 
     public function procesarRemoveAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
-        $servicio = $this->servicioManager->getServicioId($id);
-        if ($servicio == null) {
+        $pedido = $this->pedidoManager->getPedidoId($id);
+        if ($pedido == null) {
             $this->getResponse()->setStatusCode(404);
             return;
         } else {
-            $this->servicioManager->removeServicio($servicio);
-            return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/listado');
+            $this->pedidoManager->removePedido($pedido);
+            return $this->redirect()->toRoute('home');
         }
     }
 
@@ -132,7 +119,7 @@ class ServicioController extends HuellaController {
 
     public function backupAction(){
         $this->layout()->setTemplate('layout/nulo');
-        $resultado = $this->servicioManager->getServicios();
+        $resultado = $this->pedidoManager->getPedidos();
         return new ViewModel([
             'resultado' => $resultado
         ]);

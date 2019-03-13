@@ -66,8 +66,8 @@ class PresupuestoManager {
 
     private function setData($presupuesto, $data){
         $data['tipo']=$this->tipo;
-        $transaccion = $this->transaccionManager->addTransaccion($data);
-        $presupuesto->setTransaccion($transaccion);
+        $bien = $this->transaccionManager->addBien($data);
+        $presupuesto->setBien($bien);
         return $presupuesto;
     }
 
@@ -75,16 +75,16 @@ class PresupuestoManager {
      * This method updates data of an existing presupuesto.
      */
     public function updatePresupuesto($presupuesto, $data) {
-        $transaccion = $presupuesto->getTransaccion();
+        $transaccion = $presupuesto->getBien();
         $data['tipo']=$this->tipo;
-        $this->transaccionManager->updateTransaccion($transaccion, $data);
+        $this->transaccionManager->updateBien($transaccion, $data);
         // Apply changes to database.
         $this->entityManager->flush();
         return true;
     }
 
     public function removePresupuesto($presupuesto) {
-        $transaccion = $presupuesto->getTransaccion();
+        $transaccion = $presupuesto->getBien();
         $this->entityManager->remove($presupuesto);
         $this->entityManager->flush();
     }

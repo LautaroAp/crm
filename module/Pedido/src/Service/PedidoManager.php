@@ -1,17 +1,17 @@
 <?php
 
-namespace Presupuesto\Service;
+namespace Pedido\Service;
 
-use DBAL\Entity\Presupuesto;
+use DBAL\Entity\Pedido;
 use DBAL\Entity\Moneda;
 use DBAL\Entity\Transaccion;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 /**
- * Esta clase se encarga de obtener y modificar los datos de los presupuestos 
+ * Esta clase se encarga de obtener y modificar los datos de los pedidos 
  * 
  */
-class PresupuestoManager {
+class PedidoManager {
 
     /**
      * Doctrine entity manager.
@@ -35,47 +35,47 @@ class PresupuestoManager {
         $this->tipo = "PRESUPUESTO";
     }
 
-    public function getPresupuestos() {
-        $presupuestos = $this->entityManager->getRepository(Presupuesto::class)->findAll();
-        return $presupuestos;
+    public function getPedidos() {
+        $pedidos = $this->entityManager->getRepository(Pedido::class)->findAll();
+        return $pedidos;
     }
 
-    public function getPresupuestoId($id) {
-        return $this->entityManager->getRepository(Presupuesto::class)
+    public function getPedidoId($id) {
+        return $this->entityManager->getRepository(Pedido::class)
                         ->find($id);
     }
 
     public function getTabla() {
         // Create the adapter
-        $adapter = new SelectableAdapter($this->entityManager->getRepository(Presupuesto::class)); // An object repository implements Selectable
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(Pedido::class)); // An object repository implements Selectable
         // Create the paginator itself
         $paginator = new Paginator($adapter);
         return ($paginator);
     }
 
     /**
-     * This method adds a new presupuesto.
+     * This method adds a new pedido.
      */
-    public function addPresupuesto($data) {
-        $presupuesto = new Presupuesto();
-        $presupuesto=$this->setData($presupuesto, $data);
-        $this->entityManager->persist($presupuesto);
+    public function addPedido($data) {
+        $pedido = new Pedido();
+        $pedido=$this->setData($pedido, $data);
+        $this->entityManager->persist($pedido);
         $this->entityManager->flush();
-        return $presupuesto;
+        return $pedido;
     }
 
-    private function setData($presupuesto, $data){
+    private function setData($pedido, $data){
         $data['tipo']=$this->tipo;
         $transaccion = $this->transaccionManager->addTransaccion($data);
-        $presupuesto->setTransaccion($transaccion);
-        return $presupuesto;
+        $pedido->setTransaccion($transaccion);
+        return $pedido;
     }
 
     /**
-     * This method updates data of an existing presupuesto.
+     * This method updates data of an existing pedido.
      */
-    public function updatePresupuesto($presupuesto, $data) {
-        $transaccion = $presupuesto->getTransaccion();
+    public function updatePedido($pedido, $data) {
+        $transaccion = $pedido->getTransaccion();
         $data['tipo']=$this->tipo;
         $this->transaccionManager->updateTransaccion($transaccion, $data);
         // Apply changes to database.
@@ -83,9 +83,9 @@ class PresupuestoManager {
         return true;
     }
 
-    public function removePresupuesto($presupuesto) {
-        $transaccion = $presupuesto->getTransaccion();
-        $this->entityManager->remove($presupuesto);
+    public function removePedido($pedido) {
+        $transaccion = $pedido->getTransaccion();
+        $this->entityManager->remove($pedido);
         $this->entityManager->flush();
     }
 

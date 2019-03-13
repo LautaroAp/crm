@@ -43,6 +43,7 @@ return [
     'Bienes',
     'TipoFactura',
     'Presupuesto',
-    'Pedido'
+    'Pedido',
+    'Transaccion'
 
 ];

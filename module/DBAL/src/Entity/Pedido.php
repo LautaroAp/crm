@@ -19,78 +19,53 @@ class Pedido {
     protected $id_pedido;
     
     /**
-     * @ORM\Column(name="NUMERO", nullable=true, type="string", length=255)
+     * @ORM\Column(name="NUMERO", nullable=true, type="integer", length=255)
      */
     protected $numero;
-
+    
     /**
-     * Many Services have One Type.
+     * Many Services have One Transaccion.
      * @ORM\ManyToOne(targetEntity="Transaccion")
      * @ORM\JoinColumn(name="ID_TRANSACCION", referencedColumnName="ID")
      */
-    private $categoria;
-    
-    /**
-     * Many Services have One Proveedor.
-     * @ORM\ManyToOne(targetEntity="Proveedor")
-     * @ORM\JoinColumn(name="ID_PROVEEDOR", referencedColumnName="ID_PROVEEDOR")
-     */
-    private $proveedor;
+    private $transaccion;
 
     /**
-     * @ORM\Column(name="PRECIO", nullable=true, type="decimal")
+     * @ORM\ManyToOne(targetEntity="Moneda")
+     * @ORM\JoinColumn(name="ID_MONEDA", referencedColumnName="ID")
      */
-    protected $precio;
-
-  
-     /**
-     * Many Products have One Product.
-     * @ORM\ManyToOne(targetEntity="Iva")
-     * @ORM\JoinColumn(name="ID_IVA", referencedColumnName="ID")
-     */
-    protected $iva;
+    private $moneda;
 
     /**
-     * @ORM\Column(name="IVA_GRAVADO", nullable=true, type="decimal")
+     * @ORM\Column(name="FECHA_ENTREGA", nullable=true, type="date")
      */
-    protected $iva_gravado;
+    protected $fecha_entrega;
 
     /**
-     * @ORM\Column(name="DESCUENTO", nullable=true, type="decimal")
+     * @ORM\Column(name="FECHA_ENVIO", nullable=true, type="date")
      */
-    protected $descuento;
-    
-    /**
-     * @ORM\Column(name="PRECIO_FINAL_DTO", nullable=true, type="decimal")
-     */
-    protected $precio_final_dto;
-    
-    /**
-     * @ORM\Column(name="PRECIO_FINAL_IVA", nullable=true, type="decimal")
-     */
-    protected $precio_final_iva;
-    
-    /**
-     * @ORM\Column(name="PRECIO_FINAL_IVA_DTO", nullable=true, type="decimal")
-     */
-    protected $precio_final_iva_dto;
-    
-    /**
-     * @ORM\Column(name="ID_MONEDA", nullable=true, type="integer")
-     */
-    protected $moneda;
+    protected $fecha_envio;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bienes")
-     * @ORM\JoinColumn(name="ID_BIEN", referencedColumnName="ID")
+     * @ORM\Column(name="LUGAR_ENTREGA", nullable=true, type="string")
      */
-    private $bien;
+    protected $lugar_entrega;
+    
+    /**
+     * @ORM\Column(name="ID_FACTURA", nullable=true, type="int", length=255)
+     */
+    protected $factura;
+
+    /**
+     * @ORM\Column(name="NUMERO", nullable=true, type="decimal")
+     */
+    protected $ingresos_brutos;
 
 
     /**
      * Get the value of id_pedido
      */ 
-    public function getId()
+    public function getId_pedido()
     {
         return $this->id_pedido;
     }
@@ -100,162 +75,50 @@ class Pedido {
      *
      * @return  self
      */ 
-    public function setId($id_pedido)
+    public function setId_pedido($id_pedido)
     {
         $this->id_pedido = $id_pedido;
+
         return $this;
     }
 
     /**
-     * Get the value of nombre
+     * Get the value of numero
      */ 
-    public function getNombre()
+    public function getNumero()
     {
-        return $this->nombre;
+        return $this->numero;
     }
 
     /**
-     * Set the value of nombre
+     * Set the value of numero
      *
      * @return  self
      */ 
-    public function setNombre($nombre)
+    public function setNumero($numero)
     {
-        $this->nombre = $nombre;
+        $this->numero = $numero;
+
         return $this;
     }
 
     /**
-     * Get the value of precio
+     * Get many Services have One Transaccion.
      */ 
-    public function getPrecio()
+    public function getTransaccion()
     {
-        return $this->precio;
+        return $this->transaccion;
     }
 
     /**
-     * Set the value of precio
+     * Set many Services have One Transaccion.
      *
      * @return  self
      */ 
-    public function setPrecio($precio)
+    public function setTransaccion($transaccion)
     {
-        $this->precio = $precio;
-        return $this;
-    }
+        $this->transaccion = $transaccion;
 
-    
-    /**
-     * Get the value of proveedor
-     */ 
-    public function getProveedor()
-    {
-        return $this->proveedor;
-    }
-
-    /**
-     * Set the value of proveedor
-     *
-     * 
-     */ 
-    public function setProveedor($proveedor)
-    {
-        $this->proveedor = $proveedor;
-        return $this;
-    }
-
-    /**
-     * Get the object iva
-     */ 
-    public function getIva()
-    {
-        return $this->iva;
-    }
-
-    /**
-     * Set the value of iva
-     *
-     * @return  self
-     */ 
-    public function setIva($iva)
-    {
-        $this->iva = $iva;
-        return $this;
-    }
-
-    /**
-     * Get the value of iva_gravado
-     */ 
-    public function getIva_gravado()
-    {
-        return $this->iva_gravado;
-    }
-
-    /**
-     * Set the value of iva_gravado
-     *
-     * @return  self
-     */ 
-    public function setIva_gravado($iva_gravado)
-    {
-        $this->iva_gravado = $iva_gravado;
-        return $this;
-    }
-
-    /**
-     * Get the value of descuento
-     */ 
-    public function getDescuento()
-    {
-        return $this->descuento;
-    }
-
-    /**
-     * Set the value of descuento
-     *
-     * @return  self
-     */ 
-    public function setDescuento($descuento)
-    {
-        $this->descuento = $descuento;
-        return $this;
-    }
-
-    /**
-     * Get the value of precio_final_iva
-     */ 
-    public function getPrecio_final_iva()
-    {
-        return $this->precio_final_iva;
-    }
-
-    /**
-     * Set the value of precio_final_iva
-     *
-     * @return  self
-     */ 
-    public function setPrecio_final_iva($precio_final_iva)
-    {
-        $this->precio_final_iva = $precio_final_iva;
-        return $this;
-    }
-
-    /**
-     * Get the value of precio_final_iva_dto
-     */ 
-    public function getPrecio_final_iva_dto()
-    {
-        return $this->precio_final_iva_dto;
-    }
-
-    /**
-     * Set the value of precio_final_iva_dto
-     *
-     * @return  self
-     */ 
-    public function setPrecio_final_iva_dto($precio_final_iva_dto)
-    {
-        $this->precio_final_iva_dto = $precio_final_iva_dto;
         return $this;
     }
 
@@ -275,100 +138,106 @@ class Pedido {
     public function setMoneda($moneda)
     {
         $this->moneda = $moneda;
-        return $this;
-    }
-
-
-    /**
-     * Get the value of descripcion
-     */ 
-    public function getDescripcion()
-    {
-        return $this->descripcion;
-    }
-
-    /**
-     * Set the value of descripcion
-     *
-     * @return  self
-     */ 
-    public function setDescripcion($descripcion)
-    {
-        $this->descripcion = $descripcion;
 
         return $this;
     }
 
     /**
-     * Get many Services have One Type.
+     * Get the value of fecha_entrega
      */ 
-    public function getCategoria()
+    public function getFecha_entrega()
     {
-        return $this->categoria;
+        return $this->fecha_entrega;
     }
 
     /**
-     * Set many Services have One Type.
+     * Set the value of fecha_entrega
      *
      * @return  self
      */ 
-    public function setCategoria($categoria)
+    public function setFecha_entrega($fecha_entrega)
     {
-        $this->categoria = $categoria;
-
-        return $this;
-    }
-
-    public function getValorIVa(){
-        if(is_null($this->iva)){
-            return null;
-        }
-        return $this->iva->getValor();
-    }
-
-    public function getCategoriaNombre(){
-        if(is_null($this->categoria)){
-            return null;
-        }
-        return $this->categoria->getNombre();
-    }
-
-    /**
-     * Get the value of precio_final_dto
-     */ 
-    public function getPrecio_final_dto()
-    {
-        return $this->precio_final_dto;
-    }
-
-    /**
-     * Set the value of precio_final_dto
-     *
-     * @return  self
-     */ 
-    public function setPrecio_final_dto($precio_final_dto)
-    {
-        $this->precio_final_dto = $precio_final_dto;
+        $this->fecha_entrega = $fecha_entrega;
 
         return $this;
     }
 
     /**
-     * Get the value of bien
+     * Get the value of fecha_envio
      */ 
-    public function getBien()
+    public function getFecha_envio()
     {
-        return $this->bien;
+        return $this->fecha_envio;
     }
 
     /**
-     * Set the value of bien
+     * Set the value of fecha_envio
      *
      * @return  self
      */ 
-    public function setBien($bien)
+    public function setFecha_envio($fecha_envio)
     {
-        $this->bien = $bien;
+        $this->fecha_envio = $fecha_envio;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of lugar_entrega
+     */ 
+    public function getLugar_entrega()
+    {
+        return $this->lugar_entrega;
+    }
+
+    /**
+     * Set the value of lugar_entrega
+     *
+     * @return  self
+     */ 
+    public function setLugar_entrega($lugar_entrega)
+    {
+        $this->lugar_entrega = $lugar_entrega;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of factura
+     */ 
+    public function getFactura()
+    {
+        return $this->factura;
+    }
+
+    /**
+     * Set the value of factura
+     *
+     * @return  self
+     */ 
+    public function setFactura($factura)
+    {
+        $this->factura = $factura;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of ingresos_brutos
+     */ 
+    public function getIngresos_brutos()
+    {
+        return $this->ingresos_brutos;
+    }
+
+    /**
+     * Set the value of ingresos_brutos
+     *
+     * @return  self
+     */ 
+    public function setIngresos_brutos($ingresos_brutos)
+    {
+        $this->ingresos_brutos = $ingresos_brutos;
 
         return $this;
     }
