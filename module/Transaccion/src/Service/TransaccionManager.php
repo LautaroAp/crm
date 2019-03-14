@@ -27,9 +27,9 @@ class TransaccionManager {
         $this->proveedorManager= $personaManager;
     }
 
-    public function getTransaccion() {
-        $transaccion = $this->entityManager->getRepository(Transaccion::class)->findAll();
-        return $transaccion;
+    public function getTransacciones() {
+        $transacciones = $this->entityManager->getRepository(Transaccion::class)->findAll();
+        return $transacciones;
     }
 
     public function getTransaccionId($id) {
@@ -39,7 +39,7 @@ class TransaccionManager {
 
     public function getTabla($tipo) {
         // Create the adapter
-        $adapter = new SelectableAdapter($this->entityManager->getRepository(Transaccion::class)->
+        $adapter = new SelectableAdapter($sthis->entityManager->getRepository(Transaccion::class)->
         findBy(['tipo'=>$tipo])); // An object repository implements Selectable
         // Create the paginator itself
         $paginator = new Paginator($adapter);

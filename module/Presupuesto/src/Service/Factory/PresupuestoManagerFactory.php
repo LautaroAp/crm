@@ -1,14 +1,14 @@
 <?php
-namespace Servicio\Service\Factory;
+namespace Presupuesto\Service\Factory;
 
 use Interop\Container\ContainerInterface;
-use Servicio\Service\ServicioManager;
+use Presupuesto\Service\PresupuestoManager;
 use Moneda\Service\MonedaManager;
 use Transaccion\Service\TransaccionManager;
 
 
 /**
- * This is the factory class for ServicioManager service. The purpose of the factory
+ * This is the factory class for PresupuestoManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
  */
 class PresupuestoManagerFactory

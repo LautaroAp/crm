@@ -3,9 +3,7 @@ namespace Presupuesto\Controller\Factory;
 
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Presupuesto\Controller\PresupuestoController;
-use Presupuesto\Service\PresupuestoManager;
-use Moneda\Service\MonedaManager;
+use Transaccion\Controller\TransaccionController;
 use Transaccion\Service\TransaccionManager;
 
 /**
@@ -20,12 +18,9 @@ class PresupuestoControllerFactory implements FactoryInterface {
     {
        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
-        $presupuestoManager = $container->get(PresupuestoManager::class);
-        $monedaManager = $container->get(MonedaManager::class);            
-        $transaccionManager = $container->get(TransaccionManager::class);            
-
+        $transaccionManager = $container->get(TransaccionManager::class);
 
         // Instantiate the service and inject dependencies
-        return new PresupuestoController($entityManager, $presupuestoManager, $monedaManager, $transaccionManager);
+        return new TransaccionController($entityManager, $transaccionManager);
     }    
 }
