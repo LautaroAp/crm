@@ -308,7 +308,8 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="transaccion-font">
+                                    <a href="<?= $this->url("pedido/agregar", ['tipo' => 'pedido']); ?>" 
+                                        class="transaccion-font">
                                         <span class="glyphicon glyphicon-shopping-cart" ></span>&nbsp; Pedido
                                     </a>
                                 </li>
