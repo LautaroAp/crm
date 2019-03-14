@@ -14,11 +14,6 @@ use Zend\View\Model\ViewModel;
 class PedidoController extends TransaccionController{
 
     /**
-     * @var DoctrineORMEntityManager
-     */
-    protected $entityManager;
-
-    /**
      * Pedido manager.
      * @var User\Service\PedidoManager 
      */
@@ -26,15 +21,11 @@ class PedidoController extends TransaccionController{
     private $monedaManager;
     private $tipo;
 
-    public function __construct($entityManager, $pedidoManager, $monedaManager) {
-        $this->entityManager = $entityManager;
+    public function __construct($pedidoManager, $monedaManager) {
+        parent::__construct($pedidoManager);
+
         $this->pedidoManager = $pedidoManager;
         $this->monedaManager= $monedaManager;
-        $this->tipo = "pedido";
-    }
-
-    public function getManager(){
-        return $this->entityManager;
     }
 
     public function indexAction() {
@@ -42,63 +33,51 @@ class PedidoController extends TransaccionController{
     }
 
     private function procesarIndexAction() {
-        $paginator = $this->pedidoManager->getTabla();
-        $page = 1;
-        if ($this->params()->fromRoute('id')) {
-            $page = $this->params()->fromRoute('id');
-        }
-        $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage($this->getElemsPag());
-        return new ViewModel([
-            'pedidos' => $paginator,
-            'volver' => null,
-        ]);        
+        // $paginator = $this->pedidoManager->getTabla();
+        // $page = 1;
+        // if ($this->params()->fromRoute('id')) {
+        //     $page = $this->params()->fromRoute('id');
+        // }
+        // $paginator->setCurrentPageNumber((int) $page)
+        //         ->setItemCountPerPage($this->getElemsPag());
+        // return new ViewModel([
+        //     'pedidos' => $paginator,
+        //     'volver' => null,
+        // ]);        
+    }
+
+    private function getTipo(){
+        return "pedido";
     }
 
     public function addAction() {
-        // $view = $this->procesarAddAction();
-        // return $view;
-    }
-
-    private function procesarAddAction() {
-        // if ($this->getRequest()->isPost()) {
-        //     $data = $this->params()->fromPost();
-        //     $this->pedidoManager->addPedido($data);
-        //     $this->redirect()->toRoute('home');
-        // }
-        // $tipo= $this->tipo;
-        // $volver = $this->getUltimaUrl();
-        // return new ViewModel([
-        //     'tipo'=>$tipo,
-        //     'volver' => $null,
-        // ]);
-
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $data['tipo'] = $this->getTipo();
+            $this->procesarAddAction($data);
+            $this->redirect()->toRoute('home');
+        }
+        return new ViewModel([
+        ]);
     }
 
     public function editAction() {
-        // return $this->procesarEditAction();
+        $id = $this->params()->fromRoute('id', -1);
+        $pedido = $this->pedidoManager->getPedidoId($id);
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $data['tipo'] = $this->getTipo();
+            $this->procesarEditAction($pedido, $data);
+            return $this->redirect()->toRoute('home');
+        }       
+        return new ViewModel([
+            'pedido' => $pedido,
+            'transaccion'=>$pedido->getTransaccion(),
+            'persona'=>$transaccion->getPersona(),
+            'tipo'=>$this->getTipo(),
+        ]);    
     }
 
-    
-    public function procesarEditAction() {
-        // $id = $this->params()->fromRoute('id', -1);
-        // $pedido = $this->pedidoManager->getPedidoId($id);
-        // $transaccionId = $pedido->getTransaccion();
-        // $tipo = $this->params()->fromRoute('tipo');
-        // if ($this->getRequest()->isPost()) {
-        //     $data = $this->params()->fromPost();
-        //     $this->pedidoManager->updatePedido($pedido, $data);
-        //     return $this->redirect()->toRoute('home');
-        // }
-        // $volver = $this->getUltimaUrl();
-        // return new ViewModel([
-        //     'pedido' => $pedido,
-        //     'transaccion'=>$transaccion,
-        //     'proveedores'=>$proveedores,
-        //     'tipo'=>"pedido",
-        //     'volver' => $volver,
-        // ]);
-    }
 
     public function removeAction() {
         // $view = $this->procesarRemoveAction();

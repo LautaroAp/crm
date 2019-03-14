@@ -19,13 +19,12 @@ class PedidoControllerFactory implements FactoryInterface {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
        
-        $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $pedidoManager = $container->get(PedidoManager::class);
         $monedaManager = $container->get(MonedaManager::class);            
         // $transaccionManager = $container->get(TransaccionManager::class);            
 
 
         // Instantiate the service and inject dependencies
-        return new PedidoController($entityManager, $pedidoManager, $monedaManager);
+        return new PedidoController($pedidoManager, $monedaManager);
     }    
 }

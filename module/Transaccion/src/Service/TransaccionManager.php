@@ -57,7 +57,7 @@ class TransaccionManager {
     /**
      * This method adds a new servicio.
      */
-    public function addTransaccion($data) {
+    public function add($data) {
         $transaccion = new Transaccion();
         $transaccion=$this->setData($transaccion, $data);
         $this->entityManager->persist($transaccion);
@@ -66,7 +66,7 @@ class TransaccionManager {
     }
 
     private function setData($transaccion, $data){
-        $transaccion->setNumero($data['numero']);
+        $transaccion->setNumero($data['numero_transaccion']);
         $transaccion->setFecha_transaccion($data['fecha_transaccion']);
         if($data['persona'] == "-1"){
             $transaccion->setPersona(null);
@@ -77,14 +77,14 @@ class TransaccionManager {
         $transaccion->setTipo($data['tipo']);
         $transaccion->setFecha_vencimiento($data['fecha_vencimiento']);
         $transaccion->setBienes_transacciones($data['transacciones']);
-        //MONEDA
         return $transaccion;
     }
 
     /**
      * This method updates data of an existing servicio.
      */
-    public function update($transaccion, $data) {
+    public function edit($transaccion, $data) {
+        //le llega un objeto transaccion (padre)
         $transaccion=$this->setData($transaccion, $data);
         // Apply changes to database.
         $this->entityManager->flush();

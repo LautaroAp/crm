@@ -55,34 +55,39 @@ class PedidoManager extends TransaccionManager{
      * This method adds a new pedido.
      */
     public function addPedido($data) {
+        //llamo a add de la transaccion, retorna una transaccion que se le setea al pedido
+        $transaccion = parent::add($data);
         $pedido = new Pedido();
-        $pedido=$this->setData($pedido, $data);
+        $pedido=$this->setData($pedido, $data, $transaccion);
         $this->entityManager->persist($pedido);
         $this->entityManager->flush();
         return $pedido;
     }
 
-    private function setData($pedido, $data){
-        $data['tipo']=$this->tipo;
-        $transaccion = $this->transaccionManager->addTransaccion($data);
+    private function setData($pedido, $data, $transaccion){
         $pedido->setTransaccion($transaccion);
+        $pedido->setNumero($data['numero_pedido']);
+        $moneda=null;
+        if ($data['moneda']!= '-1'){
+            $moneda = $this->monedaManager->getMoneda($data['moneda']);
+        }
+        $pedido->setMoneda($moneda);
         return $pedido;
     }
 
     /**
      * This method updates data of an existing pedido.
      */
-    public function updatePedido($pedido, $data) {
-        $transaccion = $pedido->getTransaccion();
-        $data['tipo']=$this->tipo;
-        $this->transaccionManager->updateTransaccion($transaccion, $data);
+    public function edit($pedido, $data) {
+        $transaccion = parent::edit($pedido->getTransaccion(), $data);
+        $pedido = $this->setData($pedido, $data, $transaccion);
         // Apply changes to database.
         $this->entityManager->flush();
         return true;
     }
 
-    public function removePedido($pedido) {
-        $transaccion = $pedido->getTransaccion();
+    public function remove($pedido) {
+        parent::remove($pedido->getTransaccion());
         $this->entityManager->remove($pedido);
         $this->entityManager->flush();
     }

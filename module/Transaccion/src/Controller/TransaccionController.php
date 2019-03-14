@@ -11,20 +11,14 @@ use Zend\View\Model\ViewModel;
 
 abstract class TransaccionController extends HuellaController {
 
+   
     /**
-     * @var DoctrineORMEntityManager
+     *El manager puede ser una instancia de cualquiera de las clases que heredan de transaccion
      */
-    protected $entityManager;
+    protected $manager;
 
-    /**
-     * Transaccion manager.
-     * @var User\Service\TransaccionManager 
-     */
-    protected $transaccionManager;
-
-    public function __construct($entityManager, $transaccionManager) {
-        $this->entityManager = $entityManager;
-        $this->transaccionManager = $transaccionManager;
+    public function __construct($manager) {
+        $this->manager = $manager;
     }
 
     public function indexAction(){
@@ -34,19 +28,18 @@ abstract class TransaccionController extends HuellaController {
     public abstract function editAction();
     public abstract function removeAction();
 
-    // public function procesarRemoveAction() {
-    //     $id = (int) $this->params()->fromRoute('id', -1);
-    //     $transaccion = $this->transaccionManager->getTransaccionId($id);
-    //     if ($transaccion == null) {
-    //         $this->getResponse()->setStatusCode(404);
-    //         return;
-    //     } else {
-    //         $this->transaccionManager->remove($transaccion);
-    //         return $this->redirect()->toRoute('home');
-    //     }
-    // }
+    //este metodo se llama desde pedido, remito, presupuesto (no esta declarado en las clases hijas)
+    public function procesarAddAction($data){
+        $this->manager->add($data);
+    }
 
-    public abstract function getManager();
+    public function procesarEditAction($transaccion, $data){
+        $this->manager->edit($transaccion, $data);
+    }
+
+    public function getManager(){
+        return $this->manager;
+    }
 
 
 }
