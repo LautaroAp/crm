@@ -72,6 +72,10 @@ class PedidoManager extends TransaccionManager{
             $moneda = $this->monedaManager->getMoneda($data['moneda']);
         }
         $pedido->setMoneda($moneda);
+        $pedido->setFecha_entrega($data['fecha_entrega']);
+        $pedido->setForma_envio($data['forma_envio']);
+        $pedido->setIngresos_brutos($data['ingresos_brutos']);
+        $pedido->setLugar_entrega($data['lugar_entrega']);
         return $pedido;
     }
 

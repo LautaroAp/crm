@@ -16,9 +16,11 @@ abstract class TransaccionController extends HuellaController {
      *El manager puede ser una instancia de cualquiera de las clases que heredan de transaccion
      */
     protected $manager;
+    protected $personaManager;
 
-    public function __construct($manager) {
+    public function __construct($manager, $personaManager) {
         $this->manager = $manager;
+        $this->personaManager= $personaManager;
     }
 
     public function indexAction(){
@@ -26,7 +28,6 @@ abstract class TransaccionController extends HuellaController {
     }
     public abstract function addAction();
     public abstract function editAction();
-    public abstract function removeAction();
 
     //este metodo se llama desde pedido, remito, presupuesto (no esta declarado en las clases hijas)
     public function procesarAddAction($data){

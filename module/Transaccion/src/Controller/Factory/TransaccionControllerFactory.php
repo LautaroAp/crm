@@ -17,10 +17,9 @@ class PresupuestoControllerFactory implements FactoryInterface {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
        
-        $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $transaccionManager = $container->get(TransaccionManager::class);
 
         // Instantiate the service and inject dependencies
-        return new TransaccionController($entityManager, $transaccionManager);
+        return new TransaccionController($transaccionManager);
     }    
 }

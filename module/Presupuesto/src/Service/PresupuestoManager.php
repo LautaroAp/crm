@@ -2,42 +2,39 @@
 
 namespace Presupuesto\Service;
 
-use DBAL\Entity\Presupuesto;
 use DBAL\Entity\Moneda;
+use DBAL\Entity\Presupuesto;
+
 use DBAL\Entity\Transaccion;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
+use Transaccion\Service\TransaccionManager;
 /**
- * Esta clase se encarga de obtener y modificar los datos de los presupuestos 
+ * Esta clase se encarga de obtener y modificar los datos de los pedidos 
  * 
  */
-class PresupuestoManager {
+class PresupuestoManager extends TransaccionManager{
 
     /**
      * Doctrine entity manager.
      * @var Doctrine\ORM\EntityManager
      */
-    private $entityManager;
+    protected $entityManager;
+    protected $monedaManager;
 
-    protected $ivaManager;
-    protected $categoriaManager;
-    protected $transaccionManager;
     private $tipo;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $ivaManager,$transaccionManager) {
+    public function __construct($entityManager, $monedaManager) {
         $this->entityManager = $entityManager;
-        $this->ivaManager=$ivaManager;
-        $this->categoriaManager=$categoriaManager;
-        $this->proveedorManager= $proveedorManager;
-        $this->transaccionManager = $transaccionManager;
+        $this->monedaManager = $monedaManager;
         $this->tipo = "PRESUPUESTO";
     }
 
     public function getPresupuestos() {
-        $presupuestos = $this->entityManager->getRepository(Presupuesto::class)->findAll();
-        return $presupuestos;
+        $pedidos = $this->entityManager->getRepository(Presupuesto::class)->findAll();
+        return $pedidos;
     }
 
     public function getPresupuestoId($id) {
@@ -45,9 +42,10 @@ class PresupuestoManager {
                         ->find($id);
     }
 
+
     public function getTabla() {
         // Create the adapter
-        $adapter = new SelectableAdapter($this->entityManager->getRepository(Presupuesto::class)); // An object repository implements Selectable
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(Presupuesto::class));
         // Create the paginator itself
         $paginator = new Paginator($adapter);
         return ($paginator);
@@ -57,34 +55,39 @@ class PresupuestoManager {
      * This method adds a new presupuesto.
      */
     public function addPresupuesto($data) {
+        //llamo a add de la transaccion, retorna una transaccion que se le setea al presupuesto
+        $transaccion = parent::add($data);
         $presupuesto = new Presupuesto();
-        $presupuesto=$this->setData($presupuesto, $data);
+        $presupuesto=$this->setData($presupuesto, $data, $transaccion);
         $this->entityManager->persist($presupuesto);
         $this->entityManager->flush();
         return $presupuesto;
     }
 
-    private function setData($presupuesto, $data){
-        $data['tipo']=$this->tipo;
-        $transaccion = $this->transaccionManager->addTransaccion($data);
+    private function setData($presupuesto, $data, $transaccion){
         $presupuesto->setTransaccion($transaccion);
+        $presupuesto->setNumero($data['numero_pedido']);
+        $moneda=null;
+        if ($data['moneda']!= '-1'){
+            $moneda = $this->monedaManager->getMoneda($data['moneda']);
+        }
+        $presupuesto->setMoneda($moneda);
         return $presupuesto;
     }
 
     /**
      * This method updates data of an existing presupuesto.
      */
-    public function updatePresupuesto($presupuesto, $data) {
-        $transaccion = $presupuesto->getTransaccion();
-        $data['tipo']=$this->tipo;
-        $this->transaccionManager->updateTransaccion($transaccion, $data);
+    public function edit($presupuesto, $data) {
+        $transaccion = parent::edit($presupuesto->getTransaccion(), $data);
+        $presupuesto = $this->setData($presupuesto, $data, $transaccion);
         // Apply changes to database.
         $this->entityManager->flush();
         return true;
     }
 
-    public function removePresupuesto($presupuesto) {
-        $transaccion = $presupuesto->getTransaccion();
+    public function remove($presupuesto) {
+        parent::remove($presupuesto->getTransaccion());
         $this->entityManager->remove($presupuesto);
         $this->entityManager->flush();
     }

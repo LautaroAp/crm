@@ -21,31 +21,20 @@ class PedidoController extends TransaccionController{
     private $monedaManager;
     private $tipo;
 
-    public function __construct($pedidoManager, $monedaManager) {
-        parent::__construct($pedidoManager);
+    public function __construct($pedidoManager, $monedaManager, $personaManager) {
+        parent::__construct($pedidoManager, $personaManager);
 
         $this->pedidoManager = $pedidoManager;
         $this->monedaManager= $monedaManager;
+
     }
 
     public function indexAction() {
-        return $this->procesarIndexAction();
+        print_r("abre el index de pedido");
+        die();
     }
 
-    private function procesarIndexAction() {
-        // $paginator = $this->pedidoManager->getTabla();
-        // $page = 1;
-        // if ($this->params()->fromRoute('id')) {
-        //     $page = $this->params()->fromRoute('id');
-        // }
-        // $paginator->setCurrentPageNumber((int) $page)
-        //         ->setItemCountPerPage($this->getElemsPag());
-        // return new ViewModel([
-        //     'pedidos' => $paginator,
-        //     'volver' => null,
-        // ]);        
-    }
-
+   
     private function getTipo(){
         return "pedido";
     }
@@ -76,33 +65,6 @@ class PedidoController extends TransaccionController{
             'persona'=>$transaccion->getPersona(),
             'tipo'=>$this->getTipo(),
         ]);    
-    }
-
-
-    public function removeAction() {
-        // $view = $this->procesarRemoveAction();
-        // return $view;
-    }
-
-    public function procesarRemoveAction() {
-        // $id = (int) $this->params()->fromRoute('id', -1);
-        // $pedido = $this->pedidoManager->getPedidoId($id);
-        // if ($pedido == null) {
-        //     $this->getResponse()->setStatusCode(404);
-        //     return;
-        // } else {
-        //     $this->pedidoManager->removePedido($pedido);
-        //     return $this->redirect()->toRoute('home');
-        // }
-    }
-
-
-    public function backupAction(){
-        // $this->layout()->setTemplate('layout/nulo');
-        // $resultado = $this->pedidoManager->getPedidos();
-        // return new ViewModel([
-        //     'resultado' => $resultado
-        // ]);
     }
 
 
