@@ -16,8 +16,8 @@ class TransaccionManager {
      * Doctrine entity manager.
      * @var Doctrine\ORM\EntityManager
      */
-    private $entityManager;
-    private $personaManager;
+    protected $entityManager;
+    protected $personaManager;
 
     /**
      * Constructs the service.
@@ -37,10 +37,9 @@ class TransaccionManager {
                         ->find($id);
     }
 
-    public function getTabla($tipo) {
+    public function getTabla() {
         // Create the adapter
-        $adapter = new SelectableAdapter($sthis->entityManager->getRepository(Transaccion::class)->
-        findBy(['tipo'=>$tipo])); // An object repository implements Selectable
+        $adapter = new SelectableAdapter($sthis->entityManager->getRepository(Transaccion::class)); // An object repository implements Selectable
         // Create the paginator itself
         $paginator = new Paginator($adapter);
         return ($paginator);

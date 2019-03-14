@@ -2,37 +2,34 @@
 
 namespace Pedido\Service;
 
-use DBAL\Entity\Pedido;
 use DBAL\Entity\Moneda;
+use DBAL\Entity\Pedido;
+
 use DBAL\Entity\Transaccion;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
+use Transaccion\Service\TransaccionManager;
 /**
  * Esta clase se encarga de obtener y modificar los datos de los pedidos 
  * 
  */
-class PedidoManager {
+class PedidoManager extends TransaccionManager{
 
     /**
      * Doctrine entity manager.
      * @var Doctrine\ORM\EntityManager
      */
-    private $entityManager;
+    protected $entityManager;
+    protected $monedaManager;
 
-    protected $ivaManager;
-    protected $categoriaManager;
-    protected $transaccionManager;
     private $tipo;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $ivaManager,$transaccionManager) {
+    public function __construct($entityManager, $monedaManager) {
         $this->entityManager = $entityManager;
-        $this->ivaManager=$ivaManager;
-        $this->categoriaManager=$categoriaManager;
-        $this->proveedorManager= $proveedorManager;
-        $this->transaccionManager = $transaccionManager;
-        $this->tipo = "PRESUPUESTO";
+        $this->monedaManager = $monedaManager;
+        $this->tipo = "PEDIDO";
     }
 
     public function getPedidos() {
@@ -45,9 +42,10 @@ class PedidoManager {
                         ->find($id);
     }
 
+
     public function getTabla() {
         // Create the adapter
-        $adapter = new SelectableAdapter($this->entityManager->getRepository(Pedido::class)); // An object repository implements Selectable
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(Pedido::class));
         // Create the paginator itself
         $paginator = new Paginator($adapter);
         return ($paginator);

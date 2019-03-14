@@ -42,9 +42,9 @@ class Pedido {
     protected $fecha_entrega;
 
     /**
-     * @ORM\Column(name="FECHA_ENVIO", nullable=true, type="date")
+     * @ORM\Column(name="FORMA_ENVIO", nullable=true, type="string")
      */
-    protected $fecha_envio;
+    protected $forma_envio;
 
     /**
      * @ORM\Column(name="LUGAR_ENTREGA", nullable=true, type="string")
@@ -57,7 +57,7 @@ class Pedido {
     protected $factura;
 
     /**
-     * @ORM\Column(name="NUMERO", nullable=true, type="decimal")
+     * @ORM\Column(name="INGRESOS_BRUTOS", nullable=true, type="decimal")
      */
     protected $ingresos_brutos;
 
@@ -162,25 +162,6 @@ class Pedido {
         return $this;
     }
 
-    /**
-     * Get the value of fecha_envio
-     */ 
-    public function getFecha_envio()
-    {
-        return $this->fecha_envio;
-    }
-
-    /**
-     * Set the value of fecha_envio
-     *
-     * @return  self
-     */ 
-    public function setFecha_envio($fecha_envio)
-    {
-        $this->fecha_envio = $fecha_envio;
-
-        return $this;
-    }
 
     /**
      * Get the value of lugar_entrega
@@ -238,6 +219,26 @@ class Pedido {
     public function setIngresos_brutos($ingresos_brutos)
     {
         $this->ingresos_brutos = $ingresos_brutos;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of forma_envio
+     */ 
+    public function getForma_envio()
+    {
+        return $this->forma_envio;
+    }
+
+    /**
+     * Set the value of forma_envio
+     *
+     * @return  self
+     */ 
+    public function setForma_envio($forma_envio)
+    {
+        $this->forma_envio = $forma_envio;
 
         return $this;
     }

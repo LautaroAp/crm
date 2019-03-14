@@ -21,8 +21,8 @@ return [
                 'options' => [
                     'route'    => '/pedido',
                     'defaults' => [
-                        'controller' => \Application\Controller\IndexController::class,
-                        'action' => 'gestionPedidos',
+                        'controller' => \Pedido\Controller\PedidoController::class,
+                        'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
