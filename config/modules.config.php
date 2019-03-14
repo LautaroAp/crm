@@ -44,6 +44,9 @@ return [
     'TipoFactura',
     'Presupuesto',
     'Pedido',
-    'Transaccion'
+    'Transaccion',
+    'BienesTransacciones',
+    'Remito',
+    
 
 ];

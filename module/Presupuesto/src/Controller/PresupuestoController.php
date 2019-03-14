@@ -21,14 +21,12 @@ class PresupuestoController extends HuellaController {
      * @var User\Service\PresupuestoManager 
      */
     protected $presupuestoManager;
-    private $transaccionManager;
     private $monedaManager;
 
-    public function __construct($entityManager, $presupuestoManager, $monedaManager,$transaccionManager) {
+    public function __construct($entityManager, $presupuestoManager, $monedaManager) {
         $this->entityManager = $entityManager;
         $this->presupuestoManager = $presupuestoManager;
         $this->monedaManager= $monedaManager;
-        $this->transaccionManager = $transaccionManager;
     }
 
     public function indexAction() {

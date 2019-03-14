@@ -27,7 +27,7 @@ class BienesTransacciones {
 
     /**
      * @ORM\ManyToOne(targetEntity="Transaccion")
-     * @ORM\JoinColumn(name="Transaccion", referencedColumnName="ID")
+     * @ORM\JoinColumn(name="ID_TRANSACCION", referencedColumnName="ID")
      */
     private $transaccion;
 

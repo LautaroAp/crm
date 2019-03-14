@@ -6,7 +6,7 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 use Pedido\Controller\PedidoController;
 use Pedido\Service\PedidoManager;
 use Moneda\Service\MonedaManager;
-use Transaccion\Service\TransaccionManager;
+// use Transaccion\Service\TransaccionManager;
 
 /**
  * Description of PedidoControllerFactory
@@ -22,10 +22,10 @@ class PedidoControllerFactory implements FactoryInterface {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $pedidoManager = $container->get(PedidoManager::class);
         $monedaManager = $container->get(MonedaManager::class);            
-        $transaccionManager = $container->get(TransaccionManager::class);            
+        // $transaccionManager = $container->get(TransaccionManager::class);            
 
 
         // Instantiate the service and inject dependencies
-        return new PedidoController($entityManager, $pedidoManager, $monedaManager, $transaccionManager);
+        return new PedidoController($entityManager, $pedidoManager, $monedaManager);
     }    
 }

@@ -23,12 +23,14 @@ class PedidoController extends HuellaController {
     protected $pedidoManager;
     private $transaccionManager;
     private $monedaManager;
+    private $tipo;
 
     public function __construct($entityManager, $pedidoManager, $monedaManager,$transaccionManager) {
         $this->entityManager = $entityManager;
         $this->pedidoManager = $pedidoManager;
         $this->monedaManager= $monedaManager;
         $this->transaccionManager = $transaccionManager;
+        $this->tipo = "pedido";
     }
 
     public function indexAction() {
@@ -43,10 +45,9 @@ class PedidoController extends HuellaController {
         }
         $paginator->setCurrentPageNumber((int) $page)
                 ->setItemCountPerPage($this->getElemsPag());
-        $volver = $this->getUltimaUrl();
         return new ViewModel([
             'pedidos' => $paginator,
-            'volver' => $volver,
+            'volver' => null,
         ]);        
     }
 
@@ -59,14 +60,13 @@ class PedidoController extends HuellaController {
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->pedidoManager->addPedido($data);
-            $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/listado');
+            $this->redirect()->toRoute('home');
         }
-        $transacciones = $this->transaccionesManager->getIvas();
-        $tipo= $this->params()->fromRoute('tipo');
+        $tipo= $this->tipo;
         $volver = $this->getUltimaUrl();
         return new ViewModel([
             'tipo'=>$tipo,
-            'volver' => $volver,
+            'volver' => $null,
         ]);
 
     }

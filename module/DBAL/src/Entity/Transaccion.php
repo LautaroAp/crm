@@ -25,9 +25,15 @@ class Transaccion {
     protected $numero_transaccion;
 
     /**
-     * @ORM\Column(name="FECHA", type="datetime")
+     * @ORM\Column(name="FECHA_CREACION", type="datetime")
      */
     protected $fecha_transaccion;
+
+    /**
+     * @ORM\Column(name="FECHA_VENCIMIENTO", type="datetime")
+     */
+    protected $fecha_vencimiento;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="Persona")
@@ -44,7 +50,7 @@ class Transaccion {
      * 
      * @ORM\OneToMany(targetEntity="\DBAL\Entity\BienesTransacciones", mappedBy="bien")
      */
-    private $transacciones;
+    private $bienes_transacciones;
 
 
     /**
@@ -70,7 +76,7 @@ class Transaccion {
     /**
      * Get the value of numero_transaccion
      */ 
-    public function getNumero_transaccion()
+    public function getNumero()
     {
         return $this->numero_transaccion;
     }
@@ -80,7 +86,7 @@ class Transaccion {
      *
      * @return  self
      */ 
-    public function setNumero_transaccion($numero_transaccion)
+    public function setNumero($numero_transaccion)
     {
         $this->numero_transaccion = $numero_transaccion;
 
@@ -130,7 +136,7 @@ class Transaccion {
     /**
      * Get the value of tipo_trasaccion
      */ 
-    public function getTipo_trasaccion()
+    public function getTipo()
     {
         return $this->tipo_trasaccion;
     }
@@ -140,30 +146,56 @@ class Transaccion {
      *
      * @return  self
      */ 
-    public function setTipo_trasaccion($tipo_trasaccion)
+    public function setTipo($tipo_trasaccion)
     {
         $this->tipo_trasaccion = $tipo_trasaccion;
 
         return $this;
     }
 
+
+
     /**
-     * Get the value of transacciones
+     * Get the value of fecha_vencimiento
      */ 
-    public function getTransacciones()
+    public function getFecha_vencimiento()
     {
-        return $this->transacciones;
+        return $this->fecha_vencimiento;
     }
 
     /**
-     * Set the value of transacciones
+     * Set the value of fecha_vencimiento
      *
      * @return  self
      */ 
-    public function setTransacciones($transacciones)
+    public function setFecha_vencimiento($fecha_vencimiento)
     {
-        $this->transacciones = $transacciones;
+        $this->fecha_vencimiento = $fecha_vencimiento;
 
         return $this;
+    }
+
+    /**
+     * Get the value of bienes_transacciones
+     */ 
+    public function getBienes_transacciones()
+    {
+        return $this->bienes_transacciones;
+    }
+
+    /**
+     * Set the value of bienes_transacciones
+     *
+     * @return  self
+     */ 
+    public function setBienes_transacciones($bienes_transacciones)
+    {
+        $this->bienes_transacciones = $bienes_transacciones;
+
+        return $this;
+    }
+
+    public function addBien_transaccion($bien_transaccion){
+        $this->bienes_transacciones[] = $bien_transaccion;
     }
 }

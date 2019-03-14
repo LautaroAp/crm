@@ -61,10 +61,9 @@
             "TipoFactura\\": "module/TipoFactura/src/",
             "Presupuesto\\": "module/Presupuesto/src/",
             "Pedido\\": "module/Pedido/src/",
-            "Transaccion\\": "module/Transaccion/src/"
-
-
-
+            "Transaccion\\": "module/Transaccion/src/",
+            "BienesTransacciones\\": "module/BienesTransacciones/src/",
+            "Remito\\": "module/Remito/src/"
         }
     },
     "autoload-dev": {
