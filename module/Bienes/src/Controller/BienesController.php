@@ -25,13 +25,11 @@ class BienesController extends HuellaController
        //SE OBTIENE EL TIPO DE BIEN LA RUTA POR SI SE LO LLAMA DE CLIENTE/PROVEEDOR
         $tipo= $this->params()->fromRoute('tipo');
         if (isset($tipo)){
-            //si llego una persona por ruta se la guarda en la sesion para paginator
+            //si llego un tipo de bien por ruta se la guarda en la sesion para paginator
             $_SESSION['BIENES']['TIPO'] = $tipo;
-            $this->prepararBreadcrumbs("Bienes de Cambio", "/bienes/".$tipo);
         }
         else{
             $_SESSION['BIENES']['TIPO'] = "todos";
-            $this->prepararBreadcrumbs("Bienes de Cambio", "/bienes");
         }
         if ($request->isPost()) {
             //SI SE COMPLETO EL FORMULARIO DE BUSQUEDA TOMO ESOS PARAMETROS Y LOS GUARDO EN LA SESION 
@@ -50,7 +48,7 @@ class BienesController extends HuellaController
             $tipoBien = $parametros['tipo'];       
         }
         else {
-            //SI LLEGO DESDE  TOMO EL TIPO DE PERSONA DE LA RUTA
+            //SI EL TIPO DE LA RUTA NO ES NILO
             $tipoBien= $tipo;
             $parametros['tipo'] = $tipo;
         }

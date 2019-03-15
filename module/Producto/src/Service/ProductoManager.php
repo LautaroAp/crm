@@ -72,7 +72,8 @@ class ProductoManager
         return true;
     }
 
-    private function addDatosParticularesProducto($producto, $data, $bien =null){
+    private function addDatosParticularesProducto($producto, $data){
+        $bien = $producto->getBien();
         $data['tipo'] = $this->tipo;
         if (isset($bien)){
             $this->bienesManager->updateBien($bien, $data);

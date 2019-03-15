@@ -107,10 +107,10 @@ class BienesManager {
         $bien=$this->setData($bien, $data);
         // Apply changes to database.
         $this->entityManager->flush();
-        return true;
+        return $bien;
     }
 
-    public function removeBien($bien) {
+    public function remove($bien) {
         $this->entityManager->remove($bien);
         $this->entityManager->flush();
     }

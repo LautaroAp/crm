@@ -84,7 +84,8 @@ class LicenciaManager {
     public function addLicencia($data) {
         $licencia = new Licencia();
         $this->addData($licencia, $data);
-        $this->bienManager->addBien($data);
+        $bien = $this->bienManager->addBien($data);
+        $licencia->setBien($bien);
         if ($this->tryAddLicencia($licencia)) {
             $_SESSION['MENSAJES']['licencia'] = 1;
             $_SESSION['MENSAJES']['licencia_msj'] = 'Licencia agregada correctamente';
@@ -101,6 +102,15 @@ class LicenciaManager {
      */
     public function updateLicencia($licencia, $data) {
         $this->addData($licencia, $data);
+     
+        $bien->$licencia->getBien();
+        if (isset($bien)){
+            $this->bienManager->updateBien($bien, $data);
+        }
+        else {
+            $this->bienManager->addBien($bien, $data);
+            $licencia->setBien($bien);
+        } 
         if ($this->tryUpdateLicencia($licencia)) {
             $_SESSION['MENSAJES']['licencia'] = 1;
             $_SESSION['MENSAJES']['licencia_msj'] = 'Licencia editada correctamente';
