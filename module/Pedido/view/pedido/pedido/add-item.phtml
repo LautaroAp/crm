@@ -1,5 +1,5 @@
 <!-- scripts -->
-<script src="/js/servicio.js"></script>
+<script src="/js/item.js"></script>
 <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
@@ -128,21 +128,28 @@ $date = date('d-m-Y');
                     <!-- Detalle -->
                     <div class="row form-row">
                         <div class="form-group col-md-2">
+                            <label>Precio</label>
+                            <input type="text" class="form-control" name="precio" id="precio" value="0"
+                                onkeypress="return justNumbers(event)" onkeyup="calculaSubtotal()">
+                        </div>
+                        <div class="form-group col-md-2">
                             <label>Cantidad</label>
-                            <input type="number" class="form-control" name="cantidad" id="cantidad" 
-                                min="1" max="99" value="">
+                            <input type="text" class="form-control" name="cantidad" id="cantidad" value="1" 
+                                onkeypress="return justNumbers(event)" onkeyup="calculaSubtotal()">
                         </div>
-                        <div class="form-group col-md-3">
-                            <label>Bonificación</label>
-                            <input type="text" class="form-control" name="bonificacion" id="bonificacion" value="Nro ######">
+                        <div class="form-group col-md-2">
+                            <label>% Bonificación</label>
+                            <input type="text" class="form-control" name="bonificacion" id="bonificacion" value="0"
+                                onkeypress="return justNumbers(event)" onkeyup="calculaSubtotal()">
                         </div>
-                        <div class="form-group col-md-3">
-                            <label>IVA</label>
-                            <input type="text" class="form-control" name="iva" id="iva" value="Nro ######">
+                        <div class="form-group col-md-2">
+                            <label>% IVA</label>
+                            <input type="text" class="form-control" name="iva" id="iva" value="0"
+                                onkeypress="return justNumbers(event)" onkeyup="calculaSubtotal()">
                         </div>
                         <div class="form-group col-md-3">
                             <label>Subtotal</label>
-                            <input type="text" class="form-control" name="subtotal" id="subtotal" value="Nro ######">
+                            <input type="text" class="form-control" name="subtotal" id="subtotal" value="0" readonly>
                         </div>
                     </div>
                 </div>
