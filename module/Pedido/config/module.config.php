@@ -42,7 +42,7 @@ return [
                     'agregar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/add[/:tipo]',
+                            'route' => '/add[/:id]',
                             'defaults' => [
                                 'action' => 'add',
                             ],
@@ -54,6 +54,18 @@ return [
                             'route' => '/remove[/:id]',
                             'defaults' => [
                                 'action' => 'remove',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'item' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/item[/:id]',
+                            'defaults' => [
+                                'action' => 'addItem',
                             ],
                             'constraints' => [
                                 'id' => '[0-9]\d*',
