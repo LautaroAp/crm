@@ -111,8 +111,7 @@ $date = date('d-m-Y');
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($usuarios as $usuario) :
-                                    $persona_usuario = $usuario->getPersona(); ?>
+                                <?php foreach ($items as $item) : ?>
                                 <tr>
                                     <td><?php echo ("Producto/Servicio"); ?></td>
                                     <td><?php echo ("Descripción"); ?></td>
@@ -124,24 +123,16 @@ $date = date('d-m-Y');
                                     <td><?php echo ("$ IVA"); ?></td>
                                     <td><?php echo ("Total"); ?></td>
                                     <td class="pull-right">
-                                        <a href="<?= $this->url('usuarios', ['action' => 'delete', 'id' => 99]); ?>" type="button">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </a>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
                         <br>
-                        <a href="<?= $this->url('pedido/addItem', ['action' => 'addItem', 'id' => 99]); ?>" type="button">
-                            <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Producto</span>
+                        <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'pedido']); ?>" type="button">
+                            <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Item</span>
                         </a>
-                        <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => 99]); ?>" type="button">
-                            <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Servicio</span>
-                        </a>
-                        <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => 99]); ?>" type="button">
-                            <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Licencia</span>
-                        </a>
+        
                         <a href="#"> &nbsp;&nbsp;&nbsp; ¿o uno solo que filtre todo?</a>
                     </div>
                 </div>

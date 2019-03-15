@@ -5,6 +5,8 @@ namespace Bienes\Service;
 use DBAL\Entity\Bienes;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 /**
  * Esta clase se encarga de obtener y modificar los datos de los servicios 
  * 
@@ -16,12 +18,18 @@ class BienesManager {
      * @var Doctrine\ORM\EntityManager
      */
     private $entityManager;
+    private $categoriaManager;
+    private $proveedorManager;
+    private $ivaManager;
 
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager) {
+    public function __construct($entityManager, $ivaManager, $categoriaManager, $proveedorManager) {
         $this->entityManager = $entityManager;
+        $this->categoriaManager= $categoriaManager;
+        $this->ivaManager= $ivaManager;
+        $this->proveedorManager = $proveedorManager;
      
     }
 
@@ -63,7 +71,7 @@ class BienesManager {
         return $bien;
     }
 
-    private function setData($bien, $data){
+    private function setData($bien, $data){    
         $bien->setNombre($data['nombre']);
         $bien->setDescripcion($data['descripcion']);
         if($data['categoria'] == "-1"){
@@ -143,7 +151,7 @@ class BienesManager {
     }
     
     public function getTotalFiltrados($parametros) {
-        $query = $this->busquedaPorFiltros($filtros);
+        $query = $this->busquedaPorFiltros($parametros);
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
         return $adapter;
     }
@@ -153,7 +161,7 @@ class BienesManager {
         $emConfig = $this->entityManager->getConfiguration();
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('B')
-                ->from(Bien::class, 'B');
+                ->from(Bienes::class, 'B');
         $indices = array_keys($parametros);
         for ($i = 0; $i < count($indices); $i++) {
             $p = $i + 1;
@@ -164,7 +172,7 @@ class BienesManager {
             }
             if($nombreCampo=="tipo"){
                 $valorCampo=$parametros[$nombreCampo]; 
-                $queryBuilder->where("P.$nombreCampo LIKE ?$p")->setParameter("$p", '%'.$valorCampo.'%');
+                $queryBuilder->andWhere("B.$nombreCampo LIKE ?$p")->setParameter("$p", '%'.$valorCampo.'%');
             }
         }
         $queryBuilder ->orderBy('B.nombre', 'DESC');

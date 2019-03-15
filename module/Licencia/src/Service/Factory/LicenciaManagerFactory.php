@@ -6,6 +6,7 @@ use Licencia\Service\LicenciaManager;
 use Iva\Service\IvaManager;
 use Categoria\Service\CategoriaManager;
 use Proveedor\Service\ProveedorManager;
+use Bien\Service\BienManager;
 
 /**
  * This is the factory class for LicenciaManager service. The purpose of the factory
@@ -22,7 +23,8 @@ class LicenciaManagerFactory
         $ivaManager = $container->get(IvaManager::class);
         $categoriaManager = $container->get(CategoriaManager::class);
         $proveedorManager = $container->get(ProveedorManager::class);
-
-        return new LicenciaManager($entityManager, $ivaManager, $categoriaManager, $proveedorManager);
+        $bienManager =  $container->get(LicenciaManager::class);
+        return new LicenciaManager($entityManager, $ivaManager, $categoriaManager, $proveedorManager,
+        $bienManager);
     }
 }

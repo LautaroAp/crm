@@ -19,19 +19,19 @@ class LicenciaManager {
      * @var Doctrine\ORM\EntityManager
      */
     private $entityManager;
-
     private $ivaManager;
-
     private $categoriaManager;
+    private $bienManager;
     /**
      * Constructs the service.
      */
     public function __construct($entityManager, $ivaManager, $categoriaManager,
-    $proveedorManager) {
+    $proveedorManager, $bienManager) {
         $this->entityManager = $entityManager;
         $this->ivaManager= $ivaManager;
         $this->categoriaManager= $categoriaManager;
         $this->proveedorManager= $proveedorManager;
+        $this->bienManager = $bienManager;
     }
 
     //retorna todas las licencias sin paginator para el backup
@@ -84,7 +84,7 @@ class LicenciaManager {
     public function addLicencia($data) {
         $licencia = new Licencia();
         $this->addData($licencia, $data);
-
+        $this->bienManager->addBien($data);
         if ($this->tryAddLicencia($licencia)) {
             $_SESSION['MENSAJES']['licencia'] = 1;
             $_SESSION['MENSAJES']['licencia_msj'] = 'Licencia agregada correctamente';
@@ -199,8 +199,10 @@ class LicenciaManager {
     }
     
     private function tryRemoveLicencia($licencia) {
+        $bien = $licencia->getBien();
         try {
             $this->entityManager->remove($licencia);
+            $this->bienManager->remove($bien);
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {

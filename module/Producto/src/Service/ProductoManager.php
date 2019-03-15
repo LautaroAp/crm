@@ -149,8 +149,10 @@ class ProductoManager
     }
 
     public function removeProducto($producto) {
-            $this->entityManager->remove($producto);
-            $this->entityManager->flush();  
+        $bien = $producto->getBien();
+        $this->entityManager->remove($producto);
+        $this->bienesManager->remove($bien);
+        $this->entityManager->flush();  
     }
 
     public function getTabla() {

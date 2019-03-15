@@ -36,6 +36,8 @@ class IndexController extends HuellaController {
     private function reiniciarParametros(){
         $_SESSION['PARAMETROS_VENTA'] = array();
         $_SESION['EVENTO'] = array();
+        $_SESSION['BIENES'] = array();
+        $_SESSION['PARAMETROS_BIENES'] = array();
         $_SESSION['PARAMETROS_CLIENTE'] = array();
         $_SESSION['PARAMETROS_PROVEEDOR'] = array();
         $_SESSION['PARAMETROS_CLIENTE_INACTIVO'] = array();

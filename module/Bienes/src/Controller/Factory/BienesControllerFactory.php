@@ -20,8 +20,6 @@ class BienesControllerFactory implements FactoryInterface {
     {
        
         $bienesManager = $container->get(BienesManager::class);
-
-
         // Instantiate the service and inject dependencies
         return new BienesController($bienesManager);
     }    

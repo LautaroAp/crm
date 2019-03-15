@@ -87,7 +87,7 @@ class Bienes {
     protected $moneda;
 
     /**
-     * @ORM\Column(name="TIPO", nullable=true, type="integer")
+     * @ORM\Column(name="TIPO", nullable=true, type="string")
      */
     protected $tipo;
     
@@ -373,7 +373,6 @@ class Bienes {
     public function setTipo($tipo)
     {
         $this->tipo = $tipo;
-
         return $this;
     }
 }

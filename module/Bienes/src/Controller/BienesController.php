@@ -1,34 +1,26 @@
 <?php
 
 namespace Bienes\Controller;
-
+use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
 
-class BienesVentaController extends BienesController
+class BienesController extends HuellaController
 {
 
+   protected $bienesManager;
 
-    /**
-     * Bienes manager.
-     * @var User\Service\eventoVentaManager 
-     */
-    protected $bienesManager;
-
-
-    protected $tipoBienesManager;
-    
     public function __construct($bienesManager){
         $this->bienesManager = $bienesManager;
     }
     
     
-    public function indexAction()
-    {
-        return $this->procesarIndexAction();
-    }
+    // public function indexAction()
+    // {
+    //     return $this->procesarIndexAction();
+    // }
 
-    private function procesarIndexAction() {
+    public function indexAction() {
         $request = $this->getRequest();
        //SE OBTIENE EL TIPO DE BIEN LA RUTA POR SI SE LO LLAMA DE CLIENTE/PROVEEDOR
         $tipo= $this->params()->fromRoute('tipo');
@@ -46,21 +38,21 @@ class BienesVentaController extends BienesController
             $parametros = $this->params()->fromPost();
             $_SESSION['PARAMETROS_BIENES'] = $parametros;
         }
-        if (!is_null($_SESSION['PARAMETROS_BIENES'])) {
+        if (isset($_SESSION['PARAMETROS_BIENES'])) {
             //SI HAY PARAMETROS GUARDADOS EN LA SESION TOMAR ESOS PARAMETROS 
-            $parametros = $_SESSION['PARAMETROSBIENES'];
+            $parametros = $_SESSION['PARAMETROS_BIENES'];
         } else {
             //SI NO HAY PARAMETROS CREAR NUEVOS
             $parametros = array();
         }
         if (($_SESSION['BIENES']['TIPO'] == "todos") and isset($parametros['tipo'])){
             //SI LLEGO DESDE EMPRESA TOMO EL TIPO DE PERSONA DEL FORMULARIO
-            $tipoBien = $parametros['tipo_bien'];       
+            $tipoBien = $parametros['tipo'];       
         }
         else {
             //SI LLEGO DESDE  TOMO EL TIPO DE PERSONA DE LA RUTA
             $tipoBien= $tipo;
-            $parametros['tipo_bien'] = $tipo;
+            $parametros['tipo'] = $tipo;
         }
         if (($tipoBien == '-1') and ($_SESSION['BIENES']['TIPO'] == "todos")){
             //SI SE SELECCIONO "TODOS" (MOSTRAR PRODUCTOS, LICENCIAS Y SERVICIOS)
