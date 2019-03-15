@@ -60,7 +60,7 @@ return [
                             ],
                         ],
                     ],
-                    'item' => [
+                    'addItem' => [
                         'type' => Segment::class,
                         'options' => [
                             'route' => '/item[/:id]',
