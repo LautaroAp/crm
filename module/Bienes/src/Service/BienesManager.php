@@ -3,7 +3,6 @@
 namespace Bienes\Service;
 
 use DBAL\Entity\Bienes;
-use DBAL\Entity\Categoria;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 /**
@@ -17,17 +16,13 @@ class BienesManager {
      * @var Doctrine\ORM\EntityManager
      */
     private $entityManager;
-    private $proveedorManager;
-    private $ivaManager;
-    private $categoriaManager;
+
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $ivaManager, $categoriaManager, $proveedorManager) {
+    public function __construct($entityManager) {
         $this->entityManager = $entityManager;
-        $this->proveedorManager= $proveedorManager;
-        $this->ivaManager= $ivaManager;
-        $this->categoriaManager= $categoriaManager;
+     
     }
 
     public function getBienes() {
@@ -36,8 +31,7 @@ class BienesManager {
     }
 
     public function getBienId($id) {
-        return $this->entityManager->getRepository(Bienes::class)
-                        ->find($id);
+        return $this->entityManager->getRepository(Bienes::class)->find($id);
     }
 
     public function getTabla($tipo) {
@@ -141,4 +135,39 @@ class BienesManager {
         }
     }
 
+    public function getBienesFiltrados($parametros) {
+        $query = $this->busquedaPorFiltros($parametros);
+        $adapter = new DoctrineAdapter(new ORMPaginator($query));
+        $paginator = new Paginator($adapter);
+        return $paginator;
+    }
+    
+    public function getTotalFiltrados($parametros) {
+        $query = $this->busquedaPorFiltros($filtros);
+        $adapter = new DoctrineAdapter(new ORMPaginator($query));
+        return $adapter;
+    }
+
+    public function busquedaPorFiltros($parametros) {
+        $entityManager = $this->entityManager;
+        $emConfig = $this->entityManager->getConfiguration();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('B')
+                ->from(Bien::class, 'B');
+        $indices = array_keys($parametros);
+        for ($i = 0; $i < count($indices); $i++) {
+            $p = $i + 1;
+            $nombreCampo = $indices[$i]; 
+            if($nombreCampo=="tipo"){
+                $valorCampo=$parametros[$nombreCampo]; 
+                $queryBuilder->andWhere('B.tipo = :tipo')->setParameter('tipo',$valorCampo);
+            }
+            if($nombreCampo=="tipo"){
+                $valorCampo=$parametros[$nombreCampo]; 
+                $queryBuilder->where("P.$nombreCampo LIKE ?$p")->setParameter("$p", '%'.$valorCampo.'%');
+            }
+        }
+        $queryBuilder ->orderBy('B.nombre', 'DESC');
+        return $queryBuilder->getQuery();
+    }
 }
