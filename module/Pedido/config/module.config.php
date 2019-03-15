@@ -60,6 +60,18 @@ return [
                             ],
                         ],
                     ],
+                    'item' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/item[/:id]',
+                            'defaults' => [
+                                'action' => 'addItem',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
                     'page' => [
                         'type' => Segment::class,
                         'options' => [
