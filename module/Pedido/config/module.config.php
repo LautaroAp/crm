@@ -42,7 +42,7 @@ return [
                     'agregar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/add[/:tipo]',
+                            'route' => '/add[/:id]',
                             'defaults' => [
                                 'action' => 'add',
                             ],

@@ -51,6 +51,10 @@ class PedidoController extends TransaccionController{
     }
 
     public function addAction() {
+        $id = $this->params()->fromRoute('id', -1);
+        // $persona= $this->personaManager->getPersona($Id);
+        // $cliente = $this->clienteManager->getClienteIdPersona($persona->getId());
+
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
