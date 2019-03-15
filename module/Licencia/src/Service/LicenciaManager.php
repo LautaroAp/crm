@@ -2,6 +2,7 @@
 
 namespace Licencia\Service;
 
+use DBAL\Entity\Bienes;
 use DBAL\Entity\Licencia;
 use DBAL\Entity\Categoria;
 use Licencia\Form\LicenciaForm;
