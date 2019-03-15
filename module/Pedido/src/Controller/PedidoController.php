@@ -40,6 +40,19 @@ class PedidoController extends TransaccionController{
     }
 
     public function addAction() {
+        $items = null;
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $data['tipo'] = $this->getTipo();
+            $this->procesarAddAction($data);
+            $this->redirect()->toRoute('home');
+        }
+        return new ViewModel([
+            'items' => $items,
+        ]);
+    }
+
+    public function addItemAction() {
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
