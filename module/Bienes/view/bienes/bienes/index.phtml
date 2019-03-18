@@ -48,18 +48,22 @@ $date = date('d-m-Y');
                     <div class="row form-row">
                         <div class="form-group col-sm-3">
                             <label>Tipo de Item</label>
-                            <select class="form-control" id="forma_pago" name="forma_pago" required>
-                                <option value="-1" hidden="">Seleccionar tipo de Item</option>
-                                <option value="1">Productos</option>
-                                <option value="1">Servicios</option>
-                                <option value="1">Licencias</option>
+                            <select class="form-control" id="tipo" name="tipo" required>
+                                <option value="<?php if (isset($tipo_bien)) {echo ($tipo_bien);} else {echo ("-1");}?>"
+                                 hidden=""><?php if (isset($tipo_bien)) {echo ($tipo_bien);} else {echo ("Seleccionar");}?></option>
+                                <option value="Producto">Producto</option>
+                                <option value="Servicio">Servicio</option>
+                                <option value="Licencia">Licencia</option>
                             </select>
                         </div>
                         <div class="form-group col-sm-8">
                             <label>Buscar Item</label>
                             <div class="form-inline">
-                                <input type="text" class="form-control" name="persona" id="persona" placeholder="Nombre" style="width: 60%;">
-                                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+                                <input type="text" class="form-control" name="nombre" id="nombre" value="Nombre" style="width: 60%;">
+                                <button type="submit" class="btn btn-default">
+                                <i class="glyphicon glyphicon-search"></i> Buscar
+                                </button>
+                                <!-- <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar</button> -->
                             </div>
                         </div>
                     </div>
@@ -79,36 +83,27 @@ $date = date('d-m-Y');
                         <table id="tabla_evento" class="table table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="th-sm">Producto/Servicio</th>
-                                    <th class="th-sm">Descripción</th>
-                                    <th class="th-sm">Cantidad</th>
-                                    <th class="th-sm">Precio Unitario</th>
-                                    <th class="th-sm">% Bonif.</th>
-                                    <th class="th-sm">$ Bonif.</th>
+                                    <th class="th-sm">Item</th>
+                                    <th class="th-sm">Nombre</th>
+                                    <th class="th-sm">Descripcion</th>
+                                    <th class="th-sm">Categoria</th>
+                                    <th class="th-sm">Stock</th>
+                                    <th class="th-sm">Precio</th>
+                                    <!-- <th class="th-sm">% Descuento</th>
                                     <th class="th-sm">% IVA</th>
-                                    <th class="th-sm">$ IVA</th>
-                                    <th class="th-sm">Total</th>
+                                    <th class="th-sm">Total</th> -->
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($usuarios as $usuario) :
-                                    $persona_usuario = $usuario->getPersona(); ?>
+                                <?php foreach ($bienes as $bien) : ?>
                                 <tr>
-                                    <td><?php echo ("Producto/Servicio"); ?></td>
-                                    <td><?php echo ("Descripción"); ?></td>
-                                    <td><?php echo ("Cantidad"); ?></td>
-                                    <td><?php echo ("Precio Unitario"); ?></td>
-                                    <td><?php echo ("% Bonif."); ?></td>
-                                    <td><?php echo ("$ Bonif."); ?></td>
-                                    <td><?php echo ("% IVA"); ?></td>
-                                    <td><?php echo ("$ IVA"); ?></td>
-                                    <td><?php echo ("Total"); ?></td>
-                                    <td class="pull-right">
-                                        <a href="<?= $this->url('usuarios', ['action' => 'delete', 'id' => 99]); ?>" type="button">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </a>
-                                    </td>
+                                    <td> <input type="checkbox"> </td>
+                                    <td><?= $bien->getNombre(); ?></td>
+                                    <td><?= $bien->getDescripcion(); ?></td>
+                                    <td><?= $bien->getCategoria(); ?></td>
+                                    <td><?php echo (" "); ?></td>
+                                    <td><?= $bien->getPrecio_final_iva_dto(); ?></td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>

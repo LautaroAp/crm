@@ -63,8 +63,7 @@ class BienesController extends HuellaController
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
         }
-        $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage($this->getElemsPag());
+        $paginator->setCurrentPageNumber((int) $page)->setItemCountPerPage($this->getElemsPag());
         return new ViewModel([
             'bienes' => $paginator,
             'parametros' => $parametros,
