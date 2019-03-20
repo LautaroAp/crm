@@ -41,8 +41,20 @@ class PedidoController extends TransaccionController{
     public function addAction() {
         $items = array();
         if (isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
+            
             $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
         }
+        // $json = "";
+        // foreach ($items as $item){
+        //     $json .= $item->getJson(). ',';
+        // }
+        // $json = substr($json, 0, -1);
+        // $json = '['.$json.']';
+        // if ($json!="[]"){
+        //     print_r($json);
+        //     die();  
+        // }
+
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         if ($this->getRequest()->isPost()) {
@@ -55,6 +67,7 @@ class PedidoController extends TransaccionController{
         return new ViewModel([
             'items' => $items,
             'persona' => $persona,
+            // 'json' => $json,
         ]);
     }
 

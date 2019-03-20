@@ -49,12 +49,14 @@ class Bienes {
     protected $precio;
 
   
-     /**
+
+
+    /**
      * Many Products have One Product.
      * @ORM\ManyToOne(targetEntity="Iva")
      * @ORM\JoinColumn(name="ID_IVA", referencedColumnName="ID")
      */
-    protected $iva;
+     protected $iva;
 
     /**
      * @ORM\Column(name="IVA_GRAVADO", nullable=true, type="decimal")
@@ -323,12 +325,19 @@ class Bienes {
         return $this;
     }
 
-    public function getValorIVa(){
-        if(is_null($this->iva)){
-            return null;
-        }
-        return $this->iva->getValor();
-    }
+    // public function getValorIVa(){
+    //     if(is_null($this->iva)){
+    //         return null;
+    //     }
+    //     return $this->iva->getValor();
+    // }
+
+    // public function getStringIva(){
+    //     if(is_null($this->iva)){
+    //         return "";
+    //     }
+    //     return strval($this->getValorIVa());
+    // }
 
     public function getCategoriaNombre(){
         if(is_null($this->categoria)){
@@ -383,9 +392,12 @@ class Bienes {
         $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
         $output .= '"Categoria": "' . $this->getCategoria() .'", ';
         $output .= '"Descuento": "' . $this->getDescuento() .'", ';
-        $output .= '"Iva": "' . $this->getIva()->getValor() .'", ';
+        if (!is_null($this->getIva())){
+            $output .= '"Iva": ' . $this->getIva()->getJSON() .', ';
+        }
         $output .= '"Precio": "' . $this->getPrecio() .'" ';
-
+        
+       
         // $output = '"bien": {'.$output.'}';
 
         return  '{'.$output.'}' ;

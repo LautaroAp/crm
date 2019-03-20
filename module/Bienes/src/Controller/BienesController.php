@@ -3,6 +3,7 @@
 namespace Bienes\Controller;
 use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
+use DBAL\Entity\BienesTransacciones;
 
 
 class BienesController extends HuellaController
@@ -110,9 +111,6 @@ class BienesController extends HuellaController
         if (isset($_SESSION['PARAMETROS_BIENES'])) {
             //SI HAY PARAMETROS GUARDADOS EN LA SESION TOMAR ESOS PARAMETROS 
             $parametros = $_SESSION['PARAMETROS_BIENES'];
-            print_r("paraaaaaaams ");
-            print_r($parametros);
-
         } else {
             //SI NO HAY PARAMETROS CREAR NUEVOS
             $parametros = array();
@@ -132,12 +130,7 @@ class BienesController extends HuellaController
             unset($parametros['tipo']);
         }
         if ($this->agregar($parametros)){
-            print_r("<br>");
-            print_r("<br>");
-            print_r("<br>");
-
-            print_r($parametros);
-            die();
+            return $this->addItem($parametros, $transaccion, $id_persona);
         }
         $bienes = $this->bienesManager->getBienesFiltrados2($parametros);
         $page = 1;
@@ -153,5 +146,22 @@ class BienesController extends HuellaController
             'transaccion' => $transaccion,
             'id_persona' => $id_persona
         ]);
+    }
+
+    private function addItem($parametros, $transaccion, $id_persona){
+        $bienTransaccion = new BienesTransacciones();
+        $bien = $this->bienesManager->getBienId($parametros['idbien']);
+        $bienTransaccion->setBien($bien);
+        $bienTransaccion->setBonificacion($parametros['bonificacion']);
+        $bienTransaccion->setCantidad($parametros['cantidad']);
+        $bienTransaccion->setIva($parametros['iva']);
+        $bienTransaccion->setSubtotal($parametros['subtotal']);
+        if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
+            $_SESSION['TRANSACCIONES']['PEDIDO'] = array();
+        }
+        array_push($_SESSION['TRANSACCIONES']['PEDIDO'], $bienTransaccion);
+        $ruta= $transaccion."/agregar";
+        print_r($ruta);
+        return $this->redirect()->toRoute($ruta,['id'=>$id_persona]);
     }
 }

@@ -191,4 +191,20 @@ class BienesTransacciones {
 
         return $this;
     }
+
+    public function getJSON(){
+        $output = "";
+        $output .= '"Id": "' . $this->getId() .'", ';
+          if (!is_null($this->getBien())){
+            $output .= '"Bien": "' . $this->getBien()->getJson() .'" ';
+        }
+        $output .= '"Cantidad": "' . $this->getCantidad() .'" ';
+        $output .= '"Bonificacion": "' . $this->getBonificacion() .'", ';
+        $output .= '"Subtotal": "' . $this->getSubtotal() .'", ';
+      
+
+        var_dump('{'.$output.'}');
+        die();
+        return  '{'.$output.'}' ;
+    }
 }

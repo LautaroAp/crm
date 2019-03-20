@@ -18,15 +18,19 @@
 <!-- php -->
 <?php
 $date = date('d-m-Y');
+$url = "/clientes/listado/ficha/".$persona->getId();
+
 ?>
 <!-- Document -->
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/productosservicios">Productos y Servicios</a></li>
-            <li class="breadcrumb-item"><a href="/productosservicios/servicios">Servicios</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Agregar Servicio</li>
+            <li class="breadcrumb-item"><a href="/clientes">Clientes</a></li>
+            <li class="breadcrumb-item"><a href="/clientes/listado">Listado</a></li>
+            <li class="breadcrumb-item"><a href="<?= $url ?>" >Ficha</a></li>
+
+            <li class="breadcrumb-item active" aria-current="page">Agregar Pedido</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
             <li class="pull-right"><a href="/productosservicios/servicios" id="volver">Volver</a></li>
@@ -97,14 +101,14 @@ $date = date('d-m-Y');
                         <table id="tabla_evento" class="table table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="th-sm">Producto/Servicio</th>
+                                    <th class="th-sm">Nombre</th>
                                     <th class="th-sm">Descripción</th>
                                     <th class="th-sm">Cantidad</th>
                                     <th class="th-sm">Precio Unitario</th>
                                     <th class="th-sm">% Bonif.</th>
-                                    <th class="th-sm">$ Bonif.</th>
-                                    <th class="th-sm">% IVA</th>
-                                    <th class="th-sm">$ IVA</th>
+                                    <!-- <th class="th-sm">$ Bonif.</th> -->
+                                    <!-- <th class="th-sm">% IVA</th>
+                                    <th class="th-sm">$ IVA</th> -->
                                     <th class="th-sm">Total</th>
                                     <th></th>
                                 </tr>
@@ -112,15 +116,12 @@ $date = date('d-m-Y');
                             <tbody>
                                 <?php foreach ($items as $item) : ?>
                                 <tr>
-                                    <td><?php echo ("Producto/Servicio"); ?></td>
-                                    <td><?php echo ("Descripción"); ?></td>
-                                    <td><?php echo ("Cantidad"); ?></td>
-                                    <td><?php echo ("Precio Unitario"); ?></td>
-                                    <td><?php echo ("% Bonif."); ?></td>
-                                    <td><?php echo ("$ Bonif."); ?></td>
-                                    <td><?php echo ("% IVA"); ?></td>
-                                    <td><?php echo ("$ IVA"); ?></td>
-                                    <td><?php echo ("Total"); ?></td>
+                                    <td><?= $item->getBien()->getNombre(); ?></td>
+                                    <td><?= $item->getBien()->getDescripcion(); ?></td>
+                                    <td><?= $item->getCantidad(); ?></td>
+                                    <td><?= $item->getBien()->getPrecio(); ?></td>
+                                    <td><?= $item->getBonificacion(); ?></td>
+                                    <td><?= $item->getSubtotal(); ?></td> 
                                     <td class="pull-right">
                                     </td>
                                 </tr>
@@ -132,7 +133,6 @@ $date = date('d-m-Y');
                             <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Item</span>
                         </a>
         
-                        <a href="#"> &nbsp;&nbsp;&nbsp; ¿o uno solo que filtre todo?</a>
                     </div>
                 </div>
             </div>
@@ -294,7 +294,7 @@ $date = date('d-m-Y');
         </div>
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $volver ?>">
+                <a href="<?= $url ?>">
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha zoom"></a>
             </div>
             <div class="ficha-cliente-label">
