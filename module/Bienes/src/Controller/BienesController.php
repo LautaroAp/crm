@@ -48,7 +48,7 @@ class BienesController extends HuellaController
             $tipoBien = $parametros['tipo'];       
         }
         else {
-            //SI EL TIPO DE LA RUTA NO ES NILO
+            //SI EL TIPO DE LA RUTA NO ES NULO
             $tipoBien= $tipo;
             $parametros['tipo'] = $tipo;
         }
