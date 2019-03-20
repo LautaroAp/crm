@@ -150,6 +150,23 @@ class BienesManager {
         return $paginator;
     }
     
+    public function getBienesFiltrados2($parametros){
+        $bienes = [];
+        if (COUNT($parametros)>1){
+            $query = $this->busquedaPorFiltros($parametros);
+            $bienes= $query->getResult();
+        }
+        else{
+            $bienes = $this->getBienes();
+        }
+        $json ="";
+        foreach ($bienes as $bien){
+            $json .= $bien->getJson(). ',';
+        }
+        $json = substr($json, 0, -1);
+        $json = '['.$json.']';
+        return $json;
+    }
     public function getTotalFiltrados($parametros) {
         $query = $this->busquedaPorFiltros($parametros);
         $adapter = new DoctrineAdapter(new ORMPaginator($query));
@@ -170,7 +187,7 @@ class BienesManager {
                 $valorCampo=$parametros[$nombreCampo]; 
                 $queryBuilder->andWhere('B.tipo = :tipo')->setParameter('tipo',$valorCampo);
             }
-            if($nombreCampo=="tipo"){
+            if($nombreCampo=="nombre"){
                 $valorCampo=$parametros[$nombreCampo]; 
                 $queryBuilder->andWhere("B.$nombreCampo LIKE ?$p")->setParameter("$p", '%'.$valorCampo.'%');
             }

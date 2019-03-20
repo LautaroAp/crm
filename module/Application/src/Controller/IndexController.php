@@ -41,6 +41,8 @@ class IndexController extends HuellaController {
         $_SESSION['PARAMETROS_CLIENTE'] = array();
         $_SESSION['PARAMETROS_PROVEEDOR'] = array();
         $_SESSION['PARAMETROS_CLIENTE_INACTIVO'] = array();
+        $_SESSION['TRANSACCIONES'] = array();
+
     }
 
     public function gestionClientesAction() {

@@ -14,15 +14,6 @@ function seleccionarFila(e) {
     }
 }
 
-// Vista previa de Registo de Eventos
-// $(function(){    
-//     $(".vpEvento").dblclick(function(e) {
-//         e.preventDefault();
-//         var data = $(this).attr("data-valor");
-//         alert(data);    
-//     });
-// });
-
 // funcion para eliminar los eventos guardados
 function eliminaEventos() {
     // para cada elemento, envio id a la Action eliminaEvento
@@ -62,3 +53,33 @@ function actualizarDatosTipoEvento(tipo){
         });
 }
 
+
+var item = null;
+var item_ant=null;
+// obtengo ID de eventos
+function seleccionarItem(e) {
+    elementId = e.target.id;
+    alert(document.body.getElementsByTagName("td")[0]);
+
+    $('#' + elementId).toggleClass('table-seleccion');
+    if ($('#' + elementId).hasClass('table-seleccion')) {
+        item_ant=item;
+        if (item_ant){
+            $('#' + item_ant).toggleClass('table-seleccion');
+        }
+        // Guardo id de item seleccionado
+        item = elementId;
+        console.log(item);
+    } else {
+        // Reseteo el item
+        item = null;
+    }
+}
+
+// $(function(){
+//     $(".click").dblclick(function (e){
+//         e.preventDefault();
+//         var data = $(this).attr("data-valor");
+//         alert(data);
+//     });
+// });

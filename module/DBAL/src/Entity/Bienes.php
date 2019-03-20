@@ -92,21 +92,21 @@ class Bienes {
     protected $tipo;
     
     /**
-     * Get the value of id_servicio
+     * Get the value of id
      */ 
     public function getId()
     {
-        return $this->id_servicio;
+        return $this->id;
     }
 
     /**
-     * Set the value of id_servicio
+     * Set the value of id
      *
      * @return  self
      */ 
-    public function setId($id_servicio)
+    public function setId($id)
     {
-        $this->id_servicio = $id_servicio;
+        $this->id = $id;
         return $this;
     }
 
@@ -374,5 +374,20 @@ class Bienes {
     {
         $this->tipo = $tipo;
         return $this;
+    }
+
+    public function getJSON(){
+        $output = "";
+        $output .= '"Id": "' . $this->getId() .'", ';
+        $output .= '"Nombre": "' . $this->getNombre() .'", ';
+        $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
+        $output .= '"Categoria": "' . $this->getCategoria() .'", ';
+        $output .= '"Descuento": "' . $this->getDescuento() .'", ';
+        $output .= '"Iva": "' . $this->getIva()->getValor() .'", ';
+        $output .= '"Precio": "' . $this->getPrecio() .'" ';
+
+        // $output = '"bien": {'.$output.'}';
+
+        return  '{'.$output.'}' ;
     }
 }

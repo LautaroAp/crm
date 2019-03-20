@@ -29,12 +29,18 @@ abstract class TransaccionController extends HuellaController {
     public abstract function addAction();
     public abstract function editAction();
 
+    protected function reiniciarParams(){
+        $_SESSION['BIENES'] = null;
+        $_SESSION['PARAMETROS_BIENES']=null;
+    }
     //este metodo se llama desde pedido, remito, presupuesto (no esta declarado en las clases hijas)
     public function procesarAddAction($data){
+        $this->reiniciarParams();
         $this->manager->add($data);
     }
 
     public function procesarEditAction($transaccion, $data){
+        $this->reiniciarParams();
         $this->manager->edit($transaccion, $data);
     }
 
