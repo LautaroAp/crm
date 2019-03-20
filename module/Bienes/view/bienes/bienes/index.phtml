@@ -1,5 +1,6 @@
 <!-- scripts -->
 <script src="/js/item.js"></script>
+<script src="/js/bienes.js"></script>
 <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
@@ -19,14 +20,22 @@
 <!-- php -->
 <?php
 $date = date('d-m-Y');
+$url = "";
+$label = "";
+if ($transaccion == "pedido") {
+    $url = "/pedido/add/" . $id_persona;
+    $label = "Agregar Pedido";
+}
 ?>
+
 <!-- Document -->
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/productosservicios">Productos y Servicios</a></li>
-            <li class="breadcrumb-item"><a href="/productosservicios/servicios">Servicios</a></li>
+            <li class="breadcrumb-item"><a href="/clientes">Clientes</a></li>
+            <li class="breadcrumb-item"><a href="/clientes/listado">Listado</a></li>
+            <li class="breadcrumb-item"><a href=<?= $url ?>> <?= $label ?> </a></li>
             <li class="breadcrumb-item active" aria-current="page">Agregar Servicio</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
@@ -35,7 +44,7 @@ $date = date('d-m-Y');
     </nav>
 </div>
 <!-- Formulario -->
-<form method="post">
+<form id="busqueda" method="post">
     <div class="container margen">
         <!-- Datos de Pedido -->
         <div class="row form-row">
@@ -49,8 +58,7 @@ $date = date('d-m-Y');
                         <div class="form-group col-sm-3">
                             <label>Tipo de Item</label>
                             <select class="form-control" id="tipo" name="tipo" required>
-                                <option value="<?php if (isset($tipo_bien)) {echo ($tipo_bien);} else {echo ("-1");}?>"
-                                 hidden=""><?php if (isset($tipo_bien)) {echo ($tipo_bien);} else {echo ("Seleccionar");}?></option>
+                                <option value="-1">Seleccionar</option>
                                 <option value="Producto">Producto</option>
                                 <option value="Servicio">Servicio</option>
                                 <option value="Licencia">Licencia</option>
@@ -59,9 +67,9 @@ $date = date('d-m-Y');
                         <div class="form-group col-sm-8">
                             <label>Buscar Item</label>
                             <div class="form-inline">
-                                <input type="text" class="form-control" name="nombre" id="nombre" value="Nombre" style="width: 60%;">
-                                <button type="submit" class="btn btn-default">
-                                <i class="glyphicon glyphicon-search"></i> Buscar
+                                <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" style="width: 60%;">
+                                <button type="submit" class="btn btn-default" id="busqueda">
+                                    <i class="glyphicon glyphicon-search"></i> Buscar
                                 </button>
                                 <!-- <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar</button> -->
                             </div>
@@ -77,79 +85,55 @@ $date = date('d-m-Y');
                 <div class="panel-heading titulo-espaciado">
                     LISTADO DE ITEMS
                 </div>
-
-                <div class="" id="">
-                    <div class="panel panel-body">
-                        <table id="tabla_evento" class="table table-condensed">
-                            <thead>
-                                <tr>
-                                    <th class="th-sm">Item</th>
-                                    <th class="th-sm">Nombre</th>
-                                    <th class="th-sm">Descripcion</th>
-                                    <th class="th-sm">Categoria</th>
-                                    <th class="th-sm">Stock</th>
-                                    <th class="th-sm">Precio</th>
-                                    <!-- <th class="th-sm">% Descuento</th>
-                                    <th class="th-sm">% IVA</th>
-                                    <th class="th-sm">Total</th> -->
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($bienes as $bien) : ?>
-                                <tr>
-                                    <td> <input type="checkbox"> </td>
-                                    <td><?= $bien->getNombre(); ?></td>
-                                    <td><?= $bien->getDescripcion(); ?></td>
-                                    <td><?= $bien->getCategoria(); ?></td>
-                                    <td><?php echo (" "); ?></td>
-                                    <td><?= $bien->getPrecio_final_iva_dto(); ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="panel panel-body" id="contenido_bienes">
+                    <script>
+                        var obj = <?php echo ($bienes); ?>;
+                        addItems(obj);
+                    </script>
                 </div>
             </div>
         </div>
 
         <!-- Datos -->
-        <div class="row form-row">
-            <div class="panel panel-default sombra-ficha">
-                <div class="panel-heading titulo-espaciado">
-                    DETALLE
-                </div>
-                <div class="panel-body">
-                    <!-- Detalle -->
-                    <div class="row form-row">
-                        <div class="form-group col-md-2">
-                            <label>Precio</label>
-                            <input type="text" class="form-control" name="precio" id="precio" value="0"
-                                onkeypress="return justNumbers(event)" onkeyup="calculaSubtotal()">
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>Cantidad</label>
-                            <input type="text" class="form-control" name="cantidad" id="cantidad" value="1" 
-                                onkeypress="return justNumbers(event)" onkeyup="calculaSubtotal()" required>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>% Bonificación</label>
-                            <input type="text" class="form-control" name="bonificacion" id="bonificacion" value="0"
-                                onkeypress="return justNumbers(event)" onkeyup="calculaSubtotal()" required>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>% IVA</label>
-                            <input type="text" class="form-control" name="iva" id="iva" value="0"
-                                onkeypress="return justNumbers(event)" onkeyup="calculaSubtotal()" required>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Subtotal</label>
-                            <input type="text" class="form-control" name="subtotal" id="subtotal" value="0" readonly>
+        <form method="post">
+            <div class="row form-row">
+                <div class="panel panel-default sombra-ficha">
+                    <div class="panel-heading titulo-espaciado">
+                        DETALLE
+                    </div>
+                    <div class="panel-body">
+                        <!-- Detalle -->
+                        <div class="row form-row">
+                            <div class="form-group col-md-2">
+                                <label>Cantidad</label>
+                                <input type="number" class="form-control" name="cantidad" id="cantidad" min="1" max="99" value="" 
+                                    onkeypress="return justNumbers(event);" onclick="calculaSubtotal()" onkeyup="calculaSubtotal()">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>% Bonificación</label>
+                                <input type="text" class="form-control" name="bonificacion" id="bonificacion" 
+                                    onkeypress="return justNumbers(event);" onkeyup="calculaSubtotal()">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>% IVA</label>
+                                <select class="form-control" name="iva" id="iva" onkeypress="return justNumbers(event);" onchange="calculaSubtotal()">
+                                    <?php foreach ($ivas as $iva) : ?>
+                                    <option value="<?php echo ($iva->getId()); ?>">
+                                        <?php echo ($iva->getValor()) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Subtotal</label>
+                                <input type="text" class="form-control" name="subtotal" id="subtotal" onkeypress="return justNumbers(event);" onkeyup="calculaSubtotal()">
+                            </div>
+                            <input type="number" name="item_precio" id="item_precio" hidden="">
+                            <input type="number" name="item_dto" id="item_dto" hidden="">
+                            <input type="number" name="idbien" id="idbien" hidden="">
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
     </div>
 
@@ -165,37 +149,39 @@ $date = date('d-m-Y');
                     <p>¿Está seguro que desea agregar este item?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-default">Aceptar</button>
+                    <button type="submit" class="btn btn-default" id="agregar">Aceptar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
     </div>
 
-</form>
 
-<!-- Inicio: Panel Botones -->
-<div class="container margen">
-    <div class="row img-centrar">
-        <div class="col ficha-cliente-p img-centrar">
-            <div>
-                <a data-toggle="modal" data-target="#myModal">
-                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm zoom" role="button">
-                </a>
+
+    <!-- Inicio: Panel Botones -->
+    <div class="container margen">
+        <div class="row img-centrar">
+            <div class="col ficha-cliente-p img-centrar">
+                <div>
+                    <a data-toggle="modal" data-target="#myModal">
+                        <img src="<?= $this->basePath('img/crm/aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm zoom" role="button">
+                    </a>
+                </div>
+                <div class="ficha-cliente-label">
+                    <label>Guardar</label>
+                </div>
             </div>
-            <div class="ficha-cliente-label">
-                <label>Guardar</label>
-            </div>
-        </div>
-        <div class="col ficha-cliente-p img-centrar">
-            <div>
-                <a href="<?= $volver ?>">
-                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha zoom"></a>
-            </div>
-            <div class="ficha-cliente-label">
-                <label>Volver</label>
+            <div class="col ficha-cliente-p img-centrar">
+                <div>
+                    <a href=<?= $url ?>>
+                        <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha zoom"></a>
+                </div>
+                <div class="ficha-cliente-label">
+                    <label>Volver</label>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+</form>
 <!-- Fin: Panel Botones --> 

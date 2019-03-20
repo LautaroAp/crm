@@ -30,8 +30,7 @@ class PedidoController extends TransaccionController{
     }
 
     public function indexAction() {
-        print_r("abre el index de pedido");
-        die();
+
     }
 
    
@@ -40,15 +39,22 @@ class PedidoController extends TransaccionController{
     }
 
     public function addAction() {
-        $items = null;
+        $items = array();
+        if (isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
+            $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
+        }
+        $id_persona = $this->params()->fromRoute('id');
+        $persona = $this->personaManager->getPersona($id_persona);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
             $this->procesarAddAction($data);
             $this->redirect()->toRoute('home');
         }
+        $this->reiniciarParams();
         return new ViewModel([
             'items' => $items,
+            'persona' => $persona,
         ]);
     }
 

@@ -14,10 +14,26 @@ return [
             'bienes' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route' =>'[/:transaccion]/bienes[/:tipo]',
+                    'route' =>'[/:transaccion][/:id]/bienes[/:tipo]',
                     'defaults' => [
                         'controller' => \Bienes\Controller\BienesController::class,
                         'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'ajax' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '/ajax[/:action[/:id]]',
+                            'defaults' => [
+                                'controller' => Controller\BienesController::class,                               
+                            ],
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[a-zA-Z0-9_-]*',
+                            ],
+                        ],
                     ],
                 ],
             ],

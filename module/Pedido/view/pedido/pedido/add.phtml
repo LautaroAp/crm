@@ -128,8 +128,8 @@ $date = date('d-m-Y');
                             </tbody>
                         </table>
                         <br>
-                        <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'pedido']); ?>" type="button">
-                            <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Item</span>
+                        <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'pedido','id'=> $persona->getId()]); ?>" type="button">
+                            <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Item</span>
                         </a>
                     </div>
                 </div>
