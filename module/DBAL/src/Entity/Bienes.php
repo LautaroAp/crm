@@ -392,9 +392,8 @@ class Bienes {
         $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
         $output .= '"Categoria": "' . $this->getCategoria() .'", ';
         $output .= '"Descuento": "' . $this->getDescuento() .'", ';
-        if (!is_null($this->getIva())){
-            $output .= '"Iva": ' . $this->getIva()->getJSON() .', ';
-        }
+        $output .= '"Iva": "' . $this->getIva()->getValor() .'", ';
+
         $output .= '"Precio": "' . $this->getPrecio() .'" ';
         
        

@@ -52,7 +52,7 @@ class Pedido {
     protected $lugar_entrega;
     
     /**
-     * @ORM\Column(name="ID_FACTURA", nullable=true, type="int", length=255)
+     * @ORM\Column(name="ID_FACTURA", nullable=true, type="integer", length=255)
      */
     protected $factura;
 

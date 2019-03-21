@@ -10,9 +10,11 @@ class BienesController extends HuellaController
 {
 
    protected $bienesManager;
+   private $ivaManager;
 
-    public function __construct($bienesManager){
+    public function __construct($bienesManager,$ivaManager){
         $this->bienesManager = $bienesManager;
+        $this->ivaManager= $ivaManager;
     }
     
     
@@ -84,8 +86,9 @@ class BienesController extends HuellaController
     }
 
     private function agregar($params){
+
         if ((isset($params['cantidad']) and isset($params['subtotal'])) and isset($params['idbien'])){
-            return ($params['cantidad'] and $params['subtotal']);
+            return true;
         }
         else return false;
     }
@@ -96,6 +99,7 @@ class BienesController extends HuellaController
         $tipo= $this->params()->fromRoute('tipo');
         $transaccion =$this->params()->fromRoute('transaccion');
         $id_persona = $this->params()->fromRoute('id');
+        $ivas = $this->ivaManager->getIvas();
         if (isset($tipo)){
             //si llego un tipo de bien por ruta se la guarda en la sesion para paginator
             $_SESSION['BIENES']['TIPO'] = $tipo;
@@ -120,7 +124,7 @@ class BienesController extends HuellaController
             $tipoBien = $parametros['tipo'];       
         }
         else {
-            //SI EL TIPO DE LA RUTA NO ES NILO
+            //SI EL TIPO DE LA RUTA NO ES NULO
             $tipoBien= $tipo;
             $parametros['tipo'] = $tipo;
         }
@@ -140,6 +144,7 @@ class BienesController extends HuellaController
 
         return new ViewModel([
             'bienes' => $bienes,
+            'ivas' => $ivas,
             // 'parametros' => $parametros,
             'tipo' => $tipo,
             // 'tipo_bien' =>$tipoBien,
@@ -154,7 +159,8 @@ class BienesController extends HuellaController
         $bienTransaccion->setBien($bien);
         $bienTransaccion->setBonificacion($parametros['bonificacion']);
         $bienTransaccion->setCantidad($parametros['cantidad']);
-        $bienTransaccion->setIva($parametros['iva']);
+        $iva = $this->ivaManager->getIva($parametros['iva']);
+        $bienTransaccion->setIva($iva);
         $bienTransaccion->setSubtotal($parametros['subtotal']);
         if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
             $_SESSION['TRANSACCIONES']['PEDIDO'] = array();

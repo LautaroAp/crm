@@ -21,7 +21,7 @@ class BienesTransacciones {
 
     /**
      * @ORM\ManyToOne(targetEntity="Bienes")
-     * @ORM\JoinColumn(name="BIEN", referencedColumnName="ID")
+     * @ORM\JoinColumn(name="ID_BIEN", referencedColumnName="ID")
      */
     private $bien;
 
@@ -42,7 +42,8 @@ class BienesTransacciones {
     protected $bonificacion;
 
     /**
-     * @ORM\Column(name="IVA", nullable=true, type="decimal")
+     * @ORM\ManyToOne(targetEntity="Iva" , cascade={"persist"})
+     * @ORM\JoinColumn(name="IVA", referencedColumnName="ID")
      */
     protected $iva;
 
@@ -195,16 +196,16 @@ class BienesTransacciones {
     public function getJSON(){
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
-          if (!is_null($this->getBien())){
-            $output .= '"Bien": "' . $this->getBien()->getJson() .'" ';
+        if (!is_null($this->getBien())){
+            $output .= '"Bien": ' . $this->getBien()->getJSON() .', ';
         }
-        $output .= '"Cantidad": "' . $this->getCantidad() .'" ';
+        if (!is_null($this->getIva())){
+            $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
+        }
+        $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
         $output .= '"Bonificacion": "' . $this->getBonificacion() .'", ';
-        $output .= '"Subtotal": "' . $this->getSubtotal() .'", ';
+        $output .= '"Subtotal": "' . $this->getSubtotal() .'" ';
       
-
-        var_dump('{'.$output.'}');
-        die();
         return  '{'.$output.'}' ;
     }
 }

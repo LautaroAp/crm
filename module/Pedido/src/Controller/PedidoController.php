@@ -44,30 +44,27 @@ class PedidoController extends TransaccionController{
             
             $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
         }
-        // $json = "";
-        // foreach ($items as $item){
-        //     $json .= $item->getJson(). ',';
-        // }
-        // $json = substr($json, 0, -1);
-        // $json = '['.$json.']';
-        // if ($json!="[]"){
-        //     print_r($json);
-        //     die();  
-        // }
-
+        $json = "";
+        foreach ($items as $item){
+            $json .= $item->getJson(). ',';
+        }
+        $json = substr($json, 0, -1);
+        $json = '['.$json.']';
+     
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
-            $this->procesarAddAction($data);
+            $data['persona'] = $persona;
+            $this->pedidoManager->addPedido($data, $items);
             $this->redirect()->toRoute('home');
         }
         $this->reiniciarParams();
         return new ViewModel([
             'items' => $items,
             'persona' => $persona,
-            // 'json' => $json,
+            'json' => $json,
         ]);
     }
 

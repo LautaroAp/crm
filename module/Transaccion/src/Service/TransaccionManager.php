@@ -4,6 +4,8 @@ namespace Transaccion\Service;
 
 use DBAL\Entity\Transaccion;
 use DBAL\Entity\Categoria;
+use DBAL\Entity\Persona;
+use DBAL\Entity\BienesTransacciones;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 /**
@@ -18,13 +20,14 @@ class TransaccionManager {
      */
     protected $entityManager;
     protected $personaManager;
-
+    protected $bienesTransaccionesManager;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $personaManager) {
+    public function __construct($entityManager, $personaManager, $bienesTransaccionesManager) {
         $this->entityManager = $entityManager;
-        $this->proveedorManager= $personaManager;
+        $this->personaManager= $personaManager;
+        $this->bienesTransaccionesManager = $bienesTransaccionesManager;
     }
 
     public function getTransacciones() {
@@ -57,29 +60,51 @@ class TransaccionManager {
     /**
      * This method adds a new servicio.
      */
-    public function add($data) {
+    public function add($data, $items) {
         $transaccion = new Transaccion();
         $transaccion=$this->setData($transaccion, $data);
-        $this->entityManager->persist($transaccion);
+        $this->entityManager->persist($transaccion);    
+        $this->setItems($transaccion, $items);
         $this->entityManager->flush();
         return $transaccion;
     }
 
+    private function getUltimoId(){
+        $highest_id = $this->entityManager->createQueryBuilder()
+        ->select('MAX(T.id)')
+        ->from(Transaccion::Class, 'T')
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+
     private function setData($transaccion, $data){
-        $transaccion->setNumero($data['numero_transaccion']);
-        $transaccion->setFecha_transaccion($data['fecha_transaccion']);
-        if($data['persona'] == "-1"){
-            $transaccion->setPersona(null);
-        } else {            
-            $p=$this->personaManager->getPersona($data['persona']);
-            $transaccion->setPersona($p);
+
+        if (isset($data['numero_transaccion'])){
+            $transaccion->setNumero($data['numero_transaccion']);
         }
+        else{
+            $transaccion->setNumero($this->getUltimoId()+1);
+        }
+        if (isset($data['fecha_transaccion'])){
+            $fecha_transaccion = \DateTime::createFromFormat('d/m/Y', $data['fecha_transaccion']); 
+            $transaccion->setFecha_transaccion($fecha_transaccion);
+        }
+        $transaccion->setPersona($data['persona']);
         $transaccion->setTipo($data['tipo']);
-        $transaccion->setFecha_vencimiento($data['fecha_vencimiento']);
-        $transaccion->setBienes_transacciones($data['transacciones']);
+        if (isset($data['fecha_vencimiento'])){
+            $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
+            $transaccion->setFecha_vencimiento($fecha_vencimiento);
+        }
         return $transaccion;
     }
 
+    private function setItems($transaccion, $items){
+        foreach($items as $item ){
+            $item->setTransaccion($transaccion);
+            $item= $this->bienesTransaccionesManager->add($item);
+            $transaccion->addBien_transaccion($item);
+        }
+    }
     /**
      * This method updates data of an existing servicio.
      */

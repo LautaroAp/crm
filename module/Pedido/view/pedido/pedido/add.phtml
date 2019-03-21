@@ -1,4 +1,5 @@
 <!-- scripts -->
+<script src="/js/bienes-transacciones.js"></script>
 <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
@@ -88,52 +89,21 @@ $url = "/clientes/listado/ficha/".$persona->getId();
                 </div>
             </div>
         </div>
-
-        <!-- Tabla de Items -->
-        <div class="row form-row">
+         <!-- Tabla de Items -->
+         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
-                    PRODUCTOS & SERVICIOS
+                    LISTADO DE ITEMS
                 </div>
-
-                <div class="" id="">
-                    <div class="panel panel-body">
-                        <table id="tabla_evento" class="table table-condensed">
-                            <thead>
-                                <tr>
-                                    <th class="th-sm">Nombre</th>
-                                    <th class="th-sm">Descripción</th>
-                                    <th class="th-sm">Cantidad</th>
-                                    <th class="th-sm">Precio Unitario</th>
-                                    <th class="th-sm">% Bonif.</th>
-                                    <!-- <th class="th-sm">$ Bonif.</th> -->
-                                    <!-- <th class="th-sm">% IVA</th>
-                                    <th class="th-sm">$ IVA</th> -->
-                                    <th class="th-sm">Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($items as $item) : ?>
-                                <tr>
-                                    <td><?= $item->getBien()->getNombre(); ?></td>
-                                    <td><?= $item->getBien()->getDescripcion(); ?></td>
-                                    <td><?= $item->getCantidad(); ?></td>
-                                    <td><?= $item->getBien()->getPrecio(); ?></td>
-                                    <td><?= $item->getBonificacion(); ?></td>
-                                    <td><?= $item->getSubtotal(); ?></td> 
-                                    <td class="pull-right">
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                        <br>
-                        <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'pedido','id'=> $persona->getId()]); ?>" type="button">
-                            <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Item</span>
-                        </a>
-        
-                    </div>
+                <div class="panel panel-body" id="contenido_bienes">
+                    <script>
+                        var obj = <?php echo ($json); ?>;
+                        addItems(obj);
+                    </script>
+                    <br>
+                    <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'pedido','id'=> $persona->getId()]); ?>" type="button">
+                        <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Item</span>
+                    </a>    
                 </div>
             </div>
         </div>
@@ -149,17 +119,20 @@ $url = "/clientes/listado/ficha/".$persona->getId();
                     <div class="row form-row">
                         <div class="form-group col-md-3">
                             <label>Bonificación Total</label>
-                            <input type="text" class="form-control" name="persona" id="persona" value="Nro ######" readonly>
+                            <input type="text" class="form-control" name="bonificacion_total" id="bonificacion_total" value=0 >
                         </div>
                         <div class="form-group col-md-3">
                             <label>IVA Total</label>
-                            <input type="text" class="form-control" name="persona" id="persona" value="Nro ######" readonly>
+                            <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 >
                         </div>
                         <div class="form-group col-md-3">
                             <label>Total General</label>
-                            <input type="text" class="form-control" name="persona" id="persona" value="Nro ######" readonly>
+                            <input type="text" class="form-control" name="total_general" id="total_general" value=0 >
                         </div>
                     </div>
+                    <script>
+                        calcularSubcampos();
+                     </script>
                     <!-- Forma de Pago + Fecha -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">

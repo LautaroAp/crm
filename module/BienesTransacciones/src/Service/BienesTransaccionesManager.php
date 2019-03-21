@@ -69,6 +69,13 @@ class BienesTransaccionesManager {
         return $bienTransaccion;
     }
 
+    public function add($bienTransaccion){
+        print_r($bienTransaccion->getJSON());
+        $this->entityManager->persist($bienTransaccion);
+        $this->entityManager->flush();
+        return $bienTransaccion;
+    }
+    
     private function setData($bienTransaccion, $data){
         $bienTransaccion->setNombre($data['nombre']);
         $bienTransaccion->setDescripcion($data['descripcion']);

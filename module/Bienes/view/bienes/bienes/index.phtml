@@ -1,4 +1,22 @@
-
+<!-- scripts -->
+<script src="/js/item.js"></script>
+<script src="/js/bienes.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#datetimepicker1').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+        $('#datetimepicker2').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+        $('#datetimepicker3').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+    });
+</script>
 <!-- php -->
 <?php
 $date = date('d-m-Y');
@@ -9,7 +27,6 @@ if ($transaccion == "pedido") {
     $label = "Agregar Pedido";
 }
 ?>
-<script src="/js/bienes.js"></script>
 
 <!-- Document -->
 <div class="container padding-cero">
@@ -27,7 +44,7 @@ if ($transaccion == "pedido") {
     </nav>
 </div>
 <!-- Formulario -->
-<form id="busqueda"method="post">
+<form id="busqueda" method="post">
     <div class="container margen">
         <!-- Datos de Pedido -->
         <div class="row form-row">
@@ -52,7 +69,7 @@ if ($transaccion == "pedido") {
                             <div class="form-inline">
                                 <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" style="width: 60%;">
                                 <button type="submit" class="btn btn-default" id="busqueda">
-                                <i class="glyphicon glyphicon-search"></i> Buscar
+                                    <i class="glyphicon glyphicon-search"></i> Buscar
                                 </button>
                                 <!-- <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar</button> -->
                             </div>
@@ -61,21 +78,18 @@ if ($transaccion == "pedido") {
                 </div>
             </div>
         </div>
-     
+
         <!-- Tabla de Items -->
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
                     LISTADO DE ITEMS
                 </div>
-
-                <div class="" id="">
-                    <div class="container" id="contenido_bienes">
-                        <script>
-                            var obj = <?php echo ($bienes); ?>;
-                            addItems(obj);
-                        </script>
-                    </div>
+                <div class="panel panel-body" id="contenido_bienes">
+                    <script>
+                        var obj = <?php echo ($bienes); ?>;
+                        addItems(obj);
+                    </script>
                 </div>
             </div>
         </div>
@@ -92,21 +106,29 @@ if ($transaccion == "pedido") {
                         <div class="row form-row">
                             <div class="form-group col-md-2">
                                 <label>Cantidad</label>
-                                <input type="number" class="form-control" name="cantidad" id="cantidad" 
-                                    min="1" max="99" value="">
+                                <input type="number" class="form-control" name="cantidad" id="cantidad" min="1" max="99" value="" 
+                                    onkeypress="return justNumbers(event);" onclick="calculaSubtotal()" onkeyup="calculaSubtotal()">
                             </div>
                             <div class="form-group col-md-3">
-                                <label>Bonificación</label>
-                                <input type="text" class="form-control" name="bonificacion" id="bonificacion" >
+                                <label>% Bonificación</label>
+                                <input type="text" class="form-control" name="bonificacion" id="bonificacion" 
+                                    onkeypress="return justNumbers(event);" onkeyup="calculaSubtotal()">
                             </div>
                             <div class="form-group col-md-3">
-                                <label>IVA</label>
-                                <input type="text" class="form-control" name="iva" id="iva" >
+                                <label>% IVA</label>
+                                <select class="form-control" name="iva" id="iva" onkeypress="return justNumbers(event);" onchange="calculaSubtotal()">
+                                    <?php foreach ($ivas as $iva) : ?>
+                                    <option value="<?php echo ($iva->getId()); ?>">
+                                        <?php echo ($iva->getValor()) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Subtotal</label>
-                                <input type="text" class="form-control" name="subtotal" id="subtotal" >
+                                <input type="text" class="form-control" name="subtotal" id="subtotal" onkeypress="return justNumbers(event);" onkeyup="calculaSubtotal()">
                             </div>
+                            <input type="number" name="item_precio" id="item_precio" hidden="">
+                            <input type="number" name="item_dto" id="item_dto" hidden="">
                             <input type="number" name="idbien" id="idbien" hidden="">
                         </div>
                     </div>
@@ -121,10 +143,10 @@ if ($transaccion == "pedido") {
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Agregar pedido</h4>
+                    <h4 class="modal-title">Agregar item</h4>
                 </div>
                 <div class="modal-body">
-                    <p>¿Está seguro que desea agregar este pedido?</p>
+                    <p>¿Está seguro que desea agregar este item?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-default" id="agregar">Aceptar</button>
@@ -136,31 +158,30 @@ if ($transaccion == "pedido") {
 
 
 
-<!-- Inicio: Panel Botones -->
-<div class="container margen">
-    <div class="row img-centrar">
-        <div class="col ficha-cliente-p img-centrar">
-            <div>
-                <a data-toggle="modal" data-target="#myModal">
-                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>" 
-                    class="img-rounded img-responsive img-texto-derecha img-submenu-sm zoom" role="button">
-                </a>
+    <!-- Inicio: Panel Botones -->
+    <div class="container margen">
+        <div class="row img-centrar">
+            <div class="col ficha-cliente-p img-centrar">
+                <div>
+                    <a data-toggle="modal" data-target="#myModal">
+                        <img src="<?= $this->basePath('img/crm/aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm zoom" role="button">
+                    </a>
+                </div>
+                <div class="ficha-cliente-label">
+                    <label>Guardar</label>
+                </div>
             </div>
-            <div class="ficha-cliente-label">
-                <label>Guardar</label>
-            </div>
-        </div>
-        <div class="col ficha-cliente-p img-centrar">
-            <div>
-                <a href=<?= $url ?> >
-                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha zoom"></a>
-            </div>
-            <div class="ficha-cliente-label">
-                <label>Volver</label>
+            <div class="col ficha-cliente-p img-centrar">
+                <div>
+                    <a href=<?= $url ?>>
+                        <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha zoom"></a>
+                </div>
+                <div class="ficha-cliente-label">
+                    <label>Volver</label>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 </form>
 <!-- Fin: Panel Botones --> 

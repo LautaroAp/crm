@@ -1,12 +1,13 @@
 var items=[];
-function addItems(bienes) {
-    items = bienes;
+function addItems(bienesTransacciones) {
+    items = bienesTransacciones;
     console.log(items);
-    var col = ["Nombre", "Descripcion", "Descuento", "Iva","Precio"];
+    var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Bonificacion","IVA", "Subtotal"];
     //TABLE HEADER
     var table = document.createElement("table");
     table.setAttribute("class", "table table-hover");
     table.setAttribute("role","button");
+    table.setAttribute("id", "table_bienes");
     var tr = table.insertRow(-1);                   // TABLE ROW.
     for (var i = 0; i < col.length; i++) {
         var th = document.createElement("th");      // TABLE HEADER.
@@ -15,29 +16,38 @@ function addItems(bienes) {
     }
     //TABLE BODY
     var value = null;
-    for (var i = 0; i < bienes.length; i++) {
-        var item = bienes[i]
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i]
         tr = table.insertRow(-1);
         // tr.onclick= selectItem(item["id"]);
         tr.setAttribute("id", i);
         tr.setAttribute("class", "click");
-        tr.setAttribute("onclick","selectItem(event,id)");
+        // tr.setAttribute("onclick","selectItem(event,id)");
         // console.log(item);
         for (var j = 0; j < col.length; j++) {
             var tabCell = tr.insertCell(-1);
             tabCell.setAttribute("id", i);
             tabCell.setAttribute("class", "click");
-            value = item[col[j]];
-            
-            if ((col[j] == "Descuento") || (col[j] == "Iva")){value = formatPercent(value);}
+            if (col[j]=="Nombre" || col[j]=="Descripcion" || col[j]=="Precio"){
+                value = item["Bien"][col[j]];
+            }
+            else if (col[j]=="IVA"){
+                value = item["IVA"]["Valor"];
+            }
+            else{
+                value = item[col[j]];
+            }
+            if ((col[j] == "Bonificacion") || (col[j]=="IVA")){value = formatPercent(value);}
             if (col[j] == "Precio"){value = formatMoney(value);}
-            
+
             tabCell.innerHTML = value;
         }
     }
     var divContainer = document.getElementById("contenido_bienes");
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
+
+
 }
 
 function formatMoney(number) {
@@ -46,6 +56,39 @@ function formatMoney(number) {
 
 function formatPercent(number) {
     return number.toLocaleString('en-US') + ' %';
+}
+
+function calcularSubcampos(){
+
+    var table = document.getElementById("table_bienes");
+    var sumBonificacion = 0;
+    var sumSubtotal=0;
+    var sumIva=0;
+
+    for(var i = 1; i < table.rows.length; i++)
+    {
+        bonificacion = table.rows[i].cells[4].innerHTML;
+        var bonificacion = bonificacion.substring(0, bonificacion.length-2);
+        sumBonificacion = sumBonificacion + parseFloat(bonificacion);
+        console.log(sumBonificacion);
+        
+        console.log(sumIva);
+        iva = table.rows[i].cells[5].innerHTML;
+        var iva = iva.substring(0, iva.length-2);
+        sumIva = sumIva + parseFloat(iva);
+        console.log(sumIva);
+
+        subtotal = table.rows[i].cells[6].innerHTML;
+        sumSubtotal = sumSubtotal + parseFloat(subtotal);
+        console.log(sumSubtotal);
+
+    }
+    $("#bonificacion_total").val(formatPercent(parseFloat(sumBonificacion)));
+    $("#iva_total").val(formatPercent(parseFloat(sumIva)));
+    $("#total_general").val(formatMoney(sumSubtotal));
+
+ 
+
 }
 
 var item = null;

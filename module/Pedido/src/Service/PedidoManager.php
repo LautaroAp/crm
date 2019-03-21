@@ -4,7 +4,8 @@ namespace Pedido\Service;
 
 use DBAL\Entity\Moneda;
 use DBAL\Entity\Pedido;
-
+use DBAL\Entity\Persona;
+use DBAL\Entity\BienesTransacciones;
 use DBAL\Entity\Transaccion;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
@@ -21,12 +22,15 @@ class PedidoManager extends TransaccionManager{
      */
     protected $entityManager;
     protected $monedaManager;
+    protected $personaManager;
+    protected $bienesTransaccionManager;
 
     private $tipo;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $monedaManager) {
+    public function __construct($entityManager, $monedaManager, $personaManager, $bienesTransaccionManager) {
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager);
         $this->entityManager = $entityManager;
         $this->monedaManager = $monedaManager;
         $this->tipo = "PEDIDO";
@@ -54,11 +58,13 @@ class PedidoManager extends TransaccionManager{
     /**
      * This method adds a new pedido.
      */
-    public function addPedido($data) {
+    public function addPedido($data, $items) {
         //llamo a add de la transaccion, retorna una transaccion que se le setea al pedido
-        $transaccion = parent::add($data);
+        $transaccion = parent::add($data,$items);
+  
         $pedido = new Pedido();
         $pedido=$this->setData($pedido, $data, $transaccion);
+
         $this->entityManager->persist($pedido);
         $this->entityManager->flush();
         return $pedido;
@@ -66,17 +72,31 @@ class PedidoManager extends TransaccionManager{
 
     private function setData($pedido, $data, $transaccion){
         $pedido->setTransaccion($transaccion);
-        $pedido->setNumero($data['numero_pedido']);
+        if (isset($data['numero_pedido'])){
+            $pedido->setNumero($data['numero_pedido']);
+        }
         $moneda=null;
         if ($data['moneda']!= '-1'){
-            $moneda = $this->monedaManager->getMoneda($data['moneda']);
+            $moneda = $this->monedaManager->getMonedaId($data['moneda']); 
         }
         $pedido->setMoneda($moneda);
-        $pedido->setFecha_entrega($data['fecha_entrega']);
-        $pedido->setForma_envio($data['forma_envio']);
-        $pedido->setIngresos_brutos($data['ingresos_brutos']);
-        $pedido->setLugar_entrega($data['lugar_entrega']);
-        return $pedido;
+        $fecha_entrega=null;
+
+        if (isset($data['fecha_entrega'])){
+            $fecha_entrega = \DateTime::createFromFormat('d/m/Y', $data['fecha_entrega']); 
+            $pedido->setFecha_entrega($fecha_entrega);
+        }
+       
+        if (isset($data['forma_envio'])){
+            $pedido->setForma_envio($data['forma_envio']);
+        }
+        if (isset($data['ingresos_brutos'])){
+            $pedido->setIngresos_brutos($data['ingresos_brutos']);
+        }
+        if (isset($data['lugar_entrega'])){
+            $pedido->setLugar_entrega($data['lugar_entrega']);
+        }
+       return $pedido;
     }
 
     /**

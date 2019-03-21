@@ -173,6 +173,14 @@
     font-weight: bold;    
     border: 5px solid  #17a589;
 }
+
+.item-seleccion{
+    font-weight: bold;
+    /* color: black !important; */
+    /* background-color: rgb(132, 163, 253) !important; */
+    background-color: rgb(235, 235, 235) !important;
+}
+
 .margen {
     margin-top: 10px;
 }

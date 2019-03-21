@@ -5,9 +5,7 @@ use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Bienes\Controller\BienesController;
 use Bienes\Service\BienesManager;
-use Producto\Service\ProductoManager;
-use Servicio\Service\ServicioManager;
-use Licencia\Service\LicenciaManager;
+use Iva\Service\IvaManager;
 /**
  * Description of BienesControllerFactory
  *
@@ -20,7 +18,8 @@ class BienesControllerFactory implements FactoryInterface {
     {
        
         $bienesManager = $container->get(BienesManager::class);
+        $ivaManager = $container->get(IvaManager::class);
         // Instantiate the service and inject dependencies
-        return new BienesController($bienesManager);
+        return new BienesController($bienesManager, $ivaManager);
     }    
 }

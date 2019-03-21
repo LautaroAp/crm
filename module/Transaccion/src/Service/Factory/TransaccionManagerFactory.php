@@ -4,6 +4,7 @@ namespace Transaccion\Service\Factory;
 use Interop\Container\ContainerInterface;
 use Transaccion\Service\TransaccionManager;
 use Persona\Service\PersonaManager;
+use BienesTransacciones\Service\BienesTransaccionesManager;
 
 
 /**
@@ -18,7 +19,9 @@ class TransaccionManagerFactory
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');        
-        $personaManager = $container->get(PersonaManager::class);         
-        return new TransaccionManager($entityManager,$personaManager);
+        $personaManager = $container->get(PersonaManager::class);
+        $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);   
+
+        return new TransaccionManager($entityManager,$personaManager, $bienesTransaccionesManager);
     }
 }
