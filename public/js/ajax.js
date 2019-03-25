@@ -46,6 +46,8 @@ function actualizarDatosProvincias(id_pais)
     });
 }
 
+
+
 function actualizarDatosTipoEvento(tipo){
     if (tipo==-1)
         tipo="todos";
@@ -74,6 +76,18 @@ function seleccionarItem(e) {
         // Reseteo el item
         item = null;
     }
+}
+
+function mostrarTransacciones(id_persona){
+    $.post('/clientes/ajax/mostrarTransacciones/' + id_persona, function (data) {
+        $('#eventos').html(data);
+    });
+}
+
+function mostrarAccionesComerciales(id_persona){
+    $.post('/clientes/ajax/mostrarAccionesComerciales/' + id_persona, function (data) {
+        $('#eventos').html(data);
+    });
 }
 
 // $(function(){

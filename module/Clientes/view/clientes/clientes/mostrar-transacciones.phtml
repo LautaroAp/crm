@@ -1,0 +1,45 @@
+<script>
+$(document).ready(function() {
+    $('#tabla_eventos').DataTable({
+        "order": [0, 'desc'],
+
+        "language": {
+            "url": "/json/spanish.json"
+        }
+    });
+});
+</script>
+
+<table id="tabla_eventos" class="display">
+    <thead>
+        <tr>
+            <th class="" id="fila">Fecha</th>
+            <th class="">Responsable</th>
+            <th class="">Tipo</th>
+            <th class="detalle-width">Detalle</th>
+            <th class=""></th>
+        </tr>
+    </thead>
+    <tbody id="cuerpo_eventos" role="button" class="">
+        <?php foreach ($eventos as $evento) : ?>
+        <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)" class="vpEvento">
+            <td id="<?= $evento->getId() ?>">
+                <?php
+                if (!is_null($evento->getFecha_transaccion())) {
+                    echo ($evento->getFecha_transaccion()->format('Y/m/d'));
+                }
+                ?></td>
+            <td> <?php echo ($evento->getResponsable()->getUsuario()); ?> </td>
+            <td id="<?= $evento->getId() ?>" class="">
+                <?php
+                if (!is_null($evento->getTipo())) {
+                    echo (ucfirst($evento->getTipo()));
+                } else {
+                    echo ('No definido');
+                }
+                ?></td>
+            <td><?= $evento->getDescripcion() ?>
+            <td>
+                <?php endforeach; ?>
+    </tbody>
+</table>

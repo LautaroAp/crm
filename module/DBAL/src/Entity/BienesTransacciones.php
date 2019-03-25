@@ -19,10 +19,12 @@ class BienesTransacciones {
      */
     protected $id;
 
-    /**
+     /**
+     * Many BienesTransacciones have One Bien.
      * @ORM\ManyToOne(targetEntity="Bienes")
      * @ORM\JoinColumn(name="ID_BIEN", referencedColumnName="ID")
      */
+  
     private $bien;
 
     /**

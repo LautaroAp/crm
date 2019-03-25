@@ -28,14 +28,15 @@ class ClientesManager {
     protected $personaManager;
     protected $total;
     protected $tipo;
-    
+    protected $transaccionManager;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $usuarioManager, $personaManager) {
+    public function __construct($entityManager, $usuarioManager, $personaManager, $transaccionManager) {
         $this->entityManager = $entityManager;
         $this->usuarioManager = $usuarioManager;
         $this->personaManager = $personaManager;
+        $this->transaccionManager = $transaccionManager;
         $this->tipo = "CLIENTE";
 
     }
@@ -461,6 +462,10 @@ class ClientesManager {
              $cliente->setCondicion_iva(null);
         }
         $this->entityManager->flush();
+    }
+
+    public function getTransacciones($id_persona){
+        return $this->transaccionManager->getTransaccionesPersona($id_persona);
     }
    
 }

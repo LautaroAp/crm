@@ -5,6 +5,7 @@ use Interop\Container\ContainerInterface;
 use Transaccion\Service\TransaccionManager;
 use Persona\Service\PersonaManager;
 use BienesTransacciones\Service\BienesTransaccionesManager;
+use Iva\Service\IvaManager;
 
 
 /**
@@ -21,7 +22,7 @@ class TransaccionManagerFactory
         $entityManager = $container->get('doctrine.entitymanager.orm_default');        
         $personaManager = $container->get(PersonaManager::class);
         $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);   
-
-        return new TransaccionManager($entityManager,$personaManager, $bienesTransaccionesManager);
+        $ivaManager= $container->get(IvaManager::class);
+        return new TransaccionManager($entityManager,$personaManager, $bienesTransaccionesManager, $ivaManager);
     }
 }

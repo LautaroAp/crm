@@ -5,6 +5,7 @@ namespace Transaccion\Service;
 use DBAL\Entity\Transaccion;
 use DBAL\Entity\Categoria;
 use DBAL\Entity\Persona;
+use DBAL\Entity\Ejecutivo;
 use DBAL\Entity\BienesTransacciones;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
@@ -21,13 +22,16 @@ class TransaccionManager {
     protected $entityManager;
     protected $personaManager;
     protected $bienesTransaccionesManager;
+    protected $ivaManager;
+    
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $personaManager, $bienesTransaccionesManager) {
+    public function __construct($entityManager, $personaManager, $bienesTransaccionesManager, $ivaManager) {
         $this->entityManager = $entityManager;
         $this->personaManager= $personaManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
+        $this->ivaManager = $ivaManager;
     }
 
     public function getTransacciones() {
@@ -38,6 +42,10 @@ class TransaccionManager {
     public function getTransaccionId($id) {
         return $this->entityManager->getRepository(Transaccion::class)
                         ->find($id);
+    }
+
+    public function getTransaccionesPersona($id_persona){
+        return $this->entityManager->getRepository(Transaccion::class)->findBy(['persona'=>$id_persona]);
     }
 
     public function getTabla() {
@@ -69,9 +77,9 @@ class TransaccionManager {
         return $transaccion;
     }
 
-    private function getUltimoId(){
+    public function getTotalTransacciones(){
         $highest_id = $this->entityManager->createQueryBuilder()
-        ->select('MAX(T.id)')
+        ->select('COUNT(T.id)')
         ->from(Transaccion::Class, 'T')
         ->getQuery()
         ->getSingleScalarResult();
@@ -83,8 +91,20 @@ class TransaccionManager {
             $transaccion->setNumero($data['numero_transaccion']);
         }
         else{
-            $transaccion->setNumero($this->getUltimoId()+1);
+            $transaccion->setNumero($this->getTotalTransacciones()()+1);
         }
+        if (isset($data['nombre'])){
+            $transaccion->setNombre($data['nombre']);
+        }
+        else{
+            $transaccion->setNombre(ucfirst($data['tipo']));
+        }
+        $transaccion->setEstado("S"); //S ES ACTIVO COMO EN CLIENTES
+        $transaccion->setMonto(substr($data['total_general'], 2));
+        $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
+        ->findOneBy(['usuario' => $data['responsable']]);     
+        $transaccion->setResponsable($ejecutivo);
+
         if (isset($data['fecha_transaccion'])){
             $fecha_transaccion = \DateTime::createFromFormat('d/m/Y', $data['fecha_transaccion']); 
             $transaccion->setFecha_transaccion($fecha_transaccion);
@@ -95,14 +115,23 @@ class TransaccionManager {
             $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
             $transaccion->setFecha_vencimiento($fecha_vencimiento);
         }
+        if (isset($data['bonificacion_general'])){
+            $transaccion->setBonificacionGeneral($data['bonificacion_general']);
+        }
+        if (isset($data['iva_general'])){
+
+        }
         return $transaccion;
     }
 
     private function setItems($transaccion, $items){
         foreach($items as $item ){
             $item->setTransaccion($transaccion);
+            // $transaccion->addBienesTransacciones($item);
+            $bien= $item->getBien();
+            // $bien->addBienesTransacciones($item);
             $item= $this->bienesTransaccionesManager->add($item);
-            $transaccion->addBien_transaccion($item);
+
         }
     }
     /**
@@ -120,5 +149,6 @@ class TransaccionManager {
         $this->entityManager->remove($transaccion);
         $this->entityManager->flush();
     }
+
 
 }

@@ -24,13 +24,14 @@ class PedidoManager extends TransaccionManager{
     protected $monedaManager;
     protected $personaManager;
     protected $bienesTransaccionManager;
-
+    protected $ivaManager;
     private $tipo;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $monedaManager, $personaManager, $bienesTransaccionManager) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager);
+    public function __construct($entityManager, $monedaManager, $personaManager, $bienesTransaccionManager,
+    $ivaManager) {
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager);
         $this->entityManager = $entityManager;
         $this->monedaManager = $monedaManager;
         $this->tipo = "PEDIDO";
@@ -96,6 +97,7 @@ class PedidoManager extends TransaccionManager{
         if (isset($data['lugar_entrega'])){
             $pedido->setLugar_entrega($data['lugar_entrega']);
         }
+
        return $pedido;
     }
 
@@ -110,10 +112,16 @@ class PedidoManager extends TransaccionManager{
         return true;
     }
 
+    public function getTotalPedidos(){
+        $pedidos = $this->getPedidos();
+        return COUNT($pedidos);
+    }
+
     public function remove($pedido) {
         parent::remove($pedido->getTransaccion());
         $this->entityManager->remove($pedido);
         $this->entityManager->flush();
     }
+
 
 }

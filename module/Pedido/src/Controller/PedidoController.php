@@ -19,13 +19,17 @@ class PedidoController extends TransaccionController{
      */
     protected $pedidoManager;
     private $monedaManager;
+    private $clientesManager;
+    private $proveedorManager;
     private $tipo;
 
-    public function __construct($pedidoManager, $monedaManager, $personaManager) {
+    public function __construct($pedidoManager, $monedaManager, $personaManager, $clientesManager, $proveedorManager) {
         parent::__construct($pedidoManager, $personaManager);
-
+        $this->clientesManager=$clientesManager;
+        $this->proveedorManager= $proveedorManager;
         $this->pedidoManager = $pedidoManager;
         $this->monedaManager= $monedaManager;
+        
 
     }
 
@@ -50,9 +54,15 @@ class PedidoController extends TransaccionController{
         }
         $json = substr($json, 0, -1);
         $json = '['.$json.']';
-     
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
+        $tipoPersona = null;
+        if($persona->getTipo()=="CLIENTE"){
+            $tipoPersona= $this->clientesManager->getClienteIdPersona($id_persona);
+        }
+        elseif ($persona->getTipo()=="PROVEEDOR"){
+            $tipoPersona= $this->proveedorManager->getProveedorIdPersona($id_persona);
+        }
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
@@ -60,10 +70,15 @@ class PedidoController extends TransaccionController{
             $this->pedidoManager->addPedido($data, $items);
             $this->redirect()->toRoute('home');
         }
+        $numTransacciones= $this->pedidoManager->getTotalTransacciones()+1;
+        $numPedido = $this->pedidoManager->getTotalPedidos()+1;
         $this->reiniciarParams();
         return new ViewModel([
             'items' => $items,
             'persona' => $persona,
+            'tipoPersona'=>$tipoPersona,
+            'numTransacciones'=>$numTransacciones,
+            'numPedido'=>$numPedido,
             'json' => $json,
         ]);
     }

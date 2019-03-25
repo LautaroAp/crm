@@ -116,8 +116,10 @@ if ($transaccion == "pedido") {
                             </div>
                             <div class="form-group col-md-3">
                                 <label>% IVA</label>
-                                <select class="form-control" name="iva" id="iva" onkeypress="return justNumbers(event);" onchange="calculaSubtotal()">
-                                    <?php foreach ($ivas as $iva) : ?>
+                                <select class="form-control" name="iva" id="iva" onkeypress="return justNumbers(event);" onclick="calculaSubtotal()">
+                                    <option value="" hidden="" selected>0.00</option> 
+                                    <?php foreach ($ivas as $iva) : ?> 
+
                                     <option value="<?php echo ($iva->getId()); ?>">
                                         <?php echo ($iva->getValor()) ?></option>
                                     <?php endforeach; ?>

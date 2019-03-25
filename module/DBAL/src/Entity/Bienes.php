@@ -48,6 +48,12 @@ class Bienes {
      */
     protected $precio;
 
+    /**
+     * 
+     * @ORM\OneToMany(targetEntity="\DBAL\Entity\BienesTransacciones", mappedBy="bien")
+     */
+    private $bienesTransacciones;
+
   
 
 
@@ -401,4 +407,13 @@ class Bienes {
 
         return  '{'.$output.'}' ;
     }
+    public function addBienesTransacciones($bienesTransacciones) {
+        $this->bienesTransacciones[] = $bienesTransacciones;
+    }
+
+    public function getBienesTransacciones() {
+        return $this->bienesTransacciones;
+    }
+
+
 }

@@ -7,6 +7,7 @@ use Moneda\Service\MonedaManager;
 use Transaccion\Service\TransaccionManager;
 use BienesTransacciones\Service\BienesTransaccionesManager;
 use Persona\Service\PersonaManager;
+use Iva\Service\IvaManager;
 
 /**
  * This is the factory class for PedidoManager service. The purpose of the factory
@@ -22,7 +23,8 @@ class PedidoManagerFactory
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $monedaManager = $container->get(MonedaManager::class);   
         $personaManager = $container->get(PersonaManager::class);
-        $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);   
-        return new PedidoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager);
+        $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);  
+        $ivaManager = $container->get(IvaManager::class); 
+        return new PedidoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager);
     }
 }

@@ -64,28 +64,34 @@ function calcularSubcampos(){
     var sumBonificacion = 0;
     var sumSubtotal=0;
     var sumIva=0;
-
+    var bonificacion_general=0;
     for(var i = 1; i < table.rows.length; i++)
     {
+        precio_unitario = table.rows[i].cells[3].innerHTML;
+        precio_unitario = parseFloat(precio_unitario.substring(2, precio_unitario.length));
         bonificacion = table.rows[i].cells[4].innerHTML;
         var bonificacion = bonificacion.substring(0, bonificacion.length-2);
-        sumBonificacion = sumBonificacion + parseFloat(bonificacion);
-        console.log(sumBonificacion);
+        sumBonificacion = sumBonificacion + parseFloat(bonificacion) * precio_unitario;
+        // console.log(sumBonificacion);
         
-        console.log(sumIva);
         iva = table.rows[i].cells[5].innerHTML;
         var iva = iva.substring(0, iva.length-2);
-        sumIva = sumIva + parseFloat(iva);
-        console.log(sumIva);
+        sumIva = sumIva + parseFloat(iva) * precio_unitario ;
+        // console.log(sumIva);
 
         subtotal = table.rows[i].cells[6].innerHTML;
         sumSubtotal = sumSubtotal + parseFloat(subtotal);
-        console.log(sumSubtotal);
+        // console.log(sumSubtotal);
 
     }
-    $("#bonificacion_total").val(formatPercent(parseFloat(sumBonificacion)));
-    $("#iva_total").val(formatPercent(parseFloat(sumIva)));
-    $("#total_general").val(formatMoney(sumSubtotal));
+
+    bonificacion_general = $("#bonificacion_general").val();
+    total_general = sumSubtotal - (sumSubtotal* bonificacion_general/100);
+    
+    $("#subtotal_general").val(formatMoney(parseFloat(sumSubtotal)));
+    $("#bonificacion_total").val(formatMoney(parseFloat(sumBonificacion)));
+    $("#iva_total").val(formatMoney(parseFloat(sumIva)));
+    $("#total_general").val(formatMoney(total_general));
 
  
 

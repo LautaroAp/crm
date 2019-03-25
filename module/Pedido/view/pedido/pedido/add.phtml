@@ -20,6 +20,7 @@
 <?php
 $date = date('d-m-Y');
 $url = "/clientes/listado/ficha/".$persona->getId();
+$responsable = $this->identity();
 
 ?>
 <!-- Document -->
@@ -61,12 +62,13 @@ $url = "/clientes/listado/ficha/".$persona->getId();
                         </div>
                         <div class="form-group col-md-4">
                             <label>Cliente</label>
-                            <input type="text" class="form-control" name="persona" id="persona" value="*******************" readonly>
+                            <input type="text" class="form-control" name="persona" id="persona" value="<?= $persona->getNombre() ?>" readonly>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Razón Social</label>
                             <div class="form-inline">
-                                <input type="text" class="form-control" name="persona" id="persona" value="********************" style="width: 60%; min-width: 300px;" readonly>
+                                <input type="text" class="form-control" name="razon_social" id="razon_social" 
+                                value="<?php if (!is_null($tipoPersona)){echo ($tipoPersona->getRazon_social());} ?>" style="width: 60%; min-width: 300px;" readonly>
                                 <button type="button" class="btn btn-default">Consumidor Final</button>
                             </div>
                         </div>
@@ -75,16 +77,23 @@ $url = "/clientes/listado/ficha/".$persona->getId();
                     <div class="row form-row">
                         <div class="form-group col-md-3">
                             <label>Número de Transacción</label>
-                            <input type="text" class="form-control" name="persona" id="persona" value="Nro ######" readonly
-                                style="max-width: 250px;">
+                            <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion" 
+                            value="<?= $numTransacciones ?>" readonly style="max-width: 250px;">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Número de Pedido</label>
+                            <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion" 
+                            value="<?= $numPedido ?>" style="max-width: 250px;">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Número de Presupuesto</label>
                             <div class="form-inline">
-                                <input type="text" class="form-control" name="persona" id="persona" value="Nro ######">
-                                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+                                <input type="text" class="form-control" name="numero_presupuesto" id="numero_presupuesto" value="" readonly>
+                                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search">
+                                </span> Buscar</button> 
                             </div>
                         </div>
+                        <input type="hidden" id="responsable" name="responsable" value=<?= $responsable ?> >
                     </div>
                 </div>
             </div>
@@ -118,12 +127,22 @@ $url = "/clientes/listado/ficha/".$persona->getId();
                     <!-- Totales -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Bonificación Total</label>
+                            <label>Bonificación Total ($)</label>
                             <input type="text" class="form-control" name="bonificacion_total" id="bonificacion_total" value=0 >
                         </div>
                         <div class="form-group col-md-3">
-                            <label>IVA Total</label>
+                            <label>IVA Total ($)</label>
                             <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Subtotal General</label>
+                            <input type="text" class="form-control" name="subtotal_general" id="subtotal_general" value=0 >
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <label>Bonificacion General (%)</label>
+                            <input type="text" class="form-control" name="bonificacion_general" id="bonificacion_general" value="0" >
                         </div>
                         <div class="form-group col-md-3">
                             <label>Total General</label>
@@ -183,8 +202,10 @@ $url = "/clientes/listado/ficha/".$persona->getId();
                     <!-- Entrega y Factura al Momento -->
                     <div class="row form-row">
                         <div class="form-check col-md-4">
-                            <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion" data-target="#collapseEntregaDomicilioFacturacion" aria-expanded="true" aria-controls="collapseEntregaDomicilioFacturacion" name="EntregaDomicilioFacturacion" id="EntregaDomicilioFacturacion">
-                            <label class="form-check-label" for="factura_momento">Entrega en Domicilio de Facturación</label>
+                            <input type="checkbox" value=""  id="EntregaDomicilioFacturacion" name="EntregaDomicilioFacturacion"
+                            data-toggle="collapse" data-parent="#accordion" data-target="#collapseEntregaDomicilioFacturacion"
+                            aria-expanded="true" aria-controls="collapseEntregaDomicilioFacturacion" >
+                            <label class="form-check-label" for="EntregaDomicilioFacturacion">Entrega en Domicilio de Facturación</label>
                         </div>
                         <div class="form-check col-md-4">
                             <input type="checkbox" class="form-check-input" name="entrega_momento" id="entrega_momento">

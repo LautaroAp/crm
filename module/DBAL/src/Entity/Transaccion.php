@@ -25,6 +25,17 @@ class Transaccion {
     protected $numero_transaccion;
 
     /**
+     * @ORM\Column(name="NOMBRE", nullable=true, type="string")
+     */
+    protected $nombre;
+
+    /**
+     * @ORM\Column(name="DETALLE", nullable=true, type="string")
+     */
+    protected $detalle;
+
+
+    /**
      * @ORM\Column(name="FECHA_CREACION", type="datetime")
      */
     protected $fecha_transaccion;
@@ -41,6 +52,13 @@ class Transaccion {
      */
     protected $persona;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Ejecutivo")
+     * @ORM\JoinColumn(name="ID_EJECUTIVO", referencedColumnName="ID_EJECUTIVO")
+     */
+    protected $responsable;
+
     /**
      * @ORM\Column(name="TIPO", nullable=true, type="string", length=255)
      */
@@ -48,10 +66,33 @@ class Transaccion {
 
     /**
      * 
-     * @ORM\OneToMany(targetEntity="\DBAL\Entity\BienesTransacciones", mappedBy="bien")
+     * @ORM\OneToMany(targetEntity="\DBAL\Entity\BienesTransacciones", mappedBy="transaccion")
      */
-    private $bienes_transacciones;
+    private $bienesTransacciones;
 
+
+    /**
+     * @ORM\Column(name="ESTADO", type="string")
+     */
+    protected $estado;
+
+    /**
+     * @ORM\Column(name="MONTO", nullable=true, type="decimal")
+     */
+    protected $monto;
+
+
+    /**
+     * @ORM\Column(name="BONIFICACION_GENERAL", nullable=true, type="decimal")
+     */
+    protected $bonificacionGeneral;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Iva")
+     * @ORM\JoinColumn(name="IVA_GENERAL", referencedColumnName="ID")
+     */
+    protected $ivaGeneral;
 
     /**
      * Get the value of id
@@ -178,24 +219,172 @@ class Transaccion {
     /**
      * Get the value of bienes_transacciones
      */ 
-    public function getBienes_transacciones()
+    public function getBienesTransacciones()
     {
         return $this->bienes_transacciones;
     }
 
+    public function addBienesTransacciones($bienesTransacciones) {
+        $this->bienesTransacciones[] = $bienesTransacciones;
+    }
+
+  
+
     /**
-     * Set the value of bienes_transacciones
+     * Get the value of nombre
+     */ 
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set the value of nombre
      *
      * @return  self
      */ 
-    public function setBienes_transacciones($bienes_transacciones)
+    public function setNombre($nombre)
     {
-        $this->bienes_transacciones = $bienes_transacciones;
+        $this->nombre = $nombre;
 
         return $this;
     }
 
-    public function addBien_transaccion($bien_transaccion){
-        $this->bienes_transacciones[] = $bien_transaccion;
+
+    /**
+     * Get the value of responsable
+     */ 
+    public function getResponsable()
+    {
+        return $this->responsable;
+    }
+
+    /**
+     * Set the value of responsable
+     *
+     * @return  self
+     */ 
+    public function setResponsable($responsable)
+    {
+        $this->responsable = $responsable;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of estado
+     */ 
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * Set the value of estado
+     *
+     * @return  self
+     */ 
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of monto
+     */ 
+    public function getMonto()
+    {
+        return $this->monto;
+    }
+
+    /**
+     * Set the value of monto
+     *
+     * @return  self
+     */ 
+    public function setMonto($monto)
+    {
+        $this->monto = $monto;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of detalle
+     */ 
+    public function getDetalle()
+    {
+        return $this->detalle;
+    }
+
+    /**
+     * Set the value of detalle
+     *
+     * @return  self
+     */ 
+    public function setDetalle($detalle)
+    {
+        $this->detalle = $detalle;
+
+        return $this;
+    }
+
+    public function getDescripcion(){
+        $descripcion = "";
+        if (!is_null($this->nombre)){
+            $descripcion .= $this->nombre;
+        }
+        if (!is_null($this->bienesTransacciones)){
+            $descripcion.= " por ". COUNT($this->bienesTransacciones) ." items ";
+        }
+        if (!is_null($this->monto)){
+            $descripcion.= " por un monto de $ ". $this->monto;
+        }
+        if (!is_null($this->detalle)){
+            $descripcion.= " en concepto de: ".$this->detalle;
+        }
+        return $descripcion;
+    }
+
+    /**
+     * Get the value of bonificacionGeneral
+     */ 
+    public function getBonificacionGeneral()
+    {
+        return $this->bonificacionGeneral;
+    }
+
+    /**
+     * Set the value of bonificacionGeneral
+     *
+     * @return  self
+     */ 
+    public function setBonificacionGeneral($bonificacionGeneral)
+    {
+        $this->bonificacionGeneral = $bonificacionGeneral;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of ivaGeneral
+     */ 
+    public function getIvaGeneral()
+    {
+        return $this->ivaGeneral;
+    }
+
+    /**
+     * Set the value of ivaGeneral
+     *
+     * @return  self
+     */ 
+    public function setIvaGeneral($ivaGeneral)
+    {
+        $this->ivaGeneral = $ivaGeneral;
+
+        return $this;
     }
 }

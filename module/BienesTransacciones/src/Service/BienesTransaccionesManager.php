@@ -70,8 +70,7 @@ class BienesTransaccionesManager {
     }
 
     public function add($bienTransaccion){
-        print_r($bienTransaccion->getJSON());
-        $this->entityManager->persist($bienTransaccion);
+        $this->entityManager->merge($bienTransaccion);
         $this->entityManager->flush();
         return $bienTransaccion;
     }

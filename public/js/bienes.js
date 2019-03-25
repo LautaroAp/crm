@@ -68,6 +68,8 @@ function selectItem(e,pos) {
         $("#cantidad").val(1);
         $("#bonificacion").val(0);
         $("#iva option:selected").html(items[pos]["Iva"]);
+        console.log("cambia el iva a ");
+        console.log(items[pos]["Iva"]);
         $("#subtotal").val(items[pos]["Precio"]);
         $("#idbien").val(items[pos]["Id"]);
         console.log(item);
