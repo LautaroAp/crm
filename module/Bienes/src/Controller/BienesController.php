@@ -29,6 +29,7 @@ class BienesController extends HuellaController
     }
 
     public function indexAction() {
+        
         $request = $this->getRequest();
        //SE OBTIENE EL TIPO DE BIEN LA RUTA POR SI SE LO LLAMA DE CLIENTE/PROVEEDOR
         $tipo= $this->params()->fromRoute('tipo');

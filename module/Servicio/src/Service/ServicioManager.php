@@ -86,7 +86,7 @@ class ServicioManager {
     public function removeServicio($servicio) {
         $bien = $servicio->getBien();
         $this->entityManager->remove($servicio); 
-        $this->bienesManager->removeBien($bien);
+        $this->bienesManager->remove($bien);
         $this->entityManager->flush();
     }
 

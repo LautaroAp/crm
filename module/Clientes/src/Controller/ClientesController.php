@@ -38,6 +38,7 @@ class ClientesController extends HuellaController
     }
 
     public function indexAction(){
+        $this->reiniciarParametros("TRANSACCIONES");
         $this->prepararBreadcrumbs("Listado", "/listado", "Clientes");
         $request = $this->getRequest();
         $tipo= $this->params()->fromRoute('tipo');
@@ -189,6 +190,7 @@ class ClientesController extends HuellaController
     }
 
     public function fichaAction(){
+        $this->reiniciarParametros("TRANSACCIONES");
         $id_persona = (int)$this->params()->fromRoute('id', -1);
         $persona = $this->personaManager->getPersona($id_persona);
         $limite = $this->getAnterior();

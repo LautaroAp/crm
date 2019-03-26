@@ -33,7 +33,7 @@ class IndexController extends HuellaController {
         return new ViewModel();
     }
 
-    private function reiniciarParametros(){
+    protected function reiniciarParametros($arreglo=null){
         $_SESSION['PARAMETROS_VENTA'] = array();
         $_SESION['EVENTO'] = array();
         $_SESSION['BIENES'] = array();

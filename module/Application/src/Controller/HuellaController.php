@@ -136,4 +136,8 @@ class HuellaController extends AbstractActionController
         }
         return $resultado;
     }
+
+    protected function reiniciarParametros($arreglo){
+        $_SESSION[$arreglo] = array();
+    }
 }
