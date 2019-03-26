@@ -1,13 +1,13 @@
 var items=[];
 function addItems(bienes) {
     items = bienes;
-    // console.log(items);
-    // var col = ["Nombre", "Descripcion", "Descuento", "Iva","Precio", "Subtotal"];
+    console.log(items);
     var col = ["Nombre", "Descripcion", "Precio", "Descuento", "Iva", "Subtotal"];
     //TABLE HEADER
     var table = document.createElement("table");
     table.setAttribute("class", "table table-hover");
     table.setAttribute("role","button");
+    table.setAttribute("id", "table_bienes");
     var tr = table.insertRow(-1);                   // TABLE ROW.
     for (var i = 0; i < col.length; i++) {
         var th = document.createElement("th");      // TABLE HEADER.

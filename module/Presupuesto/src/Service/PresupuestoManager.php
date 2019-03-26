@@ -4,13 +4,14 @@ namespace Presupuesto\Service;
 
 use DBAL\Entity\Moneda;
 use DBAL\Entity\Presupuesto;
-
+use DBAL\Entity\Persona;
+use DBAL\Entity\BienesTransacciones;
 use DBAL\Entity\Transaccion;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use Transaccion\Service\TransaccionManager;
 /**
- * Esta clase se encarga de obtener y modificar los datos de los pedidos 
+ * Esta clase se encarga de obtener y modificar los datos de los presupuestos 
  * 
  */
 class PresupuestoManager extends TransaccionManager{
@@ -21,20 +22,24 @@ class PresupuestoManager extends TransaccionManager{
      */
     protected $entityManager;
     protected $monedaManager;
-
+    protected $personaManager;
+    protected $bienesTransaccionManager;
+    protected $ivaManager;
     private $tipo;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $monedaManager) {
+    public function __construct($entityManager, $monedaManager, $personaManager, $bienesTransaccionManager,
+    $ivaManager) {
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager);
         $this->entityManager = $entityManager;
         $this->monedaManager = $monedaManager;
         $this->tipo = "PRESUPUESTO";
     }
 
     public function getPresupuestos() {
-        $pedidos = $this->entityManager->getRepository(Presupuesto::class)->findAll();
-        return $pedidos;
+        $presupuestos = $this->entityManager->getRepository(Presupuesto::class)->findAll();
+        return $presupuestos;
     }
 
     public function getPresupuestoId($id) {
@@ -54,9 +59,9 @@ class PresupuestoManager extends TransaccionManager{
     /**
      * This method adds a new presupuesto.
      */
-    public function addPresupuesto($data) {
+    public function addPresupuesto($data, $items) {
         //llamo a add de la transaccion, retorna una transaccion que se le setea al presupuesto
-        $transaccion = parent::add($data);
+        $transaccion = parent::add($data, $items);
         $presupuesto = new Presupuesto();
         $presupuesto=$this->setData($presupuesto, $data, $transaccion);
         $this->entityManager->persist($presupuesto);
@@ -66,10 +71,12 @@ class PresupuestoManager extends TransaccionManager{
 
     private function setData($presupuesto, $data, $transaccion){
         $presupuesto->setTransaccion($transaccion);
-        $presupuesto->setNumero($data['numero_pedido']);
+        if (isset($data['numero_presupuesto'])){
+            $presupuesto->setNumero($data['numero_presupuesto']);
+        }
         $moneda=null;
         if ($data['moneda']!= '-1'){
-            $moneda = $this->monedaManager->getMoneda($data['moneda']);
+            $moneda = $this->monedaManager->getMonedaId($data['moneda']); 
         }
         $presupuesto->setMoneda($moneda);
         return $presupuesto;
@@ -84,6 +91,11 @@ class PresupuestoManager extends TransaccionManager{
         // Apply changes to database.
         $this->entityManager->flush();
         return true;
+    }
+
+    public function getTotalPresupuestos(){
+        $presupuestos = $this->getPresupuestos();
+        return COUNT($presupuestos);
     }
 
     public function remove($presupuesto) {

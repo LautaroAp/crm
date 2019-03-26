@@ -21,8 +21,8 @@ return [
                 'options' => [
                     'route'    => '/presupuesto',
                     'defaults' => [
-                        'controller' => \Application\Controller\IndexController::class,
-                        'action' => 'gestionPresupuestos',
+                        'controller' => \Presupuesto\Controller\PresupuestoController::class,
+                        'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
@@ -42,7 +42,7 @@ return [
                     'agregar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/add[/:tipo[/:id]]',
+                            'route' => '/add[/:id]',
                             'defaults' => [
                                 'action' => 'add',
                             ],
@@ -54,6 +54,18 @@ return [
                             'route' => '/remove[/:id]',
                             'defaults' => [
                                 'action' => 'remove',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'addItem' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/item[/:id]',
+                            'defaults' => [
+                                'action' => 'addItem',
                             ],
                             'constraints' => [
                                 'id' => '[0-9]\d*',

@@ -5,7 +5,9 @@ use Interop\Container\ContainerInterface;
 use Presupuesto\Service\PresupuestoManager;
 use Moneda\Service\MonedaManager;
 use Transaccion\Service\TransaccionManager;
-
+use BienesTransacciones\Service\BienesTransaccionesManager;
+use Persona\Service\PersonaManager;
+use Iva\Service\IvaManager;
 
 /**
  * This is the factory class for PresupuestoManager service. The purpose of the factory
@@ -20,8 +22,11 @@ class PresupuestoManagerFactory
     {        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $monedaManager = $container->get(MonedaManager::class);   
-        $transaccionManager = $container->get(TransaccionManager::class);   
+        $personaManager = $container->get(PersonaManager::class);
+        $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);  
+        $ivaManager = $container->get(IvaManager::class); 
 
-        return new PresupuestoManager($entityManager, $monedaManager, $transaccionManager);
+        return new PresupuestoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, 
+        $ivaManager);
     }
 }

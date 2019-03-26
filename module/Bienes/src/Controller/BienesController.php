@@ -99,13 +99,13 @@ class BienesController extends HuellaController
         // print_r($iva); die(); // No aplica el IVA si se deja el que carga por defecto (hay que cambiarlo)
         $bienTransaccion->setIva($iva);
         $bienTransaccion->setSubtotal($parametros['subtotal']);
-        if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
-            $_SESSION['TRANSACCIONES']['PEDIDO'] = array();
+        if (!isset($_SESSION['TRANSACCIONES'][strtoupper($transaccion)])){
+            $_SESSION['TRANSACCIONES'][strtoupper($transaccion)] = array();
         }
-        array_push($_SESSION['TRANSACCIONES']['PEDIDO'], $bienTransaccion);
+        array_push($_SESSION['TRANSACCIONES'][strtoupper($transaccion)], $bienTransaccion);
         $ruta= $transaccion."/agregar";
         print_r("agrego a transacciones pedido el item ");
-        print_r(COUNT($_SESSION['TRANSACCIONES']['PEDIDO']));
+        print_r(COUNT($_SESSION['TRANSACCIONES'][strtoupper($transaccion)]));
         // die();
         return $this->redirect()->toRoute($ruta,['id'=>$id_persona]);
     }

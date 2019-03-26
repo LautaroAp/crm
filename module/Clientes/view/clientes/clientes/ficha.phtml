@@ -310,7 +310,8 @@ $id_persona = $persona->getId();
                         <div class="collapse" id="drop">
                             <ul class="list-inline padding-sm" style="margin-left: 20px;">
                                 <li>
-                                    <a href="#" class="transaccion-font" style="">
+                                <a href="<?= $this->url("presupuesto/agregar", ['id' => $persona->getId()]); ?>"
+                                 class="transaccion-font">
                                         <span class="glyphicon glyphicon-copy"></span>&nbsp; Presupuesto
                                     </a>
                                 </li>

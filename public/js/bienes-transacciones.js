@@ -5,7 +5,7 @@ function addItems(bienesTransacciones) {
     var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal"];
     //TABLE HEADER
     var table = document.createElement("table");
-    table.setAttribute("class", "table table-hover table-responsive");
+    table.setAttribute("class", "table table-hover");
     table.setAttribute("role","button");
     table.setAttribute("id", "table_bienes");
     var tr = table.insertRow(-1);                   // TABLE ROW.
@@ -22,8 +22,8 @@ function addItems(bienesTransacciones) {
         // tr.onclick= selectItem(item["id"]);
         tr.setAttribute("id", i);
         tr.setAttribute("class", "click");
-        // tr.setAttribute("onclick","selectItem(event,id)");
-        // console.log(item);
+        tr.setAttribute("onclick","selectItem(event,id)");
+        console.log(item);
         for (var j = 0; j < col.length; j++) {
             var tabCell = tr.insertCell(-1);
             tabCell.setAttribute("id", i);
@@ -108,9 +108,9 @@ function selectItem(e,pos) {
         if (item_ant){
             $('#' + item_ant).toggleClass('item-seleccion');
         }
-        
         // Guardo id de la fila seleccionada
         item = pos;
+        console.log(item);
         $("#item_precio").val(items[pos]["Precio"]);
         // $("#item_dto").val(items[pos]["Descuento"]);
         $("#cantidad").val(1);
@@ -130,7 +130,15 @@ function selectItem(e,pos) {
         $("#iva option:selected").html(0);
         $("#subtotal").val(0);
         $("#idbien").val(0);
-    }
-   
-   
+    }  
+}
+
+function removerBien(){
+    console.log("items ");
+    console.log(items);
+    alert();
+    items = items.splice(item,1);
+    console.log("despues de borrar");
+    console.log(items);
+    alert();;
 }

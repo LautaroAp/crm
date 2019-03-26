@@ -8,24 +8,25 @@ function justNumbers(e) {
 
 function calculaSubtotal() {
 
-    $precio = (parseFloat($('#item_precio').val()));
-    $cantidad = (parseFloat($('#cantidad').val()));
-    $descuento = (parseFloat($('#descuento').val()));
-    $iva = (parseFloat($("#iva option:selected").html()));
+    precio = (parseFloat($('#item_precio').val()));
+    cantidad = (parseFloat($('#cantidad').val()));
+    descuento = (parseFloat($('#descuento').val()));
+    iva = (parseFloat($("#iva option:selected").html()));
 
-    $precio_dto = ($precio - (($descuento * $precio) / 100));
-    $precio_iva = ($precio + (($iva * $precio) / 100));
-    $precio_dto_iva = ($precio_dto + (($iva * $precio_dto) / 100));
+    precio_dto = (precio - ((descuento * precio) / 100));
+    precio_iva = (precio + ((iva * precio) / 100));
+    precio_dto_iva = (precio_dto + ((iva * precio_dto) / 100));
 
-    $subtotal = ($precio_dto_iva * $cantidad).toFixed(2);
+    subtotal = (precio_dto_iva * cantidad).toFixed(2);
+
 
     // Setea subtotal
-    if ($precio) {
-        $("#subtotal").val($subtotal);
-    } else {
-        $("#subtotal").val("0");
+    if (subtotal){
+        $("#subtotal").val(subtotal);
     }
-    
+    else{
+        $("#subtotal").val(0);
+    }
 }
 
 

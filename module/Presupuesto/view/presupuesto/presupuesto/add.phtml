@@ -1,126 +1,191 @@
 <!-- scripts -->
-<script src="/js/servicio.js"></script>
+<script src="/js/bienes-transacciones.js"></script>
+<script src="/js/item.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#datetimepicker1').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+        $('#datetimepicker2').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+        $('#datetimepicker3').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+    });
+</script>
+<!-- php -->
+<?php
+$date = date('d-m-Y');
+$url = "/clientes/listado/ficha/".$persona->getId();
+$responsable = $this->identity();
+
+?>
+<!-- Document -->
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
-    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
-    style="margin:0px;">
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/productosservicios">Productos y Servicios</a></li>
-            <li class="breadcrumb-item"><a href="/productosservicios/servicios">Servicios</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Agregar Servicio</li>
+            <li class="breadcrumb-item"><a href="/clientes">Clientes</a></li>
+            <li class="breadcrumb-item"><a href="/clientes/listado">Listado</a></li>
+            <li class="breadcrumb-item"><a href="<?= $url ?>" >Ficha</a></li>
+
+            <li class="breadcrumb-item active" aria-current="page">Agregar Presupuesto</li>
         </ol>
-        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
-                    style="margin:0px;">
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
             <li class="pull-right"><a href="/productosservicios/servicios" id="volver">Volver</a></li>
         </ol>
     </nav>
 </div>
 <!-- Formulario -->
 <form method="post">
-<div class="container margen">
-    <!-- Datos del Servicio -->
-    <div class="row">
-        <div class="panel panel-default sombra-ficha">
-            <div class="panel-heading titulo-espaciado">
-                DATOS PARTICULARES DEL SERVICIO
-            </div>
-            <div class="panel-body">
-                <!-- 1ra fila -->
-                <div class="row form-row">
-                    <div class="form-group col-md-6">
-                        <label>Nombre</label>
-                        <input type="text" required="true" class="form-control" name="nombre" placeholder="Ingresar nombre">
+    <div class="container margen">
+        <!-- Datos de Presupuesto -->
+        <div class="row form-row">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading titulo-espaciado">
+                    PRESUPUESTO
+                </div>
+                <div class="panel-body">
+                    <!-- Fecha + Datos de Persona -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-2">
+                            <label>Fecha de Venta</label>
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input type='text' class="form-control" name="fecha_transaccion" value="<?= $date ?>" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Cliente</label>
+                            <input type="text" class="form-control" name="persona" id="persona" value="<?= $persona->getNombre() ?>" readonly>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Razón Social</label>
+                            <div class="form-inline">
+                                <input type="text" class="form-control" name="razon_social" id="razon_social" 
+                                value="<?php if (!is_null($tipoPersona)){echo ($tipoPersona->getRazon_social());} ?>" style="width: 60%; min-width: 300px;" readonly>
+                                <button type="button" class="btn btn-default">Consumidor Final</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label>Descripción</label>
-                        <input type="text" class="form-control" name="descripcion" placeholder="Ingresar descripcion">
+                    <!-- Datos de Transaccion -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <label>Número de Transacción</label>
+                            <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion" 
+                            value="<?= $numTransacciones ?>" readonly style="max-width: 250px;">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Número de Presupuesto</label>
+                            <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion" 
+                            value="<?= $numPresupuesto ?>" style="max-width: 250px;">
+                        </div>
+                        <input type="hidden" id="responsable" name="responsable" value=<?= $responsable ?> >
                     </div>
                 </div>
-                <!-- 2da fila -->
-                <div class="row form-row">
-                    <div class="form-group col-md-6">
-                    <label>Categoría</label>
-                        <select class="form-control" id="categoria" name="categoria">
-                            <option value="" hidden="">Seleccionar Categoría</option>
-                            <option value="-1">NO DEFINIDO</option>
-                            <?php foreach ($categorias as $categoria) : ?>
+            </div>
+        </div>
+         <!-- Tabla de Items -->
+         <div class="row form-row">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading titulo-espaciado">
+                    LISTADO DE ITEMS
+                </div>
+                <div class="panel panel-body" id="contenido_bienes">
+                    <script>
+                        var obj = <?php echo ($json); ?>;
+                        addItems(obj);
+                    </script>
+                    <br>
+                    <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'presupuesto','id'=> $persona->getId()]); ?>" type="button">
+                        <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Item</span>
+                    </a>    
+                </div>
+            </div>
+        </div>
+
+        <!-- Datos -->
+        <div class="row form-row">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading titulo-espaciado">
+                    DATOS ECONÓMICOS
+                </div>
+                <div class="panel-body">
+                    <!-- Totales -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <label>Descuentos ($)</label>
+                            <input type="text" class="form-control" name="bonificacion_total" id="bonificacion_total" value=0 >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>IVA Total ($)</label>
+                            <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Subtotal General</label>
+                            <input type="text" class="form-control" name="subtotal_general" id="subtotal_general" value=0 >
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <label>Bonificacion General (%)</label>
+                            <input type="text" class="form-control" name="bonificacion_general" id="bonificacion_general" value="0"
+                            onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" >
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Total General</label>
+                            <input type="text" class="form-control" name="total_general" id="total_general" value=0 >
+                        </div>
+                    </div>
+                    <script>
+                        calcularSubcampos();
+                     </script>
+                    <!-- Forma de Pago + Fecha -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <label>Forma de Pago</label>
+                            <select class="form-control" id="forma_pago" name="forma_pago">
+                                <option value="" hidden="">Seleccionar Forma de Pago</option>
+                                <option value="-1">NO DEFINIDO</option>
+                                <?php foreach ($categorias as $categoria) : ?>
                                 <option value="<?= $categoria->getId(); ?>">
                                     <?= $categoria->getNombre(); ?>
                                 </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Proveedor</label>
-                        <select class="form-control" id="proveedor" name="proveedor" required>
-                            <option value="" hidden="">Seleccionar Proveedor</option>
-                            <option value="-1">NO DEFINIDO</option>
-                            <?php foreach ($proveedores as $proveedor) : ?>
-                                <option value="<?= $proveedor->getId(); ?>">
-                                    <?= $proveedor->getPersona()->getNombre(); ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Moneda</label>
+                            <select class="form-control" id="moneda" name="moneda">
+                                <option value="" hidden="">Seleccionar Moneda</option>
+                                <option value="-1">NO DEFINIDO</option>
+                                <?php foreach ($categorias as $categoria) : ?>
+                                <option value="<?= $categoria->getId(); ?>">
+                                    <?= $categoria->getNombre(); ?>
                                 </option>
-                            <?php endforeach; ?>
-                        </select>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Fecha de Vencimiento</label>
+                            <div class='input-group date' id='datetimepicker2'>
+                                <input type='text' class="form-control" name="fecha_transaccion" value="<?= $date ?>" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>   
+        </div>
     </div>
-    <!-- Fin Datos del Servicio -->
-
-    <!-- Precios del Servicio -->
-    <div class="row">
-        <div class="panel panel-default sombra-ficha">
-            <div class="panel-heading titulo-espaciado">
-                DATOS ECONÓMICOS DEL SERVICIO
-            </div>
-            <div class="panel-body">
-                <!-- 1ra fila -->
-                <div class="row form-row">
-                    <div class="form-group col-md-4">
-                        <label>Precio</label>
-                        <input type="text" class="form-control" name="precio_venta" id="precio_venta" 
-                            value=0 onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label>% Descuento</label>
-                        <input type="text" class="form-control" name="descuento" id="descuento" value=0
-                            onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
-                    </div>
-                    <div class="form-group col-md-2">
-                    <label>% IVA</label>
-                        <select class="form-control" name="iva" id="iva"
-                        onkeypress="return justNumbers(event);" onchange="calcularPrecios()">
-                        <?php foreach ($ivas as $iva) : ?>
-                            <option value="<?php  echo  ($iva->getId()); ?>">
-                            <?php echo ($iva->getValor()) ?></option>
-                        <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Total IVA $</label>
-                        <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
-                    </div>
-                </div>
-                <!-- 2da fila -->
-                <div class="row form-row">
-                    <div class="form-group col-md-4">
-                        <label>Precio Público con Dto.</label>
-                        <input type="text" class="form-control" name="precio_publico_dto" id="precio_publico_dto" value=0 readonly>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Precio Público + IVA</label>
-                        <input type="text" class="form-control" name="precio_publico_iva" id="precio_publico_iva" value=0 readonly>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Precio Público +IVA con Dto.</label>
-                        <input type="text" class="form-control" name="precio_publico_iva_dto" id="precio_publico_iva_dto" value=0 readonly>
-                    </div>
-                </div>
-            </div>
-        </div>   
-    </div>
-    <!-- Fin Precios del Servicio -->
 
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
@@ -128,10 +193,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Agregar servicio</h4>
+                    <h4 class="modal-title">Agregar presupuesto</h4>
                 </div>
                 <div class="modal-body">
-                    <p>¿Está seguro que desea agregar este servicio?</p>
+                    <p>¿Está seguro que desea agregar este presupuesto?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-default">Aceptar</button>
@@ -140,16 +205,12 @@
             </div>
         </div>
     </div>
-    <!-- Fin Modal -->
-</div>
-
-<!-- Fin: Cliente Nuevo -->
 
 </form>
 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
-    <div class="row img-centrar"> 
+    <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <a data-toggle="modal" data-target="#myModal">
@@ -159,17 +220,16 @@
             <div class="ficha-cliente-label">
                 <label>Guardar</label>
             </div>
-        </div>                   
+        </div>
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $volver ?>">
-                <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
-                class="img-rounded img-responsive img-texto-derecha zoom"></a>
+                <a href="<?= $url ?>">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha zoom"></a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Volver</label>
             </div>
         </div>
-    </div>       
+    </div>
 </div>
-<!-- Fin: Panel Botones -->
+<!-- Fin: Panel Botones --> 

@@ -62,7 +62,7 @@ class PedidoManager extends TransaccionManager{
     public function addPedido($data, $items) {
         //llamo a add de la transaccion, retorna una transaccion que se le setea al pedido
         $transaccion = parent::add($data,$items);
-  
+        
         $pedido = new Pedido();
         $pedido=$this->setData($pedido, $data, $transaccion);
 

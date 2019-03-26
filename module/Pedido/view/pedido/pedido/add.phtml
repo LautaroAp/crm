@@ -99,6 +99,9 @@ $responsable = $this->identity();
                 </div>
             </div>
         </div>
+
+
+
          <!-- Tabla de Items -->
          <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
@@ -111,9 +114,15 @@ $responsable = $this->identity();
                         addItems(obj);
                     </script>
                     <br>
+
+
                     <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'pedido','id'=> $persona->getId()]); ?>" type="button">
                         <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Item</span>
-                    </a>    
+                    </a>   
+                    
+                    <a href="" type="button" onclick="removerBien()">
+                        <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Remover</span>
+                    </a>  
                 </div>
             </div>
         </div>
