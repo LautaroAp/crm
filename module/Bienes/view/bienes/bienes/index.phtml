@@ -19,13 +19,13 @@
 </script>
 <!-- php -->
 <?php
-$date = date('d-m-Y');
-$url = "";
-$label = "";
-if ($transaccion == "pedido") {
-    $url = "/pedido/add/" . $id_persona;
-    $label = "Agregar Pedido";
-}
+    $date = date('d-m-Y');
+    $url = "";
+    $label = "";
+    if ($transaccion == "pedido") {
+        $url = "/pedido/add/" . $id_persona;
+        $label = "Agregar Pedido";
+    }
 ?>
 
 <!-- Document -->
@@ -110,16 +110,14 @@ if ($transaccion == "pedido") {
                                     onkeypress="return justNumbers(event);" onclick="calculaSubtotal()" onkeyup="calculaSubtotal()">
                             </div>
                             <div class="form-group col-md-3">
-                                <label>% Bonificación</label>
-                                <input type="text" class="form-control" name="bonificacion" id="bonificacion" 
+                                <label>% Descuento</label>
+                                <input type="text" class="form-control" name="descuento" id="descuento" 
                                     onkeypress="return justNumbers(event);" onkeyup="calculaSubtotal()">
                             </div>
                             <div class="form-group col-md-3">
                                 <label>% IVA</label>
-                                <select class="form-control" name="iva" id="iva" onkeypress="return justNumbers(event);" onclick="calculaSubtotal()">
-                                    <option value="" hidden="" selected>0.00</option> 
+                                <select class="form-control" name="iva" id="iva" onkeypress="return justNumbers(event);" onchange="calculaSubtotal()">
                                     <?php foreach ($ivas as $iva) : ?> 
-
                                     <option value="<?php echo ($iva->getId()); ?>">
                                         <?php echo ($iva->getValor()) ?></option>
                                     <?php endforeach; ?>
@@ -136,7 +134,6 @@ if ($transaccion == "pedido") {
                     </div>
                 </div>
             </div>
-
     </div>
 
     <!-- Modal -->
@@ -157,8 +154,6 @@ if ($transaccion == "pedido") {
             </div>
         </div>
     </div>
-
-
 
     <!-- Inicio: Panel Botones -->
     <div class="container margen">

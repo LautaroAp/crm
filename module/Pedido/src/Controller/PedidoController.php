@@ -45,7 +45,6 @@ class PedidoController extends TransaccionController{
     public function addAction() {
         $items = array();
         if (isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
-            
             $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
         }
         $json = "";
@@ -54,6 +53,7 @@ class PedidoController extends TransaccionController{
         }
         $json = substr($json, 0, -1);
         $json = '['.$json.']';
+        print_r($json);
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         $tipoPersona = null;

@@ -5,13 +5,16 @@ use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Presupuesto\Controller\PresupuestoController;
 use Presupuesto\Service\PresupuestoManager;
-use Moneda\Service\MonedaManager;
 use Persona\Service\PersonaManager;
+use Moneda\Service\MonedaManager;
+use Proveedor\Service\ProveedorManager;
+use Clientes\Service\ClientesManager;
+use Iva\Service\IvaManager;
 
 // use Transaccion\Service\TransaccionManager;
 
 /**
- * Description of PresupuestoControllerFactory
+ * Description of PedidoControllerFactory
  *
  * @author SoftHuella
  */
@@ -22,13 +25,16 @@ class PresupuestoControllerFactory implements FactoryInterface {
     {
        
         $pedidoManager = $container->get(PresupuestoManager::class);
-        $monedaManager = $container->get(MonedaManager::class);  
+        $monedaManager = $container->get(MonedaManager::class);    
         $personaManager = $container->get(PersonaManager::class);            
-          
+        $clientesManager = $container->get(ClientesManager::class);            
+        $proveedorManager = $container->get(ProveedorManager::class);            
+        $ivaManager = $container->get(IvaManager::class);
         // $transaccionManager = $container->get(TransaccionManager::class);            
 
 
         // Instantiate the service and inject dependencies
-        return new PresupuestoController($pedidoManager, $monedaManager);
+        return new PresupuestoController($pedidoManager, $monedaManager, $personaManager, $clientesManager, 
+        $proveedorManager, $ivaManager);
     }    
 }

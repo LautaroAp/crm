@@ -2,7 +2,7 @@ var items=[];
 function addItems(bienesTransacciones) {
     items = bienesTransacciones;
     console.log(items);
-    var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Bonificacion","IVA", "Subtotal"];
+    var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal"];
     //TABLE HEADER
     var table = document.createElement("table");
     table.setAttribute("class", "table table-hover");
@@ -37,7 +37,7 @@ function addItems(bienesTransacciones) {
             else{
                 value = item[col[j]];
             }
-            if ((col[j] == "Bonificacion") || (col[j]=="IVA")){value = formatPercent(value);}
+            if ((col[j] == "Descuento") || (col[j]=="IVA")){value = formatPercent(value);}
             if (col[j] == "Precio"){value = formatMoney(value);}
 
             tabCell.innerHTML = value;
@@ -69,9 +69,9 @@ function calcularSubcampos(){
     {
         precio_unitario = table.rows[i].cells[3].innerHTML;
         precio_unitario = parseFloat(precio_unitario.substring(2, precio_unitario.length));
-        bonificacion = table.rows[i].cells[4].innerHTML;
-        var bonificacion = bonificacion.substring(0, bonificacion.length-2);
-        sumBonificacion = sumBonificacion + parseFloat(bonificacion) * precio_unitario;
+        descuento = table.rows[i].cells[4].innerHTML;
+        var descuento = descuento.substring(0, descuento.length-2);
+        sumBonificacion = sumBonificacion + parseFloat(descuento) * precio_unitario;
         // console.log(sumBonificacion);
         
         iva = table.rows[i].cells[5].innerHTML;
@@ -101,8 +101,7 @@ var item = null;
 var item_ant=null;
 // obtengo ID de eventos
 function selectItem(e,pos) {
-    console.log(items);
-
+    // console.log(items);
     $('#' + pos).toggleClass('item-seleccion');
     if ($('#' + pos).hasClass('item-seleccion')) {
         item_ant=item;
@@ -113,21 +112,21 @@ function selectItem(e,pos) {
         // Guardo id de la fila seleccionada
         item = pos;
         $("#item_precio").val(items[pos]["Precio"]);
-        $("#item_dto").val(items[pos]["Descuento"]);
+        // $("#item_dto").val(items[pos]["Descuento"]);
         $("#cantidad").val(1);
-        $("#bonificacion").val(0);
+        $("#descuento").val(items[pos]["Descuento"]);
         $("#iva option:selected").html(items[pos]["Iva"]);
         $("#subtotal").val(items[pos]["Precio"]);
         $("#idbien").val(items[pos]["Id"]);
-        console.log(item);
+        // console.log(item);
         calculaSubtotal();
     } else {
         // Reseteo el item
         item = null;
         $("#item_precio").val(0);
-        $("#item_dto").val(0);
+        // $("#item_dto").val(0);
         $("#cantidad").val(0);
-        $("#bonificacion").val(0);
+        $("#descuento").val(0);
         $("#iva option:selected").html(0);
         $("#subtotal").val(0);
         $("#idbien").val(0);

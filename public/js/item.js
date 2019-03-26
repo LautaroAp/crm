@@ -9,22 +9,15 @@ function justNumbers(e) {
 function calculaSubtotal() {
 
     $precio = (parseFloat($('#item_precio').val()));
-    console.log("precio de ");
-    console.log($precio);
-    $dto = (parseFloat($('#item_dto').val()));
-
     $cantidad = (parseFloat($('#cantidad').val()));
-    $bonificacion = (parseFloat($('#bonificacion').val()));
+    $descuento = (parseFloat($('#descuento').val()));
     $iva = (parseFloat($("#iva option:selected").html()));
 
-    $precio_dto = ($precio - (($dto * $precio) / 100));
-    $precio_bonif = ($precio_dto - (($bonificacion * $precio) / 100));
-    // $precio_bonif = ($precio - (($bonificacion * $precio) / 100));
-
+    $precio_dto = ($precio - (($descuento * $precio) / 100));
     $precio_iva = ($precio + (($iva * $precio) / 100));
-    $precio_bonif_iva = ($precio_bonif + (($iva * $precio_bonif) / 100));
+    $precio_dto_iva = ($precio_dto + (($iva * $precio_dto) / 100));
 
-    $subtotal = ($precio_bonif_iva * $cantidad).toFixed(2);
+    $subtotal = ($precio_dto_iva * $cantidad).toFixed(2);
 
     // Setea subtotal
     if ($precio) {

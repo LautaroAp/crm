@@ -17,18 +17,18 @@ class PresupuestoController extends TransaccionController{
      * Presupuesto manager.
      * @var User\Service\PresupuestoManager 
      */
-    protected $pedidoManager;
+    protected $presupuestoManager;
     private $monedaManager;
     private $clientesManager;
     private $proveedorManager;
     private $tipo;
 
 
-    public function __construct($pedidoManager, $monedaManager, $personaManager, $clientesManager, $proveedorManager) {
-        parent::__construct($pedidoManager, $personaManager);
+    public function __construct($presupuestoManager, $monedaManager, $personaManager, $clientesManager, $proveedorManager) {
+        parent::__construct($presupuestoManager, $personaManager);
         $this->clientesManager=$clientesManager;
         $this->proveedorManager= $proveedorManager;
-        $this->pedidoManager = $pedidoManager;
+        $this->presupuestoManager = $presupuestoManager;
         $this->monedaManager= $monedaManager;
         
     }
@@ -43,9 +43,9 @@ class PresupuestoController extends TransaccionController{
 
     public function addAction() {
         $items = array();
-        if (isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
+        if (isset($_SESSION['TRANSACCIONES']['presupuesto'])){
             
-            $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
+            $items = $_SESSION['TRANSACCIONES']['presupuesto'];
         }
         $json = "";
         foreach ($items as $item){
@@ -66,25 +66,25 @@ class PresupuestoController extends TransaccionController{
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
-            $this->pedidoManager->addPedido($data, $items);
+            $this->presupuestoManager->addPresupuesto($data, $items);
             $this->redirect()->toRoute('home');
         }
-        $numTransacciones= $this->pedidoManager->getTotalTransacciones()+1;
-        $numPedido = $this->pedidoManager->getTotalPedidos()+1;
+        $numTransacciones= $this->presupuestoManager->getTotalTransacciones()+1;
+        $numpresupuesto = $this->presupuestoManager->getTotalPresupuestos()+1;
         $this->reiniciarParams();
         return new ViewModel([
             'items' => $items,
             'persona' => $persona,
             'tipoPersona'=>$tipoPersona,
             'numTransacciones'=>$numTransacciones,
-            'numPedido'=>$numPedido,
+            'numPresupuesto'=>$numPresupuesto,
             'json' => $json,
         ]);
     }
 
     public function editAction() {
         $id = $this->params()->fromRoute('id', -1);
-        $presupuesto = $this->pedidoManager->getPresupuestoId($id);
+        $presupuesto = $this->presupuestoManager->getPresupuestoId($id);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();

@@ -1,8 +1,9 @@
 var items=[];
 function addItems(bienes) {
     items = bienes;
-    console.log(items);
-    var col = ["Nombre", "Descripcion", "Descuento", "Iva","Precio"];
+    // console.log(items);
+    // var col = ["Nombre", "Descripcion", "Descuento", "Iva","Precio", "Subtotal"];
+    var col = ["Nombre", "Descripcion", "Precio", "Descuento", "Iva", "Subtotal"];
     //TABLE HEADER
     var table = document.createElement("table");
     table.setAttribute("class", "table table-hover");
@@ -29,7 +30,9 @@ function addItems(bienes) {
             tabCell.setAttribute("class", "click");
             value = item[col[j]];
             
-            if ((col[j] == "Descuento") || (col[j] == "Iva")){value = formatPercent(value);}
+            // if ((col[j] == "Descuento") || (col[j] == "Iva")){value = formatPercent(value);}
+            if (col[j] == "Descuento"){value = formatPercent(value);}
+
             if (col[j] == "Precio"){value = formatMoney(value);}
             
             tabCell.innerHTML = value;
@@ -52,27 +55,25 @@ var item = null;
 var item_ant=null;
 // obtengo ID de eventos
 function selectItem(e,pos) {
-    console.log(items);
-
+    // console.log(items);
     $('#' + pos).toggleClass('item-seleccion');
     if ($('#' + pos).hasClass('item-seleccion')) {
         item_ant=item;
         if (item_ant){
             $('#' + item_ant).toggleClass('item-seleccion');
         }
-        
         // Guardo id de la fila seleccionada
         item = pos;
         $("#item_precio").val(items[pos]["Precio"]);
-        $("#item_dto").val(items[pos]["Descuento"]);
         $("#cantidad").val(1);
-        $("#bonificacion").val(0);
-        $("#iva option:selected").html(items[pos]["Iva"]);
-        console.log("cambia el iva a ");
-        console.log(items[pos]["Iva"]);
+        $("#descuento").val(items[pos]["Descuento"]);
+        // $("#iva option:selected").html(items[pos]["Iva"]); // Hacer funcion que recorra los ivas y marque con SELECTED = TRUE el que tiene que ser
+        seleccionaIva(items[pos]["Iva"]);
+        // console.log("cambia el iva a ");
+        // console.log(items[pos]["Iva"]);
         $("#subtotal").val(items[pos]["Precio"]);
         $("#idbien").val(items[pos]["Id"]);
-        console.log(item);
+        // console.log(item);
         calculaSubtotal();
     } else {
         // Reseteo el item
@@ -80,11 +81,26 @@ function selectItem(e,pos) {
         $("#item_precio").val(0);
         $("#item_dto").val(0);
         $("#cantidad").val(0);
-        $("#bonificacion").val(0);
-        $("#iva option:selected").html(0);
+        $("#descuento").val(0);
+        // $("#iva option:selected").html(0);
+        seleccionaIva('0.00');
         $("#subtotal").val(0);
         $("#idbien").val(0);
     }
    
-   
+}
+
+// TODA UNA TARDE TRATANDO DE HACER ESTA PUTA FUNCION!!!! FALTA VERIFICAR
+function seleccionaIva(iva_select){
+    // console.log(iva_select);
+    tabla_ivas = $("#iva option");
+    for (var i = 0; i < tabla_ivas.length; i++) {
+        var opt = tabla_ivas[i];
+        if(opt.innerHTML.trim() == iva_select.trim()){
+            opt.setAttribute("selected", "true");
+        } else {
+            opt.removeAttribute("selected");
+        }
+        // console.log("value = " + opt.value + " text = " + opt.innerHTML.trim());
+    }
 }

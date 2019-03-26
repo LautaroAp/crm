@@ -41,7 +41,7 @@ class BienesTransacciones {
     /**
      * @ORM\Column(name="BONIFICACION", nullable=true, type="decimal")
      */
-    protected $bonificacion;
+    protected $descuento;
 
     /**
      * @ORM\ManyToOne(targetEntity="Iva" , cascade={"persist"})
@@ -138,9 +138,9 @@ class BienesTransacciones {
     /**
      * Get the value of bonificacion
      */ 
-    public function getBonificacion()
+    public function getDescuento()
     {
-        return $this->bonificacion;
+        return $this->descuento;
     }
 
     /**
@@ -148,9 +148,9 @@ class BienesTransacciones {
      *
      * @return  self
      */ 
-    public function setBonificacion($bonificacion)
+    public function setDescuento($descuento)
     {
-        $this->bonificacion = $bonificacion;
+        $this->descuento = $descuento;
 
         return $this;
     }
@@ -205,7 +205,7 @@ class BienesTransacciones {
             $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
         }
         $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
-        $output .= '"Bonificacion": "' . $this->getBonificacion() .'", ';
+        $output .= '"Descuento": "' . $this->getDescuento() .'", ';
         $output .= '"Subtotal": "' . $this->getSubtotal() .'" ';
       
         return  '{'.$output.'}' ;
