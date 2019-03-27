@@ -5,9 +5,9 @@ function addItems(bienes) {
     var col = ["Nombre", "Descripcion", "Precio", "Descuento", "Iva", "Subtotal"];
     //TABLE HEADER
     var table = document.createElement("table");
+    table.setAttribute("id", "table_bienes");
     table.setAttribute("class", "table table-hover");
     table.setAttribute("role","button");
-    table.setAttribute("id", "table_bienes");
     var tr = table.insertRow(-1);                   // TABLE ROW.
     for (var i = 0; i < col.length; i++) {
         var th = document.createElement("th");      // TABLE HEADER.
@@ -75,7 +75,7 @@ function selectItem(e,pos) {
         item = null;
         $("#item_precio").val('0.00');
         $("#item_dto").val('0.00');
-        $("#cantidad").val('0');
+        $("#cantidad").val("");
         $("#descuento").val('0.00');
         seleccionaIva('0.00');
         $("#subtotal").val('0.00');

@@ -32,6 +32,7 @@ else{
     $url = "/empresa";
     $label = "Empresa";
 }
+
 ?>
 
 <div class="container padding-cero">
@@ -77,6 +78,7 @@ else{
                                 <option value="PROVEEDOR">Proveedor</option>
                                 </select>
                             </div>
+                            <!-- Filtro Tipo -->
                             <div class="form-group col-md-3" >
                                 <div id="div_tipo_eve">
                                 <select class="form-control" id="ops_tipos" name="tipo" required="">
@@ -100,17 +102,18 @@ else{
                                 </select>
                                 </div>
                             </div>
+                            <!-- Filtro Mes -->
                             <div class="form-group col-sm-2">
                                 <input type="number" class="form-control" name="ventas_m" min="1" max="12" placeholder="Mes" 
                                 value="<?php if (isset($parametros['ventas_m'])) {
                                         echo ($parametros['ventas_m']);
                                     } ?>">                        
                             </div>
+                            <!-- Filtro Año -->
                             <div class="form-group col-sm-2">
-                                <input type="number" class="form-control" name="ventas_y" min="2000" max="<?php echo date("Y"); ?>" 
-                                placeholder="Año" value="<?php if (isset($parametros['ventas_m'])) {
-                                                                    echo ($parametros['ventas_y']);
-                                                                } ?>">                        
+                                <input type="number" class="form-control" name="ventas_y" min="2000" max="<?php echo date("Y"); ?>" placeholder="Año" 
+                                    value="<?php if (isset($parametros['ventas_y'])) {echo ($parametros['ventas_y']);}
+                                                else {echo (date("Y"));} ?>" required>                        
                             </div>
                             <div class="form-group col-sm-1">
                                 <button type="submit" class="btn btn-default"> 
@@ -161,25 +164,26 @@ else{
                                         } 
                                     ?>
                                 </td>
-                                <td><?php echo ($evento->getUsuarioEjecutivo()); ?></td>
-                                <td><?php echo ($evento->getTipo()); ?></td>
-                                <td><?php echo ($evento->getNombrePersona()); ?></td>
+                                <td><?= $evento->getUsuarioEjecutivo(); ?></td>
+                                <td><?= $evento->getTipo(); ?></td>
+                                <td><?= $evento->getNombrePersona(); ?></td>
                                 <td><?php 
-                                        if(!is_null($evento->getPersona())){
-                                            echo ($evento->getPersona()->getTipo());
-                                        }
+                                        if(!is_null($evento->getPersona())){echo ($evento->getPersona()->getTipo());}
                                     ?>
                                 </td>
 
                                 <td class="table-items-right">
                                     <a class="btn btn-default" 
-                                    <?php if (strtoupper($evento->getPersona()->getTipo()) == "CLIENTE") { ?>
-                                        href=<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?> 
+                                    <?php
+                                        if(!is_null($evento->getPersona())){
+
+                                        if (strtoupper($evento->getPersona()->getTipo()) == "CLIENTE") { ?>
+                                            href=<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?> 
                                     <?php 
-                                } elseif (strtoupper($evento->getPersona()->getTipo()) == "PROVEEDOR") { ?>
-                                        href=<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?>
+                                        } elseif (strtoupper($evento->getPersona()->getTipo()) == "PROVEEDOR") { ?>
+                                            href=<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?>
                                     <?php 
-                                } ?>>
+                                        }} ?>>
                                     <span class="glyphicon glyphicon-share-alt" ></span>
                                     </a>
                                 </td>

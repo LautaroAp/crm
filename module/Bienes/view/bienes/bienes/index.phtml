@@ -4,6 +4,25 @@
 <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<link href="http://twitter.github.com/bootstrap/assets/css/docs.css" rel="stylesheet">
+<link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
+
+<script>
+    $(document).ready(function() {
+        $('#table_bienes').DataTable({
+            "order": [0, 'desc'],
+
+            "language": {
+                "url": "/json/spanish.json"
+            }
+        });
+    });
+</script>
+
 <script type="text/javascript">
     $(function() {
         $('#datetimepicker1').datetimepicker({
@@ -105,7 +124,7 @@
                         <div class="row form-row">
                             <div class="form-group col-md-2">
                                 <label>Cantidad</label>
-                                <input type="number" class="form-control" name="cantidad" id="cantidad" min="1" max="99" value="0" 
+                                <input type="number" class="form-control" name="cantidad" id="cantidad" min="1" max="99" value="" 
                                     onkeypress="return justNumbers(event);" onclick="calculaSubtotal()" onkeyup="calculaSubtotal()">
                             </div>
                             <div class="form-group col-md-3">
