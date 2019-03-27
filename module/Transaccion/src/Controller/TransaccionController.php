@@ -24,7 +24,6 @@ abstract class TransaccionController extends HuellaController {
     }
 
     public function indexAction(){
-        print_r ("hola");
     }
     public abstract function addAction();
     public abstract function editAction();

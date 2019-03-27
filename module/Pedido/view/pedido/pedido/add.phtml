@@ -4,6 +4,8 @@
 <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
 <script type="text/javascript">
     $(function() {
         $('#datetimepicker1').datetimepicker({
@@ -111,18 +113,13 @@ $responsable = $this->identity();
                 <div class="panel panel-body" id="contenido_bienes">
                     <script>
                         var obj = <?php echo ($json); ?>;
-                        addItems(obj);
+                        var idPersona = <?php echo($persona->getId()); ?>;
+                        addItems(obj, "pedido", idPersona);
                     </script>
                     <br>
-
-
                     <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'pedido','id'=> $persona->getId()]); ?>" type="button">
                         <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Agregar Item</span>
                     </a>   
-                    
-                    <a href="" type="button" onclick="removerBien()">
-                        <span class="btn btn-default"><span class="glyphicon glyphicon-minus"></span> Eliminar Item</span>
-                    </a>  
                 </div>
             </div>
         </div>

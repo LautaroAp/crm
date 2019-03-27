@@ -100,7 +100,8 @@ $responsable = $this->identity();
                 <div class="panel panel-body" id="contenido_bienes">
                     <script>
                         var obj = <?php echo ($json); ?>;
-                        addItems(obj);
+                        var idPersona = <?php echo($persona->getId()); ?>;
+                        addItems(obj, "presupuesto", idPersona);
                     </script>
                     <br>
                     <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'presupuesto','id'=> $persona->getId()]); ?>" type="button">

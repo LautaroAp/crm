@@ -34,8 +34,6 @@ class PresupuestoController extends TransaccionController{
     }
 
     public function indexAction() {
-        print_r("hola");
-        die();
     }
 
    
@@ -99,6 +97,16 @@ class PresupuestoController extends TransaccionController{
             'persona'=>$transaccion->getPersona(),
             'tipo'=>$this->getTipo(),
         ]);    
+    }
+
+    public function eliminarItemAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $pos = $this->params()->fromRoute('id');
+        $id = $this->params()->fromRoute('id2');
+        array_splice($_SESSION['TRANSACCIONES']['PRESUPUESTO'], $pos,1);
+        $view = new ViewModel();
+        $view->setTerminal(true);
+        return $view;
     }
 
 
