@@ -171,6 +171,12 @@ table.dataTable tr.table-seleccion > .sorting_1 {
     color: rgb(18, 93, 155) !important;
 }
 
+table.dataTable tr.item-seleccion > .sorting_1 {
+    font-weight: bold;
+    background-color: rgb(235, 235, 235) !important;
+    color: rgb(18, 93, 155) !important;
+}
+
 .margen {
     margin-top: 10px;
 }
