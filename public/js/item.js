@@ -22,10 +22,11 @@ function calculaSubtotal() {
 
     // Setea subtotal
     if (subtotal){
-        $("#subtotal").val(subtotal);
+        // $("#subtotal").val(subtotal);
+        $("#subtotal").val(formatMoney(parseFloat(subtotal).toFixed(2)));
     }
     else{
-        $("#subtotal").val(0);
+        $("#subtotal").val('0.00');
     }
 }
 

@@ -392,16 +392,6 @@ class Bienes {
     }
 
     public function getJSON(){
-        // $output = "";
-        // $output .= '"Id": "' . $this->getId() .'", ';
-        // $output .= '"Nombre": "' . $this->getNombre() .'", ';
-        // $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
-        // $output .= '"Categoria": "' . $this->getCategoria() .'", ';
-        // $output .= '"Descuento": "' . $this->getDescuento() .'", ';
-        // $output .= '"Iva": "' . $this->getIva()->getValor() .'", ';
-        // $output .= '"Precio": "' . $this->getPrecio() .'", ';
-        // $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
-
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
         $output .= '"Nombre": "' . $this->getNombre() .'", ';
@@ -411,9 +401,6 @@ class Bienes {
         $output .= '"Descuento": "' . $this->getDescuento() .'", ';
         $output .= '"Iva": "' . $this->getIva()->getValor() .'", ';
         $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
-        
-       
-        // $output = '"bien": {'.$output.'}';
 
         return  '{'.$output.'}' ;
     }

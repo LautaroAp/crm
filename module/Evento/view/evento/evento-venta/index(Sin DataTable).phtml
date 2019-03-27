@@ -1,18 +1,4 @@
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-
-<link href="http://twitter.github.com/bootstrap/assets/css/docs.css" rel="stylesheet">
-<link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
-
-<!-- <script src="js/functions.js"></script> -->
-<script>
-$(document).ready(function() {
-    $('#tabla_resumen').DataTable({
-        
-    });
-});
-</script>
-
+<script src="js/functions.js"></script>
 <?php
 $meses = [
     'N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
@@ -33,7 +19,6 @@ else{
     $label = "Empresa";
 }
 ?>
-
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
     <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
@@ -138,9 +123,7 @@ else{
                     </div>
                     <p>
                     </p>
-
-                    <!-- <table id="tabla_evento" class="table table-bordred table-striped"> -->
-                    <table id="tabla_resumen" class="display">
+                    <table id="tabla_evento" class="table table-bordred table-striped">
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -148,49 +131,45 @@ else{
                                 <th>Evento</th>
                                 <th>Nombre</th>
                                 <th>Categoría</th>
-                                <td></td>
                             </tr>
                         </thead>
-                        <tbody>
-                            <?php foreach ($eventos as $evento) : ?>
-                            <tr>
-                                <td>
-                                    <?php 
-                                        if (!is_null($evento->getFecha())) {
-                                            echo ($evento->getFecha()->format('d/m/Y'));
-                                        } 
-                                    ?>
-                                </td>
-                                <td><?php echo ($evento->getUsuarioEjecutivo()); ?></td>
-                                <td><?php echo ($evento->getTipo()); ?></td>
-                                <td><?php echo ($evento->getNombrePersona()); ?></td>
-                                <td><?php 
-                                        if(!is_null($evento->getPersona())){
-                                            echo ($evento->getPersona()->getTipo());
-                                        }
-                                    ?>
-                                </td>
+                        <?php foreach ($eventos as $evento) : ?>
+                        <tr>
+                            <td><?php if (!is_null($evento->getFecha())) {
+                                    echo ($evento->getFecha()->format('d/m/Y'));
+                                } ?></td>
+                            <td><?php echo ($evento->getUsuarioEjecutivo()); ?></td>
+                            <td><?php echo ($evento->getTipo()); ?></td>
+                            <td><?php echo ($evento->getNombrePersona()); ?></td>
+                            <td><?php echo ($evento->getPersona()->getTipo()); ?></td>
 
-                                <td class="table-items-right">
-                                    <a class="btn btn-default" 
-                                    <?php if (strtoupper($evento->getPersona()->getTipo()) == "CLIENTE") { ?>
-                                        href=<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?> 
-                                    <?php 
-                                } elseif (strtoupper($evento->getPersona()->getTipo()) == "PROVEEDOR") { ?>
-                                        href=<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?>
-                                    <?php 
-                                } ?>>
-                                    <span class="glyphicon glyphicon-share-alt" ></span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>
+                            <td class="table-items-right">
+                                <a class="btn btn-default" 
+                                <?php if (strtoupper($evento->getPersona()->getTipo()) == "CLIENTE") { ?>
+                                    href=<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?> 
+                                <?php 
+                            } elseif (strtoupper($evento->getPersona()->getTipo()) == "PROVEEDOR") { ?>
+                                    href=<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?>
+                                <?php 
+                            } ?>>
+                                <span class="glyphicon glyphicon-share-alt" ></span>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                     </table>
                 </div>
             </div>
         </div>
-    </div>      
+    </div>  
+    <?php
+    echo $this->paginationControl(
+        $eventos,
+        'Sliding', // All, Elastic, Jumping, Sliding
+        'search_pagination3.phtml',
+        $this->url('pageventas', ['action' => 'index', 'id' => 1])
+    );
+    ?>     
 </div>
 
 <!-- Inicio: Panel Botones -->

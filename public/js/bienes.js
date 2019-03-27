@@ -55,7 +55,6 @@ var item = null;
 var item_ant=null;
 // obtengo ID de eventos
 function selectItem(e,pos) {
-    // console.log(items);
     $('#' + pos).toggleClass('item-seleccion');
     if ($('#' + pos).hasClass('item-seleccion')) {
         item_ant=item;
@@ -67,25 +66,20 @@ function selectItem(e,pos) {
         $("#item_precio").val(items[pos]["Precio"]);
         $("#cantidad").val(1);
         $("#descuento").val(items[pos]["Descuento"]);
-        // $("#iva option:selected").html(items[pos]["Iva"]); // Hacer funcion que recorra los ivas y marque con SELECTED = TRUE el que tiene que ser
         seleccionaIva(items[pos]["Iva"]);
-        // console.log("cambia el iva a ");
-        // console.log(items[pos]["Iva"]);
         $("#subtotal").val(items[pos]["Precio"]);
         $("#idbien").val(items[pos]["Id"]);
-        // console.log(item);
         calculaSubtotal();
     } else {
         // Reseteo el item
         item = null;
-        $("#item_precio").val(0);
-        $("#item_dto").val(0);
-        $("#cantidad").val(0);
-        $("#descuento").val(0);
-        // $("#iva option:selected").html(0);
+        $("#item_precio").val('0.00');
+        $("#item_dto").val('0.00');
+        $("#cantidad").val('0');
+        $("#descuento").val('0.00');
         seleccionaIva('0.00');
-        $("#subtotal").val(0);
-        $("#idbien").val(0);
+        $("#subtotal").val('0.00');
+        $("#idbien").val('0');
     }
    
 }

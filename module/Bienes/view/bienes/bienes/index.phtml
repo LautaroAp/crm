@@ -105,17 +105,18 @@
                         <div class="row form-row">
                             <div class="form-group col-md-2">
                                 <label>Cantidad</label>
-                                <input type="number" class="form-control" name="cantidad" id="cantidad" min="1" max="99" value="" 
+                                <input type="number" class="form-control" name="cantidad" id="cantidad" min="1" max="99" value="0" 
                                     onkeypress="return justNumbers(event);" onclick="calculaSubtotal()" onkeyup="calculaSubtotal()">
                             </div>
                             <div class="form-group col-md-3">
                                 <label>% Descuento</label>
-                                <input type="text" class="form-control" name="descuento" id="descuento" 
+                                <input type="text" class="form-control" name="descuento" id="descuento" value="0.00" 
                                     onkeypress="return justNumbers(event);" onkeyup="calculaSubtotal()">
                             </div>
                             <div class="form-group col-md-3">
                                 <label>% IVA</label>
-                                <select class="form-control" name="iva" id="iva" onkeypress="return justNumbers(event);" onchange="calculaSubtotal()">
+                                <select class="form-control" name="iva" id="iva"
+                                    onkeypress="return justNumbers(event);" onchange="calculaSubtotal()">
                                     <?php foreach ($ivas as $iva) : ?> 
                                     <option value="<?php echo ($iva->getId()); ?>">
                                         <?php echo ($iva->getValor()) ?></option>
@@ -124,7 +125,8 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Subtotal</label>
-                                <input type="text" class="form-control" name="subtotal" id="subtotal" onkeypress="return justNumbers(event);" onkeyup="calculaSubtotal()">
+                                <input type="text" class="form-control" name="subtotal" id="subtotal" value="0.00"
+                                    onkeypress="return justNumbers(event);" onkeyup="calculaSubtotal()" readonly>
                             </div>
                             <input type="number" name="item_precio" id="item_precio" hidden="">
                             <input type="number" name="item_dto" id="item_dto" hidden="">

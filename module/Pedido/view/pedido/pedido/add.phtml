@@ -119,11 +119,11 @@ $responsable = $this->identity();
 
 
                     <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'pedido','id'=> $persona->getId()]); ?>" type="button">
-                        <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Item</span>
+                        <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Agregar Item</span>
                     </a>   
                     
                     <a href="" type="button" onclick="removerBien()">
-                        <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Remover</span>
+                        <span class="btn btn-default"><span class="glyphicon glyphicon-minus"></span> Eliminar Item</span>
                     </a>  
                 </div>
             </div>
@@ -139,27 +139,27 @@ $responsable = $this->identity();
                     <!-- Totales -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Descuentos ($)</label>
-                            <input type="text" class="form-control" name="bonificacion_total" id="bonificacion_total" value=0 >
+                            <label>Descuento Total ($)</label>
+                            <input type="text" class="form-control" name="bonificacion_total" id="bonificacion_total" value=0 readonly>
                         </div>
                         <div class="form-group col-md-3">
                             <label>IVA Total ($)</label>
-                            <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 >
+                            <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Subtotal General</label>
-                            <input type="text" class="form-control" name="subtotal_general" id="subtotal_general" value=0 >
+                            <label>Subtotal</label>
+                            <input type="text" class="form-control" name="subtotal_general" id="subtotal_general" value=0 readonly>
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Bonificacion General (%)</label>
-                            <input type="text" class="form-control" name="bonificacion_general" id="bonificacion_general" value="0"
+                            <label>% Bonificación</label>
+                            <input type="text" class="form-control" name="bonificacion_general" id="bonificacion_general" value="0.00"
                             onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" >
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Total General</label>
-                            <input type="text" class="form-control" name="total_general" id="total_general" value=0 >
+                            <label>Total</label>
+                            <input type="text" class="form-control" name="total_general" id="total_general" value=0 readonly>
                         </div>
                     </div>
                     <script>

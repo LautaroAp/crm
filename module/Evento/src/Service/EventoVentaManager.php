@@ -32,12 +32,19 @@ class EventoVentaManager extends EventoManager
     }
     
     
+    // public function getEventosFiltrados($parametros) {
+    //     $filtros = $this->limpiarParametros($parametros);
+    //     $query = $this->busquedaPorFiltros($filtros);
+    //     $adapter = new DoctrineAdapter(new ORMPaginator($query));
+    //     $paginator = new Paginator($adapter);
+    //     return $paginator;
+    // }
+
     public function getEventosFiltrados($parametros) {
         $filtros = $this->limpiarParametros($parametros);
         $query = $this->busquedaPorFiltros($filtros);
-        $adapter = new DoctrineAdapter(new ORMPaginator($query));
-        $paginator = new Paginator($adapter);
-        return $paginator;
+
+        return $query->getResult();
     }
     
     public function getTotalFiltrados($parametros) {

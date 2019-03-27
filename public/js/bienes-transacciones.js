@@ -93,6 +93,7 @@ function calcularSubcampos(){
         // console.log(sumIva);
 
         subtotal = table.rows[i].cells[6].innerHTML;
+        subtotal = parseFloat(subtotal.substring(2, subtotal.length));
         sumSubtotal = sumSubtotal + parseFloat(subtotal);
         // console.log(sumSubtotal);
 
