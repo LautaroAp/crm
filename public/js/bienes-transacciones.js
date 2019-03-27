@@ -42,6 +42,19 @@ function addItems(bienesTransacciones) {
 
             tabCell.innerHTML = value;
         }
+        var butt = document.createElement('button'); // create a button
+        butt.setAttribute('type','button');
+        butt.setAttribute('class','btn btn-default btn-sm glyphicon glyphicon-remove'); // set attributes ...
+        butt.setAttribute('name','eliminarBien');
+        butt.setAttribute('value','Borrar');
+        butt.onclick = function() { // set onclick handler
+          removerBien();
+        }
+        var tabCell = tr.insertCell(-1);
+        tabCell.setAttribute("id", i);
+        tabCell.setAttribute("class", "click");
+        tabCell.appendChild(butt);
+        //   tr.cells[-1].appendChild(butt);
     }
     var divContainer = document.getElementById("contenido_bienes");
     divContainer.innerHTML = "";
