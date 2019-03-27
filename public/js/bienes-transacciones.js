@@ -1,7 +1,11 @@
 var items=[];
-function addItems(bienesTransacciones) {
+var tipoTransaccion;
+var idPersona;
+function addItems(bienesTransacciones, tipo, id) {
     items = bienesTransacciones;
-    console.log(items);
+    tipoTransaccion = tipo; 
+    idPersona=id;
+    console.log(idPersona);
     var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal"];
     //TABLE HEADER
     var table = document.createElement("table");
@@ -45,13 +49,10 @@ function addItems(bienesTransacciones) {
         var butt = document.createElement('button'); // create a button
         butt.setAttribute('type','button');
         butt.setAttribute('class','btn btn-default btn-sm glyphicon glyphicon-remove'); // set attributes ...
-        butt.setAttribute('name','eliminarBien');
+        butt.setAttribute('id',i);
         butt.setAttribute('value','Borrar');
-        butt.onclick = function() { // set onclick handler
-          removerBien();
-        }
+        butt.setAttribute("onclick","removerBien2(event,id)");
         var tabCell = tr.insertCell(-1);
-        tabCell.setAttribute("id", i);
         tabCell.setAttribute("class", "click");
         tabCell.appendChild(butt);
         //   tr.cells[-1].appendChild(butt);
@@ -61,6 +62,10 @@ function addItems(bienesTransacciones) {
     divContainer.appendChild(table);
 
 
+}
+
+function getItems(){
+    return items;
 }
 
 function formatMoney(number) {
@@ -124,7 +129,6 @@ function selectItem(e,pos) {
         }
         // Guardo id de la fila seleccionada
         item = pos;
-        console.log(item);
         $("#item_precio").val(items[pos]["Precio"]);
         // $("#item_dto").val(items[pos]["Descuento"]);
         $("#cantidad").val(1);
@@ -147,12 +151,27 @@ function selectItem(e,pos) {
     }  
 }
 
-function removerBien(){
-    console.log("items ");
-    console.log(items);
-    alert();
-    items = items.splice(item,1);
-    console.log("despues de borrar");
-    console.log(items);
-    alert();;
+function removerBien(event,id){
+    //el id indica el inicio de donde se borra y el 1 la cantidad de elementos eliminados
+    items.splice(id,1);
+    addItems(items);
+}
+
+function removerBien2(event,id){
+    
+    $.ajax({
+        "dataType": "text",
+        "type": "POST",
+        "data": "temp",
+        "url": '/'+tipoTransaccion+'/ajax/eliminarItem/'+id+'/'+idPersona,
+
+        "success": function (msg) {
+            document.location.reload();
+        },
+        "error": function (msg) {
+            console.log("1-error!");
+        }
+    }).done(function() {
+        console.log("1-done!");
+    })
 }

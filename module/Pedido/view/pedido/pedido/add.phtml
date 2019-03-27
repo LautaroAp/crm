@@ -113,18 +113,13 @@ $responsable = $this->identity();
                 <div class="panel panel-body" id="contenido_bienes">
                     <script>
                         var obj = <?php echo ($json); ?>;
-                        addItems(obj);
+                        var idPersona = <?php echo($persona->getId()); ?>;
+                        addItems(obj, "pedido", idPersona);
                     </script>
                     <br>
-
-
                     <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'pedido','id'=> $persona->getId()]); ?>" type="button">
                         <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Agregar Item</span>
                     </a>   
-                    
-                    <a href="" type="button" onclick="removerBien()">
-                        <span class="btn btn-default"><span class="glyphicon glyphicon-minus"></span> Eliminar Item</span>
-                    </a>  
                 </div>
             </div>
         </div>

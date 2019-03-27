@@ -104,9 +104,6 @@ class BienesController extends HuellaController
         }
         array_push($_SESSION['TRANSACCIONES'][strtoupper($transaccion)], $bienTransaccion);
         $ruta= $transaccion."/agregar";
-        print_r("agrego a transacciones pedido el item ");
-        print_r(COUNT($_SESSION['TRANSACCIONES'][strtoupper($transaccion)]));
-        // die();
         return $this->redirect()->toRoute($ruta,['id'=>$id_persona]);
     }
 }

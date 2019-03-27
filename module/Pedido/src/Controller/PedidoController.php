@@ -53,7 +53,6 @@ class PedidoController extends TransaccionController{
         }
         $json = substr($json, 0, -1);
         $json = '['.$json.']';
-        print_r($json);
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         $tipoPersona = null;
@@ -109,6 +108,17 @@ class PedidoController extends TransaccionController{
             'persona'=>$transaccion->getPersona(),
             'tipo'=>$this->getTipo(),
         ]);    
+    }
+
+    public function eliminarItemAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $pos = $this->params()->fromRoute('id');
+        $id = $this->params()->fromRoute('id2');
+        array_splice($_SESSION['TRANSACCIONES']['PEDIDO'], $pos,1);
+        // return $this->redirect()->toRoute('pedido/add/'.$id);
+        $view = new ViewModel();
+        $view->setTerminal(true);
+        return $view;
     }
 
 
