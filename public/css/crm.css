@@ -142,23 +142,6 @@
     width: 75% !important;
 }
 
-.table-zebra>tbody>tr:nth-child(odd)>td, 
-.table-zebra>tbody>tr:nth-child(odd)>th {
-    background-color: #FFFFFF;
-    min-width: 120px !important;
-    min-height: 75px !important;
-}
-.table-zebra>tbody>tr:nth-child(even)>td, 
-.table-zebra>tbody>tr:nth-child(even)>th {
-    background-color: #F2F2F2;
-    min-width: 120px !important;
-    min-height: 75px !important;
-}
-.table-zebra>thead>tr>th {
-    background-color: #F2F2F2;
-    min-width: 120px !important;
-}
-
 .table-top{
     margin-top: 1px !important;
     /*padding: 0px !important;*/
@@ -170,15 +153,22 @@
 }
 
 .table-seleccion{
-    font-weight: bold;    
-    border: 5px solid  #17a589;
+    font-weight: bold;
+    background-color: rgb(235, 235, 235) !important;
+    color: rgb(18, 93, 155) !important;
+}
+
+/* <table> con clase "dataTable" + <tr> con clase "table-seleccion" y que contengan la clase "sorting_1" */
+table.dataTable tr.table-seleccion > .sorting_1 {
+    font-weight: bold;
+    background-color: rgb(235, 235, 235) !important;
+    color: rgb(18, 93, 155) !important;
 }
 
 .item-seleccion{
     font-weight: bold;
-    /* color: black !important; */
-    /* background-color: rgb(132, 163, 253) !important; */
     background-color: rgb(235, 235, 235) !important;
+    color: rgb(18, 93, 155) !important;
 }
 
 .margen {
