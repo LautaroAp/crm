@@ -60,6 +60,7 @@ class EventoVentaController extends EventoController
         } else {
             //SI NO HAY PARAMETROS CREAR NUEVOS
             $parametros = array();
+            $parametros['ventas_y'] = date("L");
         }
         if (($_SESSION['EVENTO']['tipo_persona'] == "empresa") and isset($parametros['tipo_persona'])){
             //SI LLEGO DESDE EMPRESA TOMO EL TIPO DE PERSONA DEL FORMULARIO
@@ -88,10 +89,13 @@ class EventoVentaController extends EventoController
         else {
             $accionComercial= $this->tipoEventoManager->getTipoEventoId($parametros['tipo']);
         }
-        $paginator = $this->eventoVentaManager->getEventosFiltrados($parametros);
+        if (!isset($parametros['ventas_y'])){
+            $parametros['ventas_y'] = date("Y");}
+
+        // $paginator = $this->eventoVentaManager->getEventosFiltrados($parametros);
         $eventos = $this->eventoVentaManager->getEventosFiltrados($parametros);
         $total = $this->eventoVentaManager->getTotalFiltrados($parametros);
-        $page = 1;
+        // $page = 1;
         if (!is_null($tipoPersona) and ($tipoPersona!="-1")){
             $tipoEventos = $this->tipoEventoManager->getTipoEventos($tipoPersona);
         }
@@ -104,6 +108,7 @@ class EventoVentaController extends EventoController
         // $paginator->setCurrentPageNumber((int) $page)
         //         ->setItemCountPerPage($this->getElemsPag());
         $volver = $this->getUltimaUrl();
+
         return new ViewModel([
             'eventos' => $eventos,
             'parametros' => $parametros,
