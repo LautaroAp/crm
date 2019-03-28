@@ -8,7 +8,11 @@
 <script>
 $(document).ready(function() {
     $('#tabla_resumen').DataTable({
-        
+        "order": [0, 'desc'],
+
+        "language": {
+            "url": "/json/spanish.json"
+        }
     });
 });
 </script>
