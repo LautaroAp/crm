@@ -62,7 +62,9 @@ class ClientesManager {
                         ->findOneBy(['Id' => $Id]);
     }
 
-
+    public function getPersona($idPersona){
+        return $this->entityManager->getRepository(Persona::class)->findOneBy(['id' => $idPersona]);
+    }
     //esta funcion es usada por el controller para obtener todos los clientes
     //que cumplen con los parametros
     public function getTablaFiltrado($parametros, $estado) {
@@ -464,8 +466,13 @@ class ClientesManager {
         $this->entityManager->flush();
     }
 
-    public function getTransacciones($id_persona){
-        return $this->transaccionManager->getTransaccionesPersona($id_persona);
+    public function getTransacciones($idPersona){
+        // $persona =$this->getPersona($idPersona);
+        // $transacciones = $persona->getTransacciones();
+        // var_dump($transacciones);
+        // die();
+        // return $persona->getTransacciones();
+        return $this->transaccionManager->getTransaccionesPersona($idPersona);
     }
    
 }

@@ -43,9 +43,13 @@ class PresupuestoController extends TransaccionController{
 
     public function addAction() {
         $items = array();
-        if (isset($_SESSION['TRANSACCIONES']['PRESUPUESTO'])){
+        // if (isset($_SESSION['TRANSACCIONES']['PRESUPUESTO'])){
             
-            $items = $_SESSION['TRANSACCIONES']['PRESUPUESTO'];
+        //     $items = $_SESSION['TRANSACCIONES']['PRESUPUESTO'];
+        // }
+        if (isset($this->bienesTransacciones['PRESUPUESTO'])){
+            
+            $items = $this->bienesTransacciones['PRESUPUESTO'];
         }
         $json = "";
         foreach ($items as $item){
@@ -103,7 +107,7 @@ class PresupuestoController extends TransaccionController{
         $this->layout()->setTemplate('layout/nulo');
         $pos = $this->params()->fromRoute('id');
         $id = $this->params()->fromRoute('id2');
-        array_splice($_SESSION['TRANSACCIONES']['PRESUPUESTO'], $pos,1);
+        array_splice($this->bienesTransacciones['PRESUPUESTO'], $pos,1);
         $view = new ViewModel();
         $view->setTerminal(true);
         return $view;

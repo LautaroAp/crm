@@ -185,7 +185,9 @@ class BienesManager {
             $nombreCampo = $indices[$i]; 
             if($nombreCampo=="tipo"){
                 $valorCampo=$parametros[$nombreCampo]; 
-                $queryBuilder->andWhere('B.tipo = :tipo')->setParameter('tipo',$valorCampo);
+                if ($valorCampo!="-1"){
+                    $queryBuilder->andWhere('B.tipo = :tipo')->setParameter('tipo',$valorCampo);
+                }
             }
             if($nombreCampo=="nombre"){
                 $valorCampo=$parametros[$nombreCampo]; 
@@ -195,4 +197,6 @@ class BienesManager {
         $queryBuilder ->orderBy('B.nombre', 'DESC');
         return $queryBuilder->getQuery();
     }
+
+    
 }

@@ -9,6 +9,8 @@ use DBAL\Entity\Ejecutivo;
 use DBAL\Entity\BienesTransacciones;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
+use DateInterval;
+
 /**
  * Esta clase se encarga de obtener y modificar los datos de los servicios 
  * 
@@ -86,7 +88,6 @@ class TransaccionManager {
     }
 
     private function setData($transaccion, $data){
-
         if (isset($data['numero_transaccion'])){
             $transaccion->setNumero($data['numero_transaccion']);
         }
@@ -105,14 +106,15 @@ class TransaccionManager {
         ->findOneBy(['usuario' => $data['responsable']]);     
         $transaccion->setResponsable($ejecutivo);
 
+
         if (isset($data['fecha_transaccion'])){
-            $fecha_transaccion = \DateTime::createFromFormat('d/m/Y', $data['fecha_transaccion']); 
+            $fecha_transaccion = \DateTime::createFromFormat('d-m-Y', $data['fecha_transaccion']); 
             $transaccion->setFecha_transaccion($fecha_transaccion);
         }
         $transaccion->setPersona($data['persona']);
         $transaccion->setTipo($data['tipo']);
         if (isset($data['fecha_vencimiento'])){
-            $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
+            $fecha_vencimiento = \DateTime::createFromFormat('d-m-Y', $data['fecha_evento']);
             $transaccion->setFecha_vencimiento($fecha_vencimiento);
         }
         if (isset($data['bonificacion_general'])){
@@ -125,13 +127,14 @@ class TransaccionManager {
     }
 
     private function setItems($transaccion, $items){
-        foreach($items as $item ){
+        //LOS BIENESTRANSACCIONES SE GUARDAN COMO ARREGLO
+        foreach($items as $array ){
+            $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
             $item->setTransaccion($transaccion);
             // $transaccion->addBienesTransacciones($item);
             $bien= $item->getBien();
             // $bien->addBienesTransacciones($item);
             $item= $this->bienesTransaccionesManager->add($item);
-
         }
     }
     /**
@@ -142,7 +145,7 @@ class TransaccionManager {
         $transaccion=$this->setData($transaccion, $data);
         // Apply changes to database.
         $this->entityManager->flush();
-        return true;
+        return $transaccion;
     }
 
     public function remove($transaccion) {

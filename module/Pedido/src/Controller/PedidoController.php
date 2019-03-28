@@ -10,6 +10,7 @@ use Transaccion\Controller\TransaccionController;
 use Pedido\Service\PedidoManager;
 
 use Zend\View\Model\ViewModel;
+use DBAL\Entity\BienesTransacciones;
 
 class PedidoController extends TransaccionController{
 
@@ -22,13 +23,17 @@ class PedidoController extends TransaccionController{
     private $clientesManager;
     private $proveedorManager;
     private $tipo;
+    private $bienesTransaccionesManager;
+    private $items;
 
-    public function __construct($pedidoManager, $monedaManager, $personaManager, $clientesManager, $proveedorManager) {
+    public function __construct($pedidoManager, $monedaManager, $personaManager, $clientesManager, $proveedorManager,
+    $bienesTransaccionesManager) {
         parent::__construct($pedidoManager, $personaManager);
         $this->clientesManager=$clientesManager;
         $this->proveedorManager= $proveedorManager;
         $this->pedidoManager = $pedidoManager;
         $this->monedaManager= $monedaManager;
+        $this->bienesTransaccionesManager= $bienesTransaccionesManager;
         
 
     }
@@ -48,7 +53,8 @@ class PedidoController extends TransaccionController{
             $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
         }
         $json = "";
-        foreach ($items as $item){
+        foreach ($items as $array){
+            $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
             $json .= $item->getJson(). ',';
         }
         $json = substr($json, 0, -1);
@@ -93,21 +99,57 @@ class PedidoController extends TransaccionController{
         ]);
     }
 
+
     public function editAction() {
-        $id = $this->params()->fromRoute('id', -1);
+        $id= $this->params()->fromRoute('id');
         $pedido = $this->pedidoManager->getPedidoId($id);
+        $items= array();
+        if (!is_null($pedido)){
+            $items = $pedido->getTransaccion()->getBienesTransacciones();
+        }
+        $items = $this->getItemsArray($items);
+        if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
+            $_SESSION['TRANSACCIONES']['PEDIDO']= $items;
+        }
+        $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
+        $json = "";
+        foreach ($items as $array){
+            $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+            $json .= $item->getJson(). ',';
+        }
+        var_dump($items);
+        $json = substr($json, 0, -1);
+        $json = '['.$json.']';
+        print_r($json);
+        $id_persona = $this->params()->fromRoute('id');
+        $persona = $this->personaManager->getPersona($id_persona);
+        $tipoPersona = null;
+        if($persona->getTipo()=="CLIENTE"){
+            $tipoPersona= $this->clientesManager->getClienteIdPersona($id_persona);
+        }
+        elseif ($persona->getTipo()=="PROVEEDOR"){
+            $tipoPersona= $this->proveedorManager->getProveedorIdPersona($id_persona);
+        }
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
-            $this->procesarEditAction($pedido, $data);
-            return $this->redirect()->toRoute('home');
-        }       
+            $data['persona'] = $persona;
+            $data['items'] = $_SESSION['TRANSACCIONES']['PEDIDO'];
+            $this->pedidoManager->edit($pedido, $data);
+            $this->redirect()->toRoute('home');
+        }
+
+        $numTransacciones= $pedido->getTransaccion()->getNumero(); 
+        $numPedido = $pedido->getNumero();
+        $this->reiniciarParams();
         return new ViewModel([
-            'pedido' => $pedido,
-            'transaccion'=>$pedido->getTransaccion(),
-            'persona'=>$transaccion->getPersona(),
-            'tipo'=>$this->getTipo(),
-        ]);    
+            'items' => $items,
+            'persona' => $persona,
+            'tipoPersona'=>$tipoPersona,
+            'numTransacciones'=>$numTransacciones,
+            'numPedido'=>$numPedido,
+            'json' => $json,
+        ]);
     }
 
     public function eliminarItemAction(){
@@ -115,6 +157,7 @@ class PedidoController extends TransaccionController{
         $pos = $this->params()->fromRoute('id');
         $id = $this->params()->fromRoute('id2');
         array_splice($_SESSION['TRANSACCIONES']['PEDIDO'], $pos,1);
+
         // return $this->redirect()->toRoute('pedido/add/'.$id);
         $view = new ViewModel();
         $view->setTerminal(true);

@@ -20,14 +20,17 @@ class BienesTransaccionesManager {
     private $proveedorManager;
     private $ivaManager;
     private $categoriaManager;
+    private $bienesManager;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $ivaManager, $categoriaManager, $proveedorManager) {
+    public function __construct($entityManager, $ivaManager, $categoriaManager, $proveedorManager,
+    $bienesManager) {
         $this->entityManager = $entityManager;
         $this->proveedorManager= $proveedorManager;
         $this->ivaManager= $ivaManager;
         $this->categoriaManager= $categoriaManager;
+        $this->bienesManager = $bienesManager;
     }
 
     public function getBienesTransacciones() {
@@ -70,6 +73,7 @@ class BienesTransaccionesManager {
     }
 
     public function add($bienTransaccion){
+
         $this->entityManager->merge($bienTransaccion);
         $this->entityManager->flush();
         return $bienTransaccion;
@@ -147,4 +151,18 @@ class BienesTransaccionesManager {
         }
     }
 
+    public function bienTransaccionFromArray($array){
+        // var_dump($array);
+        $bienTransaccion = new BienesTransacciones();
+        $bien = $this->bienesManager->getBienId($array['bien']);
+        $bienTransaccion->setBien($bien);
+        $bienTransaccion->setCantidad($array['cantidad']);
+        $bienTransaccion->setDescuento($array['descuento']);
+        $iva = $this->ivaManager->getIva($array['iva']);
+        $bienTransaccion->setIva($iva);
+        $subtotal = $array['subtotal'];
+        $subtotal = substr($subtotal, 2);
+        $bienTransaccion->setSubtotal($subtotal);
+        return $bienTransaccion;
+    }
 }
