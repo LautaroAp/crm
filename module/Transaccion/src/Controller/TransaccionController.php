@@ -46,6 +46,13 @@ abstract class TransaccionController extends HuellaController {
     public function getManager(){
         return $this->manager;
     }
+    protected function getItemsArray($items){
+        $salida = array();
+        foreach ($items as $item){
+            array_push($salida, $item->toArray());
+        }
+        return $salida;
+    }
 
 
 }

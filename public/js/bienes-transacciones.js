@@ -42,7 +42,7 @@ function addItems(bienesTransacciones, tipo, id) {
                 value = item[col[j]];
             }
             if ((col[j] == "Descuento") || (col[j]=="IVA")){value = formatPercent((parseFloat(value)).toFixed(2));}
-            if (col[j] == "Precio"){value = formatMoney(value);}
+            if ((col[j] == "Precio")  || (col[j]=="Subtotal")) {value = formatMoney(value);}
 
             tabCell.innerHTML = value;
         }

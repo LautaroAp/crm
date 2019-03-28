@@ -17,32 +17,22 @@ class BienesController extends HuellaController
     }
         
     private function busqueda($params){
-        return ((($params['tipo'])>1) or (isset($params['nombre'])));
+        return ((isset($params['tipo']) and $params['tipo']!="-1") or (isset($params['nombre'])));
     }
 
     private function agregar($params){
-
         if ((isset($params['cantidad']) and isset($params['subtotal'])) and isset($params['idbien'])){
-            return true;
+            return($params['cantidad']>0);          
         }
         else return false;
     }
 
     public function indexAction() {
-        
         $request = $this->getRequest();
-       //SE OBTIENE EL TIPO DE BIEN LA RUTA POR SI SE LO LLAMA DE CLIENTE/PROVEEDOR
-        $tipo= $this->params()->fromRoute('tipo');
         $transaccion =$this->params()->fromRoute('transaccion');
+        $accion = $this->params()->fromRoute('accion');
         $id_persona = $this->params()->fromRoute('id');
         $ivas = $this->ivaManager->getIvas();
-        if (isset($tipo)){
-            //si llego un tipo de bien por ruta se la guarda en la sesion para paginator
-            $_SESSION['BIENES']['TIPO'] = $tipo;
-        }
-        else{
-            $_SESSION['BIENES']['TIPO'] = "todos";
-        }
         if ($request->isPost()) {
             //SI SE COMPLETO EL FORMULARIO DE BUSQUEDA TOMO ESOS PARAMETROS Y LOS GUARDO EN LA SESION 
             $parametros = $this->params()->fromPost();
@@ -55,55 +45,43 @@ class BienesController extends HuellaController
             //SI NO HAY PARAMETROS CREAR NUEVOS
             $parametros = array();
         }
-        if (($_SESSION['BIENES']['TIPO'] == "todos") and isset($parametros['tipo'])){
-            //SI LLEGO DESDE EMPRESA TOMO EL TIPO DE PERSONA DEL FORMULARIO
-            $tipoBien = $parametros['tipo'];       
-        }
-        else {
-            //SI EL TIPO DE LA RUTA NO ES NULO
-            $tipoBien= $tipo;
-            $parametros['tipo'] = $tipo;
-        }
-        if (($tipoBien == '-1') and ($_SESSION['BIENES']['TIPO'] == "todos")){
-            //SI SE SELECCIONO "TODOS" (MOSTRAR PRODUCTOS, LICENCIAS Y SERVICIOS)
-            $tipoBien = null;
-            unset($parametros['tipo']);
-        }
-        if ($this->agregar($parametros)){
-            return $this->addItem($parametros, $transaccion, $id_persona);
+        $parametros = $this->limpiarParametros($parametros);
+        if (($this->agregar($parametros)) and (!$this->busqueda($parametros))){
+            return $this->addItem($parametros, $transaccion, $id_persona, $accion);
         }
         $bienes = $this->bienesManager->getBienesFiltrados2($parametros);
         $page = 1;
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
         }
-
         return new ViewModel([
             'bienes' => $bienes,
             'ivas' => $ivas,
-            // 'parametros' => $parametros,
-            'tipo' => $tipo,
-            // 'tipo_bien' =>$tipoBien,
             'transaccion' => $transaccion,
             'id_persona' => $id_persona
         ]);
     }
 
-    private function addItem($parametros, $transaccion, $id_persona){
+    private function addItem($parametros, $transaccion, $id_persona, $accion){
         $bienTransaccion = new BienesTransacciones();
         $bien = $this->bienesManager->getBienId($parametros['idbien']);
         $bienTransaccion->setBien($bien);
         $bienTransaccion->setDescuento($parametros['descuento']);
         $bienTransaccion->setCantidad($parametros['cantidad']);
         $iva = $this->ivaManager->getIva($parametros['iva']);
-        // print_r($iva); die(); // No aplica el IVA si se deja el que carga por defecto (hay que cambiarlo)
         $bienTransaccion->setIva($iva);
-        $bienTransaccion->setSubtotal($parametros['subtotal']);
+        $bienTransaccion->setSubtotal($parametros['subtotal']); 
+        $transaccionUpper =strtoupper($transaccion);
         if (!isset($_SESSION['TRANSACCIONES'][strtoupper($transaccion)])){
             $_SESSION['TRANSACCIONES'][strtoupper($transaccion)] = array();
         }
-        array_push($_SESSION['TRANSACCIONES'][strtoupper($transaccion)], $bienTransaccion);
-        $ruta= $transaccion."/agregar";
+        array_push($_SESSION['TRANSACCIONES'][strtoupper($transaccion)], $bienTransaccion->toArray());
+
+        // if (!isset($this->bienesTransacciones[$transaccionUpper])){
+        //      $this->bienesTransacciones[$transaccionUpper]= array();
+        // }
+        // array_push($this->bienesTransacciones[$transaccionUpper], $bienTransaccion);
+        $ruta= $transaccion."/".$accion;
         return $this->redirect()->toRoute($ruta,['id'=>$id_persona]);
     }
 }

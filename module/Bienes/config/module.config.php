@@ -14,7 +14,7 @@ return [
             'bienes' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route' =>'[/:transaccion][/:id]/bienes[/:tipo]',
+                    'route' =>'[/:transaccion][/:accion][/:id]/bienes[/:tipo]',
                     'defaults' => [
                         'controller' => \Bienes\Controller\BienesController::class,
                         'action' => 'index',

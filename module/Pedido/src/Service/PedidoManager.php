@@ -10,6 +10,8 @@ use DBAL\Entity\Transaccion;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use Transaccion\Service\TransaccionManager;
+use DateInterval;
+
 /**
  * Esta clase se encarga de obtener y modificar los datos de los pedidos 
  * 
@@ -84,7 +86,7 @@ class PedidoManager extends TransaccionManager{
         $fecha_entrega=null;
 
         if (isset($data['fecha_entrega'])){
-            $fecha_entrega = \DateTime::createFromFormat('d/m/Y', $data['fecha_entrega']); 
+            $fecha_entrega = \DateTime::createFromFormat('d-m-Y', $data['fecha_entrega']); 
             $pedido->setFecha_entrega($fecha_entrega);
         }
        
@@ -97,7 +99,6 @@ class PedidoManager extends TransaccionManager{
         if (isset($data['lugar_entrega'])){
             $pedido->setLugar_entrega($data['lugar_entrega']);
         }
-
        return $pedido;
     }
 

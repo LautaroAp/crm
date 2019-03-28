@@ -13,12 +13,14 @@ class HuellaController extends AbstractActionController
     protected $breadcrumbs;
     protected $entityManager;
     protected $elemsPag;
+    protected $bienesTransacciones;
 
 
     public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
         $breadcrumbs = array();
+        $bienesTransacciones= array();
     }
 
     protected function pertenece($arr, $nuevo)
@@ -139,5 +141,22 @@ class HuellaController extends AbstractActionController
 
     protected function reiniciarParametros($arreglo){
         $_SESSION[$arreglo] = array();
+        $bienesTransacciones= array();
+    }
+
+    protected function limpiarParametros($param) {
+        foreach ($param as $filtro => $valor) {
+            if ($filtro != 'busquedaAvanzada'){
+                 if (empty($valor)) {
+                unset($param[$filtro]);
+                 } else {
+                trim($param[$filtro]);
+                 }
+            }
+            else{
+                $param[$filtro]=true;
+            }
+        }
+        return ($param);
     }
 }

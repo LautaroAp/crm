@@ -21,25 +21,32 @@ $(document).ready(function() {
         </tr>
     </thead>
     <tbody id="cuerpo_eventos" role="button" class="">
-        <?php foreach ($eventos as $evento) : ?>
-        <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)" class="vpEvento">
-            <td id="<?= $evento->getId() ?>">
+        <?php foreach ($transacciones as $transaccion) : ?>
+        <tr id="<?= $transaccion->getId() ?>" onclick="seleccionarFila(event)" class="vpEvento">
+            <td id="<?= $transaccion->getId() ?>">
                 <?php
-                if (!is_null($evento->getFecha_transaccion())) {
-                    echo ($evento->getFecha_transaccion()->format('Y/m/d'));
+                if (!is_null($transaccion->getFecha_transaccion())) {
+                    echo ($transaccion->getFecha_transaccion()->format('Y/m/d'));
                 }
                 ?></td>
-            <td> <?php echo ($evento->getResponsable()->getUsuario()); ?> </td>
-            <td id="<?= $evento->getId() ?>" class="">
+            <td> <?php echo ($transaccion->getResponsable()->getUsuario()); ?> </td>
+            <td id="<?= $transaccion->getId() ?>" class="">
                 <?php
-                if (!is_null($evento->getTipo())) {
-                    echo (ucfirst($evento->getTipo()));
+                if (!is_null($transaccion->getTipo())) {
+                    echo (ucfirst($transaccion->getTipo()));
                 } else {
                     echo ('No definido');
                 }
                 ?></td>
-            <td><?= $evento->getDescripcion() ?>
-            <td>
-                <?php endforeach; ?>
+            <td><?= $transaccion->getDescripcion() ?></td>
+            <td id="<?= $transaccion->getId() ?>" class="">
+                <a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>"
+                 type="button" class="btn btn-default btn-sm" 
+                 >
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </td>
+        </tr>
+        <?php endforeach; ?>
     </tbody>
 </table>

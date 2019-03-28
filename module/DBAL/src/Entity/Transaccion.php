@@ -221,7 +221,7 @@ class Transaccion {
      */ 
     public function getBienesTransacciones()
     {
-        return $this->bienes_transacciones;
+        return $this->bienesTransacciones;
     }
 
     public function addBienesTransacciones($bienesTransacciones) {

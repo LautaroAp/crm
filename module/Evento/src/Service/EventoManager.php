@@ -98,17 +98,7 @@ class EventoManager {
             $cliente_proveedor= $this->entityManager
             ->getRepository(Proveedor::class)->findOneBy(['persona' => $persona->getId()]);
         }
-      
-        
         $this->actualizaFechas($evento, $cliente_proveedor, $tipo_evento, $fecha_evento, $fecha_vencimiento);     
-
-        // if ($this->tryAddEvento($evento)) {
-        //     $_SESSION['MENSAJES']['ficha_cliente'] = 1;
-        //     $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Actividad guardada correctamente';
-        // } else {
-        //     $_SESSION['MENSAJES']['ficha_cliente'] = 0;
-        //     $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al guardar actividad';
-        // }
         $this->entityManager->persist($evento);
         $this->entityManager->flush();
         return $evento;

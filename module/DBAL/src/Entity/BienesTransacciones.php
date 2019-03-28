@@ -210,4 +210,27 @@ class BienesTransacciones {
       
         return  '{'.$output.'}' ;
     }
+
+    public function toArray(){
+        $salida = array();
+        if(!is_null($this->id)){
+            $salida['id']= $this->id;
+        }
+        else{
+            $salida['id'] = null;
+        }
+        if (!is_null($this->transaccion)){
+            $salida['transaccion'] = $this->transaccion->getId();
+        }
+        else{
+            $salida['transaccion']= null;
+        }
+        $salida['bien'] = $this->bien->getId();
+        $salida['cantidad'] = $this->cantidad;
+        $salida['descuento'] = $this->descuento;
+        $salida['iva'] = $this->iva->getId();
+        $salida['subtotal'] = $this->subtotal;
+        return $salida;
+    }
+
 }

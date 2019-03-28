@@ -60,6 +60,13 @@ class Persona {
      */
     private $eventos;
 
+    /**
+     * 
+     * @ORM\OneToMany(targetEntity="\DBAL\Entity\Transaccion", mappedBy="persona")
+     * @ORM\OrderBy({"id" = "desc"})
+     */
+    private $transacciones;
+
     public function getId()
     {
         return $this->id;
@@ -163,5 +170,9 @@ class Persona {
 
     public function getEventos() {
         return $this->eventos;
+    }
+
+    public function getTransacciones(){
+        return $this->transacciones;
     }
 }
