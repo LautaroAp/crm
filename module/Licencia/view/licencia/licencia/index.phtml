@@ -1,3 +1,17 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#tabla_licencias').DataTable({
+            "order": [0, 'desc'],
+
+            "language": {
+                "url": "/json/spanish.json"
+            }
+        });
+    });
+</script>
+
 <?php
 if (isset($_SESSION['MENSAJES']['licencia'])) {
     if ($_SESSION['MENSAJES']['licencia']) {
@@ -9,6 +23,7 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
     $_SESSION['MENSAJES']['licencia_msj'] = null;
 }
 ?>
+
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
     <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
@@ -38,7 +53,7 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
             <div class="container margen">
                 <div class="col-md-12">
                     <div class="table-responsive">
-                        <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
+                        <table id="tabla_licencias" class="display">            
                             <thead>
                                 <tr>
                                     <th class="th-sm"> Licencia</th>
@@ -94,7 +109,7 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
                                         </div>
                                     </div>
                                 </tr>
-                            <?php endforeach; ?>
+                            <?php endforeach;} ?>
                             </tbody>
                         </table>
                     </div>
@@ -102,15 +117,6 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
             </div>
         </div>
     </div>
-    <?php
-    echo $this->paginationControl(
-        $licencias,
-        'Sliding', // All, Elastic, Jumping, Sliding
-        'search_pagination5.phtml',
-        $this->url('licencia/page', ['action' => 'index', 'id' => 1])
-    );
-}
-?>
 </div>
 <!-- Fin: Tabla Licencias -->
 

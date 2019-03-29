@@ -1,3 +1,18 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#tabla_profesiones').DataTable({
+            "order": [0, 'desc'],
+
+            "language": {
+                "url": "/json/spanish.json"
+            }
+        });
+    });
+</script>
+
 <?php
 if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
     if ($_SESSION['MENSAJES']['profesion_cliente']) {
@@ -85,7 +100,7 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table id="tabla_profesion" class="table table-bordred table-striped">
+                            <table id="tabla_profesiones" class="display">
                                 <thead>
                                     <tr>
                                         <th>Nombre de Profesión</th>
@@ -95,7 +110,7 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                    if (isset($profesiones_pag)) {
+                                    if (isset($profesiones)) {
                                         foreach ($profesiones as $profesion):
                                             ?>
                                             <tr>
@@ -133,7 +148,7 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
                                             </div>
                                         </div>
                                         </tr>
-                                    <?php endforeach; ?>
+                                    <?php endforeach;} ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -141,12 +156,7 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
                     </div>
                 </div>
             </div>
-        </div>
-        <?php
-        echo $this->paginationControl($profesiones_pag, 'Sliding', // All, Elastic, Jumping, Sliding
-                'search_pagination_prof.phtml', $this->url('profesion/page', ['action' => 'index', 'id' => 1]));
-    }
-    ?>                 
+        </div>                
 </div>
 
 <!-- Inicio: Panel Botones -->

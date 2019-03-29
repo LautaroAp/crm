@@ -68,15 +68,9 @@ class TipoEventoController extends HuellaController {
         $url = $this->getRuta($tipoPersona);
         $limite= $this->getAnterior();
         $this->prepararBreadcrumbs("Listado", $url, $limite);
-        $paginator = $this->tipoeventoManager->getTabla($tipoPersona);
+        $tipoeventos = $this->tipoeventoManager->getTabla($tipoPersona);
         $categorias= $this->tipoeventoManager->getCategoriaEventos();
-        $page = 1;
-        if ($this->params()->fromRoute('id')) {
-            $page = $this->params()->fromRoute('id');
-        }
-        $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage($this->getElemsPag());
-
+ 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->tipoeventoManager->addTipoEvento($data, $tipoPersona);
@@ -86,7 +80,7 @@ class TipoEventoController extends HuellaController {
         $volver = $this->getUltimaUrl();
         return new ViewModel([
             'form' => $form,
-            'tipoeventos_pag' => $paginator,
+            'tipoeventos' => $tipoeventos,
             'tipoPersona'=> $tipoPersona,
             'categoriaeventos' => $categorias,
             'volver' => $volver,

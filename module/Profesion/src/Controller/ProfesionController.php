@@ -56,13 +56,6 @@ class ProfesionController extends HuellaController {
     private function procesarAddAction() {
         $this->prepararBreadcrumbs("Profesiones", "/profesion", "Clientes");
         $profesiones = $this->profesionManager->getProfesiones();
-        $paginator = $this->profesionManager->getTabla();
-        $page = 1;
-        if ($this->params()->fromRoute('id')) {
-            $page = $this->params()->fromRoute('id');
-        }
-        $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage($this->getElemsPag());
         
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
@@ -72,7 +65,6 @@ class ProfesionController extends HuellaController {
         $volver = $this->getUltimaUrl();
         return new ViewModel([
             'profesiones' => $profesiones,
-            'profesiones_pag' => $paginator,
             'volver'=> $volver,
         ]);
     }

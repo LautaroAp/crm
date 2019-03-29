@@ -155,15 +155,21 @@ class TipoEventoManager {
         $entityManager->flush();
     }
 
+    // public function getTabla($tipoPersona) {
+    //     $query = $this->getTipos($tipoPersona);
+    //     $pag = new ORMPaginator($query);
+    //     $pag->setUseOutputWalkers(true);
+    //     $adapter = new DoctrineAdapter($pag);
+    //     $this->total = COUNT($adapter);
+    //     $paginator = new Paginator($adapter);
+    //     return $paginator;
+    // }
+
     public function getTabla($tipoPersona) {
         $query = $this->getTipos($tipoPersona);
-        $pag = new ORMPaginator($query);
-        $pag->setUseOutputWalkers(true);
-        $adapter = new DoctrineAdapter($pag);
-        $this->total = COUNT($adapter);
-        $paginator = new Paginator($adapter);
-        return $paginator;
+        return $query->getResult();
     }
+
     public function getTipos($tipoPersona){
         $queryBuilder = $this->entityManager->createQueryBuilder();
         $queryBuilder->select('T')

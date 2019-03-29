@@ -42,14 +42,19 @@ class CategoriaManager {
     }
 
     
+    // public function getTabla($tipo) {
+    //     $query = $this->getCategorias($tipo);
+    //     $pag = new ORMPaginator($query);
+    //     $pag->setUseOutputWalkers(true);
+    //     $adapter = new DoctrineAdapter($pag);
+    //     $this->total = COUNT($adapter);
+    //     $paginator = new Paginator($adapter);
+    //     return $paginator;
+    // }
+
     public function getTabla($tipo) {
         $query = $this->getCategorias($tipo);
-        $pag = new ORMPaginator($query);
-        $pag->setUseOutputWalkers(true);
-        $adapter = new DoctrineAdapter($pag);
-        $this->total = COUNT($adapter);
-        $paginator = new Paginator($adapter);
-        return $paginator;
+        return $query->getResult();
     }
 
     public function getCategorias($tipo){

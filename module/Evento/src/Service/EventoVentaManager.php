@@ -133,7 +133,6 @@ class EventoVentaManager extends EventoManager
         
     }
     
-    
     public function getTipoEvento($id=null){
         if (isset ($id)) {
             return $this->entityManager
