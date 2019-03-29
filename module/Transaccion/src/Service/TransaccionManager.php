@@ -105,8 +105,6 @@ class TransaccionManager {
         $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
         ->findOneBy(['usuario' => $data['responsable']]);     
         $transaccion->setResponsable($ejecutivo);
-
-
         if (isset($data['fecha_transaccion'])){
             $fecha_transaccion = \DateTime::createFromFormat('d-m-Y', $data['fecha_transaccion']); 
             $transaccion->setFecha_transaccion($fecha_transaccion);
@@ -137,13 +135,25 @@ class TransaccionManager {
             $item= $this->bienesTransaccionesManager->add($item);
         }
     }
-    /**
-     * This method updates data of an existing servicio.
-     */
+    private function setItemsEdit($transaccion, $items){
+        //LOS BIENESTRANSACCIONES SE GUARDAN COMO ARREGLO
+        $itemsAnteriores = $transaccion->getBienesTransacciones();
+        if (!is_null($itemsAnteriores)){        
+            $this->bienesTransaccionesManager->borrarBienesTransacciones($itemsAnteriores);
+        }
+        foreach($items as $array ){
+            $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+            $item->setTransaccion($transaccion);
+            // $transaccion->addBienesTransacciones($item);
+            $bien= $item->getBien();
+            // $bien->addBienesTransacciones($item);
+            $item= $this->bienesTransaccionesManager->add($item);
+        }
+    }
+
     public function edit($transaccion, $data) {
-        //le llega un objeto transaccion (padre)
         $transaccion=$this->setData($transaccion, $data);
-        // Apply changes to database.
+        $this->setItemsEdit($transaccion, $data['items']);
         $this->entityManager->flush();
         return $transaccion;
     }
