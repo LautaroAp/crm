@@ -1,11 +1,10 @@
 <!-- scripts -->
 <script src="/js/bienes-transacciones.js"></script>
 <script src="/js/item.js"></script>
-<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
 <script type="text/javascript">
     $(function() {
         $('#datetimepicker1').datetimepicker({
@@ -134,7 +133,7 @@ $responsable = $this->identity();
                     <div class="row form-row">
                         <div class="form-group col-md-3">
                             <label>Descuento Total ($)</label>
-                            <input type="text" class="form-control" name="bonificacion_total" id="bonificacion_total" value=0 readonly>
+                            <input type="text" class="form-control" name="descuento_total" id="descuento_total" value=0 readonly>
                         </div>
                         <div class="form-group col-md-3">
                             <label>IVA Total ($)</label>
@@ -145,34 +144,8 @@ $responsable = $this->identity();
                             <input type="text" class="form-control" name="subtotal_general" id="subtotal_general" value=0 readonly>
                         </div>
                     </div>
-                    <div class="row form-row">
-                        <div class="form-group col-md-3">
-                            <label>% Bonificación</label>
-                            <input type="text" class="form-control" name="bonificacion_general" id="bonificacion_general" value="0.00"
-                            onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" >
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Total</label>
-                            <input type="text" class="form-control" name="total_general" id="total_general" value=0 readonly>
-                        </div>
-                    </div>
-                    <script>
-                        calcularSubcampos();
-                     </script>
                     <!-- Forma de Pago + Fecha -->
                     <div class="row form-row">
-                        <div class="form-group col-md-3">
-                            <label>Forma de Pago</label>
-                            <select class="form-control" id="forma_pago" name="forma_pago">
-                                <option value="" hidden="">Seleccionar Forma de Pago</option>
-                                <option value="-1">NO DEFINIDO</option>
-                                <?php foreach ($categorias as $categoria) : ?>
-                                <option value="<?= $categoria->getId(); ?>">
-                                    <?= $categoria->getNombre(); ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
                         <div class="form-group col-md-3">
                             <label>Moneda</label>
                             <select class="form-control" id="moneda" name="moneda">
@@ -185,6 +158,36 @@ $responsable = $this->identity();
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="form-group col-md-3">
+                            <label>Forma de Pago</label>
+                            <select class="form-control" id="forma_pago" name="forma_pago" onchange="seleccionaFormaPago()">
+                                <option value="-1" hidden="">Seleccionar Forma de Pago</option>
+                                <option value="1">Contado</option>
+                                <option value="2">Tarjeta</option>
+                                <?php foreach ($categorias as $categoria) : ?>
+                                <option value="<?= $categoria->getId(); ?>">
+                                    <?= $categoria->getNombre(); ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div id="div_bonificacion" class="form-group col-md-3" hidden="">
+                            <label>% Bonificación</label>
+                            <input type="text" class="form-control" name="bonificacion_general" id="bonificacion_general" value="0.00"
+                            onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" >
+                        </div>
+                        <div id="div_recargo" class="form-group col-md-3" hidden="">
+                            <label>% Recargo</label>
+                            <input type="text" class="form-control" name="recargo_general" id="recargo_general" value="0.00"
+                            onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" >
+                        </div>
+                    </div>
+                    <!-- Total -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <label>Total</label>
+                            <input type="text" class="form-control" name="total_general" id="total_general" value=0 readonly>
+                        </div>
                         <div class="form-group col-md-2">
                             <label>Fecha de Vencimiento</label>
                             <div class='input-group date' id='datetimepicker2'>
@@ -195,6 +198,9 @@ $responsable = $this->identity();
                             </div>
                         </div>
                     </div>
+                    <script>
+                        calcularSubcampos();
+                     </script>
                 </div>
             </div>
         </div>

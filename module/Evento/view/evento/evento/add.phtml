@@ -3,7 +3,6 @@ $this->headTitle('Agregar Evento');
 $id_persona = $this->persona->getId();
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');
-
 $date = date('d-m-Y');
 
 $form->get('fecha_evento')->setAttributes([
@@ -16,7 +15,6 @@ $form->get('tipo_evento')->setAttributes([
     'class' => 'form-control',
     'value' => '',
 ]);
-
 
 $form->get('id_cliente')->setAttributes([
     'class' => 'form-control',
@@ -31,7 +29,6 @@ $form->get('id_ejecutivo')->setAttributes([
 ]);
 
 $form->get('submit')->setAttributes(['class' => 'btn btn-danger']);
-
 $form->prepare();
 ?>
 
@@ -45,6 +42,23 @@ $form->prepare();
         });
     });
 </script>
+
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes/listado'); ?>">Listado</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('clientes/ficha', ['tipo' => 'cliente', 'id' => $id_persona]) ?>">Ficha Cliente</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Acción Comercial</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+                    style="margin:0px;">
+            <li class="pull-right"><a href="<?= $this->url('clientes/ficha', ['tipo' => 'cliente', 'id' => $id_persona]) ?>" id="volver">Volver</a></li>
+        </ol>
+    </nav>
+</div>
 
 <div class="container margen">
     <div class="row">
@@ -98,9 +112,7 @@ $form->prepare();
                                 <h4 class="modal-title">Agregar evento</h4>
                             </div>
                             <div class="modal-body">
-                                <p>
-                                    ¿Está seguro que desea agregar este evento?
-                                </p>
+                                <p>¿Está seguro que desea agregar este evento?</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-default">Aceptar</button>

@@ -121,6 +121,7 @@ class PedidoController extends TransaccionController{
         if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
             $_SESSION['TRANSACCIONES']['PEDIDO']= $items;
         }
+        
         $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
         $json = "";
         foreach ($items as $array){
