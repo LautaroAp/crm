@@ -120,15 +120,8 @@ class PedidoController extends TransaccionController{
             $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
             $json .= $item->getJson(). ',';
         }
-<<<<<<< HEAD
-
         $json = substr($json, 0, -1);
         $json = '['.$json.']';
-
-=======
-        $json = substr($json, 0, -1);
-        $json = '['.$json.']';
->>>>>>> 39d578688dbeef89f1e3b8d5827580634e7f46ca
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         $tipoPersona = null;
