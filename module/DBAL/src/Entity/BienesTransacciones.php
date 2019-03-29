@@ -207,7 +207,7 @@ class BienesTransacciones {
         $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
         $output .= '"Descuento": "' . $this->getDescuento() .'", ';
         $output .= '"Subtotal": "' . $this->getSubtotal() .'" ';
-      
+        
         return  '{'.$output.'}' ;
     }
 
