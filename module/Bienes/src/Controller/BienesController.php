@@ -70,7 +70,11 @@ class BienesController extends HuellaController
         $bienTransaccion->setCantidad($parametros['cantidad']);
         $iva = $this->ivaManager->getIva($parametros['iva']);
         $bienTransaccion->setIva($iva);
-        $bienTransaccion->setSubtotal($parametros['subtotal']); 
+        $subtotal = $parametros['subtotal'];
+        if ($subtotal[0]=="$"){
+            $subtotal = substr($subtotal, 2);
+        }
+        $bienTransaccion->setSubtotal($subtotal); 
         $transaccionUpper =strtoupper($transaccion);
         if (!isset($_SESSION['TRANSACCIONES'][strtoupper($transaccion)])){
             $_SESSION['TRANSACCIONES'][strtoupper($transaccion)] = array();

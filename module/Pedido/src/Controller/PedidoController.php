@@ -105,12 +105,10 @@ class PedidoController extends TransaccionController{
     public function editAction() {
         $id_transaccion= $this->params()->fromRoute('id');
         $pedido = $this->pedidoManager->getPedidoFromTransaccionId($id_transaccion);
-
         $items= array();
         if (!is_null($pedido)){
             $items = $pedido->getTransaccion()->getBienesTransacciones();
         }
-        
         $items = $this->getItemsArray($items);
         if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
             $_SESSION['TRANSACCIONES']['PEDIDO']= $items;
@@ -121,10 +119,8 @@ class PedidoController extends TransaccionController{
             $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
             $json .= $item->getJson(). ',';
         }
-        var_dump($items);
         $json = substr($json, 0, -1);
         $json = '['.$json.']';
-        print_r($json);
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         $tipoPersona = null;

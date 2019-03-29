@@ -33,8 +33,8 @@ function addItems(bienes) {
             tabCell.setAttribute("id", i);
             tabCell.setAttribute("class", "click");
             value = item[col[j]];
-            if (col[j] == "Descuento"){value = formatPercent(value);}
-            if (col[j] == "Precio"){value = formatMoney(value);}
+            if ((col[j] == "Descuento") || (col[j] == "Iva" )){value = formatPercent(value);}
+            if ((col[j] == "Precio") || (col[j] == "Subtotal")){value = formatMoney(value);}
             tabCell.innerHTML = value;
         }
     }

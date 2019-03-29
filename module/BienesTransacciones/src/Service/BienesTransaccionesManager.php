@@ -161,8 +161,13 @@ class BienesTransaccionesManager {
         $iva = $this->ivaManager->getIva($array['iva']);
         $bienTransaccion->setIva($iva);
         $subtotal = $array['subtotal'];
-        $subtotal = substr($subtotal, 2);
         $bienTransaccion->setSubtotal($subtotal);
         return $bienTransaccion;
+    }
+
+    public function borrarBienesTransacciones($bienesTransacciones){
+        foreach ($bienesTransacciones as $bienTransaccion){
+            $this->removeBienTransaccion($bienTransaccion);
+        }
     }
 }
