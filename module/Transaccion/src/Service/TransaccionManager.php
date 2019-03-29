@@ -25,15 +25,17 @@ class TransaccionManager {
     protected $personaManager;
     protected $bienesTransaccionesManager;
     protected $ivaManager;
-    
+    protected $formaPagoManager;    
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $personaManager, $bienesTransaccionesManager, $ivaManager) {
+    public function __construct($entityManager, $personaManager, $bienesTransaccionesManager, $ivaManager,
+    $formaPagoManager) {
         $this->entityManager = $entityManager;
         $this->personaManager= $personaManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->ivaManager = $ivaManager;
+        $this->formaPagoManager = $formaPagoManager;
     }
 
     public function getTransacciones() {
@@ -119,7 +121,11 @@ class TransaccionManager {
             $transaccion->setBonificacionGeneral($data['bonificacion_general']);
         }
         if (isset($data['iva_general'])){
-
+            $iva = $this->ivaManager->getIvaId($data['iva_general']);
+        }
+        if(isset($data['forma_pago'])){
+            $formaPago = $this->formaPagoManager->getFormaPagoId($data['forma_pago']);
+            $transaccion->setFormaPago($formaPago);
         }
         return $transaccion;
     }
@@ -163,5 +169,8 @@ class TransaccionManager {
         $this->entityManager->flush();
     }
 
+    public function getFormasPago(){
+        return $this->formaPagoManager->getFormasPago();
+    }
 
 }

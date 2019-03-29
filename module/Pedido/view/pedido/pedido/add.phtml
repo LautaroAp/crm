@@ -86,7 +86,7 @@ $responsable = $this->identity();
                         </div>
                         <div class="form-group col-md-3">
                             <label>Número de Pedido</label>
-                            <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion" 
+                            <input type="text" class="form-control" name="numero_pedido" id="numero_pedido" 
                             value="<?= $numPedido ?>" style="max-width: 250px;">
                         </div>
                         <div class="form-group col-md-6">
@@ -98,13 +98,11 @@ $responsable = $this->identity();
                             </div>
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value=<?= $responsable ?> >
+                        <input type="hidden" id="url" name="url" value=<?= $url ?> >
                     </div>
                 </div>
             </div>
         </div>
-
-
-
          <!-- Tabla de Items -->
          <div class="row form-row">
             <div class="panel panel-default sombra-ficha">

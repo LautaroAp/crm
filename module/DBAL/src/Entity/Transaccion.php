@@ -94,6 +94,12 @@ class Transaccion {
      */
     protected $ivaGeneral;
 
+       /**
+     * @ORM\ManyToOne(targetEntity="FormaPago")
+     * @ORM\JoinColumn(name="ID_FORMA_PAGO", referencedColumnName="ID")
+     */
+    protected $formaPago;
+    
     /**
      * Get the value of id
      */ 
@@ -384,6 +390,26 @@ class Transaccion {
     public function setIvaGeneral($ivaGeneral)
     {
         $this->ivaGeneral = $ivaGeneral;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of formaPago
+     */ 
+    public function getFormaPago()
+    {
+        return $this->formaPago;
+    }
+
+    /**
+     * Set the value of formaPago
+     *
+     * @return  self
+     */ 
+    public function setFormaPago($formaPago)
+    {
+        $this->formaPago = $formaPago;
 
         return $this;
     }

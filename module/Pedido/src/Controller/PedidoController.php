@@ -75,10 +75,17 @@ class PedidoController extends TransaccionController{
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
             $this->pedidoManager->addPedido($data, $items);
-            $this->redirect()->toRoute('home');
+            if($persona->getTipo()=="CLIENTE"){
+                $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            }
+            else{
+                $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            }
+        
         }
         $numTransacciones= $this->pedidoManager->getTotalTransacciones()+1;
         $numPedido = $this->pedidoManager->getTotalPedidos()+1;
+        $formasPago = $this->pedidoManager->getFormasPago();
         $this->reiniciarParams();
         return new ViewModel([
             'items' => $items,
@@ -87,6 +94,7 @@ class PedidoController extends TransaccionController{
             'numTransacciones'=>$numTransacciones,
             'numPedido'=>$numPedido,
             'json' => $json,
+            'formasPago' => $formasPago,
         ]);
     }
 
@@ -121,14 +129,13 @@ class PedidoController extends TransaccionController{
         }
         $json = substr($json, 0, -1);
         $json = '['.$json.']';
-        $id_persona = $this->params()->fromRoute('id');
-        $persona = $this->personaManager->getPersona($id_persona);
+        $persona = $pedido->getTransaccion()->getPersona();
         $tipoPersona = null;
         if($persona->getTipo()=="CLIENTE"){
-            $tipoPersona= $this->clientesManager->getClienteIdPersona($id_persona);
+            $tipoPersona= $this->clientesManager->getClienteIdPersona($persona->getId());
         }
         elseif ($persona->getTipo()=="PROVEEDOR"){
-            $tipoPersona= $this->proveedorManager->getProveedorIdPersona($id_persona);
+            $tipoPersona= $this->proveedorManager->getProveedorIdPersona($persona->getId());
         }
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
@@ -136,11 +143,18 @@ class PedidoController extends TransaccionController{
             $data['persona'] = $persona;
             $data['items'] = $_SESSION['TRANSACCIONES']['PEDIDO'];
             $this->pedidoManager->edit($pedido, $data);
-            $this->redirect()->toRoute('home');
+            $url = $data['url'];
+            if($persona->getTipo()=="CLIENTE"){
+                $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            }
+            else{
+                $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            }
+        
         }
-
         $numTransacciones= $pedido->getTransaccion()->getNumero(); 
         $numPedido = $pedido->getNumero();
+        $formasPago= $this->pedidoManager->getFormasPago();
         $this->reiniciarParams();
         return new ViewModel([
             'items' => $items,
@@ -149,6 +163,8 @@ class PedidoController extends TransaccionController{
             'numTransacciones'=>$numTransacciones,
             'numPedido'=>$numPedido,
             'json' => $json,
+            'formasPago' => $formasPago,
+
         ]);
     }
 

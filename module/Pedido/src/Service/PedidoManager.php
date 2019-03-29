@@ -32,8 +32,8 @@ class PedidoManager extends TransaccionManager{
      * Constructs the service.
      */
     public function __construct($entityManager, $monedaManager, $personaManager, $bienesTransaccionManager,
-    $ivaManager) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager);
+    $ivaManager, $formaPagoManager) {
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager);
         $this->entityManager = $entityManager;
         $this->monedaManager = $monedaManager;
         $this->tipo = "PEDIDO";
