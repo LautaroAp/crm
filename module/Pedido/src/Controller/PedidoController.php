@@ -115,16 +115,17 @@ class PedidoController extends TransaccionController{
         if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
             $_SESSION['TRANSACCIONES']['PEDIDO']= $items;
         }
+        
         $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
         $json = "";
         foreach ($items as $array){
             $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
             $json .= $item->getJson(). ',';
         }
-        var_dump($items);
+
         $json = substr($json, 0, -1);
         $json = '['.$json.']';
-        print_r($json);
+
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         $tipoPersona = null;

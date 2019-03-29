@@ -50,10 +50,7 @@ class BienesController extends HuellaController
             return $this->addItem($parametros, $transaccion, $id_persona, $accion);
         }
         $bienes = $this->bienesManager->getBienesFiltrados2($parametros);
-        $page = 1;
-        if ($this->params()->fromRoute('id')) {
-            $page = $this->params()->fromRoute('id');
-        }
+
         return new ViewModel([
             'bienes' => $bienes,
             'ivas' => $ivas,
