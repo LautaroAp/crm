@@ -40,16 +40,11 @@ class ServicioController extends HuellaController {
 
     private function procesarIndexAction() {
         $this->prepararBreadcrumbs("Listado", "/listado", "Servicios");
-        $paginator = $this->servicioManager->getTabla();
-        $page = 1;
-        if ($this->params()->fromRoute('id')) {
-            $page = $this->params()->fromRoute('id');
-        }
-        $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage($this->getElemsPag());
+        $servicios = $this->servicioManager->getServicios();
+
         $volver = $this->getUltimaUrl();
         return new ViewModel([
-            'servicios' => $paginator,
+            'servicios' => $servicios,
             'volver' => $volver,
         ]);        
     }

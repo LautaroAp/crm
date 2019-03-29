@@ -1,5 +1,18 @@
 <script src="js/functions.js"></script>
-<!-- Inicio: Tabla Productos -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#tabla_productos').DataTable({
+            "order": [0, 'desc'],
+
+            "language": {
+                "url": "/json/spanish.json"
+            }
+        });
+    });
+</script>
+
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
     <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
@@ -22,7 +35,7 @@
                 LISTADO CATEGORIA PRODUCTOS
             </div>
             <div class="panel-body">
-                <table id="tabla_evento" class="table table-bordred table-hover table-condensed">            
+                <table id="tabla_productos" class="display">            
                     <thead>
                         <tr>
                             <th class="th-sm" style="width:20%;">Nombre</th>
@@ -35,8 +48,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (isset($productos_pag)) { 
-                            foreach ($productos_pag as $producto) : 
+                        <?php if (isset($productos)) { 
+                            foreach ($productos as $producto) : 
                                 $bien = $producto->getBien();
                         ?>
                                 <tr>
@@ -82,14 +95,11 @@
                                         </div>
                                     </div>
                                 </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach;} ?>
                     </tbody>
                 </table>
             </div>
         </div>
-        <?php echo $this->paginationControl($productos_pag, 'Sliding', // All, Elastic, Jumping, Sliding
-                        'search_pagination_producto.phtml', $this->url('producto/page', ['action' => 'index', 'id' => 1]));
-        } ?> 
     </div>
 </div>
 <!-- Fin: Tabla Productos -->

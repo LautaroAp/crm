@@ -39,16 +39,10 @@ class LicenciaController extends HuellaController {
 
     private function procesarIndexAction() {
         $this->prepararBreadcrumbs("Listado", "/listado", "Licencias");
-        $paginator = $this->licenciaManager->getTabla();
-        $page = 1;
-        if ($this->params()->fromRoute('id')) {
-            $page = $this->params()->fromRoute('id');
-        }
-        $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage($this->getElemsPag());
+        $licencias = $this->licenciaManager->getLicencias();
 
         return new ViewModel([
-            'licencias' => $paginator,
+            'licencias' => $licencias,
         ]);
     }
 

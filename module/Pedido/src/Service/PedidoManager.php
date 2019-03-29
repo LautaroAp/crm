@@ -49,6 +49,10 @@ class PedidoManager extends TransaccionManager{
                         ->find($id);
     }
 
+    public function getPedidoFromTransaccionId($id) {
+        return $this->entityManager->getRepository(Pedido::class)
+                        ->findOneBy(['transaccion'=>$id]);
+    }
 
     public function getTabla() {
         // Create the adapter

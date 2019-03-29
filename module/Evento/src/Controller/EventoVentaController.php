@@ -92,10 +92,8 @@ class EventoVentaController extends EventoController
         if (!isset($parametros['ventas_y'])){
             $parametros['ventas_y'] = date("Y");}
 
-        // $paginator = $this->eventoVentaManager->getEventosFiltrados($parametros);
         $eventos = $this->eventoVentaManager->getEventosFiltrados($parametros);
         $total = $this->eventoVentaManager->getTotalFiltrados($parametros);
-        // $page = 1;
         if (!is_null($tipoPersona) and ($tipoPersona!="-1")){
             $tipoEventos = $this->tipoEventoManager->getTipoEventos($tipoPersona);
         }
@@ -105,8 +103,6 @@ class EventoVentaController extends EventoController
         if ($this->params()->fromRoute('id')) {
             $page = $this->params()->fromRoute('id');
         }
-        // $paginator->setCurrentPageNumber((int) $page)
-        //         ->setItemCountPerPage($this->getElemsPag());
         $volver = $this->getUltimaUrl();
 
         return new ViewModel([

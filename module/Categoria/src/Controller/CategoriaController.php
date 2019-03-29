@@ -87,15 +87,7 @@ class CategoriaController extends HuellaController {
         $tipo= $this->params()->fromRoute('tipo');
         $url = $this->getRuta($tipo);
         $this->prepararBreadcrumbs("Categorias", $url);
-        $id=$this->params()->fromRoute('id');
-        $form = $this->categoriaManager->createForm();
-        $paginator = $this->categoriaManager->getTabla($tipo);
-        $page = 1;
-        if ($this->params()->fromRoute('id')) {
-            $page = $this->params()->fromRoute('id');
-        }
-        $paginator->setCurrentPageNumber((int) $page)
-                ->setItemCountPerPage($this->getElemsPag());
+        $categorias = $this->categoriaManager->getTabla($tipo);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->categoriaManager->addCategoria($data, $tipo);
@@ -105,7 +97,7 @@ class CategoriaController extends HuellaController {
         $_SESSION['CATEGORIA']['TIPO'] = $tipo;
         $volver = $this->getUltimaUrl();
         return new ViewModel([
-            'categorias' => $paginator,
+            'categorias' => $categorias,
             'tipo'=>$tipo,
             'volver'=>$volver
         ]);

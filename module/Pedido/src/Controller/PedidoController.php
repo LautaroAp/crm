@@ -62,12 +62,14 @@ class PedidoController extends TransaccionController{
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         $tipoPersona = null;
+
         if($persona->getTipo()=="CLIENTE"){
             $tipoPersona= $this->clientesManager->getClienteIdPersona($id_persona);
         }
         elseif ($persona->getTipo()=="PROVEEDOR"){
             $tipoPersona= $this->proveedorManager->getProveedorIdPersona($id_persona);
         }
+        
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
@@ -101,12 +103,14 @@ class PedidoController extends TransaccionController{
 
 
     public function editAction() {
-        $id= $this->params()->fromRoute('id');
-        $pedido = $this->pedidoManager->getPedidoId($id);
+        $id_transaccion= $this->params()->fromRoute('id');
+        $pedido = $this->pedidoManager->getPedidoFromTransaccionId($id_transaccion);
+
         $items= array();
         if (!is_null($pedido)){
             $items = $pedido->getTransaccion()->getBienesTransacciones();
         }
+        
         $items = $this->getItemsArray($items);
         if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
             $_SESSION['TRANSACCIONES']['PEDIDO']= $items;

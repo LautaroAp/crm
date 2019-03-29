@@ -46,9 +46,7 @@ class ServicioManager {
     }
 
     public function getTabla() {
-        // Create the adapter
-        $adapter = new SelectableAdapter($this->entityManager->getRepository(Servicio::class)); // An object repository implements Selectable
-        // Create the paginator itself
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(Servicio::class));
         $paginator = new Paginator($adapter);
         return ($paginator);
     }
