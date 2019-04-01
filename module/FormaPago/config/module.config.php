@@ -15,11 +15,10 @@ use Application;
 return [ 
    'router' => [
         'routes' => [
-            'actividades' => [
+            'formaspago' => [
                 'type'    => Segment::class,
                 'options' => [
-                    // 'route'    => '/clientes/actividadesCliente',
-                    'route' =>'/actividades',
+                    'route' =>'/formaspago',
                     'defaults' => [
                         'controller'    => Controller\FormaPagoController::class,
                         'action'        => 'index',

@@ -82,6 +82,11 @@ class PresupuestoManager extends TransaccionManager{
         return $presupuesto;
     }
 
+    public function getPresupuestoFromTransaccionId($id){
+        return $this->entityManager->getRepository(Presupuesto::class)
+        ->findOneBy(['transaccion'=>$id]);
+    }
+
     /**
      * This method updates data of an existing presupuesto.
      */

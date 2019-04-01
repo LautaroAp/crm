@@ -77,13 +77,7 @@ class BienesController extends HuellaController
             $_SESSION['TRANSACCIONES'][strtoupper($transaccion)] = array();
         }
         array_push($_SESSION['TRANSACCIONES'][strtoupper($transaccion)], $bienTransaccion->toArray());
-
-        // if (!isset($this->bienesTransacciones[$transaccionUpper])){
-        //      $this->bienesTransacciones[$transaccionUpper]= array();
-        // }
-        // array_push($this->bienesTransacciones[$transaccionUpper], $bienTransaccion);
         $ruta= $transaccion."/".$accion;
-
         return $this->redirect()->toRoute($ruta,['id'=>$id_persona]);
     }
 }
