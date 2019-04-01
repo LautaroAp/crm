@@ -83,6 +83,7 @@ class BienesController extends HuellaController
         // }
         // array_push($this->bienesTransacciones[$transaccionUpper], $bienTransaccion);
         $ruta= $transaccion."/".$accion;
+
         return $this->redirect()->toRoute($ruta,['id'=>$id_persona]);
     }
 }

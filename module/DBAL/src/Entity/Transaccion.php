@@ -96,7 +96,7 @@ class Transaccion {
 
        /**
      * @ORM\ManyToOne(targetEntity="FormaPago")
-     * @ORM\JoinColumn(name="ID_FORMA_PAGO", referencedColumnName="ID")
+     * @ORM\JoinColumn(name="ID_FORMA_DE_PAGO", referencedColumnName="ID")
      */
     protected $formaPago;
     

@@ -90,7 +90,7 @@ class PedidoManager extends TransaccionManager{
         $fecha_entrega=null;
 
         if (isset($data['fecha_entrega'])){
-            $fecha_entrega = \DateTime::createFromFormat('d-m-Y', $data['fecha_entrega']); 
+            $fecha_entrega = \DateTime::createFromFormat('d/m/Y', $data['fecha_entrega']); 
             $pedido->setFecha_entrega($fecha_entrega);
         }
        

@@ -73,7 +73,6 @@ class BienesTransaccionesManager {
     }
 
     public function add($bienTransaccion){
-
         $this->entityManager->merge($bienTransaccion);
         $this->entityManager->flush();
         return $bienTransaccion;

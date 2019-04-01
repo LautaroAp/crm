@@ -102,16 +102,14 @@ function calcularSubcampos(){
 
     bonificacion_general = $("#bonificacion_general").val();
     recargo_general = $("#recargo_general").val();
-
-    total_general = sumSubtotal - (sumSubtotal* bonificacion_general/100) + (sumSubtotal* recargo_general/100);
-    
+    if (!recargo_general){
+        recargo_general=0;
+    }
+    var total_general = sumSubtotal - (sumSubtotal* bonificacion_general/100) + (sumSubtotal* recargo_general/100);
     $("#subtotal_general").val(formatMoney(parseFloat(sumSubtotal).toFixed(2)));
     $("#descuento_total").val(formatMoney(parseFloat(sumBonificacion).toFixed(2)));
     $("#iva_total").val(formatMoney(parseFloat(sumIva).toFixed(2)));
     $("#total_general").val(formatMoney(parseFloat(total_general).toFixed(2)));
-
- 
-
 }
 
 var item = null;

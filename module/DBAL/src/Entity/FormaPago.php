@@ -23,7 +23,7 @@ class FormaPago
     protected $id;
 
     /**
-     * @ORM\Column(name="FORMA_DE_PAGO", nullable=true, type="string")
+     * @ORM\Column(name="FORMA_DE_PAGO", nullable=true, type="integer")
      */
     protected $formaPago;
 

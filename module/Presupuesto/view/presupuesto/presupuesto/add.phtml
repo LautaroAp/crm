@@ -104,9 +104,9 @@ $responsable = $this->identity();
                         addItems(obj, "presupuesto", idPersona);
                     </script>
                     <br>
-                    <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'presupuesto','id'=> $persona->getId()]); ?>" type="button">
-                        <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Item</span>
-                    </a>    
+                    <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'presupuesto','accion'=>'agregar','id'=> $persona->getId()]); ?>" type="button">
+                        <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Agregar Item</span>
+                    </a>   
                 </div>
             </div>
         </div>
