@@ -33,6 +33,7 @@ class Usuario {
      * @ORM\Column(name="SKYPE", nullable=true, type="string", length=255)
      */
     protected $skype;
+    
      /**
      * Many Usuario have One Persona.
      * @ORM\ManyToOne(targetEntity="Persona")

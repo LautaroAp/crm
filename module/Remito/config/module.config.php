@@ -21,8 +21,8 @@ return [
                 'options' => [
                     'route'    => '/remito',
                     'defaults' => [
-                        'controller' => \Application\Controller\IndexController::class,
-                        'action' => 'gestionRemitos',
+                        'controller' => \Remito\Controller\RemitoController::class,
+                        'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
@@ -42,7 +42,7 @@ return [
                     'agregar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/add[/:tipo[/:id]]',
+                            'route' => '/add[/:id]',
                             'defaults' => [
                                 'action' => 'add',
                             ],
@@ -60,6 +60,18 @@ return [
                             ],
                         ],
                     ],
+                    'addItem' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/item[/:id]',
+                            'defaults' => [
+                                'action' => 'addItem',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
                     'page' => [
                         'type' => Segment::class,
                         'options' => [
@@ -70,6 +82,20 @@ return [
                             ],
                             'constraints' => [
                                 'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'ajax' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '/ajax[/:action[/:id[/:id2]]]',
+                            'defaults' => [
+                                'controller' => \Remito\Controller\RemitoController::class,                             
+                            ],
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[a-zA-Z0-9_-]*',
+                                'id2' => '[a-zA-Z0-9_-]*',
                             ],
                         ],
                     ],

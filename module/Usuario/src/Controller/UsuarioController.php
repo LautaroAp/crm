@@ -21,12 +21,14 @@ class UsuarioController extends HuellaController {
 
     private $usuarioManager;
     private $clienteManager;
+    private $personaManager;
 
 
-    public function __construct($entityManager, $usuarioManager, $clienteManager) {
+    public function __construct($entityManager, $usuarioManager, $clienteManager, $personaManager) {
         $this->entityManager = $entityManager;
         $this->usuarioManager = $usuarioManager;
         $this->clienteManager = $clienteManager;
+        $this->personaManager = $personaManager;
 
     }
 
@@ -134,10 +136,15 @@ class UsuarioController extends HuellaController {
             if ($usuario == null) {
                 $this->getResponse()->setStatusCode(404);
                 return;
-            } 
+            }
+
             $cliente = $this->usuarioManager->getCliente($id);
             $idPersona =$cliente->getPersona()->getId();
-            $this->usuarioManager->removeUsuario($usuario);           
+
+            $persona = $usuario->getPersona();
+
+            $this->usuarioManager->removeUsuario($usuario);
+            $this->personaManager->removePersona($persona);           
             return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $idPersona]);
         } else {
             $view = new ViewModel();

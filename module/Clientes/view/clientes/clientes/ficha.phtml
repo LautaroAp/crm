@@ -299,7 +299,7 @@ $id_persona = $persona->getId();
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="transaccion-font">
+                                    <a href="<?= $this->url("remito/agregar", ['id' => $persona->getId()]); ?>" class="transaccion-font">
                                         <span class="glyphicon glyphicon-check"></span>&nbsp; Remito
                                     </a>
                                 </li>

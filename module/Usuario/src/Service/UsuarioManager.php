@@ -93,6 +93,7 @@ class UsuarioManager {
     }
 
     public function removeUsuario($usuario) {
+        
         if ($this->tryRemoveUsuario($usuario)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Datos eliminados correctamente';

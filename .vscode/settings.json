@@ -1,2 +1,8 @@
 {
+    "editor.wordWrap": "on",
+
+    "workbench.colorCustomizations": {
+        "editor.selectionBackground": "#13641a",
+        "editor.selectionHighlightBackground": "#135564"
+    },
 }

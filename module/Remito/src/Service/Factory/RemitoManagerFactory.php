@@ -1,14 +1,16 @@
 <?php
-namespace Servicio\Service\Factory;
+namespace Remito\Service\Factory;
 
 use Interop\Container\ContainerInterface;
-use Servicio\Service\ServicioManager;
+use Remito\Service\RemitoManager;
 use Moneda\Service\MonedaManager;
 use Transaccion\Service\TransaccionManager;
-
-
+use BienesTransacciones\Service\BienesTransaccionesManager;
+use Persona\Service\PersonaManager;
+use Iva\Service\IvaManager;
+use FormaPago\Service\FormaPagoManager;
 /**
- * This is the factory class for ServicioManager service. The purpose of the factory
+ * This is the factory class for RemitoManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
  */
 class RemitoManagerFactory
@@ -20,8 +22,11 @@ class RemitoManagerFactory
     {        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $monedaManager = $container->get(MonedaManager::class);   
-        $transaccionManager = $container->get(TransaccionManager::class);   
-
-        return new RemitoManager($entityManager, $monedaManager, $transaccionManager);
+        $personaManager = $container->get(PersonaManager::class);
+        $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);  
+        $ivaManager = $container->get(IvaManager::class); 
+        $formaPagoManager = $container->get(FormaPagoManager::class); 
+        return new RemitoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager,
+        $formaPagoManager);
     }
 }
