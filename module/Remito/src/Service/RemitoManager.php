@@ -87,22 +87,25 @@ class RemitoManager extends TransaccionManager{
             $moneda = $this->monedaManager->getMonedaId($data['moneda']); 
         }
         $remito->setMoneda($moneda);
-        $fecha_entrega=null;
 
-        if (isset($data['fecha_entrega'])){
-            $fecha_entrega = \DateTime::createFromFormat('d/m/Y', $data['fecha_entrega']); 
-            $remito->setFecha_entrega($fecha_entrega);
-        }
+        // $fecha_entrega=null;
+        // if (isset($data['fecha_entrega'])){
+        //     $fecha_entrega = \DateTime::createFromFormat('d/m/Y', $data['fecha_entrega']); 
+        //     $remito->setFecha_entrega($fecha_entrega);
+        // }
        
-        if (isset($data['forma_envio'])){
-            $remito->setForma_envio($data['forma_envio']);
-        }
-        if (isset($data['ingresos_brutos'])){
-            $remito->setIngresos_brutos($data['ingresos_brutos']);
-        }
-        if (isset($data['lugar_entrega'])){
-            $remito->setLugar_entrega($data['lugar_entrega']);
-        }
+        // if (isset($data['forma_envio'])){
+        //     $remito->setForma_envio($data['forma_envio']);
+        // }
+
+        // if (isset($data['ingresos_brutos'])){
+        //     $remito->setIngresos_brutos($data['ingresos_brutos']);
+        // }
+
+        // if (isset($data['lugar_entrega'])){
+        //     $remito->setLugar_entrega($data['lugar_entrega']);
+        // }
+
        return $remito;
     }
 

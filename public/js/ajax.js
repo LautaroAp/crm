@@ -92,10 +92,3 @@ function mostrarAccionesComerciales(id_persona){
     });
 }
 
-// $(function(){
-//     $(".click").dblclick(function (e){
-//         e.preventDefault();
-//         var data = $(this).attr("data-valor");
-//         alert(data);
-//     });
-// });

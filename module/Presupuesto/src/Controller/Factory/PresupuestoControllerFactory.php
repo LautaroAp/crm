@@ -9,7 +9,7 @@ use Persona\Service\PersonaManager;
 use Moneda\Service\MonedaManager;
 use Proveedor\Service\ProveedorManager;
 use Clientes\Service\ClientesManager;
-use Iva\Service\IvaManager;
+use BienesTransacciones\Service\BienesTransaccionesManager;
 
 // use Transaccion\Service\TransaccionManager;
 
@@ -29,12 +29,12 @@ class PresupuestoControllerFactory implements FactoryInterface {
         $personaManager = $container->get(PersonaManager::class);            
         $clientesManager = $container->get(ClientesManager::class);            
         $proveedorManager = $container->get(ProveedorManager::class);            
-        $ivaManager = $container->get(IvaManager::class);
+        $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);
         // $transaccionManager = $container->get(TransaccionManager::class);            
 
 
         // Instantiate the service and inject dependencies
         return new PresupuestoController($pedidoManager, $monedaManager, $personaManager, $clientesManager, 
-        $proveedorManager, $ivaManager);
+        $proveedorManager, $bienesTransaccionesManager);
     }    
 }

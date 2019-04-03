@@ -83,10 +83,12 @@ $responsable = $this->identity();
                         </div>
                         <div class="form-group col-md-3">
                             <label>Número de Presupuesto</label>
-                            <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion" 
+                            <input type="text" class="form-control" name="numero_presupuesto" id="numero_presupuesto" 
                             value="<?= $numPresupuesto ?>" style="max-width: 250px;">
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value=<?= $responsable ?> >
+                        <input type="hidden" id="url" name="url" value=<?= $url ?> >
+
                     </div>
                 </div>
             </div>
@@ -112,6 +114,7 @@ $responsable = $this->identity();
         </div>
 
         <!-- Datos -->
+                <!-- Datos -->
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
@@ -121,46 +124,20 @@ $responsable = $this->identity();
                     <!-- Totales -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Descuentos ($)</label>
-                            <input type="text" class="form-control" name="bonificacion_total" id="bonificacion_total" value=0 >
+                            <label>Descuento Total ($)</label>
+                            <input type="text" class="form-control" name="descuento_total" id="descuento_total" value=0 readonly>
                         </div>
                         <div class="form-group col-md-3">
                             <label>IVA Total ($)</label>
-                            <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 >
+                            <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Subtotal General</label>
-                            <input type="text" class="form-control" name="subtotal_general" id="subtotal_general" value=0 >
+                            <label>Subtotal</label>
+                            <input type="text" class="form-control" name="subtotal_general" id="subtotal_general" value=0 readonly>
                         </div>
                     </div>
-                    <div class="row form-row">
-                        <div class="form-group col-md-3">
-                            <label>Bonificacion General (%)</label>
-                            <input type="text" class="form-control" name="bonificacion_general" id="bonificacion_general" value="0"
-                            onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" >
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Total General</label>
-                            <input type="text" class="form-control" name="total_general" id="total_general" value=0 >
-                        </div>
-                    </div>
-                    <script>
-                        calcularSubcampos();
-                     </script>
                     <!-- Forma de Pago + Fecha -->
                     <div class="row form-row">
-                        <div class="form-group col-md-3">
-                            <label>Forma de Pago</label>
-                            <select class="form-control" id="forma_pago" name="forma_pago">
-                                <option value="" hidden="">Seleccionar Forma de Pago</option>
-                                <option value="-1">NO DEFINIDO</option>
-                                <?php foreach ($categorias as $categoria) : ?>
-                                <option value="<?= $categoria->getId(); ?>">
-                                    <?= $categoria->getNombre(); ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
                         <div class="form-group col-md-3">
                             <label>Moneda</label>
                             <select class="form-control" id="moneda" name="moneda">
@@ -173,6 +150,36 @@ $responsable = $this->identity();
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="form-group col-md-3">
+                            <label>Forma de Pago</label>
+                            <select class="form-control" id="forma_pago" name="forma_pago" onchange="seleccionaFormaPago()">
+                                <option value="-1" hidden="">Seleccionar Forma de Pago</option>
+                                <option value="1">Contado</option>
+                                <option value="2">Tarjeta</option>
+                                <?php foreach ($categorias as $categoria) : ?>
+                                <option value="<?= $categoria->getId(); ?>">
+                                    <?= $categoria->getNombre(); ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div id="div_bonificacion" class="form-group col-md-3" hidden="">
+                            <label>% Bonificación</label>
+                            <input type="text" class="form-control" name="bonificacion_general" id="bonificacion_general" value="0.00"
+                            onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" >
+                        </div>
+                        <div id="div_recargo" class="form-group col-md-3" hidden="">
+                            <label>% Recargo</label>
+                            <input type="text" class="form-control" name="recargo_general" id="recargo_general" value="0.00"
+                            onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" >
+                        </div>
+                    </div>
+                    <!-- Total -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <label>Total</label>
+                            <input type="text" class="form-control" name="total_general" id="total_general" value=0 readonly>
+                        </div>
                         <div class="form-group col-md-2">
                             <label>Fecha de Vencimiento</label>
                             <div class='input-group date' id='datetimepicker2'>
@@ -183,11 +190,12 @@ $responsable = $this->identity();
                             </div>
                         </div>
                     </div>
+                    <script>
+                        calcularSubcampos();
+                    </script>
                 </div>
             </div>
         </div>
-    </div>
-
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">

@@ -160,7 +160,7 @@ $responsable = $this->identity();
                         </div>
                         <div class="form-group col-md-3">
                             <label>Forma de Pago</label>
-                            <select class="form-control" id="forma_pago" name="forma_pago" onchange="seleccionaFormaPago()">
+                            <select class="form-control" id="forma_pago" name="forma_pago">
                                 <option value="-1" hidden="">Seleccionar Forma de Pago</option>
                                 <option value="1">Contado</option>
                                 <option value="2">Tarjeta</option>
@@ -171,12 +171,12 @@ $responsable = $this->identity();
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div id="div_bonificacion" class="form-group col-md-3" hidden="">
+                        <div id="div_bonificacion" class="form-group col-md-2" >
                             <label>% Bonificación</label>
                             <input type="text" class="form-control" name="bonificacion_general" id="bonificacion_general" value="0.00"
                             onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" >
                         </div>
-                        <div id="div_recargo" class="form-group col-md-3" hidden="">
+                        <div id="div_recargo" class="form-group col-md-2" >
                             <label>% Recargo</label>
                             <input type="text" class="form-control" name="recargo_general" id="recargo_general" value="0.00"
                             onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" >

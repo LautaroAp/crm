@@ -22,14 +22,17 @@ class PresupuestoController extends TransaccionController{
     private $clientesManager;
     private $proveedorManager;
     private $tipo;
+    private $bienesTransaccionesManager;
 
 
-    public function __construct($presupuestoManager, $monedaManager, $personaManager, $clientesManager, $proveedorManager) {
+    public function __construct($presupuestoManager, $monedaManager, $personaManager, $clientesManager,
+    $proveedorManager,$bienesTransaccionesManager) {
         parent::__construct($presupuestoManager, $personaManager);
         $this->clientesManager=$clientesManager;
         $this->proveedorManager= $proveedorManager;
         $this->presupuestoManager = $presupuestoManager;
         $this->monedaManager= $monedaManager;
+        $this->bienesTransaccionesManager= $bienesTransaccionesManager;
         
     }
 
@@ -43,16 +46,12 @@ class PresupuestoController extends TransaccionController{
 
     public function addAction() {
         $items = array();
-        // if (isset($_SESSION['TRANSACCIONES']['PRESUPUESTO'])){
-            
-        //     $items = $_SESSION['TRANSACCIONES']['PRESUPUESTO'];
-        // }
-        if (isset($this->bienesTransacciones['PRESUPUESTO'])){
-            
-            $items = $this->bienesTransacciones['PRESUPUESTO'];
+        if (isset($_SESSION['TRANSACCIONES']['PRESUPUESTO'])){
+            $items = $_SESSION['TRANSACCIONES']['PRESUPUESTO'];
         }
         $json = "";
-        foreach ($items as $item){
+        foreach ($items as $array){
+            $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
             $json .= $item->getJson(). ',';
         }
         $json = substr($json, 0, -1);
@@ -60,21 +59,30 @@ class PresupuestoController extends TransaccionController{
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         $tipoPersona = null;
+
         if($persona->getTipo()=="CLIENTE"){
             $tipoPersona= $this->clientesManager->getClienteIdPersona($id_persona);
         }
         elseif ($persona->getTipo()=="PROVEEDOR"){
             $tipoPersona= $this->proveedorManager->getProveedorIdPersona($id_persona);
         }
+        
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
             $this->presupuestoManager->addPresupuesto($data, $items);
-            $this->redirect()->toRoute('home');
+            if($persona->getTipo()=="CLIENTE"){
+                $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            }
+            else{
+                $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            }
+        
         }
         $numTransacciones= $this->presupuestoManager->getTotalTransacciones()+1;
         $numPresupuesto = $this->presupuestoManager->getTotalPresupuestos()+1;
+        $formasPago = $this->presupuestoManager->getFormasPago();
         $this->reiniciarParams();
         return new ViewModel([
             'items' => $items,
@@ -83,35 +91,74 @@ class PresupuestoController extends TransaccionController{
             'numTransacciones'=>$numTransacciones,
             'numPresupuesto'=>$numPresupuesto,
             'json' => $json,
+            'formasPago' => $formasPago,
         ]);
     }
-
     public function editAction() {
-        $id = $this->params()->fromRoute('id', -1);
-        $presupuesto = $this->presupuestoManager->getPresupuestoId($id);
+        $id_transaccion= $this->params()->fromRoute('id');
+        $presupuesto = $this->presupuestoManager->getPresupuestoFromTransaccionId($id_transaccion);
+        $items= array();
+        if (!is_null($presupuesto)){
+            $items = $presupuesto->getTransaccion()->getBienesTransacciones();
+        }
+        $items = $this->getItemsArray($items);
+        if (!isset($_SESSION['TRANSACCIONES']['PRESUPUESTO'])){
+            $_SESSION['TRANSACCIONES']['PRESUPUESTO']= $items;
+        }
+        $items = $_SESSION['TRANSACCIONES']['PRESUPUESTO'];
+        $json = "";
+        foreach ($items as $array){
+            $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+            $json .= $item->getJson(). ',';
+        }
+        $json = substr($json, 0, -1);
+        $json = '['.$json.']';
+        $persona = $presupuesto->getTransaccion()->getPersona();
+        $tipoPersona = null;
+        if($persona->getTipo()=="CLIENTE"){
+            $tipoPersona= $this->clientesManager->getClienteIdPersona($persona->getId());
+        }
+        elseif ($persona->getTipo()=="PROVEEDOR"){
+            $tipoPersona= $this->proveedorManager->getProveedorIdPersona($persona->getId());
+        }
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
-            $this->procesarEditAction($presupuesto, $data);
-            return $this->redirect()->toRoute('home');
-        }       
+            $data['persona'] = $persona;
+            $data['items'] = $_SESSION['TRANSACCIONES']['PRESUPUESTO'];
+            $this->presupuestoManager->edit($presupuesto, $data);
+            $url = $data['url'];
+            if($persona->getTipo()=="CLIENTE"){
+                $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            }
+            else{
+                $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            }
+        }
+        $numTransacciones= $presupuesto->getTransaccion()->getNumero(); 
+        $numPresupuesto = $presupuesto->getNumero();
+        $formasPago= $this->presupuestoManager->getFormasPago();
+        $this->reiniciarParams();
         return new ViewModel([
-            'presupuesto' => $presupuesto,
-            'transaccion'=>$presupuesto->getTransaccion(),
-            'persona'=>$transaccion->getPersona(),
-            'tipo'=>$this->getTipo(),
-        ]);    
+            'items' => $items,
+            'persona' => $persona,
+            'tipoPersona'=>$tipoPersona,
+            'numTransacciones'=>$numTransacciones,
+            'numPresupuesto'=>$numPresupuesto,
+            'json' => $json,
+            'formasPago' => $formasPago,
+
+        ]);
     }
 
     public function eliminarItemAction(){
         $this->layout()->setTemplate('layout/nulo');
         $pos = $this->params()->fromRoute('id');
         $id = $this->params()->fromRoute('id2');
-        array_splice($this->bienesTransacciones['PRESUPUESTO'], $pos,1);
+        array_splice($_SESSION['TRANSACCIONES']['PRESUPUESTO'], $pos,1);
         $view = new ViewModel();
         $view->setTerminal(true);
         return $view;
     }
-
 
 }

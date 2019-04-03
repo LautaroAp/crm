@@ -150,6 +150,10 @@ function removerBien(event,id){
 }
 
 function removerBien2(event,id){
+
+    // alert("tipoTransaccion: "); alert(tipoTransaccion);
+    // alert(" idPersona: "); alert(idPersona);
+
     $.ajax({
         "dataType": "text",
         "type": "POST",
@@ -162,6 +166,7 @@ function removerBien2(event,id){
         "error": function (msg) {
             console.log("1-error!");
         }
+
     }).done(function() {
         console.log("1-done!");
     })

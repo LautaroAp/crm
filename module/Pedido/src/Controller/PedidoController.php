@@ -170,12 +170,12 @@ class PedidoController extends TransaccionController{
     }
 
     public function eliminarItemAction(){
+
         $this->layout()->setTemplate('layout/nulo');
         $pos = $this->params()->fromRoute('id');
         $id = $this->params()->fromRoute('id2');
         array_splice($_SESSION['TRANSACCIONES']['PEDIDO'], $pos,1);
 
-        // return $this->redirect()->toRoute('pedido/add/'.$id);
         $view = new ViewModel();
         $view->setTerminal(true);
         return $view;
