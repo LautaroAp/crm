@@ -12,44 +12,16 @@
         });
     });
 </script>
-
-<?php
-if (isset($_SESSION['MENSAJES']['tipo_evento'])) {
-    if ($_SESSION['MENSAJES']['tipo_evento']) {
-        echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['tipo_evento_msj'] . "', 'success');});</script>";
-    } else {
-        echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['tipo_evento_msj'] . "', 'error');});</script>";
-    }
-    $_SESSION['MENSAJES']['tipo_evento'] = null;
-    $_SESSION['MENSAJES']['tipo_evento_msj'] = null;
-}
-$url1 = ""; $url2=""; $url3="";
-$label1=""; $label2=""; $label3="";
-if ($tipoPersona=="proveedor"){
-    $url1 = '/proveedores';
-    $label1= "Proveedores";
-    $url2 = "/proveedores/actividades";
-}elseif ($tipoPersona=="cliente"){
-    $url1= "/clientes";
-    $label1 = "Clientes";
-    $url2= "/clientes/actividades";
-}else{
-    $url = "/home";
-}
-?>
-
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
     <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
     style="margin:0px;">
             <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
-            <li class="breadcrumb-item"><a href="<?= $url1 ?>"><?php echo ($label1);?></a></li>
-            <li class="breadcrumb-item"><a href="<?= $url2 ?>">Eventos</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Listado</li>
+            <li class="breadcrumb-item active" aria-current="page">Formas de Pago</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
         style="margin:0px;">
-            <li class="pull-right"><a href="<?= $url2 ?>" id="volver">Volver</a></li>
+            <li class="pull-right"><a href="empresa" id="volver">Volver</a></li>
         </ol>
     </nav>
 </div>
@@ -73,29 +45,23 @@ if ($tipoPersona=="proveedor"){
                 <form method="post">
                     <div class="row form-row">
                         <div class="form-group col-md-4">
-                            <label>Acción Comercial</label>
-                            <input type="text" class="form-control form-margen" name="nombre" placeholder="Tipo de Actividad">
-                        </div>
-                        <div class="form-group col-md-4" hidden>
-                        <label>Categoría</label>
-                            <select class="form-control form-margen" id="accion_comercial" name="categoria">
-                                <option value="15" hidden="">Acción comercial</option>
-                                <option value="-1">NO DEFINIDO</option>
-                                <?php foreach ($categoriaeventos as $categoria) : ?>
-                                    <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <label>Forma de Pago</label>
+                            <input type="text" class="form-control form-margen" name="nombre" placeholder="Forma de Pago">
                         </div>
                         <div class="form-group col-md-4">
                         <label>Descripción</label>
-                            <input type="text" class="form-control form-margen" name="descripcion" placeholder="Descripción">
+                            <input type="text" class="form-control form-margen" name="Descripcion" placeholder="Descripcion">
+                        </div>
+                        <div class="form-group col-md-4">
+                        <label>Valor Asociado</label>
+                            <input type="text" class="form-control form-margen" name="valor" placeholder="Valor">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="form-group col-md-3">
                             <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
                                 <span class="glyphicon glyphicon-plus" ></span>
-                                Agregar Acción Comercial
+                                Agregar Forma de Pago
                             </button>
                         </div>
                     </div>
@@ -106,10 +72,10 @@ if ($tipoPersona=="proveedor"){
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Agregar evento</h4>
+                                    <h4 class="modal-title">Agregar Forma de Pago</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p>¿Está seguro que desea agregar este evento?</p>
+                                    <p>¿Está seguro que desea agregar esta forma de pago?</p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-default">Aceptar</button>
@@ -128,39 +94,21 @@ if ($tipoPersona=="proveedor"){
                         <table id="tabla_tipoevento" class="display">
                             <thead>
                                 <tr>
-                                    <th class="th-sm" onclick="sortTableString(1, 'tabla_tipoevento')">
-                                        Evento <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                                    </th>
-                                    <th class="th-sm" onclick="sortTableString(1, 'tabla_tipoevento')">
-                                        Categoría <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                                    </th>
-                                    <th class="th-sm" onclick="sortTableString(1, 'tabla_tipoevento')">
-                                        Descripción <i class="fa fa-sort float-right" aria-hidden="true"></i>
-                                    </th>
+                                    <th>Forma de Pago</th>
+                                    <th>Descripción</th>
+                                    <th>Valor</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                if (isset($tipoeventos)) {
-                                    foreach ($tipoeventos as $tipo) :
+                                if (isset($formasPago)) {
+                                    foreach ($formasPago as $formaPago) :
                                         ?>
                                         <tr>
-                                            <td><?php echo ($tipo->getNombre()); ?></td>
-                                            <td><?php echo ($tipo->getNombreCategoriaEvento()); ?></td>
-                                            <td><?php echo ($tipo->getDescripcion()); ?></td>
-                                            <td class="table-items-right">
-                                                <a class="btn btn-default" href="<?= $this->url('actividades/editar', ['action' => 'edit', 'tipo'=>$tipoPersona, 'id' => $tipo->getId()]); ?>">
-                                                    <span class="glyphicon glyphicon-pencil" ></span> 
-                                                </a>
-                                                <button   <?php if ((($tipo->getCategoria_evento())!=null) and 
-                                                ($tipo->getCategoria_evento()->getId()==16)){echo ("disabled");} ?>
-                                                name="<?= $tipo->getId() ?>" id="<?= $tipo->getId() ?>"
-                                                type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $tipo->getId() ?>"
-                                                >
-                                                    <span class="glyphicon glyphicon-remove" ></span>
-                                                </button>
-                                            </td>
+                                            <td><?php echo ($formaPago->getNombre()); ?></td>
+                                            <td><?php echo ($formaPago->getDescripcion()); ?></td>
+                                            <td><?php echo ($formaPago->getValor()); ?></td>
                                             <!-- Modal -->
                                     <div id="myModal<?= $tipo->getId() ?>" class="modal fade" role="dialog">
                                         <div class="modal-dialog">
@@ -168,16 +116,16 @@ if ($tipoPersona=="proveedor"){
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Eliminar evento</h4>
+                                                    <h4 class="modal-title">Eliminar Forma de Pago</h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>
-                                                        ¿Está seguro que desea eliminar el evento: 
-                                                        "<?= $this->escapeHtml($tipo->getNombre()) ?>"?
+                                                        ¿Está seguro que desea eliminar la Forma de Pago: 
+                                                        "<?= $this->escapeHtml($formaPago->getNombre()) ?>"?
                                                     </p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="<?= $this->url('actividades/borrar', ['action' => 'remove', 'id' => $tipo->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
+                                                    <a href="<?= $this->url('formaPago/borrar', ['action' => 'remove', 'id' => $formaPago->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
                                                     <span class="btn btn-default">Aceptar</span></a>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                                 </div>
@@ -200,12 +148,7 @@ if ($tipoPersona=="proveedor"){
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <?php if ($tipoPersona=="cliente"){ ?>
-                    <a href="<?= $this->url('gestionClientes/gestionEventosClientes') ?>">
-                <?php } elseif ($tipoPersona == "proveedor"){ ?>
-                    <a href="<?= $this->url('gestionProveedores/gestionEventosProveedores') ?>">
-
-                <?php } ?>              
+                <a href="/empresa">
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
                     class="img-rounded img-responsive img-texto-derecha zoom">
                 </a>
