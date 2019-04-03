@@ -53,9 +53,9 @@ class FormaPagoManager {
     /**
      * This method adds a new FormaPago.
      */
-    public function addFormaPago($data, $tipoPersona) {
+    public function addFormaPago($data) {
         $formapago = new FormaPago();
-        $this->addData($formapago, $data, $tipoPersona);
+        $this->addData($formapago, $data);
         return $formapago;
     }
 
@@ -67,14 +67,10 @@ class FormaPagoManager {
         return $formapago;
     }
 
-    private function addData($formapago, $data, $tipoPersona=null) {
+    private function addData($formapago, $data) {
         $formapago->setNombre($data['nombre']);
-        if ($data['categoria'] == "-1") {
-            $formapago->setCategoria_evento(null);
-        } else {
-            $categoria_eve = $this->getCategoriaEventos($data['categoria']);
-            $formapago->setCategoria_evento($categoria_eve);
-        }
+        $formapago->setDescripcion($data['descripcion']);
+        
         if (isset($tipoPersona)){
             $formapago->setTipoPersona($tipoPersona);
         }

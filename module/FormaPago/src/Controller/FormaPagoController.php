@@ -14,15 +14,12 @@ use Zend\View\Model\ViewModel;
 class FormaPagoController extends HuellaController {
 
 
-    /**
-     * FormaPago manager.
-     * @var User\Service\FormaPagoManager 
-     */
+
     protected $formaPagoManager;
 
 
 
-    public function __construct($formaPagoManagerr) {
+    public function __construct($formaPagoManager) {
         $this->formaPagoManager = $formaPagoManager;
     }
 
@@ -38,17 +35,15 @@ class FormaPagoController extends HuellaController {
     }
 
     private function procesarAddAction() {
+        $formasPago = $this->formaPagoManager->getFormasPago();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $this->formaPagoManager->addFormaPago($data, $tipoPersona);
-            return $this->redireccionar($tipoPersona);
+            $this->formaPagoManager->addFormaPago($data);
+            return $this->redirect()->toRoute("gestionEmpresa");
+            
         }
-        $volver = $this->getUltimaUrl();
         return new ViewModel([
-            'form' => $form,
             'formasPago' => $formasPago,
-            'tipoPersona'=> $tipoPersona,
-            'volver' => $volver,
         ]);
     }
 
