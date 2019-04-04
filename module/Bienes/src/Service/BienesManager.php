@@ -198,5 +198,6 @@ class BienesManager {
         return $queryBuilder->getQuery();
     }
 
+ 
     
 }

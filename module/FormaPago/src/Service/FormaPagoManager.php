@@ -45,8 +45,7 @@ class FormaPagoManager {
     }
 
     public function getFormaPagoId($id) {
-        return $this->entityManager->getRepository(FormaPago::class)
-                        ->find($id);
+        return $this->entityManager->getRepository(FormaPago::class)->findOneById($id);
     }
 
     
@@ -56,6 +55,8 @@ class FormaPagoManager {
     public function addFormaPago($data) {
         $formapago = new FormaPago();
         $this->addData($formapago, $data);
+        $this->entityManager->persist($formapago);
+        $this->entityManager->flush();
         return $formapago;
     }
 
@@ -69,12 +70,15 @@ class FormaPagoManager {
 
     private function addData($formapago, $data) {
         $formapago->setNombre($data['nombre']);
-        $formapago->setDescripcion($data['descripcion']);
-        
-        if (isset($tipoPersona)){
-            $formapago->setTipoPersona($tipoPersona);
+        if (isset($data['descripcion'])){
+            $formapago->setDescripcion($data['descripcion']);
         }
-        $formapago->setDescripcion($data['descripcion']);
+        if (isset($data['bonificacion']) and ($data['bonificacion']!="")){
+            $formapago->setBonificacion($data['bonificacion']);
+        }
+        if (isset($data['recargo']) and ($data['recargo']!="")){
+            $formapago->setRecargo($data['recargo']);
+        }
         return $formapago;
     }
     

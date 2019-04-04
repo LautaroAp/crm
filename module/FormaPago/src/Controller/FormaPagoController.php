@@ -38,6 +38,7 @@ class FormaPagoController extends HuellaController {
         $formasPago = $this->formaPagoManager->getFormasPago();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
+            $this->limpiarParametros($data);
             $this->formaPagoManager->addFormaPago($data);
             return $this->redirect()->toRoute("gestionEmpresa");
             
@@ -54,7 +55,7 @@ class FormaPagoController extends HuellaController {
     }
 
     public function procesarEditAction() {
-        $id = (int) $this->params()->fromRoute('id');
+        $id = $this->params()->fromRoute('id');
         $formaPago = $this->formaPagoManager->getFormaPagoId($id);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();

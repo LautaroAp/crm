@@ -34,8 +34,6 @@ class PedidoController extends TransaccionController{
         $this->pedidoManager = $pedidoManager;
         $this->monedaManager= $monedaManager;
         $this->bienesTransaccionesManager= $bienesTransaccionesManager;
-        
-
     }
 
     public function indexAction() {
@@ -110,6 +108,66 @@ class PedidoController extends TransaccionController{
     }
 
 
+    // public function editAction() {
+    //     $id_transaccion= $this->params()->fromRoute('id');
+    //     $pedido = $this->pedidoManager->getPedidoFromTransaccionId($id_transaccion);
+    //     $items= array();
+    //     if (!is_null($pedido)){
+    //         $items = $pedido->getTransaccion()->getBienesTransacciones();
+    //     }
+    //     $items = $this->getItemsArray($items);
+    //     if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
+    //         $_SESSION['TRANSACCIONES']['PEDIDO']= $items;
+    //     }
+        
+    //     $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
+    //     $json = "";
+    //     foreach ($items as $array){
+    //         $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+    //         $json .= $item->getJson(). ',';
+    //     }
+    //     $json = substr($json, 0, -1);
+    //     $json = '['.$json.']';
+    //     $persona = $pedido->getTransaccion()->getPersona();
+    //     $tipoPersona = null;
+    //     if($persona->getTipo()=="CLIENTE"){
+    //         $tipoPersona= $this->clientesManager->getClienteIdPersona($persona->getId());
+    //     }
+    //     elseif ($persona->getTipo()=="PROVEEDOR"){
+    //         $tipoPersona= $this->proveedorManager->getProveedorIdPersona($persona->getId());
+    //     }
+    //     if ($this->getRequest()->isPost()) {
+    //         $data = $this->params()->fromPost();
+    //         $data['tipo'] = $this->getTipo();
+    //         $data['persona'] = $persona;
+    //         $data['items'] = $_SESSION['TRANSACCIONES']['PEDIDO'];
+    //         $this->pedidoManager->edit($pedido, $data);
+    //         $url = $data['url'];
+    //         if($persona->getTipo()=="CLIENTE"){
+    //             $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+    //         }
+    //         else{
+    //             $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+    //         }
+        
+    //     }
+    //     $numTransacciones= $pedido->getTransaccion()->getNumero(); 
+    //     $numPedido = $pedido->getNumero();
+    //     $formasPago= $this->pedidoManager->getFormasPago();
+    //     $this->reiniciarParams();
+    //     return new ViewModel([
+    //         'items' => $items,
+    //         'persona' => $persona,
+    //         'tipoPersona'=>$tipoPersona,
+    //         'numTransacciones'=>$numTransacciones,
+    //         'numPedido'=>$numPedido,
+    //         'json' => $json,
+    //         'formasPago' => $formasPago,
+
+    //     ]);
+    // }
+
+
     public function editAction() {
         $id_transaccion= $this->params()->fromRoute('id');
         $pedido = $this->pedidoManager->getPedidoFromTransaccionId($id_transaccion);
@@ -118,12 +176,7 @@ class PedidoController extends TransaccionController{
             $items = $pedido->getTransaccion()->getBienesTransacciones();
         }
         $items = $this->getItemsArray($items);
-        if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])){
-            $_SESSION['TRANSACCIONES']['PEDIDO']= $items;
-        }
-        
-        $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
-        $json = "";
+        $json ="";
         foreach ($items as $array){
             $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
             $json .= $item->getJson(). ',';
@@ -142,7 +195,7 @@ class PedidoController extends TransaccionController{
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
-            $data['items'] = $_SESSION['TRANSACCIONES']['PEDIDO'];
+            // $data['items'] = $_SESSION['TRANSACCIONES']['PEDIDO'];
             $this->pedidoManager->edit($pedido, $data);
             $url = $data['url'];
             if($persona->getTipo()=="CLIENTE"){
@@ -151,7 +204,6 @@ class PedidoController extends TransaccionController{
             else{
                 $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             }
-        
         }
         $numTransacciones= $pedido->getTransaccion()->getNumero(); 
         $numPedido = $pedido->getNumero();
@@ -168,7 +220,6 @@ class PedidoController extends TransaccionController{
 
         ]);
     }
-
     public function eliminarItemAction(){
 
         $this->layout()->setTemplate('layout/nulo');

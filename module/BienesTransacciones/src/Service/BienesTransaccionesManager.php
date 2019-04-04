@@ -151,15 +151,25 @@ class BienesTransaccionesManager {
     }
 
     public function bienTransaccionFromArray($array){
-        // var_dump($array);
         $bienTransaccion = new BienesTransacciones();
-        $bien = $this->bienesManager->getBienId($array['bien']);
+        // var_dump($array);
+        if (isset($array['Bien']['Id'])){
+            $bien = $this->bienesManager->getBienId($array['Bien']['Id']);
+        }
+        else{
+            $bien = $this->bienesManager->getBienId($array['Bien']);
+        }
         $bienTransaccion->setBien($bien);
-        $bienTransaccion->setCantidad($array['cantidad']);
-        $bienTransaccion->setDescuento($array['descuento']);
-        $iva = $this->ivaManager->getIva($array['iva']);
+        $bienTransaccion->setCantidad($array['Cantidad']);
+        $bienTransaccion->setDescuento($array['Descuento']);
+        if (isset($array['IVA']['Id'])){
+            $iva = $this->ivaManager->getIva($array['IVA']['Id']);
+        }
+        else{
+            $iva=$this->ivaManager->getIva($array['IVA']);
+        }
         $bienTransaccion->setIva($iva);
-        $subtotal = $array['subtotal'];
+        $subtotal = $array['Subtotal'];
         $bienTransaccion->setSubtotal($subtotal);
         return $bienTransaccion;
     }

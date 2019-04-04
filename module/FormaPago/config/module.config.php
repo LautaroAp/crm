@@ -29,7 +29,7 @@ return [
                     'editar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '[/:tipo]/edit[/:id]',
+                            'route' => '/edit[/:id]',
                             'defaults' => [
                                 'action' => 'edit',
                             ],

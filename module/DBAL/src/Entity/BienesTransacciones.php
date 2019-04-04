@@ -214,22 +214,22 @@ class BienesTransacciones {
     public function toArray(){
         $salida = array();
         if(!is_null($this->id)){
-            $salida['id']= $this->id;
+            $salida['Id']= $this->id;
         }
         else{
-            $salida['id'] = null;
+            $salida['Id'] = null;
         }
         if (!is_null($this->transaccion)){
-            $salida['transaccion'] = $this->transaccion->getId();
+            $salida['Transaccion'] = $this->transaccion->getId();
         }
         else{
-            $salida['transaccion']= null;
+            $salida['Transaccion']= null;
         }
-        $salida['bien'] = $this->bien->getId();
-        $salida['cantidad'] = $this->cantidad;
-        $salida['descuento'] = $this->descuento;
-        $salida['iva'] = $this->iva->getId();
-        $salida['subtotal'] = $this->subtotal;
+        $salida['Bien'] = $this->bien->getId();
+        $salida['Cantidad'] = $this->cantidad;
+        $salida['Descuento'] = $this->descuento;
+        $salida['IVA'] = $this->iva->getId();
+        $salida['Subtotal'] = $this->subtotal;
         return $salida;
     }
 

@@ -1,26 +1,27 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
+<script src="/js/bienes-transacciones.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#tabla_tipoevento').DataTable({
-            "order": [0, 'desc'],
-
-            "language": {
-                "url": "/json/spanish.json"
-            }
-        });
+$(document).ready(function() {
+    $('#tabla_formaspago').DataTable({
+        "order": [0, 'desc'],
+        "language": {
+            "url": "/json/spanish.json"
+        },
+        
+        
     });
+  
+});
 </script>
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
-    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
-    style="margin:0px;">
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
             <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Formas de Pago</li>
         </ol>
-        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
-        style="margin:0px;">
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
             <li class="pull-right"><a href="empresa" id="volver">Volver</a></li>
         </ol>
     </nav>
@@ -35,112 +36,135 @@
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 LISTADO DE EVENTOS
-                <a data-toggle="collapse" data-parent="#accordion" href="#add_tipo_evento" 
-                    aria-expanded="true" aria-controls="add_tipo_evento">
+                <a data-toggle="collapse" data-parent="#accordion" href="#add_tipo_evento" aria-expanded="true"
+                    aria-controls="add_tipo_evento">
                     <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
                 </a>
             </div>
-        <div class="panel panel-body">
-            <div class="collapse" id="add_tipo_evento">
-                <form method="post">
-                    <div class="row form-row">
-                        <div class="form-group col-md-4">
-                            <label>Forma de Pago</label>
-                            <input type="text" class="form-control form-margen" name="nombre" placeholder="Forma de Pago">
+            <div class="panel panel-body">
+                <div class="collapse" id="add_tipo_evento">
+                    <form method="post">
+                        <div class="row form-row">
+                            <div class="form-group col-md-3">
+                                <label>Forma de Pago</label>
+                                <input type="text" class="form-control form-margen" id="nombre" name="nombre"
+                                    placeholder="Forma de Pago">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Descripción</label>
+                                <input type="text" class="form-control form-margen" name="descripcion"
+                                    placeholder="Descripcion">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>% Bonificacion</label>
+                                <input type="text" class="form-control form-margen" name="bonificacion"
+                                    id="bonificacion" placeholder="Bonificacion"
+                                    onkeypress="return justNumbers(event);">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>% Recargo</label>
+                                <input type="text" class="form-control form-margen" name="recargo" id="recargo"
+                                    placeholder="Recargo" onkeypress="return justNumbers(event);">
+                            </div>
                         </div>
-                        <div class="form-group col-md-4">
-                        <label>Descripción</label>
-                            <input type="text" class="form-control form-margen" name="Descripcion" placeholder="Descripcion">
+                        <div class="row form-row">
+                            <div class="form-group col-md-3">
+                                <button type="button" class="btn btn-default form-margen" data-toggle="modal"
+                                    data-target="#myModal">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    Agregar Forma de Pago
+                                </button>
+                            </div>
                         </div>
-                        <div class="form-group col-md-4">
-                        <label>Valor Asociado</label>
-                            <input type="text" class="form-control form-margen" name="valor" placeholder="Valor">
-                        </div>
-                    </div>
-                    <div class="row form-row">
-                        <div class="form-group col-md-3">
-                            <button type="button" class="btn btn-default form-margen" data-toggle="modal" data-target="#myModal">
-                                <span class="glyphicon glyphicon-plus" ></span>
-                                Agregar Forma de Pago
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Modal -->
-                    <div id="myModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Agregar Forma de Pago</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>¿Está seguro que desea agregar esta forma de pago?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-default">Aceptar</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <!-- Modal -->
+                        <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Agregar Forma de Pago</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Está seguro que desea agregar esta forma de pago?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-default">Aceptar</button>
+                                        <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">Cancelar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table id="tabla_tipoevento" class="display">
-                            <thead>
-                                <tr>
-                                    <th>Forma de Pago</th>
-                                    <th>Descripción</th>
-                                    <th>Valor</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="tabla_formaspago" class="display">
+                                <thead>
+                                    <tr>
+                                        <th>Forma de Pago</th>
+                                        <th>Descripción</th>
+                                        <th>Bonificación</th>
+                                        <th>Recargo</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
                                 if (isset($formasPago)) {
                                     foreach ($formasPago as $formaPago) :
                                         ?>
-                                        <tr>
-                                            <td><?php echo ($formaPago->getNombre()); ?></td>
-                                            <td><?php echo ($formaPago->getDescripcion()); ?></td>
-                                            <td><?php echo ($formaPago->getValor()); ?></td>
-                                            <!-- Modal -->
-                                    <div id="myModal<?= $tipo->getId() ?>" class="modal fade" role="dialog">
-                                        <div class="modal-dialog">
-                                            <!-- Modal content-->
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Eliminar Forma de Pago</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>
-                                                        ¿Está seguro que desea eliminar la Forma de Pago: 
-                                                        "<?= $this->escapeHtml($formaPago->getNombre()) ?>"?
-                                                    </p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="<?= $this->url('formaPago/borrar', ['action' => 'remove', 'id' => $formaPago->getId()]); ?>" onclick="bloqueaPantalla()" type="button">
-                                                    <span class="btn btn-default">Aceptar</span></a>
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    <tr>
+                                        <td id=<?= $formaPago->getId() ?> ondblclick="makeEditable(event)" >
+                                        <?php echo ($formaPago->getNombre()); ?></td>
+                                        <td><?php echo ($formaPago->getDescripcion()); ?></td>
+                                        <td><?php echo ($formaPago->getBonificacion()); ?></td>
+                                        <td><?php echo ($formaPago->getRecargo()); ?></td>
+                                        <td id="<?= $formaPago->getId() ?>" class="">
+                                        <a href="<?= $this->url('formaspago/editar', ['id' =>$formaPago->getId()]) ?>"
+                                            type="button" class="btn btn-default btn-sm">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                            </button>
+                                        </td>
+                                        <!-- Modal -->
+                                        <div id="myModal" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close"
+                                                            data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Eliminar Forma de Pago</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>
+                                                            ¿Está seguro que desea eliminar la Forma de Pago:
+                                                            "<?= $this->escapeHtml($formaPago->getNombre()) ?>"?
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= $this->url('formaspago/borrar', ['action' => 'remove', 'id' => $formaPago->getId()]); ?>"
+                                                            onclick="bloqueaPantalla()" type="button">
+                                                            <span class="btn btn-default">Aceptar</span></a>
+                                                        <button type="button" class="btn btn-default"
+                                                            data-dismiss="modal">Cancelar</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                     </tr>
-                                <?php endforeach;} ?>
+                                    <?php endforeach;} ?>
                                 </tbody>
                             </table>
                         </div>
-                    </div>  
-                 </div>
+                    </div>
+                </div>
             </div>
-        </div>         
+        </div>
     </div>
 </div>
 <!-- Inicio: Panel Botones -->
@@ -149,13 +173,13 @@
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <a href="/empresa">
-                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
-                    class="img-rounded img-responsive img-texto-derecha zoom">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Volver</label>
             </div>
+        </div>
     </div>
-</div>
-<!-- Fin: Panel Botones -->
+    <!-- Fin: Panel Botones -->

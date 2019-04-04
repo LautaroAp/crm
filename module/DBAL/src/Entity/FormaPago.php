@@ -23,9 +23,9 @@ class FormaPago
     protected $id;
 
     /**
-     * @ORM\Column(name="FORMA_DE_PAGO", nullable=true, type="integer")
+     * @ORM\Column(name="FORMA_DE_PAGO", nullable=true, type="string")
      */
-    protected $formaPago;
+    protected $nombre;
 
     /**
      * @ORM\Column(name="DESCRIPCION", nullable=true, type="string")
@@ -33,9 +33,13 @@ class FormaPago
     protected $descripcion;
 
      /**
-     * @ORM\Column(name="VALOR", nullable=true, type="decimal")
+     * @ORM\Column(name="BONIFICACION", nullable=true, type="decimal")
      */
-    private $valor;
+    private $bonificacion;
+      /**
+     * @ORM\Column(name="RECARGO", nullable=true, type="decimal")
+     */
+    private $recargo;
 
     /**
      * @ORM\Column(name="TIPO", nullable=true, type="string")
@@ -63,26 +67,7 @@ class FormaPago
         return $this;
     }
 
-    /**
-     * Get the value of formaPago
-     */ 
-    public function getFormaPago()
-    {
-        return $this->formaPago;
-    }
-
-    /**
-     * Set the value of formaPago
-     *
-     * @return  self
-     */ 
-    public function setFormaPago($formaPago)
-    {
-        $this->formaPago = $formaPago;
-
-        return $this;
-    }
-
+  
     /**
      * Get the value of descripcion
      */ 
@@ -103,42 +88,63 @@ class FormaPago
         return $this;
     }
 
+
     /**
-     * Get the value of valor
+     * Get the value of bonificacion
      */ 
-    public function getValor()
+    public function getBonificacion()
     {
-        return $this->valor;
+        return $this->bonificacion;
     }
 
     /**
-     * Set the value of valor
+     * Set the value of bonificacion
      *
      * @return  self
      */ 
-    public function setValor($valor)
+    public function setBonificacion($bonificacion)
     {
-        $this->valor = $valor;
+        $this->bonificacion = $bonificacion;
 
         return $this;
     }
 
     /**
-     * Get the value of tipo
+     * Get the value of recargo
      */ 
-    public function getTipo()
+    public function getRecargo()
     {
-        return $this->tipo;
+        return $this->recargo;
     }
 
     /**
-     * Set the value of tipo
+     * Set the value of recargo
      *
      * @return  self
      */ 
-    public function setTipo($tipo)
+    public function setRecargo($recargo)
     {
-        $this->tipo = $tipo;
+        $this->recargo = $recargo;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of nombre
+     */ 
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set the value of nombre
+     *
+     * @return  self
+     */ 
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
 
         return $this;
     }

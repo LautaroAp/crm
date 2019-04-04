@@ -5,7 +5,6 @@ function addItems(bienesTransacciones, tipo, id) {
     items = bienesTransacciones;
     tipoTransaccion = tipo; 
     idPersona=id;
-    console.log(idPersona);
     var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal"];
     //TABLE HEADER
     var table = document.createElement("table");
@@ -26,11 +25,11 @@ function addItems(bienesTransacciones, tipo, id) {
         // tr.onclick= selectItem(item["id"]);
         tr.setAttribute("id", i);
         tr.setAttribute("class", "click");
-        tr.setAttribute("onclick","selectItem(event,id)");
-        console.log(item);
+        // tr.setAttribute("onclick","selectItem(event,id)");
         for (var j = 0; j < col.length; j++) {
             var tabCell = tr.insertCell(-1);
-            tabCell.setAttribute("id", i);
+            //el id de cada celda sería la ubicacion (i) y el atributo correspondiente (col[j]) separado por "_"
+            tabCell.setAttribute("id", i+"_"+col[j]);
             tabCell.setAttribute("class", "click");
             if (col[j]=="Nombre" || col[j]=="Descripcion" || col[j]=="Precio"){
                 value = item["Bien"][col[j]];
@@ -41,7 +40,13 @@ function addItems(bienesTransacciones, tipo, id) {
             else{
                 value = item[col[j]];
             }
-            if ((col[j] == "Descuento") || (col[j]=="IVA")){value = formatPercent((parseFloat(value)).toFixed(2));}
+            if (col[j]=="Cantidad"){
+                tabCell.setAttribute("ondblclick", "makeEditable(event)");
+            }
+            if ((col[j] == "Descuento") || (col[j]=="IVA")){
+                value = formatPercent((parseFloat(value)).toFixed(2));
+                tabCell.setAttribute("ondblclick", "makeEditable(event)");
+            }
             if ((col[j] == "Precio")  || (col[j]=="Subtotal")) {value = formatMoney(value);}
 
             tabCell.innerHTML = value;
@@ -75,6 +80,7 @@ function formatMoney(number) {
 function formatPercent(number) {
     return number.toLocaleString('en-US') + ' %';
 }
+
 
 function calcularSubcampos(){
 
@@ -110,6 +116,7 @@ function calcularSubcampos(){
     $("#descuento_total").val(formatMoney(parseFloat(sumBonificacion).toFixed(2)));
     $("#iva_total").val(formatMoney(parseFloat(sumIva).toFixed(2)));
     $("#total_general").val(formatMoney(parseFloat(total_general).toFixed(2)));
+    $("#jsonitems").val(JSON.stringify(items));
 }
 
 var item = null;
@@ -200,4 +207,103 @@ function toggleAttr(e, attr){
     } else {
         $("#" + e).attr(attr,"");
     }
+}
+
+function justNumbers(event){
+    var keynum = window.event ? window.event.keyCode : event.which;
+    if ((keynum == 0) || (keynum == 8) || (keynum == 46)){
+        return true;
+    }   
+    return /\d/.test(String.fromCharCode(keynum));
+}
+
+var selectedAnt=null;
+var selectedNow =null;
+
+function isFormatDescuento(inputValue){
+    if (inputValue!=null){
+        return inputValue.substr(inputValue.length - 1) == "%";
+    }
+    return null;
+}
+
+function getNumberValue(inputValue){
+    if (isFormatDescuento(inputValue)){
+        return inputValue.substring(0,inputValue.length-2);
+    }
+    return inputValue;
+}
+
+function getIndex(tdId){
+    return index = tdId.substring(0, tdId.indexOf('_'));
+}
+
+function getAttribute(tdId){
+    return attribute = tdId.substring(tdId.indexOf('_')+1, tdId.length);
+}
+
+function saveValueInJson(tdId, inputValue){
+    //recibo "0_Cantidad" separo en indice 0 y atributo Cantidad
+    index = tdId.substring(0, tdId.indexOf('_'));
+    attribute = tdId.substring(tdId.indexOf('_')+1, tdId.length);
+    if (inputValue!=null){
+        console.log(inputValue);
+        items[index][attribute] = inputValue;
+        console.log(items);
+    }
+    $("#jsonitems").val(JSON.stringify(items));
+}
+//esta funcion es llamada cuando se modifica el valor de un input
+function saveValue(inputId){
+    tdId= inputId.substring(5);
+    // inputValue= $("#"+inputId).val();
+    // document.getElementById(inputId).remove();
+    // td = document.getElementById(tdId);
+    // td.innerText=inputValue;
+    saveTd(tdId);
+    saveValueInJson(tdId, inputValue)
+}
+
+//esta funcion es llamada para guardar el input anterior al generarse un nuevo input
+function saveTd(tdId){
+    inputId = "input"+tdId;
+    inputValue= $("#"+inputId).val();
+    numValue = getNumberValue(inputValue);
+    inputElement = document.getElementById(inputId);
+    if (inputElement!=null){
+        inputElement.remove();
+        td = document.getElementById(tdId);
+        attribute = getAttribute(tdId);
+        if (attribute=="Descuento"){
+            td.innerText=formatPercent((parseFloat(numValue)).toFixed(2));;
+        }
+        else{
+            td.innerText=inputValue;
+        }
+    }
+    saveValueInJson(tdId, numValue);
+}
+
+//PARA EL IVA VA A TENER QUE SER DISTINTO, ESTO SIRVE PARA BONIFICACION Y CANTIDAD NOMAS
+function makeEditable(event){
+    elementId=event.target.id;
+    element= document.getElementById(elementId);
+    if (selectedNow!=null){
+        selectedAnt=selectedNow;
+    }
+    selectedNow=elementId;
+    if (selectedAnt!=null && selectedNow!=selectedAnt){
+        saveTd(selectedAnt);
+    }
+    val = element.innerText;
+    var input = document.createElement("input");
+    input.type = "text";
+    input.className = "form-control"; // set the CSS class
+    input.value=val;
+    input.setAttribute("size",3);
+    input.id ="input"+elementId;
+    input.setAttribute("onchange", "saveValue(id);");
+    element.innerText="";
+    element.appendChild(input); 
+    // element.setAttribute('contenteditable', true);
 }

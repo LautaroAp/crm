@@ -134,6 +134,7 @@ class TransaccionManager {
         //LOS BIENESTRANSACCIONES SE GUARDAN COMO ARREGLO
         foreach($items as $array ){
             $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+            // $item = $this->bienesTransaccionesManager->getBienTransaccionFromJson($json);
             $item->setTransaccion($transaccion);
             // $transaccion->addBienesTransacciones($item);
             $bien= $item->getBien();
@@ -142,6 +143,7 @@ class TransaccionManager {
         }
     }
     private function setItemsEdit($transaccion, $items){
+
         //LOS BIENESTRANSACCIONES SE GUARDAN COMO ARREGLO
         $itemsAnteriores = $transaccion->getBienesTransacciones();
         if (!is_null($itemsAnteriores)){        
@@ -149,6 +151,8 @@ class TransaccionManager {
         }
         foreach($items as $array ){
             $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+            // $item = $this->bienesTransaccionesManager->getBienTransaccionFromJson($json);
+
             $item->setTransaccion($transaccion);
             // $transaccion->addBienesTransacciones($item);
             $bien= $item->getBien();
@@ -158,8 +162,10 @@ class TransaccionManager {
     }
 
     public function edit($transaccion, $data) {
+        $items = json_decode($data['jsonitems'], true);
         $transaccion=$this->setData($transaccion, $data);
-        $this->setItemsEdit($transaccion, $data['items']);
+        // $this->setItemsEdit($transaccion, $data['items']);
+        $this->setItemsEdit($transaccion,$items);
         $this->entityManager->flush();
         return $transaccion;
     }

@@ -17,13 +17,13 @@ $label1=""; $label2=""; $label3="";
 if ($tipoPersona=="proveedor"){
     $url1 = '/proveedores';
     $label1= "Proveedores";
-    $url2 = "/gestionProveedores/gestionEventosProveedores";
+    $url2 = "/proveedores/actividades";
     $label2 = "Eventos";
     $url3 = "/proveedores/actividades/proveedor";
 }elseif ($tipoPersona=="cliente"){
     $url1= "/clientes";
     $label1 = "Clientes";
-    $url2= "/gestionClientes/gestionEventosClientes";
+    $url2= "/clientes/actividades";
     $label2= "Eventos";
     $url3 = "/clientes/actividades/cliente";
 }else{
@@ -39,7 +39,7 @@ if ($tipoPersona=="proveedor"){
             <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
             <li class="breadcrumb-item"><a href="<?= $url1 ?>"><?php echo ($label1);?></a></li>
             <li class="breadcrumb-item"><a href="<?= $url2 ?>">Eventos</a></li>
-            <li class="breadcrumb-item"><a href="<?php $url3 ?>">Listado</a></li>
+            <li class="breadcrumb-item"><a href="<?= $url3 ?>">Listado</a></li>
             <li class="breadcrumb-item active" aria-current="page">Editar</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
