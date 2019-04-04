@@ -61,6 +61,7 @@ var_dump(json_decode($json_bienes, true));
 <script>
     
     var json_items = <?= $json_bienes ?>;
+    var output;
 
     // data2 = [{"value":"2","label":"Sonarika"},{"value":"7","label":"Rahul singh"},{"value":"8","label":"Shreya"},{"value":"10","label":"Rohit singh"},{"value":"19","label":"Gaurav"}];
 
@@ -202,8 +203,8 @@ var_dump(json_decode($json_bienes, true));
                 <div class="container" style="padding-top:10px;">
                     <form method="post" autocomplete="off">
                         <div class="autocomplete form-group form-inline">
-                            <input type="text" class="form-control" name="myCountry" id="myInput" placeholder="Código">
-                            <input type="text" class="form-control" name="myCountry" id="myInput2" placeholder="Producto & Servicio">
+                            <input type="text" class="form-control" name="item_codigo" id="item_codigo" placeholder="Código">
+                            <input type="text" class="form-control" name="item_nombre" id="item_nombre" placeholder="Producto & Servicio">
 
                             <input type="text" class="form-control" name="descripcion" id="descripcion" 
                                 placeholder="Descripción" style="width: 310px;">
@@ -218,136 +219,91 @@ var_dump(json_decode($json_bienes, true));
                 <!-- ************************************************************************** -->
                 <script>
                     
-                function autocompleteW3S(inp, arr) {
+                // Autocompletado con "NOMBRE" de Producto & Servicio
+                function autocompleteCode(inp, arr) {
                     /*the autocomplete function takes two arguments,
                     the text field element and an array of possible autocompleted values:*/
                     var currentFocus;
                     /*execute a function when someone writes in the text field:*/
                     inp.addEventListener("input", function(e) {
                         var a, b, i, val = this.value;
-                        /*close any already open lists of autocompleted values*/
-                        closeAllLists();
                         if (!val) {
                             return false;
                         }
-                        currentFocus = -1;
-
-                        /*create a DIV element that will contain the items (values):*/
-                        a = document.createElement("DIV");
-                        a.setAttribute("id", this.id + "autocomplete-list");
-                        a.setAttribute("class", "autocomplete-items");
-                        /*append the DIV element as a child of the autocomplete container:*/
-                        this.parentNode.appendChild(a);
-                        
+                        currentFocus = -1;                        
+                        output = [];
                         /*for each item in the array...*/
                         for (i = 0; i < arr.length; i++) {
                             /*check if the item starts with the same letters as the text field value:*/
-
-                            if (arr[i]["label"].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                                /*create a DIV element for each matching element:*/
-                                b = document.createElement("DIV");
-                                /*make the matching letters bold:*/
-                                b.innerHTML = "<strong>" + arr[i]["label"].substr(0, val.length) + "</strong>";
-                                b.innerHTML += arr[i]["label"].substr(val.length);
-                                /*insert a input field that will hold the current array item's value:*/
-                                b.innerHTML += "<input type='hidden' value='" + arr[i]["label"] + "'>";
-                                /*execute a function when someone clicks on the item value (DIV element):*/
-                                b.addEventListener("click", function(e) {
-                                    /*insert the value for the autocomplete text field:*/
-                                    inp.value = this.getElementsByTagName("input")[0].value;
-                                    /*close the list of autocompleted values,
-                                    (or any other open lists of autocompleted values:*/
-                                    closeAllLists();
+                            if (arr[i]["value"].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                                // agregar cada elemento a un nuevo JSON (output)
+                                // output.push(arr[i]);
+                                output.push({
+                                    value: arr[i]["label"],
+                                    label: arr[i]["value"]
                                 });
-                                a.appendChild(b);
                             }
                         }
                     });
 
-                    /*execute a function presses a key on the keyboard:*/
-                    inp.addEventListener("keydown", function(e) {
-                        var x = document.getElementById(this.id + "autocomplete-list");
-                        if (x) x = x.getElementsByTagName("div");
-                        if (e.keyCode == 40) {
-                            /*If the arrow DOWN key is pressed,
-                            increase the currentFocus variable:*/
-                            currentFocus++;
-                            /*and and make the current item more visible:*/
-                            addActive(x);
-                        } else if (e.keyCode == 38) { //up
-                            /*If the arrow UP key is pressed,
-                            decrease the currentFocus variable:*/
-                            currentFocus--;
-                            /*and and make the current item more visible:*/
-                            addActive(x);
-                        } else if (e.keyCode == 13) {
-                            /*If the ENTER key is pressed, prevent the form from being submitted,*/
-                            e.preventDefault();
-                            if (currentFocus > -1) {
-                                /*and simulate a click on the "active" item:*/
-                                if (x) x[currentFocus].click();
-                            }
-                        }
-                    });
-
-                    function addActive(x) {
-                        /*a function to classify an item as "active":*/
-                        if (!x) return false;
-                        /*start by removing the "active" class on all items:*/
-                        removeActive(x);
-                        if (currentFocus >= x.length) currentFocus = 0;
-                        if (currentFocus < 0) currentFocus = (x.length - 1);
-                        /*add class "autocomplete-active":*/
-                        x[currentFocus].classList.add("autocomplete-active");
-                    }
-
-                    function removeActive(x) {
-                        /*a function to remove the "active" class from all autocomplete items:*/
-                        for (var i = 0; i < x.length; i++) {
-                            x[i].classList.remove("autocomplete-active");
-                        }
-                    }
-
-                    function closeAllLists(elmnt) {
-                        /*close all autocomplete lists in the document,
-                        except the one passed as an argument:*/
-                        var x = document.getElementsByClassName("autocomplete-items");
-                        for (var i = 0; i < x.length; i++) {
-                            if (elmnt != x[i] && elmnt != inp) {
-                                x[i].parentNode.removeChild(x[i]);
-                            }
-                        }
-                    }
                     /*execute a function when someone clicks in the document:*/
                     document.addEventListener("click", function(e) {
-                        elementId = e.target.id;
-                        $("#myInput").autocomplete({
-                        // Obtengo data (data deberia ser data = total_bienes (con nombre y id))
-                        source: function(request, response ) {
-                            data = json_items;
-                            response(data);
-                        },
-                        // Completo los input, y retorno el id
-                        select: function (event, ui) {
-                            $('#myInput').val(ui.item.label); // display the selected text
-                            $('#descripcion').val(ui.item.value); // save selected id to input
-                            return false;
-                        }
-                    });
-
-
-                        closeAllLists(e.target);
+                        $("#item_codigo").autocomplete({
+                            source: function(request, response ) {
+                                data = output;
+                                response(data);
+                            },
+                            select: function (event, ui) {
+                                $('#item_nombre').val(ui.item.value); // display the selected text
+                                $('#item_codigo').val(ui.item.label); // save selected id to input
+                                return false;
+                            }
+                        });
                     });
                 }
 
-                /*An array containing all the country names in the world:*/
-                // var codigos = ["SH100", "CH444", "NV999", "SS200"];
-                // var nombres = ["Shampoo", "Ccocolate", "Novillo", "Soporte de Sistemas"];
+                autocompleteCode(document.getElementById("item_codigo"), json_items);
 
-                /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-                autocompleteW3S(document.getElementById("myInput"), json_items);
-                autocompleteW3S(document.getElementById("myInput2"), json_items);
+                // Autocompletado con "CODIGO" de Producto & Servicio
+                function autocompleteName(inp, arr) {
+                    /*the autocomplete function takes two arguments,
+                    the text field element and an array of possible autocompleted values:*/
+                    var currentFocus;
+                    /*execute a function when someone writes in the text field:*/
+                    inp.addEventListener("input", function(e) {
+                        var a, b, i, val = this.value;
+                        if (!val) {
+                            return false;
+                        }
+                        currentFocus = -1;                        
+                        output = [];
+                        /*for each item in the array...*/
+                        for (i = 0; i < arr.length; i++) {
+                            /*check if the item starts with the same letters as the text field value:*/
+                            if (arr[i]["label"].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                                // agregar cada elemento a un nuevo JSON (output)
+                                output.push(arr[i]);
+                            }
+                        }
+                    });
 
+                    /*execute a function when someone clicks in the document:*/
+                    document.addEventListener("click", function(e) {
+                        $("#item_nombre").autocomplete({
+                            source: function(request, response ) {
+                                data = output;
+                                response(data);
+                            },
+                            select: function (event, ui) {
+                                $('#item_nombre').val(ui.item.label); // display the selected text
+                                $('#item_codigo').val(ui.item.value); // save selected id to input
+                                return false;
+                            }
+                        });
+                    });
+                }
+
+                autocompleteName(document.getElementById("item_nombre"), json_items);
                 
                 </script>
                 <!-- ************************************************************************************** -->
@@ -586,67 +542,35 @@ var_dump(json_decode($json_bienes, true));
 
 <script>
 
-$( function() {
+// $( function() {
 
-// AUTOCOMPLETE: al ingresar un caracter tiene que devolver un json con los posibles valores.
-// $response[] = array("value"=>"..","label"=>"..");
+//     // AUTOCOMPLETE: al ingresar un caracter tiene que devolver un json con los posibles valores.
+//     // $response[] = array("value"=>"..","label"=>"..");
 
-// Single Select
-$( "#autocomplete" ).autocomplete({
-    // Obtengo data (data deberia ser data = total_bienes (con nombre y id))
-    source: function(request, response ) {
-        data = json_items;
-        response(data);
-    },
-    // Completo los input, y retorno el id
-    select: function (event, ui) {
-        $('#autocomplete').val(ui.item.label); // display the selected text
-        $('#selectuser_id').val(ui.item.value); // save selected id to input
-        return false;
-    }
-});
+//     // Single Select
+//     $( "#autocomplete" ).autocomplete({
+//         // Obtengo data (data deberia ser data = total_bienes (con nombre y id))
+//         source: function(request, response ) {
+//             data = json_items;
+//             response(data);
+//         },
+//         // Completo los input, y retorno el id
+//         select: function (event, ui) {
+//             $('#autocomplete').val(ui.item.label); // display the selected text
+//             $('#selectuser_id').val(ui.item.value); // save selected id to input
+//             return false;
+//         }
+//     });
 
+// });
 
-// Single Select con AJAX
-// $( "#autocomplete" ).autocomplete({
-//   source: function( request, response ) {
-//    $.ajax({
-//             "dataType": "text",
-//             "type": "POST",
-//             "data": "temp",
-//             "url": '/pedido/ajax/autocompletar/',
+// function split( val ) {
+//   return val.split( /,\s*/ );
+// }
 
-//             "success": function (msg) {
-//                 data = json_items;
-//                 response(data);
-//             },
-            
-//             "error": function (msg) {
-//                 console.log("1-error!");
-//             }
-
-//         }).done(function (msg) {
-//             console.log("1-done!");
-//         })
-//   },
-//   select: function (event, ui) {
-//    // Set selection
-//    $('#autocomplete').val(ui.item.label); // display the selected text
-//    $('#selectuser_id').val(ui.item.value); // save selected id to input
-//    return false;
-//   }
-//  });
-
-
-});
-
-function split( val ) {
-  return val.split( /,\s*/ );
-}
-
-function extractLast( term ) {
-  return split( term ).pop();
-}
+// function extractLast( term ) {
+//   return split( term ).pop();
+// }
 
 </script>
 
