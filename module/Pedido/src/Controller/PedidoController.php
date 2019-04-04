@@ -24,16 +24,18 @@ class PedidoController extends TransaccionController{
     private $proveedorManager;
     private $tipo;
     private $bienesTransaccionesManager;
+    private $bienesManager;
     private $items;
 
     public function __construct($pedidoManager, $monedaManager, $personaManager, $clientesManager, $proveedorManager,
-    $bienesTransaccionesManager) {
+    $bienesTransaccionesManager, $bienesManager) {
         parent::__construct($pedidoManager, $personaManager);
         $this->clientesManager=$clientesManager;
         $this->proveedorManager= $proveedorManager;
         $this->pedidoManager = $pedidoManager;
         $this->monedaManager= $monedaManager;
         $this->bienesTransaccionesManager= $bienesTransaccionesManager;
+        $this->bienesManager= $bienesManager;
         
 
     }
@@ -59,6 +61,23 @@ class PedidoController extends TransaccionController{
         }
         $json = substr($json, 0, -1);
         $json = '['.$json.']';
+
+        // Obtengo todos los Bienes
+        $bienes = $this->bienesManager->getBienes();
+
+        // Creo JSON con Nombres de todos los Productos y Servicios
+        $json_bienes = "";
+
+        // $response[] = array("value"=>"1","label"=>"Soporte");
+        foreach ($bienes as $bien){
+            $json_bienes .= $bien->getJsonBien().',';
+        }    
+        $json_bienes = substr($json_bienes, 0, -1);
+        $json_bienes = '['.$json_bienes.']';
+
+        // var_dump(json_decode($json_bienes, true));
+        // die();
+
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         $tipoPersona = null;
@@ -94,6 +113,7 @@ class PedidoController extends TransaccionController{
             'numTransacciones'=>$numTransacciones,
             'numPedido'=>$numPedido,
             'json' => $json,
+            'json_bienes' => $json_bienes,
             'formasPago' => $formasPago,
         ]);
     }
@@ -177,6 +197,19 @@ class PedidoController extends TransaccionController{
         array_splice($_SESSION['TRANSACCIONES']['PEDIDO'], $pos,1);
 
         $view = new ViewModel();
+        $view->setTerminal(true);
+        return $view;
+    }
+
+    public function autocompletarAction(){
+
+        // print_r("autocompletarAction");
+        die();
+
+        $this->layout()->setTemplate('layout/nulo');
+        
+        // $json_bienes = "";
+        // $view = new ViewModel(['json_bienes' => $json_bienes]);
         $view->setTerminal(true);
         return $view;
     }

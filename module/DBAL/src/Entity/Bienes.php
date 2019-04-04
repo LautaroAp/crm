@@ -412,5 +412,13 @@ class Bienes {
         return $this->bienesTransacciones;
     }
 
+    public function getJsonBien(){
+        $output = "";
+        $output .= '"value": "' . $this->getId() .'", ';
+        $output .= '"label": "' . $this->getNombre() .'" ';
+
+        return  '{'.$output.'}' ;
+    }
+
 
 }

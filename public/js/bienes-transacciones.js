@@ -1,34 +1,103 @@
 var items=[];
 var tipoTransaccion;
 var idPersona;
+
+// function addItems(bienesTransacciones, tipo, id) {
+//     items = bienesTransacciones;
+//     tipoTransaccion = tipo; 
+//     idPersona=id;
+//     console.log(idPersona);
+//     var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal"];
+//     //TABLE HEADER
+//     var table = document.createElement("table");
+//     table.setAttribute("class", "table table-hover");
+//     table.setAttribute("role","button");
+//     table.setAttribute("id", "table_bienes");
+//     var tr = table.insertRow(-1);                   // TABLE ROW.
+//     for (var i = 0; i < col.length; i++) {
+//         var th = document.createElement("th");      // TABLE HEADER.
+//         th.innerHTML = col[i];
+//         tr.appendChild(th);
+//     }
+//     //TABLE BODY
+//     var value = null;
+//     for (var i = 0; i < items.length; i++) {
+//         var item = items[i]
+//         tr = table.insertRow(-1);
+//         // tr.onclick= selectItem(item["id"]);
+//         tr.setAttribute("id", i);
+//         tr.setAttribute("class", "click");
+//         tr.setAttribute("onclick","selectItem(event,id)");
+//         console.log(item);
+//         for (var j = 0; j < col.length; j++) {
+//             var tabCell = tr.insertCell(-1);
+//             tabCell.setAttribute("id", i);
+//             tabCell.setAttribute("class", "click");
+//             if (col[j]=="Nombre" || col[j]=="Descripcion" || col[j]=="Precio"){
+//                 value = item["Bien"][col[j]];
+//             }
+//             else if (col[j]=="IVA"){
+//                 value = item["IVA"]["Valor"];
+//             }
+//             else{
+//                 value = item[col[j]];
+//             }
+//             if ((col[j] == "Descuento") || (col[j]=="IVA")){value = formatPercent((parseFloat(value)).toFixed(2));}
+//             if ((col[j] == "Precio")  || (col[j]=="Subtotal")) {value = formatMoney(value);}
+
+//             tabCell.innerHTML = value;
+//         }
+//         var butt = document.createElement('button'); // create a button
+//         butt.setAttribute('type','button');
+//         butt.setAttribute('class','btn btn-default btn-sm glyphicon glyphicon-remove'); // set attributes ...
+//         butt.setAttribute('id',i);
+//         butt.setAttribute('value','Borrar');
+//         butt.setAttribute("onclick","removerBien2(event,id)");
+//         var tabCell = tr.insertCell(-1);
+//         tabCell.setAttribute("class", "click");
+//         tabCell.appendChild(butt);
+//         //   tr.cells[-1].appendChild(butt);
+//     }
+//     var divContainer = document.getElementById("contenido_bienes");
+//     divContainer.innerHTML = "";
+//     divContainer.appendChild(table);
+
+
+// }
+
 function addItems(bienesTransacciones, tipo, id) {
     items = bienesTransacciones;
     tipoTransaccion = tipo; 
     idPersona=id;
-    console.log(idPersona);
-    var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal"];
-    //TABLE HEADER
+
     var table = document.createElement("table");
-    table.setAttribute("class", "table table-hover");
-    table.setAttribute("role","button");
     table.setAttribute("id", "table_bienes");
-    var tr = table.insertRow(-1);                   // TABLE ROW.
+    table.setAttribute("class", "display");
+
+    var thead = document.createElement("thead");
+    var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal", ""];
+
+    var tr = thead.insertRow(-1);                   
     for (var i = 0; i < col.length; i++) {
-        var th = document.createElement("th");      // TABLE HEADER.
+        var th = document.createElement("th");      
         th.innerHTML = col[i];
         tr.appendChild(th);
     }
-    //TABLE BODY
+    thead.appendChild(tr);
+    table.appendChild(thead);
+
+    var tbody = document.createElement("tbody");
+    tbody.setAttribute("role", "button");
     var value = null;
     for (var i = 0; i < items.length; i++) {
         var item = items[i]
-        tr = table.insertRow(-1);
+        tr = tbody.insertRow(-1);
         // tr.onclick= selectItem(item["id"]);
         tr.setAttribute("id", i);
         tr.setAttribute("class", "click");
         tr.setAttribute("onclick","selectItem(event,id)");
         console.log(item);
-        for (var j = 0; j < col.length; j++) {
+        for (var j = 0; j < col.length -1; j++) {
             var tabCell = tr.insertCell(-1);
             tabCell.setAttribute("id", i);
             tabCell.setAttribute("class", "click");
@@ -46,22 +115,24 @@ function addItems(bienesTransacciones, tipo, id) {
 
             tabCell.innerHTML = value;
         }
-        var butt = document.createElement('button'); // create a button
-        butt.setAttribute('type','button');
-        butt.setAttribute('class','btn btn-default btn-sm glyphicon glyphicon-remove'); // set attributes ...
-        butt.setAttribute('id',i);
-        butt.setAttribute('value','Borrar');
-        butt.setAttribute("onclick","removerBien2(event,id)");
+
+        // Botones
+        var btn = document.createElement('button');
+        btn.setAttribute('type','button');
+        btn.setAttribute('class','btn btn-default btn-sm glyphicon glyphicon-remove'); // set attributes ...
+        btn.setAttribute('id',i);
+        btn.setAttribute('value','Borrar');
+        btn.setAttribute("onclick","removerBien2(event,id)");
         var tabCell = tr.insertCell(-1);
         tabCell.setAttribute("class", "click");
-        tabCell.appendChild(butt);
-        //   tr.cells[-1].appendChild(butt);
+        tabCell.appendChild(btn);
+        //   tr.cells[-1].appendChild(btn);
     }
+    table.appendChild(tbody);
+
     var divContainer = document.getElementById("contenido_bienes");
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
-
-
 }
 
 function getItems(){
