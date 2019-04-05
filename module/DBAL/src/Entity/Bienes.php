@@ -414,9 +414,11 @@ class Bienes {
 
     public function getJsonBien(){
         $output = "";
+        $output .= '"id": "' . $this->getId() .'", ';
         $output .= '"value": "' . $this->getId() .'", ';
-        $output .= '"code": "' . $this->getPrecio() .'", ';
-        $output .= '"label": "' . $this->getNombre() .'" ';
+        $output .= '"label": "' . $this->getNombre() .'", ';
+        $output .= '"descripcion": "' . $this->getDescripcion() .'", ';
+        $output .= '"codigo": "' . $this->getPrecio() .'" ';
 
         return  '{'.$output.'}' ;
     }

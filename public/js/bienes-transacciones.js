@@ -221,10 +221,6 @@ function removerBien(event,id){
 }
 
 function removerBien2(event,id){
-
-    // alert("tipoTransaccion: "); alert(tipoTransaccion);
-    // alert(" idPersona: "); alert(idPersona);
-
     $.ajax({
         "dataType": "text",
         "type": "POST",
@@ -271,4 +267,8 @@ function toggleAttr(e, attr){
     } else {
         $("#" + e).attr(attr,"");
     }
+}
+
+function addItemToTable(){
+    alert("Agrega Item a la Tabla");
 }
