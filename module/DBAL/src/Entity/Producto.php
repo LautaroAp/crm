@@ -60,25 +60,25 @@ class Producto
      */
     protected $presentacion;
 
-    /**
-     * @ORM\Column(name="STOCK", nullable=true, type="integer")
-     */
-    protected $stock;
+    // /**
+    //  * @ORM\Column(name="STOCK", nullable=true, type="integer")
+    //  */
+    // protected $stock;
 
     /**
      * @ORM\Column(name="REPOSICION", nullable=true, type="integer")
      */
     protected $reposicion;
 
-    /**
-     * @ORM\Column(name="CODIGO_PRODUCTO", nullable=true, type="string")
-     */
-    protected $codigo_producto;
+    // /**
+    //  * @ORM\Column(name="CODIGO_PRODUCTO", nullable=true, type="string")
+    //  */
+    // protected $codigo_producto;
 
-    /**
-     * @ORM\Column(name="CODIGO_BARRAS", nullable=true, type="string")
-     */
-    protected $codigo_barras;
+    // /**
+    //  * @ORM\Column(name="CODIGO_BARRAS", nullable=true, type="string")
+    //  */
+    // protected $codigo_barras;
 
     /**
      * @ORM\Column(name="PRECIO_COMPRA", nullable=true, type="decimal")
@@ -282,22 +282,22 @@ class Producto
         return $this;
     }
 
-    /**
-     * Get the value of stock
-     */
-    public function getStock(){
-        return $this->stock;
-    }
+    // /**
+    //  * Get the value of stock
+    //  */
+    // public function getStock(){
+    //     return $this->stock;
+    // }
 
-    /**
-     * Set the value of stock
-     *
-     * @return self
-     */
-    public function setStock($stock){
-        $this->stock = $stock;
-        return $this;
-    }
+    // /**
+    //  * Set the value of stock
+    //  *
+    //  * @return self
+    //  */
+    // public function setStock($stock){
+    //     $this->stock = $stock;
+    //     return $this;
+    // }
 
     /**
      * Get the value of reposicion
@@ -316,39 +316,39 @@ class Producto
         return $this;
     }
 
-    /**
-     * Get the value of codigo_producto
-     */
-    public function getCodigo_producto(){
-        return $this->codigo_producto;
-    }
+    // /**
+    //  * Get the value of codigo_producto
+    //  */
+    // public function getCodigo_producto(){
+    //     return $this->codigo_producto;
+    // }
 
-    /**
-     * Set the value of codigo_producto
-     *
-     * @return self
-     */
-    public function setCodigo_producto($codigo_producto){
-        $this->codigo_producto = $codigo_producto;
-        return $this;
-    }
+    // /**
+    //  * Set the value of codigo_producto
+    //  *
+    //  * @return self
+    //  */
+    // public function setCodigo_producto($codigo_producto){
+    //     $this->codigo_producto = $codigo_producto;
+    //     return $this;
+    // }
 
-    /**
-     * Get the value of codigo_barras
-     */
-    public function getCodigo_barras(){
-        return $this->codigo_barras;
-    }
+    // /**
+    //  * Get the value of codigo_barras
+    //  */
+    // public function getCodigo_barras(){
+    //     return $this->codigo_barras;
+    // }
 
-    /**
-     * Set the value of codigo_barras
-     *
-     * @return self
-     */
-    public function setCodigo_barras($codigo_barras){
-        $this->codigo_barras = $codigo_barras;
-        return $this;
-    }
+    // /**
+    //  * Set the value of codigo_barras
+    //  *
+    //  * @return self
+    //  */
+    // public function setCodigo_barras($codigo_barras){
+    //     $this->codigo_barras = $codigo_barras;
+    //     return $this;
+    // }
 
     /**
      * Get the value of precio_compra

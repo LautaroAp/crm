@@ -84,10 +84,10 @@ class ProductoManager
         }
         $producto->setMarca($data['marca']);
         $producto->setPresentacion($data['presentacion']);
-        $producto->setStock($data['stock']);
+        // $producto->setStock($data['stock']);
         $producto->setReposicion($data['reposicion']);
-        $producto->setCodigo_producto($data['codigo_producto']);
-        $producto->setCodigo_barras($data['codigo_barras']);
+        // $producto->setCodigo_producto($data['codigo_producto']);
+        // $producto->setCodigo_barras($data['codigo_barras']);
     }
 
     private function addDatosEconomicosProducto($producto, $data){

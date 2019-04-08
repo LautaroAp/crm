@@ -96,6 +96,9 @@ class BienesManager {
         $bien->setPrecio_final_iva($data['precio_publico_iva']);
         $bien->setPrecio_final_iva_dto($data['precio_publico_iva_dto']);
         $bien->setTipo($data['tipo']);
+        $bien->setStock($data['stock']);
+        $bien->setCodigo($data['codigo']);
+        $bien->setCodigo_barras($data['codigo_barras']);
         //MONEDA
         return $bien;
     }
