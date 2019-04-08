@@ -44,6 +44,7 @@ class FormaPagoManager {
         return  $this->entityManager->getRepository(FormaPago::class)->findAll();
     }
 
+
     public function getFormaPagoId($id) {
         return $this->entityManager->getRepository(FormaPago::class)->findOneById($id);
     }

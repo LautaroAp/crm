@@ -30,12 +30,6 @@ class Presupuesto {
      */
     private $transaccion;
  
-    /**
-     * Many Presupuesto have One Moneda.
-     * @ORM\ManyToOne(targetEntity="Moneda")
-     * @ORM\JoinColumn(name="ID_MONEDA", referencedColumnName="ID")
-     */
-    protected $moneda;
 
 
     /**
@@ -98,25 +92,6 @@ class Presupuesto {
         return $this;
     }
 
-    /**
-     * Get many Presupuesto have One Moneda.
-     */ 
-    public function getMoneda()
-    {
-        return $this->moneda;
-    }
-
-    /**
-     * Set many Presupuesto have One Moneda.
-     *
-     * @return  self
-     */ 
-    public function setMoneda($moneda)
-    {
-        $this->moneda = $moneda;
-
-        return $this;
-    }
 
 
 }

@@ -119,8 +119,6 @@ class Proveedor {
      */
     private $skype;
 
-    //VER COMO HACER CON LOS EVENTOS-->OTRA TABLA DE EVENTOS PARA PROVEEDORES O LA MISMA? SI ES LA MISMA
-    //HAY QUE HACER UNA JERARQUIA ENTRE CLIENTE Y EJECUTIVO QUE TENGA ATTS EN COMUM
     /**
      * 
      * @ORM\OneToMany(targetEntity="\DBAL\Entity\Evento", mappedBy="cliente")

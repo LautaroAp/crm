@@ -30,12 +30,6 @@ class Remito {
      */
     private $transaccion;
  
-    /**
-     * Many Remito have One Moneda.
-     * @ORM\ManyToOne(targetEntity="Moneda")
-     * @ORM\JoinColumn(name="ID_MONEDA", referencedColumnName="ID")
-     */
-    protected $moneda;
 
 
     /**
@@ -98,25 +92,6 @@ class Remito {
         return $this;
     }
 
-    /**
-     * Get many Remito have One Moneda.
-     */ 
-    public function getMoneda()
-    {
-        return $this->moneda;
-    }
-
-    /**
-     * Set many Remito have One Moneda.
-     *
-     * @return  self
-     */ 
-    public function setMoneda($moneda)
-    {
-        $this->moneda = $moneda;
-
-        return $this;
-    }
-
+   
 
 }

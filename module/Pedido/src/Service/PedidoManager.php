@@ -16,7 +16,8 @@ use DateInterval;
  * Esta clase se encarga de obtener y modificar los datos de los pedidos 
  * 
  */
-class PedidoManager extends TransaccionManager{
+class PedidoManager extends TransaccionManager
+{
 
     /**
      * Doctrine entity manager.
@@ -31,30 +32,39 @@ class PedidoManager extends TransaccionManager{
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $monedaManager, $personaManager, $bienesTransaccionManager,
-    $ivaManager, $formaPagoManager) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager);
+    public function __construct(
+        $entityManager,
+        $monedaManager,
+        $personaManager,
+        $bienesTransaccionManager,
+        $ivaManager,
+        $formaPagoManager
+    ) {
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $monedaManager);
         $this->entityManager = $entityManager;
-        $this->monedaManager = $monedaManager;
         $this->tipo = "PEDIDO";
     }
 
-    public function getPedidos() {
+    public function getPedidos()
+    {
         $pedidos = $this->entityManager->getRepository(Pedido::class)->findAll();
         return $pedidos;
     }
 
-    public function getPedidoId($id) {
+    public function getPedidoId($id)
+    {
         return $this->entityManager->getRepository(Pedido::class)
-                        ->find($id);
+            ->find($id);
     }
 
-    public function getPedidoFromTransaccionId($id) {
+    public function getPedidoFromTransaccionId($id)
+    {
         return $this->entityManager->getRepository(Pedido::class)
-                        ->findOneBy(['transaccion'=>$id]);
+            ->findOneBy(['transaccion' => $id]);
     }
 
-    public function getTabla() {
+    public function getTabla()
+    {
         // Create the adapter
         $adapter = new SelectableAdapter($this->entityManager->getRepository(Pedido::class));
         // Create the paginator itself
@@ -65,51 +75,49 @@ class PedidoManager extends TransaccionManager{
     /**
      * This method adds a new pedido.
      */
-    public function addPedido($data, $items) {
+    public function addPedido($data, $items)
+    {
         //llamo a add de la transaccion, retorna una transaccion que se le setea al pedido
-        $transaccion = parent::add($data,$items);
-        
+        $transaccion = parent::add($data, $items);
+
         $pedido = new Pedido();
-        $pedido=$this->setData($pedido, $data, $transaccion);
+        $pedido = $this->setData($pedido, $data, $transaccion);
 
         $this->entityManager->persist($pedido);
         $this->entityManager->flush();
         return $pedido;
     }
 
-    private function setData($pedido, $data, $transaccion){
+    private function setData($pedido, $data, $transaccion)
+    {
         $pedido->setTransaccion($transaccion);
-        if (isset($data['numero_pedido'])){
+        if (isset($data['numero_pedido'])) {
             $pedido->setNumero($data['numero_pedido']);
         }
-        $moneda=null;
-        if ($data['moneda']!= '-1'){
-            $moneda = $this->monedaManager->getMonedaId($data['moneda']); 
-        }
-        $pedido->setMoneda($moneda);
-        $fecha_entrega=null;
-
-        if (isset($data['fecha_entrega'])){
-            $fecha_entrega = \DateTime::createFromFormat('d/m/Y', $data['fecha_entrega']); 
+     
+        $fecha_entrega = null;
+        if (isset($data['fecha_entrega'])) {
+            $fecha_entrega = \DateTime::createFromFormat('d/m/Y', $data['fecha_entrega']);
             $pedido->setFecha_entrega($fecha_entrega);
         }
-       
-        if (isset($data['forma_envio'])){
+
+        if (isset($data['forma_envio'])) {
             $pedido->setForma_envio($data['forma_envio']);
         }
-        if (isset($data['ingresos_brutos'])){
+        if (isset($data['ingresos_brutos'])) {
             $pedido->setIngresos_brutos($data['ingresos_brutos']);
         }
-        if (isset($data['lugar_entrega'])){
+        if (isset($data['lugar_entrega'])) {
             $pedido->setLugar_entrega($data['lugar_entrega']);
         }
-       return $pedido;
+        return $pedido;
     }
 
     /**
      * This method updates data of an existing pedido.
      */
-    public function edit($pedido, $data) {
+    public function edit($pedido, $data)
+    {
         $transaccion = parent::edit($pedido->getTransaccion(), $data);
         $pedido = $this->setData($pedido, $data, $transaccion);
         // Apply changes to database.
@@ -117,16 +125,22 @@ class PedidoManager extends TransaccionManager{
         return true;
     }
 
-    public function getTotalPedidos(){
+    public function getTotalPedidos()
+    {
         $pedidos = $this->getPedidos();
         return COUNT($pedidos);
     }
 
-    public function remove($pedido) {
+    public function remove($pedido)
+    {
         parent::remove($pedido->getTransaccion());
         $this->entityManager->remove($pedido);
         $this->entityManager->flush();
     }
 
+    public function getFormasPago()
+    {
+        return $this->formaPagoManager->getFormasPago();
+    }
 
 }

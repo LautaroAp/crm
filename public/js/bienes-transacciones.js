@@ -142,9 +142,9 @@ var idPersona;
 
 function addItems(bienesTransacciones, tipo, id) {
    items = bienesTransacciones;
+   console.log(items);
    tipoTransaccion = tipo;
    idPersona=id;
-
    var table = document.createElement("table");
    table.setAttribute("id", "table_bienes");
    table.setAttribute("class", "display");
@@ -214,7 +214,8 @@ function addItems(bienesTransacciones, tipo, id) {
    var divContainer = document.getElementById("contenido_bienes");
    divContainer.innerHTML = "";
    divContainer.appendChild(table);
-}
+   
+   }
 
 
 
@@ -239,15 +240,19 @@ function calcularSubcampos(){
     var sumIva=0;
     var bonificacion_general=0;
     for(var i = 1; i < table.rows.length; i++){
+        cantidad = table.rows[i].cells[2].innerHTML;
         precio_unitario = table.rows[i].cells[3].innerHTML;
         precio_unitario = parseFloat(precio_unitario.substring(2, precio_unitario.length));
         descuento = table.rows[i].cells[4].innerHTML;
-        var descuento = descuento.substring(0, descuento.length-2);
-        sumBonificacion = sumBonificacion + (parseFloat(descuento) * precio_unitario /100 );
-        
+        descuento = descuento.substring(0, descuento.length-2);
+        descuento=  (parseFloat(descuento) * precio_unitario /100 );
+        precio_unitario_dto= precio_unitario-descuento;
+        sumBonificacion = sumBonificacion + descuento*cantidad;
+        console.log("SUM BONIFICACION "+sumBonificacion);
+
         iva = table.rows[i].cells[5].innerHTML;
-        var iva = iva.substring(0, iva.length-2);
-        sumIva = sumIva + (parseFloat(iva) * precio_unitario/ 100) ;
+        iva = iva.substring(0, iva.length-2);
+        sumIva = sumIva + (parseFloat(iva) * precio_unitario_dto/ 100)*cantidad ;
 
         subtotal = table.rows[i].cells[6].innerHTML;
         subtotal = parseFloat(subtotal.substring(2, subtotal.length));
@@ -262,7 +267,7 @@ function calcularSubcampos(){
     }
     var total_general = sumSubtotal - (sumSubtotal* bonificacion_general/100) + (sumSubtotal* recargo_general/100);
     $("#subtotal_general").val(formatMoney(parseFloat(sumSubtotal).toFixed(2)));
-    $("#descuento_total").val(formatMoney(parseFloat(sumBonificacion).toFixed(2)));
+    $("#bonificacion_total").val(formatMoney(parseFloat(sumBonificacion).toFixed(2)));
     $("#iva_total").val(formatMoney(parseFloat(sumIva).toFixed(2)));
     $("#total_general").val(formatMoney(parseFloat(total_general).toFixed(2)));
     $("#jsonitems").val(JSON.stringify(items));
@@ -362,6 +367,7 @@ function justNumbers(event){
     return /\d/.test(String.fromCharCode(keynum));
 }
 
+/////////////////////////// TODO LO QUE SIGUE ES PARA EDITAR LA TABLA DINAMICAMENTE ////////////////////////////
 var selectedAnt=null;
 var selectedNow =null;
 
@@ -372,9 +378,19 @@ function isFormatDescuento(inputValue){
     return null;
 }
 
+function isFormatMoney(inputValue){
+    if (inputValue!=null){
+        return inputValue.substring(0,1) == "$";
+    }
+    return null;
+}
+
 function getNumberValue(inputValue){
     if (isFormatDescuento(inputValue)){
         return inputValue.substring(0,inputValue.length-2);
+    }
+    else if (isFormatMoney(inputValue)){
+        return inputValue.substring(2,inputValue.length);
     }
     return inputValue;
 }
@@ -387,6 +403,7 @@ function getAttribute(tdId){
     return attribute = tdId.substring(tdId.indexOf('_')+1, tdId.length);
 }
 
+
 function saveValueInJson(tdId, inputValue){
     //recibo "0_Cantidad" separo en indice 0 y atributo Cantidad
     index = tdId.substring(0, tdId.indexOf('_'));
@@ -396,6 +413,7 @@ function saveValueInJson(tdId, inputValue){
         items[index][attribute] = inputValue;
         console.log(items);
     }
+    //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
     $("#jsonitems").val(JSON.stringify(items));
 }
 //esta funcion es llamada cuando se modifica el valor de un input
@@ -406,7 +424,35 @@ function saveValue(inputId){
     // td = document.getElementById(tdId);
     // td.innerText=inputValue;
     saveTd(tdId);
-    saveValueInJson(tdId, inputValue)
+    saveValueInJson(tdId, inputValue);
+}
+
+function actualizarFila(tdId){
+    index = getIndex(tdId);
+    attribute = getAttribute(tdId);
+    // if (attribute=="Cantidad"){
+    //     tdSubtotal = document.getElementById(index+"_Subtotal");
+    //     subtotal= tdSubtotal.innerText;
+    //     subtotal = getNumberValue(subtotal);
+    //     cant = document.getElementById(tdId).innerText;
+    //     console.log("SUBTOTAL "+ subtotal);
+    //     console.log("CANTIDAD " + cant)
+    //     tdSubtotal.innerText= formatMoney(parseFloat(cant*subtotal).toFixed(2));
+    // }
+    // if (attribute=="Descuento"){
+        cant = document.getElementById(index+"_Cantidad").innerText;
+        precio = document.getElementById(index+"_Precio").innerText;
+        precio = getNumberValue(precio);
+        descuento = document.getElementById(index+"_Descuento").innerText;
+        descuento = getNumberValue(descuento);
+        iva = document.getElementById(index+"_IVA").innerText;
+        iva = getNumberValue(iva);
+        cantxprecio = cant * precio;
+        cantxprecioydto = cantxprecio - cantxprecio*descuento/100;
+        subtotal = cantxprecioydto + cantxprecioydto * iva/100;
+        document.getElementById(index+"_Subtotal").innerText = formatMoney(parseFloat(subtotal).toFixed(2));
+    // }
+    calcularSubcampos();
 }
 
 //esta funcion es llamada para guardar el input anterior al generarse un nuevo input
@@ -426,8 +472,15 @@ function saveTd(tdId){
             td.innerText=inputValue;
         }
     }
+    actualizarFila(tdId);
     saveValueInJson(tdId, numValue);
 }
+
+function pulsar(e){
+    tecla = (document.all) ? e.keyCode :e.which;
+    return (tecla!=13); 
+}
+
 
 //PARA EL IVA VA A TENER QUE SER DISTINTO, ESTO SIRVE PARA BONIFICACION Y CANTIDAD NOMAS
 function makeEditable(event){
@@ -448,6 +501,7 @@ function makeEditable(event){
     input.setAttribute("size",3);
     input.id ="input"+elementId;
     input.setAttribute("onchange", "saveValue(id);");
+    input.setAttribute("onkeypress", "return pulsar(event)");
     element.innerText="";
     element.appendChild(input); 
     // element.setAttribute('contenteditable', true);

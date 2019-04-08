@@ -21,7 +21,6 @@ class PresupuestoManager extends TransaccionManager{
      * @var Doctrine\ORM\EntityManager
      */
     protected $entityManager;
-    protected $monedaManager;
     protected $personaManager;
     protected $bienesTransaccionManager;
     protected $ivaManager;
@@ -31,9 +30,8 @@ class PresupuestoManager extends TransaccionManager{
      */
     public function __construct($entityManager, $monedaManager, $personaManager, $bienesTransaccionManager,
     $ivaManager, $formaPagoManager) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager);
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $monedaManager);
         $this->entityManager = $entityManager;
-        $this->monedaManager = $monedaManager;
         $this->tipo = "PEDIDO";
     }
 
@@ -73,10 +71,6 @@ class PresupuestoManager extends TransaccionManager{
         $presupuesto->setTransaccion($transaccion);
         if (isset($data['numero_presupuesto'])){
             $presupuesto->setNumero($data['numero_presupuesto']);
-        }
-        $moneda=null;
-        if ($data['moneda']!= '-1'){
-            $moneda = $this->monedaManager->getMonedaId($data['moneda']); 
         }
         $presupuesto->setMoneda($moneda);
         return $presupuesto;

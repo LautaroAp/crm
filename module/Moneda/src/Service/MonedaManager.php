@@ -26,8 +26,8 @@ class MonedaManager {
     }
 
     public function getMonedas() {
-        $categoriaProductos = $this->entityManager->getRepository(Moneda::class)->findAll();
-        return $categoriaProductos;
+        $monedas = $this->entityManager->getRepository(Moneda::class)->findAll();
+        return $monedas;
     }
 
     public function getMonedaId($id) {
@@ -118,5 +118,6 @@ class MonedaManager {
             return false;
         }
     }
+
 
 }

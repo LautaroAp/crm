@@ -30,16 +30,17 @@ class TransaccionManager {
      * Constructs the service.
      */
     public function __construct($entityManager, $personaManager, $bienesTransaccionesManager, $ivaManager,
-    $formaPagoManager) {
+    $formaPagoManager, $monedaManager) {
         $this->entityManager = $entityManager;
         $this->personaManager= $personaManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->ivaManager = $ivaManager;
         $this->formaPagoManager = $formaPagoManager;
+        $this->monedaManager = $monedaManager;
     }
 
     public function getTransacciones() {
-        $transacciones = $this->entityManager->getRepository(Transaccion::class)->findAll();
+        $transacciones = $this->entityManager->getRepository(Transaccion::class)->findAll();      
         return $transacciones;
     }
 
@@ -101,6 +102,13 @@ class TransaccionManager {
         }
         else{
             $transaccion->setNombre(ucfirst($data['tipo']));
+        }
+        $moneda = null;
+        if (isset($data['moneda'])) {
+            if ($data['moneda'] != '-1') {
+                $moneda = $this->monedaManager->getMonedaId($data['moneda']);
+            }
+            $transaccion->setMoneda($moneda);
         }
         $transaccion->setEstado("S"); //S ES ACTIVO COMO EN CLIENTES
         $transaccion->setMonto(substr($data['total_general'], 2));

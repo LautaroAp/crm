@@ -63,7 +63,7 @@ class Persona {
     /**
      * 
      * @ORM\OneToMany(targetEntity="\DBAL\Entity\Transaccion", mappedBy="persona")
-     * @ORM\OrderBy({"id" = "desc"})
+     * @ORM\OrderBy({"fecha_transaccion" = "desc"})
      */
     private $transacciones;
 

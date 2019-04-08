@@ -1,15 +1,14 @@
 <!-- scripts -->
 <script src="/js/bienes-transacciones.js"></script>
 <script src="/js/item.js"></script>
-
-
-
-<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css"
-    rel="stylesheet" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-
-<script>
+<script src="/js/opciones-transacciones.js"></script>
+<script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
+<script language="javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js">
+</script>
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
+<script type="text/javascript">
 $(function() {
     $('#datetimepicker1').datetimepicker({
         format: 'DD/MM/YYYY'
@@ -21,7 +20,6 @@ $(function() {
         format: 'DD/MM/YYYY'
     });
 });
-</script>
 
 <!-- Script --> <!-- PROBLEMAS CON EL DATETIMEPICKER -- JQUERY TIENE QUE SER MENOR A 2.2 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -52,9 +50,6 @@ $(document).ready(function() {
 $date = date('d-m-Y');
 $url = "/clientes/listado/ficha/" . $persona->getId();
 $responsable = $this->identity();
-
-var_dump(json_decode($json_bienes, true));
-
 ?>
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
@@ -212,30 +207,19 @@ var_dump(json_decode($json_bienes, true));
                     </div>
                     <!-- Forma de Pago + Fecha -->
                     <div class="row form-row">
-                        <div class="form-group col-md-3">
+                    <div class="form-group col-md-3" id="monedas">
                             <label>Moneda</label>
-                            <select class="form-control" id="moneda" name="moneda">
-                                <option value="" hidden="">Seleccionar Moneda</option>
-                                <option value="-1">NO DEFINIDO</option>
-                                <?php foreach ($categorias as $categoria) : ?>
-                                <option value="<?= $categoria->getId(); ?>">
-                                    <?= $categoria->getNombre(); ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
+                            <script>
+                                var monedas = <?php echo ($monedasJson); ?>;
+                                completarMonedas(monedas);
+                            </script>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3" id="formasPago">
                             <label>Forma de Pago</label>
-                            <select class="form-control" id="forma_pago" name="forma_pago">
-                                <option value="-1" hidden="">Seleccionar Forma de Pago</option>
-                                <option value="1">Contado</option>
-                                <option value="2">Tarjeta</option>
-                                <?php foreach ($categorias as $categoria) : ?>
-                                <option value="<?= $categoria->getId(); ?>">
-                                    <?= $categoria->getNombre(); ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
+                            <script>
+                                var formasPago = <?php echo ($formasPagoJson); ?>;
+                                completarFormasPago(formasPago);
+                            </script>
                         </div>
                         <div id="div_bonificacion" class="form-group col-md-2">
                             <label>% Bonificación</label>
@@ -248,6 +232,9 @@ var_dump(json_decode($json_bienes, true));
                             <input type="text" class="form-control" name="recargo_general" id="recargo_general"
                                 value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()">
                         </div>
+                        <script>
+                            setBonificacionRecargo();
+                        </script>
                     </div>
                     <!-- Total -->
                     <div class="row form-row">
@@ -315,19 +302,13 @@ var_dump(json_decode($json_bienes, true));
                                         </span>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label>Forma de Envío</label>
-                                    <select class="form-control" id="forma_envio" name="forma_envio">
-                                        <option value="" hidden="">Seleccionar Forma de Envío</option>
-                                        <option value="-1">NO DEFINIDO</option>
-                                        <?php foreach ($categorias as $categoria) : ?>
-                                        <option value="<?= $categoria->getId(); ?>">
-                                            <?= $categoria->getNombre(); ?>
-                                        </option>
-                                        <?php endforeach; ?>
-                                    </select>
+                                <div class="form-group col-md-3" id="formasEnvio">
+                                    <label>Formas de Envío</label>
+                                    <script>
+                                    var formasEnvio = <?php echo ($formasEnvioJson); ?>;
+                                    completarFormasEnvio(formasEnvio);
+                                    </script>
                                 </div>
-
                             </div>
                         </div>
                     </div>

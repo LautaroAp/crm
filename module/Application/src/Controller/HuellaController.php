@@ -14,7 +14,7 @@ class HuellaController extends AbstractActionController
     protected $entityManager;
     protected $elemsPag;
     protected $bienesTransacciones;
-
+    
 
     public function __construct($entityManager)
     {
@@ -159,4 +159,15 @@ class HuellaController extends AbstractActionController
         }
         return ($param);
     }
+
+    protected function getJsonFromObjectList($objects){
+        $json="";
+        foreach ($objects as $obj) {
+            $json .= $obj->getJSON() . ',';
+        }
+        $json = substr($json, 0, -1);
+        $json = '[' . $json . ']';
+        return $json;
+    }
+
 }

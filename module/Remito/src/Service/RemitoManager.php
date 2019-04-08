@@ -23,19 +23,14 @@ class RemitoManager extends TransaccionManager{
      * @var Doctrine\ORM\EntityManager
      */
     protected $entityManager;
-    protected $monedaManager;
-    protected $personaManager;
-    protected $bienesTransaccionManager;
-    protected $ivaManager;
     private $tipo;
     /**
      * Constructs the service.
      */
     public function __construct($entityManager, $monedaManager, $personaManager, $bienesTransaccionManager,
     $ivaManager, $formaPagoManager) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager);
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $monedaManager);
         $this->entityManager = $entityManager;
-        $this->monedaManager = $monedaManager;
         $this->tipo = "REMITO";
     }
 
@@ -82,12 +77,6 @@ class RemitoManager extends TransaccionManager{
         if (isset($data['numero_remito'])){
             $remito->setNumero($data['numero_remito']);
         }
-        $moneda=null;
-        if ($data['moneda']!= '-1'){
-            $moneda = $this->monedaManager->getMonedaId($data['moneda']); 
-        }
-        $remito->setMoneda($moneda);
-
         // $fecha_entrega=null;
         // if (isset($data['fecha_entrega'])){
         //     $fecha_entrega = \DateTime::createFromFormat('d/m/Y', $data['fecha_entrega']); 

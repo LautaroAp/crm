@@ -30,11 +30,6 @@ class Pedido {
      */
     private $transaccion;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Moneda")
-     * @ORM\JoinColumn(name="ID_MONEDA", referencedColumnName="ID")
-     */
-    private $moneda;
 
     /**
      * @ORM\Column(name="FECHA_ENTREGA", nullable=true, type="date")
@@ -122,25 +117,6 @@ class Pedido {
         return $this;
     }
 
-    /**
-     * Get the value of moneda
-     */ 
-    public function getMoneda()
-    {
-        return $this->moneda;
-    }
-
-    /**
-     * Set the value of moneda
-     *
-     * @return  self
-     */ 
-    public function setMoneda($moneda)
-    {
-        $this->moneda = $moneda;
-
-        return $this;
-    }
 
     /**
      * Get the value of fecha_entrega

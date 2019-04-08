@@ -59,6 +59,13 @@ class Transaccion {
      */
     protected $responsable;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Moneda")
+     * @ORM\JoinColumn(name="ID_MONEDA", referencedColumnName="ID")
+     */
+    private $moneda;
+    
     /**
      * @ORM\Column(name="TIPO", nullable=true, type="string", length=255)
      */
@@ -413,4 +420,57 @@ class Transaccion {
 
         return $this;
     }
+    /**
+     * Get the value of moneda
+     */ 
+    public function getMoneda()
+    {
+        return $this->moneda;
+    }
+
+    /**
+     * Set the value of moneda
+     *
+     * @return  self
+     */ 
+    public function setMoneda($moneda)
+    {
+        $this->moneda = $moneda;
+
+        return $this;
+    }
+    public function getJSON(){
+
+        $output = "";
+        $output .= '"Id": "' . $this->getId() .'", ';
+        $output .= '"Numero": "' . $this->getNombre() .'", ';
+        $output .= '"Detalle": "' . $this->getDetalle() .'", ';
+        if (!(is_null($this->fecha_transaccion))){
+            $output .= '"Fecha Transaccion": "' . $this->getFecha_transaccion()->format('d/m/Y') .'", ';
+        }
+        if (!(is_null($this->fecha_vencimiento))){
+            $output .= '"Fecha Vencimiento": "' . $this->getFecha_vencimiento()->format('d/m/Y') .'", ';
+        }
+        $output .= '"Persona": "' . $this->getPersona()->getId() .'", ';
+        $output .= '"Responsable": "' . $this->getResponsable()->getId() .'", ';
+        $output .= '"Tipo Transaccion": "' . $this->getTipo() .'", ';
+        if (!(is_null($this->ivaGeneral))){
+            $output .= '"IVA General": ' . $this->getIvaGeneral()->getJSON() .', ';
+        }
+        if (!(is_null($this->formaPago))){
+            $output .= '"Forma de Pago": ' . $this->getFormaPago()->getJSON() .', ';
+        }
+        if (!(is_null($this->moneda))){
+            $output .= '"Moneda": ' . $this->getMoneda()->getJSON() .', ';
+        }
+        $output .= '"Estado": "' . $this->getEstado() .'", ';
+        $output .= '"Monto": "' . $this->getMonto() .'", ';
+        $output .= '"Bonificacion General": "' . $this->getBonificacionGeneral() .'" ';
+
+
+
+        return  '{'.$output.'}' ;
+    }
+
+
 }

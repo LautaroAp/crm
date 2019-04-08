@@ -7,6 +7,7 @@ use Persona\Service\PersonaManager;
 use BienesTransacciones\Service\BienesTransaccionesManager;
 use Iva\Service\IvaManager;
 use FormaPago\Service\FormaPagoManager;
+use Moneda\Service\MonedaManager;
 
 /**
  * This is the factory class for TransaccionManager service. The purpose of the factory
@@ -24,7 +25,8 @@ class TransaccionManagerFactory
         $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);   
         $ivaManager= $container->get(IvaManager::class);
         $formaPagoManager= $container->get(FormaPagoManager::class);
+        $monedaManager= $container->get(MonedaManager::class);
         return new TransaccionManager($entityManager,$personaManager, $bienesTransaccionesManager, $ivaManager,
-        $formaPagoManager);
+        $formaPagoManager, $monedaManager);
     }
 }
