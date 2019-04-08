@@ -2,12 +2,28 @@
 <script src="/js/bienes-transacciones.js"></script>
 <script src="/js/item.js"></script>
 <script src="/js/opciones-transacciones.js"></script>
+
+
+<!-- Script --> <!-- PROBLEMAS CON EL DATETIMEPICKER -- JQUERY TIENE QUE SER MENOR A 2.2 -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+
+
 <script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
-<script language="javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js">
-</script>
-<link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
+<script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
+<!-- <link href="http://twitter.github.com/bootstrap/assets/css/docs.css" rel="stylesheet"> -->
+
 <script type="text/javascript">
 $(function() {
     $('#datetimepicker1').datetimepicker({
@@ -20,18 +36,7 @@ $(function() {
         format: 'DD/MM/YYYY'
     });
 });
-
-<!-- Script --> <!-- PROBLEMAS CON EL DATETIMEPICKER -- JQUERY TIENE QUE SER MENOR A 2.2 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- jQuery UI -->
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-<link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
-<!-- <link href="http://twitter.github.com/bootstrap/assets/css/docs.css" rel="stylesheet"> -->
+</script>
 
 <script>
 $(document).ready(function() {
@@ -164,9 +169,8 @@ $responsable = $this->identity();
                         </div>
                         <div class="form-group col-sm-2 margin-padding-xs">
                             <label>Cantidad</label>
-                            <input type="number" class="form-control" name="cantidad" id="cantidad" min="1" max="99" value="" placeholder="Cantidad"
-                                onkeypress="return justNumbers(event)" onclick="calculaSubtotal()" onkeyup="calculaSubtotal()"
-                                >
+                            <input type="number" class="form-control" name="item_cantidad" id="item_cantidad" min="1" max="99" value="" placeholder="Cantidad"
+                                onkeypress="return justNumbers(event)" onclick="calculaSubtotal()" onkeyup="calculaSubtotal()">
                         </div>
                         <div class="form-group col-sm-1 margin-padding-xs">
                             <label>&nbsp;</label>

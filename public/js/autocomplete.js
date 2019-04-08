@@ -23,7 +23,7 @@ function autocompleteCode(inp, arr) {
                 output.push(arr[i]);
                 // invierto codigo y label para la funcion de autocompletado (para que se muestre el codigo y no el nombre al escribir)
                 output[(output.length)-1]["label"] = item_codigo;
-                output[(output.length)-1]["codigo"] = item_label
+                output[(output.length)-1]["codigo"] = item_label;
             }
         }
     });
