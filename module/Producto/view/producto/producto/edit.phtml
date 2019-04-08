@@ -96,13 +96,13 @@ $proveedor = $bien->getProveedor();
                 <div class="row form-row">
                     <div class="form-group col-md-6">
                         <label>Código de Producto</label>
-                        <input type="text" class="form-control" name="codigo_producto"
-                            value="<?= $producto->getCodigo_producto(); ?>">
+                        <input type="text" class="form-control" name="codigo"
+                            value="<?= $bien->getCodigo(); ?>">
                     </div>
                     <div class="form-group col-md-6">
                         <label>Stock</label>
                         <input type="text" class="form-control" name="stock"
-                            value="<?= $producto->getStock(); ?>"  onkeypress="return justNumbers(event);">
+                            value="<?= $bien->getStock(); ?>"  onkeypress="return justNumbers(event);">
                     </div>
                 </div>
                 <!-- 5ta fila -->
@@ -110,7 +110,7 @@ $proveedor = $bien->getProveedor();
                     <div class="form-group col-md-6">
                         <label>Código de Barras</label>
                         <input type="text" class="form-control" name="codigo_barras"
-                            value="<?= $producto->getCodigo_barras(); ?>">
+                            value="<?= $bien->getCodigo_barras(); ?>">
                     </div>
                     <div class="form-group col-md-6">
                         <label>Reposición</label>

@@ -152,21 +152,75 @@ var_dump(json_decode($json_bienes, true));
                 <!-- Form Autocompletado -->
                 <div class="container" style="padding-top:10px;">
                     <form method="post" autocomplete="off">
+                        
                         <input type="hidden" class="form-control" name="item_id" id="item_id">
-                        <div class="autocomplete form-group form-inline">
+                        
+                        <div class="autocomplete form-group col-sm-2 margin-padding-xs">
+                            <label>Código</label>
                             <input type="text" class="form-control" name="item_codigo" id="item_codigo" placeholder="Código">
-                            <input type="text" class="form-control" name="item_nombre" id="item_nombre" placeholder="Producto & Servicio">
-                            <input type="text" class="form-control" name="item_descripcion" id="item_descripcion" 
-                                placeholder="Descripción" style="width: 310px;">
-                            <input type="number" class="form-control" name="cantidad" id="cantidad" min="1" max="99" value="" placeholder="Cantidad"
-                                    onkeypress="return justNumbers(event)" onclick="calculaSubtotal()" onkeyup="calculaSubtotal()"
-                                    style="width: 110px;">
                         </div>
-                        <button type="button" class="btn btn-default" onclick="addItemToTable()">
-                            <span class="glyphicon glyphicon-plus"></span> Agregar
-                        </button>
-                        <!-- al agregar tiene que actualizar "$json" el cual genera la tabla con  "var obj" -->
+                        <div class="autocomplete form-group col-sm-2 margin-padding-xs">
+                            <label>Producto & Servicio</label>
+                            <input type="text" class="form-control" name="item_nombre" id="item_nombre" placeholder="Producto & Servicio">
+                        </div>
+                        <div class="form-group col-sm-2 margin-padding-xs">
+                            <label>Stock Disponible</label>
+                            <input type="text" class="form-control" name="item_stock" id="item_stock" placeholder="Stock Disponible">
+                        </div>
+                        <div class="form-group col-sm-2 margin-padding-xs">
+                            <label>Cantidad</label>
+                            <input type="number" class="form-control" name="cantidad" id="cantidad" min="1" max="99" value="" placeholder="Cantidad"
+                                onkeypress="return justNumbers(event)" onclick="calculaSubtotal()" onkeyup="calculaSubtotal()"
+                                >
+                        </div>
+                        <div class="form-group col-sm-1 margin-padding-xs">
+                            <label>&nbsp;</label>
+                            <button type="button" class="btn btn-default" onclick="addItemToTable()">
+                                <span class="glyphicon glyphicon-plus"></span> Agregar
+                            </button>
+                        </div>
+
+                        
+
+                        
                     </form>
+                </div>
+                <!-- Detalles de Producto & Servicio -->
+                <div class="container" style="">
+                    <label>
+                        <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion"
+                            data-target="#collapseDetalles" aria-expanded="true"
+                            aria-controls="collapseDetalles" name="Detalles" id="Detalles">
+                        Mostrar Detalles
+                    </label>
+                    <div class="container row collapse" id="collapseDetalles">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Categoría</th>
+                                    <th>Precio</th>
+                                    <th>% Descuento</th>
+                                    <th>Precio c/Dto.</th>
+                                    <th>% IVA</th>
+                                    <th>Precio c/IVA</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="item_descripcion"></td>
+                                    <td id="item_categoria"></td>
+                                    <td id="item_precio"></td>
+                                    <td id="item_descuento"></td>
+                                    <td id="item_descuento_precio"></td>
+                                    <td id="item_iva"></td>
+                                    <td id="item_iva_precio"></td>
+                                    <td id="item_subtotal"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <script src="/js/autocomplete.js"></script>
                

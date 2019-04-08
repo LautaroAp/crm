@@ -239,6 +239,11 @@ table.dataTable tr.item-seleccion > .sorting_1 {
     padding: 5px !important;
 }
 
+.margin-padding-xs {
+    margin: 1px !important;
+    padding: 1px !important;
+}
+
 .licencia-sm{
     min-width: 65px;
     max-width: 75px;

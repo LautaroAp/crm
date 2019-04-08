@@ -54,9 +54,6 @@ class Bienes {
      */
     private $bienesTransacciones;
 
-  
-
-
     /**
      * Many Products have One Product.
      * @ORM\ManyToOne(targetEntity="Iva")
@@ -98,6 +95,21 @@ class Bienes {
      * @ORM\Column(name="TIPO", nullable=true, type="string")
      */
     protected $tipo;
+
+    /**
+     * @ORM\Column(name="STOCK", nullable=true, type="integer")
+     */
+    protected $stock;
+
+    /**
+     * @ORM\Column(name="CODIGO", nullable=true, type="string")
+     */
+    protected $codigo;
+
+    /**
+     * @ORM\Column(name="CODIGO_BARRAS", nullable=true, type="string")
+     */
+    protected $codigo_barras;
     
     /**
      * Get the value of id
@@ -391,6 +403,57 @@ class Bienes {
         return $this;
     }
 
+    /**
+     * Get the value of stock
+     */
+    public function getStock(){
+        return $this->stock;
+    }
+
+    /**
+     * Set the value of stock
+     *
+     * @return self
+     */
+    public function setStock($stock){
+        $this->stock = $stock;
+        return $this;
+    }
+
+    /**
+     * Get the value of codigo
+     */
+    public function getCodigo(){
+        return $this->codigo;
+    }
+
+    /**
+     * Set the value of codigo
+     *
+     * @return self
+     */
+    public function setCodigo($codigo){
+        $this->codigo = $codigo;
+        return $this;
+    }
+
+    /**
+     * Get the value of codigo_barras
+     */
+    public function getCodigo_barras(){
+        return $this->codigo_barras;
+    }
+
+    /**
+     * Set the value of codigo_barras
+     *
+     * @return self
+     */
+    public function setCodigo_barras($codigo_barras){
+        $this->codigo_barras = $codigo_barras;
+        return $this;
+    }
+
     public function getJSON(){
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
@@ -414,11 +477,20 @@ class Bienes {
 
     public function getJsonBien(){
         $output = "";
-        $output .= '"id": "' . $this->getId() .'", ';
         $output .= '"value": "' . $this->getId() .'", ';
         $output .= '"label": "' . $this->getNombre() .'", ';
         $output .= '"descripcion": "' . $this->getDescripcion() .'", ';
-        $output .= '"codigo": "' . $this->getPrecio() .'" ';
+        $output .= '"categoria": "' . $this->getCategoria() .'", ';
+        $output .= '"stock": "' . $this->getStock() .'", ';
+        $output .= '"codigo": "' . $this->getCodigo() .'", ';
+        $output .= '"codigo_barras": "' . $this->getCodigo_barras() .'", ';
+        $output .= '"precio": "' . $this->getPrecio() .'", ';
+        $output .= '"descuento": "' . $this->getDescuento() .'", ';
+        $output .= '"descuento_precio": "' . $this->getPrecio_final_dto() .'", ';
+        $output .= '"iva": "' . $this->getIva()->getValor() .'", ';
+        $output .= '"iva_gravado": "' . $this->getIva_gravado() .'", ';
+        $output .= '"iva_precio": "' . $this->getPrecio_final_iva() .'", ';
+        $output .= '"subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
 
         return  '{'.$output.'}' ;
     }

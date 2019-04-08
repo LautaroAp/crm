@@ -56,9 +56,9 @@
                                     <td><?php echo ($bien->getNombre()); ?></td>
                                     <td><?php echo ($bien->getDescripcion()); ?></td>
                                     <td><?php echo ($bien->getCategoriaNombre()); ?></td>
-                                    <td><?php echo ($producto->getStock()); ?></td>
+                                    <td><?php echo ($bien->getStock()); ?></td>
                                     <td><?php echo money_format("$ %n", $bien->getPrecio()); ?></td>
-                                    <td><?php echo money_format("$ %n", $bien->getPrecio() * $producto->getStock()); ?></td>
+                                    <td><?php echo money_format("$ %n", $bien->getPrecio() * $bien->getStock()); ?></td>
                                     <td>
                                         <div class="pull-right">
                                             <a class="btn btn-default" href="<?= $this->url('gestionProductosServicios/gestionProductos/editar',
