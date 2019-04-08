@@ -130,8 +130,8 @@ $responsable = $this->identity();
                                     </span> Buscar</button>
                             </div>
                         </div>
-                        <input type="hidden" id="responsable" name="responsable" value=<?= $responsable ?>>
-                        <input type="hidden" id="url" name="url" value=<?= $url ?>>
+                        <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
+                        <input type="hidden" id="url" name="url" value="<?= $url ?>">
                     </div>
                 </div>
             </div>
@@ -140,7 +140,7 @@ $responsable = $this->identity();
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
-                    LISTADO DE PRODUCTOS & SERVICIOS
+                    LISTADO DE PRODUCTOS Y SERVICIOS
                 </div>
 
                 <!-- Form Autocompletado -->
@@ -154,8 +154,8 @@ $responsable = $this->identity();
                             <input type="text" class="form-control" name="item_codigo" id="item_codigo" placeholder="Código">
                         </div>
                         <div class="autocomplete form-group col-sm-2 margin-padding-xs">
-                            <label>Producto & Servicio</label>
-                            <input type="text" class="form-control" name="item_nombre" id="item_nombre" placeholder="Producto & Servicio">
+                            <label>Producto Y Servicio</label>
+                            <input type="text" class="form-control" name="item_nombre" id="item_nombre" placeholder="Producto Y Servicio">
                         </div>
                         <div class="form-group col-sm-2 margin-padding-xs">
                             <label>Stock Disponible</label>
@@ -179,7 +179,7 @@ $responsable = $this->identity();
                         
                     </form>
                 </div>
-                <!-- Detalles de Producto & Servicio -->
+                <!-- Detalles de Producto Y Servicio -->
                 <div class="container" style="">
                     <label>
                         <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion"
@@ -245,17 +245,17 @@ $responsable = $this->identity();
                     <div class="row form-row">
                         <div class="form-group col-md-3">
                             <label>Descuento Total ($)</label>
-                            <input type="text" class="form-control" name="descuento_total" id="descuento_total" value=0
+                            <input type="text" class="form-control" name="descuento_total" id="descuento_total" value="0"
                                 readonly>
                         </div>
                         <div class="form-group col-md-3">
                             <label>IVA Total ($)</label>
-                            <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
+                            <input type="text" class="form-control" name="iva_total" id="iva_total" value="0" readonly>
                         </div>
                         <div class="form-group col-md-3">
                             <label>Subtotal</label>
                             <input type="text" class="form-control" name="subtotal_general" id="subtotal_general"
-                                value=0 readonly>
+                                value="0" readonly>
                         </div>
                     </div>
                     <!-- Forma de Pago + Fecha -->
@@ -293,7 +293,7 @@ $responsable = $this->identity();
                     <div class="row form-row">
                         <div class="form-group col-md-3">
                             <label>Total</label>
-                            <input type="text" class="form-control" name="total_general" id="total_general" value=0
+                            <input type="text" class="form-control" name="total_general" id="total_general" value="0"
                                 readonly>
                         </div>
                         <div class="form-group col-md-2">
