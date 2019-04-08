@@ -157,6 +157,7 @@ function changeBonificacionRecargo(){
         $("#recargo_general").val("0.00");
         $("#bonificacion_general").val("0.00");
     }
+    calcularSubcampos();
     
 
 }
