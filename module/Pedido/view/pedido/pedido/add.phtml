@@ -54,6 +54,8 @@ $responsable = $this->identity();
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
 <script>
     var json_items = <?= $json_bienes ?>;
+    var json_items_codigos = <?= $json_bienes ?>;
+    var json_items_nombres = <?= $json_bienes ?>;
     var output;
     var ivas = <?= $ivasJson ?>;
     setIvas(ivas);
@@ -172,8 +174,7 @@ $responsable = $this->identity();
                         </div>
                         <div class="form-group col-sm-2 margin-padding-xs">
                             <label>Cantidad</label>
-                            <input type="number" class="form-control" name="item_cantidad" id="item_cantidad" min="1" max="99" value="" placeholder="Cantidad"
-                                onkeypress="return justNumbers(event)" onclick="calculaSubtotal()" onkeyup="calculaSubtotal()">
+                            <input type="number" class="form-control" name="item_cantidad" id="item_cantidad" min="1" max="99" value="" placeholder="Cantidad" onkeypress="return justNumbers(event)">
                         </div>
                         <div class="form-group col-sm-1 margin-padding-xs">
                             <label>&nbsp;</label>

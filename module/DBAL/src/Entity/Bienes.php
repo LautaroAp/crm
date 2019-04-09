@@ -478,7 +478,8 @@ class Bienes {
     public function getJsonBien(){
         $output = "";
         $output .= '"value": "' . $this->getId() .'", ';
-        $output .= '"label": "' . $this->getNombre() .'", ';
+        $output .= '"label": "' . "" .'", ';
+        $output .= '"nombre": "' . $this->getNombre() .'", ';
         $output .= '"descripcion": "' . $this->getDescripcion() .'", ';
         $output .= '"categoria": "' . $this->getCategoria() .'", ';
         $output .= '"stock": "' . $this->getStock() .'", ';
