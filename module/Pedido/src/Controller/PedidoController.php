@@ -82,7 +82,8 @@ class PedidoController extends TransaccionController
 
         // $response[] = array("value"=>"1","label"=>"Soporte");
         foreach ($bienes as $bien) {
-            $json_bienes .= $bien->getJsonBien() . ',';
+            // $json_bienes .= $bien->getJsonBien() . ',';
+            $json_bienes .= $bien->getJsonBienToBT() . ',';
         }
         $json_bienes = substr($json_bienes, 0, -1);
         $json_bienes = '[' . $json_bienes . ']';

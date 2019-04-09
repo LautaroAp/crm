@@ -495,5 +495,17 @@ class Bienes {
         return  '{'.$output.'}' ;
     }
 
+    public function getJsonBienToBT(){
+        $output = "";
+        $output .= '"Id": "' . "" .'", ';
+        $output .= '"Bien": ' . $this->getJsonBien() .', ';
+        $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
+
+        $output .= '"Cantidad": "' . "" .'", ';
+        $output .= '"Descuento": "' . $this->getDescuento() .'", ';
+        $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
+        
+        return  '{'.$output.'}' ;
+    }
 
 }

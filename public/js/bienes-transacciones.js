@@ -372,7 +372,6 @@ function makeEditable(event){
 function addItemToTable(){
     // Compara el Stock Disponible con la Cantidad ingresada
     if(verificaStockDisponible()){
-
         // Elimina items sobrantes del json "output" y deja solo el seleccionado
         updateOutputSelect();
 
@@ -385,10 +384,9 @@ function addItemToTable(){
         // luego:
             //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
             // $("#jsonitems").val(JSON.stringify(items));
-            $("#jsonitems").val(JSON.stringify(items));
-
+        $("#jsonitems").val(JSON.stringify(items));
         // Si no actualiza, volver a llamar agregar item
-        addItems(obj, "pedido", idPersona); // Se rompe * * * ¿tengo que adaptar output con los campos de bienesTransaccion?
+        // addItems(obj, "pedido", idPersona); // Se rompe * * * ¿tengo que adaptar output con los campos de bienesTransaccion?
 
     };
 }
@@ -402,8 +400,14 @@ function updateOutputSelect(){
             break;
         } 
     }
+    
     result[0]["cantidad"] = $('#item_cantidad').val();
     output = result;
+    // output= null;
+    // cantidad = ('#item_cantidad').val();
+    // descuento = result[0]["descuento"];
+    // iva = getIvaByValue(result[0]["iva"]);
+    // output = {"Bien" : result[0], "Cantidad" : cantidad, "Descuento" : descuento, "IVA"=  }
     clearAddItem();
 }
 
