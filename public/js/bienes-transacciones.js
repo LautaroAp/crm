@@ -367,12 +367,70 @@ function makeEditable(event){
     // element.setAttribute('contenteditable', true);
 }
 
+// * * * * * * * * * PARA AGREGAR ITEM DEL AUTOCOMPLETE * * * * * * * * * 
+
 function addItemToTable(){
-    alert("Agrega Item a la Tabla");
-    // busco BIEN segun ID
-    // le concateno el BIEN a "ITEMS" (agregar a un json)
-    // luego:
-        //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
-        // $("#jsonitems").val(JSON.stringify(items));
-    // Si no actualiza, volver a llamar agregar item
+    // Compara el Stock Disponible con la Cantidad ingresada
+    if(verificaStockDisponible()){
+
+        // Elimina items sobrantes del json "output" y deja solo el seleccionado
+        updateOutputSelect();
+
+        // busco BIEN segun ID
+        // * * * (Ya lo tengo, esta completo en "output")...
+    
+        // le concateno el BIEN a "ITEMS" (agregar a un json)
+        items.push(output[0]);
+
+        // luego:
+            //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
+            // $("#jsonitems").val(JSON.stringify(items));
+            $("#jsonitems").val(JSON.stringify(items));
+
+        // Si no actualiza, volver a llamar agregar item
+        addItems(obj, "pedido", idPersona); // Se rompe * * * ¿tengo que adaptar output con los campos de bienesTransaccion?
+
+    };
+}
+
+function updateOutputSelect(){
+    // Elimina items sobrantes del json "output" y deja solo el seleccionado
+    var result;
+    for (i = 0; i < output.length; i++) {
+        if (output[i]["value"] == $('#item_id').val()) {
+            result = output.splice(i, 1);
+            break;
+        } 
+    }
+    result[0]["cantidad"] = $('#item_cantidad').val();
+    output = result;
+    clearAddItem();
+}
+
+function clearAddItem(){
+    $('#item_id').val(null);
+    $('#item_codigo').val(null);
+    $('#item_nombre').val(null);
+    $('#item_stock').val(null);
+    $('#item_cantidad').val(null);
+}
+
+function verificaStockDisponible(){
+    if($('#item_cantidad').val() > 0){
+        if($('#item_cantidad').val() > $('#item_stock').val()){
+            if(confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")){
+                return true
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    } else {
+        return false;
+    }
+}
+
+function addItemToJsonTable(){
+
 }
