@@ -429,7 +429,7 @@ function makeEditable(event){
 
 function addItemToTable(){
     // Compara el Stock Disponible con la Cantidad ingresada
-    if(verificaStockDisponible(output[0])){
+    if(verificaStockDisponible()){
         // Elimina items sobrantes del json "output" y deja solo el seleccionado
         updateOutputSelect();
 
@@ -452,24 +452,25 @@ function addItemToTable(){
 function updateOutputSelect(){
     // Elimina items sobrantes del json "output" y deja solo el seleccionado
     var result;
-    for (i = 0; i < output.length; i++) {
-        if (output[i]["value"] == $('#item_id').val()) {
-            result = output.splice(i, 1);
+    for (i = 0; i < json_items.length; i++) {
+        if (json_items[i]["value"] == $('#item_id').val()) {
+            output = json_items.splice(i, 1);
             break;
         } 
     }
     
-    result[0]["cantidad"] = $('#item_cantidad').val();
-    output = result;
+    
     // output= null;
-    // cantidad = ('#item_cantidad').val();
-    // descuento = result[0]["descuento"];
-    // iva = getIvaByValue(result[0]["iva"]);
-    // output = {"Bien" : result[0], "Cantidad" : cantidad, "Descuento" : descuento, "IVA"=  }
+    cantidad = $('#item_cantidad').val();
+    descuento = output[0]["descuento"];
+    iva = output[0]["iva"];
+    iva = ivas[getIvaFromValue(iva)];
+    output = {"Bien" : output, "Cantidad" : cantidad, "Descuento" : descuento, "IVA": iva  }
     clearAddItem();
 }
 
 function clearAddItem(){
+    //LIMPIAR LA TABLA
     $('#item_id').val(null);
     $('#item_codigo').val(null);
     $('#item_nombre').val(null);
@@ -477,8 +478,8 @@ function clearAddItem(){
     $('#item_cantidad').val(null);
 }
 
-function verificaStockDisponible(item){
-    console.log(item);
+function verificaStockDisponible(){
+    // console.log(item);
     if($('#item_cantidad').val() > 0){
         if($('#item_cantidad').val() > $('#item_stock').val()){
             if(confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")){
