@@ -1,6 +1,7 @@
 <!-- scripts -->
 <script src="/js/bienes-transacciones.js"></script>
 <script src="/js/item.js"></script>
+<script src="/js/opciones-transacciones.js"></script>
 <script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
 <script language="javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js">
@@ -19,7 +20,7 @@ $(function() {
         format: 'DD/MM/YYYY'
     });
 });
-
+</script>
 <!-- Script --> <!-- PROBLEMAS CON EL DATETIMEPICKER -- JQUERY TIENE QUE SER MENOR A 2.2 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- jQuery UI -->
@@ -172,12 +173,7 @@ $responsable = $this->identity();
                             <button type="button" class="btn btn-default" onclick="addItemToTable()">
                                 <span class="glyphicon glyphicon-plus"></span> Agregar
                             </button>
-                        </div>
-
-                        
-
-                        
-                    </form>
+                        </div>   
                 </div>
                 <!-- Detalles de Producto Y Servicio -->
                 <div class="container" style="">
@@ -419,56 +415,4 @@ $responsable = $this->identity();
 </div>
 <!-- Fin: Panel Botones -->
 
-<div class="container">
-<br><br><br><br><br><br><br><br>
-
-<!-- TABLA DE INPUTS -->
-<table>
-  <tr>
-    <td>Single selection</td>
-    <td><input type='text' id='autocomplete' ></td>
-  </tr>
-
-  <tr>
-    <td>Selected User id</td>
-    <td><input type='text' id='selectuser_id' /></td>
-  </tr>
-
-</table>
-
-<script>
-
-// $( function() {
-
-//     // AUTOCOMPLETE: al ingresar un caracter tiene que devolver un json con los posibles valores.
-//     // $response[] = array("value"=>"..","label"=>"..");
-
-//     // Single Select
-//     $( "#autocomplete" ).autocomplete({
-//         // Obtengo data (data deberia ser data = total_bienes (con nombre y id))
-//         source: function(request, response ) {
-//             data = json_items;
-//             response(data);
-//         },
-//         // Completo los input, y retorno el id
-//         select: function (event, ui) {
-//             $('#autocomplete').val(ui.item.label); // display the selected text
-//             $('#selectuser_id').val(ui.item.value); // save selected id to input
-//             return false;
-//         }
-//     });
-
-// });
-
-// function split( val ) {
-//   return val.split( /,\s*/ );
-// }
-
-// function extractLast( term ) {
-//   return split( term ).pop();
-// }
-
-</script>
-
-</div>
 
