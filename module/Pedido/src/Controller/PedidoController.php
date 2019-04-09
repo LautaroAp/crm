@@ -20,7 +20,6 @@ class PedidoController extends TransaccionController
      * @var User\Service\PedidoManager 
      */
     protected $pedidoManager;
-    private $monedaManager;
     private $clientesManager;
     private $proveedorManager;
     private $tipo;
@@ -28,7 +27,6 @@ class PedidoController extends TransaccionController
     private $bienesManager;
     private $items;
     private $formaPagoManager;
-
     public function __construct(
         $pedidoManager,
         $monedaManager,
@@ -37,13 +35,13 @@ class PedidoController extends TransaccionController
         $proveedorManager,
         $bienesTransaccionesManager,
         $bienesManager,
-        $formaPagoManager
+        $formaPagoManager, 
+        $ivaManager
     ) {
-        parent::__construct($pedidoManager, $personaManager);
+        parent::__construct($pedidoManager, $personaManager,  $monedaManager,$ivaManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
         $this->pedidoManager = $pedidoManager;
-        $this->monedaManager = $monedaManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->bienesManager = $bienesManager;
         $this->formaPagoManager = $formaPagoManager;
@@ -105,7 +103,7 @@ class PedidoController extends TransaccionController
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
-            $this->pedidoManager->addPedido($data, $items);
+            $this->pedidoManager->add($data);
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             } else {
@@ -116,6 +114,7 @@ class PedidoController extends TransaccionController
         $numPedido = $this->pedidoManager->getTotalPedidos() + 1;
         $monedasJson = $this->getJsonMonedas();
         $formasPagoJson = $this->getJsonFormasPago();
+        $ivasJson = $this->getJsonIvas();
         $this->reiniciarParams();
         return new ViewModel([
             'items' => $items,
@@ -127,6 +126,7 @@ class PedidoController extends TransaccionController
             'json_bienes' => $json_bienes,
             'formasPagoJson' => $formasPagoJson,
             'monedasJson' => $monedasJson,
+            'ivasJson' => $ivasJson,
             'formasEnvioJson'=>"[]",
             'transaccionJson'=>"[]",
         ]);
@@ -251,6 +251,7 @@ class PedidoController extends TransaccionController
         $monedasJson = $this->getJsonMonedas();
         $formasPagoJson = $this->getJsonFormasPago();
         $transaccionJson = $pedido->getTransaccion()->getJSON();
+        $ivasJson = $this->getJsonIvas();
         $this->reiniciarParams();
         return new ViewModel([
             'items' => $items,
@@ -263,6 +264,7 @@ class PedidoController extends TransaccionController
             'monedasJson' => $monedasJson,
             'formasEnvioJson'=>"[]",
             'transaccionJson' => $transaccionJson,
+            'ivasJson' => $ivasJson,
         ]);
     }
     public function eliminarItemAction()
@@ -303,6 +305,12 @@ class PedidoController extends TransaccionController
     {
         $formasPago = $this->formaPagoManager->getFormasPago();
         $json = $this->getJsonFromObjectList($formasPago);
+        return $json;
+    }
+
+    public function getJsonIvas(){
+        $ivas = $this->ivaManager->getIvas();
+        $json = $this->getJsonFromObjectList($ivas);
         return $json;
     }
 

@@ -12,6 +12,7 @@ use Clientes\Service\ClientesManager;
 use BienesTransacciones\Service\BienesTransaccionesManager;
 use Bienes\Service\BienesManager;
 use FormaPago\Service\FormaPagoManager;
+use Iva\Service\IvaManager;
 
 // use Transaccion\Service\TransaccionManager;
 
@@ -34,6 +35,7 @@ class PedidoControllerFactory implements FactoryInterface {
         $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);
         $bienesManager = $container->get(BienesManager::class);
         $formaPagoManager = $container->get(FormaPagoManager::class);
+        $ivaManager = $container->get(IvaManager::class);
 
 
         // $transaccionManager = $container->get(TransaccionManager::class);            
@@ -41,6 +43,6 @@ class PedidoControllerFactory implements FactoryInterface {
 
         // Instantiate the service and inject dependencies
         return new PedidoController($pedidoManager, $monedaManager, $personaManager, $clientesManager, 
-        $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager);
+        $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager, $ivaManager);
     }    
 }

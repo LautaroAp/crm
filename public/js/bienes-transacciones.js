@@ -1,6 +1,13 @@
 var items=[];
 var tipoTransaccion;
 var idPersona;
+var ivas;
+
+function setIvas(arrayIvas){
+    ivas = arrayIvas;
+    console.log("agrega ivas");
+    console.log(ivas);
+}
 
 function addItems(bienesTransacciones, tipo, id) {
    items = bienesTransacciones;
@@ -108,8 +115,6 @@ function calcularSubcampos(){
         descuento=  (parseFloat(descuento) * precio_unitario /100 );
         precio_unitario_dto= precio_unitario-descuento;
         sumBonificacion = sumBonificacion + descuento*cantidad;
-        console.log("SUM BONIFICACION "+sumBonificacion);
-
         iva = table.rows[i].cells[5].innerHTML;
         iva = iva.substring(0, iva.length-2);
         sumIva = sumIva + (parseFloat(iva) * precio_unitario_dto/ 100)*cantidad ;
@@ -269,6 +274,9 @@ function saveValueInJson(tdId, inputValue){
     index = tdId.substring(0, tdId.indexOf('_'));
     attribute = tdId.substring(tdId.indexOf('_')+1, tdId.length);
     if (inputValue!=null){
+        if (attribute =="IVA"){
+            inputValue = ivas[getIvaFromValue(inputValue)];
+        }
         console.log(inputValue);
         items[index][attribute] = inputValue;
         console.log(items);
@@ -318,14 +326,20 @@ function actualizarFila(tdId){
 //esta funcion es llamada para guardar el input anterior al generarse un nuevo input
 function saveTd(tdId){
     inputId = "input"+tdId;
-    inputValue= $("#"+inputId).val();
+    if (getAttribute(tdId)=="IVA"){
+        console.log(inputId);
+        inputValue= $("#"+inputId+" option:selected").text();
+    }
+    else{
+        inputValue= $("#"+inputId).val();
+    }
     numValue = getNumberValue(inputValue);
     inputElement = document.getElementById(inputId);
     if (inputElement!=null){
         inputElement.remove();
         td = document.getElementById(tdId);
         attribute = getAttribute(tdId);
-        if (attribute=="Descuento"){
+        if ((attribute=="Descuento") || (attribute=="IVA")){
             td.innerText=formatPercent((parseFloat(numValue)).toFixed(2));;
         }
         else{
@@ -341,6 +355,14 @@ function pulsar(e){
     return (tecla!=13); 
 }
 
+function getIvaFromValue(valor){
+    for (var i=1; i<ivas.length; i++){
+        if (ivas[i]["Valor"]==valor){
+            return i;
+        }
+    }
+    return 0;
+}
 
 //PARA EL IVA VA A TENER QUE SER DISTINTO, ESTO SIRVE PARA BONIFICACION Y CANTIDAD NOMAS
 function makeEditable(event){
@@ -354,24 +376,60 @@ function makeEditable(event){
         saveTd(selectedAnt);
     }
     val = element.innerText;
-    var input = document.createElement("input");
-    input.type = "text";
-    input.className = "form-control"; // set the CSS class
-    input.value=val;
-    input.setAttribute("size",3);
-    input.id ="input"+elementId;
-    input.setAttribute("onchange", "saveValue(id);");
-    input.setAttribute("onkeypress", "return pulsar(event)");
-    element.innerText="";
-    element.appendChild(input); 
-    // element.setAttribute('contenteditable', true);
+    if (getAttribute(elementId)=="IVA"){      
+        //Create and append select list
+        var selectList = document.createElement("select");
+        selectList.id = "input"+elementId;
+        selectList.name="IVA";
+        selectList.setAttribute("class", "form-control");
+        selectList.setAttribute("onchange", "saveValue(id);");
+        selectList.setAttribute("onkeypress", "return pulsar(event)");
+        valor = element.innerText;
+        element.innerText="";
+        element.appendChild(selectList);
+        //Create and append the options
+        
+        var option = document.createElement("option");
+        iva = getIvaFromValue(valor);
+        option.value = getIvaFromValue(iva['Id']);
+        option.text = valor;
+        option.setAttribute("hidden","");
+        selectList.appendChild(option);
+    
+    
+        var option = document.createElement("option");
+        option.value = "-1";
+        option.text = "NO DEFINIDO";
+        selectList.appendChild(option);
+    
+        for (var i = 0; i < ivas.length; i++) {
+            var option = document.createElement("option");
+            option.value = ivas[i]['Id'];
+            option.text = ivas[i]['Valor'];
+            selectList.appendChild(option);
+        }
+    }
+    else{
+        var input = document.createElement("input");
+        input.type = "text";
+        input.className = "form-control"; // set the CSS class
+        input.value=val;
+        input.setAttribute("size",3);
+        input.id ="input"+elementId;
+        input.setAttribute("onchange", "saveValue(id);");
+        input.setAttribute("onkeypress", "return pulsar(event)");
+        element.innerText="";
+        element.appendChild(input); 
+        // element.setAttribute('contenteditable', true);
+    }
+    
 }
 
 // * * * * * * * * * PARA AGREGAR ITEM DEL AUTOCOMPLETE * * * * * * * * * 
 
 function addItemToTable(){
     // Compara el Stock Disponible con la Cantidad ingresada
-    if(verificaStockDisponible()){
+    if(verificaStockDisponible(output[0])){
         // Elimina items sobrantes del json "output" y deja solo el seleccionado
         updateOutputSelect();
 
@@ -419,7 +477,8 @@ function clearAddItem(){
     $('#item_cantidad').val(null);
 }
 
-function verificaStockDisponible(){
+function verificaStockDisponible(item){
+    console.log(item);
     if($('#item_cantidad').val() > 0){
         if($('#item_cantidad').val() > $('#item_stock').val()){
             if(confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")){

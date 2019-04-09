@@ -65,7 +65,7 @@ function autocompleteName(inp, arr) {
         /*for each item in the array...*/
         for (i = 0; i < arr.length; i++) {
             /*check if the item starts with the same letters as the text field value:*/
-            if (arr[i]["Bien"]["label"].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            if (arr[i]["label"].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                 // agregar cada elemento a un nuevo JSON (output)
                 output.push(arr[i]);
             }
@@ -76,7 +76,7 @@ function autocompleteName(inp, arr) {
     document.addEventListener("click", function(e) {
         $("#item_nombre").autocomplete({
             source: function(request, response ) {
-                data = output["Bien"];
+                data = output;
                 response(data);
             },
             select: function (event, ui) {
@@ -92,9 +92,12 @@ function autocompleteName(inp, arr) {
                 $('#item_iva').html(ui.item.iva);
                 $('#item_iva_precio').html(ui.item.iva_precio);
                 $('#item_subtotal').html(ui.item.subtotal);
+                $('#item_cantidad').html(1);
                 return false;
             }
         });
     });
 }
 autocompleteName(document.getElementById("item_nombre"), json_items);
+
+

@@ -72,21 +72,6 @@ class PedidoManager extends TransaccionManager
         return ($paginator);
     }
 
-    /**
-     * This method adds a new pedido.
-     */
-    public function addPedido($data, $items)
-    {
-        //llamo a add de la transaccion, retorna una transaccion que se le setea al pedido
-        $transaccion = parent::add($data, $items);
-
-        $pedido = new Pedido();
-        $pedido = $this->setData($pedido, $data, $transaccion);
-
-        $this->entityManager->persist($pedido);
-        $this->entityManager->flush();
-        return $pedido;
-    }
 
     private function setData($pedido, $data, $transaccion)
     {
@@ -125,6 +110,33 @@ class PedidoManager extends TransaccionManager
         return true;
     }
 
+    public function add($data)
+    {
+        $transaccion = parent::add($data);
+        $pedido = new Pedido();
+        $pedido = $this->setData($pedido, $data, $transaccion);
+        // Apply changes to database.
+        $this->entityManager->persist($pedido);
+        $this->entityManager->flush();
+        return $pedido;
+    }
+
+
+    // /**
+    //  * This method adds a new pedido.
+    //  */
+    // public function addPedido($data, $items)
+    // {
+    //     //llamo a add de la transaccion, retorna una transaccion que se le setea al pedido
+    //     $transaccion = parent::add($data, $items);
+
+    //     $pedido = new Pedido();
+    //     $pedido = $this->setData($pedido, $data, $transaccion);
+
+    //     $this->entityManager->persist($pedido);
+    //     $this->entityManager->flush();
+    //     return $pedido;
+    // }
     public function getTotalPedidos()
     {
         $pedidos = $this->getPedidos();

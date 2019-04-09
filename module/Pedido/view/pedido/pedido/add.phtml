@@ -3,21 +3,15 @@
 <script src="/js/item.js"></script>
 <script src="/js/opciones-transacciones.js"></script>
 
-
 <!-- Script --> <!-- PROBLEMAS CON EL DATETIMEPICKER -- JQUERY TIENE QUE SER MENOR A 2.2 -->
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 <!-- jQuery UI -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-
-
-
 <script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
 <script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
-
-
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
@@ -61,6 +55,8 @@ $responsable = $this->identity();
 <script>
     var json_items = <?= $json_bienes ?>;
     var output;
+    var ivas = <?= $ivasJson ?>;
+    setIvas(ivas);
 </script>
 
 <!-- Document -->
@@ -99,35 +95,42 @@ $responsable = $this->identity();
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>Cliente</label>
                             <input type="text" class="form-control" name="persona" id="persona"
                                 value="<?= $persona->getNombre() ?>" readonly>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
                             <label>Razón Social</label>
-                            <div class="form-inline">
+                            
                                 <input type="text" class="form-control" name="razon_social" id="razon_social"
                                     value="<?php if (!is_null($tipoPersona)) {
                                     echo ($tipoPersona->getRazon_social());
-                                } ?>" style="width: 60%; min-width: 300px;" readonly>
-                                <button type="button" class="btn btn-default">Consumidor Final</button>
-                            </div>
+                                } ?>" readonly>
+                               
                         </div>
+                        <div class="form-group col-md-3">
+                            <label>Condición de IVA</label>
+                            <input type="text" class="form-control" name="condicion_iva" id="condicion_iva"
+                                    value="<?php if (!is_null($tipoPersona)) {
+                                    echo ($tipoPersona->getCondicion_iva());
+                                } ?>" readonly>
+                        </div>
+                         
                     </div>
                     <!-- Datos de Transaccion -->
                     <div class="row form-row">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
                             <label>Número de Transacción</label>
                             <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion"
                                 value="<?= $numTransacciones ?>" readonly style="max-width: 250px;">
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
                             <label>Número de Pedido</label>
                             <input type="text" class="form-control" name="numero_pedido" id="numero_pedido"
                                 value="<?= $numPedido ?>" style="max-width: 250px;">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label>Número de Presupuesto</label>
                             <div class="form-inline">
                                 <input type="text" class="form-control" name="numero_presupuesto"
@@ -217,7 +220,8 @@ $responsable = $this->identity();
                     </div>
                 </div>
                 <script src="/js/autocomplete.js"></script>
-               
+                <input type="hidden" id="jsonitems" name="jsonitems" size="200">
+
                 <!-- Tabla de Items -->
                 <div class="panel panel-body" id="contenido_bienes">
                     <script>

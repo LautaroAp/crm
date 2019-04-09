@@ -69,19 +69,6 @@ class TransaccionManager {
         return $queryBuilder->getQuery();
     }
 
-    
-    /**
-     * This method adds a new servicio.
-     */
-    public function add($data, $items) {
-        $transaccion = new Transaccion();
-        $transaccion=$this->setData($transaccion, $data);
-        $this->entityManager->persist($transaccion);    
-        $this->setItems($transaccion, $items);
-        $this->entityManager->flush();
-        return $transaccion;
-    }
-
     public function getTotalTransacciones(){
         $highest_id = $this->entityManager->createQueryBuilder()
         ->select('COUNT(T.id)')
@@ -138,19 +125,24 @@ class TransaccionManager {
         return $transaccion;
     }
 
+    // private function setItems2($transaccion, $items){
+    //     //LOS BIENESTRANSACCIONES SE GUARDAN COMO ARREGLO
+    //     foreach($items as $array ){
+    //         $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+    //         print_r($array);
+    //         var_dump($item);
+    //         die();
+    //         // $item = $this->bienesTransaccionesManager->getBienTransaccionFromJson($json);
+    //         $item->setTransaccion($transaccion);
+    //         // $transaccion->addBienesTransacciones($item);
+    //         $bien= $item->getBien();
+    //         // $bien->addBienesTransacciones($item);
+    //         $item= $this->bienesTransaccionesManager->add($item);
+    //         var_dump($item);
+    //         die();
+    //     }
+    // }
     private function setItems($transaccion, $items){
-        //LOS BIENESTRANSACCIONES SE GUARDAN COMO ARREGLO
-        foreach($items as $array ){
-            $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
-            // $item = $this->bienesTransaccionesManager->getBienTransaccionFromJson($json);
-            $item->setTransaccion($transaccion);
-            // $transaccion->addBienesTransacciones($item);
-            $bien= $item->getBien();
-            // $bien->addBienesTransacciones($item);
-            $item= $this->bienesTransaccionesManager->add($item);
-        }
-    }
-    private function setItemsEdit($transaccion, $items){
 
         //LOS BIENESTRANSACCIONES SE GUARDAN COMO ARREGLO
         $itemsAnteriores = $transaccion->getBienesTransacciones();
@@ -172,11 +164,34 @@ class TransaccionManager {
     public function edit($transaccion, $data) {
         $items = json_decode($data['jsonitems'], true);
         $transaccion=$this->setData($transaccion, $data);
-        // $this->setItemsEdit($transaccion, $data['items']);
-        $this->setItemsEdit($transaccion,$items);
+        // $this->setItems($transaccion, $data['items']);
+        $this->setItems($transaccion,$items);
         $this->entityManager->flush();
         return $transaccion;
     }
+
+    public function add($data) {
+        $transaccion = new Transaccion();
+        $items = json_decode($data['jsonitems'], true);
+        $transaccion=$this->setData($transaccion, $data);
+        // $this->setItems($transaccion, $data['items']);
+        $this->entityManager->persist($transaccion);    
+        $this->setItems($transaccion,$items);
+        $this->entityManager->flush();
+        return $transaccion;
+    }
+
+    //     /**
+    //  * This method adds a new servicio.
+    //  */
+    // public function add2($data, $items) {
+    //     $transaccion = new Transaccion();
+    //     $transaccion=$this->setData($transaccion, $data);
+    //     $this->entityManager->persist($transaccion);    
+    //     $this->setItems2($transaccion, $items);
+    //     $this->entityManager->flush();
+    //     return $transaccion;
+    // }
 
     public function remove($transaccion) {
         $this->entityManager->remove($transaccion);
