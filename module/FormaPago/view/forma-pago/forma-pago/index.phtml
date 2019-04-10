@@ -125,13 +125,20 @@ $(document).ready(function() {
                                         <td><?php echo ($formaPago->getBonificacion()); ?></td>
                                         <td><?php echo ($formaPago->getRecargo()); ?></td>
                                         <td id="<?= $formaPago->getId() ?>" class="">
-                                        <a href="<?= $this->url('formaspago/editar', ['id' =>$formaPago->getId()]) ?>"
-                                            type="button" class="btn btn-default btn-sm">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                            </button>
+                                            <div class="pull-right">
+                                                <a href="<?= $this->url('formaspago/editar', ['id' =>$formaPago->getId()]) ?>"
+                                                    type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </a>
+                                                <button name="<?= $formaPago->getId() ?>" id="<?= $formaPago->getId() ?>" type="button" 
+                                                    class="btn btn-default btn-sm" data-toggle="modal" 
+                                                    data-target="#myModal<?= $formaPago->getId() ?>">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                            </div>
                                         </td>
                                         <!-- Modal -->
-                                        <div id="myModal" class="modal fade" role="dialog">
+                                        <div id="myModal<?= $formaPago->getId() ?>" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <!-- Modal content-->
                                                 <div class="modal-content">

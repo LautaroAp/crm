@@ -16,11 +16,13 @@ class FormaPagoController extends HuellaController {
 
 
     protected $formaPagoManager;
+    private $transaccionManager;
 
 
 
-    public function __construct($formaPagoManager) {
+    public function __construct($formaPagoManager, $transaccionManager) {
         $this->formaPagoManager = $formaPagoManager;
+        $this->transaccionManager = $transaccionManager;
     }
 
     public function indexAction() {
@@ -77,6 +79,7 @@ class FormaPagoController extends HuellaController {
         if ($formaPago == null) {
             $this->reportarError();
         } else {
+            $this->transaccionManager->eliminarFormasPago($formaPago->getId());
             $this->formaPagoManager->removeFormaPago($formaPago);
             return $this->redirect()->toRoute('herramientas/formaspago');
 
