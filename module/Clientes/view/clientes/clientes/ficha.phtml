@@ -34,7 +34,7 @@ $id_persona = $persona->getId();
     </nav>
 </div>
 
-<!-- Inicio: Datos de Cliente -->
+<!-- Datos de Cliente -->
 <div class="container margen">
     <div class="row">
         <!-- Datos de Perfil -->
@@ -136,49 +136,69 @@ $id_persona = $persona->getId();
         </div>
     </div>
 
-    <!-- Datos Ganaderos -->
+    <!-- Datos Adicionales -->
     <div class="container row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
-                DATOS GANADEROS
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseModulosAdicionales" aria-expanded="true" aria-controls="collapseModulosAdicionales">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse" onclick="cambiaIconoCollapse(event)"></i></span>
+                DATOS ADICIONALES
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseDatosAdicionales" aria-expanded="true" aria-controls="collapseDatosAdicionales">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="d_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
                 </a>
             </div>
-            <div class="collapse" id="collapseModulosAdicionales">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-5 ficha-cliente-p">
-                            <p><label>Raza de Manejo:</label> <?= $cliente->getRazaManejo(); ?></p>
-                        </div>
-                        <div class="col-md-4 ficha-cliente-p">
-                            <p><label>Nro. Animales:</label> <?= $cliente->getAnimales(); ?></p>
-                        </div>
-                        <div class="col-md-3 ficha-cliente-p">
-                            <p><label>Nro. Establecimientos:</label> <?= $cliente->getEstablecimientos(); ?></p>
-                        </div>
-                    </div>
+
+            <div class="collapse" id="collapseDatosAdicionales">
+                <div class="panel panel-body">
+                    <table id="tabla_evento" class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th class="th-sm">Descripción</th>
+                                <th class="th-sm">Dato</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><?php echo (". . ."); ?></td>
+                                <td><?php echo (". . ."); ?></td>
+                                <td>
+                                    <div class="pull-right">
+                                        <button class="btn btn-default btn-sm" type="button">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                        <button class="btn btn-default btn-sm" type="button">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </div>
+                                </td>                                    
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a href="#" type="button">
+                        <span class="btn btn-default">
+                            <span class="glyphicon glyphicon-plus"></span> Dato Adicional
+                        </span>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Datos de Usuarios Adicionales -->
+    <!-- Usuarios Adicionales -->
     <div class="container row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
-                USUARIOS Y DATOS ADICIONALES
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseUsuariosDatosAdicionales" aria-expanded="true" aria-controls="collapseUsuariosDatosAdicionales">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="ud_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
+                USUARIOS ADICIONALES
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseUsuariosAdicionales" aria-expanded="true" aria-controls="collapseUsuariosAdicionales">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="u_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
                 </a>
             </div>
 
-            <div class="collapse" id="collapseUsuariosDatosAdicionales">
+            <div class="collapse" id="collapseUsuariosAdicionales">
                 <div class="panel panel-body">
                     <table id="tabla_evento" class="table table-condensed table-hover">
                         <thead>
                             <tr>
-                                <th class="th-sm">U/Dato Adicional</th>
+                                <th class="th-sm">Usuario</th>
                                 <th class="th-sm">Teléfono</th>
                                 <th class="th-sm">Email</th>
                                 <th class="th-sm">Skype</th>
@@ -193,13 +213,18 @@ $id_persona = $persona->getId();
                                     <td><?php echo ($persona_usuario->getTelefono()); ?></td>
                                     <td><?php echo ($persona_usuario->getEmail()); ?></td>
                                     <td><?php echo ($usuario->getSkype()); ?></td>
-                                    <td class="pull-right">
-                                        <a class="btn btn-default" href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                        </a>
-                                        <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#usuarioModal<?= $usuario->getId() ?>">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
+                                    <td>
+                                        <div class="pull-right">
+                                            <a class="btn btn-default btn-sm" 
+                                                href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </a>
+                                            <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>" type="button" 
+                                                class="btn btn-default btn-sm" data-toggle="modal" 
+                                                data-target="#usuarioModal<?= $usuario->getId() ?>">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </div>
                                     </td>
                                     <!-- Modal Usuario Adicional -->
                                     <div id="usuarioModal<?= $usuario->getId() ?>" class="modal fade" role="dialog">
@@ -228,33 +253,27 @@ $id_persona = $persona->getId();
                                     </div>
                                 </tr>
                             <?php endforeach; ?>
-                            <tr>
-                                <td>
-                                    <br>
-                                    <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $persona->getId()]); ?>" type="button">
-                                        <span class="btn btn-default">
-                                            <span class="glyphicon glyphicon-plus"></span> Agregar Datos Adicionales
-                                        </span>
-                                    </a>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
+                    <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $persona->getId()]); ?>" type="button">
+                        <span class="btn btn-default">
+                            <span class="glyphicon glyphicon-plus"></span> Usuario Adicional
+                        </span>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Fin: Datos de Cliente -->
 
-<!-- Inicio: Actividades -->
+<!-- Registro de Eventos -->
 <div class="container margen">
     <div class="container row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 REGISTRO DE EVENTOS
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
                 </a>
             </div>
             <div class="panel-body">
@@ -264,7 +283,7 @@ $id_persona = $persona->getId();
                         <div class="btn-group padding-md">
                             <button type="button" class="btn btn-default" style="font-weight: bold;" onclick="mostrarTransacciones(<?= $id_persona ?>)">Transacciones</button>
                             <a role="button" class="btn btn-default" data-toggle="collapse" data-parent="#accordion" href="#drop" aria-expanded="true" aria-controls="drop">
-                                <span class="glyphicon glyphicon-chevron-down"></span>
+                                <span class="glyphicon glyphicon-plus"></span>
                             </a>
                         </div>
                         <!-- Acción Comercial -->
@@ -348,7 +367,6 @@ $id_persona = $persona->getId();
         </div>
     </div>
 </div>
-<!-- Fin: Actividades -->
 
 <!-- Modal Ciente -->
 <div class="modal fade" id="exampleModal<?= $cliente->getId() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -404,7 +422,7 @@ $id_persona = $persona->getId();
     </div>
 </div>
 
-<!-- Inicio: Panel Botones -->
+<!-- Panel Botones -->
 <div class="container margen">
     <div class="row img-centrar">
         <!-- Modificar Datos -->
@@ -463,4 +481,3 @@ $id_persona = $persona->getId();
         </div>
     </div>
 </div>
-<!-- Fin: Panel Botones -->

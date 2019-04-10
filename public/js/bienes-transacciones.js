@@ -1,17 +1,15 @@
-var items=[];
+// var items=[];
+var items;
 var tipoTransaccion;
 var idPersona;
 var ivas;
 
 function setIvas(arrayIvas){
     ivas = arrayIvas;
-    console.log("agrega ivas");
-    console.log(ivas);
 }
 
 function addItems(bienesTransacciones, tipo, id) {
    items = bienesTransacciones;
-   console.log(items);
    tipoTransaccion = tipo;
    idPersona=id;
    var table = document.createElement("table");
@@ -40,7 +38,6 @@ function addItems(bienesTransacciones, tipo, id) {
        tr.setAttribute("id", i);
        tr.setAttribute("class", "click");
     //    tr.setAttribute("onclick","selectItem(event,id)");
-       console.log(item);
        for (var j = 0; j < col.length -1; j++) {
            var tabCell = tr.insertCell(-1);
            tabCell.setAttribute("id", i+"_"+col[j]);
@@ -61,7 +58,11 @@ function addItems(bienesTransacciones, tipo, id) {
                value = formatPercent((parseFloat(value)).toFixed(2));
                tabCell.setAttribute("ondblclick", "makeEditable(event)");
             }
-           if ((col[j] == "Precio")  || (col[j]=="Subtotal")) {value = formatMoney(value);}
+           if ((col[j] == "Precio")  || (col[j]=="Subtotal")){
+               if (value){ 
+                   value = formatMoney(value);
+                }
+            }
 
            tabCell.innerHTML = value;
        }
@@ -76,7 +77,6 @@ function addItems(bienesTransacciones, tipo, id) {
        var tabCell = tr.insertCell(-1);
        tabCell.setAttribute("class", "click");
        tabCell.appendChild(btn);
-       //   tr.cells[-1].appendChild(btn);
    }
    table.appendChild(tbody);
 
@@ -277,9 +277,7 @@ function saveValueInJson(tdId, inputValue){
         if (attribute =="IVA"){
             inputValue = ivas[getIvaFromValue(inputValue)];
         }
-        console.log(inputValue);
         items[index][attribute] = inputValue;
-        console.log(items);
     }
     //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
     $("#jsonitems").val(JSON.stringify(items));
@@ -327,7 +325,6 @@ function actualizarFila(tdId){
 function saveTd(tdId){
     inputId = "input"+tdId;
     if (getAttribute(tdId)=="IVA"){
-        console.log(inputId);
         inputValue= $("#"+inputId+" option:selected").text();
     }
     else{
@@ -437,49 +434,104 @@ function addItemToTable(){
         // * * * (Ya lo tengo, esta completo en "output")...
     
         // le concateno el BIEN a "ITEMS" (agregar a un json)
-        items.push(output[0]);
+        items.push(output);
 
         // luego:
             //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
             // $("#jsonitems").val(JSON.stringify(items));
         $("#jsonitems").val(JSON.stringify(items));
+
         // Si no actualiza, volver a llamar agregar item
-        // addItems(obj, "pedido", idPersona); // Se rompe * * * ¿tengo que adaptar output con los campos de bienesTransaccion?
+        addItems(items, "pedido", idPersona); // Se rompe * * *
 
     };
 }
+
+// function updateOutputSelect(){
+//     // Elimina items sobrantes del json "output" y deja solo el seleccionado
+//     var result;
+//     for (i = 0; i < json_items.length; i++) {
+//         if (json_items[i]["value"] == $('#item_id').val()) {
+//             output = json_items.splice(i, 1);
+//             break;
+//         } 
+//     }
+    
+//     cantidad = $('#item_cantidad').val();
+//     descuento = output[0]["descuento"];
+//     iva = output[0]["iva"];
+//     iva = ivas[getIvaFromValue(iva)];
+
+//     // Cambia el formato de "output" con "Bien: + IVA:"
+//     output = {"Bien" : output[0], "Cantidad" : cantidad, "Descuento" : descuento, "IVA": iva  }
+//     clearAddItem();
+// }
 
 function updateOutputSelect(){
     // Elimina items sobrantes del json "output" y deja solo el seleccionado
     var result;
     for (i = 0; i < json_items.length; i++) {
         if (json_items[i]["value"] == $('#item_id').val()) {
-            output = json_items.splice(i, 1);
+            result = json_items.splice(i, 1);
             break;
         } 
     }
     
-    
-    // output= null;
-    cantidad = $('#item_cantidad').val();
-    descuento = output[0]["descuento"];
-    iva = output[0]["iva"];
-    iva = ivas[getIvaFromValue(iva)];
-    output = {"Bien" : output, "Cantidad" : cantidad, "Descuento" : descuento, "IVA": iva  }
+    var item_cantidad = $('#item_cantidad').val();
+    var item_descuento = result[0]["descuento"];
+    var item_iva = result[0]["iva"];
+    var item_iva = ivas[getIvaFromValue(item_iva)];    
+    var item_subtotal = result[0]["subtotal"] * item_cantidad;
+
+    formatMoney(item_subtotal);
+
+    output = null; 
+    output = {
+                "Bien": { 
+
+                    "Categoria": result[0]["categoria"],
+                    "Descripcion": result[0]["descripcion"],
+                    "Descuento": result[0]["descuento"],
+                    "Id": result[0]["value"],
+                    "Iva": result[0]["iva"],
+                    "Nombre": result[0]["nombre"],
+                    "Precio": result[0]["precio"],
+                    "Subtotal": result[0]["subtotal"] 
+                },
+                "Cantidad" : item_cantidad, 
+                "Descuento" : item_descuento, 
+                "IVA": item_iva,
+                "Id" : "",
+                "Subtotal" : item_subtotal
+                
+            }
+
+
+    // Cambia el formato de "output" con "Bien: + IVA:"
+    // output = {"Bien" : output[0], "Cantidad" : cantidad, "Descuento" : descuento, "IVA": iva  }
     clearAddItem();
 }
 
 function clearAddItem(){
-    //LIMPIAR LA TABLA
     $('#item_id').val(null);
     $('#item_codigo').val(null);
     $('#item_nombre').val(null);
     $('#item_stock').val(null);
     $('#item_cantidad').val(null);
+
+    // Tabla Detalles
+    $('#item_descripcion').html(null);
+    $('#item_categoria').html(null);
+    $('#item_precio').html(null);
+    $('#item_descuento').html(null);
+    $('#item_descuento_precio').html(null);
+    $('#item_iva').html(null);
+    $('#item_iva_precio').html(null);
+    $('#item_subtotal').html(null);
+
 }
 
 function verificaStockDisponible(){
-    // console.log(item);
     if($('#item_cantidad').val() > 0){
         if($('#item_cantidad').val() > $('#item_stock').val()){
             if(confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")){

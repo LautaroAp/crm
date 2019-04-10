@@ -167,17 +167,65 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             </div>
         </div>
     </div>
-</div>
-<!-- Fin: Datos de Proveedor -->
 
-<!-- Inicio: Actividades -->
+
+
+<!-- Datos Adicionales -->
+<div class="container row">
+        <div class="panel panel-default sombra-ficha">
+            <div class="panel-heading text-center titulo-espaciado">
+                DATOS ADICIONALES
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseDatosAdicionales" aria-expanded="true" aria-controls="collapseDatosAdicionales">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="ud_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
+                </a>
+            </div>
+
+            <div class="collapse" id="collapseDatosAdicionales">
+                <div class="panel panel-body">
+                    <table id="tabla_evento" class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th class="th-sm">Descripción</th>
+                                <th class="th-sm">Dato</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><?php echo (". . ."); ?></td>
+                                <td><?php echo (". . ."); ?></td>
+                                <td>
+                                    <div class="pull-right">
+                                        <button class="btn btn-default btn-sm" type="button">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                        <button class="btn btn-default btn-sm" type="button">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </div>
+                                </td>                                    
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a href="#" type="button">
+                        <span class="btn btn-default">
+                            <span class="glyphicon glyphicon-plus"></span> Dato Adicional
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Registro de Eventos -->
 <div class="container margen">
     <div class="container row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 REGISTRO DE EVENTOS
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
                 </a>
             </div>
             <div class="panel-body padding-top-cero">
@@ -188,7 +236,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             <button type="button" class="btn btn-default" style="font-weight: bold;">Transacciones</button>
                             <a role="button" class="btn btn-default" data-toggle="collapse" 
                                 data-parent="#accordion" href="#drop" aria-expanded="true" aria-controls="drop">
-                                <span class="glyphicon glyphicon-chevron-down" ></span>
+                                <span class="glyphicon glyphicon-plus" ></span>
                             </a>
                         </div>
                         <!-- Acción Comercial -->

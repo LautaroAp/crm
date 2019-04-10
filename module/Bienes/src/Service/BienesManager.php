@@ -99,6 +99,7 @@ class BienesManager {
         $bien->setStock($data['stock']);
         $bien->setCodigo($data['codigo']);
         $bien->setCodigo_barras($data['codigo_barras']);
+        // $bien->setMarca($data['marca']);
         //MONEDA
         return $bien;
     }

@@ -111,6 +111,11 @@ class Bienes {
      */
     protected $codigo_barras;
     
+    // /**
+    //  * @ORM\Column(name="MARCA", nullable=true, type="string")
+    //  */
+    // protected $marca;
+
     /**
      * Get the value of id
      */ 
@@ -453,6 +458,24 @@ class Bienes {
         $this->codigo_barras = $codigo_barras;
         return $this;
     }
+
+    // /**
+    //  * Get the value of marca
+    //  */
+    // public function getMarca(){
+    //     return $this->marca;
+    // }
+
+    // /**
+    //  * Set the value of marca
+    //  *
+    //  * @return self
+    //  */
+    // public function setMarca($marca)
+    // {
+    //     $this->marca = $marca;
+    //     return $this;
+    // }
 
     public function getJSON(){
         $output = "";

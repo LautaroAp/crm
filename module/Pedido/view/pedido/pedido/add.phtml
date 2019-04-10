@@ -225,11 +225,15 @@ $responsable = $this->identity();
 
                 <!-- Tabla de Items -->
                 <div class="panel panel-body" id="contenido_bienes">
+
                     <script>
-                    var obj = <?php echo ($json); ?>;
-                    var idPersona = <?php echo ($persona->getId()); ?>;
-                    addItems(obj, "pedido", idPersona);
+                        var obj = <?php echo ($json); ?>;
+                        var idPersona = <?php echo ($persona->getId()); ?>;
+                        
+                        // Crear Tabla
+                        addItems(obj, "pedido", idPersona);
                     </script>
+
                     <br>
                     <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion' => 'pedido', 'accion' => 'agregar', 'id' => $persona->getId()]); ?>"
                         type="button">

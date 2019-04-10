@@ -45,6 +45,7 @@ $this->headTitle('Servicios');
                             <table id="tabla_servicios" class="display">
                             <thead>
                                 <tr>
+                                    <th class="th-sm">Código</th>
                                     <th class="th-sm">Nombre</th>
                                     <th class="th-sm">Categoria</th>
                                     <th class="th-sm">Precio</th>
@@ -59,6 +60,7 @@ $this->headTitle('Servicios');
                                 $bien = $servicio->getBien();
                             ?>
                                 <tr>
+                                    <td><?php echo ($bien->getCodigo()); ?></td>
                                     <td><?php echo ($bien->getNombre()); ?></td>
                                     <td><?php echo ($bien->getCategoriaNombre()); ?></td>
                                     <td><?php echo  money_format("$ %n",($bien->getPrecio())); ?></td>
