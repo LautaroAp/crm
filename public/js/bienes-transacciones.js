@@ -447,26 +447,6 @@ function addItemToTable(){
     };
 }
 
-// function updateOutputSelect(){
-//     // Elimina items sobrantes del json "output" y deja solo el seleccionado
-//     var result;
-//     for (i = 0; i < json_items.length; i++) {
-//         if (json_items[i]["value"] == $('#item_id').val()) {
-//             output = json_items.splice(i, 1);
-//             break;
-//         } 
-//     }
-    
-//     cantidad = $('#item_cantidad').val();
-//     descuento = output[0]["descuento"];
-//     iva = output[0]["iva"];
-//     iva = ivas[getIvaFromValue(iva)];
-
-//     // Cambia el formato de "output" con "Bien: + IVA:"
-//     output = {"Bien" : output[0], "Cantidad" : cantidad, "Descuento" : descuento, "IVA": iva  }
-//     clearAddItem();
-// }
-
 function updateOutputSelect(){
     // Elimina items sobrantes del json "output" y deja solo el seleccionado
     var result;
@@ -503,7 +483,6 @@ function updateOutputSelect(){
                 "IVA": item_iva,
                 "Id" : "",
                 "Subtotal" : item_subtotal
-                
             }
 
 
@@ -545,8 +524,4 @@ function verificaStockDisponible(){
     } else {
         return false;
     }
-}
-
-function addItemToJsonTable(){
-
 }

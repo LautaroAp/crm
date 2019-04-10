@@ -40,7 +40,7 @@ class FormaPagoController extends HuellaController {
             $data = $this->params()->fromPost();
             $this->limpiarParametros($data);
             $this->formaPagoManager->addFormaPago($data);
-            return $this->redirect()->toRoute("gestionEmpresa");
+            return $this->redirect()->toRoute("herramientas/formaspago");
             
         }
         return new ViewModel([
@@ -78,7 +78,7 @@ class FormaPagoController extends HuellaController {
             $this->reportarError();
         } else {
             $this->formaPagoManager->removeFormaPago($formaPago);
-            return $this->redirect()->toRoute('home');
+            return $this->redirect()->toRoute('herramientas/formaspago');
 
         }
     }

@@ -279,20 +279,6 @@ class PedidoController extends TransaccionController
         return $view;
     }
 
-    public function autocompletarAction()
-    {
-
-        // print_r("autocompletarAction");
-        die();
-
-        $this->layout()->setTemplate('layout/nulo');
-        
-        // $json_bienes = "";
-        // $view = new ViewModel(['json_bienes' => $json_bienes]);
-        $view->setTerminal(true);
-        return $view;
-    }
-
     public function getJsonMonedas()
     {
         $monedas = $this->monedaManager->getMonedas();
