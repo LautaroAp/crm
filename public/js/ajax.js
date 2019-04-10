@@ -61,7 +61,7 @@ var item_ant=null;
 // obtengo ID de eventos
 function seleccionarItem(e) {
     elementId = e.target.id;
-    alert(document.body.getElementsByTagName("td")[0]);
+    // alert(document.body.getElementsByTagName("td")[0]);
 
     $('#' + elementId).toggleClass('table-seleccion');
     if ($('#' + elementId).hasClass('table-seleccion')) {

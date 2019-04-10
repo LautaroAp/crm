@@ -1,5 +1,5 @@
 // var items=[];
-// var items;
+var items;
 var tipoTransaccion;
 var idPersona;
 var ivas;
@@ -8,170 +8,84 @@ function setIvas(arrayIvas){
     ivas = arrayIvas;
 }
 
-
-
 function addItems(bienesTransacciones, tipo, id) {
-    // items = bienesTransacciones;
-    $(document).ready(function() {
-        $('#table_bienes').DataTable({
-            "order": [0, 'desc'],
-    
-            "language": {
-                "url": "/json/spanish.json"
-            }
-        });
-    });
-    tipoTransaccion = tipo;
-    idPersona=id;
-    var divContainer = document.getElementById("div_table_bienes");
-    if (divContainer!=null){
-        divContainer.parentNode.removeChild(divContainer);
-    }
-    divContainer = document.createElement("div");
-    divContainer.setAttribute("id","div_table_bienes");
+   items = bienesTransacciones;
+   tipoTransaccion = tipo;
+   idPersona=id;
+   var table = document.createElement("table");
+   table.setAttribute("id", "table_bienes");
+   table.setAttribute("class", "display");
 
-    var parentDiv = document.getElementById("contenido_bienes");
-    parentDiv.innerHTML = "";
-    parentDiv.appendChild(divContainer);
+   var thead = document.createElement("thead");
+   var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal", ""];
 
+   var tr = thead.insertRow(-1);                  
+   for (var i = 0; i < col.length; i++) {
+       var th = document.createElement("th");     
+       th.innerHTML = col[i];
+       tr.appendChild(th);
+   }
+   thead.appendChild(tr);
+   table.appendChild(thead);
 
-    table = document.createElement("table");
-    table.setAttribute("id", "table_bienes");
-    table.setAttribute("class", "display");
- 
-    var thead = document.createElement("thead");
-    var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal", ""];
- 
-    var tr = thead.insertRow(-1);                  
-    for (var i = 0; i < col.length; i++) {
-        var th = document.createElement("th");     
-        th.innerHTML = col[i];
-        tr.appendChild(th);
-    }
-    thead.appendChild(tr);
-    table.appendChild(thead);
- 
-    var tbody = document.createElement("tbody");
-    tbody.setAttribute("role", "button");
-    var value = null;
-    for (var i = 0; i < bienesTransacciones.length; i++) {
-        var item = bienesTransacciones[i]
-        tr = tbody.insertRow(-1);
-        // tr.onclick= selectItem(item["id"]);
-        tr.setAttribute("id", i);
-        tr.setAttribute("class", "click");
-     //    tr.setAttribute("onclick","selectItem(event,id)");
-        for (var j = 0; j < col.length -1; j++) {
-            var tabCell = tr.insertCell(-1);
-            tabCell.setAttribute("id", i+"_"+col[j]);
-            tabCell.setAttribute("class", "click");
-            if (col[j]=="Nombre" || col[j]=="Descripcion" || col[j]=="Precio"){
-                value = item["Bien"][col[j]];
-            }
-            else if (col[j]=="IVA"){
-                value = item["IVA"]["Valor"];
-            }
-            else{
-                value = item[col[j]];
-            }
-            if (col[j]=="Cantidad"){
-             tabCell.setAttribute("ondblclick", "makeEditable(event)");
-         }
-            if ((col[j] == "Descuento") || (col[j]=="IVA")){
-                value = formatPercent((parseFloat(value)).toFixed(2));
-                tabCell.setAttribute("ondblclick", "makeEditable(event)");
-             }
-            if ((col[j] == "Precio")  || (col[j]=="Subtotal")){
-                if (value){ 
-                    value = formatMoney(value);
-                 }
-             }
- 
-            tabCell.innerHTML = value;
+   var tbody = document.createElement("tbody");
+   tbody.setAttribute("role", "button");
+   var value = null;
+   for (var i = 0; i < items.length; i++) {
+       var item = items[i]
+       tr = tbody.insertRow(-1);
+       // tr.onclick= selectItem(item["id"]);
+       tr.setAttribute("id", i);
+       tr.setAttribute("class", "click");
+    //    tr.setAttribute("onclick","selectItem(event,id)");
+       for (var j = 0; j < col.length -1; j++) {
+           var tabCell = tr.insertCell(-1);
+           tabCell.setAttribute("id", i+"_"+col[j]);
+           tabCell.setAttribute("class", "click");
+           if (col[j]=="Nombre" || col[j]=="Descripcion" || col[j]=="Precio"){
+               value = item["Bien"][col[j]];
+           }
+           else if (col[j]=="IVA"){
+               value = item["IVA"]["Valor"];
+           }
+           else{
+               value = item[col[j]];
+           }
+           if (col[j]=="Cantidad"){
+            tabCell.setAttribute("ondblclick", "makeEditable(event)");
         }
- 
-        // Botones
-        var btn = document.createElement('button');
-        btn.setAttribute('type','button');
-        btn.setAttribute('class','btn btn-default btn-sm glyphicon glyphicon-remove'); // set attributes ...
-        btn.setAttribute('id',i);
-        btn.setAttribute('value','Borrar');
-        btn.setAttribute("onclick","removerBien2(event,id)");
-        var tabCell = tr.insertCell(-1);
-        tabCell.setAttribute("class", "click");
-        tabCell.appendChild(btn);
-    }
-    table.appendChild(tbody);
- 
-    // var divContainer = document.getElementById("div_table_bienes");
-    divContainer.innerHTML = "";
-    divContainer.appendChild(table);
-    
-    }
- 
-
-
-
-function addItems2(bienesTransacciones) {
-    // items = bienesTransacciones;
-    var table = document.getElementById("table_bienes");
-    var tbody = document.getElementById("tbody_bienes");
-    var value = null;
-    var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal", ""];
-    // for (var i = 0; i < bienesTransacciones.length; i++) {
-        var item = bienesTransacciones[bienesTransacciones.length-1];
-        var tr = tbody.insertRow(-1);
-        // tr.onclick= selectItem(item["id"]);
-        tr.setAttribute("id", i);
-        tr.setAttribute("class", "click");
-     //    tr.setAttribute("onclick","selectItem(event,id)");
-        for (var j = 0; j < col.length -1; j++) {
-            var tabCell = tr.insertCell(-1);
-            tabCell.setAttribute("id", i+"_"+col[j]);
-            tabCell.setAttribute("class", "click");
-            if (col[j]=="Nombre" || col[j]=="Descripcion" || col[j]=="Precio"){
-                value = item["Bien"][col[j]];
+           if ((col[j] == "Descuento") || (col[j]=="IVA")){
+               value = formatPercent((parseFloat(value)).toFixed(2));
+               tabCell.setAttribute("ondblclick", "makeEditable(event)");
             }
-            else if (col[j]=="IVA"){
-                value = item["IVA"]["Valor"];
+           if ((col[j] == "Precio")  || (col[j]=="Subtotal")){
+               if (value){ 
+                   value = formatMoney(value);
+                }
             }
-            else{
-                value = item[col[j]];
-            }
-            if (col[j]=="Cantidad"){
-             tabCell.setAttribute("ondblclick", "makeEditable(event)");
-         }
-            if ((col[j] == "Descuento") || (col[j]=="IVA")){
-                value = formatPercent((parseFloat(value)).toFixed(2));
-                tabCell.setAttribute("ondblclick", "makeEditable(event)");
-             }
-            if ((col[j] == "Precio")  || (col[j]=="Subtotal")){
-                if (value){ 
-                    value = formatMoney(value);
-                 }
-             }
- 
-            tabCell.innerHTML = value;
-        }
- 
-        // Botones de cada fila
-        var btn = document.createElement('button');
-        btn.setAttribute('type','button');
-        btn.setAttribute('class','btn btn-default btn-sm glyphicon glyphicon-remove'); // set attributes ...
-        btn.setAttribute('id',i);
-        btn.setAttribute('value','Borrar');
-        btn.setAttribute("onclick","removerBien2(event,id)");
-        var tabCell = tr.insertCell(-1);
-        tabCell.setAttribute("class", "click");
-        tabCell.appendChild(btn);
-    // }
-    table.appendChild(tbody);
- 
-    // var divContainer = document.getElementById("contenido_bienes");
-    // divContainer.innerHTML = "";
-    // divContainer.appendChild(table);   
-    }
- 
+
+           tabCell.innerHTML = value;
+       }
+
+       // Botones
+       var btn = document.createElement('button');
+       btn.setAttribute('type','button');
+       btn.setAttribute('class','btn btn-default btn-sm glyphicon glyphicon-remove'); // set attributes ...
+       btn.setAttribute('id',i);
+       btn.setAttribute('value','Borrar');
+       btn.setAttribute("onclick","removerBien2(event,id)");
+       var tabCell = tr.insertCell(-1);
+       tabCell.setAttribute("class", "click");
+       tabCell.appendChild(btn);
+   }
+   table.appendChild(tbody);
+
+   var divContainer = document.getElementById("contenido_bienes");
+   divContainer.innerHTML = "";
+   divContainer.appendChild(table);
+   
+   }
+
 function getItems(){
     return items;
 }
@@ -509,18 +423,6 @@ function makeEditable(event){
 }
 
 // * * * * * * * * * PARA AGREGAR ITEM DEL AUTOCOMPLETE * * * * * * * * * 
-//agregar el item a la lista de la sesion 
-function persistItemsInSession() {
-    console.log(JSON.stringify(items));
-    $.ajax({
-        type: "POST",
-        data: {json : JSON.stringify(items)},
-        url: '/'+tipoTransaccion+'/ajax/setItems'
-    }).done(function() {
-        console.log("1-done!");
-    })
-}
-
 
 function addItemToTable(){
     // Compara el Stock Disponible con la Cantidad ingresada
@@ -532,16 +434,16 @@ function addItemToTable(){
         // * * * (Ya lo tengo, esta completo en "output")...
     
         // le concateno el BIEN a "ITEMS" (agregar a un json)
-
         items.push(output);
-        persistItemsInSession();
         console.log("ahora items queda ");
         console.log(items);
         // luego:
             //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
             // $("#jsonitems").val(JSON.stringify(items));
         $("#jsonitems").val(JSON.stringify(items));
-        addItems(items, tipoTransaccion, idPersona); // Se rompe * * *
+
+        // Si no actualiza, volver a llamar agregar item
+        addItems(items, "pedido", idPersona); // Se rompe * * *
 
     };
 }

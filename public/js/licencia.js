@@ -6,10 +6,6 @@ function justNumbers(e) {
     return /\d/.test(String.fromCharCode(keynum));
 }
 
-function actualizarIva(){
-    alert(parseFloat($('#iva').String));
-}
-
 
 function calcularPrecios() {
     // Setea el precios en caso de Null & NaN

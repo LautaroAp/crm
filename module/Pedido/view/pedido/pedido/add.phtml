@@ -3,15 +3,19 @@
 <script src="/js/item.js"></script>
 <script src="/js/opciones-transacciones.js"></script>
 
-<!-- Script --> <!-- PROBLEMAS CON EL DATETIMEPICKER -- JQUERY TIENE QUE SER MENOR A 2.2 -->
+<!-- Script -->
+<!-- PROBLEMAS CON EL DATETIMEPICKER -- JQUERY TIENE QUE SER MENOR A 2.2 -->
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 <!-- jQuery UI -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
-<script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
+<script language="javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js">
+</script>
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
@@ -33,15 +37,15 @@ $(function() {
 </script>
 
 <script>
-$(document).ready(function() {
-    $('#table_bienes').DataTable({
-        "order": [0, 'desc'],
+// $(document).ready(function() {
+//     $('#table_bienes').DataTable({
+//         "order": [0, 'desc'],
 
-        "language": {
-            "url": "/json/spanish.json"
-        }
-    });
-});
+//         "language": {
+//             "url": "/json/spanish.json"
+//         }
+//     });
+// });
 </script>
 
 <!-- php -->
@@ -53,12 +57,14 @@ $responsable = $this->identity();
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
 <script>
-    var json_items = <?= $json_bienes ?>;
-    var json_items_codigos = <?= $json_bienes ?>;
-    var json_items_nombres = <?= $json_bienes ?>;
-    var output;
-    var ivas = <?= $ivasJson ?>;
-    setIvas(ivas);
+var items = [];
+var json_items = <?= $json_bienes ?>;
+var json_items_codigos = <?= $json_bienes ?>;
+var json_items_nombres = <?= $json_bienes ?>;
+var output;
+var ivas = <?= $ivasJson ?>;
+
+setIvas(ivas);
 </script>
 
 <!-- Document -->
@@ -104,21 +110,19 @@ $responsable = $this->identity();
                         </div>
                         <div class="form-group col-md-3">
                             <label>Razón Social</label>
-                            
-                                <input type="text" class="form-control" name="razon_social" id="razon_social"
-                                    value="<?php if (!is_null($tipoPersona)) {
+
+                            <input type="text" class="form-control" name="razon_social" id="razon_social" value="<?php if (!is_null($tipoPersona)) {
                                     echo ($tipoPersona->getRazon_social());
                                 } ?>" readonly>
-                               
+
                         </div>
                         <div class="form-group col-md-3">
                             <label>Condición de IVA</label>
-                            <input type="text" class="form-control" name="condicion_iva" id="condicion_iva"
-                                    value="<?php if (!is_null($tipoPersona)) {
+                            <input type="text" class="form-control" name="condicion_iva" id="condicion_iva" value="<?php if (!is_null($tipoPersona)) {
                                     echo ($tipoPersona->getCondicion_iva());
                                 } ?>" readonly>
                         </div>
-                         
+
                     </div>
                     <!-- Datos de Transaccion -->
                     <div class="row form-row">
@@ -157,38 +161,42 @@ $responsable = $this->identity();
                 <!-- Form Autocompletado -->
                 <div class="container" style="padding-top:10px;">
                     <form method="post" autocomplete="off">
-                        
+
                         <input type="hidden" class="form-control" name="item_id" id="item_id">
-                        
+
                         <div class="autocomplete form-group col-sm-2 margin-padding-xs">
                             <label>Código</label>
-                            <input type="text" class="form-control" name="item_codigo" id="item_codigo" placeholder="Código">
+                            <input type="text" class="form-control" name="item_codigo" id="item_codigo"
+                                placeholder="Código">
                         </div>
                         <div class="autocomplete form-group col-sm-2 margin-padding-xs">
                             <label>Producto Y Servicio</label>
-                            <input type="text" class="form-control" name="item_nombre" id="item_nombre" placeholder="Producto Y Servicio">
+                            <input type="text" class="form-control" name="item_nombre" id="item_nombre"
+                                placeholder="Producto Y Servicio">
                         </div>
                         <div class="form-group col-sm-2 margin-padding-xs">
                             <label>Stock Disponible</label>
-                            <input type="text" class="form-control" name="item_stock" id="item_stock" placeholder="Stock Disponible">
+                            <input type="text" class="form-control" name="item_stock" id="item_stock"
+                                placeholder="Stock Disponible">
                         </div>
                         <div class="form-group col-sm-2 margin-padding-xs">
                             <label>Cantidad</label>
-                            <input type="number" class="form-control" name="item_cantidad" id="item_cantidad" min="1" max="99" value="" placeholder="Cantidad" onkeypress="return justNumbers(event)">
+                            <input type="number" class="form-control" name="item_cantidad" id="item_cantidad" min="1"
+                                max="99" value="" placeholder="Cantidad" onkeypress="return justNumbers(event)">
                         </div>
                         <div class="form-group col-sm-1 margin-padding-xs">
                             <label>&nbsp;</label>
                             <button type="button" class="btn btn-default" onclick="addItemToTable()">
                                 <span class="glyphicon glyphicon-plus"></span> Agregar
                             </button>
-                        </div>   
+                        </div>
                 </div>
                 <!-- Detalles de Producto Y Servicio -->
                 <div class="container" style="">
                     <label>
                         <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion"
-                            data-target="#collapseDetalles" aria-expanded="true"
-                            aria-controls="collapseDetalles" name="Detalles" id="Detalles">
+                            data-target="#collapseDetalles" aria-expanded="true" aria-controls="collapseDetalles"
+                            name="Detalles" id="Detalles">
                         Mostrar Detalles
                     </label>
                     <div class="container row collapse" id="collapseDetalles">
@@ -224,21 +232,23 @@ $responsable = $this->identity();
                 <input type="hidden" id="jsonitems" name="jsonitems" size="200">
 
                 <!-- Tabla de Items -->
-                <div class="panel panel-body" id="contenido_bienes">
-
-                    <script>
-                        var obj = <?php echo ($json); ?>;
-                        var idPersona = <?php echo ($persona->getId()); ?>;
-                        
-                        // Crear Tabla
-                        addItems(obj, "pedido", idPersona);
-                    </script>
-
-                    <br>
-                    <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion' => 'pedido', 'accion' => 'agregar', 'id' => $persona->getId()]); ?>"
+                <div class="panel panel-body" >
+                    <div class="panel panel-body" id="contenido_bienes">
+                        <div id="div_table_items">
+                            <script>
+                            var items = <?php echo ($json); ?>;
+                            var idPersona = <?php echo ($persona->getId()); ?>;
+                            // Crear Tabla
+                            addItems(items, "pedido", idPersona);
+                            </script>
+                        </div>
+                        <br>                     
+                    </div>
+                    <div class="container">
+                        <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion' => 'pedido', 'accion' => 'agregar', 'id' => $persona->getId()]); ?>"
                         type="button">
-                        <span class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar Item</span>
-                    </a>
+                        <span class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar Item</span> </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -254,8 +264,8 @@ $responsable = $this->identity();
                     <div class="row form-row">
                         <div class="form-group col-md-3">
                             <label>Descuento Total ($)</label>
-                            <input type="text" class="form-control" name="descuento_total" id="descuento_total" value="0"
-                                readonly>
+                            <input type="text" class="form-control" name="descuento_total" id="descuento_total"
+                                value="0" readonly>
                         </div>
                         <div class="form-group col-md-3">
                             <label>IVA Total ($)</label>
@@ -269,18 +279,18 @@ $responsable = $this->identity();
                     </div>
                     <!-- Forma de Pago + Fecha -->
                     <div class="row form-row">
-                    <div class="form-group col-md-3" id="monedas">
+                        <div class="form-group col-md-3" id="monedas">
                             <label>Moneda</label>
                             <script>
-                                var monedas = <?php echo ($monedasJson); ?>;
-                                completarMonedas(monedas);
+                            var monedas = <?php echo ($monedasJson); ?>;
+                            completarMonedas(monedas);
                             </script>
                         </div>
                         <div class="form-group col-md-3" id="formasPago">
                             <label>Forma de Pago</label>
                             <script>
-                                var formasPago = <?php echo ($formasPagoJson); ?>;
-                                completarFormasPago(formasPago);
+                            var formasPago = <?php echo ($formasPagoJson); ?>;
+                            completarFormasPago(formasPago);
                             </script>
                         </div>
                         <div id="div_bonificacion" class="form-group col-md-2">
@@ -295,7 +305,7 @@ $responsable = $this->identity();
                                 value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()">
                         </div>
                         <script>
-                            setBonificacionRecargo();
+                        setBonificacionRecargo();
                         </script>
                     </div>
                     <!-- Total -->
