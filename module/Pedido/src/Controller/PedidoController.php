@@ -1,9 +1,4 @@
 <?php
-
-/**
- * Clase actualmente sin uso
- */
-
 namespace Pedido\Controller;
 
 use Transaccion\Controller\TransaccionController;
@@ -62,25 +57,11 @@ class PedidoController extends TransaccionController
 
     public function addAction()
     {
-        // $items = array();
-        // if (isset($_SESSION['TRANSACCIONES']['PEDIDO'])) {
-        //     $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
-        // }
-        // $json = "";
-        // foreach ($items as $array) {
-        //     $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
-        //     $json .= $item->getJson() . ',';
-        // }
-        // $json = substr($json, 0, -1);
-        // $json = '[' . $json . ']';
-
         $json="[]";
         if (isset($_SESSION['TRANSACCIONES']['PEDIDO'])) {
             $json = $_SESSION['TRANSACCIONES']['PEDIDO'];
 
         }
-        print_r($json);
-        // $json = '[' . $json . ']';
         // Obtengo todos los Bienes
         $bienes = $this->bienesManager->getBienes();
 
@@ -124,6 +105,9 @@ class PedidoController extends TransaccionController
         $formasPagoJson = $this->getJsonFormasPago();
         $ivasJson = $this->getJsonIvas();
         $this->reiniciarParams();
+        print_r($json);
+        print_r("<br>");
+        print_r($json_bienes);
         return new ViewModel([
             // 'items' => $items,
             'persona' => $persona,
@@ -162,21 +146,46 @@ class PedidoController extends TransaccionController
         if (!is_null($pedido)) {
             $items = $pedido->getTransaccion()->getBienesTransacciones();
         }
-        $items = $this->getItemsArray($items);
-        if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])) {
-            $_SESSION['TRANSACCIONES']['PEDIDO'] = $items;
-        }
+       
+        // if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])) {
+        //     $_SESSION['TRANSACCIONES']['PEDIDO'] = json_encode($items);
+        // }
 
-        $items = $_SESSION['TRANSACCIONES']['PEDIDO'];
         $json = "";
-        foreach ($items as $array) {
-            $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
-            $json .= $item->getJson() . ',';
+        //SI HAY ITEMS CARGADOS EN LA SESION LOS TOMO DE AHI 
+        if ((isset($_SESSION['TRANSACCIONES']['PEDIDO']))){
+            $json = $_SESSION['TRANSACCIONES']['PEDIDO'];
         }
-        $json = substr($json, 0, -1);
-        $json = '[' . $json . ']';
+        //SINO LOS TOMO DEL PEDIDO Y GUARDO ESO EN LA SESION PARA CONTINUAR TRABAJANDO CON LA SESION
+        else{
+            $items_array = $this->getItemsArray($items);
+            foreach ($items_array as $array) {
+                $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+                $json .= $item->getJson() . ',';
+               
+            }
+            $json = substr($json, 0, -1);
+            $json = '[' . $json . ']';
+            $_SESSION['TRANSACCIONES']['PEDIDO'] = $json;
+        }
+       
         $persona = $pedido->getTransaccion()->getPersona();
         $tipoPersona = null;
+        // Obtengo todos los Bienes
+        $bienes = $this->bienesManager->getBienes();
+
+        // Creo JSON con Nombres de todos los Productos y Servicios
+        $json_bienes = "";
+
+        // $response[] = array("value"=>"1","label"=>"Soporte");
+        foreach ($bienes as $bien) {
+            $json_bienes .= $bien->getJsonBien() . ',';
+        }
+        $json_bienes = substr($json_bienes, 0, -1);
+        $json_bienes = '[' . $json_bienes . ']';
+
+        // var_dump(json_decode($json_bienes, true));
+        // die();  
         if ($persona->getTipo() == "CLIENTE") {
             $tipoPersona = $this->clientesManager->getClienteIdPersona($persona->getId());
         } elseif ($persona->getTipo() == "PROVEEDOR") {
@@ -199,16 +208,21 @@ class PedidoController extends TransaccionController
         $numPedido = $pedido->getNumero();
         $monedasJson = $this->getJsonMonedas();
         $formasPagoJson = $this->getJsonFormasPago();
-        $transaccionJson = $pedido->getTransaccion()->getJSON();
         $ivasJson = $this->getJsonIvas();
+        $transaccionJson = $pedido->getTransaccion()->getJSON();
         $this->reiniciarParams();
+        print_r("<br>");
+        print_r($_SESSION['TRANSACCIONES']['PEDIDO']);
+        print_r("<br>");
+        print_r($json);
         return new ViewModel([
-            'items' => $items,
+            // 'items' => $items,
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,
             'numTransacciones' => $numTransacciones,
             'numPedido' => $numPedido,
             'json' => $json,
+            'json_bienes' => $json_bienes,
             'formasPagoJson' => $formasPagoJson,
             'monedasJson' => $monedasJson,
             'formasEnvioJson'=>"[]",
@@ -238,19 +252,6 @@ class PedidoController extends TransaccionController
         $json = json_encode($array);
         $_SESSION['TRANSACCIONES']['PEDIDO']= $json;
         $view = new ViewModel();
-        $view->setTerminal(true);
-        return $view;
-    }
-
-    public function autocompletarAction()
-    {
-        // print_r("autocompletarAction");
-        die();
-
-        $this->layout()->setTemplate('layout/nulo');
-        
-        // $json_bienes = "";
-        // $view = new ViewModel(['json_bienes' => $json_bienes]);
         $view->setTerminal(true);
         return $view;
     }

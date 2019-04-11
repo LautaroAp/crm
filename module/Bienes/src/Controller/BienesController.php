@@ -85,6 +85,8 @@ class BienesController extends HuellaController
         //le quito al json el cierre de corchete
         $json = substr($json, 0, -1);
         $newJson = $bienTransaccion->getJSON();
+        print_r($newJson);
+        die();
         $json .= ", " . $newJson . "]";
         // $array = json_decode($json, true);
         // $btjson= $bienTransaccion->toArray();

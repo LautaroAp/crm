@@ -477,6 +477,13 @@ class Bienes {
     //     return $this;
     // }
 
+    public function getIvaPeso(){
+        if (!is_null($this->iva)){
+            $salida = $this->getIva()->getValor() * $this->getPrecio_final_dto() / 100;
+            return $salida;
+        }
+        return "";
+    }
     public function getJSON(){
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
@@ -485,7 +492,9 @@ class Bienes {
         $output .= '"Categoria": "' . $this->getCategoria() .'", ';
         $output .= '"Precio": "' . $this->getPrecio() .'", ';
         $output .= '"Descuento": "' . $this->getDescuento() .'", ';
+        $output .= '"Precio Dto.": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"Iva": "' . $this->getIva()->getValor() .'", ';
+        $output .= '"Iva $": "' . $this->getIvaPeso() .'", ';
         $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
 
         return  '{'.$output.'}' ;
@@ -524,7 +533,8 @@ class Bienes {
         $output .= '"Id": "' . "" .'", ';
         $output .= '"Bien": ' . $this->getJsonBien() .', ';
         $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
-
+        $output .= '"Iva $": "' . $this->getIvaPeso() .'", ';
+        $output .= '"Precio Dto.": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"Cantidad": "' . "" .'", ';
         $output .= '"Descuento": "' . $this->getDescuento() .'", ';
         $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';

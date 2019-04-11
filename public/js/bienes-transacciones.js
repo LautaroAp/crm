@@ -11,7 +11,6 @@ function setIvas(arrayIvas){
 
 
 function addItems(bienesTransacciones, tipo, id) {
-    // items = bienesTransacciones;
     $(document).ready(function() {
         $('#table_bienes').DataTable({
             "order": [0, 'desc'],
@@ -40,7 +39,7 @@ function addItems(bienesTransacciones, tipo, id) {
     table.setAttribute("class", "display");
  
     var thead = document.createElement("thead");
-    var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal", ""];
+    var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento", "Precio Dto.", "IVA", "IVA $", "Subtotal", ""];
  
     var tr = thead.insertRow(-1);                  
     for (var i = 0; i < col.length; i++) {
@@ -55,28 +54,40 @@ function addItems(bienesTransacciones, tipo, id) {
     tbody.setAttribute("role", "button");
     var value = null;
     for (var i = 0; i < bienesTransacciones.length; i++) {
-        var item = bienesTransacciones[i]
+        var item = bienesTransacciones[i];
+        console.log("item es ");
+        console.log(item);
         tr = tbody.insertRow(-1);
         // tr.onclick= selectItem(item["id"]);
         tr.setAttribute("id", i);
         tr.setAttribute("class", "click");
      //    tr.setAttribute("onclick","selectItem(event,id)");
-        for (var j = 0; j < col.length -1; j++) {
+        for (var j = 0; j < col.length -1; j++){
             var tabCell = tr.insertCell(-1);
             tabCell.setAttribute("id", i+"_"+col[j]);
             tabCell.setAttribute("class", "click");
+            var precio = item["Bien"]["Precio"];
+            console.log(precio);
+            var dto = item["Bien"]["Descuento"];
+            console.log(dto);
+
+            var cantidad = item["Cantidad"];
+            console.log(cantidad);
+ 
+            var precioDto = (precio - precio * dto/100) * cantidad;
+            var iva = value = item["IVA"]["Valor"];
             if (col[j]=="Nombre" || col[j]=="Descripcion" || col[j]=="Precio"){
                 value = item["Bien"][col[j]];
             }
             else if (col[j]=="IVA"){
-                value = item["IVA"]["Valor"];
+                value = iva;
             }
             else{
                 value = item[col[j]];
             }
             if (col[j]=="Cantidad"){
              tabCell.setAttribute("ondblclick", "makeEditable(event)");
-         }
+            }
             if ((col[j] == "Descuento") || (col[j]=="IVA")){
                 value = formatPercent((parseFloat(value)).toFixed(2));
                 tabCell.setAttribute("ondblclick", "makeEditable(event)");
@@ -85,8 +96,15 @@ function addItems(bienesTransacciones, tipo, id) {
                 if (value){ 
                     value = formatMoney(value);
                  }
-             }
- 
+            }
+            if (col[j]=="Precio Dto."){
+                value = formatMoney((parseFloat(precioDto)).toFixed(2));
+            }
+            if ((col[j]=="IVA $")){
+                value = precioDto * iva /100; 
+                value = formatMoney((parseFloat(value)).toFixed(2));
+            }
+            
             tabCell.innerHTML = value;
         }
  
@@ -106,72 +124,7 @@ function addItems(bienesTransacciones, tipo, id) {
     // var divContainer = document.getElementById("div_table_bienes");
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
-    
-    }
- 
-
-
-
-function addItems2(bienesTransacciones) {
-    // items = bienesTransacciones;
-    var table = document.getElementById("table_bienes");
-    var tbody = document.getElementById("tbody_bienes");
-    var value = null;
-    var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal", ""];
-    // for (var i = 0; i < bienesTransacciones.length; i++) {
-        var item = bienesTransacciones[bienesTransacciones.length-1];
-        var tr = tbody.insertRow(-1);
-        // tr.onclick= selectItem(item["id"]);
-        tr.setAttribute("id", i);
-        tr.setAttribute("class", "click");
-     //    tr.setAttribute("onclick","selectItem(event,id)");
-        for (var j = 0; j < col.length -1; j++) {
-            var tabCell = tr.insertCell(-1);
-            tabCell.setAttribute("id", i+"_"+col[j]);
-            tabCell.setAttribute("class", "click");
-            if (col[j]=="Nombre" || col[j]=="Descripcion" || col[j]=="Precio"){
-                value = item["Bien"][col[j]];
-            }
-            else if (col[j]=="IVA"){
-                value = item["IVA"]["Valor"];
-            }
-            else{
-                value = item[col[j]];
-            }
-            if (col[j]=="Cantidad"){
-             tabCell.setAttribute("ondblclick", "makeEditable(event)");
-         }
-            if ((col[j] == "Descuento") || (col[j]=="IVA")){
-                value = formatPercent((parseFloat(value)).toFixed(2));
-                tabCell.setAttribute("ondblclick", "makeEditable(event)");
-             }
-            if ((col[j] == "Precio")  || (col[j]=="Subtotal")){
-                if (value){ 
-                    value = formatMoney(value);
-                 }
-             }
- 
-            tabCell.innerHTML = value;
-        }
- 
-        // Botones de cada fila
-        var btn = document.createElement('button');
-        btn.setAttribute('type','button');
-        btn.setAttribute('class','btn btn-default btn-sm glyphicon glyphicon-remove'); // set attributes ...
-        btn.setAttribute('id',i);
-        btn.setAttribute('value','Borrar');
-        btn.setAttribute("onclick","removerBien2(event,id)");
-        var tabCell = tr.insertCell(-1);
-        tabCell.setAttribute("class", "click");
-        tabCell.appendChild(btn);
-    // }
-    table.appendChild(tbody);
- 
-    // var divContainer = document.getElementById("contenido_bienes");
-    // divContainer.innerHTML = "";
-    // divContainer.appendChild(table);   
-    }
- 
+}
 function getItems(){
     return items;
 }
@@ -186,26 +139,35 @@ function formatPercent(number) {
 
 
 function calcularSubcampos(){
-
     var table = document.getElementById("table_bienes");
     var sumBonificacion = 0;
     var sumSubtotal=0;
     var sumIva=0;
     var bonificacion_general=0;
+    var descuento =0;
+    var cantidad =0;
+    var precio_unitario_dto = 0;
+    var iva = 0;
+    var subtotal = 0;
     for(var i = 1; i < table.rows.length; i++){
+        //CANTIDAD ES LA COLUMNA 2
         cantidad = table.rows[i].cells[2].innerHTML;
+        //PRECIO UNITARIO ES LA COLUMNA 3
         precio_unitario = table.rows[i].cells[3].innerHTML;
         precio_unitario = parseFloat(precio_unitario.substring(2, precio_unitario.length));
+        //DESCUENTO ES LA COLUMNA 4
         descuento = table.rows[i].cells[4].innerHTML;
         descuento = descuento.substring(0, descuento.length-2);
         descuento=  (parseFloat(descuento) * precio_unitario /100 );
         precio_unitario_dto= precio_unitario-descuento;
         sumBonificacion = sumBonificacion + descuento*cantidad;
-        iva = table.rows[i].cells[5].innerHTML;
+        //IVA ES LA COLUMNA 
+        iva = table.rows[i].cells[6].innerHTML;
         iva = iva.substring(0, iva.length-2);
         sumIva = sumIva + (parseFloat(iva) * precio_unitario_dto/ 100)*cantidad ;
 
-        subtotal = table.rows[i].cells[6].innerHTML;
+        //SUBTOTAL ES LA COLUMNA 8
+        subtotal = table.rows[i].cells[8].innerHTML;
         subtotal = parseFloat(subtotal.substring(2, subtotal.length));
         sumSubtotal = sumSubtotal + parseFloat(subtotal);
 
@@ -218,7 +180,7 @@ function calcularSubcampos(){
     }
     var total_general = sumSubtotal - (sumSubtotal* bonificacion_general/100) + (sumSubtotal* recargo_general/100);
     $("#subtotal_general").val(formatMoney(parseFloat(sumSubtotal).toFixed(2)));
-    $("#bonificacion_total").val(formatMoney(parseFloat(sumBonificacion).toFixed(2)));
+    $("#descuento_total").val(formatMoney(parseFloat(sumBonificacion).toFixed(2)));
     $("#iva_total").val(formatMoney(parseFloat(sumIva).toFixed(2)));
     $("#total_general").val(formatMoney(parseFloat(total_general).toFixed(2)));
     $("#jsonitems").val(JSON.stringify(items));
@@ -267,7 +229,6 @@ function removerBien2(event,id){
         "type": "POST",
         "data": "temp",
         "url": '/'+tipoTransaccion+'/ajax/eliminarItem/'+id+'/'+idPersona,
-
         "success": function (msg) {
             document.location.reload();
         },
@@ -357,6 +318,8 @@ function getAttribute(tdId){
 
 function saveValueInJson(tdId, inputValue){
     //recibo "0_Cantidad" separo en indice 0 y atributo Cantidad
+    console.log("itemsss");
+    console.log(items);
     index = tdId.substring(0, tdId.indexOf('_'));
     attribute = tdId.substring(tdId.indexOf('_')+1, tdId.length);
     if (inputValue!=null){
@@ -367,6 +330,8 @@ function saveValueInJson(tdId, inputValue){
     }
     //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
     $("#jsonitems").val(JSON.stringify(items));
+    persistItemsInSession();
+
 }
 //esta funcion es llamada cuando se modifica el valor de un input
 function saveValue(inputId){
@@ -375,8 +340,29 @@ function saveValue(inputId){
     // document.getElementById(inputId).remove();
     // td = document.getElementById(tdId);
     // td.innerText=inputValue;
+    console.log("items 1");
+    console.log(items);
     saveTd(tdId);
-    saveValueInJson(tdId, inputValue);
+    // saveValueInJson(tdId, inputValue);
+}
+
+function actualizarJson(fila){
+    // console.log("items antes de actualizar");
+    // console.log(items);
+    // console.log("fila");
+    // console.log(fila);
+    var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento", "IVA", "Subtotal", ""];
+    var index = fila+"_";
+    for (var j = 0; j < col.length -1; j++) {
+        var subindex = index +col[j];
+        items[fila][j] = $("#"+subindex).val();
+        console.log(subindex);
+        console.log(items[fila][j]);
+    }
+    // console.log("items desp de actualizar");
+    // console.log(items);
+    $("#jsonitems").val(JSON.stringify(items));
+    persistItemsInSession();
 }
 
 function actualizarFila(tdId){
@@ -392,19 +378,22 @@ function actualizarFila(tdId){
     //     tdSubtotal.innerText= formatMoney(parseFloat(cant*subtotal).toFixed(2));
     // }
     // if (attribute=="Descuento"){
-        cant = document.getElementById(index+"_Cantidad").innerText;
-        precio = document.getElementById(index+"_Precio").innerText;
-        precio = getNumberValue(precio);
-        descuento = document.getElementById(index+"_Descuento").innerText;
-        descuento = getNumberValue(descuento);
-        iva = document.getElementById(index+"_IVA").innerText;
-        iva = getNumberValue(iva);
-        cantxprecio = cant * precio;
-        cantxprecioydto = cantxprecio - cantxprecio*descuento/100;
-        subtotal = cantxprecioydto + cantxprecioydto * iva/100;
-        document.getElementById(index+"_Subtotal").innerText = formatMoney(parseFloat(subtotal).toFixed(2));
+    cant = document.getElementById(index+"_Cantidad").innerText;
+    precio = document.getElementById(index+"_Precio").innerText;
+    precio = getNumberValue(precio);
+    descuento = document.getElementById(index+"_Descuento").innerText;
+    descuento = getNumberValue(descuento);
+    iva = document.getElementById(index+"_IVA").innerText;
+    iva = getNumberValue(iva);
+    cantxprecio = cant * precio;
+    cantxprecioydto = cantxprecio - cantxprecio*descuento/100;
+    subtotal = cantxprecioydto + cantxprecioydto * iva/100 ;
+    document.getElementById(index+"_Subtotal").innerText = formatMoney(parseFloat(subtotal).toFixed(2));
     // }
     calcularSubcampos();
+    console.log("items 3");
+    console.log(items);
+    actualizarJson(index);
 }
 
 //esta funcion es llamada para guardar el input anterior al generarse un nuevo input
@@ -429,8 +418,9 @@ function saveTd(tdId){
             td.innerText=inputValue;
         }
     }
+    console.log("items 2");
+    console.log(items);
     actualizarFila(tdId);
-    saveValueInJson(tdId, numValue);
 }
 
 function pulsar(e){
@@ -504,14 +494,12 @@ function makeEditable(event){
         element.innerText="";
         element.appendChild(input); 
         // element.setAttribute('contenteditable', true);
-    }
-    
+    }    
 }
 
 // * * * * * * * * * PARA AGREGAR ITEM DEL AUTOCOMPLETE * * * * * * * * * 
 //agregar el item a la lista de la sesion 
 function persistItemsInSession() {
-    console.log(JSON.stringify(items));
     $.ajax({
         type: "POST",
         data: {json : JSON.stringify(items)},
@@ -546,36 +534,18 @@ function addItemToTable(){
     };
 }
 
-// function updateOutputSelect(){
-//     // Elimina items sobrantes del json "output" y deja solo el seleccionado
-//     var result;
-//     for (i = 0; i < json_items.length; i++) {
-//         if (json_items[i]["value"] == $('#item_id').val()) {
-//             output = json_items.splice(i, 1);
-//             break;
-//         } 
-//     }
-    
-//     cantidad = $('#item_cantidad').val();
-//     descuento = output[0]["descuento"];
-//     iva = output[0]["iva"];
-//     iva = ivas[getIvaFromValue(iva)];
-
-//     // Cambia el formato de "output" con "Bien: + IVA:"
-//     output = {"Bien" : output[0], "Cantidad" : cantidad, "Descuento" : descuento, "IVA": iva  }
-//     clearAddItem();
-// }
-
 function updateOutputSelect(){
     // Elimina items sobrantes del json "output" y deja solo el seleccionado
     var result;
-    for (i = 0; i < json_items.length; i++) {
-        if (json_items[i]["value"] == $('#item_id').val()) {
-            result = json_items.splice(i, 1);
+    var aux = Array.from(json_items);
+    for (i = 0; i < aux.length; i++) {
+        if (aux[i]["value"] == $('#item_id').val()) {
+            result = aux.splice(i, 1);
+        
+            // result = result.splice(i,1);
             break;
         } 
     }
-    
     var item_cantidad = $('#item_cantidad').val();
     var item_descuento = result[0]["descuento"];
     var item_iva = result[0]["iva"];
@@ -602,7 +572,6 @@ function updateOutputSelect(){
                 "IVA": item_iva,
                 "Id" : "",
                 "Subtotal" : item_subtotal
-                
             }
 
 
@@ -644,8 +613,4 @@ function verificaStockDisponible(){
     } else {
         return false;
     }
-}
-
-function addItemToJsonTable(){
-
 }

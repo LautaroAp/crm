@@ -13,26 +13,6 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 return [
     'router' => [
         'routes' => [
-            // 'application' => [
-            //     'type' => Literal::class,
-            //     'options' => [
-            //         'route' => '/',
-            //         'defaults' => [
-            //             'controller' => Controller\IndexController::class,
-            //             'action' => 'menu',
-            //         ],
-            //     ],
-            // ],
-            // 'menu' => [
-            //     'type' => Literal::class,
-            //     'options' => [
-            //         'route' => '/menu',
-            //         'defaults' => [
-            //             'controller' => Controller\IndexController::class,
-            //             'action' => 'menu',
-            //         ],
-            //     ],
-            // ],
             'home' => [
                 'type' => Segment::class,
                 'options' => [
@@ -629,6 +609,16 @@ return [
                             'route' => '/categorias[/:tipo[/:id]]',
                             'defaults' => [
                                 'controller' => \Categoria\Controller\CategoriaController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'formaspago' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/formasPago',
+                            'defaults' => [
+                                'controller' => \FormaPago\Controller\FormaPagoController::class,
                                 'action' => 'index',
                             ],
                         ],

@@ -195,6 +195,23 @@ class BienesTransacciones {
         return $this;
     }
 
+    public function getIvaPeso(){
+        if (!is_null($this->iva)){
+            $salida = $this->getIva()->getValor() * $this->getPrecioDto() / 100;
+            $salida = $salida * $this->getCantidad();
+            return $salida;
+        }
+        return "";
+    }
+
+    public function getPrecioDto(){
+        if (!is_null($this->getDescuento())){
+            $salida = $this->getDescuento() * $this->getBien()->getPrecio() /100;
+            return $this->getBien()->getPrecio() - $salida;
+        }
+        return $this->getBien()->getPrecio();
+    }
+    
     public function getJSON(){
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
@@ -203,9 +220,12 @@ class BienesTransacciones {
         }
         if (!is_null($this->getIva())){
             $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
-        }
+        }        
+        $output .= '"Iva $": "' . $this->getIvaPeso() .'", ';
         $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
         $output .= '"Descuento": "' . $this->getDescuento() .'", ';
+        $output .= '"Precio Dto.": "' . $this->getPrecioDto() .'", ';
+
         $output .= '"Subtotal": "' . $this->getSubtotal() .'" ';
         
         return  '{'.$output.'}' ;

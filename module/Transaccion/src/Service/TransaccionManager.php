@@ -125,25 +125,7 @@ class TransaccionManager {
         return $transaccion;
     }
 
-    // private function setItems2($transaccion, $items){
-    //     //LOS BIENESTRANSACCIONES SE GUARDAN COMO ARREGLO
-    //     foreach($items as $array ){
-    //         $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
-    //         print_r($array);
-    //         var_dump($item);
-    //         die();
-    //         // $item = $this->bienesTransaccionesManager->getBienTransaccionFromJson($json);
-    //         $item->setTransaccion($transaccion);
-    //         // $transaccion->addBienesTransacciones($item);
-    //         $bien= $item->getBien();
-    //         // $bien->addBienesTransacciones($item);
-    //         $item= $this->bienesTransaccionesManager->add($item);
-    //         var_dump($item);
-    //         die();
-    //     }
-    // }
     private function setItems($transaccion, $items){
-
         //LOS BIENESTRANSACCIONES SE GUARDAN COMO ARREGLO
         $itemsAnteriores = $transaccion->getBienesTransacciones();
         if (!is_null($itemsAnteriores)){        
@@ -181,18 +163,6 @@ class TransaccionManager {
         return $transaccion;
     }
 
-    //     /**
-    //  * This method adds a new servicio.
-    //  */
-    // public function add2($data, $items) {
-    //     $transaccion = new Transaccion();
-    //     $transaccion=$this->setData($transaccion, $data);
-    //     $this->entityManager->persist($transaccion);    
-    //     $this->setItems2($transaccion, $items);
-    //     $this->entityManager->flush();
-    //     return $transaccion;
-    // }
-
     public function remove($transaccion) {
         $this->entityManager->remove($transaccion);
         $this->entityManager->flush();
@@ -200,6 +170,15 @@ class TransaccionManager {
 
     public function getFormasPago(){
         return $this->formaPagoManager->getFormasPago();
+    }
+
+    public function eliminarFormasPago($id) {
+        $entityManager = $this->entityManager;
+        $transacciones = $this->entityManager->getRepository(Transaccion::class)->findBy(['formaPago'=>$id]);
+        foreach ($transacciones as $transaccion) {
+            $transaccion->setFormaPago(null);
+        }
+        $entityManager->flush();
     }
 
 }
