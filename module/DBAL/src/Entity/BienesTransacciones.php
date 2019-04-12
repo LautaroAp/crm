@@ -224,7 +224,7 @@ class BienesTransacciones {
         $output .= '"Iva $": "' . $this->getIvaPeso() .'", ';
         $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
         $output .= '"Descuento": "' . $this->getDescuento() .'", ';
-        $output .= '"Precio Dto.": "' . $this->getPrecioDto() .'", ';
+        $output .= '"Dto. $": "' . $this->getPrecioDto() .'", ';
 
         $output .= '"Subtotal": "' . $this->getSubtotal() .'" ';
         

@@ -39,7 +39,7 @@ function addItems(bienesTransacciones, tipo, id) {
     table.setAttribute("class", "display");
 
     var thead = document.createElement("thead");
-    var col = ["Nombre", "Descripcion", "Cantidad", "Precio", "Descuento", "Precio Dto.", "IVA", "IVA $", "Subtotal", ""];
+    var col = ["Nombre", "Descripcion", "Cantidad", "Precio", "Descuento", "Dto. $", "IVA", "IVA $", "Subtotal", ""];
 
     var tr = thead.insertRow(-1);
     for (var i = 0; i < col.length; i++) {
@@ -88,7 +88,7 @@ function addItems(bienesTransacciones, tipo, id) {
                     value = formatMoney(value);
                 }
             }
-            if (col[j] == "Precio Dto.") {
+            if (col[j] == "Dto. $") {
                 value = formatMoney((parseFloat(precioDto)).toFixed(2));
             }
             if ((col[j] == "IVA $")) {
@@ -383,7 +383,7 @@ function actualizarFila(tdId) {
     iva = getNumberValue(iva);
     cantxprecio = cant * precio;
     cantxprecioydto = cantxprecio - cantxprecio * descuento / 100;
-    document.getElementById(index + "_Precio Dto.").innerText = formatMoney(parseFloat(cantxprecioydto).toFixed(2));
+    document.getElementById(index + "_Dto. $").innerText = formatMoney(parseFloat(cantxprecioydto).toFixed(2));
     subtotal = cantxprecioydto + cantxprecioydto * iva / 100;
     ivaEnPeso =   cantxprecioydto * iva / 100;
     document.getElementById(index + "_IVA $").innerText = formatMoney(parseFloat(ivaEnPeso).toFixed(2));

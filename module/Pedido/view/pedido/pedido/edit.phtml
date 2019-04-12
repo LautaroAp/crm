@@ -241,85 +241,90 @@ setIvas(ivas);
                 </div>
             </div>
         </div>
+        <!-- Datos -->
+        <div class="row form-row">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading titulo-espaciado">
+                    DATOS ECONÓMICOS
+                </div>
+                <div class="panel-body">
+                    <!-- Totales -->
+                    <div class="row form-row">
 
-    <!-- Datos -->
-    <div class="row form-row">
-        <div class="panel panel-default sombra-ficha">
-            <div class="panel-heading titulo-espaciado">
-                DATOS ECONÓMICOS
-            </div>
-            <div class="panel-body">
-                <!-- Totales -->
-                <div class="row form-row">
-                    <div class="form-group col-md-3">
-                        <label>Descuento Total ($)</label>
-                        <input type="text" class="form-control" name="descuento_total" id="descuento_total" value=0
-                            readonly>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>IVA Total ($)</label>
-                        <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>Subtotal</label>
-                        <input type="text" class="form-control" name="subtotal_general" id="subtotal_general" value=0
-                            readonly>
-                    </div>
-                </div>
-                <!-- Forma de Pago + Fecha -->
-                <div class="row form-row">
-                    <div class="form-group col-md-3" id="monedas">
-                        <label>Moneda</label>
-                        <script>
-                        var monedas = <?php echo ($monedasJson); ?>;
-                        completarMonedas(monedas);
-                        </script>
-                    </div>
-                    <div class="form-group col-md-3" id="formasPago">
-                        <label>Forma de Pago</label>
-                        <script>
-                        var formasPago = <?php echo ($formasPagoJson); ?>;
-                        var transaccion = <?php echo ($transaccionJson); ?>;
-                        completarFormasPago(formasPago, transaccion);
-                        </script>
-                    </div>
-                    <div id="div_bonificacion" class="form-group col-md-2">
-                        <label>% Bonificación</label>
-                        <input type="text" class="form-control" name="bonificacion_general" id="bonificacion_general"
-                            value="0.00"  onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()">
-                    </div>
-                    <div id="div_recargo" class="form-group col-md-2">
-                        <label>% Recargo</label>
-                        <input type="text" class="form-control" name="recargo_general" id="recargo_general" value="0.00"
-                            onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()">
-                    </div>
-                    <script>
-                    setBonificacionRecargo();
-                    </script>
-                </div>
-                <!-- Total -->
-                <div class="row form-row">
-                    <div class="form-group col-md-3">
-                        <label>Total</label>
-                        <input type="text" class="form-control" name="total_general" id="total_general" value=0
-                            readonly>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label>Fecha de Vencimiento</label>
-                        <div class='input-group date' id='datetimepicker2'>
-                            <input type='text' class="form-control" name="fecha_transaccion" value="<?= $date ?>" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
+                        <div class="form-group col-md-3">
+                            <label>Venta Bruta ($)</label>
+                            <input type="text" class="form-control" name="" id=""
+                                value="Precio x Cantidad" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Descuento Global ($)</label>
+                            <input type="text" class="form-control" name="descuento_total" id="descuento_total"
+                                value="0" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>IVA Total ($)</label>
+                            <input type="text" class="form-control" name="iva_total" id="iva_total" value="0" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Total ($)</label>
+                            <input type="text" class="form-control" name="subtotal_general" id="subtotal_general"
+                                value="0" readonly>
                         </div>
                     </div>
+                    <!-- Forma de Pago + Fecha -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-3" id="monedas">
+                            <label>Moneda</label>
+                            <script>
+                            var monedas = <?php echo ($monedasJson); ?>;
+                            completarMonedas(monedas);
+                            </script>
+                        </div>
+                        <div class="form-group col-md-3" id="formasPago">
+                            <label>Forma de Pago</label>
+                            <script>
+                            var formasPago = <?php echo ($formasPagoJson); ?>;
+                            completarFormasPago(formasPago);
+                            </script>
+                        </div>
+                        <div id="div_bonificacion" class="form-group col-md-2">
+                            <label>% Bonificación</label>
+                            <input type="text" class="form-control" name="bonificacion_general"
+                                id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
+                                onkeyup="calcularSubcampos()">
+                        </div>
+                        <div id="div_recargo" class="form-group col-md-2">
+                            <label>% Recargo</label>
+                            <input type="text" class="form-control" name="recargo_general" id="recargo_general"
+                                value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()">
+                        </div>
+                        <script>
+                        setBonificacionRecargo();
+                        </script>
+                    </div>
+                    <!-- Total -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <label>Total General ($)</label>
+                            <input type="text" class="form-control" name="total_general" id="total_general" value="0"
+                                readonly>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Fecha de Vencimiento</label>
+                            <div class='input-group date' id='datetimepicker2'>
+                                <input type='text' class="form-control" name="fecha_transaccion" value="<?= $date ?>" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                    calcularSubcampos();
+                    </script>
                 </div>
-                <script>
-                calcularSubcampos();
-                </script>
             </div>
         </div>
-    </div>
 
     <!-- Datos -->
     <div class="row form-row">
