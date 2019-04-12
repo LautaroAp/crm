@@ -54,8 +54,8 @@ function completarFormasPago(formasPago, transaccion=null){
         if ("Forma de Pago" in transaccion == true){
         option.value = transaccion["Forma de Pago"]["Id"];
         option.text = transaccion["Forma de Pago"]["Nombre"];
-        recargo= transaccion["Forma de Pago"]["Recargo"];
-        bonificacion = transaccion["Forma de Pago"]["Bonificacion"];
+        recargo= parseFloat(transaccion["Recargo general"]).toFixed(2);
+        bonificacion = parseFloat(transaccion["Bonificacion general"]).toFixed(2);
         }
         else{
             option.value = "-1";
@@ -147,11 +147,21 @@ function changeBonificacionRecargo(){
 
     selectedId = $("#forma_pago option:selected").val();
     if (selectedId!="-1"){
-        selectedPos = getPosId(arrayFormasPago, selectedId);
-        recargo = arrayFormasPago[selectedPos]['Recargo'];
-        bonificacion = arrayFormasPago[selectedPos]['Bonificacion'];
-        $("#recargo_general").val(recargo);
-        $("#bonificacion_general").val(bonificacion);
+        var selectedPos = getPosId(arrayFormasPago, selectedId);
+        var recargo = arrayFormasPago[selectedPos]['Recargo'];
+        var bonificacion = arrayFormasPago[selectedPos]['Bonificacion'];
+        if(recargo){
+            $("#recargo_general").val(parseFloat(recargo).toFixed(2));
+        }
+        else {
+            $("#recargo_general").val("0.00");
+        }
+        if (bonificacion){
+            $("#bonificacion_general").val(parseFloat(bonificacion).toFixed(2));
+        }
+        else{
+            $("#bonificacion_general").val("0.00");
+        }
     }
     else{
         $("#recargo_general").val("0.00");

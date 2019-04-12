@@ -105,9 +105,6 @@ class PedidoController extends TransaccionController
         $formasPagoJson = $this->getJsonFormasPago();
         $ivasJson = $this->getJsonIvas();
         $this->reiniciarParams();
-        print_r($json);
-        print_r("<br>");
-        print_r($json_bienes);
         return new ViewModel([
             // 'items' => $items,
             'persona' => $persona,
@@ -211,10 +208,10 @@ class PedidoController extends TransaccionController
         $ivasJson = $this->getJsonIvas();
         $transaccionJson = $pedido->getTransaccion()->getJSON();
         $this->reiniciarParams();
-        print_r("<br>");
-        print_r($_SESSION['TRANSACCIONES']['PEDIDO']);
-        print_r("<br>");
-        print_r($json);
+        // print_r("<br>");
+        // print_r($_SESSION['TRANSACCIONES']['PEDIDO']);
+        // print_r("<br>");
+        // print_r($json);
         return new ViewModel([
             // 'items' => $items,
             'persona' => $persona,

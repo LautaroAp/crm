@@ -154,5 +154,4 @@ class PedidoManager extends TransaccionManager
     {
         return $this->formaPagoManager->getFormasPago();
     }
-
 }

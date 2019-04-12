@@ -95,6 +95,12 @@ class Transaccion {
     protected $bonificacionGeneral;
 
 
+
+    /**
+     * @ORM\Column(name="RECARGO_GENERAL", nullable=true, type="decimal")
+     */
+    protected $recargoGeneral;
+
     /**
      * @ORM\ManyToOne(targetEntity="Iva")
      * @ORM\JoinColumn(name="IVA_GENERAL", referencedColumnName="ID")
@@ -366,7 +372,10 @@ class Transaccion {
      */ 
     public function getBonificacionGeneral()
     {
-        return $this->bonificacionGeneral;
+        if (!is_null($this->bonificacionGeneral)){
+            return $this->bonificacionGeneral;
+        }
+        return "0.00";
     }
 
     /**
@@ -460,6 +469,8 @@ class Transaccion {
         if (!(is_null($this->formaPago))){
             $output .= '"Forma de Pago": ' . $this->getFormaPago()->getJSON() .', ';
         }
+        $output .= '"Recargo general": ' . $this->getRecargoGeneral() .', ';
+        $output .= '"Bonificacion general": ' . $this->getBonificacionGeneral() .', ';
         if (!(is_null($this->moneda))){
             $output .= '"Moneda": ' . $this->getMoneda()->getJSON() .', ';
         }
@@ -473,4 +484,28 @@ class Transaccion {
     }
 
 
+
+    /**
+     * Get the value of recargoGeneral
+     */ 
+    public function getRecargoGeneral()
+    {
+        if (!is_null($this->recargoGeneral)){
+            return $this->recargoGeneral;
+        }
+        else return "0.00";
+    }
+
+    /**
+     * Set the value of recargoGeneral
+     *
+     * @return  self
+     */ 
+    public function setRecargoGeneral($recargoGeneral)
+    {
+       
+        $this->recargoGeneral = $recargoGeneral;
+
+        return $this;
+    }
 }

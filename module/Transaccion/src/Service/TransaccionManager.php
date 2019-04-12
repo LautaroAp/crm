@@ -75,9 +75,11 @@ class TransaccionManager {
         ->from(Transaccion::Class, 'T')
         ->getQuery()
         ->getSingleScalarResult();
+        return $highest_id;
     }
 
     private function setData($transaccion, $data){
+
         if (isset($data['numero_transaccion'])){
             $transaccion->setNumero($data['numero_transaccion']);
         }
@@ -112,8 +114,15 @@ class TransaccionManager {
         //     $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
         //     $transaccion->setFecha_vencimiento($fecha_vencimiento);
         // }
-        if (isset($data['bonificacion_general'])){
+        if (isset($data['bonificacion_general']) and $data['bonificacion_general']!=''){
             $transaccion->setBonificacionGeneral($data['bonificacion_general']);
+        }
+
+        if (isset($data['bonificacion_general']) and $data['bonificacion_general']!=''){
+            $transaccion->setBonificacionGeneral($data['bonificacion_general']);
+        }
+        if (isset($data['recargo_general']) and $data['recargo_general']!=''){
+            $transaccion->setRecargoGeneral($data['recargo_general']);
         }
         if (isset($data['iva_general'])){
             $iva = $this->ivaManager->getIvaId($data['iva_general']);

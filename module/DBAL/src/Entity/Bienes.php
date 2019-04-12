@@ -495,6 +495,7 @@ class Bienes {
         $output .= '"Precio Dto.": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"Iva": "' . $this->getIva()->getValor() .'", ';
         $output .= '"Iva $": "' . $this->getIvaPeso() .'", ';
+        $output .= '"Tipo": "' . $this->getTipo() .'", ';
         $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
 
         return  '{'.$output.'}' ;
@@ -523,7 +524,10 @@ class Bienes {
         $output .= '"iva": "' . $this->getIva()->getValor() .'", ';
         $output .= '"iva_gravado": "' . $this->getIva_gravado() .'", ';
         $output .= '"iva_precio": "' . $this->getPrecio_final_iva() .'", ';
+        $output .= '"tipo": "' . $this->getTipo() .'", ';
+
         $output .= '"subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
+        
 
         return  '{'.$output.'}' ;
     }
@@ -537,6 +541,7 @@ class Bienes {
         $output .= '"Precio Dto.": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"Cantidad": "' . "" .'", ';
         $output .= '"Descuento": "' . $this->getDescuento() .'", ';
+        $output .= '"Tipo": "' . $this->getTipo() .'", ';
         $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
         
         return  '{'.$output.'}' ;
