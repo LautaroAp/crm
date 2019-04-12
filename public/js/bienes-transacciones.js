@@ -343,6 +343,7 @@ function saveValueInJson(tdId, inputValue) {
 //esta funcion es llamada cuando se modifica el valor de un input
 function saveValue(inputId) {
     tdId = inputId.substring(5);
+    
     // inputValue= $("#"+inputId).val();
     // document.getElementById(inputId).remove();
     // td = document.getElementById(tdId);
@@ -382,7 +383,10 @@ function actualizarFila(tdId) {
     iva = getNumberValue(iva);
     cantxprecio = cant * precio;
     cantxprecioydto = cantxprecio - cantxprecio * descuento / 100;
+    document.getElementById(index + "_Precio Dto.").innerText = formatMoney(parseFloat(cantxprecioydto).toFixed(2));
     subtotal = cantxprecioydto + cantxprecioydto * iva / 100;
+    ivaEnPeso =   cantxprecioydto * iva / 100;
+    document.getElementById(index + "_IVA $").innerText = formatMoney(parseFloat(ivaEnPeso).toFixed(2));
     document.getElementById(index + "_Subtotal").innerText = formatMoney(parseFloat(subtotal).toFixed(2));
     actualizarJson(index);
     calcularSubcampos();
