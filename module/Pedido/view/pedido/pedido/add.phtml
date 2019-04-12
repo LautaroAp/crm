@@ -251,8 +251,14 @@ setIvas(ivas);
                 <div class="panel-body">
                     <!-- Totales -->
                     <div class="row form-row">
+
                         <div class="form-group col-md-3">
-                            <label>Descuento Total ($)</label>
+                            <label>Venta Bruta ($)</label>
+                            <input type="text" class="form-control" name="" id=""
+                                value="Precio x Cantidad" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Descuento Global ($)</label>
                             <input type="text" class="form-control" name="descuento_total" id="descuento_total"
                                 value="0" readonly>
                         </div>
@@ -261,7 +267,7 @@ setIvas(ivas);
                             <input type="text" class="form-control" name="iva_total" id="iva_total" value="0" readonly>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Subtotal</label>
+                            <label>Total ($)</label>
                             <input type="text" class="form-control" name="subtotal_general" id="subtotal_general"
                                 value="0" readonly>
                         </div>
@@ -300,7 +306,7 @@ setIvas(ivas);
                     <!-- Total -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Total</label>
+                            <label>Total General ($)</label>
                             <input type="text" class="form-control" name="total_general" id="total_general" value="0"
                                 readonly>
                         </div>

@@ -228,8 +228,11 @@ class ClientesController extends HuellaController
 
     public function mostrarTransaccionesAction(){
         $this->layout()->setTemplate('layout/nulo');
+        // $id_persona = $this->params()->fromRoute('id');
+        // $transacciones = $this->clientesManager->getTransacciones($id_persona);
         $id_persona = $this->params()->fromRoute('id');
-        $transacciones = $this->clientesManager->getTransacciones($id_persona);
+        $cliente = $this->clientesManager->getClienteIdPersona($id_persona);
+        $transacciones = $cliente->getPersona()->getTransacciones();
         $view = new ViewModel(['transacciones' => $transacciones]);
         return $view;
     }

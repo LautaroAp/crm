@@ -412,7 +412,10 @@ class Bienes {
      * Get the value of stock
      */
     public function getStock(){
-        return $this->stock;
+        if (!is_null($this->stock)){
+            return $this->stock;
+        }
+        else return "";
     }
 
     /**
@@ -496,6 +499,7 @@ class Bienes {
         $output .= '"Iva": "' . $this->getIva()->getValor() .'", ';
         $output .= '"Iva $": "' . $this->getIvaPeso() .'", ';
         $output .= '"Tipo": "' . $this->getTipo() .'", ';
+        $output .= '"Stock": "' . $this->getStock() .'", ';
         $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
 
         return  '{'.$output.'}' ;
@@ -525,6 +529,7 @@ class Bienes {
         $output .= '"iva_gravado": "' . $this->getIva_gravado() .'", ';
         $output .= '"iva_precio": "' . $this->getPrecio_final_iva() .'", ';
         $output .= '"tipo": "' . $this->getTipo() .'", ';
+        $output .= '"stock": "' . $this->getStock() .'", ';
 
         $output .= '"subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
         
@@ -542,6 +547,7 @@ class Bienes {
         $output .= '"Cantidad": "' . "" .'", ';
         $output .= '"Descuento": "' . $this->getDescuento() .'", ';
         $output .= '"Tipo": "' . $this->getTipo() .'", ';
+        $output .= '"Stock": "' . $this->getStock() .'", ';
         $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
         
         return  '{'.$output.'}' ;

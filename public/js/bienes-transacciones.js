@@ -309,21 +309,36 @@ function getAttribute(tdId) {
     return attribute = tdId.substring(tdId.indexOf('_') + 1, tdId.length);
 }
 
-
+function controlStock(attribute, inputValue){
+    console.log(items[index]["Stock"]);
+    console.log(inputValue);
+    if (attribute=="Cantidad"){
+        if (items[index]["Stock"]>inputValue){
+            return true;
+        }
+        if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")) {
+            return true
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
 function saveValueInJson(tdId, inputValue) {
     //recibo "0_Cantidad" separo en indice 0 y atributo Cantidad
     index = tdId.substring(0, tdId.indexOf('_'));
     attribute = tdId.substring(tdId.indexOf('_') + 1, tdId.length);
     if (inputValue != null) {
-        if (attribute == "IVA") {
-            inputValue = ivas[getIvaFromValue(inputValue)];
+        if (controlStock(attribute, inputValue)){
+            if (attribute == "IVA") {
+                inputValue = ivas[getIvaFromValue(inputValue)];
+            }
+            items[index][attribute] = inputValue;
         }
-        items[index][attribute] = inputValue;
     }
-    //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
+     //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
     $("#jsonitems").val(JSON.stringify(items));
     persistItemsInSession();
-
 }
 //esta funcion es llamada cuando se modifica el valor de un input
 function saveValue(inputId) {
@@ -489,12 +504,12 @@ function persistItemsInSession() {
 
 function addItemToTable() {
     // Compara el Stock Disponible con la Cantidad ingresada
-    updateOutputSelect();
-    if (verificaStockDisponible(output)) {
+    
+    if (verificaStockDisponible()) {
         // Elimina items sobrantes del json "output" y deja solo el seleccionado
         // busco BIEN segun ID
         // * * * (Ya lo tengo, esta completo en "output")...
-
+        updateOutputSelect();
         // le concateno el BIEN a "ITEMS" (agregar a un json)
 
         items.push(output);
@@ -540,7 +555,8 @@ function updateOutputSelect() {
             "Nombre": result[0]["nombre"],
             "Precio": result[0]["precio"],
             "Subtotal": result[0]["subtotal"],
-            "Tipo": result[0]['tipo']
+            "Tipo": result[0]['tipo'],
+            "Stock": result[0]['stock']
         },
         "Cantidad": item_cantidad,
         "Descuento": item_descuento,
@@ -574,23 +590,20 @@ function clearAddItem() {
 
 }
 
-function verificaStockDisponible(output) {
-    if (output["tipo"] == "PRODUCTO") {
-        if ($('#item_cantidad').val() > 0) {
-            if ($('#item_cantidad').val() > $('#item_stock').val()) {
-                if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")) {
-                    return true
-                } else {
-                    return false;
-                }
+function verificaStockDisponible() {
+   
+    if ($('#item_cantidad').val() > 0) {
+        if ($('#item_cantidad').val() > $('#item_stock').val()) {
+            if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")) {
+                return true
             } else {
-                return true;
+                return false;
             }
         } else {
-            return false;
+            return true;
         }
+    } else {
+        return false;
     }
-    else{
-        return true;
-    }
+
 }
