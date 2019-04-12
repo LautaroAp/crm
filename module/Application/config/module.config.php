@@ -36,9 +36,9 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'listado' => [
-                        'type' => Literal::class,
+                        'type' => Segment::class,
                         'options' => [
-                            'route' => '/listado',
+                            'route' => '/listado[/:tipo]',
                             'defaults' => [
                                 'controller' => \Clientes\Controller\ClientesController::class,
                                 'action' => 'index',

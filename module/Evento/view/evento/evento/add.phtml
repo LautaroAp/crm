@@ -32,9 +32,11 @@ $form->get('submit')->setAttributes(['class' => 'btn btn-danger']);
 $form->prepare();
 ?>
 
-<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<!-- Datetime Picker -->
+<script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
+<script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
+
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker3').datetimepicker({
@@ -42,6 +44,8 @@ $form->prepare();
         });
     });
 </script>
+<!-- Fin -> Datetime Picker -->
+
 
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">

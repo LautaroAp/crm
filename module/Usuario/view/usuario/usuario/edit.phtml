@@ -32,60 +32,62 @@ $form->prepare();
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default sombra-ficha">
-            <div class="panel-heading titulo-espaciado">Usuario Nuevo</div>
+            <div class="panel-heading titulo-espaciado">EDITAR USUARIO
+            </div>
+            <div class="panel-body">
+                <?= $this->form()->openTag($form); ?>
+                <div class="container">
+                    <div class="row">
+                        <div class="row form-row">
+                            <div class="form-group col-md-4">
+                                <?= $this->formLabel($form->get('nombre')); ?>
+                                <?= $this->formElement($form->get('nombre')); ?>
+                                <?= $this->formElementErrors($form->get('nombre')); ?>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <?= $this->formLabel($form->get('telefono')); ?>
+                                <?= $this->formElement($form->get('telefono')); ?>
+                                <?= $this->formElementErrors($form->get('telefono')); ?>
+                            </div>
+                        </div>
+                        <div class="row form-row">
+                            <div class="form-group col-md-4">
+                                <?= $this->formLabel($form->get('email')); ?>
+                                <?= $this->formElement($form->get('email')); ?>
+                                <?= $this->formElementErrors($form->get('email')); ?>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <?= $this->formLabel($form->get('skype')); ?>
+                                <?= $this->formElement($form->get('skype')); ?>
+                                <?= $this->formElementErrors($form->get('skype')); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="exampleModalLabel">Editar usuario</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>¿Está seguro que desea editar los datos de este usuario?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-default">Aceptar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
-<?= $this->form()->openTag($form); ?>
-<div class="container">
-    <div class="row">
-        <div class="row form-row">
-            <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('nombre')); ?>
-                <?= $this->formElement($form->get('nombre')); ?>
-                <?= $this->formElementErrors($form->get('nombre')); ?>
-            </div>
-            <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('telefono')); ?>
-                <?= $this->formElement($form->get('telefono')); ?>
-                <?= $this->formElementErrors($form->get('telefono')); ?>
-            </div>
-        </div>
-        <div class="row form-row">
-            <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('email')); ?>
-                <?= $this->formElement($form->get('email')); ?>
-                <?= $this->formElementErrors($form->get('email')); ?>
-            </div>
-            <div class="form-group col-md-4">
-                <?= $this->formLabel($form->get('skype')); ?>
-                <?= $this->formElement($form->get('skype')); ?>
-                <?= $this->formElementErrors($form->get('skype')); ?>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar usuario</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Está seguro que desea editar los datos de este usuario?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-default">Aceptar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>   
 </div>
 
 <!-- Inicio: Panel Botones -->

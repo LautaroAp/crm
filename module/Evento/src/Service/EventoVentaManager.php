@@ -86,7 +86,9 @@ class EventoVentaManager extends EventoManager
                 $queryBuilder->andWhere('YEAR(E.fecha) = :year')->setParameter('year',$valorCampo);
             }
         }
-        $queryBuilder ->orderBy('E.fecha', 'DESC');
+        $queryBuilder ->orderBy('E.fecha', 'DESC')
+                        ->orderBy('E.id', 'DESC');
+                        
         return $queryBuilder->getQuery();
     }
 

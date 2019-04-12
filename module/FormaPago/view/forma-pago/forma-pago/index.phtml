@@ -2,6 +2,7 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
 <script src="/js/bienes-transacciones.js"></script>
+
 <script>
 $(document).ready(function() {
     $('#tabla_formaspago').DataTable({
@@ -9,16 +10,16 @@ $(document).ready(function() {
         "language": {
             "url": "/json/spanish.json"
         },
-        
-        
     });
   
 });
 </script>
+
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
             <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
             <li class="breadcrumb-item active" aria-current="page">Formas de Pago</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
@@ -35,7 +36,7 @@ $(document).ready(function() {
     <div class="row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
-                LISTADO DE EVENTOS
+                FORMAS DE PAGO
                 <a data-toggle="collapse" data-parent="#accordion" href="#add_tipo_evento" aria-expanded="true"
                     aria-controls="add_tipo_evento">
                     <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
@@ -48,23 +49,23 @@ $(document).ready(function() {
                             <div class="form-group col-md-3">
                                 <label>Forma de Pago</label>
                                 <input type="text" class="form-control form-margen" id="nombre" name="nombre"
-                                    placeholder="Forma de Pago">
+                                    placeholder="Forma de Pago" required>
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Descripción</label>
                                 <input type="text" class="form-control form-margen" name="descripcion"
-                                    placeholder="Descripcion">
+                                    placeholder="Descripcion" required>
                             </div>
                             <div class="form-group col-md-3">
                                 <label>% Bonificacion</label>
                                 <input type="text" class="form-control form-margen" name="bonificacion"
                                     id="bonificacion" placeholder="Bonificacion"
-                                    onkeypress="return justNumbers(event);">
+                                    onkeypress="return justNumbers(event);" required>
                             </div>
                             <div class="form-group col-md-3">
                                 <label>% Recargo</label>
                                 <input type="text" class="form-control form-margen" name="recargo" id="recargo"
-                                    placeholder="Recargo" onkeypress="return justNumbers(event);">
+                                    placeholder="Recargo" onkeypress="return justNumbers(event);" required>
                             </div>
                         </div>
                         <div class="row form-row">
@@ -72,7 +73,7 @@ $(document).ready(function() {
                                 <button type="button" class="btn btn-default form-margen" data-toggle="modal"
                                     data-target="#myModal">
                                     <span class="glyphicon glyphicon-plus"></span>
-                                    Agregar Forma de Pago
+                                    Forma de Pago
                                 </button>
                             </div>
                         </div>
@@ -120,10 +121,10 @@ $(document).ready(function() {
                                         ?>
                                     <tr>
                                         <td id=<?= $formaPago->getId() ?> ondblclick="makeEditable(event)" >
-                                        <?php echo ($formaPago->getNombre()); ?></td>
-                                        <td><?php echo ($formaPago->getDescripcion()); ?></td>
-                                        <td><?php echo ($formaPago->getBonificacion()); ?></td>
-                                        <td><?php echo ($formaPago->getRecargo()); ?></td>
+                                        <?= $formaPago->getNombre() ?></td>
+                                        <td><?= $formaPago->getDescripcion() ?></td>
+                                        <td><?= $formaPago->getBonificacion() ?> %</td>
+                                        <td><?= $formaPago->getRecargo() ?> %</td>
                                         <td id="<?= $formaPago->getId() ?>" class="">
                                             <div class="pull-right">
                                                 <a href="<?= $this->url('formaspago/editar', ['id' =>$formaPago->getId()]) ?>"
