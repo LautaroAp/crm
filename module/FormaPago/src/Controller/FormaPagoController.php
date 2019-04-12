@@ -61,7 +61,8 @@ class FormaPagoController extends HuellaController {
         $formaPago = $this->formaPagoManager->getFormaPagoId($id);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $this->formaPagoManager->edit($formaPago, $data);
+            $this->formaPagoManager->updateFormaPago($formaPago, $data);
+            return $this->redirect()->toRoute("herramientas/formaspago");
         }
         return new ViewModel(array(
             'formaPago' => $formaPago,

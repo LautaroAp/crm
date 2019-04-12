@@ -65,8 +65,10 @@ class FormaPagoManager {
      * This method updates data of an existing formapago.
      */
     public function updateFormaPago($formapago, $data) {
-        $formapago=$this->addData($formapago, $data);
-        return $formapago;
+        // $formapago=$this->addData($formapago, $data);
+        // return $formapago;
+        $this->addData($formapago, $data);
+        $this->entityManager->flush();
     }
 
     private function addData($formapago, $data) {
