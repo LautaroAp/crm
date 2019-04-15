@@ -114,7 +114,7 @@ class Bienes {
     // /**
     //  * @ORM\Column(name="MARCA", nullable=true, type="string")
     //  */
-    // protected $marca;
+    protected $marca;
 
     /**
      * Get the value of id
@@ -496,11 +496,11 @@ class Bienes {
         $output .= '"Precio": "' . $this->getPrecio() .'", ';
         $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
         $output .= '"Dto ($)": "' . $this->getPrecio_final_dto() .'", ';
-        $output .= '"Iva": "' . $this->getIva()->getValor() .'", ';
-        $output .= '"Iva $": "' . $this->getIvaPeso() .'", ';
+        $output .= '"Iva (%)": "' . $this->getIva()->getValor() .'", ';
+        $output .= '"IVA ($)": "' . $this->getIvaPeso() .'", ';
         $output .= '"Tipo": "' . $this->getTipo() .'", ';
         $output .= '"Stock": "' . $this->getStock() .'", ';
-        $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
+        $output .= '"Totales": "' . $this->getPrecio_final_iva_dto() .'" ';
 
         return  '{'.$output.'}' ;
     }
@@ -531,7 +531,7 @@ class Bienes {
         $output .= '"tipo": "' . $this->getTipo() .'", ';
         $output .= '"stock": "' . $this->getStock() .'", ';
 
-        $output .= '"subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
+        $output .= '"totales": "' . $this->getPrecio_final_iva_dto() .'" ';
         
 
         return  '{'.$output.'}' ;
@@ -541,16 +541,36 @@ class Bienes {
         $output = "";
         $output .= '"Id": "' . "" .'", ';
         $output .= '"Bien": ' . $this->getJsonBien() .', ';
-        $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
-        $output .= '"Iva $": "' . $this->getIvaPeso() .'", ';
+        $output .= '"IVA (%)": ' . $this->getIva()->getJSON() .', ';
+        $output .= '"IVA ($)": "' . $this->getIvaPeso() .'", ';
         $output .= '"Dto ($)": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"Cantidad": "' . "" .'", ';
         $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
         $output .= '"Tipo": "' . $this->getTipo() .'", ';
         $output .= '"Stock": "' . $this->getStock() .'", ';
-        $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
+        $output .= '"Totales": "' . $this->getPrecio_final_iva_dto() .'" ';
         
         return  '{'.$output.'}' ;
     }
 
+
+    /**
+     * Get // @ORM\Column(name="MARCA", nullable=true, type="string")
+     */ 
+    public function getMarca()
+    {
+        return $this->marca;
+    }
+
+    /**
+     * Set // @ORM\Column(name="MARCA", nullable=true, type="string")
+     *
+     * @return  self
+     */ 
+    public function setMarca($marca)
+    {
+        $this->marca = $marca;
+
+        return $this;
+    }
 }

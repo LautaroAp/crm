@@ -72,9 +72,9 @@ class PedidoController extends TransaccionController
         foreach ($bienes as $bien) {
             $json_bienes .= $bien->getJsonBien() . ',';
         }
+
         $json_bienes = substr($json_bienes, 0, -1);
         $json_bienes = '[' . $json_bienes . ']';
-
         // var_dump(json_decode($json_bienes, true));
         // die();
 

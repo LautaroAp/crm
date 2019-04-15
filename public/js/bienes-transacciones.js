@@ -39,7 +39,7 @@ function addItems(bienesTransacciones, tipo, id) {
     table.setAttribute("class", "display");
 
     var thead = document.createElement("thead");
-    var col = ["Nombre", "Descripcion", "Cantidad", "Precio", "Dto (%)", "Dto ($)", "IVA", "IVA $", "Subtotal", ""];
+    var col = ["Nombre", "Descripcion", "Cantidad", "Precio", "Dto (%)", "Dto ($)", "IVA (%)", "IVA ($)", "Totales", ""];
 
     var tr = thead.insertRow(-1);
     for (var i = 0; i < col.length; i++) {
@@ -67,11 +67,11 @@ function addItems(bienesTransacciones, tipo, id) {
             var precio = item["Bien"]["Precio"];
             var dto = item["Bien"]["Dto (%)"];
             var cantidad = item["Cantidad"];
-            var precioDto = (precio - precio * dto / 100) * cantidad;
-            var iva = value = item["IVA"]["Valor"];
+            var precioDto = (precio * dto / 100) * cantidad;
+            var iva = value = item["IVA (%)"]["Valor"];
             if (col[j] == "Nombre" || col[j] == "Descripcion" || col[j] == "Precio") {
                 value = item["Bien"][col[j]];
-            } else if (col[j] == "IVA") {
+            } else if (col[j] == "IVA (%)") {
                 value = iva;
             } else {
                 value = item[col[j]];
@@ -79,11 +79,11 @@ function addItems(bienesTransacciones, tipo, id) {
             if (col[j] == "Cantidad") {
                 tabCell.setAttribute("ondblclick", "makeEditable(event)");
             }
-            if ((col[j] == "Dto (%)") || (col[j] == "IVA")) {
+            if ((col[j] == "Dto (%)") || (col[j] == "IVA (%)")) {
                 value = formatPercent((parseFloat(value)).toFixed(2));
                 tabCell.setAttribute("ondblclick", "makeEditable(event)");
             }
-            if ((col[j] == "Precio") || (col[j] == "Subtotal")) {
+            if ((col[j] == "Precio") || (col[j] == "Totales")) {
                 if (value) {
                     value = formatMoney(value);
                 }
@@ -91,7 +91,7 @@ function addItems(bienesTransacciones, tipo, id) {
             if (col[j] == "Dto ($)") {
                 value = formatMoney((parseFloat(precioDto)).toFixed(2));
             }
-            if ((col[j] == "IVA $")) {
+            if ((col[j] == "IVA ($)")) {
                 value = precioDto * iva / 100;
                 value = formatMoney((parseFloat(value)).toFixed(2));
             }
@@ -144,6 +144,7 @@ function calcularSubcampos() {
     var precio_unitario_dto = 0;
     var iva = 0;
     var subtotal = 0;
+    var sumVentaBruta = 0;
     for (var i = 1; i < table.rows.length; i++) {
         //CANTIDAD ES LA COLUMNA 2
         cantidad = table.rows[i].cells[2].innerHTML;
@@ -165,6 +166,7 @@ function calcularSubcampos() {
         subtotal = table.rows[i].cells[8].innerHTML;
         subtotal = parseFloat(subtotal.substring(2, subtotal.length));
         sumSubtotal = sumSubtotal + parseFloat(subtotal);
+        sumVentaBruta = sumVentaBruta + cantidad * precio_unitario;
 
     }
 
@@ -175,6 +177,7 @@ function calcularSubcampos() {
     }
     var total_general = sumSubtotal - (sumSubtotal * bonificacion_general / 100) + (sumSubtotal * recargo_general / 100);
     $("#subtotal_general").val(formatMoney(parseFloat(sumSubtotal).toFixed(2)));
+    $("#venta_bruta").val(formatMoney(parseFloat(sumVentaBruta).toFixed(2)));
     $("#descuento_total").val(formatMoney(parseFloat(sumBonificacion).toFixed(2)));
     $("#iva_total").val(formatMoney(parseFloat(sumIva).toFixed(2)));
     $("#total_general").val(formatMoney(parseFloat(total_general).toFixed(2)));
@@ -312,26 +315,28 @@ function getAttribute(tdId) {
 function controlStock(attribute, inputValue){
     console.log(items[index]["Bien"]["Stock"]);
     console.log(inputValue);
-    if (attribute=="Cantidad"){
-        if (items[index]["Bien"]["Stock"]>=inputValue){
-            return true;
-        }
-        if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")) {
-            return true
-        } else {
-            return false;
+    inputValue = parseFloat(inputValue);
+    if (items[index]["Bien"]["Tipo"]=="PRODUCTO"){
+        if (attribute=="Cantidad"){
+            var stock = parseFloat(items[index]["Bien"]["Stock"]);
+            if(stock<=inputValue){
+                if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")) {
+                    return true
+                } else {
+                    return false;
+                }
+            }
         }
     }
     return true;
 }
 function saveValueInJson(tdId, inputValue) {
     //recibo "0_Cantidad" separo en indice 0 y atributo Cantidad
-    alert(tdId);
     index = tdId.substring(0, tdId.indexOf('_'));
     attribute = tdId.substring(tdId.indexOf('_') + 1, tdId.length);
     if (inputValue != null) {
         if (controlStock(attribute, inputValue)){
-            if (attribute == "IVA") {
+            if (attribute == "IVA (%)") {
                 inputValue = ivas[getIvaFromValue(inputValue)];
             }
             items[index][attribute] = inputValue;
@@ -348,16 +353,16 @@ function saveValue(inputId) {
 }
 
 function actualizarJson(fila) {
-    var col = ["Cantidad", "Dto (%)", "IVA", "Subtotal"];
+    var col = ["Cantidad", "Dto (%)", "IVA (%)", "Totales"];
     var index = fila + "_";
     for (var j = 0; j < col.length; j++) {
         var subindex = index + col[j];
-        if (col[j] != "IVA") {
+        if (col[j] != "IVA (%)") {
             items[fila][col[j]] = getNumberValue(document.getElementById(subindex).innerText);
         } else {
             var valorIva = document.getElementById(subindex).innerText;
             var ivajson = ivas[getIvaFromValue(valorIva)];
-            items[fila]["IVA"] = ivajson;
+            items[fila]["IVA (%)"] = ivajson;
         }
     }
     console.log("despues de actualizar items queda ");
@@ -371,19 +376,22 @@ function actualizarFila(tdId) {
     attribute = getAttribute(tdId);
     cant = document.getElementById(index + "_Cantidad").innerText;
     if (controlStock(attribute,cant)){
+        alert("cambia");
         precio = document.getElementById(index + "_Precio").innerText;
         precio = getNumberValue(precio);
         descuento = document.getElementById(index + "_Dto (%)").innerText;
         descuento = getNumberValue(descuento);
-        iva = document.getElementById(index + "_IVA").innerText;
+        iva = document.getElementById(index + "_IVA (%)").innerText;
         iva = getNumberValue(iva);
+        console.log(iva);
         cantxprecio = cant * precio;
-        cantxprecioydto = cantxprecio - cantxprecio * descuento / 100;
-        document.getElementById(index + "_Dto ($)").innerText = formatMoney(parseFloat(cantxprecioydto).toFixed(2));
+        dto$ = cantxprecio  * descuento / 100;
+        cantxprecioydto =cantxprecio -cantxprecio  * descuento / 100;
+        document.getElementById(index + "_Dto ($)").innerText = formatMoney(parseFloat(dto$).toFixed(2));
         subtotal = cantxprecioydto + cantxprecioydto * iva / 100;
         ivaEnPeso =   cantxprecioydto * iva / 100;
-        document.getElementById(index + "_IVA $").innerText = formatMoney(parseFloat(ivaEnPeso).toFixed(2));
-        document.getElementById(index + "_Subtotal").innerText = formatMoney(parseFloat(subtotal).toFixed(2));
+        document.getElementById(index + "_IVA ($)").innerText = formatMoney(parseFloat(ivaEnPeso).toFixed(2));
+        document.getElementById(index + "_Totales").innerText = formatMoney(parseFloat(subtotal).toFixed(2));
         actualizarJson(index);
         calcularSubcampos();
     }
@@ -392,8 +400,10 @@ function actualizarFila(tdId) {
 //esta funcion es llamada para guardar el input anterior al generarse un nuevo input
 function saveTd(tdId) {
     inputId = "input" + tdId;
-    if (getAttribute(tdId) == "IVA") {
-        inputValue = $("#" + inputId + " option:selected").text();
+    var inputValue;
+    if (getAttribute(tdId) == "IVA (%)") {
+        var select = document.getElementById(inputId);
+        inputValue = select.options[select.selectedIndex].text;
     } else {
         inputValue = document.getElementById(inputId).value;
     }
@@ -403,7 +413,7 @@ function saveTd(tdId) {
         inputElement.remove();
         td = document.getElementById(tdId);
         attribute = getAttribute(tdId);
-        if ((attribute == "Dto (%)") || (attribute == "IVA")) {
+        if ((attribute == "Dto (%)") || (attribute == "IVA (%)")) {
             td.innerText = formatPercent((parseFloat(numValue)).toFixed(2));;
         } else {
             td.innerText = inputValue;
@@ -441,11 +451,11 @@ function makeEditable(event) {
         saveTd(selectedAnt);
     }
     val = element.innerText;
-    if (getAttribute(elementId) == "IVA") {
+    if (getAttribute(elementId) == "IVA (%)") {
         //Create and append select list
         var selectList = document.createElement("select");
         selectList.id = "input" + elementId;
-        selectList.name = "IVA";
+        selectList.name = "IVA (%)";
         selectList.setAttribute("class", "form-control");
         selectList.setAttribute("onchange", "saveValue(id);");
         selectList.setAttribute("onkeypress", "return pulsar(event)");
@@ -505,15 +515,17 @@ function persistItemsInSession() {
 
 function addItemToTable() {
     // Compara el Stock Disponible con la Cantidad ingresada
-    
-    if (verificaStockDisponible()) {
+    updateOutputSelect();
+    if (verificaStockDisponible(output)) {
         // Elimina items sobrantes del json "output" y deja solo el seleccionado
         // busco BIEN segun ID
         // * * * (Ya lo tengo, esta completo en "output")...
-        updateOutputSelect();
+        // updateOutputSelect();
         // le concateno el BIEN a "ITEMS" (agregar a un json)
 
         items.push(output);
+        console.log("agrego a items");
+        console.log(items);
         persistItemsInSession();
         // luego:
         //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
@@ -540,7 +552,7 @@ function updateOutputSelect() {
     var item_descuento = result[0]["descuento"];
     var item_iva = result[0]["iva"];
     var item_iva = ivas[getIvaFromValue(item_iva)];
-    var item_subtotal = result[0]["subtotal"] * item_cantidad;
+    var item_subtotal = result[0]["totales"] * item_cantidad;
 
     item_subtotal = (parseFloat(item_subtotal).toFixed(2));
 
@@ -555,15 +567,15 @@ function updateOutputSelect() {
             "Iva": result[0]["iva"],
             "Nombre": result[0]["nombre"],
             "Precio": result[0]["precio"],
-            "Subtotal": result[0]["subtotal"],
+            "Totales": result[0]["totales"],
             "Tipo": result[0]['tipo'],
             "Stock": result[0]['stock']
         },
         "Cantidad": item_cantidad,
         "Dto (%)": item_descuento,
-        "IVA": item_iva,
+        "IVA (%)": item_iva,
         "Id": "",
-        "Subtotal": item_subtotal
+        "Totales": item_subtotal
     }
 
 
@@ -591,20 +603,23 @@ function clearAddItem() {
 
 }
 
-function verificaStockDisponible() {
-   
-    if ($('#item_cantidad').val() > 0) {
-        if ($('#item_cantidad').val() > $('#item_stock').val()) {
-            if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")) {
-                return true
+function verificaStockDisponible(output) {
+   if (output["Bien"]["Tipo"]=="PRODUCTO"){
+       var cant = parseFloat(output["Cantidad"]);
+       if (cant > 0) {
+            if (cant > parseFloat(output["Bien"]["Stock"])) {
+                if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")) {
+                    return true
+                } else {
+                    return false;
+                }
             } else {
-                return false;
+                return true;
             }
         } else {
-            return true;
+            return false;
         }
-    } else {
-        return false;
-    }
-
+   }
+   return true;
+    
 }

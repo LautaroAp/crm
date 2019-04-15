@@ -51,11 +51,6 @@ class Producto
     protected $proveedor;
 
     /**
-     * @ORM\Column(name="MARCA", nullable=true, type="string")
-     */
-    protected $marca;
-
-    /**
      * @ORM\Column(name="PRESENTACION", nullable=true, type="string")
      */
     protected $presentacion;
@@ -247,23 +242,6 @@ class Producto
         return $this;
     }
 
-    /**
-     * Get the value of marca
-     */
-    public function getMarca(){
-        return $this->marca;
-    }
-
-    /**
-     * Set the value of marca
-     *
-     * @return self
-     */
-    public function setMarca($marca)
-    {
-        $this->marca = $marca;
-        return $this;
-    }
 
     /**
      * Get the value of presentacion
