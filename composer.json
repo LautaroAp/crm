@@ -64,7 +64,8 @@
             "Transaccion\\": "module/Transaccion/src/",
             "BienesTransacciones\\": "module/BienesTransacciones/src/",
             "Remito\\": "module/Remito/src/",
-            "FormaPago\\": "module/FormaPago/src/"
+            "FormaPago\\": "module/FormaPago/src/",
+            "DatoAdicional\\": "module/DatoAdicional/src/"
         }
     },
     "autoload-dev": {

@@ -28,7 +28,6 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    
                     'buscar' => [
                         'type' => Segment::class,
                         'options' => [
@@ -38,7 +37,6 @@ return [
                             ],
                         ],
                     ],
-
                     'page' => [
                         'type' => Segment::class,
                         'options' => [

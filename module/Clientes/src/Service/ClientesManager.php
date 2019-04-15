@@ -152,7 +152,8 @@ class ClientesManager {
             'cliente' =>$cliente,
             'eventos' =>$persona->getEventos(),
             'usuarios' => $cliente->getUsuarios(),
-            'persona'=>$cliente->getPersona()
+            'persona'=>$cliente->getPersona(),
+            'datos_adicionales'=>$persona->getDatos_adicionales()
         ];
         return $data;
     }
