@@ -223,8 +223,8 @@ class BienesTransacciones {
         }        
         $output .= '"Iva $": "' . $this->getIvaPeso() .'", ';
         $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
-        $output .= '"Descuento": "' . $this->getDescuento() .'", ';
-        $output .= '"Dto. $": "' . $this->getPrecioDto() .'", ';
+        $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
+        $output .= '"Dto ($)": "' . $this->getPrecioDto() .'", ';
 
         $output .= '"Subtotal": "' . $this->getSubtotal() .'" ';
         
@@ -247,7 +247,7 @@ class BienesTransacciones {
         }
         $salida['Bien'] = $this->bien->getId();
         $salida['Cantidad'] = $this->cantidad;
-        $salida['Descuento'] = $this->descuento;
+        $salida['Dto (%)'] = $this->descuento;
         $salida['IVA'] = $this->iva->getId();
         $salida['Subtotal'] = $this->subtotal;
         return $salida;

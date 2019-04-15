@@ -17,7 +17,7 @@ function addItems(bienesTransacciones, tipo, id) {
    table.setAttribute("class", "display");
 
    var thead = document.createElement("thead");
-   var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Descuento","IVA", "Subtotal", ""];
+   var col = ["Nombre", "Descripcion", "Cantidad", "Precio","Dto (%)","IVA", "Subtotal", ""];
 
    var tr = thead.insertRow(-1);                  
    for (var i = 0; i < col.length; i++) {
@@ -54,7 +54,7 @@ function addItems(bienesTransacciones, tipo, id) {
            if (col[j]=="Cantidad"){
             tabCell.setAttribute("ondblclick", "makeEditable(event)");
         }
-           if ((col[j] == "Descuento") || (col[j]=="IVA")){
+           if ((col[j] == "Dto (%)") || (col[j]=="IVA")){
                value = formatPercent((parseFloat(value)).toFixed(2));
                tabCell.setAttribute("ondblclick", "makeEditable(event)");
             }
@@ -152,7 +152,7 @@ function selectItem(e,pos) {
         item = pos;
         $("#item_precio").val(items[pos]["Precio"]);
         $("#cantidad").val(1);
-        $("#descuento").val(items[pos]["Descuento"]);
+        $("#descuento").val(items[pos]["Dto (%)"]);
         $("#iva option:selected").html(items[pos]["Iva"]);
         $("#subtotal").val(items[pos]["Precio"]);
         $("#idbien").val(items[pos]["Id"]);
@@ -305,7 +305,7 @@ function actualizarFila(tdId){
     //     console.log("CANTIDAD " + cant)
     //     tdSubtotal.innerText= formatMoney(parseFloat(cant*subtotal).toFixed(2));
     // }
-    // if (attribute=="Descuento"){
+    // if (attribute=="Dto (%)"){
         cant = document.getElementById(index+"_Cantidad").innerText;
         precio = document.getElementById(index+"_Precio").innerText;
         precio = getNumberValue(precio);
@@ -336,7 +336,7 @@ function saveTd(tdId){
         inputElement.remove();
         td = document.getElementById(tdId);
         attribute = getAttribute(tdId);
-        if ((attribute=="Descuento") || (attribute=="IVA")){
+        if ((attribute=="Dto (%)") || (attribute=="IVA")){
             td.innerText=formatPercent((parseFloat(numValue)).toFixed(2));;
         }
         else{
@@ -464,7 +464,7 @@ function addItemToTable(){
 //     iva = ivas[getIvaFromValue(iva)];
 
 //     // Cambia el formato de "output" con "Bien: + IVA:"
-//     output = {"Bien" : output[0], "Cantidad" : cantidad, "Descuento" : descuento, "IVA": iva  }
+//     output = {"Bien" : output[0], "Cantidad" : cantidad, "Dto (%)" : descuento, "IVA": iva  }
 //     clearAddItem();
 // }
 
@@ -492,7 +492,7 @@ function updateOutputSelect(){
 
                     "Categoria": result[0]["categoria"],
                     "Descripcion": result[0]["descripcion"],
-                    "Descuento": result[0]["descuento"],
+                    "Dto (%)": result[0]["descuento"],
                     "Id": result[0]["value"],
                     "Iva": result[0]["iva"],
                     "Nombre": result[0]["nombre"],
@@ -500,7 +500,7 @@ function updateOutputSelect(){
                     "Subtotal": result[0]["subtotal"] 
                 },
                 "Cantidad" : item_cantidad, 
-                "Descuento" : item_descuento, 
+                "Dto (%)" : item_descuento, 
                 "IVA": item_iva,
                 "Id" : "",
                 "Subtotal" : item_subtotal
@@ -509,7 +509,7 @@ function updateOutputSelect(){
 
 
     // Cambia el formato de "output" con "Bien: + IVA:"
-    // output = {"Bien" : output[0], "Cantidad" : cantidad, "Descuento" : descuento, "IVA": iva  }
+    // output = {"Bien" : output[0], "Cantidad" : cantidad, "Dto (%)" : descuento, "IVA": iva  }
     clearAddItem();
 }
 

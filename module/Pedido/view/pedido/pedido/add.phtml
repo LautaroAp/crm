@@ -158,20 +158,20 @@ setIvas(ivas);
                             <input type="text" class="form-control" name="item_codigo" id="item_codigo"
                                 placeholder="Código">
                         </div>
-                        <div class="autocomplete form-group col-sm-2 margin-padding-xs">
+                        <div class="autocomplete form-group col-sm-4 margin-padding-xs">
                             <label>Producto Y Servicio</label>
                             <input type="text" class="form-control" name="item_nombre" id="item_nombre"
                                 placeholder="Producto Y Servicio">
                         </div>
                         <div class="form-group col-sm-2 margin-padding-xs">
-                            <label>Stock Disponible</label>
-                            <input type="text" class="form-control" name="item_stock" id="item_stock"
-                                placeholder="Stock Disponible">
-                        </div>
-                        <div class="form-group col-sm-2 margin-padding-xs">
                             <label>Cantidad</label>
                             <input type="number" class="form-control" name="item_cantidad" id="item_cantidad" min="1"
                                 max="99" value="" placeholder="Cantidad" onkeypress="return justNumbers(event)">
+                        </div>
+                        <div class="form-group col-sm-2 margin-padding-xs">
+                            <label>Stock Disponible</label>
+                            <input type="text" class="form-control" name="item_stock" id="item_stock"
+                                placeholder="Stock Disponible">
                         </div>
                         <div class="form-group col-sm-1 margin-padding-xs">
                             <label>&nbsp;</label>
@@ -195,7 +195,7 @@ setIvas(ivas);
                                     <th>Descripción</th>
                                     <th>Categoría</th>
                                     <th>Precio</th>
-                                    <th>% Descuento</th>
+                                    <th>Dto (%)</th>
                                     <th>Precio c/Dto.</th>
                                     <th>% IVA</th>
                                     <th>Precio c/IVA</th>

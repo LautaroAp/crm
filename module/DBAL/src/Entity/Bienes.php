@@ -494,8 +494,8 @@ class Bienes {
         $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
         $output .= '"Categoria": "' . $this->getCategoria() .'", ';
         $output .= '"Precio": "' . $this->getPrecio() .'", ';
-        $output .= '"Descuento": "' . $this->getDescuento() .'", ';
-        $output .= '"Dto. $": "' . $this->getPrecio_final_dto() .'", ';
+        $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
+        $output .= '"Dto ($)": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"Iva": "' . $this->getIva()->getValor() .'", ';
         $output .= '"Iva $": "' . $this->getIvaPeso() .'", ';
         $output .= '"Tipo": "' . $this->getTipo() .'", ';
@@ -543,9 +543,9 @@ class Bienes {
         $output .= '"Bien": ' . $this->getJsonBien() .', ';
         $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
         $output .= '"Iva $": "' . $this->getIvaPeso() .'", ';
-        $output .= '"Dto. $": "' . $this->getPrecio_final_dto() .'", ';
+        $output .= '"Dto ($)": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"Cantidad": "' . "" .'", ';
-        $output .= '"Descuento": "' . $this->getDescuento() .'", ';
+        $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
         $output .= '"Tipo": "' . $this->getTipo() .'", ';
         $output .= '"Stock": "' . $this->getStock() .'", ';
         $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';

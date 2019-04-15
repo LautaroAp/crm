@@ -161,7 +161,7 @@ class BienesTransaccionesManager {
         }
         $bienTransaccion->setBien($bien);
         $bienTransaccion->setCantidad($array['Cantidad']);
-        $bienTransaccion->setDescuento($array['Descuento']);
+        $bienTransaccion->setDescuento($array['Dto.%']);
         if (isset($array['IVA']['Id'])){
             $iva = $this->ivaManager->getIva($array['IVA']['Id']);
         }
