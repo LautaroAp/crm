@@ -240,7 +240,43 @@ setIvas(ivas);
                 </div>
             </div>
         </div>
+                <!-- Datos -->
+                <div class="row form-row">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading titulo-espaciado">
+                    DATOS DE ENVÍO
+                </div>
+                <div class="panel-body">
 
+
+                    <div class="row form-row">
+                        <div class="form-group col-md-3" id="formasEnvio">
+                            <label>Forma de Envío</label>
+                            <script>
+                            var formasEnvio = <?php echo ($formasEnvioJson); ?>;
+                            completarFormasEnvio(formasEnvio);
+                            </script>
+                        </div>
+                        <div id="div_forma_envio_valor" class="form-group col-md-2">
+                            <label>Precio ($)</label>
+                            <input type="text" class="form-control" name="forma_envio_valor"
+                                id="forma_envio_valor" value="0.00" onkeypress="return justNumbers(event);"
+                                onkeyup="calcularSubcampos()">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Fecha de Entrega</label>
+                            <div class='input-group date' id='datetimepicker3'>
+                                <input type='text' class="form-control" name="fecha_entrega"
+                                    value="<?= $date ?>" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Datos -->
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
@@ -321,62 +357,6 @@ setIvas(ivas);
                     <script>
                     calcularSubcampos();
                     </script>
-                </div>
-            </div>
-        </div>
-
-        <!-- Datos -->
-        <div class="row form-row">
-            <div class="panel panel-default sombra-ficha">
-                <div class="panel-heading titulo-espaciado">
-                    DATOS DE ENVÍO
-                </div>
-                <div class="panel-body">
-                    <!-- Entrega y Factura al Momento -->
-                    <div class="row form-row">
-                        <div class="form-check col-md-4">
-                            <input type="checkbox" value="" id="EntregaDomicilioFacturacion"
-                                name="EntregaDomicilioFacturacion" data-toggle="collapse" data-parent="#accordion"
-                                data-target="#collapseEntregaDomicilioFacturacion" aria-expanded="true"
-                                aria-controls="collapseEntregaDomicilioFacturacion">
-                            <label class="form-check-label" for="EntregaDomicilioFacturacion">Entrega en Domicilio de
-                                Facturación</label>
-                        </div>
-                        <div class="form-check col-md-4">
-                            <input type="checkbox" class="form-check-input" name="entrega_momento" id="entrega_momento">
-                            <label class="form-check-label" for="entrega_momento">Entrega al momento de la Venta</label>
-                        </div>
-                        <div class="form-check col-md-4">
-                            <input type="checkbox" class="form-check-input" name="factura_momento" id="factura_momento">
-                            <label class="form-check-label" for="factura_momento">Factura al momento de la Venta</label>
-                        </div>
-                    </div>
-                    <!-- Forma de Pago + Fecha -->
-                    <div class="row form-row">
-                        <div class="form-group col-md-12">
-
-                            <div class="row form-row collapse" id="collapseEntregaDomicilioFacturacion">
-                                <br>
-                                <div class="form-group col-md-3">
-                                    <label>Fecha de Entrega</label>
-                                    <div class='input-group date' id='datetimepicker3'>
-                                        <input type='text' class="form-control" name="fecha_entrega"
-                                            value="<?= $date ?>" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-3" id="formasEnvio">
-                                    <label>Formas de Envío</label>
-                                    <script>
-                                    var formasEnvio = <?php echo ($formasEnvioJson); ?>;
-                                    completarFormasEnvio(formasEnvio);
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -623,6 +623,16 @@ return [
                             ],
                         ],
                     ],
+                    'formasenvio' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/formasEnvio',
+                            'defaults' => [
+                                'controller' => \FormaEnvio\Controller\FormaEnvioController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
                     'backup' => [
                         'type' => Segment::class,
                         'options' => [

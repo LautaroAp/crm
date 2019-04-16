@@ -1,0 +1,199 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<script src="/js/bienes-transacciones.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#tabla_formasenvio').DataTable({
+        "order": [0, 'desc'],
+        "language": {
+            "url": "/json/spanish.json"
+        },
+    });
+  
+});
+</script>
+
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Formas de Envío</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
+            <li class="pull-right"><a href="empresa" id="volver">Volver</a></li>
+        </ol>
+    </nav>
+</div>
+
+<!--Bloqueo de pantalla + animacion-->
+<div id="bloquea" class="cargando" style="display:none;"></div>
+<div class="" id="loader"></div>
+<!-- Inicio: Tabla Tipo-Evento -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default sombra-ficha">
+            <div class="panel-heading text-center titulo-espaciado">
+                FORMAS DE ENVÍO
+                <a data-toggle="collapse" data-parent="#accordion" href="#add_tipo_evento" aria-expanded="true"
+                    aria-controls="add_tipo_evento">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
+                </a>
+            </div>
+            <div class="panel panel-body">
+                <div class="collapse" id="add_tipo_evento">
+                    <form method="post">
+                        <div class="row form-row">
+                            <div class="form-group col-md-3">
+                                <label>Forma de Envío</label>
+                                <input type="text" class="form-control form-margen" id="nombre" name="nombre"
+                                    placeholder="Forma de Envío" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Descripción</label>
+                                <input type="text" class="form-control form-margen" name="descripcion"
+                                    placeholder="Descripcion" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Precio ($)</label>
+                                <input type="text" class="form-control form-margen" name="valor"
+                                    id="valor" placeholder="valor"
+                                    onkeypress="return justNumbers(event);" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Fecha de Entrega</label>
+                                <div>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="fecha_entrega" value="1" checked>Si
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="fecha_entrega" value="0" >No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-row">
+                            <div class="form-group col-md-3">
+                                <button type="button" class="btn btn-default form-margen" data-toggle="modal"
+                                    data-target="#myModal">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    Forma de Envío
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Agregar Forma de Envío</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Está seguro que desea agregar esta forma de envío?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-default">Aceptar</button>
+                                        <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table id="tabla_formasenvio" class="display">
+                                <thead>
+                                    <tr>
+                                        <th>Forma de Envío</th>
+                                        <th>Descripción</th>
+                                        <th>Valor ($)</th>
+                                        <th>Fecha de Entrega</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                if (isset($formasEnvio)) {
+                                    foreach ($formasEnvio as $formaEnvio) :
+                                        ?>
+                                    <tr>
+                                        <td id=<?= $formaEnvio->getId() ?> ondblclick="makeEditable(event)" >
+                                        <?= $formaEnvio->getNombre() ?></td>
+                                        <td><?= $formaEnvio->getDescripcion() ?></td>
+                                        <td><?= $formaEnvio->getValor() ?></td>
+                                        <td><?= $formaEnvio->getFecha_entrega() ?></td>
+                                        <td id="<?= $formaEnvio->getId() ?>" class="">
+                                            <div class="pull-right">
+                                                <a href="<?= $this->url('formasenvio/editar', ['id' =>$formaEnvio->getId()]) ?>"
+                                                    type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </a>
+                                                <button name="<?= $formaEnvio->getId() ?>" id="<?= $formaEnvio->getId() ?>" type="button" 
+                                                    class="btn btn-default btn-sm" data-toggle="modal" 
+                                                    data-target="#myModal<?= $formaEnvio->getId() ?>">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <!-- Modal -->
+                                        <div id="myModal<?= $formaEnvio->getId() ?>" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close"
+                                                            data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Eliminar Forma de Envío</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>
+                                                            ¿Está seguro que desea eliminar la Forma de Envío:
+                                                            "<?= $this->escapeHtml($formaEnvio->getNombre()) ?>"?
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="<?= $this->url('formasenvio/borrar', ['action' => 'remove', 'id' => $formaEnvio->getId()]); ?>"
+                                                            onclick="bloqueaPantalla()" type="button">
+                                                            <span class="btn btn-default">Aceptar</span></a>
+                                                        <button type="button" class="btn btn-default"
+                                                            data-dismiss="modal">Cancelar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                    <?php endforeach;} ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row img-centrar">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="/empresa">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha zoom">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
+            </div>
+        </div>
+    </div>
+    <!-- Fin: Panel Botones -->

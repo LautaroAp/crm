@@ -47,7 +47,7 @@ return [
     'Transaccion',
     'BienesTransacciones',
     'Remito',
-    'FormaPago'
-    
-
+    'FormaPago',
+    'FormaEnvio',
+    'DatoAdicional'
 ];

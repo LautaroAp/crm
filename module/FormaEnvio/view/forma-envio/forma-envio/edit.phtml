@@ -1,0 +1,92 @@
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas/formasenvio'); ?>">Formas de Envío</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
+            <li class="pull-right"><a href="empresa" id="volver">Volver</a></li>
+        </ol>
+    </nav>
+</div>
+
+<!--Bloqueo de pantalla + animacion-->
+<div id="bloquea" class="cargando" style="display:none;"></div>
+<div class="" id="loader"></div>
+<!-- Inicio: Tabla Tipo-Evento -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default sombra-ficha">
+            <div class="panel-heading titulo-espaciado">
+                EDITAR FORMA DE ENVÍO
+            </div>
+            <div class="panel panel-body">
+                <div class="" id="add_tipo_evento">
+                    <form method="post">
+                        <div class="row form-row">
+                            <div class="form-group col-md-3">
+                                <label>Forma de Envío</label>
+                                <input type="text" class="form-control form-margen" id="nombre" name="nombre"
+                                    placeholder="Forma de Pago" value="<?= $formaEnvio->getNombre() ?>" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Descripción</label>
+                                <input type="text" class="form-control form-margen" name="descripcion"
+                                    placeholder="Descripcion" value="<?= $formaEnvio->getDescripcion() ?>" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Precio ($)</label>
+                                <input type="text" class="form-control form-margen" name="valor"
+                                    id="bonificacion" placeholder="valor"
+                                    onkeypress="return justNumbers(event);" value="<?= $formaEnvio->getValor() ?>" required>
+                            </div>
+                            <!-- HACER LEVANTAR LA OPCION getFecha_engrega() (1 = SI) (0 = NO) -->
+                            <div class="form-group col-md-3">
+                                <label>Fecha de Entrega</label>
+                                <div>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="fecha_entrega" value="1" checked>Si
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="fecha_entrega" value="0" >No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-row">
+                            <div class="form-group col-md-3">
+                                <button type="button" class="btn btn-default form-margen" data-toggle="modal"
+                                    data-target="#myModal">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    Editar Forma de Envío
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Editar Forma de Envio</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Está seguro que desea modificar esta forma de envío?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-default">Aceptar</button>
+                                        <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -20,6 +20,12 @@ class ClientesController extends HuellaController
     private $eventoManager;
 
     /**
+     * Doctrine entity manager.
+     * @var Doctrine\ORM\EntityManager
+     */
+    private $datoAdicionalManager;
+
+    /**
      * @var DoctrineORMEntityManager
      */
     protected $tipoEventosManager;
@@ -29,12 +35,14 @@ class ClientesController extends HuellaController
         $clientesManager,
         $tipoEventosManager,
         $eventoManager,
-        $personaManager
+        $personaManager,
+        $datoAdicionalManager
     ) {
         $this->clientesManager = $clientesManager;
         $this->tipoEventosManager = $tipoEventosManager;
         $this->eventoManager = $eventoManager;
         $this->personaManager = $personaManager;
+        $this->datoAdicionalManager = $datoAdicionalManager;
     }
 
     public function indexAction(){
@@ -196,12 +204,16 @@ class ClientesController extends HuellaController
         $limite = $this->getAnterior();
         $this->prepararBreadcrumbs("Ficha Cliente", "/ficha/".$id_persona, $limite);
         $data = $this->clientesManager->getDataFicha($id_persona);
+
+        // print_r($data['datos_adicionales']); die();
+        
         $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();
         $volver = $this->getUltimaUrl();
         return new ViewModel([
             'cliente' => $data['cliente'],
             'usuarios' => $data['usuarios'],
             'eventos' => $data['eventos'],
+            'datos_adicionales' => $data['datos_adicionales'],
             'tipo_eventos' => $this->tipoEventosManager->getTipoEventos($persona->getTipo()),
             'persona' => $data['persona'],
             'volver'=>$volver,

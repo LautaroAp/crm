@@ -67,6 +67,12 @@ class Persona {
      */
     private $transacciones;
 
+    /**
+     * 
+     * @ORM\OneToMany(targetEntity="\DBAL\Entity\DatoAdicional", mappedBy="id_ficha_persona")
+     */
+    private $datos_adicionales;
+
     public function getId()
     {
         return $this->id;
@@ -175,4 +181,13 @@ class Persona {
     public function getTransacciones(){
         return $this->transacciones;
     }
+
+    /**
+     * Get the value of datos_adicionales
+     */ 
+    public function getDatos_adicionales()
+    {
+        return $this->datos_adicionales;
+    }
+
 }

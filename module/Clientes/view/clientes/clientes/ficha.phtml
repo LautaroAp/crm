@@ -137,7 +137,7 @@ $id_persona = $persona->getId();
     </div>
 
     <!-- Datos Adicionales -->
-    <!-- <div class="container row">
+    <div class="container row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 DATOS ADICIONALES
@@ -151,29 +151,60 @@ $id_persona = $persona->getId();
                     <table id="tabla_evento" class="table table-condensed table-hover">
                         <thead>
                             <tr>
-                                <th class="th-sm">Descripción</th>
                                 <th class="th-sm">Dato</th>
+                                <th class="th-sm">Descripcion</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <div class="pull-right">
-                                        <button class="btn btn-default btn-sm" type="button">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                        </button>
-                                        <button class="btn btn-default btn-sm" type="button">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
+                            <?php foreach ($datos_adicionales as $dato_adicional): ?>
+                                <tr>
+                                    <td><?php echo ($dato_adicional->getDato_adicional()); ?></td>
+                                    <td><?php echo ($dato_adicional->getDescripcion()); ?></td>
+                                    <td>
+                                        <div class="pull-right">
+                                            <a class="btn btn-default btn-sm" 
+                                                href="<?= $this->url('datoadicional', ['action' => 'edit', 'id' => $dato_adicional->getId()]); ?>">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </a>
+                                            <button name="<?= $dato_adicional->getId() ?>" id="<?= $dato_adicional->getId() ?>" type="button" 
+                                                class="btn btn-default btn-sm" data-toggle="modal" 
+                                                data-target="#datoAdicionalModal<?= $dato_adicional->getId() ?>">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <!-- Modal Usuario Adicional -->
+                                    <div id="datoAdicionalModal<?= $dato_adicional->getId() ?>" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Eliminar usuario</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>
+                                                        ¿Está seguro que desea eliminar el usuario:
+                                                        "<?= $this->escapeHtml($dato_adicional->getDato_adicional()) ?>"
+                                                        de forma permanente?
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="<?= $this->url('datoadicional/borrar', ['action' => 'delete', 'id' => $dato_adicional->getId()]); ?>" type="button">
+                                                        <span class="btn btn-default">Aceptar</span></a>
+
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </td>                                    
-                            </tr>
+                                </tr>
+                            <?php endforeach;?>
                         </tbody>
                     </table>
-                    <a href="#" type="button">
+                    <br>
+                    <a href="<?= $this->url('datoadicional/agregar', ['action' => 'add', 'id' => $persona->getId()]); ?>" type="button">
                         <span class="btn btn-default">
                             <span class="glyphicon glyphicon-plus"></span> Dato Adicional
                         </span>
@@ -181,7 +212,7 @@ $id_persona = $persona->getId();
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- Usuarios Adicionales -->
     <div class="container row">

@@ -139,8 +139,8 @@ setIvas(ivas);
             </div>
         </div>
 
-            <!-- Listado de Items -->
-            <div class="row form-row">
+        <!-- Listado de Items -->
+        <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
                     LISTADO DE PRODUCTOS Y SERVICIOS
@@ -220,7 +220,7 @@ setIvas(ivas);
                 <input type="hidden" id="jsonitems" name="jsonitems" size="200">
 
                 <!-- Tabla de Items -->
-                <div class="panel panel-body" >
+                <div class="panel panel-body">
                     <div class="panel panel-body" id="contenido_bienes">
                         <div id="div_table_items">
                             <script>
@@ -230,12 +230,68 @@ setIvas(ivas);
                             addItems(items, "pedido", idPersona);
                             </script>
                         </div>
-                        <br>                     
+                        <br>
                     </div>
                     <div class="container">
                         <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion' => 'pedido', 'accion' => 'agregar', 'id' => $persona->getId()]); ?>"
-                        type="button">
-                        <span class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar Item</span> </a>
+                            type="button">
+                            <span class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar
+                                Item</span> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Datos -->
+        <div class="row form-row">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading titulo-espaciado">
+                    DATOS DE ENVÍO
+                </div>
+                <div class="panel-body">
+                    <!-- Entrega y Factura al Momento -->
+                    <div class="row form-row">
+                        <div class="form-check col-md-4">
+                            <input type="checkbox" value="" id="EntregaDomicilioFacturacion"
+                                name="EntregaDomicilioFacturacion" data-toggle="collapse" data-parent="#accordion"
+                                data-target="#collapseEntregaDomicilioFacturacion" aria-expanded="true"
+                                aria-controls="collapseEntregaDomicilioFacturacion">
+                            <label class="form-check-label" for="EntregaDomicilioFacturacion">Entrega en Domicilio de
+                                Facturación</label>
+                        </div>
+                        <div class="form-check col-md-4">
+                            <input type="checkbox" class="form-check-input" name="entrega_momento" id="entrega_momento">
+                            <label class="form-check-label" for="entrega_momento">Entrega al momento de la Venta</label>
+                        </div>
+                        <div class="form-check col-md-4">
+                            <input type="checkbox" class="form-check-input" name="factura_momento" id="factura_momento">
+                            <label class="form-check-label" for="factura_momento">Factura al momento de la Venta</label>
+                        </div>
+                    </div>
+                    <!-- Forma de Pago + Fecha -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-12">
+
+                            <div class="row form-row collapse" id="collapseEntregaDomicilioFacturacion">
+                                <br>
+                                <div class="form-group col-md-3">
+                                    <label>Fecha de Entrega</label>
+                                    <div class='input-group date' id='datetimepicker3'>
+                                        <input type='text' class="form-control" name="fecha_entrega"
+                                            value="<?= $date ?>" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3" id="formasEnvio">
+                                    <label>Formas de Envío</label>
+                                    <script>
+                                    var formasEnvio = <?php echo ($formasEnvioJson); ?>;
+                                    completarFormasEnvio(formasEnvio);
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -324,60 +380,7 @@ setIvas(ivas);
             </div>
         </div>
 
-    <!-- Datos -->
-    <div class="row form-row">
-        <div class="panel panel-default sombra-ficha">
-            <div class="panel-heading titulo-espaciado">
-                DATOS DE ENVÍO
-            </div>
-            <div class="panel-body">
-                <!-- Entrega y Factura al Momento -->
-                <div class="row form-row">
-                    <div class="form-check col-md-4">
-                        <input type="checkbox" value="" id="EntregaDomicilioFacturacion"
-                            name="EntregaDomicilioFacturacion" data-toggle="collapse" data-parent="#accordion"
-                            data-target="#collapseEntregaDomicilioFacturacion" aria-expanded="true"
-                            aria-controls="collapseEntregaDomicilioFacturacion">
-                        <label class="form-check-label" for="EntregaDomicilioFacturacion">Entrega en Domicilio de
-                            Facturación</label>
-                    </div>
-                    <div class="form-check col-md-4">
-                        <input type="checkbox" class="form-check-input" name="entrega_momento" id="entrega_momento">
-                        <label class="form-check-label" for="entrega_momento">Entrega al momento de la Venta</label>
-                    </div>
-                    <div class="form-check col-md-4">
-                        <input type="checkbox" class="form-check-input" name="factura_momento" id="factura_momento">
-                        <label class="form-check-label" for="factura_momento">Factura al momento de la Venta</label>
-                    </div>
-                </div>
-                <!-- Forma de Pago + Fecha -->
-                <div class="row form-row">
-                    <div class="form-group col-md-12">
 
-                        <div class="row form-row collapse" id="collapseEntregaDomicilioFacturacion">
-                            <br>
-                            <div class="form-group col-md-3">
-                                <label>Fecha de Entrega</label>
-                                <div class='input-group date' id='datetimepicker3'>
-                                    <input type='text' class="form-control" name="fecha_entrega" value="<?= $date ?>" />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3" id="formasEnvio">
-                                <label>Formas de Envío</label>
-                                <script>
-                                var formasEnvio = <?php echo ($formasEnvioJson); ?>;
-                                completarFormasEnvio(formasEnvio);
-                                </script>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     </div>
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
