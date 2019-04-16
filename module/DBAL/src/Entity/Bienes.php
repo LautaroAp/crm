@@ -114,7 +114,7 @@ class Bienes {
     // /**
     //  * @ORM\Column(name="MARCA", nullable=true, type="string")
     //  */
-    // protected $marca;
+    protected $marca;
 
     /**
      * Get the value of id
@@ -412,7 +412,10 @@ class Bienes {
      * Get the value of stock
      */
     public function getStock(){
-        return $this->stock;
+        if (!is_null($this->stock)){
+            return $this->stock;
+        }
+        else return "";
     }
 
     /**
@@ -477,6 +480,13 @@ class Bienes {
     //     return $this;
     // }
 
+    public function getIvaPeso(){
+        if (!is_null($this->iva)){
+            $salida = $this->getIva()->getValor() * $this->getPrecio_final_dto() / 100;
+            return $salida;
+        }
+        return "";
+    }
     public function getJSON(){
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
@@ -484,9 +494,13 @@ class Bienes {
         $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
         $output .= '"Categoria": "' . $this->getCategoria() .'", ';
         $output .= '"Precio": "' . $this->getPrecio() .'", ';
-        $output .= '"Descuento": "' . $this->getDescuento() .'", ';
-        $output .= '"Iva": "' . $this->getIva()->getValor() .'", ';
-        $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
+        $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
+        $output .= '"Dto ($)": "' . $this->getPrecio_final_dto() .'", ';
+        $output .= '"Iva (%)": "' . $this->getIva()->getValor() .'", ';
+        $output .= '"IVA ($)": "' . $this->getIvaPeso() .'", ';
+        $output .= '"Tipo": "' . $this->getTipo() .'", ';
+        $output .= '"Stock": "' . $this->getStock() .'", ';
+        $output .= '"Totales": "' . $this->getPrecio_final_iva_dto() .'" ';
 
         return  '{'.$output.'}' ;
     }
@@ -514,7 +528,11 @@ class Bienes {
         $output .= '"iva": "' . $this->getIva()->getValor() .'", ';
         $output .= '"iva_gravado": "' . $this->getIva_gravado() .'", ';
         $output .= '"iva_precio": "' . $this->getPrecio_final_iva() .'", ';
-        $output .= '"subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
+        $output .= '"tipo": "' . $this->getTipo() .'", ';
+        $output .= '"stock": "' . $this->getStock() .'", ';
+
+        $output .= '"totales": "' . $this->getPrecio_final_iva_dto() .'" ';
+        
 
         return  '{'.$output.'}' ;
     }
@@ -523,13 +541,36 @@ class Bienes {
         $output = "";
         $output .= '"Id": "' . "" .'", ';
         $output .= '"Bien": ' . $this->getJsonBien() .', ';
-        $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
-
+        $output .= '"IVA (%)": ' . $this->getIva()->getJSON() .', ';
+        $output .= '"IVA ($)": "' . $this->getIvaPeso() .'", ';
+        $output .= '"Dto ($)": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"Cantidad": "' . "" .'", ';
-        $output .= '"Descuento": "' . $this->getDescuento() .'", ';
-        $output .= '"Subtotal": "' . $this->getPrecio_final_iva_dto() .'" ';
+        $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
+        $output .= '"Tipo": "' . $this->getTipo() .'", ';
+        $output .= '"Stock": "' . $this->getStock() .'", ';
+        $output .= '"Totales": "' . $this->getPrecio_final_iva_dto() .'" ';
         
         return  '{'.$output.'}' ;
     }
 
+
+    /**
+     * Get // @ORM\Column(name="MARCA", nullable=true, type="string")
+     */ 
+    public function getMarca()
+    {
+        return $this->marca;
+    }
+
+    /**
+     * Set // @ORM\Column(name="MARCA", nullable=true, type="string")
+     *
+     * @return  self
+     */ 
+    public function setMarca($marca)
+    {
+        $this->marca = $marca;
+
+        return $this;
+    }
 }

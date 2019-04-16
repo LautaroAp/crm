@@ -96,10 +96,16 @@ class BienesManager {
         $bien->setPrecio_final_iva($data['precio_publico_iva']);
         $bien->setPrecio_final_iva_dto($data['precio_publico_iva_dto']);
         $bien->setTipo($data['tipo']);
-        $bien->setStock($data['stock']);
+        if (isset($data['stock'])){
+            $bien->setStock($data['stock']);
+        }
         $bien->setCodigo($data['codigo']);
-        $bien->setCodigo_barras($data['codigo_barras']);
-        // $bien->setMarca($data['marca']);
+        if (isset($data['codigo_barras'])){
+            $bien->setCodigo_barras($data['codigo_barras']);
+        }
+        if (isset($data['marca'])){
+            $bien->setMarca($data['marca']);
+        }
         //MONEDA
         return $bien;
     }

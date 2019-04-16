@@ -35,9 +35,6 @@ class DatoAdicionalController extends HuellaController {
     private function procesarAddAction() {
         // $datosAdicionales = $this->datoAdicionalManager->getDatosAdicionales();
         $id_persona = (int) $this->params()->fromRoute('id');
-
-        print_r($id_persona); die();
-
         $persona= $this->personaManager->getPersona($id_persona);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();

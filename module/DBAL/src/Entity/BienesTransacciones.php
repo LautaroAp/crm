@@ -195,6 +195,23 @@ class BienesTransacciones {
         return $this;
     }
 
+    public function getIvaPeso(){
+        if (!is_null($this->iva)){
+            $salida = $this->getIva()->getValor() * $this->getPrecioDto() / 100;
+            $salida = $salida * $this->getCantidad();
+            return $salida;
+        }
+        return "";
+    }
+
+    public function getPrecioDto(){
+        if (!is_null($this->getDescuento())){
+            $salida = $this->getDescuento() * $this->getBien()->getPrecio() /100;
+            return $this->getBien()->getPrecio() - $salida;
+        }
+        return $this->getBien()->getPrecio();
+    }
+    
     public function getJSON(){
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
@@ -202,11 +219,14 @@ class BienesTransacciones {
             $output .= '"Bien": ' . $this->getBien()->getJSON() .', ';
         }
         if (!is_null($this->getIva())){
-            $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
-        }
+            $output .= '"IVA (%)": ' . $this->getIva()->getJSON() .', ';
+        }        
+        $output .= '"IVA ($)": "' . $this->getIvaPeso() .'", ';
         $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
-        $output .= '"Descuento": "' . $this->getDescuento() .'", ';
-        $output .= '"Subtotal": "' . $this->getSubtotal() .'" ';
+        $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
+        $output .= '"Dto ($)": "' . $this->getPrecioDto() .'", ';
+
+        $output .= '"Totales": "' . $this->getSubtotal() .'" ';
         
         return  '{'.$output.'}' ;
     }
@@ -227,9 +247,9 @@ class BienesTransacciones {
         }
         $salida['Bien'] = $this->bien->getId();
         $salida['Cantidad'] = $this->cantidad;
-        $salida['Descuento'] = $this->descuento;
-        $salida['IVA'] = $this->iva->getId();
-        $salida['Subtotal'] = $this->subtotal;
+        $salida['Dto (%)'] = $this->descuento;
+        $salida['IVA (%)'] = $this->iva->getId();
+        $salida['Totales'] = $this->subtotal;
         return $salida;
     }
 

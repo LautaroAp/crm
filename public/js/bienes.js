@@ -7,7 +7,7 @@ function addItems(bienes) {
     table.setAttribute("class", "display");
 
     var thead = document.createElement("thead");
-    var col = ["Nombre", "Descripcion", "Precio", "Descuento", "Iva", "Subtotal"];
+    var col = ["Nombre", "Descripcion", "Precio", "Dto (%)", "Iva", "Totales"];
     var tr = thead.insertRow(-1);                   
     for (var i = 0; i < col.length; i++) {
         var th = document.createElement("th");      
@@ -33,8 +33,8 @@ function addItems(bienes) {
             tabCell.setAttribute("id", i);
             tabCell.setAttribute("class", "click");
             value = item[col[j]];
-            if ((col[j] == "Descuento") || (col[j] == "Iva" )){value = formatPercent(value);}
-            if ((col[j] == "Precio") || (col[j] == "Subtotal")){value = formatMoney(value);}
+            if ((col[j] == "Dto (%)") || (col[j] == "Iva" )){value = formatPercent(value);}
+            if ((col[j] == "Precio") || (col[j] == "Totales")){value = formatMoney(value);}
             tabCell.innerHTML = value;
         }
     }
@@ -67,7 +67,7 @@ function selectItem(e, pos) {
         item = pos;
         $("#item_precio").val(items[pos]["Precio"]);
         $("#cantidad").val(1);
-        $("#descuento").val(items[pos]["Descuento"]);
+        $("#descuento").val(items[pos]["Dto (%)"]);
         seleccionaIva(items[pos]["Iva"]);
         $("#subtotal").val(items[pos]["Precio"]);
         $("#idbien").val(items[pos]["Id"]);

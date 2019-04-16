@@ -161,15 +161,15 @@ class BienesTransaccionesManager {
         }
         $bienTransaccion->setBien($bien);
         $bienTransaccion->setCantidad($array['Cantidad']);
-        $bienTransaccion->setDescuento($array['Descuento']);
-        if (isset($array['IVA']['Id'])){
-            $iva = $this->ivaManager->getIva($array['IVA']['Id']);
+        $bienTransaccion->setDescuento($array['Dto (%)']);
+        if (isset($array['IVA (%)']['Id'])){
+            $iva = $this->ivaManager->getIva($array['IVA (%)']['Id']);
         }
         else{
-            $iva=$this->ivaManager->getIva($array['IVA']);
+            $iva=$this->ivaManager->getIva($array['IVA (%)']);
         }
         $bienTransaccion->setIva($iva);
-        $subtotal = $array['Subtotal'];
+        $subtotal = $array['Totales'];
         $bienTransaccion->setSubtotal($subtotal);
         return $bienTransaccion;
     }

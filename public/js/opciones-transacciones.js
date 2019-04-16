@@ -54,8 +54,8 @@ function completarFormasPago(formasPago, transaccion=null){
         if ("Forma de Pago" in transaccion == true){
         option.value = transaccion["Forma de Pago"]["Id"];
         option.text = transaccion["Forma de Pago"]["Nombre"];
-        recargo= transaccion["Forma de Pago"]["Recargo"];
-        bonificacion = transaccion["Forma de Pago"]["Bonificacion"];
+        recargo= parseFloat(transaccion["Recargo general"]).toFixed(2);
+        bonificacion = parseFloat(transaccion["Bonificacion general"]).toFixed(2);
         }
         else{
             option.value = "-1";
@@ -84,24 +84,37 @@ function completarFormasPago(formasPago, transaccion=null){
     }
 }
 
-
-
-function completarFormasEnvio(formasEnvio){
-    arrayFormasEnvio= formasEnvio;
+function completarFormasEnvio(formasEnvio, transaccion=null){
+    arrayFormasEnvio=formasEnvio;
     var myDiv = document.getElementById("formasEnvio");
 
     //Create and append select list
     var selectList = document.createElement("select");
     selectList.id = "forma_envio";
-    selectList.name = "forma_envio";
+    selectList.name="forma_envio";
+    // selectList.setAttribute("onchange", "changeBonificacionRecargo()");
     selectList.setAttribute("class", "form-control");
     myDiv.appendChild(selectList);
     console.log(formasEnvio);
     //Create and append the options
-
     var option = document.createElement("option");
-    option.value = "-1";
-    option.text = "Seleccionar Forma de Envío";
+    if (transaccion){
+        if ("Forma de Envio" in transaccion == true){
+        option.value = transaccion["Forma de Envio"]["Id"];
+        option.text = transaccion["Forma de Envio"]["Nombre"];
+        option.text = transaccion["Descripccion"]["Descripccion"];
+        valor = parseFloat(transaccion["Valor"]).toFixed(2);
+        }
+        else{
+            option.value = "-1";
+            option.text = "Seleccionar Forma de Envio";
+        }
+    }
+    else{
+        option.value = "-1";
+        option.text = "Seleccionar Forma de Envio";
+    }
+
     option.setAttribute("hidden","");
     selectList.appendChild(option);
 
@@ -118,6 +131,39 @@ function completarFormasEnvio(formasEnvio){
         selectList.appendChild(option);
     }
 }
+
+// function completarFormasEnvio(formasEnvio){
+//     arrayFormasEnvio= formasEnvio;
+//     var myDiv = document.getElementById("formasEnvio");
+
+//     //Create and append select list
+//     var selectList = document.createElement("select");
+//     selectList.id = "forma_envio";
+//     selectList.name = "forma_envio";
+//     selectList.setAttribute("class", "form-control");
+//     myDiv.appendChild(selectList);
+//     console.log(formasEnvio);
+//     //Create and append the options
+
+//     var option = document.createElement("option");
+//     option.value = "-1";
+//     option.text = "Seleccionar Forma de Envío";
+//     option.setAttribute("hidden","");
+//     selectList.appendChild(option);
+
+
+//     var option = document.createElement("option");
+//     option.value = "-1";
+//     option.text = "NO DEFINIDO";
+//     selectList.appendChild(option);
+
+//     for (var i = 0; i < formasEnvio.length; i++) {
+//         var option = document.createElement("option");
+//         option.value = formasEnvio[i]['Id'];
+//         option.text = formasEnvio[i]['Nombre'];
+//         selectList.appendChild(option);
+//     }
+// }
 
 function setBonificacionRecargo(){
     if (recargo!=null){
@@ -147,11 +193,21 @@ function changeBonificacionRecargo(){
 
     selectedId = $("#forma_pago option:selected").val();
     if (selectedId!="-1"){
-        selectedPos = getPosId(arrayFormasPago, selectedId);
-        recargo = arrayFormasPago[selectedPos]['Recargo'];
-        bonificacion = arrayFormasPago[selectedPos]['Bonificacion'];
-        $("#recargo_general").val(recargo);
-        $("#bonificacion_general").val(bonificacion);
+        var selectedPos = getPosId(arrayFormasPago, selectedId);
+        var recargo = arrayFormasPago[selectedPos]['Recargo'];
+        var bonificacion = arrayFormasPago[selectedPos]['Bonificacion'];
+        if(recargo){
+            $("#recargo_general").val(parseFloat(recargo).toFixed(2));
+        }
+        else {
+            $("#recargo_general").val("0.00");
+        }
+        if (bonificacion){
+            $("#bonificacion_general").val(parseFloat(bonificacion).toFixed(2));
+        }
+        else{
+            $("#bonificacion_general").val("0.00");
+        }
     }
     else{
         $("#recargo_general").val("0.00");
