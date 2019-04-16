@@ -26,7 +26,6 @@ class RemitoManagerFactory
         $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);  
         $ivaManager = $container->get(IvaManager::class); 
         $formaPagoManager = $container->get(FormaPagoManager::class); 
-        return new RemitoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager,
-        $formaPagoManager);
+        return new RemitoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager);
     }
 }

@@ -81,11 +81,18 @@ class BienesController extends HuellaController
             $_SESSION['TRANSACCIONES'][strtoupper($transaccion)] = "[]";
         }
 
+    
         $json = $_SESSION['TRANSACCIONES'][strtoupper($transaccion)];
         //le quito al json el cierre de corchete
         $json = substr($json, 0, -1);
+
         $newJson = $bienTransaccion->getJSON();
-        $json .= ", " . $newJson . "]";
+        if (strlen($json) >1){
+            $json .= ", " . $newJson . "]";
+        }
+        else{
+            $json .= $newJson . "]";
+        } 
         // $array = json_decode($json, true);
         // $btjson= $bienTransaccion->toArray();
         // print_r($array);
@@ -93,6 +100,8 @@ class BienesController extends HuellaController
         // $json = json_encode($array);
         // print_r($json);
         $_SESSION['TRANSACCIONES'][strtoupper($transaccion)]=$json;
+        // print_r( $_SESSION['TRANSACCIONES'][strtoupper($transaccion)]);
+        // die();
         $ruta= $transaccion."/".$accion;
         return $this->redirect()->toRoute($ruta,['id'=>$id_persona]);
     }

@@ -19,12 +19,14 @@ abstract class TransaccionController extends HuellaController {
     protected $personaManager;
     protected $monedaManager;
     protected $ivaManager;
+    protected $formaPagoManager;
 
-    public function __construct($manager, $personaManager, $monedaManager,$ivaManager) {
+    public function __construct($manager, $personaManager, $monedaManager,$ivaManager, $formaPagoManager) {
         $this->manager = $manager;
         $this->personaManager= $personaManager;
         $this->monedaManager = $monedaManager;
         $this->ivaManager= $ivaManager;
+        $this->formaPagoManager = $formaPagoManager;
     }
 
     public function indexAction(){
@@ -59,5 +61,24 @@ abstract class TransaccionController extends HuellaController {
         return $salida;
     }
 
+    public function getJsonMonedas()
+    {
+        $monedas = $this->monedaManager->getMonedas();
+        $json = $this->getJsonFromObjectList($monedas);
+        return $json;
+    }
+
+    public function getJsonFormasPago()
+    {
+        $formasPago = $this->formaPagoManager->getFormasPago();
+        $json = $this->getJsonFromObjectList($formasPago);
+        return $json;
+    }
+
+    public function getJsonIvas(){
+        $ivas = $this->ivaManager->getIvas();
+        $json = $this->getJsonFromObjectList($ivas);
+        return $json;
+    }
 
 }

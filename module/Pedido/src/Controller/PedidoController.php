@@ -21,7 +21,6 @@ class PedidoController extends TransaccionController
     private $bienesTransaccionesManager;
     private $bienesManager;
     private $items;
-    private $formaPagoManager;
     // private $itemsSeteados;
     public function __construct(
         $pedidoManager,
@@ -34,13 +33,12 @@ class PedidoController extends TransaccionController
         $formaPagoManager, 
         $ivaManager
     ) {
-        parent::__construct($pedidoManager, $personaManager,  $monedaManager,$ivaManager);
+        parent::__construct($pedidoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
         $this->pedidoManager = $pedidoManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->bienesManager = $bienesManager;
-        $this->formaPagoManager = $formaPagoManager;
         // $this->itemsSeteados="";
     }
 
@@ -229,12 +227,6 @@ class PedidoController extends TransaccionController
     }
 
     public function setItemsAction(){
-      
-        // if ($this->getRequest()->isPost()) {
-        //     $data = $this->params()->fromPost();
-        //     $_SESSION['TRANSACCIONES']['PEDIDO'] = $data['jsonitems'];
-        // }
-
         $items = $_POST['json'];
         $_SESSION['TRANSACCIONES']['PEDIDO'] = $items;
     }
@@ -253,25 +245,7 @@ class PedidoController extends TransaccionController
         return $view;
     }
 
-    public function getJsonMonedas()
-    {
-        $monedas = $this->monedaManager->getMonedas();
-        $json = $this->getJsonFromObjectList($monedas);
-        return $json;
-    }
 
-    public function getJsonFormasPago()
-    {
-        $formasPago = $this->formaPagoManager->getFormasPago();
-        $json = $this->getJsonFromObjectList($formasPago);
-        return $json;
-    }
-
-    public function getJsonIvas(){
-        $ivas = $this->ivaManager->getIvas();
-        $json = $this->getJsonFromObjectList($ivas);
-        return $json;
-    }
 
 
 }

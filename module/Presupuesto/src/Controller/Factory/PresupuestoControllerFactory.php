@@ -10,11 +10,15 @@ use Moneda\Service\MonedaManager;
 use Proveedor\Service\ProveedorManager;
 use Clientes\Service\ClientesManager;
 use BienesTransacciones\Service\BienesTransaccionesManager;
+use Bienes\Service\BienesManager;
+use FormaPago\Service\FormaPagoManager;
+use Iva\Service\IvaManager;
+
 
 // use Transaccion\Service\TransaccionManager;
 
 /**
- * Description of PedidoControllerFactory
+ * Description of PresupuestoControllerFactory
  *
  * @author SoftHuella
  */
@@ -24,17 +28,17 @@ class PresupuestoControllerFactory implements FactoryInterface {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
        
-        $pedidoManager = $container->get(PresupuestoManager::class);
+        $presupuestoManager = $container->get(PresupuestoManager::class);
         $monedaManager = $container->get(MonedaManager::class);    
         $personaManager = $container->get(PersonaManager::class);            
         $clientesManager = $container->get(ClientesManager::class);            
-        $proveedorManager = $container->get(ProveedorManager::class);            
+        $proveedorManager = $container->get(ProveedorManager::class);
         $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);
-        // $transaccionManager = $container->get(TransaccionManager::class);            
-
+        $bienesManager = $container->get(BienesManager::class);
+        $formaPagoManager = $container->get(FormaPagoManager::class);
+        $ivaManager = $container->get(IvaManager::class);
 
         // Instantiate the service and inject dependencies
-        return new PresupuestoController($pedidoManager, $monedaManager, $personaManager, $clientesManager, 
-        $proveedorManager, $bienesTransaccionesManager);
+        return new PresupuestoController($presupuestoManager, $monedaManager, $personaManager, $clientesManager, $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager, $ivaManager);
     }    
 }

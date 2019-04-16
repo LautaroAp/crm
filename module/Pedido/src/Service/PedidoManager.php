@@ -121,22 +121,6 @@ class PedidoManager extends TransaccionManager
         return $pedido;
     }
 
-
-    // /**
-    //  * This method adds a new pedido.
-    //  */
-    // public function addPedido($data, $items)
-    // {
-    //     //llamo a add de la transaccion, retorna una transaccion que se le setea al pedido
-    //     $transaccion = parent::add($data, $items);
-
-    //     $pedido = new Pedido();
-    //     $pedido = $this->setData($pedido, $data, $transaccion);
-
-    //     $this->entityManager->persist($pedido);
-    //     $this->entityManager->flush();
-    //     return $pedido;
-    // }
     public function getTotalPedidos()
     {
         $pedidos = $this->getPedidos();
@@ -150,8 +134,5 @@ class PedidoManager extends TransaccionManager
         $this->entityManager->flush();
     }
 
-    public function getFormasPago()
-    {
-        return $this->formaPagoManager->getFormasPago();
-    }
+   
 }

@@ -1,29 +1,61 @@
 <!-- scripts -->
 <script src="/js/bienes-transacciones.js"></script>
 <script src="/js/item.js"></script>
-<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript">
-    $(function() {
-        $('#datetimepicker1').datetimepicker({
-            format: 'DD/MM/YYYY'
-        });
-        $('#datetimepicker2').datetimepicker({
-            format: 'DD/MM/YYYY'
-        });
-        $('#datetimepicker3').datetimepicker({
-            format: 'DD/MM/YYYY'
-        });
-    });
+<script src="/js/opciones-transacciones.js"></script>
+
+<!-- Script -->
+<!-- PROBLEMAS CON EL DATETIMEPICKER -- JQUERY TIENE QUE SER MENOR A 2.2 -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
+<script language="javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js">
 </script>
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
+<!-- <link href="http://twitter.github.com/bootstrap/assets/css/docs.css" rel="stylesheet"> -->
+
+<script type="text/javascript">
+$(function() {
+    $('#datetimepicker1').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
+    $('#datetimepicker2').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
+    $('#datetimepicker3').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
+});
+</script>
+
+
 <!-- php -->
 <?php
 $date = date('d-m-Y');
-$url = "/clientes/listado/ficha/".$persona->getId();
+$url = "/clientes/listado/ficha/" . $persona->getId();
 $responsable = $this->identity();
-
 ?>
+
+<!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
+<script>
+var items = [];
+var json_items = <?= $json_bienes ?>;
+var json_items_codigos = <?= $json_bienes ?>;
+var json_items_nombres = <?= $json_bienes ?>;
+var output;
+var ivas = <?= $ivasJson ?>;
+
+setIvas(ivas);
+</script>
+
 <!-- Document -->
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
@@ -55,23 +87,30 @@ $responsable = $this->identity();
                         <div class="form-group col-md-2">
                             <label>Fecha de Venta</label>
                             <div class='input-group date' id='datetimepicker1'>
-                                <input type='text' class="form-control" id="fecha_transaccion" name="fecha_transaccion" value="<?= $date ?>" />
+                                <input type='text' class="form-control" name="fecha_transaccion" value="<?= $date ?>" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>Cliente</label>
-                            <input type="text" class="form-control" name="persona" id="persona" value="<?= $persona->getNombre() ?>" readonly>
+                            <input type="text" class="form-control" name="persona" id="persona"
+                                value="<?= $persona->getNombre() ?>" readonly>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
                             <label>Razón Social</label>
-                            <div class="form-inline">
-                                <input type="text" class="form-control" name="razon_social" id="razon_social" 
-                                value="<?php if (!is_null($tipoPersona)){echo ($tipoPersona->getRazon_social());} ?>" style="width: 60%; min-width: 300px;" readonly>
-                                <button type="button" class="btn btn-default">Consumidor Final</button>
-                            </div>
+
+                            <input type="text" class="form-control" name="razon_social" id="razon_social" value="<?php if (!is_null($tipoPersona)) {
+                                    echo ($tipoPersona->getRazon_social());
+                                } ?>" readonly>
+
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Condición de IVA</label>
+                            <input type="text" class="form-control" name="condicion_iva" id="condicion_iva" value="<?php if (!is_null($tipoPersona)) {
+                                    echo ($tipoPersona->getCondicion_iva());
+                                } ?>" readonly>
                         </div>
                     </div>
                     <!-- Datos de Transaccion -->
@@ -94,27 +133,110 @@ $responsable = $this->identity();
             </div>
         </div>
          <!-- Tabla de Items -->
-         <div class="row form-row">
+        <!-- Listado de Items -->
+        <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
-                    LISTADO DE ITEMS
+                    LISTADO DE PRODUCTOS Y SERVICIOS
                 </div>
-                <div class="panel panel-body" id="contenido_bienes">
-                    <script>
-                        var obj = <?php echo ($json); ?>;
-                        var idPersona = <?php echo($persona->getId()); ?>;
-                        addItems(obj, "presupuesto", idPersona);
-                    </script>
-                    <br>
-                    <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion'=>'presupuesto','accion'=>'agregar','id'=> $persona->getId()]); ?>" type="button">
-                        <span class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Agregar Item</span>
-                    </a>   
+
+                <!-- Form Autocompletado -->
+                <div class="container" style="padding-top:10px;">
+                    <form method="post" autocomplete="off">
+
+                        <input type="hidden" class="form-control" name="item_id" id="item_id">
+
+                        <div class="autocomplete form-group col-sm-2 margin-padding-xs">
+                            <label>Código</label>
+                            <input type="text" class="form-control" name="item_codigo" id="item_codigo"
+                                placeholder="Código">
+                        </div>
+                        <div class="autocomplete form-group col-sm-4 margin-padding-xs">
+                            <label>Producto Y Servicio</label>
+                            <input type="text" class="form-control" name="item_nombre" id="item_nombre"
+                                placeholder="Producto Y Servicio">
+                        </div>
+                        <div class="form-group col-sm-2 margin-padding-xs">
+                            <label>Cantidad</label>
+                            <input type="number" class="form-control" name="item_cantidad" id="item_cantidad" min="1"
+                                max="99" value="" placeholder="Cantidad" onkeypress="return justNumbers(event)">
+                        </div>
+                        <div class="form-group col-sm-2 margin-padding-xs">
+                            <label>Stock Disponible</label>
+                            <input type="text" class="form-control" name="item_stock" id="item_stock"
+                                placeholder="Stock Disponible">
+                        </div>
+                        <div class="form-group col-sm-1 margin-padding-xs">
+                            <label>&nbsp;</label>
+                            <button type="button" class="btn btn-default" onclick="addItemToTable()">
+                                <span class="glyphicon glyphicon-plus"></span> Agregar
+                            </button>
+                        </div>
+                </div>
+                <!-- Detalles de Producto Y Servicio -->
+                <div class="container" style="">
+                    <label>
+                        <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion"
+                            data-target="#collapseDetalles" aria-expanded="true" aria-controls="collapseDetalles"
+                            name="Detalles" id="Detalles">
+                        Mostrar Detalles
+                    </label>
+                    <div class="container row collapse" id="collapseDetalles">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Categoría</th>
+                                    <th>Precio</th>
+                                    <th>Dto (%)</th>
+                                    <th>Precio c/Dto.</th>
+                                    <th>% IVA</th>
+                                    <th>Precio c/IVA</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="item_descripcion"></td>
+                                    <td id="item_categoria"></td>
+                                    <td id="item_precio"></td>
+                                    <td id="item_descuento"></td>
+                                    <td id="item_descuento_precio"></td>
+                                    <td id="item_iva"></td>
+                                    <td id="item_iva_precio"></td>
+                                    <td id="item_subtotal"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <script src="/js/autocomplete.js"></script>
+                <input type="hidden" id="jsonitems" name="jsonitems" size="200">
+
+                <!-- Tabla de Items -->
+                <div class="panel panel-body" >
+                    <div class="panel panel-body" id="contenido_bienes">
+                        <div id="div_table_items">
+                            <script>
+                            var items = <?php echo ($json); ?>;
+                            var idPersona = <?php echo ($persona->getId()); ?>;
+                            // Crear Tabla
+                            addItems(items, "presupuesto", idPersona);
+                            </script>
+                        </div>
+                        <br>                     
+                    </div>
+                    <div class="container">
+                        <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion' => 'presupuesto', 'accion' => 'agregar', 'id' => $persona->getId()]); ?>"
+                        type="button">
+                        <span class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar Item</span> </a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Datos -->
-                <!-- Datos -->
+        <!-- Datos -->
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
@@ -123,62 +245,63 @@ $responsable = $this->identity();
                 <div class="panel-body">
                     <!-- Totales -->
                     <div class="row form-row">
+
                         <div class="form-group col-md-3">
-                            <label>Descuento Total ($)</label>
-                            <input type="text" class="form-control" name="descuento_total" id="descuento_total" value=0 readonly>
+                            <label>Venta Bruta ($)</label>
+                            <input type="text" class="form-control" name="venta_bruta" id="venta_bruta"
+                                value="Precio x Cantidad" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Descuento Global ($)</label>
+                            <input type="text" class="form-control" name="descuento_total" id="descuento_total" value="0" readonly>
                         </div>
                         <div class="form-group col-md-3">
                             <label>IVA Total ($)</label>
-                            <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
+                            <input type="text" class="form-control" name="iva_total" id="iva_total" value="0" readonly>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Subtotal</label>
-                            <input type="text" class="form-control" name="subtotal_general" id="subtotal_general" value=0 readonly>
+                            <label>Total ($)</label>
+                            <input type="text" class="form-control" name="subtotal_general" id="subtotal_general"
+                                value="0" readonly>
                         </div>
                     </div>
                     <!-- Forma de Pago + Fecha -->
                     <div class="row form-row">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3" id="monedas">
                             <label>Moneda</label>
-                            <select class="form-control" id="moneda" name="moneda">
-                                <option value="" hidden="">Seleccionar Moneda</option>
-                                <option value="-1">NO DEFINIDO</option>
-                                <?php foreach ($categorias as $categoria) : ?>
-                                <option value="<?= $categoria->getId(); ?>">
-                                    <?= $categoria->getNombre(); ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
+                            <script>
+                            var monedas = <?php echo ($monedasJson); ?>;
+                            completarMonedas(monedas);
+                            </script>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3" id="formasPago">
                             <label>Forma de Pago</label>
-                            <select class="form-control" id="forma_pago" name="forma_pago" onchange="seleccionaFormaPago()">
-                                <option value="-1" hidden="">Seleccionar Forma de Pago</option>
-                                <option value="1">Contado</option>
-                                <option value="2">Tarjeta</option>
-                                <?php foreach ($categorias as $categoria) : ?>
-                                <option value="<?= $categoria->getId(); ?>">
-                                    <?= $categoria->getNombre(); ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
+                            <script>
+                            var formasPago = <?php echo ($formasPagoJson); ?>;
+                            completarFormasPago(formasPago);
+                            </script>
                         </div>
-                        <div id="div_bonificacion" class="form-group col-md-3" hidden="">
+                        <div id="div_bonificacion" class="form-group col-md-2">
                             <label>% Bonificación</label>
-                            <input type="text" class="form-control" name="bonificacion_general" id="bonificacion_general" value="0.00"
-                            onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" >
+                            <input type="text" class="form-control" name="bonificacion_general"
+                                id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
+                                onkeyup="calcularSubcampos()">
                         </div>
-                        <div id="div_recargo" class="form-group col-md-3" hidden="">
+                        <div id="div_recargo" class="form-group col-md-2">
                             <label>% Recargo</label>
-                            <input type="text" class="form-control" name="recargo_general" id="recargo_general" value="0.00"
-                            onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" >
+                            <input type="text" class="form-control" name="recargo_general" id="recargo_general"
+                                value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()">
                         </div>
+                        <script>
+                        setBonificacionRecargo();
+                        </script>
                     </div>
                     <!-- Total -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Total</label>
-                            <input type="text" class="form-control" name="total_general" id="total_general" value=0 readonly>
+                            <label>Total General ($)</label>
+                            <input type="text" class="form-control" name="total_general" id="total_general" value="0"
+                                readonly>
                         </div>
                         <div class="form-group col-md-2">
                             <label>Fecha de Vencimiento</label>
@@ -191,7 +314,7 @@ $responsable = $this->identity();
                         </div>
                     </div>
                     <script>
-                        calcularSubcampos();
+                    calcularSubcampos();
                     </script>
                 </div>
             </div>
@@ -214,7 +337,6 @@ $responsable = $this->identity();
             </div>
         </div>
     </div>
-
 </form>
 
 <!-- Inicio: Panel Botones -->

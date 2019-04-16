@@ -277,7 +277,7 @@ function justNumbers(event) {
     return /\d/.test(String.fromCharCode(keynum));
 }
 
-/////////////////////////// TODO LO QUE SIGUE ES PARA EDITAR LA TABLA DINAMICAMENTE ////////////////////////////
+/////////////////////////// TODO LO QUE SIGUE ES PARA EDITAR LA TABLA DINAMICAMENTE ////////////////////
 var selectedAnt = null;
 var selectedNow = null;
 
@@ -376,7 +376,6 @@ function actualizarFila(tdId) {
     attribute = getAttribute(tdId);
     cant = document.getElementById(index + "_Cantidad").innerText;
     if (controlStock(attribute,cant)){
-        alert("cambia");
         precio = document.getElementById(index + "_Precio").innerText;
         precio = getNumberValue(precio);
         descuento = document.getElementById(index + "_Dto (%)").innerText;
