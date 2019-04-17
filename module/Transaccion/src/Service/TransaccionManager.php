@@ -25,18 +25,23 @@ class TransaccionManager {
     protected $personaManager;
     protected $bienesTransaccionesManager;
     protected $ivaManager;
-    protected $formaPagoManager;    
+    protected $formaPagoManager;
+    protected $formaEnvioManager;
+    
     /**
      * Constructs the service.
      */
     public function __construct($entityManager, $personaManager, $bienesTransaccionesManager, $ivaManager,
-    $formaPagoManager, $monedaManager) {
+    $formaPagoManager, $formaEnvioManager, $monedaManager) {
         $this->entityManager = $entityManager;
         $this->personaManager= $personaManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->ivaManager = $ivaManager;
         $this->formaPagoManager = $formaPagoManager;
+        $this->formaEnvioManager = $formaEnvioManager;
         $this->monedaManager = $monedaManager;
+
+ 
     }
 
     public function getTransacciones() {
@@ -111,7 +116,7 @@ class TransaccionManager {
         $transaccion->setPersona($data['persona']);
         $transaccion->setTipo($data['tipo']);
         if (isset($data['fecha_vencimiento'])){
-            $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
+            $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_vencimiento']);
             $transaccion->setFecha_vencimiento($fecha_vencimiento);
         }
         if (isset($data['bonificacion_general']) and $data['bonificacion_general']!=''){
@@ -130,6 +135,11 @@ class TransaccionManager {
         if(isset($data['forma_pago'])){
             $formaPago = $this->formaPagoManager->getFormaPagoId($data['forma_pago']);
             $transaccion->setFormaPago($formaPago);
+        }
+
+        if(isset($data['forma_envio'])){           
+            $formaEnvio = $this->formaEnvioManager->getFormaEnvioId($data['forma_envio']);
+            $transaccion->setFormaEnvio($formaEnvio);
         }
         return $transaccion;
     }

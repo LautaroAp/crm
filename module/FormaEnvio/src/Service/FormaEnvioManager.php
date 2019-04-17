@@ -74,11 +74,6 @@ class FormaEnvioManager {
         if (isset($data['descripcion'])){
             $formaenvio->setDescripcion($data['descripcion']);
         }
-        if (isset($data['valor']) and ($data['valor']!="")){
-            $formaenvio->setValor($data['valor']);
-        }
-        $formaenvio->setFecha_entrega($data['fecha_entrega']);
-        return $formaenvio;
     }
     
 

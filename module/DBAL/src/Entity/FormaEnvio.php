@@ -32,16 +32,6 @@ class FormaEnvio
      */
     protected $descripcion;
 
-    /**
-     * @ORM\Column(name="VALOR", nullable=true, type="decimal")
-     */
-    protected $valor;
-
-    /**
-     * @ORM\Column(name="FECHA_ENTREGA", type="integer")
-     */
-    protected $fecha_entrega;
-
 
     /**
      * Get the value of id
@@ -104,54 +94,13 @@ class FormaEnvio
     }
 
 
-    /**
-     * Get the value of valor
-     */ 
-    public function getValor()
-    {
-        return $this->valor;
-    }
-
-    /**
-     * Set the value of valor
-     *
-     * @return  self
-     */ 
-    public function setValor($valor)
-    {
-        $this->valor = $valor;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of fecha_entrega
-     */ 
-    public function getFecha_entrega()
-    {
-        return $this->fecha_entrega;
-    }
-
-    /**
-     * Set the value of fecha_entrega
-     *
-     * @return  self
-     */ 
-    public function setFecha_entrega($fecha_entrega)
-    {
-        $this->fecha_entrega = $fecha_entrega;
-
-        return $this;
-    }
 
     public function getJSON(){
 
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
         $output .= '"Nombre": "' . $this->getNombre() .'", ';
-        $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
-        $output .= '"Valor": "' . $this->getValor() .'", ';
-        $output .= '"Fecha de Entrega": "' . $this->getFecha_entrega() .'" ';
+        $output .= '"Descripcion": "' . $this->getDescripcion() .'" ';
 
         return  '{'.$output.'}' ;
     }

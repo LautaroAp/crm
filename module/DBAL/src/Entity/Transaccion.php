@@ -107,11 +107,17 @@ class Transaccion {
      */
     protected $ivaGeneral;
 
-       /**
+    /**
      * @ORM\ManyToOne(targetEntity="FormaPago")
      * @ORM\JoinColumn(name="ID_FORMA_DE_PAGO", referencedColumnName="ID")
      */
     protected $formaPago;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="FormaEnvio")
+     * @ORM\JoinColumn(name="ID_FORMA_DE_ENVIO", referencedColumnName="ID")
+     */
+    protected $formaEnvio;
     
     /**
      * Get the value of id
@@ -448,42 +454,7 @@ class Transaccion {
 
         return $this;
     }
-    public function getJSON(){
-
-        $output = "";
-        $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Numero": "' . $this->getNumero() .'", ';
-        $output .= '"Detalle": "' . $this->getDetalle() .'", ';
-        if (!(is_null($this->fecha_transaccion))){
-            $output .= '"Fecha Transaccion": "' . $this->getFecha_transaccion()->format('d/m/Y') .'", ';
-        }
-        if (!(is_null($this->fecha_vencimiento))){
-            $output .= '"Fecha Vencimiento": "' . $this->getFecha_vencimiento()->format('d/m/Y') .'", ';
-        }
-        $output .= '"Persona": "' . $this->getPersona()->getId() .'", ';
-        $output .= '"Responsable": "' . $this->getResponsable()->getId() .'", ';
-        $output .= '"Tipo Transaccion": "' . $this->getTipo() .'", ';
-        if (!(is_null($this->ivaGeneral))){
-            $output .= '"IVA General": ' . $this->getIvaGeneral()->getJSON() .', ';
-        }
-        if (!(is_null($this->formaPago))){
-            $output .= '"Forma de Pago": ' . $this->getFormaPago()->getJSON() .', ';
-        }
-        $output .= '"Recargo general": ' . $this->getRecargoGeneral() .', ';
-        $output .= '"Bonificacion general": ' . $this->getBonificacionGeneral() .', ';
-        if (!(is_null($this->moneda))){
-            $output .= '"Moneda": ' . $this->getMoneda()->getJSON() .', ';
-        }
-        $output .= '"Estado": "' . $this->getEstado() .'", ';
-        $output .= '"Monto": "' . $this->getMonto() .'", ';
-        $output .= '"Bonificacion General": "' . $this->getBonificacionGeneral() .'" ';
-
-
-
-        return  '{'.$output.'}' ;
-    }
-
-
+    
 
     /**
      * Get the value of recargoGeneral
@@ -507,5 +478,63 @@ class Transaccion {
         $this->recargoGeneral = $recargoGeneral;
 
         return $this;
+    }
+
+    /**
+     * Get the value of formaEnvio
+     */ 
+    public function getFormaEnvio()
+    {
+        return $this->formaEnvio;
+    }
+
+    /**
+     * Set the value of formaEnvio
+     *
+     * @return  self
+     */ 
+    public function setFormaEnvio($formaEnvio)
+    {
+        $this->formaEnvio = $formaEnvio;
+
+        return $this;
+    }
+
+    public function getJSON(){
+
+        $output = "";
+        $output .= '"Id": "' . $this->getId() .'", ';
+        $output .= '"Numero": "' . $this->getNumero() .'", ';
+        $output .= '"Detalle": "' . $this->getDetalle() .'", ';
+        if (!(is_null($this->fecha_transaccion))){
+            $output .= '"Fecha Transaccion": "' . $this->getFecha_transaccion()->format('d/m/Y') .'", ';
+        }
+        if (!(is_null($this->fecha_vencimiento))){
+            $output .= '"Fecha Vencimiento": "' . $this->getFecha_vencimiento()->format('d/m/Y') .'", ';
+        }
+        $output .= '"Persona": "' . $this->getPersona()->getId() .'", ';
+        $output .= '"Responsable": "' . $this->getResponsable()->getId() .'", ';
+        $output .= '"Tipo Transaccion": "' . $this->getTipo() .'", ';
+        if (!(is_null($this->ivaGeneral))){
+            $output .= '"IVA General": ' . $this->getIvaGeneral()->getJSON() .', ';
+        }
+        if (!(is_null($this->formaPago))){
+            $output .= '"Forma de Pago": ' . $this->getFormaPago()->getJSON() .', ';
+        }
+        if (!(is_null($this->formaEnvio))){
+            $output .= '"Forma de Envio": ' . $this->getFormaEnvio()->getJSON() .', ';
+        }
+        $output .= '"Recargo general": ' . $this->getRecargoGeneral() .', ';
+        $output .= '"Bonificacion general": ' . $this->getBonificacionGeneral() .', ';
+        if (!(is_null($this->moneda))){
+            $output .= '"Moneda": ' . $this->getMoneda()->getJSON() .', ';
+        }
+        $output .= '"Estado": "' . $this->getEstado() .'", ';
+        $output .= '"Monto": "' . $this->getMonto() .'", ';
+        $output .= '"Bonificacion General": "' . $this->getBonificacionGeneral() .'" ';
+
+
+
+        return  '{'.$output.'}' ;
     }
 }

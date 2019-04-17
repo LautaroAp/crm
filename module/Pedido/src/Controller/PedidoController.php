@@ -17,32 +17,16 @@ class PedidoController extends TransaccionController
     protected $pedidoManager;
     private $clientesManager;
     private $proveedorManager;
-    private $tipo;
     private $bienesTransaccionesManager;
     private $bienesManager;
-    private $items;
-    private $formaEnvioManager;
-    // private $itemsSeteados;
-    public function __construct(
-        $pedidoManager,
-        $monedaManager,
-        $personaManager,
-        $clientesManager,
-        $proveedorManager,
-        $bienesTransaccionesManager,
-        $bienesManager,
-        $formaPagoManager,
-        $formaEnvioManager,
-        $ivaManager
-    ) {
-        parent::__construct($pedidoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager);
+    
+    public function __construct($pedidoManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager,                                    $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager) {
+        parent::__construct($pedidoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
         $this->pedidoManager = $pedidoManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->bienesManager = $bienesManager;
-        $this->formaEnvioManager = $formaEnvioManager;
-        // $this->itemsSeteados="";
     }
 
     public function indexAction()
@@ -76,8 +60,6 @@ class PedidoController extends TransaccionController
 
         $json_bienes = substr($json_bienes, 0, -1);
         $json_bienes = '[' . $json_bienes . ']';
-        // var_dump(json_decode($json_bienes, true));
-        // die();
 
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
@@ -121,7 +103,6 @@ class PedidoController extends TransaccionController
             'formasEnvioJson' => $formasEnvioJson,
             'monedasJson' => $monedasJson,
             'ivasJson' => $ivasJson,
-            // 'formasEnvioJson'=>"[]",
             'transaccionJson'=>"[]",
             'presupuestosJson' => $jsonPrespuestos
 
@@ -151,10 +132,6 @@ class PedidoController extends TransaccionController
             $items = $pedido->getTransaccion()->getBienesTransacciones();
         }
        
-        // if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])) {
-        //     $_SESSION['TRANSACCIONES']['PEDIDO'] = json_encode($items);
-        // }
-
         $json = "";
         //SI HAY ITEMS CARGADOS EN LA SESION LOS TOMO DE AHI 
         if ((isset($_SESSION['TRANSACCIONES']['PEDIDO']))){
@@ -188,8 +165,6 @@ class PedidoController extends TransaccionController
         $json_bienes = substr($json_bienes, 0, -1);
         $json_bienes = '[' . $json_bienes . ']';
 
-        // var_dump(json_decode($json_bienes, true));
-        // die();  
         if ($persona->getTipo() == "CLIENTE") {
             $tipoPersona = $this->clientesManager->getClienteIdPersona($persona->getId());
         } elseif ($persona->getTipo() == "PROVEEDOR") {
@@ -197,6 +172,7 @@ class PedidoController extends TransaccionController
         }
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
+
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
             // $data['items'] = $_SESSION['TRANSACCIONES']['PEDIDO'];
@@ -214,16 +190,11 @@ class PedidoController extends TransaccionController
         $formasPagoJson = $this->getJsonFormasPago();
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
+        $transaccion = $pedido->getTransaccion();
         $transaccionJson = $pedido->getTransaccion()->getJSON();
         $presupuestos = $this->pedidoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
         $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
-        print_r($presupuestos);
-        die();
         $this->reiniciarParams();
-        // print_r("<br>");
-        // print_r($_SESSION['TRANSACCIONES']['PEDIDO']);
-        // print_r("<br>");
-        // print_r($json);
         return new ViewModel([
             // 'items' => $items,
             'persona' => $persona,
@@ -235,7 +206,8 @@ class PedidoController extends TransaccionController
             'formasPagoJson' => $formasPagoJson,
             'formasEnvioJson' => $formasEnvioJson,
             'monedasJson' => $monedasJson,
-            // 'formasEnvioJson'=>"[]",
+            'pedido' => $pedido,
+            'transaccion' => $transaccion,
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
             'presupuestosJson' => $jsonPrespuestos

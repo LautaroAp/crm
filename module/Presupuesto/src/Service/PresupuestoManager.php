@@ -26,9 +26,10 @@ class PresupuestoManager extends TransaccionManager{
         $personaManager,
         $bienesTransaccionManager,
         $ivaManager,
-        $formaPagoManager
+        $formaPagoManager,
+        $formaEnvioManager
     ) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $monedaManager);
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager);
         $this->entityManager = $entityManager;
         $this->tipo = "PRESUPUESTO";
     }

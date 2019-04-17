@@ -29,30 +29,12 @@
                             <div class="form-group col-md-3">
                                 <label>Forma de Envío</label>
                                 <input type="text" class="form-control form-margen" id="nombre" name="nombre"
-                                    placeholder="Forma de Pago" value="<?= $formaEnvio->getNombre() ?>" required>
+                                    placeholder="Ingregsar forma de envío" value="<?= $formaEnvio->getNombre() ?>" required>
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Descripción</label>
                                 <input type="text" class="form-control form-margen" name="descripcion"
-                                    placeholder="Descripcion" value="<?= $formaEnvio->getDescripcion() ?>" required>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>Precio ($)</label>
-                                <input type="text" class="form-control form-margen" name="valor"
-                                    id="bonificacion" placeholder="valor"
-                                    onkeypress="return justNumbers(event);" value="<?= $formaEnvio->getValor() ?>" required>
-                            </div>
-                            <!-- HACER LEVANTAR LA OPCION getFecha_engrega() (1 = SI) (0 = NO) -->
-                            <div class="form-group col-md-3">
-                                <label>Fecha de Entrega</label>
-                                <div>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="fecha_entrega" value="1" checked>Si
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="fecha_entrega" value="0" >No
-                                    </label>
-                                </div>
+                                    placeholder="Ingresar descripción" value="<?= $formaEnvio->getDescripcion() ?>" required>
                             </div>
                         </div>
                         <div class="row form-row">

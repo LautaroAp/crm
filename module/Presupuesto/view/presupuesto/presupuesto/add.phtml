@@ -235,8 +235,37 @@ setIvas(ivas);
             </div>
         </div>
 
-        <!-- Datos -->
-        <!-- Datos -->
+        <!-- Datos de Envio-->
+        <div class="row form-row">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading titulo-espaciado">
+                    DATOS DE ENVÍO
+                </div>
+                <div class="panel-body">
+                    <div class="row form-row">
+                        <div class="form-group col-md-3" id="formasEnvio">
+                            <label>Forma de Envío</label>
+                            <script>
+                                var formasEnvio = <?php echo ($formasEnvioJson); ?>;
+                                completarFormasEnvio(formasEnvio);
+                            </script>
+                        </div>
+                        <div class="form-group col-md-2" hidden>
+                            <label>Fecha de Entrega</label>
+                            <div class='input-group date' id='datetimepicker3'>
+                                <input type='text' class="form-control" name="fecha_entrega"
+                                    value="<?= $date ?>" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Datos Economicos -->
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
@@ -306,7 +335,7 @@ setIvas(ivas);
                         <div class="form-group col-md-2">
                             <label>Fecha de Vencimiento</label>
                             <div class='input-group date' id='datetimepicker2'>
-                                <input type='text' class="form-control" name="fecha_transaccion" value="<?= $date ?>" />
+                                <input type='text' class="form-control" name="fecha_vencimiento" value="<?= $date ?>" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>

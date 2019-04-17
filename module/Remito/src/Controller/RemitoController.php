@@ -25,18 +25,11 @@ class RemitoController extends TransaccionController{
     private $bienesTransaccionesManager;
     private $bienesManager;
     private $items;
-    public function __construct(
-        $remitoManager,
-        $monedaManager,
-        $personaManager,
-        $clientesManager,
-        $proveedorManager,
-        $bienesTransaccionesManager,
-        $bienesManager,
-        $formaPagoManager, 
-        $ivaManager
-    ) {
-        parent::__construct($remitoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager);
+
+
+    public function __construct($remitoManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager,
+                                $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager) {
+        parent::__construct($remitoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
         $this->remitoManager = $remitoManager;
@@ -73,8 +66,6 @@ class RemitoController extends TransaccionController{
 
         $json_bienes = substr($json_bienes, 0, -1);
         $json_bienes = '[' . $json_bienes . ']';
-        // var_dump(json_decode($json_bienes, true));
-        // die();
 
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
@@ -171,8 +162,6 @@ class RemitoController extends TransaccionController{
         $json_bienes = substr($json_bienes, 0, -1);
         $json_bienes = '[' . $json_bienes . ']';
 
-        // var_dump(json_decode($json_bienes, true));
-        // die();  
         if ($persona->getTipo() == "CLIENTE") {
             $tipoPersona = $this->clientesManager->getClienteIdPersona($persona->getId());
         } elseif ($persona->getTipo() == "PROVEEDOR") {

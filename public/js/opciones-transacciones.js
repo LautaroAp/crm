@@ -3,6 +3,7 @@ var arrayFormasPago;
 var arrayFormasEnvio;
 var recargo=null;
 var bonificacion = null;
+
 function completarMonedas(monedas){
     arrayMonedas=monedas;
     var myDiv = document.getElementById("monedas");
@@ -100,10 +101,8 @@ function completarFormasEnvio(formasEnvio, transaccion=null){
     var option = document.createElement("option");
     if (transaccion){
         if ("Forma de Envio" in transaccion == true){
-        option.value = transaccion["Forma de Envio"]["Id"];
-        option.text = transaccion["Forma de Envio"]["Nombre"];
-        option.text = transaccion["Descripccion"]["Descripccion"];
-        valor = parseFloat(transaccion["Valor"]).toFixed(2);
+            option.value = transaccion["Forma de Envio"]["Id"];
+            option.text = transaccion["Forma de Envio"]["Nombre"];
         }
         else{
             option.value = "-1";
@@ -131,39 +130,6 @@ function completarFormasEnvio(formasEnvio, transaccion=null){
         selectList.appendChild(option);
     }
 }
-
-// function completarFormasEnvio(formasEnvio){
-//     arrayFormasEnvio= formasEnvio;
-//     var myDiv = document.getElementById("formasEnvio");
-
-//     //Create and append select list
-//     var selectList = document.createElement("select");
-//     selectList.id = "forma_envio";
-//     selectList.name = "forma_envio";
-//     selectList.setAttribute("class", "form-control");
-//     myDiv.appendChild(selectList);
-//     console.log(formasEnvio);
-//     //Create and append the options
-
-//     var option = document.createElement("option");
-//     option.value = "-1";
-//     option.text = "Seleccionar Forma de Envío";
-//     option.setAttribute("hidden","");
-//     selectList.appendChild(option);
-
-
-//     var option = document.createElement("option");
-//     option.value = "-1";
-//     option.text = "NO DEFINIDO";
-//     selectList.appendChild(option);
-
-//     for (var i = 0; i < formasEnvio.length; i++) {
-//         var option = document.createElement("option");
-//         option.value = formasEnvio[i]['Id'];
-//         option.text = formasEnvio[i]['Nombre'];
-//         selectList.appendChild(option);
-//     }
-// }
 
 function setBonificacionRecargo(){
     if (recargo!=null){

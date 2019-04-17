@@ -38,6 +38,18 @@ $(function() {
 <!-- php -->
 <?php
 $date = date('d-m-Y');
+
+if(!is_null($transaccion->getFecha_transaccion())){
+    $fecha_transaccion = $transaccion->getFecha_transaccion()->format('d/m/Y');
+} else {
+    $fecha_transaccion = $date;
+}
+if(!is_null($transaccion->getFecha_vencimiento())){
+    $fecha_vencimiento = $transaccion->getFecha_vencimiento()->format('d/m/Y');
+} else {
+    $fecha_vencimiento = $date;
+}
+
 $url = "/clientes/listado/ficha/" . $persona->getId();
 $responsable = $this->identity();
 ?>
@@ -84,7 +96,7 @@ setIvas(ivas);
                         <div class="form-group col-md-2">
                             <label>Fecha de Venta</label>
                             <div class='input-group date' id='datetimepicker1'>
-                                <input type='text' class="form-control" name="fecha_transaccion" value="<?= $date ?>" />
+                                <input type='text' class="form-control" name="fecha_transaccion" value="<?= $fecha_transaccion ?>" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -229,7 +241,39 @@ setIvas(ivas);
                 </div>
             </div>
         </div>
-        <!-- Datos -->
+
+        <!-- Datos de Envio-->
+        <div class="row form-row">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading titulo-espaciado">
+                    DATOS DE ENVÍO
+                </div>
+                <div class="panel-body">
+                    <div class="row form-row">
+                        <div class="form-group col-md-3" id="formasEnvio">
+                            <label>Forma de Envío</label>
+                            <script>
+                                var formasEnvio = <?php echo ($formasEnvioJson); ?>;
+                                var transaccionJson = <?php echo ($transaccionJson); ?>;
+                                completarFormasEnvio(formasEnvio,transaccionJson);
+                            </script>
+                        </div>
+                        <div class="form-group col-md-2" hidden>
+                            <label>Fecha de Entrega</label>
+                            <div class='input-group date' id='datetimepicker3'>
+                                <input type='text' class="form-control" name="fecha_entrega"
+                                    value="<?= $date ?>" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Datos Economicos -->
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
@@ -272,7 +316,8 @@ setIvas(ivas);
                             <label>Forma de Pago</label>
                             <script>
                             var formasPago = <?php echo ($formasPagoJson); ?>;
-                            completarFormasPago(formasPago);
+                            var transaccionJson = <?php echo ($transaccionJson); ?>;
+                            completarFormasPago(formasPago, transaccionJson);
                             </script>
                         </div>
                         <div id="div_bonificacion" class="form-group col-md-2">
@@ -300,7 +345,7 @@ setIvas(ivas);
                         <div class="form-group col-md-2">
                             <label>Fecha de Vencimiento</label>
                             <div class='input-group date' id='datetimepicker2'>
-                                <input type='text' class="form-control" name="fecha_transaccion" value="<?= $date ?>" />
+                                <input type='text' class="form-control" name="fecha_vencimiento" value="<?= $fecha_vencimiento ?>" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>

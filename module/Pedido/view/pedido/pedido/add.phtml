@@ -241,28 +241,21 @@ var jsonPrespuestos = <?= $presupuestosJson ?>;
                 </div>
             </div>
         </div>
-                <!-- Datos -->
-                <div class="row form-row">
+
+        <!-- Datos de Envio-->
+        <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
                     DATOS DE ENVÍO
                 </div>
                 <div class="panel-body">
-
-
                     <div class="row form-row">
                         <div class="form-group col-md-3" id="formasEnvio">
                             <label>Forma de Envío</label>
                             <script>
-                            var formasEnvio = <?php echo ($formasEnvioJson); ?>;
-                            completarFormasEnvio(formasEnvio);
+                                var formasEnvio = <?php echo ($formasEnvioJson); ?>;
+                                completarFormasEnvio(formasEnvio);
                             </script>
-                        </div>
-                        <div id="div_forma_envio_valor" class="form-group col-md-2">
-                            <label>Precio ($)</label>
-                            <input type="text" class="form-control" name="forma_envio_valor"
-                                id="forma_envio_valor" value="0.00" onkeypress="return justNumbers(event);"
-                                onkeyup="calcularSubcampos()">
                         </div>
                         <div class="form-group col-md-2">
                             <label>Fecha de Entrega</label>
@@ -278,7 +271,8 @@ var jsonPrespuestos = <?= $presupuestosJson ?>;
                 </div>
             </div>
         </div>
-        <!-- Datos -->
+
+        <!-- Datos Economicos -->
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
@@ -287,7 +281,6 @@ var jsonPrespuestos = <?= $presupuestosJson ?>;
                 <div class="panel-body">
                     <!-- Totales -->
                     <div class="row form-row">
-
                         <div class="form-group col-md-3">
                             <label>Venta Bruta ($)</label>
                             <input type="text" class="form-control" name="venta_bruta" id="venta_bruta"
@@ -348,7 +341,7 @@ var jsonPrespuestos = <?= $presupuestosJson ?>;
                         <div class="form-group col-md-2">
                             <label>Fecha de Vencimiento</label>
                             <div class='input-group date' id='datetimepicker2'>
-                                <input type='text' class="form-control" name="fecha_transaccion" value="<?= $date ?>" />
+                                <input type='text' class="form-control" name="fecha_vencimiento" value="<?= $date ?>" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>

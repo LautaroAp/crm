@@ -20,13 +20,15 @@ abstract class TransaccionController extends HuellaController {
     protected $monedaManager;
     protected $ivaManager;
     protected $formaPagoManager;
+    protected $formaEnvioManager;
 
-    public function __construct($manager, $personaManager, $monedaManager,$ivaManager, $formaPagoManager) {
+    public function __construct($manager, $personaManager, $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager) {
         $this->manager = $manager;
         $this->personaManager= $personaManager;
         $this->monedaManager = $monedaManager;
         $this->ivaManager= $ivaManager;
         $this->formaPagoManager = $formaPagoManager;
+        $this->formaEnvioManager = $formaEnvioManager;
     }
 
     public function indexAction(){
