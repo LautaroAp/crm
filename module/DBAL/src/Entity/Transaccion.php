@@ -452,7 +452,7 @@ class Transaccion {
 
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Numero": "' . $this->getNombre() .'", ';
+        $output .= '"Numero": "' . $this->getNumero() .'", ';
         $output .= '"Detalle": "' . $this->getDetalle() .'", ';
         if (!(is_null($this->fecha_transaccion))){
             $output .= '"Fecha Transaccion": "' . $this->getFecha_transaccion()->format('d/m/Y') .'", ';

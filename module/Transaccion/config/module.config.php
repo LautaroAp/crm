@@ -6,10 +6,27 @@
  */
 
 namespace Transaccion;
+use Zend\Router\Http\Literal;
+use Zend\Router\Http\Segment;
 
 return [
     'router' => [
-        'routes' =>[],
+        'routes' =>[
+            'ajax' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/ajax[/:action[/:id[/:id2]]]',
+                    'defaults' => [
+                        'controller' => \Transaccion\Controller\TransaccionController::class,                             
+                    ],
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
+                        'id2' => '[a-zA-Z0-9_-]*',
+                    ],
+                ],
+            ],
+        ],
     ],
      'view_manager' => array(
          'template_path_stack' => array(

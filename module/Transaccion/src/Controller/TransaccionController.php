@@ -81,4 +81,14 @@ abstract class TransaccionController extends HuellaController {
         return $json;
     }
 
+    public function getTransaccionesAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $idPersona = $this->params()->fromRoute('id');
+        $tipoTransaccion = $this->params()->fromRoute('id2');
+        $transacciones = $this->transaccionManager->getTransaccionesPersonaTipo($idPersona, $tipoTransaccion);
+        $view = new ViewModel(['transacciones' => $transacciones]);
+        $view->setTerminal(true);
+        return $view;
+    }
+
 }

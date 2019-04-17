@@ -106,6 +106,8 @@ class PedidoController extends TransaccionController
         $formasPagoJson = $this->getJsonFormasPago();
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
+        $presupuestos = $this->pedidoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+        $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
         $this->reiniciarParams();
         return new ViewModel([
             // 'items' => $items,
@@ -121,6 +123,8 @@ class PedidoController extends TransaccionController
             'ivasJson' => $ivasJson,
             // 'formasEnvioJson'=>"[]",
             'transaccionJson'=>"[]",
+            'presupuestosJson' => $jsonPrespuestos
+
         ]);
     }
 
@@ -211,6 +215,10 @@ class PedidoController extends TransaccionController
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
         $transaccionJson = $pedido->getTransaccion()->getJSON();
+        $presupuestos = $this->pedidoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+        $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
+        print_r($presupuestos);
+        die();
         $this->reiniciarParams();
         // print_r("<br>");
         // print_r($_SESSION['TRANSACCIONES']['PEDIDO']);
@@ -230,6 +238,7 @@ class PedidoController extends TransaccionController
             // 'formasEnvioJson'=>"[]",
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
+            'presupuestosJson' => $jsonPrespuestos
         ]);
     }
 

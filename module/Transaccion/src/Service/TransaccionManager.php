@@ -190,4 +190,8 @@ class TransaccionManager {
         $entityManager->flush();
     }
 
+    public function getTransaccionesPersonaTipo($idPersona,$tipoTransaccion){
+        $transacciones = $this->entityManager->getRepository(Transaccion::class)->findBy(['persona'=>$idPersona, 'tipo_trasaccion'=>strtoupper($tipoTransaccion)]);
+        return $transacciones;
+    }
 }

@@ -33,7 +33,6 @@ function addItems(bienesTransacciones, tipo, id) {
     parentDiv.innerHTML = "";
     parentDiv.appendChild(divContainer);
 
-
     table = document.createElement("table");
     table.setAttribute("id", "table_bienes");
     table.setAttribute("class", "display");
