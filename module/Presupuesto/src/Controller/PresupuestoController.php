@@ -198,8 +198,6 @@ class PresupuestoController extends TransaccionController{
         $transaccion = $presupuesto->getTransaccion();
         $transaccionJson = $presupuesto->getTransaccion()->getJSON();
 
-        var_dump(json_decode($transaccionJson), true);
-
         $this->reiniciarParams();
         return new ViewModel([
             // 'items' => $items,
