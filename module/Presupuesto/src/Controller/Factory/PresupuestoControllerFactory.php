@@ -12,6 +12,7 @@ use Clientes\Service\ClientesManager;
 use BienesTransacciones\Service\BienesTransaccionesManager;
 use Bienes\Service\BienesManager;
 use FormaPago\Service\FormaPagoManager;
+use FormaEnvio\Service\FormaEnvioManager;
 use Iva\Service\IvaManager;
 
 
@@ -36,9 +37,10 @@ class PresupuestoControllerFactory implements FactoryInterface {
         $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);
         $bienesManager = $container->get(BienesManager::class);
         $formaPagoManager = $container->get(FormaPagoManager::class);
+        $formaEnvioManager = $container->get(FormaEnvioManager::class);
         $ivaManager = $container->get(IvaManager::class);
 
         // Instantiate the service and inject dependencies
-        return new PresupuestoController($presupuestoManager, $monedaManager, $personaManager, $clientesManager, $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager, $ivaManager);
+        return new PresupuestoController($presupuestoManager, $monedaManager, $personaManager, $clientesManager, $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager);
     }    
 }

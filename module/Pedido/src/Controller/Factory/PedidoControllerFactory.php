@@ -45,6 +45,6 @@ class PedidoControllerFactory implements FactoryInterface {
 
         // Instantiate the service and inject dependencies
         return new PedidoController($pedidoManager, $monedaManager, $personaManager, $clientesManager, 
-        $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager,$formaEnvioManager, $ivaManager);
+        $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager);
     }    
 }

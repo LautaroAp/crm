@@ -17,32 +17,16 @@ class PedidoController extends TransaccionController
     protected $pedidoManager;
     private $clientesManager;
     private $proveedorManager;
-    private $tipo;
     private $bienesTransaccionesManager;
     private $bienesManager;
-    private $items;
-    private $formaEnvioManager;
-    // private $itemsSeteados;
-    public function __construct(
-        $pedidoManager,
-        $monedaManager,
-        $personaManager,
-        $clientesManager,
-        $proveedorManager,
-        $bienesTransaccionesManager,
-        $bienesManager,
-        $formaPagoManager,
-        $formaEnvioManager,
-        $ivaManager
-    ) {
-        parent::__construct($pedidoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager);
+    public function __construct($pedidoManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager,
+                                $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager) {
+        parent::__construct($pedidoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
         $this->pedidoManager = $pedidoManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->bienesManager = $bienesManager;
-        $this->formaEnvioManager = $formaEnvioManager;
-        // $this->itemsSeteados="";
     }
 
     public function indexAction()
@@ -117,7 +101,6 @@ class PedidoController extends TransaccionController
             'formasEnvioJson' => $formasEnvioJson,
             'monedasJson' => $monedasJson,
             'ivasJson' => $ivasJson,
-            // 'formasEnvioJson'=>"[]",
             'transaccionJson'=>"[]",
         ]);
     }
@@ -203,6 +186,7 @@ class PedidoController extends TransaccionController
         $formasPagoJson = $this->getJsonFormasPago();
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
+        $transaccion = $pedido->getTransaccion();
         $transaccionJson = $pedido->getTransaccion()->getJSON();
 
         // var_dump(json_decode($transaccionJson, true));
@@ -213,14 +197,14 @@ class PedidoController extends TransaccionController
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,
             'numTransacciones' => $numTransacciones,
-            'pedidoJson' => $pedidoJson,
             'numPedido' => $numPedido,
             'json' => $json,
             'json_bienes' => $json_bienes,
             'formasPagoJson' => $formasPagoJson,
             'formasEnvioJson' => $formasEnvioJson,
             'monedasJson' => $monedasJson,
-            // 'formasEnvioJson'=>"[]",
+            'pedido' => $pedido,
+            'transaccion' => $transaccion,
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
         ]);

@@ -116,7 +116,7 @@ class TransaccionManager {
         $transaccion->setPersona($data['persona']);
         $transaccion->setTipo($data['tipo']);
         if (isset($data['fecha_vencimiento'])){
-            $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
+            $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_vencimiento']);
             $transaccion->setFecha_vencimiento($fecha_vencimiento);
         }
         if (isset($data['bonificacion_general']) and $data['bonificacion_general']!=''){
@@ -136,6 +136,7 @@ class TransaccionManager {
             $formaPago = $this->formaPagoManager->getFormaPagoId($data['forma_pago']);
             $transaccion->setFormaPago($formaPago);
         }
+
         if(isset($data['forma_envio'])){           
             $formaEnvio = $this->formaEnvioManager->getFormaEnvioId($data['forma_envio']);
             $transaccion->setFormaEnvio($formaEnvio);
