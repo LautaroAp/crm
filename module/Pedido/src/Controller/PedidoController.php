@@ -76,8 +76,6 @@ class PedidoController extends TransaccionController
 
         $json_bienes = substr($json_bienes, 0, -1);
         $json_bienes = '[' . $json_bienes . ']';
-        // var_dump(json_decode($json_bienes, true));
-        // die();
 
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
@@ -147,10 +145,6 @@ class PedidoController extends TransaccionController
             $items = $pedido->getTransaccion()->getBienesTransacciones();
         }
        
-        // if (!isset($_SESSION['TRANSACCIONES']['PEDIDO'])) {
-        //     $_SESSION['TRANSACCIONES']['PEDIDO'] = json_encode($items);
-        // }
-
         $json = "";
         //SI HAY ITEMS CARGADOS EN LA SESION LOS TOMO DE AHI 
         if ((isset($_SESSION['TRANSACCIONES']['PEDIDO']))){
@@ -184,8 +178,6 @@ class PedidoController extends TransaccionController
         $json_bienes = substr($json_bienes, 0, -1);
         $json_bienes = '[' . $json_bienes . ']';
 
-        // var_dump(json_decode($json_bienes, true));
-        // die();  
         if ($persona->getTipo() == "CLIENTE") {
             $tipoPersona = $this->clientesManager->getClienteIdPersona($persona->getId());
         } elseif ($persona->getTipo() == "PROVEEDOR") {
@@ -193,6 +185,7 @@ class PedidoController extends TransaccionController
         }
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
+
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
             // $data['items'] = $_SESSION['TRANSACCIONES']['PEDIDO'];
@@ -211,16 +204,16 @@ class PedidoController extends TransaccionController
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
         $transaccionJson = $pedido->getTransaccion()->getJSON();
+
+        // var_dump(json_decode($transaccionJson, true));
+
         $this->reiniciarParams();
-        // print_r("<br>");
-        // print_r($_SESSION['TRANSACCIONES']['PEDIDO']);
-        // print_r("<br>");
-        // print_r($json);
         return new ViewModel([
             // 'items' => $items,
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,
             'numTransacciones' => $numTransacciones,
+            'pedidoJson' => $pedidoJson,
             'numPedido' => $numPedido,
             'json' => $json,
             'json_bienes' => $json_bienes,

@@ -204,8 +204,6 @@ class ClientesController extends HuellaController
         $limite = $this->getAnterior();
         $this->prepararBreadcrumbs("Ficha Cliente", "/ficha/".$id_persona, $limite);
         $data = $this->clientesManager->getDataFicha($id_persona);
-
-        // print_r($data['datos_adicionales']); die();
         
         $_SESSION['TIPOEVENTO']['TIPO']=$persona->getTipo();
         $volver = $this->getUltimaUrl();

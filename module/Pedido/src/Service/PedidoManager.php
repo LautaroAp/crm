@@ -38,9 +38,10 @@ class PedidoManager extends TransaccionManager
         $personaManager,
         $bienesTransaccionManager,
         $ivaManager,
-        $formaPagoManager
+        $formaPagoManager,
+        $formaEnvioManager
     ) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $monedaManager);
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager);
         $this->entityManager = $entityManager;
         $this->tipo = "PEDIDO";
     }
@@ -86,9 +87,10 @@ class PedidoManager extends TransaccionManager
             $pedido->setFecha_entrega($fecha_entrega);
         }
 
-        if (isset($data['forma_envio'])) {
-            $pedido->setForma_envio($data['forma_envio']);
-        }
+        // if (isset($data['forma_envio'])) {
+        //     $pedido->setForma_envio($data['forma_envio']);
+        // }
+
         if (isset($data['ingresos_brutos'])) {
             $pedido->setIngresos_brutos($data['ingresos_brutos']);
         }

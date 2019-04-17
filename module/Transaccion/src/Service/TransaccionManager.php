@@ -25,18 +25,23 @@ class TransaccionManager {
     protected $personaManager;
     protected $bienesTransaccionesManager;
     protected $ivaManager;
-    protected $formaPagoManager;    
+    protected $formaPagoManager;
+    protected $formaEnvioManager;
+    
     /**
      * Constructs the service.
      */
     public function __construct($entityManager, $personaManager, $bienesTransaccionesManager, $ivaManager,
-    $formaPagoManager, $monedaManager) {
+    $formaPagoManager, $formaEnvioManager, $monedaManager) {
         $this->entityManager = $entityManager;
         $this->personaManager= $personaManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->ivaManager = $ivaManager;
         $this->formaPagoManager = $formaPagoManager;
+        $this->formaEnvioManager = $formaEnvioManager;
         $this->monedaManager = $monedaManager;
+
+ 
     }
 
     public function getTransacciones() {
@@ -130,6 +135,10 @@ class TransaccionManager {
         if(isset($data['forma_pago'])){
             $formaPago = $this->formaPagoManager->getFormaPagoId($data['forma_pago']);
             $transaccion->setFormaPago($formaPago);
+        }
+        if(isset($data['forma_envio'])){           
+            $formaEnvio = $this->formaEnvioManager->getFormaEnvioId($data['forma_envio']);
+            $transaccion->setFormaEnvio($formaEnvio);
         }
         return $transaccion;
     }

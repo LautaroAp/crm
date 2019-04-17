@@ -469,11 +469,6 @@ class ClientesManager {
     }
 
     public function getTransacciones($idPersona){
-        // $persona =$this->getPersona($idPersona);
-        // $transacciones = $persona->getTransacciones();
-        // var_dump($transacciones);
-        // die();
-        // return $persona->getTransacciones();
         return $this->transaccionManager->getTransaccionesPersona($idPersona);
     }
    

@@ -7,6 +7,7 @@ use Persona\Service\PersonaManager;
 use BienesTransacciones\Service\BienesTransaccionesManager;
 use Iva\Service\IvaManager;
 use FormaPago\Service\FormaPagoManager;
+use FormaEnvio\Service\FormaEnvioManager;
 use Moneda\Service\MonedaManager;
 
 /**
@@ -25,8 +26,11 @@ class TransaccionManagerFactory
         $bienesTransaccionesManager = $container->get(BienesTransaccionesManager::class);   
         $ivaManager= $container->get(IvaManager::class);
         $formaPagoManager= $container->get(FormaPagoManager::class);
+        $formaEnvioManager= $container->get(FormaEnvioManager::class);
         $monedaManager= $container->get(MonedaManager::class);
+
+
         return new TransaccionManager($entityManager,$personaManager, $bienesTransaccionesManager, $ivaManager,
-        $formaPagoManager, $monedaManager);
+        $formaPagoManager, $formaEnvioManager, $monedaManager);
     }
 }
