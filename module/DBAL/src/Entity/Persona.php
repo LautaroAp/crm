@@ -190,4 +190,12 @@ class Persona {
         return $this->datos_adicionales;
     }
 
+    public function getJson(){
+        $output = "";
+        $output .= '"value": "' . $this->getId() .'", ';        
+        $output .= '"label": "' . $this->getNombre() .'" ';
+        
+        return  '{'.$output.'}' ;
+    }
+
 }

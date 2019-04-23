@@ -47,20 +47,24 @@ $id_persona = $persona->getId();
                     <div class="ficha-cliente-p img-centrar ">
                         <div>
                             <figure>
-                                <a href="<?= $this->url('clientes/editar', ['tipo' => 'cliente', 'id' => (int)$persona->getId()]) ?>" role="button">
-                                    <img src="<?= $this->basePath('img/crm/perfil.png') ?>" class="img-circle img-responsive img-texto-derecha zoom" width="150px" height="150px" style="margin-left:0px;">
+                                <a href="<?= $this->url('clientes/editar', ['tipo' => 'cliente', 'id' => (int)$persona->getId()]) ?>"
+                                    role="button">
+                                    <img src="<?= $this->basePath('img/crm/perfil.png') ?>"
+                                        class="img-circle img-responsive img-texto-derecha zoom" width="150px"
+                                        height="150px" style="margin-left:0px;">
                                 </a>
                                 <figcaption class="text-center"></figcaption>
                             </figure><br>
                         </div>
                         <div class="ficha-cliente-label padding-md">
                             <h4><?= $persona->getNombre(); ?></h4>
-                            <p><i><?php echo ($cliente->getNombreCategoriaCliente()); ?></i></p>
+                            <p><i><?php echo ("Nro. Cliente: " . str_pad($persona->getId(), 4, "0", STR_PAD_LEFT) . " - " . $cliente->getNombreCategoriaCliente()); ?></i></p>
                             <p><span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;
                                 <?php echo ($persona->getTelefono()); ?></p>
                             <p><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;
                                 <?php echo ($persona->getEmail()); ?></p>
-                            <p><span><img src="<?= $this->basePath('img/crm/skype.png') ?>" width="15" height="15"></span>
+                            <p><span><img src="<?= $this->basePath('img/crm/skype.png') ?>" width="15"
+                                        height="15"></span>
                                 &nbsp;<?php echo ($cliente->getSkype()); ?>
                             </p>
                         </div>
@@ -74,7 +78,8 @@ $id_persona = $persona->getId();
                             <p><label>Tipo de Negocio:</label> <?php echo ($cliente->getActividad()); ?></p>
                             <p><label>Último Contacto:</label> <?php if (!is_null($cliente->getFechaUltimoContacto())) {
                                                                     echo ($cliente->getFechaUltimoContacto()->format('d/m/Y'));
-                                                                } ?></p>
+                                                                } ?>
+                            </p>
                         </div>
 
                         <div class="col-sm-6 ficha-cliente-p">
@@ -86,23 +91,17 @@ $id_persona = $persona->getId();
                                     }
                                     ?>
                                 </label></p>
-                            <p><label>Fecha de Compra:</label> <?php
-                                                                if (!is_null($cliente->getFechaCompra())) {
+                            <p><label>Fecha de Compra:</label> <?php if (!is_null($cliente->getFechaCompra())) {
                                                                     echo ($cliente->getFechaCompra()->format('d/m/Y'));
-                                                                }
-                                                                ?>
+                                                                } ?>
                             </p>
-                            <p><label>Último Pago:</label> <?php
-                                                            if (!is_null($cliente->getFechaUltimoPago())) {
+                            <p><label>Último Pago:</label> <?php if (!is_null($cliente->getFechaUltimoPago())) {
                                                                 echo ($cliente->getFechaUltimoPago()->format('d/m/Y'));
-                                                            }
-                                                            ?>
+                                                            } ?>
                             </p>
-                            <p><label>Fecha Vencimiento:</label> <?php
-                                                                    if (!is_null($cliente->getVencimiento())) {
+                            <p><label>Fecha Vencimiento:</label> <?php if (!is_null($cliente->getVencimiento())) {
                                                                         echo ($cliente->getVencimiento()->format('d/m/Y'));
-                                                                    }
-                                                                    ?>
+                                                                    } ?>
                             </p>
 
                         </div>
@@ -137,12 +136,14 @@ $id_persona = $persona->getId();
     </div>
 
     <!-- Datos Adicionales -->
-    <div class="container row" hidden>
+    <div class="container row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 DATOS ADICIONALES
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseDatosAdicionales" aria-expanded="true" aria-controls="collapseDatosAdicionales">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="d_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseDatosAdicionales" aria-expanded="true"
+                    aria-controls="collapseDatosAdicionales">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse"
+                            id="d_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
                 </a>
             </div>
 
@@ -157,54 +158,66 @@ $id_persona = $persona->getId();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($datos_adicionales as $dato_adicional): ?>
-                                <tr>
-                                    <td><?php echo ($dato_adicional->getDato_adicional()); ?></td>
-                                    <td><?php echo ($dato_adicional->getDescripcion()); ?></td>
-                                    <td>
-                                        <div class="pull-right">
-                                            <a class="btn btn-default btn-sm" 
-                                                href="<?= $this->url('datoadicional', ['action' => 'edit', 'id' => $dato_adicional->getId()]); ?>">
-                                                <span class="glyphicon glyphicon-pencil"></span>
-                                            </a>
-                                            <button name="<?= $dato_adicional->getId() ?>" id="<?= $dato_adicional->getId() ?>" type="button" 
-                                                class="btn btn-default btn-sm" data-toggle="modal" 
-                                                data-target="#datoAdicionalModal<?= $dato_adicional->getId() ?>">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <!-- Modal Usuario Adicional -->
-                                    <div id="datoAdicionalModal<?= $dato_adicional->getId() ?>" class="modal fade" role="dialog">
-                                        <div class="modal-dialog">
-                                            <!-- Modal content-->
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Eliminar usuario</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>
-                                                        ¿Está seguro que desea eliminar el usuario:
-                                                        "<?= $this->escapeHtml($dato_adicional->getDato_adicional()) ?>"
-                                                        de forma permanente?
-                                                    </p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="<?= $this->url('datoadicional/borrar', ['action' => 'delete', 'id' => $dato_adicional->getId()]); ?>" type="button">
-                                                        <span class="btn btn-default">Aceptar</span></a>
+                            <?php foreach ($datos_adicionales as $dato_adicional) : ?>
+                            <tr>
+                                <!-- Dato -->
+                                <td><?php echo ($dato_adicional->getDato_adicional()); ?></td>
+                                <!-- Referencia -->
+                                <td>
+                                <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $dato_adicional->getId_referencia_persona()]); ?>">link</a>
+                                </td>
+                                <!-- Descripcion -->
+                                <td><?php echo ($dato_adicional->getDescripcion()); ?></td>
+                                <td>
+                                    <div class="pull-right">
+                                        <a class="btn btn-default btn-sm"
+                                            href="<?= $this->url('datoadicional/editar', ['action' => 'edit', 'id' => $dato_adicional->getId()]); ?>">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </a>
+                                        <button name="<?= $dato_adicional->getId() ?>"
+                                            id="<?= $dato_adicional->getId() ?>" type="button"
+                                            class="btn btn-default btn-sm" data-toggle="modal"
+                                            data-target="#datoAdicionalModal<?= $dato_adicional->getId() ?>">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </div>
+                                </td>
+                                <!-- Modal Dato Adicional -->
+                                <div id="datoAdicionalModal<?= $dato_adicional->getId() ?>" class="modal fade"
+                                    role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close"
+                                                    data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Eliminar dato adicional</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    ¿Está seguro que desea eliminar el dato adicional:
+                                                    "<?= $this->escapeHtml($dato_adicional->getDato_adicional()) ?>"
+                                                    de forma permanente?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= $this->url('datoadicional/borrar', ['action' => 'delete', 'id' => $dato_adicional->getId()]); ?>"
+                                                    type="button">
+                                                    <span class="btn btn-default">Aceptar</span></a>
 
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                </div>
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">Cancelar</button>
                                             </div>
                                         </div>
                                     </div>
-                                </tr>
-                            <?php endforeach;?>
+                                </div>
+                            </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                     <br>
-                    <a href="<?= $this->url('datoadicional/agregar', ['action' => 'add', 'id' => $persona->getId()]); ?>" type="button">
+                    <a href="<?= $this->url('datoadicional/agregar', ['action' => 'add', 'id' => $persona->getId()]); ?>"
+                        type="button">
                         <span class="btn btn-default">
                             <span class="glyphicon glyphicon-plus"></span> Dato Adicional
                         </span>
@@ -219,8 +232,10 @@ $id_persona = $persona->getId();
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 USUARIOS ADICIONALES
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseUsuariosAdicionales" aria-expanded="true" aria-controls="collapseUsuariosAdicionales">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="u_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseUsuariosAdicionales"
+                    aria-expanded="true" aria-controls="collapseUsuariosAdicionales">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse"
+                            id="u_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
                 </a>
             </div>
 
@@ -239,54 +254,58 @@ $id_persona = $persona->getId();
                         <tbody>
                             <?php foreach ($usuarios as $usuario) :
                                 $persona_usuario = $usuario->getPersona(); ?>
-                                <tr>
-                                    <td><?php echo ($persona_usuario->getNombre()); ?></td>
-                                    <td><?php echo ($persona_usuario->getTelefono()); ?></td>
-                                    <td><?php echo ($persona_usuario->getEmail()); ?></td>
-                                    <td><?php echo ($usuario->getSkype()); ?></td>
-                                    <td>
-                                        <div class="pull-right">
-                                            <a class="btn btn-default btn-sm" 
-                                                href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
-                                                <span class="glyphicon glyphicon-pencil"></span>
-                                            </a>
-                                            <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>" type="button" 
-                                                class="btn btn-default btn-sm" data-toggle="modal" 
-                                                data-target="#usuarioModal<?= $usuario->getId() ?>">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <!-- Modal Usuario Adicional -->
-                                    <div id="usuarioModal<?= $usuario->getId() ?>" class="modal fade" role="dialog">
-                                        <div class="modal-dialog">
-                                            <!-- Modal content-->
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Eliminar usuario</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>
-                                                        ¿Está seguro que desea eliminar el usuario:
-                                                        "<?= $this->escapeHtml($persona_usuario->getNombre()) ?>"
-                                                        de forma permanente?
-                                                    </p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="<?= $this->url('usuarios', ['action' => 'delete', 'id' => $usuario->getId()]); ?>" type="button">
-                                                        <span class="btn btn-default">Aceptar</span></a>
+                            <tr>
+                                <td><?php echo ($persona_usuario->getNombre()); ?></td>
+                                <td><?php echo ($persona_usuario->getTelefono()); ?></td>
+                                <td><?php echo ($persona_usuario->getEmail()); ?></td>
+                                <td><?php echo ($usuario->getSkype()); ?></td>
+                                <td>
+                                    <div class="pull-right">
+                                        <a class="btn btn-default btn-sm"
+                                            href="<?= $this->url('usuarios', ['action' => 'edit', 'id' => $usuario->getId()]); ?>">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </a>
+                                        <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>"
+                                            type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                            data-target="#usuarioModal<?= $usuario->getId() ?>">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </div>
+                                </td>
+                                <!-- Modal Usuario Adicional -->
+                                <div id="usuarioModal<?= $usuario->getId() ?>" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close"
+                                                    data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Eliminar usuario</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    ¿Está seguro que desea eliminar el usuario:
+                                                    "<?= $this->escapeHtml($persona_usuario->getNombre()) ?>"
+                                                    de forma permanente?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= $this->url('usuarios', ['action' => 'delete', 'id' => $usuario->getId()]); ?>"
+                                                    type="button">
+                                                    <span class="btn btn-default">Aceptar</span></a>
 
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                </div>
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">Cancelar</button>
                                             </div>
                                         </div>
                                     </div>
-                                </tr>
+                                </div>
+                            </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $persona->getId()]); ?>" type="button">
+                    <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $persona->getId()]); ?>"
+                        type="button">
                         <span class="btn btn-default">
                             <span class="glyphicon glyphicon-plus"></span> Usuario Adicional
                         </span>
@@ -303,8 +322,10 @@ $id_persona = $persona->getId();
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 REGISTRO DE EVENTOS
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true"
+                    aria-controls="collapseActividades">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up btn-collapse"
+                            id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
                 </a>
             </div>
             <div class="panel-body">
@@ -312,15 +333,19 @@ $id_persona = $persona->getId();
                     <div class="row padding-bot-md">
                         <!-- Transacciones -->
                         <div class="btn-group padding-md">
-                            <button type="button" class="btn btn-default" style="font-weight: bold;" onclick="mostrarTransacciones(<?= $id_persona ?>)">Transacciones</button>
-                            <a role="button" class="btn btn-default" data-toggle="collapse" data-parent="#accordion" href="#drop" aria-expanded="true" aria-controls="drop">
+                            <button type="button" class="btn btn-default" style="font-weight: bold;"
+                                onclick="mostrarTransacciones(<?= $id_persona ?>)">Transacciones</button>
+                            <a role="button" class="btn btn-default" data-toggle="collapse" data-parent="#accordion"
+                                href="#drop" aria-expanded="true" aria-controls="drop">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </a>
                         </div>
                         <!-- Acción Comercial -->
                         <div class="btn-group padding-md">
-                            <button role="button" class="btn btn-default" style="font-weight: bold;" onclick="mostrarAccionesComerciales(<?= $id_persona ?>)">Acción Comercial</button>
-                            <a href="<?= $this->url('evento', ['action' => 'add', 'tipo' => 'cliente', 'id' => $persona->getId()]) ?>" class="btn btn-default">
+                            <button role="button" class="btn btn-default" style="font-weight: bold;"
+                                onclick="mostrarAccionesComerciales(<?= $id_persona ?>)">Acción Comercial</button>
+                            <a href="<?= $this->url('evento', ['action' => 'add', 'tipo' => 'cliente', 'id' => $persona->getId()]) ?>"
+                                class="btn btn-default">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </a>
                         </div>
@@ -339,17 +364,20 @@ $id_persona = $persona->getId();
                         <div class="collapse" id="drop">
                             <ul class="list-inline padding-sm" style="margin-left: 20px;">
                                 <li>
-                                    <a href="<?= $this->url("presupuesto/agregar", ['id' => $persona->getId()]); ?>" class="transaccion-font">
+                                    <a href="<?= $this->url("presupuesto/agregar", ['id' => $persona->getId()]); ?>"
+                                        class="transaccion-font">
                                         <span class="glyphicon glyphicon-copy"></span>&nbsp; Presupuesto
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= $this->url("pedido/agregar", ['id' => $persona->getId()]); ?>" class="transaccion-font">
+                                    <a href="<?= $this->url("pedido/agregar", ['id' => $persona->getId()]); ?>"
+                                        class="transaccion-font">
                                         <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp; Pedido
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= $this->url("remito/agregar", ['id' => $persona->getId()]); ?>" class="transaccion-font">
+                                    <a href="<?= $this->url("remito/agregar", ['id' => $persona->getId()]); ?>"
+                                        class="transaccion-font">
                                         <span class="glyphicon glyphicon-check"></span>&nbsp; Remito
                                     </a>
                                 </li>
@@ -390,7 +418,7 @@ $id_persona = $persona->getId();
                     </div>
                     <div id="eventos">
                         <script>
-                            mostrarAccionesComerciales(<?= $id_persona ?>);
+                        mostrarAccionesComerciales(<?= $id_persona ?>);
                         </script>
                     </div>
                 </div>
@@ -400,7 +428,8 @@ $id_persona = $persona->getId();
 </div>
 
 <!-- Modal Ciente -->
-<div class="modal fade" id="exampleModal<?= $cliente->getId() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal<?= $cliente->getId() ?>" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -424,7 +453,8 @@ $id_persona = $persona->getId();
                 </p>
             </div>
             <div class="modal-footer">
-                <a href="<?= $this->url('clientes/modificarEstado', ['action' => 'modificarEstado', 'id' => (int)$cliente->getId()]) ?>" type="button">
+                <a href="<?= $this->url('clientes/modificarEstado', ['action' => 'modificarEstado', 'id' => (int)$cliente->getId()]) ?>"
+                    type="button">
                     <span class="btn btn-default">Aceptar</span></a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
@@ -459,8 +489,10 @@ $id_persona = $persona->getId();
         <!-- Modificar Datos -->
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('clientes/editar', ['tipo' => 'cliente', 'id' => (int)$persona->getId()]) ?>" role="button">
-                    <img src="<?= $this->basePath('img/crm/cliente_update_a.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
+                <a href="<?= $this->url('clientes/editar', ['tipo' => 'cliente', 'id' => (int)$persona->getId()]) ?>"
+                    role="button">
+                    <img src="<?= $this->basePath('img/crm/cliente_update_a.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha img-submenu zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">
@@ -470,7 +502,8 @@ $id_persona = $persona->getId();
         </div>
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a role="button" name="<?= $cliente->getId() ?>" id="<?= $cliente->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $cliente->getId() ?>">
+                <a role="button" name="<?= $cliente->getId() ?>" id="<?= $cliente->getId() ?>" data-toggle="modal"
+                    data-target="#exampleModal<?= $cliente->getId() ?>">
                     <img src="<?php
                                 if ($persona->getEstado() == "S") {
                                     echo ($this->basePath('img/crm/cliente_remove_a.png'));
@@ -503,7 +536,8 @@ $id_persona = $persona->getId();
                 }
                 ?>
                 <a href="<?= $volver ?>" role="button">
-                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha zoom">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha zoom">
                 </a>
             </div>
             <div class="ficha-cliente-label">

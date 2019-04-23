@@ -33,42 +33,39 @@ class DatoAdicionalController extends HuellaController {
     }
 
     private function procesarAddAction() {
-        // $datosAdicionales = $this->datoAdicionalManager->getDatosAdicionales();
         $id_persona = (int) $this->params()->fromRoute('id');
         $persona= $this->personaManager->getPersona($id_persona);
+
+        // Obtengo Json de Clientes
+        $clientes = $this->personaManager->getPersonasTipo("CLIENTE");
+        $json_clientes = "";
+        foreach ($clientes as $cliente) {
+            $json_clientes .= $cliente->getJson() . ',';
+        }
+        $json_clientes = substr($json_clientes, 0, -1);
+        $json_clientes = '[' . $json_clientes . ']';
+
+        // Obtengo Json de Proveedores
+        $proveedores = $this->personaManager->getPersonasTipo("PROVEEDOR");
+        $json_proveedores = "";
+        foreach ($proveedores as $proveedor) {
+            $json_proveedores .= $proveedor->getJson() . ',';
+        }
+        $json_proveedores = substr($json_proveedores, 0, -1);
+        $json_proveedores = '[' . $json_proveedores . ']';
+
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            // $this->limpiarParametros($data);
             $this->datoAdicionalManager->addDatoAdicional($data, $persona);
-            return $this->redirect()->toRoute("datoadicional");
+            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $id_persona]);
         }
         return new ViewModel([
+            'id_persona' => $id_persona,
             'persona' => $persona,
+            'json_clientes' => $json_clientes,
+            'json_proveedores' => $json_proveedores,
         ]);
     }
-
-    // private function procesarAddAction() {
-    //     $this->prepararBreadcrumbs("Agregar Servicios", "/add/servicio", "Servicios");
-    //     if ($this->getRequest()->isPost()) {
-    //         $data = $this->params()->fromPost();
-    //         $this->servicioManager->addServicio($data);
-    //         $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/listado');
-    //     }
-    //     $ivas = $this->ivaManager->getIvas();
-    //     $tipo= $this->params()->fromRoute('tipo');
-    //     $categorias = $this->servicioManager->getCategoriasServicio($tipo);
-    //     $proveedores = $this->servicioManager->getListaProveedores($tipo);
-    //     $volver = $this->getUltimaUrl();
-    //     return new ViewModel([
-    //         'tipo'=>$tipo,
-    //         'ivas'=>$ivas,
-    //         'proveedores'=>$proveedores,
-    //         'categorias'=>$categorias,
-    //         'volver' => $volver,
-    //     ]);
-
-    // }
-
     
     public function editAction() {
         $view = $this->procesarEditAction();
@@ -76,16 +73,19 @@ class DatoAdicionalController extends HuellaController {
     }
 
     public function procesarEditAction() {
-        $id = $this->params()->fromRoute('id');
-        $datoAdicional = $this->datoAdicionalManager->getDatoAdicionalId($id);
+        $id_dato = (int) $this->params()->fromRoute('id');
+        $datoAdicional = $this->datoAdicionalManager->getDatoAdicionalId($id_dato);
+        $persona= $datoAdicional->getId_ficha_persona();
+
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->datoAdicionalManager->updateDatoAdicional($datoAdicional, $data);
-            return $this->redirect()->toRoute("herramientas/formaspago");
+            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
         }
-        return new ViewModel(array(
+        
+        return new ViewModel([
             'datoAdicional' => $datoAdicional,
-        ));  
+        ]);  
     }
 
     public function removeAction() {
@@ -94,14 +94,15 @@ class DatoAdicionalController extends HuellaController {
     }
 
     public function procesarRemoveAction() {
-        $id = (int) $this->params()->fromRoute('id', -1);
-        $datoAdicional = $this->datoAdicionalManager->getDatoAdicionalId($id);
+        $id_dato = (int) $this->params()->fromRoute('id');
+        $datoAdicional = $this->datoAdicionalManager->getDatoAdicionalId($id_dato);
+        $persona= $datoAdicional->getId_ficha_persona();
+
         if ($datoAdicional == null) {
             $this->reportarError();
         } else {
-            $this->transaccionManager->eliminarDatosAdicionales($datoAdicional->getId());
             $this->datoAdicionalManager->removeDatoAdicional($datoAdicional);
-            return $this->redirect()->toRoute('herramientas/formaspago');
+            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
         }
     }
 

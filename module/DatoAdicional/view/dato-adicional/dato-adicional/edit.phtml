@@ -26,34 +26,24 @@
                 <div class="" id="add_tipo_evento">
                     <form method="post">
                         <div class="row form-row">
+                        <div class="row form-row">
                             <div class="form-group col-md-3">
-                                <label>Forma de Pago</label>
-                                <input type="text" class="form-control form-margen" id="nombre" name="nombre"
-                                    placeholder="Forma de Pago" value="<?= $datoAdicional->getNombre() ?>" required>
+                                <label>Dato</label>
+                                <input type="text" class="form-control" id="dato_adicional" name="dato_adicional"
+                                    placeholder="Dato Adicional" value="<?= $datoAdicional->getDato_adicional() ?>" required>
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Descripción</label>
-                                <input type="text" class="form-control form-margen" name="descripcion"
+                                <input type="text" class="form-control" name="descripcion"
                                     placeholder="Descripcion" value="<?= $datoAdicional->getDescripcion() ?>" required>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>% Bonificacion</label>
-                                <input type="text" class="form-control form-margen" name="bonificacion"
-                                    id="bonificacion" placeholder="Bonificacion"
-                                    onkeypress="return justNumbers(event);" value="<?= $datoAdicional->getBonificacion() ?>" required>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>% Recargo</label>
-                                <input type="text" class="form-control form-margen" name="recargo" id="recargo"
-                                    placeholder="Recargo" onkeypress="return justNumbers(event);" value="<?= $datoAdicional->getRecargo() ?>" required>
                             </div>
                         </div>
                         <div class="row form-row">
                             <div class="form-group col-md-3">
-                                <button type="button" class="btn btn-default form-margen" data-toggle="modal"
+                                <button type="button" class="btn btn-default" data-toggle="modal"
                                     data-target="#myModal">
                                     <span class="glyphicon glyphicon-pencil"></span>
-                                    Editar Forma de Pago
+                                    Agregar Dato Adicional
                                 </button>
                             </div>
                         </div>

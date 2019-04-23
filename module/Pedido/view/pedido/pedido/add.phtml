@@ -4,9 +4,7 @@
 <script src="/js/opciones-transacciones.js"></script>
 <script src="/js/transacciones.js"></script>
 
-<!-- Script -->
-<!-- PROBLEMAS CON EL DATETIMEPICKER -- JQUERY TIENE QUE SER MENOR A 2.2 -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
 <!-- jQuery UI -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -126,12 +124,13 @@ var jsonPrespuestos = <?= $presupuestosJson ?>;
                             <input type="text" class="form-control" name="numero_pedido" id="numero_pedido"
                                 value="<?= $numPedido ?>" style="max-width: 250px;">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
                             <label>Número de Presupuesto</label>
-                            <div class="form-inline">
-                                <input type="text" class="form-control" name="numero_presupuesto"
-                                    id="numero_presupuesto" value="" readonly>
-                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones"><span class="glyphicon glyphicon-search" > </span> Buscar Presupuesto</button>
+                            <div class="autocomplete input-group">
+                                <input type="text" class="form-control" name="numero_presupuesto" id="numero_presupuesto" value="" readonly>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i></button>
+                                </span>
                             </div>
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
