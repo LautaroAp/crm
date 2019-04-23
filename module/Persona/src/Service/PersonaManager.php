@@ -132,7 +132,12 @@ class PersonaManager {
     }
 
     public function getPersonasTipo($tipo){
-        return $this->entityManager->findBy(['tipo' => $tipo]);
+        // return $this->entityManager->findBy(['tipo' => $tipo]);
+        return $this->entityManager->getRepository(Persona::class)->findBy(['tipo' => $tipo]);
+    }
+
+    public function getPersonas(){
+        return $this->entityManager->getRepository(Persona::class)->findAll();
     }
 
     public function buscarPersonas($parametros, $tipos=null, $personas=null) {      
