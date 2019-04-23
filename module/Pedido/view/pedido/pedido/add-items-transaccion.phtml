@@ -1,0 +1,7 @@
+<!-- <input type="text" id="itemsPresupuesto" hidden="true" value="<?= $itemsTransaccionJson ?>" > -->
+<script src="/js/transacciones.js"></script>
+<script>
+    itemsAnteriores = itemsTransaccion;
+    itemsTransaccion = <?= $itemsTransaccionJson ?>;
+    addTransaccionItems();
+</script>

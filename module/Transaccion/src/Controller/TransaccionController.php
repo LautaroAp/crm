@@ -5,9 +5,11 @@
  */
 
 namespace Transaccion\Controller;
-
+use Transaccion\Service\TransaccionManager;
 use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
+
+
 
 abstract class TransaccionController extends HuellaController {
 
@@ -81,16 +83,6 @@ abstract class TransaccionController extends HuellaController {
         $ivas = $this->ivaManager->getIvas();
         $json = $this->getJsonFromObjectList($ivas);
         return $json;
-    }
-
-    public function getTransaccionesAction(){
-        $this->layout()->setTemplate('layout/nulo');
-        $idPersona = $this->params()->fromRoute('id');
-        $tipoTransaccion = $this->params()->fromRoute('id2');
-        $transacciones = $this->transaccionManager->getTransaccionesPersonaTipo($idPersona, $tipoTransaccion);
-        $view = new ViewModel(['transacciones' => $transacciones]);
-        $view->setTerminal(true);
-        return $view;
     }
 
 }

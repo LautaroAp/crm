@@ -136,14 +136,15 @@ class RemitoController extends TransaccionController{
         }
         //SINO LOS TOMO DEL REMITO Y GUARDO ESO EN LA SESION PARA CONTINUAR TRABAJANDO CON LA SESION
         else{
-            $items_array = $this->getItemsArray($items);
-            foreach ($items_array as $array) {
-                $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
-                $json .= $item->getJson() . ',';
+            // $items_array = $this->getItemsArray($items);
+            // foreach ($items_array as $array) {
+            //     $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+            //     $json .= $item->getJson() . ',';
                
-            }
-            $json = substr($json, 0, -1);
-            $json = '[' . $json . ']';
+            // }
+            // $json = substr($json, 0, -1);
+            // $json = '[' . $json . ']';
+            $json = $this->getJsonFromObjectList($items);
             $_SESSION['TRANSACCIONES']['REMITO'] = $json;
         }
        

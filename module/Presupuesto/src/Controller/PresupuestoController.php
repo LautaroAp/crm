@@ -132,7 +132,7 @@ class PresupuestoController extends TransaccionController{
 
 
     public function editAction() {
-         $id_transaccion = $this->params()->fromRoute('id');
+        $id_transaccion = $this->params()->fromRoute('id');
         $presupuesto = $this->presupuestoManager->getPresupuestoFromTransaccionId($id_transaccion);
         $items = array();
 
@@ -146,14 +146,15 @@ class PresupuestoController extends TransaccionController{
         }
         //SINO LOS TOMO DEL PRESUPUESTO Y GUARDO ESO EN LA SESION PARA CONTINUAR TRABAJANDO CON LA SESION
         else{
-            $items_array = $this->getItemsArray($items);
-            foreach ($items_array as $array) {
-                $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
-                $json .= $item->getJson() . ',';
+            // $items_array = $this->getItemsArray($items);
+            // foreach ($items_array as $array) {
+            //     $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+            //     $json .= $item->getJson() . ',';
                
-            }
-            $json = substr($json, 0, -1);
-            $json = '[' . $json . ']';
+            // }
+            // $json = substr($json, 0, -1);
+            // $json = '[' . $json . ']';
+            $json = $this->getJsonFromObjectList($items);
             $_SESSION['TRANSACCIONES']['PRESUPUESTO'] = $json;
         }
        

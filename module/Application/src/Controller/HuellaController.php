@@ -170,4 +170,10 @@ class HuellaController extends AbstractActionController
         return $json;
     }
 
+    // protected function unirJson($json1, $json2){
+    //     $salida ="";
+    //     $salida .= substr($json1, 0, -1);
+    //     $salida .= " ,";
+    //     $salida .= 
+    // }
 }

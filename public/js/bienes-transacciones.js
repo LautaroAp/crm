@@ -4,6 +4,9 @@ var tipoTransaccion;
 var idPersona;
 var ivas;
 
+var transaccion = null;
+var transaccion_ant = null;
+
 function setIvas(arrayIvas) {
     ivas = arrayIvas;
 }
@@ -221,6 +224,7 @@ function removerBien(event, id) {
 }
 
 function removerBien2(event, id) {
+    console.log(tipoTransaccion);
     $.ajax({
         "dataType": "text",
         "type": "POST",
@@ -343,7 +347,7 @@ function saveValueInJson(tdId, inputValue) {
     }
      //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
     $("#jsonitems").val(JSON.stringify(items));
-    persistItemsInSession();
+    // persistItemsInSession();
 }
 //esta funcion es llamada cuando se modifica el valor de un input
 function saveValue(inputId) {
@@ -367,7 +371,7 @@ function actualizarJson(fila) {
     console.log("despues de actualizar items queda ");
     console.log(items);
     $("#jsonitems").val(JSON.stringify(items));
-    persistItemsInSession();
+    // persistItemsInSession();
 }
 
 function actualizarFila(tdId) {
@@ -522,9 +526,7 @@ function addItemToTable() {
         // le concateno el BIEN a "ITEMS" (agregar a un json)
 
         items.push(output);
-        console.log("agrego a items");
-        console.log(items);
-        persistItemsInSession();
+        // persistItemsInSession();
         // luego:
         //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
         // $("#jsonitems").val(JSON.stringify(items));

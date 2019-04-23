@@ -56,6 +56,11 @@ var ivas = <?= $ivasJson ?>;
 var idPersona = <?php echo ($persona->getId()); ?>;
 setIvas(ivas);
 var jsonPrespuestos = <?= $presupuestosJson ?>;
+var itemsTransaccionJson = <?= $itemsTransaccionJson ?>;
+items.concat(itemsTransaccionJson);
+var itemsTransaccion =null;
+var itemsAnteriores =null;
+
 </script>
 
 <!-- Document -->
@@ -136,6 +141,7 @@ var jsonPrespuestos = <?= $presupuestosJson ?>;
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
                         <input type="hidden" id="url" name="url" value="<?= $url ?>">
+                        <input type="hidden" id="transaccion_base" name="transaccion_base">
                     </div>
                 </div>
             </div>
@@ -233,7 +239,7 @@ var jsonPrespuestos = <?= $presupuestosJson ?>;
                         </div>
                         <br>                     
                     </div>
-                    <div class="container">
+                    <div class="container" hidden="true">
                         <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion' => 'pedido', 'accion' => 'agregar', 'id' => $persona->getId()]); ?>"
                         type="button">
                         <span class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar Item</span> </a>
@@ -392,14 +398,17 @@ var jsonPrespuestos = <?= $presupuestosJson ?>;
                     </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-default">Aceptar</button>
+                        <button type="button" class="btn btn-default" onclick="completeItems()" data-dismiss="modal">Aceptar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </div>
         </div>
-
+                
 </form>
+
+<div id="div_transaccion">
+</div> 
 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">

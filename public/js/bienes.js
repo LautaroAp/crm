@@ -32,7 +32,12 @@ function addItems(bienes) {
             var tabCell = tr.insertCell(-1);
             tabCell.setAttribute("id", i);
             tabCell.setAttribute("class", "click");
-            value = item[col[j]];
+            if (col[j]=="Total"){
+                value = item["Totales"];
+            }
+            else{
+                value = item[col[j]];
+            }
             if ((col[j] == "Dto (%)") || (col[j] == "Iva (%)" )){value = formatPercent(value);}
             if ((col[j] == "Precio") || (col[j] == "Totales")){value = formatMoney(value);}
             tabCell.innerHTML = value;

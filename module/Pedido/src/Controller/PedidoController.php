@@ -104,10 +104,13 @@ class PedidoController extends TransaccionController
             'monedasJson' => $monedasJson,
             'ivasJson' => $ivasJson,
             'transaccionJson'=>"[]",
-            'presupuestosJson' => $jsonPrespuestos
+            'presupuestosJson' => $jsonPrespuestos,
+            'itemsTransaccionJson' =>"[]",
 
         ]);
     }
+
+    
 
     public function addItemAction()
    {
@@ -210,7 +213,8 @@ class PedidoController extends TransaccionController
             'transaccion' => $transaccion,
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
-            'presupuestosJson' => $jsonPrespuestos
+            'presupuestosJson' => $jsonPrespuestos,
+            'itemsTransaccionJson' =>"[]",
         ]);
     }
 
@@ -238,6 +242,20 @@ class PedidoController extends TransaccionController
        $formasEnvio = $this->formaEnvioManager->getFormasEnvio();
        $json = $this->getJsonFromObjectList($formasEnvio);
        return $json;
+   }
+
+   public function addItemsTransaccionAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $idTransaccion = $this->params()->fromRoute('id');
+        $transaccion = $this->pedidoManager->getTransaccionId($idTransaccion);
+        $items = $transaccion->getBienesTransacciones();
+        $itemsTransaccionJson = $this->getJsonFromObjectList($items);
+       
+        // $items_array = $this->getItemsArray($items);
+        // $itemsTransaccionJson=COUNT($items);    
+        $view = new ViewModel(['itemsTransaccionJson'=>$itemsTransaccionJson]);
+        $view->setTerminal(true);
+        return $view;
    }
 
 }

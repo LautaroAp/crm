@@ -8,21 +8,34 @@
 namespace Transaccion;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
-
+use Application;
 return [
     'router' => [
         'routes' =>[
-            'ajax' => [
-                'type' => Segment::class,
+            'transacciones' => [
+                'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/ajax[/:action[/:id[/:id2]]]',
+                    'route'    => '/transacciones',
                     'defaults' => [
-                        'controller' => \Transaccion\Controller\TransaccionController::class,                             
+                        'controller' => \Transaccion\Controller\TransaccionController::class,
+                        'action' => 'index',
                     ],
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
-                        'id2' => '[a-zA-Z0-9_-]*',
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'ajax' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '/ajax[/:action[/:id[/:id2]]]',
+                            'defaults' => [
+                                'controller' => \Transaccion\Controller\TransaccionController::class,                          
+                            ],
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[a-zA-Z0-9_-]*',
+                                'id2' => '[a-zA-Z0-9_-]*',
+                            ],
+                        ],
                     ],
                 ],
             ],

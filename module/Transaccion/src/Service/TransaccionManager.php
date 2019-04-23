@@ -51,7 +51,7 @@ class TransaccionManager {
 
     public function getTransaccionId($id) {
         return $this->entityManager->getRepository(Transaccion::class)
-                        ->find($id);
+                        ->findOneById($id);
     }
 
     public function getTransaccionesPersona($id_persona){
