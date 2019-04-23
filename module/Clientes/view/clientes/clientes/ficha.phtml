@@ -152,19 +152,33 @@ $id_persona = $persona->getId();
                     <table id="tabla_evento" class="table table-condensed table-hover">
                         <thead>
                             <tr>
-                                <th class="th-sm">Dato</th>
+                                <th class="th-sm">Dato o Referencia</th>
                                 <th class="th-sm">Descripcion</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($datos_adicionales as $dato_adicional) : ?>
+                            <?php foreach ($datos_adicionales as $dato_adicional) :
+                                $url = 'clientes/ficha';
+                                $referencia = $dato_adicional->getId_referencia_persona();
+                                if(is_null($referencia)){
+                                    $referencia = "";
+                                } else {
+                                    $referencia = $dato_adicional->getId_referencia_persona()->getId();
+                                    if($dato_adicional->getId_referencia_persona()->getTipo() == "PROVEEDOR"){
+                                        $url = 'proveedores/ficha';
+                                    }
+                                }; ?>
                             <tr>
-                                <!-- Dato -->
-                                <td><?php echo ($dato_adicional->getDato_adicional()); ?></td>
-                                <!-- Referencia -->
                                 <td>
-                                <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $dato_adicional->getId_referencia_persona()]); ?>">link</a>
+                                    <!-- Dato -->
+                                    <?php if($referencia == "") {echo ($dato_adicional->getDato_adicional());} ?>
+                                    <!-- Referencia -->
+                                    <a href="<?= $this->url($url, ['action' => 'ficha', 'id' => $referencia]); ?>" 
+                                        <?php if($referencia == ""){echo ("hidden");} ?> target="_blank">
+                                        <label role="button"><?= $dato_adicional->getDato_adicional() ?></label> 
+                                        <span class="glyphicon glyphicon-share"></span>
+                                    </a>
                                 </td>
                                 <!-- Descripcion -->
                                 <td><?php echo ($dato_adicional->getDescripcion()); ?></td>
