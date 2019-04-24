@@ -32,18 +32,19 @@
     <div class="row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
-                LISTADO CATEGORIA PRODUCTOS
+                LISTADO PRODUCTOS
             </div>
             <div class="panel-body">
                 <table id="tabla_productos" class="display">            
                     <thead>
                         <tr>
-                            <th class="th-sm" style="width:20%;">Nombre</th>
-                            <th class="th-sm" style="width:20%;">Descripción</th>
-                            <th class="th-sm" style="width:20%;">Categoria</th>
-                            <th class="th-sm" style="width:10%;">Stock</th>
-                            <th class="th-sm" style="width:10%;">Precio Venta</th>
-                            <th class="th-sm" style="width:10%;">Stock en $.</th> <!-- precio_venta * stock -->
+                            <th class="th-sm">Código</th>
+                            <th class="th-sm">Nombre</th>
+                            <th class="th-sm">Descripción</th>
+                            <th class="th-sm">Categoria</th>
+                            <th class="th-sm">Stock</th>
+                            <th class="th-sm">Precio Venta</th>
+                            <th class="th-sm">Stock en $.</th> <!-- precio_venta * stock -->
                             <th style="width:10%;"></th>
                         </tr>
                     </thead>
@@ -52,49 +53,50 @@
                             foreach ($productos as $producto) : 
                                 $bien = $producto->getBien();
                         ?>
-                                <tr>
-                                    <td><?php echo ($bien->getNombre()); ?></td>
-                                    <td><?php echo ($bien->getDescripcion()); ?></td>
-                                    <td><?php echo ($bien->getCategoriaNombre()); ?></td>
-                                    <td><?php echo ($bien->getStock()); ?></td>
-                                    <td><?php echo money_format("$ %n", $bien->getPrecio()); ?></td>
-                                    <td><?php echo money_format("$ %n", $bien->getPrecio() * $bien->getStock()); ?></td>
-                                    <td>
-                                        <div class="pull-right">
-                                            <a class="btn btn-default btn-sm" href="<?= $this->url('gestionProductosServicios/gestionProductos/editar',
-                                                                                 ['action' => 'edit', 'tipo'=>'producto','id' => $producto->getId()]); ?>">
-                                                <span class="glyphicon glyphicon-pencil" ></span> 
-                                            </a>
-                                            <button name="<?= $producto->getId() ?>" id="<?= $producto->getId() ?>"
-                                                type="button" class="btn btn-default btn-sm" data-toggle="modal" 
-                                                                data-target="#myModal<?= $producto->getId() ?>">
-                                                <span class="glyphicon glyphicon-trash" ></span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <!-- Modal -->
-                                    <div id="myModal<?= $producto->getId() ?>" class="modal fade" role="dialog">
-                                        <div class="modal-dialog">
-                                            <!-- Modal content-->
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Borrar producto</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>
-                                                        Estas seguro de borrar la producto?
-                                                        "<?= $this->escapeHtml($producto->getNombre()) ?>"
-                                                    </p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="<?= $this->url('gestionProductosServicios/gestionProductos/eliminar', ['action' => 'remove', 'id' => $producto->getId()]); ?>" class="btn btn-default">Borrar</a>
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                </div>
+                            <tr>
+                                <td><?= $bien->getCodigo() ?></td>
+                                <td><?= $bien->getNombre() ?></td>
+                                <td><?= $bien->getDescripcion() ?></td>
+                                <td><?= $bien->getCategoriaNombre() ?></td>
+                                <td><?= $bien->getStock() ?></td>
+                                <td><?php echo money_format("$ %n", $bien->getPrecio()); ?></td>
+                                <td><?php echo money_format("$ %n", $bien->getPrecio() * $bien->getStock()); ?></td>
+                                <td>
+                                    <div class="pull-right">
+                                        <a class="btn btn-default btn-sm" href="<?= $this->url('gestionProductosServicios/gestionProductos/editar',
+                                                                                ['action' => 'edit', 'tipo'=>'producto','id' => $producto->getId()]); ?>">
+                                            <span class="glyphicon glyphicon-pencil" ></span> 
+                                        </a>
+                                        <button name="<?= $producto->getId() ?>" id="<?= $producto->getId() ?>"
+                                            type="button" class="btn btn-default btn-sm" data-toggle="modal" 
+                                                            data-target="#myModal<?= $producto->getId() ?>">
+                                            <span class="glyphicon glyphicon-trash" ></span>
+                                        </button>
+                                    </div>
+                                </td>
+                                <!-- Modal -->
+                                <div id="myModal<?= $producto->getId() ?>" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Borrar producto</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Estas seguro de borrar la producto?
+                                                    "<?= $this->escapeHtml($producto->getNombre()) ?>"
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= $this->url('gestionProductosServicios/gestionProductos/eliminar', ['action' => 'remove', 'id' => $producto->getId()]); ?>" class="btn btn-default">Borrar</a>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                             </div>
                                         </div>
                                     </div>
-                                </tr>
+                                </div>
+                            </tr>
                         <?php endforeach;} ?>
                     </tbody>
                 </table>

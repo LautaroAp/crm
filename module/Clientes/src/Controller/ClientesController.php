@@ -67,6 +67,7 @@ class ClientesController extends HuellaController
         $total_clientes = $this->clientesManager->getTotal();
         $pag = $this->getPaginator($paginator);
         $volver = $this->getUltimaUrl();
+        $_SESSION['CATEGORIA']['TIPO'] = "CLIENTE";
         return new ViewModel([
             'personas' => $pag,
             'paises' => $pais,
