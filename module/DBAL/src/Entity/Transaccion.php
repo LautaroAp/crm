@@ -118,6 +118,13 @@ class Transaccion {
      * @ORM\JoinColumn(name="ID_FORMA_DE_ENVIO", referencedColumnName="ID")
      */
     protected $formaEnvio;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Transaccion")
+     * @ORM\JoinColumn(name="ID_TRANSACCION_PREVIA", referencedColumnName="ID")
+     */
+    protected $transaccionPrevia;
+
     
     /**
      * Get the value of id
@@ -531,10 +538,33 @@ class Transaccion {
         }
         $output .= '"Estado": "' . $this->getEstado() .'", ';
         $output .= '"Monto": "' . $this->getMonto() .'", ';
+        if (!(is_null($this->transaccionPrevia))){
+            $output .= '"Transaccion Previa": ' . $this->getTransaccionPrevia()->getId() .', ';
+        }
         $output .= '"Bonificacion General": "' . $this->getBonificacionGeneral() .'" ';
 
 
 
         return  '{'.$output.'}' ;
+    }
+
+    /**
+     * Get the value of transaccionPrevia
+     */ 
+    public function getTransaccionPrevia()
+    {
+        return $this->transaccionPrevia;
+    }
+
+    /**
+     * Set the value of transaccionPrevia
+     *
+     * @return  self
+     */ 
+    public function setTransaccionPrevia($transaccionPrevia)
+    {
+        $this->transaccionPrevia = $transaccionPrevia;
+
+        return $this;
     }
 }

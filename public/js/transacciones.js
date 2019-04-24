@@ -1,3 +1,4 @@
+
 var transacciones;
 function completarTransacciones(transacciones_anteriores){
     transacciones= transacciones_anteriores;
@@ -31,7 +32,7 @@ function completarTransacciones(transacciones_anteriores){
     tbody.setAttribute("role", "button");
     var value = null;
     for (var i = 0; i < transacciones.length; i++) {
-        var transaccion = transacciones[i];
+        var transac = transacciones[i];
         tr = tbody.insertRow(-1);
         // tr.onclick= selectItem(item["id"]);
         tr.setAttribute("id", i);
@@ -42,14 +43,22 @@ function completarTransacciones(transacciones_anteriores){
             tabCell.setAttribute("id", i);
             tabCell.setAttribute("class", "click");
             // tabCell.setAttribute("onclick", "selectTransaccion(id)");
-            value = transaccion[col[j]];
+            value = transac[col[j]];
             tabCell.innerHTML = value;
         }
 
         // Botones
         var btn = document.createElement('button');
         btn.setAttribute('type', 'button');
-        btn.setAttribute('class', 'btn btn-default btn-sm  glyphicon glyphicon-unchecked ');
+        // alert(transaccionPrevia);
+        // alert(transacciones[i]["Id"]);
+        if (transaccionPrevia!=null && transaccionPrevia==transacciones[i]["Id"]){
+            btn.setAttribute('class', 'btn btn-default btn-sm  glyphicon glyphicon-check ');
+            transaccion = i+"button";
+        }
+        else{
+            btn.setAttribute('class', 'btn btn-default btn-sm  glyphicon glyphicon-unchecked ');
+        }
         btn.setAttribute('id', i+"button");
         btn.setAttribute("onclick", "selectTransaccion(id)");
         var tabCell = tr.insertCell(-1);
@@ -76,9 +85,9 @@ function selectTransaccion(id){
         $('#' + id).removeClass('glyphicon-unchecked');
         $('#' + id).addClass('glyphicon-check');
         var indexTransaccion = getTransaccion(id);
-        $('#transaccion_base').val(indexTransaccion);
+
         transaccion_ant = transaccion;
-        if (transaccion_ant) {
+        if (transaccion_ant!=null) {
             $('#' + transaccion_ant).removeClass('glyphicon-check');
             $('#' + transaccion_ant).addClass('glyphicon-unchecked');
         }
@@ -97,20 +106,17 @@ function removeItemsAnteriores(){
     console.log(items);
 }
 function addTransaccionItems(){
-    console.log(itemsAnteriores);
     removeItemsAnteriores();
     items = (items.concat(itemsTransaccion));
     addItems(items, tipoTransaccion, idPersona);
-    // persistItemsInSession(items);
 }
 
 function completeItems(id){
-    // if (itemsTransaccion!==null){
-    //     itemsAnteriores = itemsTransaccion;
-    // }
     if (id!=null){
         var transaccion_selected = transacciones[id];
         var idTransaccion = transaccion_selected["Id"];
+        $('#transaccion_buscada').val(idTransaccion);
+
         $.post( '/' + tipoTransaccion + '/ajax/addItemsTransaccion/' + idTransaccion, function (data) {
             $('#div_transaccion').html(data);
         });

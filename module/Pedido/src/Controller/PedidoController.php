@@ -45,7 +45,6 @@ class PedidoController extends TransaccionController
         $json="[]";
         if (isset($_SESSION['TRANSACCIONES']['PEDIDO'])) {
             $json = $_SESSION['TRANSACCIONES']['PEDIDO'];
-
         }
         // Obtengo todos los Bienes
         $bienes = $this->bienesManager->getBienes();
@@ -213,6 +212,7 @@ class PedidoController extends TransaccionController
             'transaccion' => $transaccion,
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
+            'transaccionJson'=>"[]",
             'presupuestosJson' => $jsonPrespuestos,
             'itemsTransaccionJson' =>"[]",
         ]);
@@ -250,9 +250,6 @@ class PedidoController extends TransaccionController
         $transaccion = $this->pedidoManager->getTransaccionId($idTransaccion);
         $items = $transaccion->getBienesTransacciones();
         $itemsTransaccionJson = $this->getJsonFromObjectList($items);
-       
-        // $items_array = $this->getItemsArray($items);
-        // $itemsTransaccionJson=COUNT($items);    
         $view = new ViewModel(['itemsTransaccionJson'=>$itemsTransaccionJson]);
         $view->setTerminal(true);
         return $view;

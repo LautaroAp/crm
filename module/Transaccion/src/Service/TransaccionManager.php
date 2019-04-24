@@ -141,6 +141,10 @@ class TransaccionManager {
             $formaEnvio = $this->formaEnvioManager->getFormaEnvioId($data['forma_envio']);
             $transaccion->setFormaEnvio($formaEnvio);
         }
+        if(isset($data['transaccion_buscada'])){           
+            $transaccionPrevia = $this->getTransaccionId($data['transaccion_buscada']);
+            $transaccion->setTransaccionPrevia($transaccionPrevia);
+        }
         return $transaccion;
     }
 
