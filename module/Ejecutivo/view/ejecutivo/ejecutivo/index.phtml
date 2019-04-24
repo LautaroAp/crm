@@ -93,7 +93,7 @@ if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
                                     <th class="th-sm">Ejecutivo</th>
                                     <th class="th-sm">Email</th>
                                     <th class="th-sm">Usuario</th>
-                                    <th class="th-sm"">Clave</th>
+                                    <th class="th-sm">Clave</th>
                                     <th></th>     
                                 </tr>
                             </thead>
@@ -116,14 +116,16 @@ if (isset($_SESSION['MENSAJES']['ejecutivo'])) {
                                         echo ($ejecutivo->getClave());
                                         echo ('</td>');
                                         ?>    
-                                    <td class="table-items-right">
-                                        <a class="btn btn-default" href="<?= $this->url('ejecutivos/editar', ['action' => 'edit', 'id' => $ejecutivo->getId()]); ?>">
-                                            <span class="glyphicon glyphicon-pencil" ></span> 
-                                        </a>
-                                        <button name="<?= $ejecutivo->getId() ?>" id="<?= $ejecutivo->getId() ?>" type="button" class="btn btn-default" 
-                                            data-toggle="modal" data-target="#myModal<?= $ejecutivo->getId() ?>">
-                                            <span class="glyphicon glyphicon-remove" ></span>
-                                        </button>
+                                    <td>
+                                        <div class="pull-right">
+                                            <a class="btn btn-default btn-sm" href="<?= $this->url('ejecutivos/editar', ['action' => 'edit', 'id' => $ejecutivo->getId()]); ?>">
+                                                <span class="glyphicon glyphicon-pencil" ></span> 
+                                            </a>
+                                            <button name="<?= $ejecutivo->getId() ?>" id="<?= $ejecutivo->getId() ?>" type="button" class="btn btn-default btn-sm" 
+                                                data-toggle="modal" data-target="#myModal<?= $ejecutivo->getId() ?>">
+                                                <span class="glyphicon glyphicon-trash" ></span>
+                                            </button>
+                                        </div>
                                     </td>
                                     <!-- Modal -->
                                     <div id="myModal<?= $ejecutivo->getId() ?>" class="modal fade" role="dialog">

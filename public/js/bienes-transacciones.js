@@ -104,7 +104,7 @@ function addItems(bienesTransacciones, tipo, id) {
         // Botones
         var btn = document.createElement('button');
         btn.setAttribute('type', 'button');
-        btn.setAttribute('class', 'btn btn-default btn-sm glyphicon glyphicon-remove'); // set attributes ...
+        btn.setAttribute('class', 'btn btn-default btn-sm glyphicon glyphicon-trash'); // set attributes ...
         btn.setAttribute('id', i);
         btn.setAttribute('value', 'Borrar');
         btn.setAttribute("onclick", "removerBien2(event,id)");

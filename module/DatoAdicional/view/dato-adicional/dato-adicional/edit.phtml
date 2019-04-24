@@ -17,17 +17,20 @@ if($datoAdicional->getId_referencia_persona()){
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <script>
+var json_nro_clientes = <?= $json_clientes ?>;
 var json_clientes = <?= $json_clientes ?>;
+var json_nro_proveedores = <?= $json_proveedores ?>;
 var json_proveedores = <?= $json_proveedores ?>;
 </script>
 
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
-            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
-            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
-            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas/formaspago'); ?>">Formas de Pago</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes/listado'); ?>">Listado</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('clientes/ficha', ['tipo' => 'cliente', 'id' => $persona->getId()]) ?>">Ficha Cliente</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Dato Adicional</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
             <li class="pull-right"><a href="empresa" id="volver">Volver</a></li>

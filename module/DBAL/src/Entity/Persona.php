@@ -192,8 +192,10 @@ class Persona {
 
     public function getJson(){
         $output = "";
-        $output .= '"value": "' . $this->getId() .'", ';        
-        $output .= '"label": "' . $this->getNombre() .'" ';
+        $output .= '"value": "' . $this->getId() .'", ';
+        $output .= '"label": "' . $this->getNombre() .'", ';
+        $output .= '"nro": "' . $this->getId() .'", ';        
+        $output .= '"nombre": "' . $this->getNombre() .'" ';
         
         return  '{'.$output.'}' ;
     }

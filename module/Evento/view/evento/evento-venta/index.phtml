@@ -176,20 +176,22 @@ else{
                                     ?>
                                 </td>
 
-                                <td class="table-items-right">
-                                    <a class="btn btn-default" 
-                                    <?php
-                                        if(!is_null($evento->getPersona())){
+                                <td>
+                                    <div class="pull-right">
+                                        <a class="btn btn-default btn-sm" 
+                                        <?php
+                                            if(!is_null($evento->getPersona())){
 
-                                        if (strtoupper($evento->getPersona()->getTipo()) == "CLIENTE") { ?>
-                                            href=<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?> 
-                                    <?php 
-                                        } elseif (strtoupper($evento->getPersona()->getTipo()) == "PROVEEDOR") { ?>
-                                            href=<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?>
-                                    <?php 
-                                        }} ?>>
-                                    <span class="glyphicon glyphicon-share-alt" ></span>
-                                    </a>
+                                            if (strtoupper($evento->getPersona()->getTipo()) == "CLIENTE") { ?>
+                                                href=<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?> 
+                                        <?php 
+                                            } elseif (strtoupper($evento->getPersona()->getTipo()) == "PROVEEDOR") { ?>
+                                                href=<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?>
+                                        <?php 
+                                            }} ?>>
+                                        <span class="glyphicon glyphicon-share-alt" ></span>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

@@ -154,13 +154,15 @@ if ($tipo== "iva"){
                                     <tr>
                                         <td><?php echo ($categoria->getNombre()); ?></td>
                                         <td><?php echo ($categoria->getDescripcion()); ?></td>
-                                        <td class="pull-right">
-                                            <a class="btn btn-default" href="<?= $this->url('categoria/editar', ['action' => 'edit', 'tipo' => $tipo, 'id' => $categoria->getId()]); ?>">
-                                                <span class="glyphicon glyphicon-pencil" ></span> 
-                                            </a>
-                                            <button name="<?= $categoria->getId() ?>" id="<?= $categoria->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $categoria->getId() ?>">
-                                                <span class="glyphicon glyphicon-remove" ></span>
-                                            </button>
+                                        <td>
+                                            <div class="pull-right">
+                                                <a class="btn btn-default btn-sm" href="<?= $this->url('categoria/editar', ['action' => 'edit', 'tipo' => $tipo, 'id' => $categoria->getId()]); ?>">
+                                                    <span class="glyphicon glyphicon-pencil" ></span> 
+                                                </a>
+                                                <button name="<?= $categoria->getId() ?>" id="<?= $categoria->getId() ?>" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal<?= $categoria->getId() ?>">
+                                                    <span class="glyphicon glyphicon-trash" ></span>
+                                                </button>
+                                            </div>
                                         </td>
                                         <!-- Modal -->
                                 <div id="myModal<?= $categoria->getId() ?>" class="modal fade" role="dialog">

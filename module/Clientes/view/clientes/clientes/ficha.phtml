@@ -142,8 +142,8 @@ $id_persona = $persona->getId();
                 DATOS ADICIONALES
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseDatosAdicionales" aria-expanded="true"
                     aria-controls="collapseDatosAdicionales">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse"
-                            id="d_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-menu-hamburger btn-collapse"
+                            id="d_adicionales" ></i></span>
                 </a>
             </div>
 
@@ -192,7 +192,7 @@ $id_persona = $persona->getId();
                                             id="<?= $dato_adicional->getId() ?>" type="button"
                                             class="btn btn-default btn-sm" data-toggle="modal"
                                             data-target="#datoAdicionalModal<?= $dato_adicional->getId() ?>">
-                                            <span class="glyphicon glyphicon-remove"></span>
+                                            <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </div>
                                 </td>
@@ -248,8 +248,8 @@ $id_persona = $persona->getId();
                 USUARIOS ADICIONALES
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseUsuariosAdicionales"
                     aria-expanded="true" aria-controls="collapseUsuariosAdicionales">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse"
-                            id="u_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-menu-hamburger btn-collapse"
+                            id="u_adicionales" ></i></span>
                 </a>
             </div>
 
@@ -282,7 +282,7 @@ $id_persona = $persona->getId();
                                         <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>"
                                             type="button" class="btn btn-default btn-sm" data-toggle="modal"
                                             data-target="#usuarioModal<?= $usuario->getId() ?>">
-                                            <span class="glyphicon glyphicon-remove"></span>
+                                            <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </div>
                                 </td>
@@ -338,8 +338,8 @@ $id_persona = $persona->getId();
                 REGISTRO DE EVENTOS
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true"
                     aria-controls="collapseActividades">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up btn-collapse"
-                            id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
+                    <span class="pull-right clickable "><i class="glyphicon glyphicon-menu-hamburger btn-collapse"
+                            id="actividades"></i></span>
                 </a>
             </div>
             <div class="panel-body">

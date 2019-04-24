@@ -40,7 +40,9 @@ class DatoAdicionalController extends HuellaController {
         $clientes = $this->personaManager->getPersonasTipo("CLIENTE");
         $json_clientes = "";
         foreach ($clientes as $cliente) {
-            $json_clientes .= $cliente->getJson() . ',';
+            if($cliente->getEstado() == "S"){
+                $json_clientes .= $cliente->getJson() . ',';
+            }
         }
         $json_clientes = substr($json_clientes, 0, -1);
         $json_clientes = '[' . $json_clientes . ']';
@@ -49,7 +51,9 @@ class DatoAdicionalController extends HuellaController {
         $proveedores = $this->personaManager->getPersonasTipo("PROVEEDOR");
         $json_proveedores = "";
         foreach ($proveedores as $proveedor) {
-            $json_proveedores .= $proveedor->getJson() . ',';
+            if($proveedor->getEstado() == "S"){
+                $json_proveedores .= $proveedor->getJson() . ',';
+            }
         }
         $json_proveedores = substr($json_proveedores, 0, -1);
         $json_proveedores = '[' . $json_proveedores . ']';
@@ -58,7 +62,12 @@ class DatoAdicionalController extends HuellaController {
             $data = $this->params()->fromPost();
             $referencia_persona = $this->personaManager->getPersona($data["id_referencia_persona"]);
             $this->datoAdicionalManager->addDatoAdicional($data, $persona, $referencia_persona);
-            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $id_persona]);
+            if ($persona->getTipo() == "CLIENTE") {
+                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $id_persona]);
+            } elseif ($persona->getTipo() == "PROVEEDOR") {
+                return $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $id_persona]);
+            }
+            return $this->redirect()->toRoute('home');
         }
         return new ViewModel([
             'id_persona' => $id_persona,
@@ -82,7 +91,9 @@ class DatoAdicionalController extends HuellaController {
         $clientes = $this->personaManager->getPersonasTipo("CLIENTE");
         $json_clientes = "";
         foreach ($clientes as $cliente) {
-            $json_clientes .= $cliente->getJson() . ',';
+            if($cliente->getEstado() == "S"){
+                $json_clientes .= $cliente->getJson() . ',';
+            }
         }
         $json_clientes = substr($json_clientes, 0, -1);
         $json_clientes = '[' . $json_clientes . ']';
@@ -91,7 +102,9 @@ class DatoAdicionalController extends HuellaController {
         $proveedores = $this->personaManager->getPersonasTipo("PROVEEDOR");
         $json_proveedores = "";
         foreach ($proveedores as $proveedor) {
-            $json_proveedores .= $proveedor->getJson() . ',';
+            if($proveedor->getEstado() == "S"){
+                $json_proveedores .= $proveedor->getJson() . ',';
+            }
         }
         $json_proveedores = substr($json_proveedores, 0, -1);
         $json_proveedores = '[' . $json_proveedores . ']';
@@ -100,7 +113,12 @@ class DatoAdicionalController extends HuellaController {
             $data = $this->params()->fromPost();
             $referencia_persona = $this->personaManager->getPersona($data["id_referencia_persona"]);
             $this->datoAdicionalManager->updateDatoAdicional($datoAdicional, $data, $persona, $referencia_persona);
-            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            if ($persona->getTipo() == "CLIENTE") {
+                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            } elseif ($persona->getTipo() == "PROVEEDOR") {
+                return $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            }
+            return $this->redirect()->toRoute('home');
         }
         
         return new ViewModel([
@@ -125,7 +143,12 @@ class DatoAdicionalController extends HuellaController {
             $this->reportarError();
         } else {
             $this->datoAdicionalManager->removeDatoAdicional($datoAdicional);
-            return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            if ($persona->getTipo() == "CLIENTE") {
+                return $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            } elseif ($persona->getTipo() == "PROVEEDOR") {
+                return $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            }
+            return $this->redirect()->toRoute('home');
         }
     }
 

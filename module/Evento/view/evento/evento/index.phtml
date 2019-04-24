@@ -45,8 +45,10 @@
                             <td><?php echo ($evento->getNombreCliente()); ?></td>
                             <td><?php echo ($evento->getUsuarioejecutivo()); ?></td>
                             <td>
-                                <a class="btn btn-default" href="<?= $this->url('evento', ['action' => 'edit', 'id' => $evento->getId()]); ?>"><span class="glyphicon glyphicon-pencil" ></span></a>
-                                <button name="<?= $evento->getId() ?>" id="<?= $evento->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $evento->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button>
+                                <div class="pull-right">
+                                    <a class="btn btn-default btn-sm" href="<?= $this->url('evento', ['action' => 'edit', 'id' => $evento->getId()]); ?>"><span class="glyphicon glyphicon-pencil" ></span></a>
+                                    <button name="<?= $evento->getId() ?>" id="<?= $evento->getId() ?>" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal<?= $evento->getId() ?>"><span class="glyphicon glyphicon-trash" ></span></button>
+                                </div>
                             </td>
                             <!-- Modal -->
                             <div id="myModal<?= $evento->getId() ?>" class="modal fade" role="dialog">
