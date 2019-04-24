@@ -30,7 +30,7 @@ $form->prepare();
                             <td><?php echo ($pais->getNombre()); ?></td>
                             <td> <a class="btn btn-default" href="<?= $this->url('pais', ['action' => 'edit', 'id' => $pais->getId()]); ?>"> <span class="glyphicon glyphicon-pencil" ></span> </a>                            
                                 <button name="<?= $pais->getId() ?>" id="<?= $pais->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $pais->getId() ?>">
-                                    <span class="glyphicon glyphicon-remove" ></span>
+                                    <span class="glyphicon glyphicon-trash" ></span>
                                 </button>
                             </td>
                             <!-- Modal -->

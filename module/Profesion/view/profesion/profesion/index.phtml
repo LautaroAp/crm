@@ -116,13 +116,15 @@ if (isset($_SESSION['MENSAJES']['profesion_cliente'])) {
                                             <tr>
                                                 <td><?php echo ($profesion->getNombre()); ?></td>
                                                 <td><?php echo ($profesion->getDescripcion()); ?></td>
-                                                <td class="table-items-right">
-                                                    <a class="btn btn-default" href="<?= $this->url('profesion/editar', ['action' => 'edit', 'id' => $profesion->getId()]); ?>">
-                                                        <span class="glyphicon glyphicon-pencil" ></span> 
-                                                    </a>
-                                                    <button name="<?= $profesion->getId() ?>" id="<?= $profesion->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $profesion->getId() ?>">
-                                                        <span class="glyphicon glyphicon-remove" ></span>
-                                                    </button>
+                                                <td>
+                                                    <div class="pull-right">
+                                                        <a class="btn btn-default btn-sm" href="<?= $this->url('profesion/editar', ['action' => 'edit', 'id' => $profesion->getId()]); ?>">
+                                                            <span class="glyphicon glyphicon-pencil" ></span> 
+                                                        </a>
+                                                        <button name="<?= $profesion->getId() ?>" id="<?= $profesion->getId() ?>" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal<?= $profesion->getId() ?>">
+                                                            <span class="glyphicon glyphicon-trash" ></span>
+                                                        </button>
+                                                    </div>
                                                 </td>
                                                 <!-- Modal -->
                                         <div id="myModal<?= $profesion->getId() ?>" class="modal fade" role="dialog">

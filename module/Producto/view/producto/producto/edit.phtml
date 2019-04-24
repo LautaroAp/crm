@@ -20,6 +20,9 @@
 <!-- Formulario -->
 <?php
 $bien = $producto->getBien();
+
+
+
 $categoria = $bien->getCategoria();
 $iva = $bien->getIva();
 $proveedor = $bien->getProveedor();
@@ -57,7 +60,7 @@ $proveedor = $bien->getProveedor();
                     <div class="form-group col-md-6">
                         <label>Marca</label>
                         <input type="text" class="form-control" name="marca"
-                            value="<?= $producto->getMarca(); ?>">
+                            value="<?= $bien->getMarca(); ?>">
                     </div>
                 </div>
                 <!-- 3ra fila -->

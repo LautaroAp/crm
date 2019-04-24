@@ -183,6 +183,7 @@ class ProveedorController extends HuellaController
         return new ViewModel([
             'proveedor' => $data['proveedor'],
             'eventos' => $data['eventos'],
+            'datos_adicionales' => $data['datos_adicionales'],
             'tipo_eventos' => $this->tipoEventosManager->getTipoEventos($persona->getTipo()),
             'persona' => $data['persona'],
             'volver' => $volver, 

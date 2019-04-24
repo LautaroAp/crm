@@ -142,8 +142,8 @@ $id_persona = $persona->getId();
                 DATOS ADICIONALES
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseDatosAdicionales" aria-expanded="true"
                     aria-controls="collapseDatosAdicionales">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse"
-                            id="d_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-menu-hamburger btn-collapse"
+                            id="d_adicionales" ></i></span>
                 </a>
             </div>
 
@@ -152,19 +152,33 @@ $id_persona = $persona->getId();
                     <table id="tabla_evento" class="table table-condensed table-hover">
                         <thead>
                             <tr>
-                                <th class="th-sm">Dato</th>
-                                <th class="th-sm">Descripcion</th>
+                                <th class="th-sm">Dato o Referencia</th>
+                                <th class="th-sm">Descripción</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($datos_adicionales as $dato_adicional) : ?>
+                            <?php foreach ($datos_adicionales as $dato_adicional) :
+                                $url = 'clientes/ficha';
+                                $referencia = $dato_adicional->getId_referencia_persona();
+                                if(is_null($referencia)){
+                                    $referencia = "";
+                                } else {
+                                    $referencia = $dato_adicional->getId_referencia_persona()->getId();
+                                    if($dato_adicional->getId_referencia_persona()->getTipo() == "PROVEEDOR"){
+                                        $url = 'proveedores/ficha';
+                                    }
+                                }; ?>
                             <tr>
-                                <!-- Dato -->
-                                <td><?php echo ($dato_adicional->getDato_adicional()); ?></td>
-                                <!-- Referencia -->
                                 <td>
-                                <a href="<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $dato_adicional->getId_referencia_persona()]); ?>">link</a>
+                                    <!-- Dato -->
+                                    <?php if($referencia == "") {echo ($dato_adicional->getDato_adicional());} ?>
+                                    <!-- Referencia -->
+                                    <a href="<?= $this->url($url, ['action' => 'ficha', 'id' => $referencia]); ?>" 
+                                        <?php if($referencia == ""){echo ("hidden");} ?> target="_blank">
+                                        <label role="button"><?= $dato_adicional->getDato_adicional() ?></label> 
+                                        <span class="glyphicon glyphicon-share"></span>
+                                    </a>
                                 </td>
                                 <!-- Descripcion -->
                                 <td><?php echo ($dato_adicional->getDescripcion()); ?></td>
@@ -178,7 +192,7 @@ $id_persona = $persona->getId();
                                             id="<?= $dato_adicional->getId() ?>" type="button"
                                             class="btn btn-default btn-sm" data-toggle="modal"
                                             data-target="#datoAdicionalModal<?= $dato_adicional->getId() ?>">
-                                            <span class="glyphicon glyphicon-remove"></span>
+                                            <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </div>
                                 </td>
@@ -234,8 +248,8 @@ $id_persona = $persona->getId();
                 USUARIOS ADICIONALES
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseUsuariosAdicionales"
                     aria-expanded="true" aria-controls="collapseUsuariosAdicionales">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse"
-                            id="u_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-menu-hamburger btn-collapse"
+                            id="u_adicionales" ></i></span>
                 </a>
             </div>
 
@@ -268,7 +282,7 @@ $id_persona = $persona->getId();
                                         <button name="<?= $usuario->getId() ?>" id="<?= $usuario->getId() ?>"
                                             type="button" class="btn btn-default btn-sm" data-toggle="modal"
                                             data-target="#usuarioModal<?= $usuario->getId() ?>">
-                                            <span class="glyphicon glyphicon-remove"></span>
+                                            <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </div>
                                 </td>
@@ -324,8 +338,8 @@ $id_persona = $persona->getId();
                 REGISTRO DE EVENTOS
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true"
                     aria-controls="collapseActividades">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up btn-collapse"
-                            id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
+                    <span class="pull-right clickable "><i class="glyphicon glyphicon-menu-hamburger btn-collapse"
+                            id="actividades"></i></span>
                 </a>
             </div>
             <div class="panel-body">

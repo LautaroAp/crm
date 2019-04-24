@@ -1,10 +1,36 @@
+<!-- scripts -->
+<script src="/js/dato-adicional.js"></script>
+
+<?php 
+$tipo = $datoAdicional->getTipo();
+
+if($datoAdicional->getId_referencia_persona()){
+    $id_referencia_persona = $datoAdicional->getId_referencia_persona()->getId();
+} else {
+    $id_referencia_persona = null;
+}
+ 
+?>
+
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<script>
+var json_nro_clientes = <?= $json_clientes ?>;
+var json_clientes = <?= $json_clientes ?>;
+var json_nro_proveedores = <?= $json_proveedores ?>;
+var json_proveedores = <?= $json_proveedores ?>;
+</script>
+
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
-            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
-            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
-            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas/formaspago'); ?>">Formas de Pago</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes'); ?>">Clientes</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('gestionClientes/listado'); ?>">Listado</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('clientes/ficha', ['tipo' => 'cliente', 'id' => $persona->getId()]) ?>">Ficha Cliente</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Dato Adicional</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
             <li class="pull-right"><a href="empresa" id="volver">Volver</a></li>
@@ -24,26 +50,72 @@
             </div>
             <div class="panel panel-body">
                 <div class="" id="add_tipo_evento">
-                    <form method="post">
-                        <div class="row form-row">
+                    <form method="post" autocomplete="off">
                         <div class="row form-row">
                             <div class="form-group col-md-3">
-                                <label>Dato</label>
-                                <input type="text" class="form-control" id="dato_adicional" name="dato_adicional"
-                                    placeholder="Dato Adicional" value="<?= $datoAdicional->getDato_adicional() ?>" required>
+                                <label>Tipo de Dato Adicional</label>
+                                <select class="form_control" name="tipo_dato_adicional" id="tipo_dato_adicional" required>
+                                    <option value="Dato" <?php if($tipo == "Dato"){ echo "selected";} ?>>Dato General</option>
+                                    <option value="Cliente" <?php if($tipo == "Cliente"){ echo "selected";} ?>>Referencia a Cliente</option>
+                                    <option value="Proveedor" <?php if($tipo == "Proveedor"){ echo "selected";} ?>>Referencia a Proveedor</option>
+                                </select>
                             </div>
+                        </div>
+                        <div class="row form-row">
+                            <div class="form-group col-md-3" id="tipo_dato">
+                                <label>Dato</label>
+                                <input type="text" class="form-control" id="dato_general" name="dato_general"
+                                    placeholder="Ingresar dato adicional" value="<?= $datoAdicional->getDato_adicional() ?>" >
+                            </div>
+                            <!-- ID Persona -->
+                            <input type="hidden" class="form-control" name="id_referencia_persona" id="id_referencia_persona" 
+                                value="<?= $id_referencia_persona ?>">
+                            <!-- Referencia a Cliente -->
+                            <div id="referencia_cliente" hidden="true">
+                                <div class="form-group col-md-3">
+                                    <label>Nro. de Cliente</label>
+                                    <div class="autocomplete">
+                                        <input type="text" class="form-control" id="nro_cliente" name="nro_cliente" 
+                                            placeholder="Ingresar nro de cliente" value="<?= $id_referencia_persona ?>" >
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Nombre</label>
+                                    <div class="autocomplete">
+                                        <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente" 
+                                            placeholder="Ingresar nombre o apellido" value="<?= $datoAdicional->getDato_adicional() ?>" >
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Referencia a Proveedor -->
+                            <div id="referencia_proveedor" hidden="true">
+                                <div class="form-group col-md-3">
+                                    <label>Nro. de Proveedor</label>
+                                    <div class="autocomplete">
+                                        <input type="text" class="form-control" id="nro_proveedor" name="nro_proveedor" 
+                                            placeholder="Ingresar nro de roveedor" value="<?= $id_referencia_persona ?>" >
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Nombre</label>
+                                    <div class="autocomplete">
+                                        <input type="text" class="form-control" id="nombre_proveedor" name="nombre_proveedor" 
+                                            placeholder="Ingresar nombre o apellido" value="<?= $datoAdicional->getDato_adicional() ?>" >
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Descripcion -->
                             <div class="form-group col-md-3">
                                 <label>Descripción</label>
-                                <input type="text" class="form-control" name="descripcion"
-                                    placeholder="Descripcion" value="<?= $datoAdicional->getDescripcion() ?>" required>
+                                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Ingresar descripción" value="<?= $datoAdicional->getDescripcion() ?>" required>
                             </div>
                         </div>
                         <div class="row form-row">
                             <div class="form-group col-md-3">
-                                <button type="button" class="btn btn-default" data-toggle="modal"
+                                <button type="button" class="btn btn-default form-margen" data-toggle="modal"
                                     data-target="#myModal">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                    Agregar Dato Adicional
+                                    <span class="glyphicon glyphicon-check"></span>
+                                    Guardar
                                 </button>
                             </div>
                         </div>
@@ -54,10 +126,10 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Agregar Forma de Pago</h4>
+                                        <h4 class="modal-title">Agregar Dato Adicional</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p>¿Está seguro que desea modificar esta forma de pago?</p>
+                                        <p>¿Está seguro que desea agregar este dato adicional?</p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-default">Aceptar</button>
@@ -73,3 +145,10 @@
         </div>
     </div>
 </div>
+
+<script>
+$(document).ready(function() {
+    limpiar_datos = false;
+    $("#tipo_dato_adicional").change();
+});
+</script>

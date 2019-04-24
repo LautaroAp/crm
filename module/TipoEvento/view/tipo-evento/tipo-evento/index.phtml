@@ -149,17 +149,19 @@ if ($tipoPersona=="proveedor"){
                                             <td><?php echo ($tipo->getNombre()); ?></td>
                                             <td><?php echo ($tipo->getNombreCategoriaEvento()); ?></td>
                                             <td><?php echo ($tipo->getDescripcion()); ?></td>
-                                            <td class="table-items-right">
-                                                <a class="btn btn-default" href="<?= $this->url('actividades/editar', ['action' => 'edit', 'tipo'=>$tipoPersona, 'id' => $tipo->getId()]); ?>">
-                                                    <span class="glyphicon glyphicon-pencil" ></span> 
-                                                </a>
-                                                <button   <?php if ((($tipo->getCategoria_evento())!=null) and 
-                                                ($tipo->getCategoria_evento()->getId()==16)){echo ("disabled");} ?>
-                                                name="<?= $tipo->getId() ?>" id="<?= $tipo->getId() ?>"
-                                                type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $tipo->getId() ?>"
-                                                >
-                                                    <span class="glyphicon glyphicon-remove" ></span>
-                                                </button>
+                                            <td>
+                                                <div class="pull-right">
+                                                    <a class="btn btn-default btn-sm" href="<?= $this->url('actividades/editar', ['action' => 'edit', 'tipo'=>$tipoPersona, 'id' => $tipo->getId()]); ?>">
+                                                        <span class="glyphicon glyphicon-pencil" ></span> 
+                                                    </a>
+                                                    <button   <?php if ((($tipo->getCategoria_evento())!=null) and 
+                                                    ($tipo->getCategoria_evento()->getId()==16)){echo ("disabled");} ?>
+                                                    name="<?= $tipo->getId() ?>" id="<?= $tipo->getId() ?>"
+                                                    type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal<?= $tipo->getId() ?>"
+                                                    >
+                                                        <span class="glyphicon glyphicon-trash" ></span>
+                                                    </button>
+                                                </div>
                                             </td>
                                             <!-- Modal -->
                                     <div id="myModal<?= $tipo->getId() ?>" class="modal fade" role="dialog">

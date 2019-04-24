@@ -124,7 +124,8 @@ class ProveedorManager {
         $data = [
             'proveedor' =>$proveedor,
             'eventos' =>$persona->getEventos(),
-            'persona'=>$persona
+            'persona'=>$persona,
+            'datos_adicionales'=>$persona->getDatos_adicionales(),
         ];
         return $data;
     }

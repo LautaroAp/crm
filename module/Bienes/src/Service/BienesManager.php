@@ -99,7 +99,9 @@ class BienesManager {
         if (isset($data['stock'])){
             $bien->setStock($data['stock']);
         }
-        $bien->setCodigo($data['codigo']);
+        if (isset($data['codigo'])){
+            $bien->setCodigo($data['codigo']);
+        }
         if (isset($data['codigo_barras'])){
             $bien->setCodigo_barras($data['codigo_barras']);
         }

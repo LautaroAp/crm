@@ -72,8 +72,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             <h4>
                                 <?= $persona->getNombre(); ?>
                             </h4>
-                            <p><i>
-                                    <?php echo ($proveedor->getNombreCategoriaProveedor()); ?></i></p>
+                            <p><i><?php echo ("Nro. Proveedor: " . str_pad($persona->getId(), 4, "0", STR_PAD_LEFT) . " - " . $proveedor->getNombreCategoriaProveedor()); ?></i></p>
                             <p><span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;
                                 <?php echo ($persona->getTelefono()); ?>
                             </p>
@@ -99,7 +98,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             </p>
                         </div>
                         <div class="col-sm-6 ficha-cliente-p">
-                            <p><label>Fecha Compra:</label>
+                            <p><label>Primera Compra:</label>
                                 <?php
                                 if (!is_null($proveedor->getFechaCompra())) {
                                     echo ($proveedor->getFechaCompra()->format('d/m/Y'));
@@ -168,15 +167,15 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
         </div>
     </div>
 
-
-
 <!-- Datos Adicionales -->
 <div class="container row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
                 DATOS ADICIONALES
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseDatosAdicionales" aria-expanded="true" aria-controls="collapseDatosAdicionales">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down btn-collapse" id="ud_adicionales" onclick="cambiaIconoCollapse(event)"></i></span>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseDatosAdicionales" aria-expanded="true"
+                    aria-controls="collapseDatosAdicionales">
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-menu-hamburger btn-collapse"
+                            id="d_adicionales" ></i></span>
                 </a>
             </div>
 
@@ -185,29 +184,86 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                     <table id="tabla_evento" class="table table-condensed table-hover">
                         <thead>
                             <tr>
+                                <th class="th-sm">Dato o Referencia</th>
                                 <th class="th-sm">Descripción</th>
-                                <th class="th-sm">Dato</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach ($datos_adicionales as $dato_adicional) :
+                                $url = 'clientes/ficha';
+                                $referencia = $dato_adicional->getId_referencia_persona();
+                                if(is_null($referencia)){
+                                    $referencia = "";
+                                } else {
+                                    $referencia = $dato_adicional->getId_referencia_persona()->getId();
+                                    if($dato_adicional->getId_referencia_persona()->getTipo() == "PROVEEDOR"){
+                                        $url = 'proveedores/ficha';
+                                    }
+                                }; ?>
                             <tr>
-                                <td><?php echo (". . ."); ?></td>
-                                <td><?php echo (". . ."); ?></td>
+                                <td>
+                                    <!-- Dato -->
+                                    <?php if($referencia == "") {echo ($dato_adicional->getDato_adicional());} ?>
+                                    <!-- Referencia -->
+                                    <a href="<?= $this->url($url, ['action' => 'ficha', 'id' => $referencia]); ?>" 
+                                        <?php if($referencia == ""){echo ("hidden");} ?> target="_blank">
+                                        <label role="button"><?= $dato_adicional->getDato_adicional() ?></label> 
+                                        <span class="glyphicon glyphicon-share"></span>
+                                    </a>
+                                </td>
+                                <!-- Descripcion -->
+                                <td><?php echo ($dato_adicional->getDescripcion()); ?></td>
                                 <td>
                                     <div class="pull-right">
-                                        <button class="btn btn-default btn-sm" type="button">
+                                        <a class="btn btn-default btn-sm"
+                                            href="<?= $this->url('datoadicional/editar', ['action' => 'edit', 'id' => $dato_adicional->getId()]); ?>">
                                             <span class="glyphicon glyphicon-pencil"></span>
-                                        </button>
-                                        <button class="btn btn-default btn-sm" type="button">
-                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </a>
+                                        <button name="<?= $dato_adicional->getId() ?>"
+                                            id="<?= $dato_adicional->getId() ?>" type="button"
+                                            class="btn btn-default btn-sm" data-toggle="modal"
+                                            data-target="#datoAdicionalModal<?= $dato_adicional->getId() ?>">
+                                            <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </div>
-                                </td>                                    
+                                </td>
+                                <!-- Modal Dato Adicional -->
+                                <div id="datoAdicionalModal<?= $dato_adicional->getId() ?>" class="modal fade"
+                                    role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close"
+                                                    data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Eliminar dato adicional</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    ¿Está seguro que desea eliminar el dato adicional:
+                                                    "<?= $this->escapeHtml($dato_adicional->getDato_adicional()) ?>"
+                                                    de forma permanente?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="<?= $this->url('datoadicional/borrar', ['action' => 'delete', 'id' => $dato_adicional->getId()]); ?>"
+                                                    type="button">
+                                                    <span class="btn btn-default">Aceptar</span></a>
+
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <a href="#" type="button">
+                    <br>
+                    <a href="<?= $this->url('datoadicional/agregar', ['action' => 'add', 'id' => $persona->getId()]); ?>"
+                        type="button">
                         <span class="btn btn-default">
                             <span class="glyphicon glyphicon-plus"></span> Dato Adicional
                         </span>
@@ -225,7 +281,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             <div class="panel-heading text-center titulo-espaciado">
                 REGISTRO DE EVENTOS
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up btn-collapse" id="actividades" onclick="cambiaIconoCollapse(event)"></i></span>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-menu-hamburger btn-collapse" id="actividades"></i></span>
                 </a>
             </div>
             <div class="panel-body padding-top-cero">

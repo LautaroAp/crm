@@ -90,6 +90,7 @@ class ProductoController extends HuellaController {
             $this->productoManager->updateProducto($producto, $data);
             $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/listado');
         }
+
         return new ViewModel([
             'producto' => $producto,
             'categorias' => $categoriaProductos,

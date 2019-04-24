@@ -51,11 +51,12 @@ class DatoAdicionalManager {
 
     
     /**
-     * This method adds a new DatoAdicional.
+     * Si es "DATO" solo guarda los valores y se muestran de manera Normal.
+     * Si es "REFERENCIA" guarda los ID y en el campo DATO el nombre de la PERSONA.
      */
-    public function addDatoAdicional($data, $persona) {
+    public function addDatoAdicional($data, $persona, $referencia_persona) {
         $datoAdicional = new DatoAdicional();
-        $this->addData($datoAdicional, $data, $persona);
+        $this->addData($datoAdicional, $data, $persona, $referencia_persona);
         $this->entityManager->persist($datoAdicional);
         $this->entityManager->flush();
         return $datoAdicional;
@@ -64,26 +65,20 @@ class DatoAdicionalManager {
     /**
      * This method updates data of an existing datoAdicional.
      */
-    public function updateDatoAdicional($datoAdicional, $data, $persona) {
-        // $datoAdicional=$this->addData($datoAdicional, $data);
-        // return $datoAdicional;
-        $this->addData($datoAdicional, $data, $persona);
+    public function updateDatoAdicional($datoAdicional, $data, $persona, $referencia_persona) {
+        $this->addData($datoAdicional, $data, $persona, $referencia_persona);
         $this->entityManager->flush();
     }
 
-    private function addData($datoAdicional, $data, $persona) {
+    private function addData($datoAdicional, $data, $persona, $referencia_persona) {
+
         $datoAdicional->setId_ficha_persona($persona);
-        $datoAdicional->setDato_adicional($data['dato_adicional']);
-        if (isset($data['descripcion'])){
-            $datoAdicional->setDescripcion($data['descripcion']);
-        }
-        $datoAdicional->setTipo("dato");
-        // if (isset($data['bonificacion']) and ($data['bonificacion']!="")){
-        //     $datoAdicional->setBonificacion($data['bonificacion']);
-        // }
-        // if (isset($data['recargo']) and ($data['recargo']!="")){
-        //     $datoAdicional->setRecargo($data['recargo']);
-        // }
+        $datoAdicional->setId_referencia_persona($referencia_persona);
+
+        $datoAdicional->setDato_adicional($data['dato_general']);
+        $datoAdicional->setDescripcion($data['descripcion']);
+        $datoAdicional->setTipo($data['tipo_dato_adicional']);
+
         return $datoAdicional;
     }
     

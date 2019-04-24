@@ -67,12 +67,14 @@ $this->headTitle('Servicios');
                                     <td><?php echo ($bien->getDescuento()); ?></td>
                                     <td><?php echo  money_format("$ %n",($bien->getPrecio_final_iva())); ?></td>
                                     <td><?php echo  money_format("$ %n",($bien->getPrecio_final_iva_dto())); ?></td>
-                                    <td class="table-items-right"> 
-                                    <a class="btn btn-default" href="<?= $this->url('gestionProductosServicios/gestionServicios/editar', ['action' => 'edit', 'tipo'=>'servicio','id' => $servicio->getId()]); ?>">
-                                        <span class="glyphicon glyphicon-pencil" ></span> 
-                                    </a>
-                                    <button name="<?= $servicio->getId() ?>" id="<?= $servicio->getId() ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $servicio->getId() ?>"><span class="glyphicon glyphicon-remove" ></span></button></td>
-                                </td>
+                                    <td>
+                                        <div class="pull-right">
+                                            <a class="btn btn-default btn-sm" href="<?= $this->url('gestionProductosServicios/gestionServicios/editar', ['action' => 'edit', 'tipo'=>'servicio','id' => $servicio->getId()]); ?>">
+                                                <span class="glyphicon glyphicon-pencil" ></span> 
+                                            </a>
+                                            <button name="<?= $servicio->getId() ?>" id="<?= $servicio->getId() ?>" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal<?= $servicio->getId() ?>"><span class="glyphicon glyphicon-trash" ></span></button>
+                                        </div>
+                                    </td>
                                 <!-- Modal -->
                                 <div id="myModal<?= $servicio->getId() ?>" class="modal fade" role="dialog">
                                     <div class="modal-dialog">

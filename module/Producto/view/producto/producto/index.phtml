@@ -61,14 +61,14 @@
                                     <td><?php echo money_format("$ %n", $bien->getPrecio() * $bien->getStock()); ?></td>
                                     <td>
                                         <div class="pull-right">
-                                            <a class="btn btn-default" href="<?= $this->url('gestionProductosServicios/gestionProductos/editar',
+                                            <a class="btn btn-default btn-sm" href="<?= $this->url('gestionProductosServicios/gestionProductos/editar',
                                                                                  ['action' => 'edit', 'tipo'=>'producto','id' => $producto->getId()]); ?>">
                                                 <span class="glyphicon glyphicon-pencil" ></span> 
                                             </a>
                                             <button name="<?= $producto->getId() ?>" id="<?= $producto->getId() ?>"
-                                                type="button" class="btn btn-default" data-toggle="modal" 
+                                                type="button" class="btn btn-default btn-sm" data-toggle="modal" 
                                                                 data-target="#myModal<?= $producto->getId() ?>">
-                                                <span class="glyphicon glyphicon-remove" ></span>
+                                                <span class="glyphicon glyphicon-trash" ></span>
                                             </button>
                                         </div>
                                     </td>

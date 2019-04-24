@@ -107,14 +107,16 @@ if (isset($_SESSION['MENSAJES']['licencia'])) {
                                         <td><?php echo ($iva->getNombre()); ?></td>
                                         <td><?php echo ($iva->getDescripcion()); ?></td>
                                         <td><?php echo ($iva->getValor()); ?> %</td>
-                                        <td class="table-items-right"> 
-                                            <a class="btn btn-default" href="<?= $this->url('tipoIva/editar', ['id' => $iva->getId()]); ?>">
-                                                <span class="glyphicon glyphicon-pencil" ></span> 
-                                            </a>
-                                            <button name="<?= $iva->getId() ?>" id="<?= $iva->getId() ?>" type="button" 
-                                                class="btn btn-default" data-toggle="modal" data-target="#myModal<?= $iva->getId() ?>">
-                                                <span class="glyphicon glyphicon-remove" ></span>
-                                            </button>
+                                        <td>
+                                            <div class="pull-right"> 
+                                                <a class="btn btn-default btn-sm" href="<?= $this->url('tipoIva/editar', ['id' => $iva->getId()]); ?>">
+                                                    <span class="glyphicon glyphicon-pencil" ></span> 
+                                                </a>
+                                                <button name="<?= $iva->getId() ?>" id="<?= $iva->getId() ?>" type="button" 
+                                                    class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal<?= $iva->getId() ?>">
+                                                    <span class="glyphicon glyphicon-trash" ></span>
+                                                </button>
+                                            </div>
                                         </td>
                                     <!-- Modal -->
                                     <div id="myModal<?= $iva->getId() ?>" class="modal fade" role="dialog">
