@@ -72,8 +72,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             <h4>
                                 <?= $persona->getNombre(); ?>
                             </h4>
-                            <p><i>
-                                    <?php echo ($proveedor->getNombreCategoriaProveedor()); ?></i></p>
+                            <p><i><?php echo ("Nro. Proveedor: " . str_pad($persona->getId(), 4, "0", STR_PAD_LEFT) . " - " . $proveedor->getNombreCategoriaProveedor()); ?></i></p>
                             <p><span class="glyphicon glyphicon-earphone"></span>&nbsp;&nbsp;
                                 <?php echo ($persona->getTelefono()); ?>
                             </p>
@@ -99,7 +98,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                             </p>
                         </div>
                         <div class="col-sm-6 ficha-cliente-p">
-                            <p><label>Fecha Compra:</label>
+                            <p><label>Primera Compra:</label>
                                 <?php
                                 if (!is_null($proveedor->getFechaCompra())) {
                                     echo ($proveedor->getFechaCompra()->format('d/m/Y'));
@@ -186,7 +185,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
                         <thead>
                             <tr>
                                 <th class="th-sm">Dato o Referencia</th>
-                                <th class="th-sm">Descripcion</th>
+                                <th class="th-sm">Descripción</th>
                                 <th></th>
                             </tr>
                         </thead>

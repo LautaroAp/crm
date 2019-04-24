@@ -75,19 +75,15 @@ class ProductoManager
     private function addDatosParticularesProducto($producto, $data){
         $bien = $producto->getBien();
         $data['tipo'] = $this->tipo;
-        if (isset($bien)){
+        if (isset($bien)) {
             $this->bienesManager->updateBien($bien, $data);
         }
-        else{
+        else {
             $bien = $this->bienesManager->addBien($data);
             $producto->setBien($bien);
         }
-        // $producto->setMarca($data['marca']);
         $producto->setPresentacion($data['presentacion']);
-        // $producto->setStock($data['stock']);
         $producto->setReposicion($data['reposicion']);
-        // $producto->setCodigo_producto($data['codigo_producto']);
-        // $producto->setCodigo_barras($data['codigo_barras']);
     }
 
     private function addDatosEconomicosProducto($producto, $data){
@@ -97,16 +93,6 @@ class ProductoManager
         $producto->setPrecio_compra_total($data['precio_compra_total']);
         $producto->setContribucion_marginal_valor($data['cm_valor']);
         $producto->setContribucion_marginal_porcentual($data['cm_porcentual']);
-        /////TODO ESTO YA VA A ESTAR EN BIENES
-        // $producto->setPrecio_venta($data['precio_venta']);
-        // $producto->setPrecio_venta_dto($data['precio_venta_dto']);
-        // $producto->setDescuento($data['descuento']);
-        // $producto->setIva($this->ivaManager->getIva($data['iva']));
-        // $producto->setIva_gravado($data['iva_gravado']);
-        // $producto->setPrecio_final_iva($data['precio_final_iva']);
-        // $producto->setPrecio_final_iva_dto($data['precio_final_iva_dto']);
-        // Entidad
-        // $producto->setMoneda($data['moneda']);
     }
 
     public function getListaProveedores(){
