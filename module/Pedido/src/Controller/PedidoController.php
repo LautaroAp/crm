@@ -244,7 +244,7 @@ class PedidoController extends TransaccionController
        return $json;
    }
 
-   public function addItemsTransaccionAction(){
+   public function getItemsTransaccionAction(){
         $this->layout()->setTemplate('layout/nulo');
         $idTransaccion = $this->params()->fromRoute('id');
         $transaccion = $this->pedidoManager->getTransaccionId($idTransaccion);
@@ -254,5 +254,15 @@ class PedidoController extends TransaccionController
         $view->setTerminal(true);
         return $view;
    }
-
+   
+   public function getItemsPreviosAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $idTransaccion = $this->params()->fromRoute('id');
+        $transaccion = $this->pedidoManager->getTransaccionId($idTransaccion);
+        $items = $transaccion->getBienesTransacciones();
+        $itemsTransaccionJson = $this->getJsonFromObjectList($items);
+        $view = new ViewModel(['itemsTransaccionJson'=>$itemsTransaccionJson]);
+        $view->setTerminal(true);
+        return $view;
+    }   
 }

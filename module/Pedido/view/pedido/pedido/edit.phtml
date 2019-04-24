@@ -59,7 +59,7 @@ if(!is_null($pedido->getFecha_entrega())){
 }
 
 if(!is_null($transaccion->getTransaccionPrevia())){
-    $transaccionPrevia = $transaccion->getTransaccionPrevia()->getId();
+    $transaccionPrevia = $transaccion->getTransaccionPrevia()->getNumero();
 } else {
     $transaccionPrevia = "";
 }
@@ -69,6 +69,7 @@ $responsable = $this->identity();
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
 <script>
+var tipoTransaccion ="pedido";
 var items = [];
 var json_items = <?= $json_bienes ?>;
 var json_items_codigos = <?= $json_bienes ?>;
@@ -82,6 +83,10 @@ items.concat(itemsTransaccionJson);
 var itemsTransaccion =null;
 var itemsAnteriores =null;
 var transaccionPrevia = <?= $transaccionPrevia ?>;
+var itemsTransaccionPrevia = null;
+if(transaccionPrevia!=null){
+    getItemsTransaccionPrevia();
+}
 </script>
 
 <!-- Document -->
@@ -165,7 +170,7 @@ var transaccionPrevia = <?= $transaccionPrevia ?>;
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
                         <input type="hidden" id="url" name="url" value="<?= $url ?>">
-                        <input type="hidden" id="transaccion_base" name="transaccion_base">
+                        <input type="hidden" id="id_transaccion_previa" name="id_transaccion_previa">
                     </div>
                 </div>
             </div>
@@ -438,6 +443,8 @@ var transaccionPrevia = <?= $transaccionPrevia ?>;
 </form>
 
 <div id="div_transaccion">
+</div> 
+<div id="div_items_transaccion_previa">
 </div> 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">

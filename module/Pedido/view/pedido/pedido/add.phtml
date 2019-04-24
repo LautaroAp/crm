@@ -58,7 +58,8 @@ var itemsTransaccionJson = <?= $itemsTransaccionJson ?>;
 items.concat(itemsTransaccionJson);
 var itemsTransaccion =null;
 var itemsAnteriores =null;
-
+var transaccionPrevia = null;
+var itemsTransaccionPrevia = null;
 </script>
 
 <!-- Document -->
@@ -140,7 +141,7 @@ var itemsAnteriores =null;
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
                         <input type="hidden" id="url" name="url" value="<?= $url ?>">
-                        <!-- <input type="hidden" id="transaccion_base" name="transaccion_base"> -->
+                        <input type="hidden" id="id_transaccion_previa" name="id_transaccion_previa">
                     </div>
                 </div>
             </div>
@@ -408,7 +409,8 @@ var itemsAnteriores =null;
 
 <div id="div_transaccion">
 </div> 
-
+<div id="div_items_transaccion_previa">
+</div> 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
     <div class="row img-centrar">

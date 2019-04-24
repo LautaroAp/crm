@@ -115,10 +115,17 @@ function completeItems(id){
     if (id!=null){
         var transaccion_selected = transacciones[id];
         var idTransaccion = transaccion_selected["Id"];
-        $('#transaccion_buscada').val(idTransaccion);
-
-        $.post( '/' + tipoTransaccion + '/ajax/addItemsTransaccion/' + idTransaccion, function (data) {
+        var numTransaccion = transaccion_selected["Numero"];
+        $('#transaccion_buscada').val(numTransaccion);
+        $('#id_transaccion_previa').val(idTransaccion);
+        $.post( '/' + tipoTransaccion + '/ajax/getItemsTransaccion/' + idTransaccion, function (data) {
             $('#div_transaccion').html(data);
         });
     }
+}
+
+function getItemsTransaccionPrevia(){
+    $.post( '/' + tipoTransaccion + '/ajax/getItemsPrevios/' + transaccionPrevia, function (data) {
+        $('#div_items_transaccion_previa').html(data);
+    });
 }

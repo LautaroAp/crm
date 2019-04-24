@@ -57,6 +57,24 @@ class TransaccionManager {
     public function getTransaccionesPersona($id_persona){
         return $this->entityManager->getRepository(Transaccion::class)->findBy(['persona'=>$id_persona]);
     }
+    public function getTransaccionPrevia($tipo, $id){
+        $transaccion_especifica = null;
+        print_r($tipo);
+        print_r($id);
+        die();
+        if ($tipo=="PEDIDO"){
+            $transaccion_especifica= $this->entityManager->getRepository(Presupuesto::class)->findOneById($id);
+        }
+        if ($tipo=="REMITO"){
+            $transaccion_especifica= $this->entityManager->getRepository(Remito::class)->findOneById($id);
+        }
+        if (!is_null($transaccion_especifica)){
+            return $transaccion_especifica->getTransaccion();
+        }
+        return null;
+        
+    }
+    
 
     public function getTabla() {
         // Create the adapter
@@ -141,8 +159,8 @@ class TransaccionManager {
             $formaEnvio = $this->formaEnvioManager->getFormaEnvioId($data['forma_envio']);
             $transaccion->setFormaEnvio($formaEnvio);
         }
-        if(isset($data['transaccion_buscada'])){           
-            $transaccionPrevia = $this->getTransaccionId($data['transaccion_buscada']);
+        if(isset($data['id_transaccion_previa'])){           
+            $transaccionPrevia = $this->getTransaccionId($data['id_transaccion_previa']);
             $transaccion->setTransaccionPrevia($transaccionPrevia);
         }
         return $transaccion;
