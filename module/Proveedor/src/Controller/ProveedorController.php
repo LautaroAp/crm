@@ -59,6 +59,7 @@ class ProveedorController extends HuellaController
         $total_proveedor = $this->proveedorManager->getTotal();
         $pag = $this->getPaginator($paginator);
         $volver = $this->getUltimaUrl();
+        $_SESSION['CATEGORIA']['TIPO'] = "PROVEEDOR";
         return new ViewModel([
             'personas' => $pag,
             'paises' => $pais,
