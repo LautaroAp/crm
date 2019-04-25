@@ -59,9 +59,9 @@ if(!is_null($pedido->getFecha_entrega())){
 }
 
 if(!is_null($transaccion->getTransaccionPrevia())){
-    $transaccionPrevia = $transaccion->getTransaccionPrevia()->getNumero();
+    $transaccionPreviaNum = $transaccion->getTransaccionPrevia()->getNumero();
 } else {
-    $transaccionPrevia = "";
+    $transaccionPreviaNum = -1;
 }
 $url = "/clientes/listado/ficha/" . $persona->getId();
 $responsable = $this->identity();
@@ -82,9 +82,10 @@ var itemsTransaccionJson = <?= $itemsTransaccionJson ?>;
 items.concat(itemsTransaccionJson);
 var itemsTransaccion =null;
 var itemsAnteriores =null;
-var transaccionPrevia = <?= $transaccionPrevia ?>;
+var transaccionPreviaNum = <?= $transaccionPreviaNum ?>;
+if (transaccionPreviaNum=== -1){transaccionPreviaNum=null};
 var itemsTransaccionPrevia = null;
-if(transaccionPrevia!=null){
+if(transaccionPreviaNum!=null){
     getItemsTransaccionPrevia();
 }
 </script>
@@ -162,7 +163,9 @@ if(transaccionPrevia!=null){
                         <div class="form-group col-md-3">
                             <label>Número de Presupuesto</label>
                             <div class="autocomplete input-group">
-                                <input type="text" class="form-control" name="transaccion_buscada" id="transaccion_buscada" value="<?= $transaccionPrevia ?>" readonly>
+                                <input type="text" class="form-control" name="transaccion_buscada" id="transaccion_buscada" 
+                                value="<?php if ($transaccionPreviaNum!="-1"){echo $transaccionPreviaNum;}
+                                        else {echo ("");} ?>" readonly>
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i></button>
                                 </span>

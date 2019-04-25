@@ -4,6 +4,7 @@ namespace Remito\Service;
 
 use DBAL\Entity\Moneda;
 use DBAL\Entity\Remito;
+use DBAL\Entity\Pedido;
 use DBAL\Entity\Persona;
 use DBAL\Entity\BienesTransacciones;
 use DBAL\Entity\Transaccion;
@@ -98,6 +99,7 @@ class RemitoManager extends TransaccionManager{
         $remito->setTransaccion($transaccion);
         if (isset($data['numero_remito'])){
             $remito->setNumero($data['numero_remito']);
+            $transaccion->setNumeroTransaccionTipo($data['numero_remito']);
         }
        return $remito;
     }
@@ -125,4 +127,12 @@ class RemitoManager extends TransaccionManager{
     }
 
 
+    public function getPedidoPrevio($numPedido){
+        return $this->entityManager->getRepository(Pedido::class)->findOneBy(['numero'=>$numPedido]);
+    }
+
+    public function getPedidoPrevioFromTransaccion($transaccionPrevia){
+        $idTransaccionPrevia= $transaccionPrevia->getId();
+        return $this->entityManager->getRepository(Pedido::class)->findOneBy(['transaccion'=>$idTransaccionPrevia]);
+    }
 }

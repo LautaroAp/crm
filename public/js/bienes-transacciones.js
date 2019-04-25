@@ -55,6 +55,7 @@ function addItems(bienesTransacciones, tipo, id) {
     var tbody = document.createElement("tbody");
     tbody.setAttribute("role", "button");
     var value = null;
+
     for (var i = 0; i < bienesTransacciones.length; i++) {
         var item = bienesTransacciones[i];
         tr = tbody.insertRow(-1);
@@ -69,7 +70,8 @@ function addItems(bienesTransacciones, tipo, id) {
             var precio = item["Bien"]["Precio"];
             var dto = item["Bien"]["Dto (%)"];
             var cantidad = item["Cantidad"];
-            var precioDto = (precio * dto / 100) * cantidad;
+            var dtoPeso = (precio * dto / 100) * cantidad;
+            var precioDto = precio - dtoPeso;     
             var iva = value = item["IVA (%)"]["Valor"];
             if (col[j] == "Nombre" || col[j] == "Descripcion" || col[j] == "Precio") {
                 value = item["Bien"][col[j]];
@@ -91,7 +93,7 @@ function addItems(bienesTransacciones, tipo, id) {
                 }
             }
             if (col[j] == "Dto ($)") {
-                value = formatMoney((parseFloat(precioDto)).toFixed(2));
+                value = formatMoney((parseFloat(dtoPeso)).toFixed(2));
             }
             if ((col[j] == "IVA ($)")) {
                 value = precioDto * iva / 100;
@@ -540,6 +542,8 @@ function updateOutputSelect() {
     // Elimina items sobrantes del json "output" y deja solo el seleccionado
     var result;
     var aux = Array.from(json_items);
+    console.log("aux");
+    console.log(aux);
     for (i = 0; i < aux.length; i++) {
         if (aux[i]["value"] == $('#item_id').val()) {
             result = aux.splice(i, 1);

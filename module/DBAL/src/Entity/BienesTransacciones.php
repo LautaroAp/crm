@@ -235,6 +235,9 @@ class BienesTransacciones {
         $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
         $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
         $output .= '"Dto ($)": "' . $this->getPrecioDto() .'", ';
+        if (!is_null($this->getTransaccion())){
+            $output .= '"Numero Transaccion": "' . $this->getTransaccion()->getId() .'", ';
+        }
         if (!is_null($this->getestadoEntrega())){
             $output .= '"Estado Entrega": "' . $this->getestadoEntrega() .'", ';
         }

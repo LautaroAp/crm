@@ -42,8 +42,12 @@ function completarTransacciones(transacciones_anteriores){
             var tabCell = tr.insertCell(-1);
             tabCell.setAttribute("id", i);
             tabCell.setAttribute("class", "click");
-            // tabCell.setAttribute("onclick", "selectTransaccion(id)");
-            value = transac[col[j]];
+            if (col[j]=="Numero"){
+                value = transac["Numero Tipo Transaccion"];
+            }
+            else{
+                value = transac[col[j]];
+            }
             tabCell.innerHTML = value;
         }
 
@@ -52,7 +56,7 @@ function completarTransacciones(transacciones_anteriores){
         btn.setAttribute('type', 'button');
         // alert(transaccionPrevia);
         // alert(transacciones[i]["Id"]);
-        if (transaccionPrevia!=null && transaccionPrevia==transacciones[i]["Id"]){
+        if (transaccionPreviaNum!=null && transaccionPreviaNum==transacciones[i]["Numero Tipo Transaccion"]){
             btn.setAttribute('class', 'btn btn-default btn-sm  glyphicon glyphicon-check ');
             transaccion = i+"button";
         }
@@ -69,11 +73,6 @@ function completarTransacciones(transacciones_anteriores){
 
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
-
-//     var mymodal = $('#modalTransacciones');
-//     mymodal.find('.modal-body').innerHTML("hola");
-//     mymodal.modal('show');
-// 
 }
 
 function getTransaccion(buttonId){
@@ -101,13 +100,15 @@ function processData(data){
     console.log(data);
 }
 
+
 function removeItemsAnteriores(){
-    items = $(items).not(itemsAnteriores).get();
-    console.log(items);
+    //items = $(items).not(itemsAnteriores).get();
+    // console.log(items);
 }
 function addTransaccionItems(){
-    removeItemsAnteriores();
-    items = (items.concat(itemsTransaccion));
+    // removeItemsAnteriores();
+    items= itemsTransaccion;
+    // items = (items.concat(itemsTransaccion));
     addItems(items, tipoTransaccion, idPersona);
 }
 
@@ -115,7 +116,9 @@ function completeItems(id){
     if (id!=null){
         var transaccion_selected = transacciones[id];
         var idTransaccion = transaccion_selected["Id"];
-        var numTransaccion = transaccion_selected["Numero"];
+        var numTransaccion = transaccion_selected["Numero Tipo Transaccion"];
+        // alert(tipoTransaccion);
+        // alert(idTransaccion);
         $('#transaccion_buscada').val(numTransaccion);
         $('#id_transaccion_previa').val(idTransaccion);
         $.post( '/' + tipoTransaccion + '/ajax/getItemsTransaccion/' + idTransaccion, function (data) {
@@ -125,7 +128,9 @@ function completeItems(id){
 }
 
 function getItemsTransaccionPrevia(){
-    $.post( '/' + tipoTransaccion + '/ajax/getItemsPrevios/' + transaccionPrevia, function (data) {
+    // alert(tipoTransaccion);
+    // alert(transaccionPreviaNum);
+    $.post( '/' + tipoTransaccion + '/ajax/getItemsPrevios/' + transaccionPreviaNum, function (data) {
         $('#div_items_transaccion_previa').html(data);
     });
 }

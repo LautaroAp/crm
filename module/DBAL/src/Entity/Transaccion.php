@@ -125,7 +125,11 @@ class Transaccion {
      */
     protected $transaccionPrevia;
 
-    
+    /**
+     * @ORM\Column(name="NUMERO_TIPO_TRANSACCION", nullable=true, type="integer")
+    */
+    protected $numeroTransaccionTipo;
+
     /**
      * Get the value of id
      */ 
@@ -541,6 +545,10 @@ class Transaccion {
         if (!(is_null($this->transaccionPrevia))){
             $output .= '"Transaccion Previa": ' . $this->getTransaccionPrevia()->getId() .', ';
         }
+        if (!(is_null($this->numeroTransaccionTipo))){
+            $output .= '"Numero Tipo Transaccion": ' . $this->getNumeroTransaccionTipo().', ';
+        }
+        
         $output .= '"Bonificacion General": "' . $this->getBonificacionGeneral() .'" ';
 
 
@@ -564,6 +572,26 @@ class Transaccion {
     public function setTransaccionPrevia($transaccionPrevia)
     {
         $this->transaccionPrevia = $transaccionPrevia;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of numeroTransaccionTipo
+     */ 
+    public function getNumeroTransaccionTipo()
+    {
+        return $this->numeroTransaccionTipo;
+    }
+
+    /**
+     * Set the value of numeroTransaccionTipo
+     *
+     * @return  self
+     */ 
+    public function setNumeroTransaccionTipo($numeroTransaccionTipo)
+    {
+        $this->numeroTransaccionTipo = $numeroTransaccionTipo;
 
         return $this;
     }
