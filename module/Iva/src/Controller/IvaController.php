@@ -18,11 +18,11 @@ class IvaController extends HuellaController {
      */
     protected $ivaManager;
 
-    /**
-     * Iva manager.
-     * @var User\Service\LicenciaManager 
-     */
-    private $licenciaManager;
+    // /**
+    //  * Iva manager.
+    //  * @var User\Service\LicenciaManager 
+    //  */
+    // private $licenciaManager;
 
     /**
      * Iva manager.
@@ -38,10 +38,10 @@ class IvaController extends HuellaController {
 
     
 
-    public function __construct($entityManager, $ivaManager, $licenciaManager, $productoManager, $servicioManager) {
+    public function __construct($entityManager, $ivaManager, $productoManager, $servicioManager) {
         $this->entityManager = $entityManager;
         $this->ivaManager = $ivaManager;
-        $this->licenciaManager = $licenciaManager;
+        // $this->licenciaManager = $licenciaManager;
         $this->productoManager = $productoManager;
         $this->servicioManager = $servicioManager;
     }
@@ -125,7 +125,7 @@ class IvaController extends HuellaController {
             $this->reportarError();
         } else {
             // Eliminar de Licencias
-            $this->licenciaManager->eliminarIvas($id);
+            // $this->licenciaManager->eliminarIvas($id);
             // Eliminar de Productos
             $this->productoManager->eliminarIvas($id);
             // Eliminar de Servicios

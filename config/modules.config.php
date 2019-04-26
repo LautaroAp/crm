@@ -23,7 +23,6 @@ return [
     'Application',
     'DBAL',
     'Ejecutivo',
-    'Licencia',
     'Pais',
     'Provincia',
     'Clientes', 

@@ -14,6 +14,9 @@ function setIvas(arrayIvas) {
 
 
 function addItems(bienesTransacciones, tipo, id) {
+    if (bienesTransacciones==null){
+        bienesTransacciones = [];
+    }
     $(document).ready(function () {
         $('#table_bienes').DataTable({
             "order": [0, 'desc'],
@@ -55,6 +58,7 @@ function addItems(bienesTransacciones, tipo, id) {
     var tbody = document.createElement("tbody");
     tbody.setAttribute("role", "button");
     var value = null;
+
 
     for (var i = 0; i < bienesTransacciones.length; i++) {
         var item = bienesTransacciones[i];
@@ -221,12 +225,12 @@ function selectItem(e, pos) {
 
 function removerBien(event, id) {
     //el id indica el inicio de donde se borra y el 1 la cantidad de elementos eliminados
+    
     items.splice(id, 1);
-    addItems(items);
+    addItems(items, tipoTransaccion, idPersona);
 }
 
 function removerBien2(event, id) {
-    console.log(tipoTransaccion);
     $.ajax({
         "dataType": "text",
         "type": "POST",

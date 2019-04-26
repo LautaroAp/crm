@@ -3,7 +3,7 @@
 namespace Proveedor\Service;
 
 use DBAL\Entity\Proveedor;
-use DBAL\Entity\Licencia;
+// use DBAL\Entity\Licencia;
 use DBAL\Entity\Pais;
 use DBAL\Entity\Provincia;
 use DBAL\Entity\Categoria;
@@ -329,16 +329,16 @@ class ProveedorManager {
                         ->findAll();
     }
 
-    public function getLicencia($id = null) {
-        if (isset($id)) {
-            return $this->entityManager
-                            ->getRepository(Licencia::class)
-                            ->findOneBy(['id' => $id]);
-        }
-        return $this->entityManager
-                        ->getRepository(Licencia::class)
-                        ->findAll();
-    }
+    // public function getLicencia($id = null) {
+    //     if (isset($id)) {
+    //         return $this->entityManager
+    //                         ->getRepository(Licencia::class)
+    //                         ->findOneBy(['id' => $id]);
+    //     }
+    //     return $this->entityManager
+    //                     ->getRepository(Licencia::class)
+    //                     ->findAll();
+    // }
 
     public function getProvincias($id_pais) {
         $provincias = $this->entityManager

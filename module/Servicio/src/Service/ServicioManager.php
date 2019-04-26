@@ -118,4 +118,14 @@ class ServicioManager {
         }
     }
 
+    public function getServiciosCategoria($idCategoria){
+        $bienes =  $this->bienesManager->getBienesCategoria($idCategoria,$this->tipo);
+        $salida = array();
+        foreach ($bienes as $bien){
+            $idBien = $bien->getId();
+            $servicio = $this->entityManager->getRepository(Servicio::class)->findOneBy(['bien'=>$idBien]);
+            array_push($salida,$servicio);
+        }
+        return $salida;
+    }
 }

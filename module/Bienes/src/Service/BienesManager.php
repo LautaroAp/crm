@@ -210,6 +210,10 @@ class BienesManager {
         return $queryBuilder->getQuery();
     }
 
- 
+    public function getBienesCategoria($idCategoria, $tipoBien){
+        return $this->entityManager->getRepository(Bienes::class)->findBy(['categoria'=>$idCategoria, 'tipo'=>$tipoBien]);
+    }
+    
+
     
 }

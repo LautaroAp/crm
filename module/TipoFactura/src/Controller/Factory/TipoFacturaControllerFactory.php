@@ -6,9 +6,6 @@ use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use TipoFactura\Controller\TipoFacturaController;
 use TipoFactura\Service\TipoFacturaManager;
-use Licencia\Service\LicenciaManager;
-use Producto\Service\ProductoManager;
-use Servicio\Service\ServicioManager;
 
 /**
  * Description of TipoFacturaControllerFactory

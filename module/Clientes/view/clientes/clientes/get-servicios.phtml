@@ -1,0 +1,9 @@
+
+<select class="form-control" id="servicio" name="servicio" required="">      
+<option value="<?php if(isset($servicio)){ echo ($servicio->getId()); }?>" hidden="">  
+        <?php if(isset($servicio)){ echo($servicio->getBien()->getNombre()); } else {echo ("Seleccionar Servicio");}?>
+    </option> 
+    <?php foreach ($servicios as $servicio) : ?>
+        <option value="<?php echo ($servicio->getId()); ?>"><?php echo ($servicio->getBien()->getNombre()); ?></option>
+    <?php endforeach; ?>
+</select>

@@ -4,7 +4,8 @@ namespace Clientes\Service;
 
 use DBAL\Entity\Cliente;
 use DBAL\Entity\Usuario;
-use DBAL\Entity\Licencia;
+// use DBAL\Entity\Licencia;
+use DBAL\Entity\Servicio;
 use DBAL\Entity\Pais;
 use DBAL\Entity\Provincia;
 use DBAL\Entity\Profesion;
@@ -197,8 +198,9 @@ class ClientesManager {
         $this->addDatosParticulares($cliente, $data);
         $this->addDatosLaborales($cliente, $data);
         $this->addDatosFacturacion($cliente, $data);
-        $this->addDatosLicencia($cliente, $data);
-        $this->addDatosGanaderos($cliente, $data);        
+        // $this->addDatosLicencia($cliente, $data);
+        $this->addDatosServicio($cliente, $data);
+        // $this->addDatosGanaderos($cliente, $data);        
         $persona = $this->personaManager->addPersona($data, $this->tipo);
         $cliente->setPersona($persona);
         $this->tryAddCliente($cliente);
@@ -221,8 +223,9 @@ class ClientesManager {
         $this->addDatosParticulares($cliente, $data);
         $this->addDatosLaborales($cliente, $data);
         $this->addDatosFacturacion($cliente, $data);
-        $this->addDatosLicencia($cliente, $data);
-        $this->addDatosGanaderos($cliente, $data);
+        // $this->addDatosLicencia($cliente, $data);
+        $this->addDatosServicio($cliente, $data);
+        // $this->addDatosGanaderos($cliente, $data);
         $this->personaManager->updatePersona($cliente->getPersona(), $data);
         if ($this->tryUpdateCliente($cliente)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
@@ -280,12 +283,32 @@ class ClientesManager {
                 ->setCuit_cuil($data['cuit_cuil']);
     }
 
-    private function addDatosLicencia($cliente, $data) {
-        if ($data['licencia'] == "-1") {
-            $cliente->setLicencia(null);
+    // private function addDatosLicencia($cliente, $data) {
+    //     if ($data['licencia'] == "-1") {
+    //         $cliente->setLicencia(null);
+    //     } else {
+    //         $licencia = $this->getLicencia($data['licencia']);
+    //         $cliente->setLicencia($licencia);
+    //     }
+    //     if ($data['version'] == "-1") {
+    //         $cliente->setVersion(null);
+    //     } else {
+    //         $cliente->setVersion($data['version']);
+    //     }
+    // }
+       
+    private function addDatosServicio($cliente, $data) {
+        if ($data['categoria_servicio'] == "-1") {
+            $cliente->setServicio(null);
         } else {
-            $licencia = $this->getLicencia($data['licencia']);
-            $cliente->setLicencia($licencia);
+            $categoriaServicio = $this->getCategoria($data['categoria_servicio']);
+            $cliente->setCategoriaServicio($categoria_servicio);
+        }
+        if ($data['servicio'] == "-1") {
+            $cliente->setServicio(null);
+        } else {
+            $servicio = $this->getServicio($data['servicio']);
+            $cliente->setServicio($servicio);
         }
         if ($data['version'] == "-1") {
             $cliente->setVersion(null);
@@ -294,11 +317,12 @@ class ClientesManager {
         }
     }
 
-    private function addDatosGanaderos($cliente, $data) {
-        $cliente->setAnimales($data['animales'])
-                ->setEstablecimientos($data['establecimientos'])
-                ->setRazaManejo($data['raza_manejo']);
-    }
+    // private function addDatosGanaderos($cliente, $data) {
+        
+    //     $cliente->setAnimales($data['animales'])
+    //             ->setEstablecimientos($data['establecimientos'])
+    //             ->setRazaManejo($data['raza_manejo']);
+    // }
 
     public function deleteCliente($id) {
         $entityManager = $this->entityManager;
@@ -409,16 +433,28 @@ class ClientesManager {
                         ->findAll();
     }
 
-    public function getLicencia($id = null) {
+    // public function getLicencia($id = null) {
+    //     if (isset($id)) {
+    //         return $this->entityManager
+    //                         ->getRepository(Licencia::class)
+    //                         ->findOneBy(['id' => $id]);
+    //     }
+    //     return $this->entityManager
+    //                     ->getRepository(Licencia::class)
+    //                     ->findAll();
+    // }
+
+    public function getServicio($id = null) {
         if (isset($id)) {
             return $this->entityManager
-                            ->getRepository(Licencia::class)
-                            ->findOneBy(['id' => $id]);
+                            ->getRepository(Servicio::class)
+                            ->findOneBy(['id_servicio'=>$id]);
         }
         return $this->entityManager
-                        ->getRepository(Licencia::class)
+                        ->getRepository(Servicio::class)
                         ->findAll();
     }
+
 
     public function getProvincias($id_pais) {
         $provincias = $this->entityManager
@@ -427,15 +463,26 @@ class ClientesManager {
         return $provincias;
     }
 
-    public function eliminarLicenciaClientes($id) {
+    // public function eliminarLicenciaClientes($id) {
+    //     $entityManager = $this->entityManager;
+    //     $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['licencia'=>$id]);
+    //     foreach ($clientes as $cliente) {
+    //         $cliente->setLicencia(null)
+    //                  ->setVersion(null);
+    //     }
+    //     $entityManager->flush();
+    // }
+
+    public function eliminarServicioClientes($id) {
         $entityManager = $this->entityManager;
-        $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['licencia'=>$id]);
+        $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['servicio'=>$id]);
         foreach ($clientes as $cliente) {
-            $cliente->setLicencia(null)
+            $cliente->setServicio(null)
                      ->setVersion(null);
         }
         $entityManager->flush();
     }
+
 
     public function eliminarCategoriaClientes($id) {
         $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['categoria'=>$id]);
@@ -472,4 +519,7 @@ class ClientesManager {
         return $this->transaccionManager->getTransaccionesPersona($idPersona);
     }
    
+    public function getCategoriasServicio(){
+        return $this->entityManager->getRepository(Categoria::class)->findBy(['tipo'=>"servicio"]);
+    }
 }

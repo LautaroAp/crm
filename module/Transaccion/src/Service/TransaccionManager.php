@@ -175,11 +175,16 @@ class TransaccionManager {
         foreach($items as $array ){
             $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
             // $item = $this->bienesTransaccionesManager->getBienTransaccionFromJson($json);
-
             $item->setTransaccion($transaccion);
             // $transaccion->addBienesTransacciones($item);
-            $bien= $item->getBien();
-            // $bien->addBienesTransacciones($item);
+            if (strtoupper($transaccion->getNombre())=="REMITO"){
+                $bien= $item->getBien();
+                if (strtoupper($bien->getTipo())=="PRODUCTO"){
+                    $stock = $bien->getStock();
+                    $stock = $stock - $item->getCantidad();
+                    $bien->setStock($stock);
+                }
+            }
             $item= $this->bienesTransaccionesManager->add($item);
         }
     }

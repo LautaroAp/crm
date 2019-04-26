@@ -89,12 +89,19 @@ class Cliente {
      */
     private $categoria;
 
+    // /**
+    //  * Many Clientes have One Categoria.
+    //  * @ORM\ManyToOne(targetEntity="Licencia")
+    //  * @ORM\JoinColumn(name="ID_LICENCIA", referencedColumnName="ID_LICENCIA")
+    //  */
+    // private $licencia;
+
     /**
      * Many Clientes have One Categoria.
-     * @ORM\ManyToOne(targetEntity="Licencia")
-     * @ORM\JoinColumn(name="ID_LICENCIA", referencedColumnName="ID_LICENCIA")
+     * @ORM\ManyToOne(targetEntity="Servicio")
+     * @ORM\JoinColumn(name="ID_SERVICIO", referencedColumnName="ID_SERVICIO")
      */
-    private $licencia;
+    private $servicio;
 
     /**
      * @ORM\Column(name="VERSION_LICENCIA", nullable=true, type="string", length=255)
@@ -121,10 +128,10 @@ class Cliente {
      */
     private $fecha_ultimo_pago;
 
-    /**
-     * @ORM\Column(name="LICENCIA_ACTUAL", nullable=true, type="string", length=255)
-     */
-    private $licencia_actual;
+    // /**
+    //  * @ORM\Column(name="LICENCIA_ACTUAL", nullable=true, type="string", length=255)
+    //  */
+    // private $licencia_actual;
 
     /**
      * @ORM\Column(name="DNI_CLIENTE", nullable=true, type="string")
@@ -360,22 +367,22 @@ class Cliente {
         return $this;
     }
 
-    function getNombreLicenciaCliente() {
-        if (is_null($this->licencia)) {
-            return null;
-        } else {
-            return $this->licencia->getNombre();
-        }
-    }
+    // function getNombreLicenciaCliente() {
+    //     if (is_null($this->licencia)) {
+    //         return null;
+    //     } else {
+    //         return $this->licencia->getNombre();
+    //     }
+    // }
 
-    function getLicencia() {
-        return $this->licencia;
-    }
+    // function getLicencia() {
+    //     return $this->licencia;
+    // }
 
-    function setLicencia($licencia) {
-        $this->licencia = $licencia;
-        return $this;
-    }
+    // function setLicencia($licencia) {
+    //     $this->licencia = $licencia;
+    //     return $this;
+    // }
 
     public function getVersion() {
         return $this->version;
@@ -596,4 +603,33 @@ class Cliente {
 
         return $this;
     }
+
+    /**
+     * Get many Clientes have One Categoria.
+     */ 
+    public function getServicio()
+    {
+        return $this->servicio;
+    }
+
+    /**
+     * Set many Clientes have One Categoria.
+     *
+     * @return  self
+     */ 
+    public function setServicio($servicio)
+    {
+        $this->servicio = $servicio;
+
+        return $this;
+    }
+
+    public function getNombreServicioCliente(){
+        if (is_null($this->servicio)) {
+            return null;
+        } else {
+            return $this->servicio->getBien()->getNombre();;
+        }
+    }
+    
 }

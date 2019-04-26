@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Description of Producto
  *
- * This class represents a registered licencia.
+ * This class represents a registered producto.
  * @ORM\Entity()
  * @ORM\Table(name="PRODUCTO")
  */

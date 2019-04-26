@@ -30,19 +30,22 @@ class ClientesController extends HuellaController
      */
     protected $tipoEventosManager;
     protected $personaManager;
+    protected $servicioManager;
 
     public function __construct(
         $clientesManager,
         $tipoEventosManager,
         $eventoManager,
         $personaManager,
-        $datoAdicionalManager
+        $datoAdicionalManager,
+        $servicioManager
     ) {
         $this->clientesManager = $clientesManager;
         $this->tipoEventosManager = $tipoEventosManager;
         $this->eventoManager = $eventoManager;
         $this->personaManager = $personaManager;
         $this->datoAdicionalManager = $datoAdicionalManager;
+        $this->servicioManager = $servicioManager;
     }
 
     public function indexAction(){
@@ -105,7 +108,10 @@ class ClientesController extends HuellaController
         $profesion = $this->clientesManager->getProfesion();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
-        $licencia = $this->clientesManager->getLicencia();
+        // $licencia = $this->clientesManager->getLicencia();
+        $servicio = $this->clientesManager->getServicio();
+        $categoriasServicio = $this->clientesManager->getCategoriasServicio();
+
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $cliente = $this->clientesManager->addCliente($data);
@@ -119,7 +125,9 @@ class ClientesController extends HuellaController
             'profesiones' => $profesion,
             'paises' => $pais,
             'provincias' => $provincia,
-            'licencias' => $licencia,
+            // 'licencias' => $licencia,
+            'servicios' => $servicio,
+            'categoriasServicio' => $categoriasServicio,
             'tipo' => $tipo,
             'volver'=>$volver,
         ]);
@@ -145,7 +153,9 @@ class ClientesController extends HuellaController
         $profesion = $this->clientesManager->getProfesion();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
-        $licencia = $this->clientesManager->getLicencia(); 
+        // $licencia = $this->clientesManager->getLicencia(); 
+        $servicio = $this->clientesManager->getServicio(); 
+        $categoriasServicio = $this->clientesManager->getCategoriasServicio();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $this->clientesManager->updateCliente($cliente, $data);
@@ -160,7 +170,9 @@ class ClientesController extends HuellaController
             'profesiones' => $profesion,
             'paises' => $pais,
             'provincias' => $provincia,
-            'licencias' => $licencia,
+            // 'licencias' => $licencia,
+            'servicios' => $servicio,
+            'categoriasServicio' => $categoriasServicio,
             'tipo' => $tipo,
             'volver'=>$volver,
         ]);
@@ -236,6 +248,16 @@ class ClientesController extends HuellaController
         $view = new ViewModel(['provincias' => $provs]);
         return $view;
     }
+
+
+    public function getServiciosAction() {
+        $this->layout()->setTemplate('layout/nulo');
+        $idCategoria = $this->params()->fromRoute('id');
+        $servicios = $this->servicioManager->getServiciosCategoria($idCategoria);
+        $view = new ViewModel(['servicios' => $servicios]);
+        return $view;
+    }
+
 
     public function mostrarTransaccionesAction(){
         $this->layout()->setTemplate('layout/nulo');

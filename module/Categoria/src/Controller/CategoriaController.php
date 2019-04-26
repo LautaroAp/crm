@@ -33,18 +33,18 @@ class CategoriaController extends HuellaController {
     private $proveedorManager;
     private $productoManager;
     private $servicioManager;
-    private $licenciaManager;
+    // private $licenciaManager;
 
 
     public function __construct($entityManager, $categoriaManager, $tipoEventoManager,  $clientesManager
-    , $productoManager, $servicioManager, $licenciaManager, $proveedorManager) {
+    , $productoManager, $servicioManager, $proveedorManager) {
         $this->entityManager = $entityManager;
         $this->categoriaManager = $categoriaManager;
         $this->tipoEventoManager = $tipoEventoManager;
         $this->clientesManager= $clientesManager;
         $this->productoManager = $productoManager;
         $this->servicioManager= $servicioManager;
-        $this->licenciaManager=$licenciaManager;
+        // $this->licenciaManager=$licenciaManager;
         $this->proveedorManager=$proveedorManager;
     }
 
@@ -65,9 +65,9 @@ class CategoriaController extends HuellaController {
         elseif($tipo=="proveedor"){
             return "/categorias/proveedor";
         }
-        elseif($tipo=="licencia"){
-            return "/categorias/licencia";
-        }
+        // elseif($tipo=="licencia"){
+        //     return "/categorias/licencia";
+        // }
         elseif($tipo=="producto"){
             return "/categorias/producto";
         }
@@ -141,8 +141,8 @@ class CategoriaController extends HuellaController {
             $this->proveedorManager-> eliminarCategoriaProveedor($id);
         }elseif (strtoupper($tipo)==strtoupper("producto")){
             $this->productoManager-> eliminarCategoriaProductos($id);
-        }elseif (strtoupper($tipo)==strtoupper("licencia")){
-            $this->licenciaManager->eliminarCategoriaLicencia($id);
+        // }elseif (strtoupper($tipo)==strtoupper("licencia")){
+        //     $this->licenciaManager->eliminarCategoriaLicencia($id);
         }elseif (strtoupper($tipo)==strtoupper("servicio")){
             $this->servicioManager->eliminarCategoriaServicios($id);
         }elseif (strtoupper($tipo)==strtoupper("evento")){
@@ -171,8 +171,8 @@ class CategoriaController extends HuellaController {
             return $this->redirect()->toRoute('gestionProveedores/categorias', ['tipo'=>'proveedor']);
         }elseif (strtoupper($tipo)==strtoupper("producto")){
             return $this->redirect()->toRoute('gestionProductosServicios/gestionProductos/categorias', ['tipo'=>'producto']);
-        }elseif (strtoupper($tipo)==strtoupper("licencia")){
-            return $this->redirect()->toRoute('gestionProductosServicios/gestionLicencias/categorias', ['tipo'=>'licencia']);
+        // }elseif (strtoupper($tipo)==strtoupper("licencia")){
+        //     return $this->redirect()->toRoute('gestionProductosServicios/gestionLicencias/categorias', ['tipo'=>'licencia']);
         }elseif (strtoupper($tipo)==strtoupper("servicio")){
             return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/categorias', ['tipo'=>'servicio']);
         }elseif (strtoupper($tipo)==strtoupper("evento")){

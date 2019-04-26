@@ -278,14 +278,14 @@ class Proveedor {
         return $this;
     }
 
-    function getLicencia() {
-        return $this->licencia;
-    }
+    // function getLicencia() {
+    //     return $this->licencia;
+    // }
 
-    function setLicencia($licencia) {
-        $this->licencia = $licencia;
-        return $this;
-    }
+    // function setLicencia($licencia) {
+    //     $this->licencia = $licencia;
+    //     return $this;
+    // }
 
 
    

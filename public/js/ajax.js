@@ -46,7 +46,12 @@ function actualizarDatosProvincias(id_pais)
     });
 }
 
-
+function actualizarServicios(id_categoria)
+{
+    $.post('/clientes/ajax/getServicios/' + id_categoria, function (data) {
+        $('#div_servicios').html(data);
+    });
+}
 
 function actualizarDatosTipoEvento(tipo){
     if (tipo==-1)
