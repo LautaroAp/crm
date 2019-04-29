@@ -260,23 +260,6 @@ class Producto
         return $this;
     }
 
-    // /**
-    //  * Get the value of stock
-    //  */
-    // public function getStock(){
-    //     return $this->stock;
-    // }
-
-    // /**
-    //  * Set the value of stock
-    //  *
-    //  * @return self
-    //  */
-    // public function setStock($stock){
-    //     $this->stock = $stock;
-    //     return $this;
-    // }
-
     /**
      * Get the value of reposicion
      */

@@ -49,7 +49,12 @@ function addItems(bienesTransacciones, tipo, id) {
     var tr = thead.insertRow(-1);
     for (var i = 0; i < col.length; i++) {
         var th = document.createElement("th");
-        th.innerHTML = col[i];
+        if (col[i]=="Nombre"){
+            th.innerHTML = "Producto / Servicio";
+        }
+        else{
+            th.innerHTML = col[i];
+        }
         tr.appendChild(th);
     }
     thead.appendChild(tr);

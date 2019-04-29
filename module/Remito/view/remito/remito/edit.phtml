@@ -125,7 +125,7 @@ if(transaccionPreviaNum!=null){
                         <div class="form-group col-md-3">
                             <label>Condición de IVA</label>
                             <input type="text" class="form-control" name="condicion_iva" id="condicion_iva" value="<?php if (!is_null($tipoPersona)) {
-                                    echo ($tipoPersona->getCondicion_iva());
+                                    echo ($tipoPersona->getNombreCondicionIva());
                                 } ?>" readonly>
                         </div>
 

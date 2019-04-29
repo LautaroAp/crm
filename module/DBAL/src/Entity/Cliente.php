@@ -502,7 +502,10 @@ class Cliente {
      * Get the value of condicion_iva
      */ 
     public function getCondicion_iva() {
-        return $this->condicion_iva;
+        if (is_null($this->condicion_iva)){
+            return null;
+        }
+        return $this->condicion_iva->getNombre();
     }
 
     /**
@@ -516,11 +519,10 @@ class Cliente {
     }
 
     public function getNombreCondicionIva() {
-        $condicion_iva = $this->getCondicion_iva();
-        if (is_null($condicion_iva)) {
+        if (is_null($this->condicion_iva)) {
             return null;
         } else {
-            return $condicion_iva->getNombre();
+            return $this->condicion_iva->getNombre();
         }
     }
 

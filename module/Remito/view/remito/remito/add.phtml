@@ -122,7 +122,7 @@ $responsable = $this->identity();
                         <div class="form-group col-md-3">
                             <label>Condición de IVA</label>
                             <input type="text" class="form-control" name="condicion_iva" id="condicion_iva" value="<?php if (!is_null($tipoPersona)) {
-                                    echo ($tipoPersona->getCondicion_iva());
+                                    echo ($tipoPersona->getNombreCondicionIva());
                                 } ?>" readonly>
                         </div>
                     </div>
@@ -173,7 +173,7 @@ $responsable = $this->identity();
                                 placeholder="Código">
                         </div>
                         <div class="autocomplete form-group col-sm-4 margin-padding-xs">
-                            <label>Producto Y Servicio</label>
+                        <label>Producto / Servicio</label>
                             <input type="text" class="form-control" name="item_nombre" id="item_nombre"
                                 placeholder="Producto Y Servicio">
                         </div>

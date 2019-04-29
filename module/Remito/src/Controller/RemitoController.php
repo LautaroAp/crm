@@ -252,4 +252,14 @@ class RemitoController extends TransaccionController{
         $view->setTerminal(true);
         return $view;
     }   
+
+    public function cambiarEstadoAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $idTransaccion = $this->params()->fromRoute('id');
+        $estado= $this->params()->fromRoute('id2');
+        $this->remitoManager->cambiarEstadoTransaccion($idTransaccion, $estado);
+        $view = new ViewModel();
+        $view->setTerminal(true);
+        return $view;
+    }
 }

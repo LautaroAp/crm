@@ -311,6 +311,19 @@ class Servicio {
         return $this->categoria;
     }
 
+    public function getIdCategoria(){
+        if (!is_null($this->bien)){
+            return $this->bien->getIdCategoria();
+        }
+        return null;
+    }
+
+    public function getNombreCategoria(){
+        if (!is_null($this->bien)){
+            return $this->bien->getNombreCategoria();
+        }
+        return null;
+    }
     /**
      * Set many Services have One Type.
      *
@@ -331,10 +344,10 @@ class Servicio {
     }
 
     public function getCategoriaNombre(){
-        if(is_null($this->categoria)){
+        if(is_null($this->bien)){
             return null;
         }
-        return $this->categoria->getNombre();
+        return $this->bien->getNombreCategoria();
     }
 
     /**

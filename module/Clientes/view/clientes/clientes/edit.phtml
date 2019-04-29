@@ -92,7 +92,9 @@ $raza_manejo = $cliente->getRazaManejo();
                     <div class="form-group col-md-4">
                         <label>Categoria de Servicio</label>
                         <select class="form-control" id="categoria_servicio" name="categoria_servicio" onchange="actualizarServicios(this.value)" required="">
-                            <option value="" hidden="">Seleccionar Categoria</option>
+                            <option value="<?php if (isset($servicio)) 
+                            {echo $servicio->getIdCategoria();} else{echo "";} ?> " hidden=""><?php if (isset($servicio))
+                            {echo($servicio->getNombreCategoria());} else{echo ("Seleccionar Categoria");}?></option>
                             <?php foreach ($categoriasServicio as $c) : ?>
                                 <option value="<?php echo ($c->getId()); ?>"><?php echo ($c->getNombre()); ?></option>
                             <?php endforeach; ?>
@@ -100,14 +102,10 @@ $raza_manejo = $cliente->getRazaManejo();
                     </div>
                     <div class="form-group col-md-4">
                         <label>Servicio</label>
-                        <select class="form-control" id="servicio" name="servicio">
-                            <option value="<?php if(isset($servicio)){ echo ($servicio->getId()); }?>" hidden="">  
-                            <option value="" hidden="">Seleccionar Servicio</option>
-                            <option value="-1">NO DEFINIDO</option>
-                            <?php foreach ($servicios as $servicio) : ?>
-                                <option value="<?php echo ($servicio->getId()); ?>"><?php echo ($servicio->getBien()->getNombre()); ?></option>
-                            <?php endforeach; ?>
+                        <div id="div_servicios">
+                        <select class="form-control" id="servicio" name="servicio" required="">
                         </select>
+                        </div>
                     </div> 
                     <div class="form-group col-md-4">
                         <label>Versión</label>

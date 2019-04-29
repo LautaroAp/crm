@@ -23,20 +23,22 @@ $(document).ready(function() {
     <tbody id="cuerpo_eventos" role="button" class="">
         <?php foreach ($eventos as $evento) : ?>
         <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)" class="vpEvento">
-            <td id="<?= $evento->getId() ?>" class=""><?php
-                                                        if (!is_null($evento->getFecha())) {
-                                                            echo ($evento->getFecha()->format('Y/m/d'));
-                                                        }
-                                                        ?></td>
+            <td id="<?= $evento->getId() ?>" class="">
+            <?php
+                if (!is_null($evento->getFecha())) {
+                    echo ($evento->getFecha()->format('Y/m/d'));
+                }
+            ?></td>
             <td id="<?= $evento->getId() ?>" class="">
                 <?php echo ($evento->getUsuarioEjecutivo()); ?></td>
-            <td id="<?= $evento->getId() ?>" class=""><?php
-                                                        if (!is_null($evento->getTipo())) {
-                                                            echo ($evento->getTipo());
-                                                        } else {
-                                                            echo ('No definido');
-                                                        }
-                                                        ?></td>
+            <td id="<?= $evento->getId() ?>" class="">
+            <?php
+            if (!is_null($evento->getTipo())) {
+                echo ($evento->getTipo());
+            } else {
+                echo ('No definido');
+            }
+            ?></td>
             <td id="<?= $evento->getId() ?>" class="table-scroll-description">
                 <?php echo (nl2br($evento->getDescripcion())); ?></td>
             <td id="<?= $evento->getId() ?>" class="">

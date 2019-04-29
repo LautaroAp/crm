@@ -99,6 +99,9 @@ class BienesManager {
         if (isset($data['stock'])){
             $bien->setStock($data['stock']);
         }
+        if (isset($data['unidad'])){
+            $bien->setUnidad($data['unidad']);
+        }
         if (isset($data['codigo'])){
             $bien->setCodigo($data['codigo']);
         }
