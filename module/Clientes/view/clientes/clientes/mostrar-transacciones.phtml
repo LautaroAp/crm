@@ -40,11 +40,14 @@ $(document).ready(function() {
                 ?></td>
             <td><?= $transaccion->getDescripcion() ?></td>
             <td id="<?= $transaccion->getId() ?>" class="">
+                <a href="<?= $this->url($transaccion->getTipo().'/pdf', ['id' => (int)$transaccion->getId()]) ?>"
+                 type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-file"></span>
+                </a>
                 <a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>"
-                 type="button" class="btn btn-default btn-sm" 
-                 >
+                 type="button" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-pencil"></span>
-                </button>
+                </a>
             </td>
         </tr>
         <?php endforeach; ?>

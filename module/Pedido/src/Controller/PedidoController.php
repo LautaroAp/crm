@@ -125,8 +125,7 @@ class PedidoController extends TransaccionController
 
 
 
-    public function editAction()
-    {
+    public function editAction() {
         $id_transaccion = $this->params()->fromRoute('id');
         $pedido = $this->pedidoManager->getPedidoFromTransaccionId($id_transaccion);
         $items = array();
@@ -257,5 +256,58 @@ class PedidoController extends TransaccionController
         $view->setTerminal(true);
         return $view;
    }
+
+    public function pdfAction() {
+        $this->layout()->setTemplate('layout/nulo');
+        $id_transaccion = $this->params()->fromRoute('id');
+        $pedido = $this->pedidoManager->getPedidoFromTransaccionId($id_transaccion);
+        $items = array();
+
+        if (!is_null($pedido)) {
+            $items = $pedido->getTransaccion()->getBienesTransacciones();
+        }
+       
+        $json = "";
+    
+        $items_array = $this->getItemsArray($items);
+        foreach ($items_array as $array) {
+            $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+            $json .= $item->getJson() . ',';
+            
+        }
+        $json = substr($json, 0, -1);
+        $json = '[' . $json . ']';     
+       
+        $persona = $pedido->getTransaccion()->getPersona();
+        $tipoPersona = null;
+
+        $numTransacciones = $pedido->getTransaccion()->getNumero();
+        $numPedido = $pedido->getNumero();
+        $monedasJson = $this->getJsonMonedas();
+        $formasPagoJson = $this->getJsonFormasPago();
+        $formasEnvioJson = $this->getJsonFormasEnvio();
+        $ivasJson = $this->getJsonIvas();
+        $transaccion = $pedido->getTransaccion();
+        $transaccionJson = $pedido->getTransaccion()->getJSON();
+        $presupuestos = $this->pedidoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+        $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
+        $this->reiniciarParams();
+        return new ViewModel([
+            'persona' => $persona,
+            'tipoPersona' => $tipoPersona,
+            'numTransacciones' => $numTransacciones,
+            'numPedido' => $numPedido,
+            'json' => $json,
+            'formasPagoJson' => $formasPagoJson,
+            'formasEnvioJson' => $formasEnvioJson,
+            'monedasJson' => $monedasJson,
+            'pedido' => $pedido,
+            'transaccion' => $transaccion,
+            'transaccionJson' => $transaccionJson,
+            'ivasJson' => $ivasJson,
+            'presupuestosJson' => $jsonPrespuestos,
+            'itemsTransaccionJson' =>"[]",
+        ]);
+    }
 
 }

@@ -139,7 +139,11 @@
 }
 
 .detalle-width{
-    width: 75% !important;
+    width: 60% !important;
+}
+
+.col-botones-width{
+    width: 60px !important;
 }
 
 .table-top{

@@ -152,6 +152,16 @@ return [
                             ],
                         ],
                     ],
+                    'pdf' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/pdf',
+                            'defaults' => [
+                                'controller' => \Clientes\Controller\ClientesController::class,
+                                'action' => 'pdf',
+                            ],
+                        ],
+                    ],
                 ],
             ],
              // Gestion Proveedores

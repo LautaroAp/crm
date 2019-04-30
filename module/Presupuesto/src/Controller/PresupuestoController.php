@@ -242,4 +242,58 @@ class PresupuestoController extends TransaccionController{
        return $json;
    }
 
+   // PDF
+   public function pdfAction() {
+    $this->layout()->setTemplate('layout/nulo');
+    $id_transaccion = $this->params()->fromRoute('id');
+    $presupuesto = $this->presupuestoManager->getPresupuestoFromTransaccionId($id_transaccion);
+    $items = array();
+
+    if (!is_null($presupuesto)) {
+        $items = $presupuesto->getTransaccion()->getBienesTransacciones();
+    }
+   
+    $json = "";
+
+    $items_array = $this->getItemsArray($items);
+    foreach ($items_array as $array) {
+        $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+        $json .= $item->getJson() . ',';
+        
+    }
+    $json = substr($json, 0, -1);
+    $json = '[' . $json . ']';     
+   
+    $persona = $presupuesto->getTransaccion()->getPersona();
+    $tipoPersona = null;
+
+    $numTransacciones = $presupuesto->getTransaccion()->getNumero();
+    $numPresupuesto = $presupuesto->getNumero();
+    $monedasJson = $this->getJsonMonedas();
+    $formasPagoJson = $this->getJsonFormasPago();
+    $formasEnvioJson = $this->getJsonFormasEnvio();
+    $ivasJson = $this->getJsonIvas();
+    $transaccion = $presupuesto->getTransaccion();
+    $transaccionJson = $presupuesto->getTransaccion()->getJSON();
+    $presupuestos = $this->presupuestoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+    $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
+    $this->reiniciarParams();
+    return new ViewModel([
+        'persona' => $persona,
+        'tipoPersona' => $tipoPersona,
+        'numTransacciones' => $numTransacciones,
+        'numPresupuesto' => $numPresupuesto,
+        'json' => $json,
+        'formasPagoJson' => $formasPagoJson,
+        'formasEnvioJson' => $formasEnvioJson,
+        'monedasJson' => $monedasJson,
+        'presupuesto' => $presupuesto,
+        'transaccion' => $transaccion,
+        'transaccionJson' => $transaccionJson,
+        'ivasJson' => $ivasJson,
+        'presupuestosJson' => $jsonPrespuestos,
+        'itemsTransaccionJson' =>"[]",
+        ]);
+    }
+
 }

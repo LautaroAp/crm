@@ -265,5 +265,13 @@ class ClientesController extends HuellaController
         ]);
     }
 
+    public function pdfAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $resultado = $this->clientesManager->getListaClientes();
+        return new ViewModel([
+            'resultado' => $resultado
+        ]);
+    }
+
 
 }

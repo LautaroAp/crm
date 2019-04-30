@@ -178,7 +178,11 @@ function calcularSubcampos() {
         recargo_general = 0;
     }
     var total_general = sumSubtotal - (sumSubtotal * bonificacion_general / 100) + (sumSubtotal * recargo_general / 100);
+    var bonificacion_importe = sumSubtotal * bonificacion_general / 100;
+    var recargo_importe = sumSubtotal * recargo_general / 100;
     $("#subtotal_general").val(formatMoney(parseFloat(sumSubtotal).toFixed(2)));
+    $("#bonificacion_importe").val(formatMoney(parseFloat(bonificacion_importe).toFixed(2)));
+    $("#recargo_importe").val(formatMoney(parseFloat(recargo_importe).toFixed(2)));
     $("#venta_bruta").val(formatMoney(parseFloat(sumVentaBruta).toFixed(2)));
     $("#descuento_total").val(formatMoney(parseFloat(sumBonificacion).toFixed(2)));
     $("#iva_total").val(formatMoney(parseFloat(sumIva).toFixed(2)));

@@ -472,6 +472,7 @@ class Bienes {
     public function getJSON(){
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
+        $output .= '"Codigo": "' . $this->getCodigo() .'", ';
         $output .= '"Nombre": "' . $this->getNombre() .'", ';
         $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
         $output .= '"Categoria": "' . $this->getCategoria() .'", ';

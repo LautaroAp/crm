@@ -122,13 +122,11 @@ class TransaccionManager {
         if (isset($data['bonificacion_general']) and $data['bonificacion_general']!=''){
             $transaccion->setBonificacionGeneral($data['bonificacion_general']);
         }
-
-        if (isset($data['bonificacion_general']) and $data['bonificacion_general']!=''){
-            $transaccion->setBonificacionGeneral($data['bonificacion_general']);
-        }
+        $transaccion->setBonificacionImporte(substr($data['bonificacion_importe'],2));
         if (isset($data['recargo_general']) and $data['recargo_general']!=''){
             $transaccion->setRecargoGeneral($data['recargo_general']);
         }
+        $transaccion->setRecargoImporte(substr($data['recargo_importe'],2));
         if (isset($data['iva_general'])){
             $iva = $this->ivaManager->getIvaId($data['iva_general']);
         }

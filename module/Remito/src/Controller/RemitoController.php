@@ -221,5 +221,59 @@ class RemitoController extends TransaccionController{
         return $view;
     }
 
+    // PDF
+   public function pdfAction() {
+    $this->layout()->setTemplate('layout/nulo');
+    $id_transaccion = $this->params()->fromRoute('id');
+    $remito = $this->remitoManager->getRemitoFromTransaccionId($id_transaccion);
+    $items = array();
+
+    if (!is_null($remito)) {
+        $items = $remito->getTransaccion()->getBienesTransacciones();
+    }
+   
+    $json = "";
+
+    $items_array = $this->getItemsArray($items);
+    foreach ($items_array as $array) {
+        $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+        $json .= $item->getJson() . ',';
+        
+    }
+    $json = substr($json, 0, -1);
+    $json = '[' . $json . ']';     
+   
+    $persona = $remito->getTransaccion()->getPersona();
+    $tipoPersona = null;
+
+    $numTransacciones = $remito->getTransaccion()->getNumero();
+    $numRemito = $remito->getNumero();
+    $monedasJson = $this->getJsonMonedas();
+    $formasPagoJson = $this->getJsonFormasPago();
+    $formasEnvioJson = $this->getJsonFormasEnvio();
+    $ivasJson = $this->getJsonIvas();
+    $transaccion = $remito->getTransaccion();
+    $transaccionJson = $remito->getTransaccion()->getJSON();
+    $presupuestos = $this->remitoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+    $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
+    $this->reiniciarParams();
+    return new ViewModel([
+        'persona' => $persona,
+        'tipoPersona' => $tipoPersona,
+        'numTransacciones' => $numTransacciones,
+        'numRemito' => $numRemito,
+        'json' => $json,
+        'formasPagoJson' => $formasPagoJson,
+        'formasEnvioJson' => $formasEnvioJson,
+        'monedasJson' => $monedasJson,
+        'remito' => $remito,
+        'transaccion' => $transaccion,
+        'transaccionJson' => $transaccionJson,
+        'ivasJson' => $ivasJson,
+        'presupuestosJson' => $jsonPrespuestos,
+        'itemsTransaccionJson' =>"[]",
+        ]);
+    }
+
 
 }

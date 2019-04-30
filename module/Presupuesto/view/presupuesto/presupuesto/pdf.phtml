@@ -1,0 +1,247 @@
+<?php
+
+// var_dump(json_decode($json), true); die();
+
+// pdf object
+$pdf = new TCPDF('P','mm','A4');
+
+// remove default header and footer
+$pdf->setPrintHeader(false);
+$pdf->setPrintFooter(false);
+
+// add a page
+$pdf->AddPage();
+
+// start html document
+$htmlData = '<head></head<body>';
+$pdf->writeHTML($htmlData, true, false, false, false, '');
+
+
+// set font
+$pdf->SetFont('helvetica', '', 8);
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+// Titulo
+// Print some HTML Cells
+$html = '<strong style="font-size: 12px;">ORIGINAL</strong>';
+$pdf->writeHTMLCell(0, '', '', '', $html, 'LRBT', 1, 0, true, 'C', true);
+// $pdf->Ln(2);
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+
+// Datos Personales y de Comprobante
+$html = '
+    <table border="0" cellspacing="0" cellpadding="4">
+        <thead>
+            <tr style="font-size: 14px; font-weight: bold;">
+                <th align="center" width="45%">NOMBRE</th>
+                <th width="2%"></th>
+                <th align="center" width="6%" border="1">&nbsp;P</th>
+                <th width="2%"></th>
+                <th align="left" width="45%">'. strtoupper($transaccion->getNombre()) .'</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td width="45%"><strong>Razón Social: </strong></td>
+                <th width="2%"></th>
+                <td align="center" width="6%">&nbsp;|</td>
+                <th width="2%"></th>
+                <td width="45%"><strong>Punto de Venta: </strong>&nbsp;&nbsp;<strong> Comp. Nro: </strong>'. str_pad($numPresupuesto, 6, "0", STR_PAD_LEFT)  .'</td>
+            </tr>
+            <tr>
+                <td width="45%"><strong>Domicilio Comercial: </strong></td>
+                <th width="2%"></th>
+                <td align="center" width="6%">&nbsp;|</td>
+                <th width="2%"></th>
+                <td width="45%"><strong>Fecha de Emisión: </strong>'. $transaccion->getFecha_transaccion()->format('d/m/Y') .'</td>
+            </tr>
+            <tr>
+                <td width="45%"><strong>Condición frente al IVA: </strong></td>
+                <th width="2%"></th>
+                <td align="center" width="6%">&nbsp;|</td>
+                <th width="2%"></th>
+                <td width="45%"><strong>CUIT: </strong></td>
+            </tr>
+            <tr>
+                <td width="45%"></td>
+                <th width="2%"></th>
+                <td align="center" width="6%">&nbsp;|</td>
+                <th width="2%"></th>
+                <td width="45%"><strong>Ingresos Brutos: </strong></td>
+            </tr>
+            <tr>
+                <td width="45%"></td>
+                <th width="2%"></th>
+                <td align="center" width="6%">&nbsp;|</td>
+                <th width="2%"></th>
+                <td width="45%"><strong>Fecha de Inicio de Actividades: </strong></td>
+            </tr>
+        </tbody>
+    </table>
+';
+// output the HTML content
+$pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
+$pdf->Ln(1);
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+// Periodo de Facturacion y Fechas
+$html = '
+    <table border="0" cellspacing="0" cellpadding="3">
+        <tbody>
+            <tr>
+                <td><strong>Período Facturado Desde: </strong></td>
+                <td><strong>Hasta: </strong></td>
+                <td><strong>Fecha de Vto. para el pago: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
+            </tr>
+        </tbody>
+    </table>
+';
+// output the HTML content
+$pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
+$pdf->Ln(1);
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+// Datos del Comprador
+$html = '
+    <table border="0" cellspacing="0" cellpadding="3">
+        <tbody>
+            <tr>
+                <td><strong>CUIT: </strong></td>
+                <td><strong>Apellido y Nombre / Razón Social: </strong>'. $persona->getNombre() .'</td>
+            </tr>
+            <tr>
+                <td><strong>Condición frente al IVA: </strong></td>
+                <td><strong>Domicilio Comercial: </strong></td>
+            </tr>
+            <tr>
+                <td><strong>Condición de Venta: </strong>'. $transaccion->getFormaPago()->getNombre() .'</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+';
+// output the HTML content
+$pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
+$pdf->Ln(1);
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+// make the table items
+$html = '
+    <table border="0.5" cellspacing="0" cellpadding="3">
+        <thead>
+            <tr style="font-weight: bold;">
+                <th align="center" width="8%"> Código</th>
+                <th align="center" width="23%">Producto / Servicio</th>
+                <th align="center" width="9%">Cantidad</th>
+                <th align="center" width="10%">U. Medida</th>
+                <th align="center" width="11%">Precio Unit.</th>
+                <th align="center" width="8%">% Dto.</th>
+                <th align="center" width="11%">Imp. Dto.</th>
+                <th align="center" width="9%">% IVA</th>
+                <th align="center" width="11%">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+';
+
+// load json data
+$data = json_decode($json);
+$subtotal = 0;
+foreach($data as $item){
+    // subtotal sin Bonif/Recarg
+    $subtotal = $subtotal + $item->Totales;
+    $html .= '
+            <tr>
+                <td align="center" width="8%">' . $item->Bien->Codigo . '</td>
+                <td align="center" width="23%">' . $item->Bien->Nombre .'</td>
+                <td align="center" width="9%">' . $item->Cantidad .'</td>
+                <td align="center" width="10%">' . "-"  .'</td>
+                <td align="center" width="11%">' . $item->Bien->Precio .'</td>
+                <td align="center" width="8%">' . "-" .'</td>
+                <td align="center" width="11%">' . "-" .'</td>
+                <td align="center" width="9%">' . "-" .'</td>
+                <td align="center" width="11%">' . $item->Totales .'</td>
+            </tr>
+    ';
+};
+
+// end of table items
+$html .= '
+        </tbody>
+    </table>
+';
+
+// output the HTML content
+$pdf->writeHTML($html, true, false, true, false, '');
+$pdf->Ln(1);
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+// Totales
+$html = '
+    <table border="0" cellspacing="0" cellpadding="3">
+        <tbody>
+            <tr>
+                <td width="60%">
+                </td>
+                <td width="40%">
+                    <table border="0" cellspacing="0" cellpadding="3">
+                        <tbody>
+                            <tr>
+                                <td align="right" width="70%"><strong>Subtotal: $</strong></td>
+                                <td align="right" width="30%">'. money_format(" %n",($subtotal)) .'</td>
+                            </tr>
+                            <tr>
+                                <td align="right" width="70%">
+                                    <strong>Bonif: </strong>'. $transaccion->getBonificacionGeneral() .' %  
+                                    <strong> Importe Bonif: $</strong>
+                                </td>
+                                <td align="right" width="30%">'. money_format(" %n",($transaccion->getBonificacionImporte())) .'</td>
+                            </tr>
+                            <tr>
+                                <td align="right" width="70%"><strong>Subtotal c/Bonif: $</strong></td>
+                                <td align="right" width="30%">'. money_format(" %n",($transaccion->getMonto())) .'</td>
+                            </tr>
+                            <tr>
+                                <td align="right" width="70%"><strong>Importe Otros Tributos: $</strong></td>
+                                <td align="right" width="30%">0.00</td>
+                            </tr>
+                            <tr>
+                                <td align="right" width="70%"><strong>Importe Total: $</strong></td>
+                                <td align="right" width="30%">'. money_format(" %n",($transaccion->getMonto())) .'</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+';
+// output the HTML content
+$pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
+$pdf->Ln(1);
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+// Print some HTML Cells
+$html = '<p> "SOFTWARE HUELLA" </p>';
+$pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, 'C', true);
+
+// reset pointer to the last page
+$pdf->lastPage();
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+$htmlData = '</body></html>';
+$pdf->writeHTML($htmlData, true, false, false, false, '');
+
+//Close and output PDF document
+$pdf->Output('example_006.pdf', 'I');
+
+?>

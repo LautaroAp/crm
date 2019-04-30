@@ -99,6 +99,16 @@ return [
                             ],
                         ],
                     ],
+                    'pdf' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/pdf[/:id]',
+                            'defaults' => [
+                                'controller' => \Presupuesto\Controller\PresupuestoController::class,
+                                'action' => 'pdf',
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ],

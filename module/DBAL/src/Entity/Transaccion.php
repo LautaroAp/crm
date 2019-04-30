@@ -88,18 +88,25 @@ class Transaccion {
      */
     protected $monto;
 
-
     /**
      * @ORM\Column(name="BONIFICACION_GENERAL", nullable=true, type="decimal")
      */
     protected $bonificacionGeneral;
 
-
+    /**
+     * @ORM\Column(name="BONIFICACION_IMPORTE", nullable=true, type="decimal")
+     */
+    protected $bonificacionImporte;
 
     /**
      * @ORM\Column(name="RECARGO_GENERAL", nullable=true, type="decimal")
      */
     protected $recargoGeneral;
+
+    /**
+     * @ORM\Column(name="RECARGO_IMPORTE", nullable=true, type="decimal")
+     */
+    protected $recargoImporte;
 
     /**
      * @ORM\ManyToOne(targetEntity="Iva")
@@ -397,6 +404,26 @@ class Transaccion {
     }
 
     /**
+     * Get the value of bonificacionImporte
+     */ 
+    public function getBonificacionImporte()
+    {
+        return $this->bonificacionImporte;
+    }
+
+    /**
+     * Set the value of bonificacionImporte
+     *
+     * @return  self
+     */ 
+    public function setBonificacionImporte($bonificacionImporte)
+    {
+        $this->bonificacionImporte = $bonificacionImporte;
+
+        return $this;
+    }
+
+    /**
      * Get the value of ivaGeneral
      */ 
     public function getIvaGeneral()
@@ -481,6 +508,26 @@ class Transaccion {
     }
 
     /**
+     * Get the value of recargoImporte
+     */ 
+    public function getRecargoImporte()
+    {
+        return $this->recargoImporte;
+    }
+
+    /**
+     * Set the value of recargoImporte
+     *
+     * @return  self
+     */ 
+    public function setRecargoImporte($recargoImporte)
+    {
+        $this->recargoImporte = $recargoImporte;
+
+        return $this;
+    }
+
+    /**
      * Get the value of formaEnvio
      */ 
     public function getFormaEnvio()
@@ -537,4 +584,5 @@ class Transaccion {
 
         return  '{'.$output.'}' ;
     }
+
 }

@@ -43,7 +43,7 @@ $id_persona = $persona->getId();
                 <div class="panel-heading text-center titulo-espaciado">
                     DATOS DE PERFIL
                 </div>
-                <div class="panel-body padding-top-cero" style="min-height: 325px;">
+                <div class="panel-body padding-top-cero" style="min-height: 350px;">
                     <div class="ficha-cliente-p img-centrar ">
                         <div>
                             <figure>
@@ -116,7 +116,7 @@ $id_persona = $persona->getId();
                 <div class="panel-heading text-center titulo-espaciado">
                     DATOS GENERALES
                 </div>
-                <div class="panel-body" style="min-height: 325px;">
+                <div class="panel-body" style="min-height: 330px;">
                     <div class="ficha-cliente-p margen">
                         <p><label>Razón Social:</label> <?= $cliente->getRazon_social(); ?></p>
                         <p><label>Dirección de Facturación:</label> <?= $cliente->getDireccion_facturacion(); ?></p>
@@ -559,4 +559,18 @@ $id_persona = $persona->getId();
             </div>
         </div>
     </div>
+</div>
+
+<div class="container">
+
+<!-- Prueba de TCPDF -->
+
+    <figure>
+        <a href="<?= $this->url('gestionClientes/pdf'); ?>" > 
+            <img src="<?= $this->basePath('img/crm/cliente_excel_a.png') ?>" 
+            class="img-rounded img-responsive img-menu zoom">
+        </a>
+        <figcaption>&nbsp;&nbsp;PDF&nbsp;&nbsp;</figcaption>
+    </figure>
+
 </div>
