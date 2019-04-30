@@ -59,9 +59,6 @@ class TransaccionManager {
     }
     public function getTransaccionPrevia($tipo, $id){
         $transaccion_especifica = null;
-        print_r($tipo);
-        print_r($id);
-        die();
         if ($tipo=="PEDIDO"){
             $transaccion_especifica= $this->entityManager->getRepository(Presupuesto::class)->findOneById($id);
         }

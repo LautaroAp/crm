@@ -73,6 +73,40 @@ class Persona {
      */
     private $datos_adicionales;
 
+
+    /**
+     * @ORM\Column(name="CUIT", nullable=true, type="string")
+     */
+    private $cuit_cuil;
+
+    /**
+     * @ORM\Column(name="RAZON_SOCIAL", nullable=true, type="string")
+     */
+    private $razon_social;
+
+    /**
+     * Many Personas have One Categoria.
+     * @ORM\ManyToOne(targetEntity="Categoria")
+     * @ORM\JoinColumn(name="ID_CONDICION_IVA", referencedColumnName="ID")
+     */
+    private $condicion_iva;
+
+    /**
+     * @ORM\Column(name="BANCO", nullable=true, type="string")
+     */
+    private $banco;
+
+    /**
+     * @ORM\Column(name="CBU", nullable=true, type="string")
+     */
+    private $cbu;
+
+   
+    /**
+     * @ORM\Column(name="DIRECCION_FACTURACION", nullable=true, type="string", length=255)
+     */
+    private $direccion_facturacion;
+
     public function getId()
     {
         return $this->id;
@@ -154,6 +188,134 @@ class Persona {
         $this->estado = $estado;
     }
 
+
+    /**
+     * Get the value of cuit_cuil
+     */ 
+    public function getCuit_cuil()
+    {
+        return $this->cuit_cuil;
+    }
+
+    /**
+     * Set the value of cuit_cuil
+     *
+     * @return  self
+     */ 
+    public function setCuit_cuil($cuit_cuil)
+    {
+        $this->cuit_cuil = $cuit_cuil;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of razon_social
+     */ 
+    public function getRazon_social()
+    {
+        return $this->razon_social;
+    }
+
+    /**
+     * Set the value of razon_social
+     *
+     * @return  self
+     */ 
+    public function setRazon_social($razon_social)
+    {
+        $this->razon_social = $razon_social;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of condicion_iva
+     */ 
+    public function getCondicion_iva() {
+        if (is_null($this->condicion_iva)){
+            return null;
+        }
+        return $this->condicion_iva;
+    }
+
+    /**
+     * Set the value of condicion_iva
+     *
+     * @return  self
+     */ 
+    public function setCondicion_iva($condicion_iva) {
+        $this->condicion_iva = $condicion_iva;
+        return $this;
+    }
+
+    public function getNombreCondicionIva() {
+        if (is_null($this->condicion_iva)) {
+            return null;
+        } else {
+            return $this->condicion_iva->getNombre();
+        }
+    }
+
+    /**
+     * Get the value of direccion_facturacion
+     */ 
+    public function getDireccion_facturacion()
+    {
+        return $this->direccion_facturacion;
+    }
+
+    /**
+     * Set the value of direccion_facturacion
+     *
+     * @return  self
+     */ 
+    public function setDireccion_facturacion($direccion_facturacion)
+    {
+        $this->direccion_facturacion = $direccion_facturacion;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of banco
+     */ 
+    public function getBanco()
+    {
+        return $this->banco;
+    }
+
+    /**
+     * Set the value of banco
+     *
+     * @return  self
+     */ 
+    public function setBanco($banco)
+    {
+        $this->banco = $banco;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of cbu
+     */ 
+    public function getCbu()
+    {
+        return $this->cbu;
+    }
+
+    /**
+     * Set the value of cbu
+     *
+     * @return  self
+     */ 
+    public function setCbu($cbu)
+    {
+        $this->cbu = $cbu;
+
+        return $this;
+    }
 
     /**
      * Get the value of tipo

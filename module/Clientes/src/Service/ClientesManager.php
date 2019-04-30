@@ -197,7 +197,7 @@ class ClientesManager {
         $cliente = new Cliente();
         $this->addDatosParticulares($cliente, $data);
         $this->addDatosLaborales($cliente, $data);
-        $this->addDatosFacturacion($cliente, $data);
+        // $this->addDatosFacturacion($cliente, $data);
         // $this->addDatosLicencia($cliente, $data);
         $this->addDatosServicio($cliente, $data);
         // $this->addDatosGanaderos($cliente, $data);        
@@ -222,7 +222,7 @@ class ClientesManager {
     public function updateCliente($cliente, $data) {
         $this->addDatosParticulares($cliente, $data);
         $this->addDatosLaborales($cliente, $data);
-        $this->addDatosFacturacion($cliente, $data);
+        // $this->addDatosFacturacion($cliente, $data);
         // $this->addDatosLicencia($cliente, $data);
         $this->addDatosServicio($cliente, $data);
         // $this->addDatosGanaderos($cliente, $data);
@@ -272,16 +272,7 @@ class ClientesManager {
         }
     }
 
-    private function addDatosFacturacion($cliente, $data) {
-        $condicion_iva = $this->getCategoriaCliente($data['condicion_iva']);
 
-        $cliente->setRazon_social($data['razon_social'])
-                ->setDireccion_facturacion($data['direccion_facturacion'])
-                ->setCondicion_iva($condicion_iva)
-                ->setBanco($data['banco'])
-                ->setCbu($data['cbu'])
-                ->setCuit_cuil($data['cuit_cuil']);
-    }
 
     // private function addDatosLicencia($cliente, $data) {
     //     if ($data['licencia'] == "-1") {
@@ -298,12 +289,12 @@ class ClientesManager {
     // }
        
     private function addDatosServicio($cliente, $data) {
-        if ($data['categoria_servicio'] == "-1") {
-            $cliente->setServicio(null);
-        } else {
-            $categoriaServicio = $this->getCategoria($data['categoria_servicio']);
-            $cliente->setCategoriaServicio($categoria_servicio);
-        }
+        // if ($data['categoria_servicio'] == "-1") {
+        //     $cliente->setServicio(null);
+        // } else {
+        //     $categoriaServicio = $this->getCategoriaId($data['categoria_servicio']);
+        //     $cliente->setCategoriaServicio($categoria_servicio);
+        // }
         if ($data['servicio'] == "-1") {
             $cliente->setServicio(null);
         } else {
@@ -521,5 +512,8 @@ class ClientesManager {
    
     public function getCategoriasServicio(){
         return $this->entityManager->getRepository(Categoria::class)->findBy(['tipo'=>"servicio"]);
+    }
+    public function getCategoriaId($id){
+        return $this->entityManager->getRepository(Categoria::class)->findOneById($id);
     }
 }

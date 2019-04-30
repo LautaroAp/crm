@@ -118,17 +118,17 @@ $id_persona = $persona->getId();
                 </div>
                 <div class="panel-body" style="min-height: 325px;">
                     <div class="ficha-cliente-p margen">
-                        <p><label>Razón Social:</label> <?= $cliente->getRazon_social(); ?></p>
-                        <p><label>Dirección de Facturación:</label> <?= $cliente->getDireccion_facturacion(); ?></p>
+                        <p><label>Razón Social:</label> <?= $persona->getRazon_social(); ?></p>
+                        <p><label>Dirección de Facturación:</label> <?= $persona->getDireccion_facturacion(); ?></p>
                         <p><label>Ciudad:</label> <?php echo ($cliente->getCiudad()); ?></p>
                         <p><label>Provincia:</label> <?php echo ($cliente->getNombreProvinciaCliente()); ?></p>
                         <p><label>País:</label> <?php echo ($cliente->getNombrePaisCliente()); ?></p>
                         <br>
-                        <p><label>Condición de IVA:</label> <?= $cliente->getNombreCondicionIva(); ?></p>
+                        <p><label>Condición de IVA:</label> <?= $persona->getNombreCondicionIva(); ?></p>
                         <p><label>Tipo de Factura:</label> Factura A */hacer tabla/*</p>
-                        <p><label>Banco:</label> <?= $cliente->getBanco(); ?></p>
-                        <p><label>CBU:</label> <?= $cliente->getCbu(); ?></p>
-                        <p><label>CUIT/CUIL:</label> <?= $cliente->getCuit_cuil(); ?></p>
+                        <p><label>Banco:</label> <?= $persona->getBanco(); ?></p>
+                        <p><label>CBU:</label> <?= $persona->getCbu(); ?></p>
+                        <p><label>CUIT/CUIL:</label> <?= $persona->getCuit_cuil(); ?></p>
                     </div>
                 </div>
             </div>

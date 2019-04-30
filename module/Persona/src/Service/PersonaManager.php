@@ -3,6 +3,7 @@
 namespace Persona\Service;
 
 use DBAL\Entity\Persona;
+use DBAL\Entity\Categoria;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
@@ -60,7 +61,6 @@ class PersonaManager {
     
     public function updatePersona($persona, $data) {
         $persona=$this->setData($persona, $data);
-
         if ($this->tryUpdatePersona($persona)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Datos editados correctamente';
@@ -69,6 +69,39 @@ class PersonaManager {
             $_SESSION['MENSAJES']['ficha_cliente_msj'] = 'Error al editar datos';
         }
         return true;
+    }
+
+    public function getCategoria($id = null) {
+        if (isset($id)) {
+            return $this->entityManager
+                            ->getRepository(Categoria::class)
+                            ->findOneBy(['id' => $id]);
+        }
+        return $this->entityManager
+                        ->getRepository(Categoria::class)
+                        ->findAll();
+    }
+
+    private function addDatosFacturacion($persona, $data){
+        if (isset($data['condicion_iva'])){
+            $condicion_iva = $this->getCategoria($data['condicion_iva']);
+            $persona->setCondicion_iva($condicion_iva);
+        }
+        if (isset($data['razon_social'])){
+            $persona->setRazon_social($data['razon_social']);
+        }
+        if (isset($data['direccion_facturacion'])){
+            $persona->setDireccion_facturacion($data['direccion_facturacion']);
+        }        
+        if (isset($data['banco'])){
+            $persona->setBanco($data['banco']);
+        }
+        if (isset($data['cbu'])){
+            $persona->setCbu($data['cbu']);
+        }
+        if (isset($data['cuit_cuil'])){
+            $persona->setCuit_cuil($data['cuit_cuil']);
+        }
     }
 
     private function setData($persona, $data, $tipo= null, $estado=null){
@@ -81,8 +114,10 @@ class PersonaManager {
         if (isset($estado)){
             $persona->setEstado($estado);
         }
+        $this->addDatosFacturacion($persona,$data);
         return $persona;
     }
+
 
     public function removePersona($persona) {
         if ($this->tryRemovePersona($persona)) {
