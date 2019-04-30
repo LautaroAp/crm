@@ -493,7 +493,9 @@ class Bienes {
         $output .= '"Codigo": "' . $this->getCodigo() .'", ';
         $output .= '"Nombre": "' . $this->getNombre() .'", ';
         $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
-        $output .= '"Categoria": "' . $this->getCategoria()->getJSON() .'", ';
+        if (!is_null($this->getCategoria())){
+            $output .= '"Categoria": "' . $this->getCategoria()->getJSON() .'", ';
+        }
         $output .= '"Precio": "' . $this->getPrecio() .'", ';
         $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
         $output .= '"Dto ($)": "' . $this->getPrecio_final_dto() .'", ';
