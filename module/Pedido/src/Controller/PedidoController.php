@@ -45,7 +45,6 @@ class PedidoController extends TransaccionController
         $json="[]";
         if (isset($_SESSION['TRANSACCIONES']['PEDIDO'])) {
             $json = $_SESSION['TRANSACCIONES']['PEDIDO'];
-
         }
         // Obtengo todos los Bienes
         $bienes = $this->bienesManager->getBienes();
@@ -141,14 +140,15 @@ class PedidoController extends TransaccionController
         }
         //SINO LOS TOMO DEL PEDIDO Y GUARDO ESO EN LA SESION PARA CONTINUAR TRABAJANDO CON LA SESION
         else{
-            $items_array = $this->getItemsArray($items);
-            foreach ($items_array as $array) {
-                $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
-                $json .= $item->getJson() . ',';
+            // $items_array = $this->getItemsArray($items);
+            // foreach ($items_array as $array) {
+            //     $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
+            //     $json .= $item->getJson() . ',';
                
-            }
-            $json = substr($json, 0, -1);
-            $json = '[' . $json . ']';
+            // }
+            // $json = substr($json, 0, -1);
+            // $json = '[' . $json . ']';
+            $json = $this->getJsonFromObjectList($items);
             $_SESSION['TRANSACCIONES']['PEDIDO'] = $json;
         }
        
@@ -212,6 +212,7 @@ class PedidoController extends TransaccionController
             'transaccion' => $transaccion,
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
+            'transaccionJson'=>"[]",
             'presupuestosJson' => $jsonPrespuestos,
             'itemsTransaccionJson' =>"[]",
         ]);
@@ -243,15 +244,12 @@ class PedidoController extends TransaccionController
        return $json;
    }
 
-   public function addItemsTransaccionAction(){
+   public function getItemsTransaccionAction(){
         $this->layout()->setTemplate('layout/nulo');
         $idTransaccion = $this->params()->fromRoute('id');
         $transaccion = $this->pedidoManager->getTransaccionId($idTransaccion);
         $items = $transaccion->getBienesTransacciones();
         $itemsTransaccionJson = $this->getJsonFromObjectList($items);
-       
-        // $items_array = $this->getItemsArray($items);
-        // $itemsTransaccionJson=COUNT($items);    
         $view = new ViewModel(['itemsTransaccionJson'=>$itemsTransaccionJson]);
         $view->setTerminal(true);
         return $view;
@@ -310,4 +308,19 @@ class PedidoController extends TransaccionController
         ]);
     }
 
+   
+   public function getItemsPreviosAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $numPresupuesto = $this->params()->fromRoute('id');
+        $presupuesto = $this->pedidoManager->getPresupuestoPrevio($numPresupuesto);
+        $itemsTransaccionJson="[]";
+        if ($presupuesto!=null){
+            $transaccion = $presupuesto->getTransaccion();
+            $items = $transaccion->getBienesTransacciones();
+            $itemsTransaccionJson = $this->getJsonFromObjectList($items);
+        }
+        $view = new ViewModel(['itemsTransaccionJson'=>$itemsTransaccionJson]);
+        $view->setTerminal(true);
+        return $view;
+    }   
 }

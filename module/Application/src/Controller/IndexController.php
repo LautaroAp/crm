@@ -119,17 +119,17 @@ class IndexController extends HuellaController {
         );
     }
 
-    public function gestionLicenciasAction() {
-        $label = "Licencias";
-        $url = "/licencias";
-        $limite = "Productos y Servicios";
-        $this->prepararBreadcrumbs($label, $url, $limite);
-        $this->reiniciarParametros();
-        $volver = $this->getUltimaUrl();
-        return new ViewModel(
-            ['volver' => $volver]
-        );
-    }
+    // public function gestionLicenciasAction() {
+    //     $label = "Licencias";
+    //     $url = "/licencias";
+    //     $limite = "Productos y Servicios";
+    //     $this->prepararBreadcrumbs($label, $url, $limite);
+    //     $this->reiniciarParametros();
+    //     $volver = $this->getUltimaUrl();
+    //     return new ViewModel(
+    //         ['volver' => $volver]
+    //     );
+    // }
 
     public function gestionProductosAction() {
         $label = "Productos";

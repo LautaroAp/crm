@@ -46,7 +46,12 @@ function actualizarDatosProvincias(id_pais)
     });
 }
 
-
+function actualizarServicios(id_categoria)
+{
+    $.post('/clientes/ajax/getServicios/' + id_categoria, function (data) {
+        $('#div_servicios').html(data);
+    });
+}
 
 function actualizarDatosTipoEvento(tipo){
     if (tipo==-1)
@@ -90,5 +95,10 @@ function mostrarAccionesComerciales(id_persona){
     $.post('/clientes/ajax/mostrarAccionesComerciales/' + id_persona, function (data) {
         $('#eventos').html(data);
     });
+}
+
+function cambiarEstado(estado, event){
+    var idTransaccion = event.target.id;
+    $.post('/remito/ajax/cambiarEstado/' + idTransaccion+ '/'+estado);
 }
 

@@ -58,7 +58,9 @@ var itemsTransaccionJson = <?= $itemsTransaccionJson ?>;
 items.concat(itemsTransaccionJson);
 var itemsTransaccion =null;
 var itemsAnteriores =null;
-
+var transaccionPreviaNum = null;
+var transaccionPreviaId = null;
+var itemsTransaccionPrevia = null;
 </script>
 
 <!-- Document -->
@@ -105,15 +107,15 @@ var itemsAnteriores =null;
                         <div class="form-group col-md-3">
                             <label>Razón Social</label>
 
-                            <input type="text" class="form-control" name="razon_social" id="razon_social" value="<?php if (!is_null($tipoPersona)) {
-                                    echo ($tipoPersona->getRazon_social());
+                            <input type="text" class="form-control" name="razon_social" id="razon_social" value="<?php if (!is_null($persona)) {
+                                    echo ($persona->getRazon_social());
                                 } ?>" readonly>
 
                         </div>
                         <div class="form-group col-md-3">
                             <label>Condición de IVA</label>
-                            <input type="text" class="form-control" name="condicion_iva" id="condicion_iva" value="<?php if (!is_null($tipoPersona)) {
-                                    echo ($tipoPersona->getCondicion_iva());
+                            <input type="text" class="form-control" name="condicion_iva" id="condicion_iva" value="<?php if (!is_null($persona)) {
+                                    echo ($persona->getNombreCondicionIva());
                                 } ?>" readonly>
                         </div>
                     </div>
@@ -122,7 +124,7 @@ var itemsAnteriores =null;
                         <div class="form-group col-md-2">
                             <label>Número de Transacción</label>
                             <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion"
-                                value="<?= $numTransacciones ?>" readonly style="max-width: 250px;">
+                                value="<?= $numTransacciones ?>" style="max-width: 250px;">
                         </div>
                         <div class="form-group col-md-2">
                             <label>Número de Pedido</label>
@@ -132,7 +134,7 @@ var itemsAnteriores =null;
                         <div class="form-group col-md-3">
                             <label>Número de Presupuesto</label>
                             <div class="autocomplete input-group">
-                                <input type="text" class="form-control" name="numero_presupuesto" id="numero_presupuesto" value="" readonly>
+                                <input type="text" class="form-control" name="transaccion_buscada" id="transaccion_buscada" value="" readonly>
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i></button>
                                 </span>
@@ -140,7 +142,7 @@ var itemsAnteriores =null;
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
                         <input type="hidden" id="url" name="url" value="<?= $url ?>">
-                        <input type="hidden" id="transaccion_base" name="transaccion_base">
+                        <input type="hidden" id="id_transaccion_previa" name="id_transaccion_previa">
                     </div>
                 </div>
             </div>
@@ -164,7 +166,7 @@ var itemsAnteriores =null;
                                 placeholder="Código">
                         </div>
                         <div class="autocomplete form-group col-sm-4 margin-padding-xs">
-                            <label>Producto Y Servicio</label>
+                            <label>Producto / Servicio</label>
                             <input type="text" class="form-control" name="item_nombre" id="item_nombre"
                                 placeholder="Producto Y Servicio">
                         </div>
@@ -380,35 +382,36 @@ var itemsAnteriores =null;
         </div>
     </div>
     <div id="modalTransacciones" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Seleccionar Presupuesto </h4>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Seleccionar Presupuesto </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-body" id="contenido_transacciones">
+                    <div id="div_table_transacciones">
+                        <script>
+                        completarTransacciones(jsonPrespuestos);
+                        </script>
                     </div>
-                    <div class="modal-body">
-                        <div class="panel panel-body" id="contenido_transacciones">
-                        <div id="div_table_transacciones">
-                            <script>
-                            completarTransacciones(jsonPrespuestos);
-                            </script>
-                        </div>
-                        <br>                     
-                    </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" onclick="completeItems()" data-dismiss="modal">Aceptar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    </div>
+                    <br>                     
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="completeItems()" data-dismiss="modal">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
+    </div>
                 
 </form>
 
 <div id="div_transaccion">
 </div> 
-
+<div id="div_items_transaccion_previa">
+</div> 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
     <div class="row img-centrar">

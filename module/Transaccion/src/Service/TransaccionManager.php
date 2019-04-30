@@ -57,6 +57,21 @@ class TransaccionManager {
     public function getTransaccionesPersona($id_persona){
         return $this->entityManager->getRepository(Transaccion::class)->findBy(['persona'=>$id_persona]);
     }
+    public function getTransaccionPrevia($tipo, $id){
+        $transaccion_especifica = null;
+        if ($tipo=="PEDIDO"){
+            $transaccion_especifica= $this->entityManager->getRepository(Presupuesto::class)->findOneById($id);
+        }
+        if ($tipo=="REMITO"){
+            $transaccion_especifica= $this->entityManager->getRepository(Remito::class)->findOneById($id);
+        }
+        if (!is_null($transaccion_especifica)){
+            return $transaccion_especifica->getTransaccion();
+        }
+        return null;
+        
+    }
+    
 
     public function getTabla() {
         // Create the adapter
@@ -139,6 +154,10 @@ class TransaccionManager {
             $formaEnvio = $this->formaEnvioManager->getFormaEnvioId($data['forma_envio']);
             $transaccion->setFormaEnvio($formaEnvio);
         }
+        if(isset($data['id_transaccion_previa'])){           
+            $transaccionPrevia = $this->getTransaccionId($data['id_transaccion_previa']);
+            $transaccion->setTransaccionPrevia($transaccionPrevia);
+        }
         return $transaccion;
     }
 
@@ -151,11 +170,16 @@ class TransaccionManager {
         foreach($items as $array ){
             $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
             // $item = $this->bienesTransaccionesManager->getBienTransaccionFromJson($json);
-
             $item->setTransaccion($transaccion);
             // $transaccion->addBienesTransacciones($item);
-            $bien= $item->getBien();
-            // $bien->addBienesTransacciones($item);
+            if (strtoupper($transaccion->getNombre())=="REMITO"){
+                $bien= $item->getBien();
+                if (strtoupper($bien->getTipo())=="PRODUCTO"){
+                    $stock = $bien->getStock();
+                    $stock = $stock - $item->getCantidad();
+                    $bien->setStock($stock);
+                }
+            }
             $item= $this->bienesTransaccionesManager->add($item);
         }
     }

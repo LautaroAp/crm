@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Description of Producto
  *
- * This class represents a registered licencia.
+ * This class represents a registered producto.
  * @ORM\Entity()
  * @ORM\Table(name="PRODUCTO")
  */
@@ -259,23 +259,6 @@ class Producto
         $this->presentacion = $presentacion;
         return $this;
     }
-
-    // /**
-    //  * Get the value of stock
-    //  */
-    // public function getStock(){
-    //     return $this->stock;
-    // }
-
-    // /**
-    //  * Set the value of stock
-    //  *
-    //  * @return self
-    //  */
-    // public function setStock($stock){
-    //     $this->stock = $stock;
-    //     return $this;
-    // }
 
     /**
      * Get the value of reposicion

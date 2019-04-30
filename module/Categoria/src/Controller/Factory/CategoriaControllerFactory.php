@@ -10,7 +10,7 @@ use Clientes\Service\ClientesManager;
 use Servicio\Service\ServicioManager;
 use Producto\Service\ProductoManager;
 use Proveedor\Service\ProveedorManager;
-use Licencia\Service\LicenciaManager;
+// use Licencia\Service\LicenciaManager;
 
 /**
  * Description of CategoriaControllerFactory
@@ -29,11 +29,11 @@ class CategoriaControllerFactory implements FactoryInterface {
         $clientesManager = $container->get(ClientesManager::class);
         $servicioManager = $container->get(ServicioManager::class);
         $productoManager = $container->get(ProductoManager::class);
-        $licenciaManager = $container->get(LicenciaManager::class);
+        // $licenciaManager = $container->get(LicenciaManager::class);
         $proveedorManager = $container->get(ProveedorManager::class);
 
         // Instantiate the service and inject dependencies
         return new CategoriaController($entityManager, $categoriaEventoManager, $tipoEventoManager, 
-        $clientesManager, $productoManager, $servicioManager, $licenciaManager, $proveedorManager);
+        $clientesManager, $productoManager, $servicioManager, $proveedorManager);
     }    
 }

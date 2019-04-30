@@ -42,7 +42,6 @@
             "Application\\": "module/Application/src/",
             "DBAL\\": "module/DBAL/src/",
             "Ejecutivo\\": "module/Ejecutivo/src/",
-            "Licencia\\": "module/Licencia/src/",
             "Pais\\": "module/Pais/src/",
             "Provincia\\": "module/Provincia/src/",
             "Clientes\\": "module/Clientes/src/",

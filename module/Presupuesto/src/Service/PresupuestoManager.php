@@ -87,6 +87,7 @@ class PresupuestoManager extends TransaccionManager{
         $presupuesto->setTransaccion($transaccion);
         if (isset($data['numero_presupuesto'])){
             $presupuesto->setNumero($data['numero_presupuesto']);
+            $transaccion->setNumeroTransaccionTipo($data['numero_presupuesto']);
         }
         return $presupuesto;
     }

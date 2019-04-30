@@ -55,6 +55,16 @@ class BienesTransacciones {
     protected $subtotal;
 
 
+        /**
+     * @ORM\Column(name="ESTADO_ENTREGA", nullable=true, type="string")
+     */
+    protected $estadoEntrega;
+
+        /**
+     * @ORM\Column(name="ESTADO_FACTURA", nullable=true, type="string")
+     */
+    protected $estadoFactura;
+
     /**
      * Get the value of id
      */ 
@@ -225,7 +235,15 @@ class BienesTransacciones {
         $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
         $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
         $output .= '"Dto ($)": "' . $this->getPrecioDto() .'", ';
-
+        if (!is_null($this->getTransaccion())){
+            $output .= '"Numero Transaccion": "' . $this->getTransaccion()->getId() .'", ';
+        }
+        if (!is_null($this->getestadoEntrega())){
+            $output .= '"Estado Entrega": "' . $this->getestadoEntrega() .'", ';
+        }
+        if (!is_null($this->getEstadoFactura())){
+            $output .= '"Estado Factura": "' . $this->getEstadoFactura() .'", ';
+        }
         $output .= '"Totales": "' . $this->getSubtotal() .'" ';
         
         return  '{'.$output.'}' ;
@@ -250,7 +268,49 @@ class BienesTransacciones {
         $salida['Dto (%)'] = $this->descuento;
         $salida['IVA (%)'] = $this->iva->getId();
         $salida['Totales'] = $this->subtotal;
+        // $salida['Estado Entrega'] = $this->estadoEntrega;
+        // $salida['Estado Factura'] = $this->estadoFactura;
         return $salida;
     }
 
+
+    /**
+     * Get the value of estadoEntrega
+     */ 
+    public function getestadoEntrega()
+    {
+        return $this->estadoEntrega;
+    }
+
+    /**
+     * Set the value of estadoEntrega
+     *
+     * @return  self
+     */ 
+    public function setestadoEntrega($estadoEntrega)
+    {
+        $this->estadoEntrega = $estadoEntrega;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of estadoFactura
+     */ 
+    public function getEstadoFactura()
+    {
+        return $this->estadoFactura;
+    }
+
+    /**
+     * Set the value of estadoFactura
+     *
+     * @return  self
+     */ 
+    public function setEstadoFactura($estadoFactura)
+    {
+        $this->estadoFactura = $estadoFactura;
+
+        return $this;
+    }
 }

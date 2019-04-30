@@ -41,24 +41,35 @@ $proveedor = $bien->getProveedor();
                     </div>
                     <div class="form-group col-md-6">
                         <label>Descripción</label>
-                        <input type="text" class="form-control" name="descripcion" placeholder="Ingresar descripción"
-                            value=<?php echo($bien->getDescripcion());?>>
+                        <input type="text" class="form-control" name="descripcion" placeholder="Ingresar descripción" value=<?php echo($bien->getDescripcion());?>>
                     </div>
                 </div>
                 <!-- 2da fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-6">
-                        <label>Código</label>
-                        <input type="text" required="true" class="form-control" name="codigo" placeholder="Ingresar código" 
-                            value=<?php echo($bien->getCodigo());?>>
+                        <label>Código de Servicio</label>
+                        <input type="text" class="form-control" name="codigo"
+                            value="<?= $bien->getCodigo(); ?>">
                     </div>
                     <div class="form-group col-md-6">
                         <label>Marca</label>
                         <input type="text" class="form-control" name="marca" placeholder="Ingresar marca" 
-                            value=<?php echo($bien->getMarca());?>>
+                            value=<?php echo($bien->getMarca()); ?>>
                     </div>
                 </div>
                 <!-- 3ra fila -->
+                <div class="row form-row">
+                    <div class="form-group col-md-6">
+                        <label>Código de Barras</label>
+                        <input type="text" class="form-control" name="codigo_barras" id="codigo_barras"
+                            value="<?= $bien->getCodigo_barras(); ?>">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Unidad de Medida</label>
+                        <input type="text" class="form-control" name="unidad" value="<?= $bien->getUnidad() ?>">
+                    </div>
+                </div>
+                <!-- 4ta fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-6">
                         <label>Categoría</label>
@@ -92,6 +103,7 @@ $proveedor = $bien->getProveedor();
             </div>
         </div>   
     </div>
+
     <!-- Fin Datos del Servicio -->
 
     <!-- Precios del Servicio -->
@@ -140,7 +152,7 @@ $proveedor = $bien->getProveedor();
                 <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>Precio Público con Dto</label>
-                        <input type="text" class="form-control" name="precio_publico_dto" id="precio_publico_dto" readonly value=<?php echo($bien->getPrecio_final_dto());?>>
+                        <input type="text" class="form-control" name="precio_publico_dto" id="precio_publico_dto" readonly value=<?php echo($bien->getPrecio_final_dto());?> >
                     </div>
                     <div class="form-group col-md-4">
                         <label>Precio Público + IVA</label>

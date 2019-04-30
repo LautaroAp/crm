@@ -1,17 +1,6 @@
 <!-- scripts -->
 <script src="/js/iva.js"></script>
 
-<?php
-if (isset($_SESSION['MENSAJES']['licencia'])) {
-    if ($_SESSION['MENSAJES']['licencia']) {
-        echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['licencia_msj'] . "', 'success');});</script>";
-    } else {
-        echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['licencia_msj'] . "', 'error');});</script>";
-    }
-    $_SESSION['MENSAJES']['licencia'] = null;
-    $_SESSION['MENSAJES']['licencia_msj'] = null;
-}
-?>
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
     <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"

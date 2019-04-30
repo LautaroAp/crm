@@ -89,12 +89,19 @@ class Cliente {
      */
     private $categoria;
 
+    // /**
+    //  * Many Clientes have One Categoria.
+    //  * @ORM\ManyToOne(targetEntity="Licencia")
+    //  * @ORM\JoinColumn(name="ID_LICENCIA", referencedColumnName="ID_LICENCIA")
+    //  */
+    // private $licencia;
+
     /**
      * Many Clientes have One Categoria.
-     * @ORM\ManyToOne(targetEntity="Licencia")
-     * @ORM\JoinColumn(name="ID_LICENCIA", referencedColumnName="ID_LICENCIA")
+     * @ORM\ManyToOne(targetEntity="Servicio")
+     * @ORM\JoinColumn(name="ID_SERVICIO", referencedColumnName="ID_SERVICIO")
      */
-    private $licencia;
+    private $servicio;
 
     /**
      * @ORM\Column(name="VERSION_LICENCIA", nullable=true, type="string", length=255)
@@ -121,47 +128,15 @@ class Cliente {
      */
     private $fecha_ultimo_pago;
 
-    /**
-     * @ORM\Column(name="LICENCIA_ACTUAL", nullable=true, type="string", length=255)
-     */
-    private $licencia_actual;
+    // /**
+    //  * @ORM\Column(name="LICENCIA_ACTUAL", nullable=true, type="string", length=255)
+    //  */
+    // private $licencia_actual;
 
     /**
      * @ORM\Column(name="DNI_CLIENTE", nullable=true, type="string")
      */
     private $dni;
-
-    /**
-     * @ORM\Column(name="CUIT_CUIL_CLIENTE", nullable=true, type="string")
-     */
-    private $cuit_cuil;
-
-    /**
-     * @ORM\Column(name="RAZON_SOCIAL_CLIENTE", nullable=true, type="string")
-     */
-    private $razon_social;
-
-    /**
-     * Many Clientes have One Categoria.
-     * @ORM\ManyToOne(targetEntity="Categoria")
-     * @ORM\JoinColumn(name="ID_CONDICION_IVA_CLIENTE", referencedColumnName="ID")
-     */
-    private $condicion_iva;
-
-    /**
-     * @ORM\Column(name="DIRECCION_FACTURACION", nullable=true, type="string")
-     */
-    private $direccion_facturacion;
-
-    /**
-     * @ORM\Column(name="BANCO", nullable=true, type="string")
-     */
-    private $banco;
-
-    /**
-     * @ORM\Column(name="CBU", nullable=true, type="string")
-     */
-    private $cbu;
 
     /**
      * 
@@ -360,22 +335,22 @@ class Cliente {
         return $this;
     }
 
-    function getNombreLicenciaCliente() {
-        if (is_null($this->licencia)) {
-            return null;
-        } else {
-            return $this->licencia->getNombre();
-        }
-    }
+    // function getNombreLicenciaCliente() {
+    //     if (is_null($this->licencia)) {
+    //         return null;
+    //     } else {
+    //         return $this->licencia->getNombre();
+    //     }
+    // }
 
-    function getLicencia() {
-        return $this->licencia;
-    }
+    // function getLicencia() {
+    //     return $this->licencia;
+    // }
 
-    function setLicencia($licencia) {
-        $this->licencia = $licencia;
-        return $this;
-    }
+    // function setLicencia($licencia) {
+    //     $this->licencia = $licencia;
+    //     return $this;
+    // }
 
     public function getVersion() {
         return $this->version;
@@ -452,132 +427,6 @@ class Cliente {
     }
 
     /**
-     * Get the value of cuit_cuil
-     */ 
-    public function getCuit_cuil()
-    {
-        return $this->cuit_cuil;
-    }
-
-    /**
-     * Set the value of cuit_cuil
-     *
-     * @return  self
-     */ 
-    public function setCuit_cuil($cuit_cuil)
-    {
-        $this->cuit_cuil = $cuit_cuil;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of razon_social
-     */ 
-    public function getRazon_social()
-    {
-        return $this->razon_social;
-    }
-
-    /**
-     * Set the value of razon_social
-     *
-     * @return  self
-     */ 
-    public function setRazon_social($razon_social)
-    {
-        $this->razon_social = $razon_social;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of condicion_iva
-     */ 
-    public function getCondicion_iva() {
-        return $this->condicion_iva;
-    }
-
-    /**
-     * Set the value of condicion_iva
-     *
-     * @return  self
-     */ 
-    public function setCondicion_iva($condicion_iva) {
-        $this->condicion_iva = $condicion_iva;
-        return $this;
-    }
-
-    public function getNombreCondicionIva() {
-        $condicion_iva = $this->getCondicion_iva();
-        if (is_null($condicion_iva)) {
-            return null;
-        } else {
-            return $condicion_iva->getNombre();
-        }
-    }
-
-    /**
-     * Get the value of direccion_facturacion
-     */ 
-    public function getDireccion_facturacion()
-    {
-        return $this->direccion_facturacion;
-    }
-
-    /**
-     * Set the value of direccion_facturacion
-     *
-     * @return  self
-     */ 
-    public function setDireccion_facturacion($direccion_facturacion)
-    {
-        $this->direccion_facturacion = $direccion_facturacion;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of banco
-     */ 
-    public function getBanco()
-    {
-        return $this->banco;
-    }
-
-    /**
-     * Set the value of banco
-     *
-     * @return  self
-     */ 
-    public function setBanco($banco)
-    {
-        $this->banco = $banco;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of cbu
-     */ 
-    public function getCbu()
-    {
-        return $this->cbu;
-    }
-
-    /**
-     * Set the value of cbu
-     *
-     * @return  self
-     */ 
-    public function setCbu($cbu)
-    {
-        $this->cbu = $cbu;
-
-        return $this;
-    }
-
-    /**
      * Get the value of cargo
      */ 
     public function getCargo()
@@ -596,4 +445,33 @@ class Cliente {
 
         return $this;
     }
+
+    /**
+     * Get many Clientes have One Categoria.
+     */ 
+    public function getServicio()
+    {
+        return $this->servicio;
+    }
+
+    /**
+     * Set many Clientes have One Categoria.
+     *
+     * @return  self
+     */ 
+    public function setServicio($servicio)
+    {
+        $this->servicio = $servicio;
+
+        return $this;
+    }
+
+    public function getNombreServicioCliente(){
+        if (is_null($this->servicio)) {
+            return null;
+        } else {
+            return $this->servicio->getBien()->getNombre();;
+        }
+    }
+    
 }

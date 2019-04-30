@@ -2,6 +2,7 @@
 <script src="/js/bienes-transacciones.js"></script>
 <script src="/js/item.js"></script>
 <script src="/js/opciones-transacciones.js"></script>
+<script src="/js/transacciones.js"></script>
 
 <!-- Script -->
 <!-- PROBLEMAS CON EL DATETIMEPICKER -- JQUERY TIENE QUE SER MENOR A 2.2 -->
@@ -57,12 +58,18 @@ if(!is_null($pedido->getFecha_entrega())){
     $fecha_entrega = $date;
 }
 
+if(!is_null($transaccion->getTransaccionPrevia())){
+    $transaccionPreviaNum = $transaccion->getTransaccionPrevia()->getNumeroTransaccionTipo();
+} else {
+    $transaccionPreviaNum = -1;
+}
 $url = "/clientes/listado/ficha/" . $persona->getId();
 $responsable = $this->identity();
 ?>
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
 <script>
+var tipoTransaccion ="pedido";
 var items = [];
 var json_items = <?= $json_bienes ?>;
 var json_items_codigos = <?= $json_bienes ?>;
@@ -70,6 +77,17 @@ var json_items_nombres = <?= $json_bienes ?>;
 var output;
 var ivas = <?= $ivasJson ?>;
 setIvas(ivas);
+var jsonPrespuestos = <?= $presupuestosJson ?>;
+var itemsTransaccionJson = <?= $itemsTransaccionJson ?>;
+items.concat(itemsTransaccionJson);
+var itemsTransaccion =null;
+var itemsAnteriores =null;
+var transaccionPreviaNum = <?= $transaccionPreviaNum ?>;
+if (transaccionPreviaNum=== -1){transaccionPreviaNum=null};
+var itemsTransaccionPrevia = null;
+if(transaccionPreviaNum!=null){
+    getItemsTransaccionPrevia();
+}
 </script>
 
 <!-- Document -->
@@ -117,15 +135,15 @@ setIvas(ivas);
                         <div class="form-group col-md-3">
                             <label>Razón Social</label>
 
-                            <input type="text" class="form-control" name="razon_social" id="razon_social" value="<?php if (!is_null($tipoPersona)) {
-                                    echo ($tipoPersona->getRazon_social());
+                            <input type="text" class="form-control" name="razon_social" id="razon_social" value="<?php if (!is_null($persona)) {
+                                    echo ($persona->getRazon_social());
                                 } ?>" readonly>
 
                         </div>
                         <div class="form-group col-md-3">
                             <label>Condición de IVA</label>
-                            <input type="text" class="form-control" name="condicion_iva" id="condicion_iva" value="<?php if (!is_null($tipoPersona)) {
-                                    echo ($tipoPersona->getCondicion_iva());
+                            <input type="text" class="form-control" name="condicion_iva" id="condicion_iva" value="<?php if (!is_null($persona)) {
+                                    echo ($persona->getNombreCondicionIva());
                                 } ?>" readonly>
                         </div>
 
@@ -142,17 +160,20 @@ setIvas(ivas);
                             <input type="text" class="form-control" name="numero_pedido" id="numero_pedido"
                                 value="<?= $numPedido ?>" style="max-width: 250px;">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>Número de Presupuesto</label>
-                            <div class="form-inline">
-                                <input type="text" class="form-control" name="numero_presupuesto"
-                                    id="numero_presupuesto" value="" readonly>
-                                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search">
-                                    </span> Buscar</button>
+                            <div class="autocomplete input-group">
+                                <input type="text" class="form-control" name="transaccion_buscada" id="transaccion_buscada" 
+                                value="<?php if ($transaccionPreviaNum!="-1"){echo $transaccionPreviaNum;}
+                                        else {echo ("");} ?>" readonly>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i></button>
+                                </span>
                             </div>
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
                         <input type="hidden" id="url" name="url" value="<?= $url ?>">
+                        <input type="hidden" id="id_transaccion_previa" name="id_transaccion_previa">
                     </div>
                 </div>
             </div>
@@ -177,7 +198,7 @@ setIvas(ivas);
                                 placeholder="Código">
                         </div>
                         <div class="autocomplete form-group col-sm-4 margin-padding-xs">
-                            <label>Producto Y Servicio</label>
+                            <label>Producto / Servicio</label>
                             <input type="text" class="form-control" name="item_nombre" id="item_nombre"
                                 placeholder="Producto Y Servicio">
                         </div>
@@ -397,9 +418,37 @@ setIvas(ivas);
             </div>
         </div>
     </div>
+    <div id="modalTransacciones" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Seleccionar Presupuesto </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-body" id="contenido_transacciones">
+                    <div id="div_table_transacciones">
+                        <script>
+                        completarTransacciones(jsonPrespuestos);
+                        </script>
+                    </div>
+                    <br>                     
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="completeItems()" data-dismiss="modal">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>    
 
 </form>
 
+<div id="div_transaccion">
+</div> 
+<div id="div_items_transaccion_previa">
+</div> 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
     <div class="row img-centrar">

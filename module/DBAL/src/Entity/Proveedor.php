@@ -39,11 +39,6 @@ class Proveedor {
      */
     private $ciudad;
 
-
-    /**
-     * @ORM\Column(name="DIRECCION_FACTURACION", nullable=true, type="string", length=255)
-     */
-    private $direccion_facturacion;
     /**
      * @ORM\Column(name="EMPRESA", nullable=true, type="string", length=255)
      */
@@ -85,34 +80,6 @@ class Proveedor {
      * @ORM\Column(name="DNI", nullable=true, type="string")
      */
     private $dni;
-
-    /**
-     * @ORM\Column(name="CUIT_CUIL", nullable=true, type="string")
-     */
-    private $cuit_cuil;
-
-    /**
-     * @ORM\Column(name="RAZON_SOCIAL", nullable=true, type="string")
-     */
-    private $razon_social;
-
-    /**
-     * Many Proveedors have One Categoria.
-     * @ORM\ManyToOne(targetEntity="Categoria")
-     * @ORM\JoinColumn(name="ID_CONDICION_IVA", referencedColumnName="ID")
-     */
-    private $condicion_iva;
-
-    /**
-     * @ORM\Column(name="BANCO", nullable=true, type="string")
-     */
-    private $banco;
-
-    /**
-     * @ORM\Column(name="CBU", nullable=true, type="string")
-     */
-    private $cbu;
-
    
     /**
      * @ORM\Column(name="SKYPE", nullable=true, type="string")
@@ -278,17 +245,7 @@ class Proveedor {
         return $this;
     }
 
-    function getLicencia() {
-        return $this->licencia;
-    }
-
-    function setLicencia($licencia) {
-        $this->licencia = $licencia;
-        return $this;
-    }
-
-
-   
+       
     public function addUsuario($usuario) {
         $this->usuarios[] = $usuario;
     }
@@ -355,132 +312,7 @@ class Proveedor {
         return $this;
     }
 
-    /**
-     * Get the value of cuit_cuil
-     */ 
-    public function getCuit_cuil()
-    {
-        return $this->cuit_cuil;
-    }
-
-    /**
-     * Set the value of cuit_cuil
-     *
-     * @return  self
-     */ 
-    public function setCuit_cuil($cuit_cuil)
-    {
-        $this->cuit_cuil = $cuit_cuil;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of razon_social
-     */ 
-    public function getRazon_social()
-    {
-        return $this->razon_social;
-    }
-
-    /**
-     * Set the value of razon_social
-     *
-     * @return  self
-     */ 
-    public function setRazon_social($razon_social)
-    {
-        $this->razon_social = $razon_social;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of condicion_iva
-     */ 
-    public function getCondicion_iva() {
-        return $this->condicion_iva;
-    }
-
-    /**
-     * Set the value of condicion_iva
-     *
-     * @return  self
-     */ 
-    public function setCondicion_iva($condicion_iva) {
-        $this->condicion_iva = $condicion_iva;
-        return $this;
-    }
-
-    public function getNombreCondicionIva() {
-        $condicion_iva = $this->getCondicion_iva();
-        if (is_null($condicion_iva)) {
-            return null;
-        } else {
-            return $condicion_iva->getNombre();
-        }
-    }
-
-    /**
-     * Get the value of direccion_facturacion
-     */ 
-    public function getDireccion_facturacion()
-    {
-        return $this->direccion_facturacion;
-    }
-
-    /**
-     * Set the value of direccion_facturacion
-     *
-     * @return  self
-     */ 
-    public function setDireccion_facturacion($direccion_facturacion)
-    {
-        $this->direccion_facturacion = $direccion_facturacion;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of banco
-     */ 
-    public function getBanco()
-    {
-        return $this->banco;
-    }
-
-    /**
-     * Set the value of banco
-     *
-     * @return  self
-     */ 
-    public function setBanco($banco)
-    {
-        $this->banco = $banco;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of cbu
-     */ 
-    public function getCbu()
-    {
-        return $this->cbu;
-    }
-
-    /**
-     * Set the value of cbu
-     *
-     * @return  self
-     */ 
-    public function setCbu($cbu)
-    {
-        $this->cbu = $cbu;
-
-        return $this;
-    }
-
+   
     /**
      * Get the value of actividad
      */ 

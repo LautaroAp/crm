@@ -4,6 +4,7 @@ namespace Pedido\Service;
 
 use DBAL\Entity\Moneda;
 use DBAL\Entity\Pedido;
+use DBAL\Entity\Presupuesto;
 use DBAL\Entity\Persona;
 use DBAL\Entity\BienesTransacciones;
 use DBAL\Entity\Transaccion;
@@ -79,6 +80,7 @@ class PedidoManager extends TransaccionManager
         $pedido->setTransaccion($transaccion);
         if (isset($data['numero_pedido'])) {
             $pedido->setNumero($data['numero_pedido']);
+            $transaccion->setNumeroTransaccionTipo($data['numero_pedido']);
         }
      
         $fecha_entrega = null;
@@ -97,6 +99,7 @@ class PedidoManager extends TransaccionManager
         if (isset($data['lugar_entrega'])) {
             $pedido->setLugar_entrega($data['lugar_entrega']);
         }
+
         return $pedido;
     }
 
@@ -136,5 +139,8 @@ class PedidoManager extends TransaccionManager
         $this->entityManager->flush();
     }
 
+    public function getPresupuestoPrevio($numPresupuesto){
+        return $this->entityManager->getRepository(Presupuesto::class)->findOneBy(['numero'=>$numPresupuesto]);
+    }
    
 }

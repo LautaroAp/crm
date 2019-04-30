@@ -93,6 +93,8 @@ class RemitoController extends TransaccionController{
         $monedasJson = $this->getJsonMonedas();
         $formasPagoJson = $this->getJsonFormasPago();
         $ivasJson = $this->getJsonIvas();
+        $pedidos = $this->remitoManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
+        $jsonPedidos = $this->getJsonFromObjectList($pedidos);
         $this->reiniciarParams();
         return new ViewModel([
             // 'items' => $items,
@@ -107,6 +109,9 @@ class RemitoController extends TransaccionController{
             'ivasJson' => $ivasJson,
             'formasEnvioJson'=>"[]",
             'transaccionJson'=>"[]",
+            'pedidosJson' => $jsonPedidos,
+            'itemsTransaccionJson' =>"[]",
+
         ]);
     }
 
@@ -123,7 +128,7 @@ class RemitoController extends TransaccionController{
 
     public function editAction() {
         $id_transaccion = $this->params()->fromRoute('id');
-        $remito = $this->RemitoManager->getRemitoFromTransaccionId($id_transaccion);
+        $remito = $this->remitoManager->getRemitoFromTransaccionId($id_transaccion);
         $items = array();
 
         if (!is_null($remito)) {
@@ -136,14 +141,6 @@ class RemitoController extends TransaccionController{
         }
         //SINO LOS TOMO DEL REMITO Y GUARDO ESO EN LA SESION PARA CONTINUAR TRABAJANDO CON LA SESION
         else{
-            // $items_array = $this->getItemsArray($items);
-            // foreach ($items_array as $array) {
-            //     $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
-            //     $json .= $item->getJson() . ',';
-               
-            // }
-            // $json = substr($json, 0, -1);
-            // $json = '[' . $json . ']';
             $json = $this->getJsonFromObjectList($items);
             $_SESSION['TRANSACCIONES']['REMITO'] = $json;
         }
@@ -185,7 +182,11 @@ class RemitoController extends TransaccionController{
         $monedasJson = $this->getJsonMonedas();
         $formasPagoJson = $this->getJsonFormasPago();
         $ivasJson = $this->getJsonIvas();
+        $transaccion = $remito->getTransaccion();
         $transaccionJson = $remito->getTransaccion()->getJSON();
+        $pedidos = $this->remitoManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
+        $pedidoPrevio = $this->remitoManager->getPedidoPrevioFromTransaccion($remito->getTransaccion()->getTransaccionPrevia());
+        $jsonPedidos = $this->getJsonFromObjectList($pedidos);
         $this->reiniciarParams();
         return new ViewModel([
             // 'items' => $items,
@@ -199,7 +200,11 @@ class RemitoController extends TransaccionController{
             'monedasJson' => $monedasJson,
             'formasEnvioJson'=>"[]",
             'transaccionJson' => $transaccionJson,
+            'transaccion' => $transaccion,
             'ivasJson' => $ivasJson,
+            'pedidosJson' => $jsonPedidos,
+            'itemsTransaccionJson' =>"[]",
+            'pedidoPrevio'=> $pedidoPrevio,
         ]);
     }
 
@@ -276,4 +281,39 @@ class RemitoController extends TransaccionController{
     }
 
 
+    public function getItemsTransaccionAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $idTransaccion = $this->params()->fromRoute('id');
+        $transaccion = $this->remitoManager->getTransaccionId($idTransaccion);
+        $items = $transaccion->getBienesTransacciones();
+        $itemsTransaccionJson = $this->getJsonFromObjectList($items);
+        $view = new ViewModel(['itemsTransaccionJson'=>$itemsTransaccionJson]);
+        $view->setTerminal(true);
+        return $view;
+   }
+   
+   public function getItemsPreviosAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $numPedido = $this->params()->fromRoute('id');
+        $pedido = $this->remitoManager->getPedidoPrevio($numPedido);
+        $itemsTransaccionJson="[]";
+        if ($pedido!=null){
+            $transaccion = $pedido->getTransaccion();
+            $items = $transaccion->getBienesTransacciones();
+            $itemsTransaccionJson = $this->getJsonFromObjectList($items);
+        }
+        $view = new ViewModel(['itemsTransaccionJson'=>$itemsTransaccionJson]);
+        $view->setTerminal(true);
+        return $view;
+    }   
+
+    public function cambiarEstadoAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $idTransaccion = $this->params()->fromRoute('id');
+        $estado= $this->params()->fromRoute('id2');
+        $this->remitoManager->cambiarEstadoTransaccion($idTransaccion, $estado);
+        $view = new ViewModel();
+        $view->setTerminal(true);
+        return $view;
+    }
 }

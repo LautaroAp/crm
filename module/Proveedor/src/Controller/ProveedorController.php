@@ -96,7 +96,7 @@ class ProveedorController extends HuellaController
         $condiciones_iva = $this->proveedorManager->getCondicionIva('iva');
         $pais = $this->proveedorManager->getPais();
         $provincia = $this->proveedorManager->getProvincia();
-        $licencia = $this->proveedorManager->getLicencia();
+        // $licencia = $this->proveedorManager->getLicencia();
         $_SESSION['TIPOEVENTO']['TIPO']=$tipo;
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
@@ -110,7 +110,7 @@ class ProveedorController extends HuellaController
             'condiciones_iva' => $condiciones_iva,
             'paises' => $pais,
             'provincias' => $provincia,
-            'licencias' => $licencia,
+            // 'licencias' => $licencia,
             'tipo' => $tipo,
             'volver' => $volver,
         ]);
@@ -135,12 +135,12 @@ class ProveedorController extends HuellaController
         $condiciones_iva = $this->proveedorManager->getCondicionIva('iva');
         $pais = $this->proveedorManager->getPais();
         $provincia = $this->proveedorManager->getProvincia();
-        $licencia = $this->proveedorManager->getLicencia();
+        // $licencia = $this->proveedorManager->getLicencia();
         $_SESSION['TIPOEVENTO']['TIPO']=$tipo;
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $this->proveedorManager->updateProveedor($proveedor, $data);
-            $this->redirect()->toRoute('proveedores/listado/ficha', ['action' => 'ficha', 'id' => $id_persona]);
+            $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $id_persona]);
         }
         $volver = $this->getUltimaUrl();
         return new ViewModel([
@@ -150,7 +150,7 @@ class ProveedorController extends HuellaController
             'condiciones_iva' => $condiciones_iva,
             'paises' => $pais,
             'provincias' => $provincia,
-            'licencias' => $licencia,
+            // 'licencias' => $licencia,
             'tipo' => $tipo,
             'volver' => $volver,
         ]);

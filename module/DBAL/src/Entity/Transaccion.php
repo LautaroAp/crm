@@ -125,7 +125,18 @@ class Transaccion {
      * @ORM\JoinColumn(name="ID_FORMA_DE_ENVIO", referencedColumnName="ID")
      */
     protected $formaEnvio;
-    
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Transaccion")
+     * @ORM\JoinColumn(name="ID_TRANSACCION_PREVIA", referencedColumnName="ID")
+     */
+    protected $transaccionPrevia;
+
+    /**
+     * @ORM\Column(name="NUMERO_TIPO_TRANSACCION", nullable=true, type="integer")
+    */
+    protected $numeroTransaccionTipo;
+
     /**
      * Get the value of id
      */ 
@@ -578,6 +589,13 @@ class Transaccion {
         }
         $output .= '"Estado": "' . $this->getEstado() .'", ';
         $output .= '"Monto": "' . $this->getMonto() .'", ';
+        if (!(is_null($this->transaccionPrevia))){
+            $output .= '"Transaccion Previa": ' . $this->getTransaccionPrevia()->getId() .', ';
+        }
+        if (!(is_null($this->numeroTransaccionTipo))){
+            $output .= '"Numero Tipo Transaccion": ' . $this->getNumeroTransaccionTipo().', ';
+        }
+        
         $output .= '"Bonificacion General": "' . $this->getBonificacionGeneral() .'" ';
 
 
@@ -585,4 +603,43 @@ class Transaccion {
         return  '{'.$output.'}' ;
     }
 
+    /**
+     * Get the value of transaccionPrevia
+     */ 
+    public function getTransaccionPrevia()
+    {
+        return $this->transaccionPrevia;
+    }
+
+    /**
+     * Set the value of transaccionPrevia
+     *
+     * @return  self
+     */ 
+    public function setTransaccionPrevia($transaccionPrevia)
+    {
+        $this->transaccionPrevia = $transaccionPrevia;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of numeroTransaccionTipo
+     */ 
+    public function getNumeroTransaccionTipo()
+    {
+        return $this->numeroTransaccionTipo;
+    }
+
+    /**
+     * Set the value of numeroTransaccionTipo
+     *
+     * @return  self
+     */ 
+    public function setNumeroTransaccionTipo($numeroTransaccionTipo)
+    {
+        $this->numeroTransaccionTipo = $numeroTransaccionTipo;
+
+        return $this;
+    }
 }

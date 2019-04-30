@@ -1,3 +1,4 @@
+<!-- <script src="/js/ajax.js"></script> -->
 <script>
 $(document).ready(function() {
     $('#tabla_eventos').DataTable({
@@ -21,8 +22,11 @@ $(document).ready(function() {
         </tr>
     </thead>
     <tbody id="cuerpo_eventos" role="button" class="">
-        <?php foreach ($transacciones as $transaccion) : ?>
-        <tr id="<?= $transaccion->getId() ?>" onclick="seleccionarFila(event)" class="vpEvento">
+        <?php foreach ($transacciones as $transaccion) :
+            $idTransaccion = $transaccion->getId();
+            $tipoTransaccion = $transaccion->getTipo();
+        ?>
+        <tr id="<?= $transaccion->getId() ?>" class="vpEvento">
             <td id="<?= $transaccion->getId() ?>">
                 <?php
                 if (!is_null($transaccion->getFecha_transaccion())) {
@@ -49,6 +53,40 @@ $(document).ready(function() {
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
             </td>
+            <?php if (ucfirst($transaccion->getTipo())!="Remito"){ ?>
+                <td id="<?= $transaccion->getId() ?>" class="">
+                    <a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>"
+                    type="button" class="btn btn-default btn-sm" 
+                    >
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+            <?php } else{ ?>
+                <td id="<?= $transaccion->getId() ?>">
+                <div  class="dropdown">
+                     <ul class="nav navbar-nav navbar-menu-font"> 
+                        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito">
+                        <span class="glyphicon glyphicon-check"></span></button>
+                        <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                            <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                            onclick="cambiarEstado('ANULADO', event)">
+                            Anulado</a></li>
+                            <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                            onclick="cambiarEstado('A_ENTREGAR', event)">
+                            A entregar</a></li>
+                            <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                            onclick="cambiarEstado('ENTREGADO', event)">
+                            Entregado</a></li>
+                            <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                            onclick="cambiarEstado('CONFORMADO', event)">
+                            Conformado</a></li>
+                        </ul>
+                    </ul>
+                </div>
+                </td>
+                
+            <?php } ?>
+            
         </tr>
         <?php endforeach; ?>
     </tbody>

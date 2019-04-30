@@ -3,7 +3,7 @@
 namespace Proveedor\Service;
 
 use DBAL\Entity\Proveedor;
-use DBAL\Entity\Licencia;
+// use DBAL\Entity\Licencia;
 use DBAL\Entity\Pais;
 use DBAL\Entity\Provincia;
 use DBAL\Entity\Categoria;
@@ -167,7 +167,7 @@ class ProveedorManager {
         $proveedor = new Proveedor();
         $this->addDatosParticulares($proveedor, $data);
         $this->addDatosLaborales($proveedor, $data);
-        $this->addDatosFacturacion($proveedor, $data);
+        // $this->addDatosFacturacion($proveedor, $data);
         $persona = $this->personaManager->addPersona($data, $this->tipo);
         $proveedor->setPersona($persona);
         $this->tryAddProveedor($proveedor);
@@ -190,7 +190,7 @@ class ProveedorManager {
     public function updateProveedor($proveedor, $data) {
         $this->addDatosParticulares($proveedor, $data);
         $this->addDatosLaborales($proveedor, $data);
-        $this->addDatosFacturacion($proveedor, $data);
+        // $this->addDatosFacturacion($proveedor, $data);
         $this->personaManager->updatePersona($proveedor->getPersona(), $data);
         if ($this->tryUpdateProveedor($proveedor)) {
             $_SESSION['MENSAJES']['ficha_proveedor'] = 1;
@@ -229,16 +229,16 @@ class ProveedorManager {
                 ->setCargo($data['cargo']);
     }
 
-    private function addDatosFacturacion($proveedor, $data) {
-        $condicion_iva = $this->getCategoriaProveedor($data['condicion_iva']);
+    // private function addDatosFacturacion($proveedor, $data) {
+    //     $condicion_iva = $this->getCategoriaProveedor($data['condicion_iva']);
 
-        $proveedor->setRazon_social($data['razon_social'])
-                ->setDireccion_facturacion($data['direccion_facturacion'])
-                ->setCondicion_iva($condicion_iva)
-                ->setBanco($data['banco'])
-                ->setCbu($data['cbu'])
-                ->setCuit_cuil($data['cuit_cuil']);
-    }
+    //     $proveedor->setRazon_social($data['razon_social'])
+    //             ->setDireccion_facturacion($data['direccion_facturacion'])
+    //             ->setCondicion_iva($condicion_iva)
+    //             ->setBanco($data['banco'])
+    //             ->setCbu($data['cbu'])
+    //             ->setCuit_cuil($data['cuit_cuil']);
+    // }
     
     public function modificarEstado($id) {
         $entityManager = $this->entityManager;
@@ -329,16 +329,16 @@ class ProveedorManager {
                         ->findAll();
     }
 
-    public function getLicencia($id = null) {
-        if (isset($id)) {
-            return $this->entityManager
-                            ->getRepository(Licencia::class)
-                            ->findOneBy(['id' => $id]);
-        }
-        return $this->entityManager
-                        ->getRepository(Licencia::class)
-                        ->findAll();
-    }
+    // public function getLicencia($id = null) {
+    //     if (isset($id)) {
+    //         return $this->entityManager
+    //                         ->getRepository(Licencia::class)
+    //                         ->findOneBy(['id' => $id]);
+    //     }
+    //     return $this->entityManager
+    //                     ->getRepository(Licencia::class)
+    //                     ->findAll();
+    // }
 
     public function getProvincias($id_pais) {
         $provincias = $this->entityManager
