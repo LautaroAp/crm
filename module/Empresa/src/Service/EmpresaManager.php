@@ -98,13 +98,14 @@ class EmpresaManager {
         $empresa->setDireccion($data['direccion']);
         $empresa->setTelefono($data['telefono']);
         $empresa->setMail($data['mail']);
-        $empresa->setMovil($data['movil']);
+        // $empresa->setMovil($data['movil']);
         $empresa->setFax($data['fax']);
         $empresa->setWeb($data['web']);
         $empresa->setCuit_cuil($data['cuit_cuil']);
         $vencimiento_cai = \DateTime::createFromFormat('d/m/Y', $data['vencimiento_cai']);
         $empresa->setVencimiento_cai($vencimiento_cai);
         $empresa->setRazon_social($data['razon_social']);
+        $empresa->setPunto_venta($data['punto_venta']);
         if (isset($data['condicion_iva'])){
             $condicion_iva = $this->getCategoria($data['condicion_iva']);
             $empresa->setCondicion_iva($condicion_iva);

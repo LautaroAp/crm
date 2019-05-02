@@ -55,7 +55,7 @@ $html = '
                     </table>
                 </td>
                 <th width="2%"></th>
-                <td width="45%"><strong>Punto de Venta: </strong>&nbsp;&nbsp;<strong> Comp. Nro: </strong>'. str_pad($numPresupuesto, 6, "0", STR_PAD_LEFT)  .'</td>
+                <td width="45%"><strong>Punto de Venta: </strong>'. str_pad($empresa->getPunto_venta(), 5, "0", STR_PAD_LEFT) .'&nbsp;<strong> Comp. Nro: </strong>'. str_pad($numPresupuesto, 6, "0", STR_PAD_LEFT) .'</td>
             </tr>
             <tr>
                 <td width="45%"><strong>Domicilio Comercial: </strong>'. $empresa->getDireccion() .'</td>
