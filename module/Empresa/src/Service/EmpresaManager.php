@@ -105,7 +105,6 @@ class EmpresaManager {
         $vencimiento_cai = \DateTime::createFromFormat('d/m/Y', $data['vencimiento_cai']);
         $empresa->setVencimiento_cai($vencimiento_cai);
         $empresa->setRazon_social($data['razon_social']);
-        // $empresa->setTipo_iva('tipo_iva');
         if (isset($data['condicion_iva'])){
             $condicion_iva = $this->getCategoria($data['condicion_iva']);
             $empresa->setCondicion_iva($condicion_iva);

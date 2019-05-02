@@ -20,8 +20,8 @@ class PedidoController extends TransaccionController
     private $bienesTransaccionesManager;
     private $bienesManager;
     
-    public function __construct($pedidoManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager,                                    $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager) {
-        parent::__construct($pedidoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager);
+    public function __construct($pedidoManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager) {
+        parent::__construct($pedidoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager, $empresaManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
         $this->pedidoManager = $pedidoManager;

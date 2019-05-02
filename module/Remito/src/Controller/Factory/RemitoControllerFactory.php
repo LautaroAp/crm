@@ -14,6 +14,7 @@ use Bienes\Service\BienesManager;
 use FormaPago\Service\FormaPagoManager;
 use FormaEnvio\Service\FormaEnvioManager;
 use Iva\Service\IvaManager;
+use Empresa\Service\EmpresaManager;
 
 // use Transaccion\Service\TransaccionManager;
 
@@ -37,8 +38,8 @@ class RemitoControllerFactory implements FactoryInterface {
         $bienesManager = $container->get(BienesManager::class);
         $formaPagoManager = $container->get(FormaPagoManager::class);
         $formaEnvioManager = $container->get(FormaEnvioManager::class);
-
         $ivaManager = $container->get(IvaManager::class);
+        $empresaManager = $container->get(EmpresaManager::class);
 
 
         // $transaccionManager = $container->get(TransaccionManager::class);            
@@ -46,6 +47,6 @@ class RemitoControllerFactory implements FactoryInterface {
 
         // Instantiate the service and inject dependencies
         return new RemitoController($remitoManager,  $monedaManager, $personaManager, $clientesManager, 
-        $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager);
+        $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager, $empresaManager);
     }    
 }

@@ -136,15 +136,6 @@ class EmpresaForm extends Form {
 
         $this->add([
             'type' => 'text',
-            'name' => 'tipo_iva',
-            'value' => '',
-            'options' => [
-                'label' => 'Tipo IVA',
-            ],
-        ]);
-
-        $this->add([
-            'type' => 'text',
             'name' => 'localidad',
             'value' => '',
             'options' => [
@@ -333,19 +324,6 @@ class EmpresaForm extends Form {
               
         $inputFilter->add([
             'name' => 'razon_social',
-            'required' => true,
-            'filters' => [
-                ['name' => 'StringTrim'],
-            ],
-            'validators' => [
-                [
-                    'name' => 'StringLength',
-                ],
-            ],
-        ]);
-
-        $inputFilter->add([
-            'name' => 'tipo_iva',
             'required' => true,
             'filters' => [
                 ['name' => 'StringTrim'],

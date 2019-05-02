@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * This class represents a registered empresa.
  * @ORM\Entity()
- * @ORM\Table(name="DATOS_EMPRESA")
+ * @ORM\Table(name="EMPRESA")
  */
 class Empresa {
     //put your code here
@@ -65,11 +65,6 @@ class Empresa {
      * @ORM\Column(name="RAZON_SOCIAL", nullable=true, type="string", length=255)
      */
     protected $razon_social;
-
-    /**
-     * @ORM\Column(name="TIPO_IVA", nullable=true, type="string", length=255)
-     */
-    protected $tipo_iva;
 
     /**
      * Many Personas have One Categoria.

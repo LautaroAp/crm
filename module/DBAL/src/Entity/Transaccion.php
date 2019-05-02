@@ -462,6 +462,14 @@ class Transaccion {
         return $this->formaPago;
     }
 
+    public function getNombreFormaPago(){
+        if (is_null($this->formaPago)) {
+            return "NO DEFINIDO";
+        } else {
+            return $this->formaPago->getNombre();
+        }
+    }
+
     /**
      * Set the value of formaPago
      *

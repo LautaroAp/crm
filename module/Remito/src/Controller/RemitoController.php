@@ -27,9 +27,8 @@ class RemitoController extends TransaccionController{
     private $items;
 
 
-    public function __construct($remitoManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager,
-                                $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager) {
-        parent::__construct($remitoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager);
+    public function __construct($remitoManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager) {
+        parent::__construct($remitoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager, $empresaManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
         $this->remitoManager = $remitoManager;
