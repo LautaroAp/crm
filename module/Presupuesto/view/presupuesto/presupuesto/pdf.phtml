@@ -31,12 +31,12 @@ $pdf->writeHTMLCell(0, '', '', '', $html, 'LRBT', 1, 0, true, 'C', true);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 
-// Datos Personales y de Comprobante
+// Datos Empresa y Comprobante
 $html = '
-    <table border="0" cellspacing="0" cellpadding="4">
+    <table border="1" cellspacing="0" cellpadding="4">
         <thead>
             <tr style="font-size: 14px; font-weight: bold;">
-                <th align="center" width="45%">NOMBRE</th>
+                <th align="center" width="45%">'. $empresa->getNombre() .'</th>
                 <th width="2%"></th>
                 <th align="center" width="6%" border="1">&nbsp;P</th>
                 <th width="2%"></th>
@@ -45,25 +45,31 @@ $html = '
         </thead>
         <tbody>
             <tr>
-                <td width="45%"><strong>Razón Social: </strong></td>
+                <td width="45%"><strong>Razón Social: </strong>'. $empresa->getRazon_social() .'</td>
                 <th width="2%"></th>
-                <td align="center" width="6%">&nbsp;|</td>
+                <td align="center" width="6%">
+                    <table>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </table>
+                </td>
                 <th width="2%"></th>
                 <td width="45%"><strong>Punto de Venta: </strong>&nbsp;&nbsp;<strong> Comp. Nro: </strong>'. str_pad($numPresupuesto, 6, "0", STR_PAD_LEFT)  .'</td>
             </tr>
             <tr>
-                <td width="45%"><strong>Domicilio Comercial: </strong></td>
+                <td width="45%"><strong>Domicilio Comercial: </strong>'. $empresa->getDireccion() .'</td>
                 <th width="2%"></th>
                 <td align="center" width="6%">&nbsp;|</td>
                 <th width="2%"></th>
                 <td width="45%"><strong>Fecha de Emisión: </strong>'. $transaccion->getFecha_transaccion()->format('d/m/Y') .'</td>
             </tr>
             <tr>
-                <td width="45%"><strong>Condición frente al IVA: </strong></td>
+                <td width="45%"><strong>Condición frente al IVA: </strong>'. $empresa->getNombreCondicionIva() .'</td>
                 <th width="2%"></th>
                 <td align="center" width="6%">&nbsp;|</td>
                 <th width="2%"></th>
-                <td width="45%"><strong>CUIT: </strong></td>
+                <td width="45%"><strong>CUIT: </strong>'. $empresa->getCuit_cuil() .'</td>
             </tr>
             <tr>
                 <td width="45%"></td>
@@ -106,17 +112,23 @@ $pdf->Ln(1);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+if(!is_null($persona->getRazon_social()) || ($persona->getRazon_social() !== "") ){
+    $nombre_razonsocial = $persona->getRazon_social();
+} else {
+    $nombre_razonsocial = $persona->getNombre();
+};
+
 // Datos del Comprador
 $html = '
     <table border="0" cellspacing="0" cellpadding="3">
         <tbody>
             <tr>
-                <td><strong>CUIT: </strong></td>
-                <td><strong>Apellido y Nombre / Razón Social: </strong>'. $persona->getNombre() .'</td>
+                <td><strong>CUIT: </strong>'. $persona->getCuit_cuil() .'</td>
+                <td><strong>Apellido y Nombre / Razón Social: </strong>'. $nombre_razonsocial .'</td>
             </tr>
             <tr>
-                <td><strong>Condición frente al IVA: </strong></td>
-                <td><strong>Domicilio Comercial: </strong></td>
+                <td><strong>Condición frente al IVA: </strong>'. $persona->getNombreCondicionIva() .'</td>
+                <td><strong>Domicilio Comercial: </strong>'. $persona->getDireccion_facturacion() .'</td>
             </tr>
             <tr>
                 <td><strong>Condición de Venta: </strong>'. $transaccion->getFormaPago()->getNombre() .'</td>

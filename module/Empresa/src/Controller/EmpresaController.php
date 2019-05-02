@@ -55,6 +55,7 @@ class EmpresaController extends HuellaController
         $this->prepararBreadcrumbs("Editar Empresa", "/editar/" . $empresa->getId(), "Configuracion");
         $form = $this->empresaManager->getFormForEmpresa($empresa);
         $monedas = $this->monedaManager->getMonedas();
+        $condiciones_iva = $this->empresaManager->getCondicionIva('iva');
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->empresaManager->updateEmpresa($empresa, $data);
@@ -65,6 +66,7 @@ class EmpresaController extends HuellaController
             'empresa' => $empresa,
             'form' => $form,
             'monedas' => $monedas,
+            'condiciones_iva' => $condiciones_iva,
             'volver' => $volver,
         ));
     }

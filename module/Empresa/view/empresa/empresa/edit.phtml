@@ -68,6 +68,8 @@ $form->get('parametro_vencimiento')->setAttributes([
     'style' => 'width: 50px;'
 ]);
 
+$condicion_iva = $empresa->getCondicion_iva();
+
 $form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
 $form->prepare();
 
@@ -165,11 +167,20 @@ $form->prepare();
                     <?= $this->formElement($form->get('razon_social')); ?>
                     <?= $this->formElementErrors($form->get('razon_social')); ?> 
                 </div>
+         
                 <div class="form-group col-md-4">
-                    <?= $this->formLabel($form->get('tipo_iva')); ?>
-                    <?= $this->formElement($form->get('tipo_iva')); ?>
-                    <?= $this->formElementErrors($form->get('tipo_iva')); ?> 
+                    <label>Condición de IVA</label>
+                    <select class="form-control" id="condicion_iva" name="condicion_iva">
+                        <option value="<?php if(isset($condicion_iva)){ echo ($condicion_iva->getId()); }?>" hidden="">  
+                            <?php if(isset($condicion_iva)){ echo($condicion_iva->getNombre()); } else {echo ("Seleccionar");}?>
+                        </option>
+                        <option value="-1">NO DEFINIDO</option>
+                        <?php foreach ($condiciones_iva as $condicion_iva) : ?>
+                            <option value="<?php echo ($condicion_iva->getId()); ?>"><?php echo ($condicion_iva->getNombre()); ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
+
                 <div class="form-group col-md-4">
                     <?= $this->formLabel($form->get('localidad')); ?>
                     <?= $this->formElement($form->get('localidad')); ?>

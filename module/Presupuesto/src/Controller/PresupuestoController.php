@@ -8,6 +8,7 @@ namespace Presupuesto\Controller;
 
 use Transaccion\Controller\TransaccionController;
 use Presupuesto\Service\PresupuestoManager;
+use DBAL\Entity\Empresa;
 
 use Zend\View\Model\ViewModel;
 
@@ -35,9 +36,10 @@ class PresupuestoController extends TransaccionController{
         $bienesManager, 
         $formaPagoManager,
         $formaEnvioManager,
+        $empresaManager,
         $ivaManager
     ) {
-        parent::__construct($presupuestoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager);
+        parent::__construct($presupuestoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager, $empresaManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
         $this->presupuestoManager = $presupuestoManager;
@@ -267,6 +269,8 @@ class PresupuestoController extends TransaccionController{
     $persona = $presupuesto->getTransaccion()->getPersona();
     $tipoPersona = null;
 
+    $empresa = $this->empresaManager->getEmpresa();
+    
     $numTransacciones = $presupuesto->getTransaccion()->getNumero();
     $numPresupuesto = $presupuesto->getNumero();
     $monedasJson = $this->getJsonMonedas();
@@ -293,6 +297,7 @@ class PresupuestoController extends TransaccionController{
         'ivasJson' => $ivasJson,
         'presupuestosJson' => $jsonPrespuestos,
         'itemsTransaccionJson' =>"[]",
+        'empresa' => $empresa,
         ]);
     }
 

@@ -43,50 +43,44 @@ $(document).ready(function() {
                 }
                 ?></td>
             <td><?= $transaccion->getDescripcion() ?></td>
+            <!-- PDF + BOTON REMITO -->
             <td id="<?= $transaccion->getId() ?>" class="">
-                <a href="<?= $this->url($transaccion->getTipo().'/pdf', ['id' => (int)$transaccion->getId()]) ?>"
-                 type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-file"></span>
-                </a>
-                <a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>"
-                 type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a>
-            </td>
-            <?php if (ucfirst($transaccion->getTipo())!="Remito"){ ?>
-                <td id="<?= $transaccion->getId() ?>" class="">
-                    <a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>"
-                    type="button" class="btn btn-default btn-sm" 
-                    >
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                </td>
-            <?php } else{ ?>
-                <td id="<?= $transaccion->getId() ?>">
-                <div  class="dropdown">
-                     <ul class="nav navbar-nav navbar-menu-font"> 
-                        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito">
-                        <span class="glyphicon glyphicon-check"></span></button>
-                        <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
-                            <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                            onclick="cambiarEstado('ANULADO', event)">
-                            Anulado</a></li>
-                            <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                            onclick="cambiarEstado('A_ENTREGAR', event)">
-                            A entregar</a></li>
-                            <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                            onclick="cambiarEstado('ENTREGADO', event)">
-                            Entregado</a></li>
-                            <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                            onclick="cambiarEstado('CONFORMADO', event)">
-                            Conformado</a></li>
+                <div class="dropdown">                    
+                    <!-- boton editar -->
+                    <?php if (ucfirst($transaccion->getTipo())!="Remito"){ ?>
+                        <a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>"
+                        type="button" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    <?php } else { ?>
+                    <!-- boton remito -->
+                        <ul class="nav navbar-nav navbar-menu-font"> 
+                            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                            style="margin-right: 4px;">
+                            <span class="glyphicon glyphicon-check"></span></button>
+                            <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                onclick="cambiarEstado('ANULADO', event)">
+                                Anulado</a></li>
+                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                onclick="cambiarEstado('A_ENTREGAR', event)">
+                                A entregar</a></li>
+                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                onclick="cambiarEstado('ENTREGADO', event)">
+                                Entregado</a></li>
+                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                onclick="cambiarEstado('CONFORMADO', event)">
+                                Conformado</a></li>
+                            </ul>
                         </ul>
-                    </ul>
+                    <?php } ?>
+                    <!-- boton pdf -->
+                    <a href="<?= $this->url($transaccion->getTipo().'/pdf', ['id' => (int)$transaccion->getId()]) ?>"
+                        type="button" class="btn btn-default btn-sm" target="blank">
+                            <span class="glyphicon glyphicon-file"></span>
+                    </a>
                 </div>
-                </td>
-                
-            <?php } ?>
-            
+            </td>
         </tr>
         <?php endforeach; ?>
     </tbody>

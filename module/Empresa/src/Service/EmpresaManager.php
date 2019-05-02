@@ -3,6 +3,7 @@
 namespace Empresa\Service;
 
 use DBAL\Entity\Empresa;
+use DBAL\Entity\Categoria;
 use Empresa\Form\EmpresaForm;
 
 /**
@@ -104,7 +105,11 @@ class EmpresaManager {
         $vencimiento_cai = \DateTime::createFromFormat('d/m/Y', $data['vencimiento_cai']);
         $empresa->setVencimiento_cai($vencimiento_cai);
         $empresa->setRazon_social($data['razon_social']);
-        $empresa->setTipo_iva('tipo_iva');
+        // $empresa->setTipo_iva('tipo_iva');
+        if (isset($data['condicion_iva'])){
+            $condicion_iva = $this->getCategoria($data['condicion_iva']);
+            $empresa->setCondicion_iva($condicion_iva);
+        }
         // if (isset($data['moneda'])){
         //     $empresa->setMoneda($data['moneda']);
         // }
@@ -179,5 +184,27 @@ class EmpresaManager {
     public function getElemsPag(){
         $empresa = $this->getEmpresa();
         return $empresa->getParametro_elementos_pagina();
+    }
+
+    public function getCondicionIva($tipo = null) {
+        if (isset($tipo)) {
+            return $this->entityManager
+                            ->getRepository(Categoria::class)
+                            ->findBy(['tipo' => $tipo]);
+        }
+        return $this->entityManager
+                        ->getRepository(Categoria::class)
+                        ->findAll();
+    }
+
+    public function getCategoria($id = null) {
+        if (isset($id)) {
+            return $this->entityManager
+                            ->getRepository(Categoria::class)
+                            ->findOneBy(['id' => $id]);
+        }
+        return $this->entityManager
+                        ->getRepository(Categoria::class)
+                        ->findAll();
     }
 }

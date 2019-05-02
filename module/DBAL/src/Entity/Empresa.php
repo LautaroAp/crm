@@ -65,10 +65,19 @@ class Empresa {
      * @ORM\Column(name="RAZON_SOCIAL", nullable=true, type="string", length=255)
      */
     protected $razon_social;
+
     /**
      * @ORM\Column(name="TIPO_IVA", nullable=true, type="string", length=255)
      */
     protected $tipo_iva;
+
+    /**
+     * Many Personas have One Categoria.
+     * @ORM\ManyToOne(targetEntity="Categoria")
+     * @ORM\JoinColumn(name="ID_CONDICION_IVA", referencedColumnName="ID")
+     */
+    private $condicion_iva;
+
     /**
      * @ORM\Column(name="LOCALIDAD", nullable=true, type="string", length=255)
      */
@@ -95,6 +104,11 @@ class Empresa {
      * @ORM\Column(name="PARAMETRO_ELEMENTOS_PAGINA", nullable=true, type="integer")
      */
     protected $parametro_elementos_pagina;
+
+    /**
+     * @ORM\Column(name="PUNTO_VENTA", nullable=true, type="integer")
+     */
+    protected $punto_venta;
 
     /**
      * Many Empresas have One Moneda.
@@ -292,5 +306,53 @@ class Empresa {
             return null;
         }
         return $this->moneda->getNombre();
+    }
+
+    /**
+     * Get many Personas have One Categoria.
+     */ 
+    public function getCondicion_iva()
+    {
+        return $this->condicion_iva;
+    }
+
+    /**
+     * Set many Personas have One Categoria.
+     *
+     * @return  self
+     */ 
+    public function setCondicion_iva($condicion_iva)
+    {
+        $this->condicion_iva = $condicion_iva;
+
+        return $this;
+    }
+
+    public function getNombreCondicionIva() {
+        if (is_null($this->condicion_iva)) {
+            return null;
+        } else {
+            return $this->condicion_iva->getNombre();
+        }
+    }
+
+    /**
+     * Get the value of punto_venta
+     */ 
+    public function getPunto_venta()
+    {
+        return $this->punto_venta;
+    }
+
+    /**
+     * Set the value of punto_venta
+     *
+     * @return  self
+     */ 
+    public function setPunto_venta($punto_venta)
+    {
+        $this->punto_venta = $punto_venta;
+
+        return $this;
     }
 }

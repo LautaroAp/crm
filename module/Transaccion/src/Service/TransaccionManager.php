@@ -7,6 +7,7 @@ use DBAL\Entity\Categoria;
 use DBAL\Entity\Persona;
 use DBAL\Entity\Ejecutivo;
 use DBAL\Entity\BienesTransacciones;
+use DBAL\Entity\Empresa;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DateInterval;
@@ -27,12 +28,13 @@ class TransaccionManager {
     protected $ivaManager;
     protected $formaPagoManager;
     protected $formaEnvioManager;
+    // protected $empresaManager;
     
     /**
      * Constructs the service.
      */
     public function __construct($entityManager, $personaManager, $bienesTransaccionesManager, $ivaManager,
-    $formaPagoManager, $formaEnvioManager, $monedaManager) {
+    $formaPagoManager, $formaEnvioManager, $monedaManager/*, $empresaManager*/) {
         $this->entityManager = $entityManager;
         $this->personaManager= $personaManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
@@ -40,6 +42,7 @@ class TransaccionManager {
         $this->formaPagoManager = $formaPagoManager;
         $this->formaEnvioManager = $formaEnvioManager;
         $this->monedaManager = $monedaManager;
+        // $this->empresaManager = $empresaManager;
 
  
     }
