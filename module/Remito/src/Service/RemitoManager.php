@@ -136,9 +136,5 @@ class RemitoManager extends TransaccionManager{
         return $this->entityManager->getRepository(Pedido::class)->findOneBy(['transaccion'=>$idTransaccionPrevia]);
     }
 
-    public function cambiarEstadoTransaccion($idTransaccion, $estado){
-        $transaccion = $this->getTransaccionId($idTransaccion);
-        $transaccion->setEstado($estado);
-        $this->entityManager->flush();
-    }
+  
 }

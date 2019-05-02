@@ -6,6 +6,7 @@ use Pedido\Service\PedidoManager;
 use Moneda\Service\MonedaManager;
 use Transaccion\Service\TransaccionManager;
 use BienesTransacciones\Service\BienesTransaccionesManager;
+use Bienes\Service\BienesManager;
 use Persona\Service\PersonaManager;
 use Iva\Service\IvaManager;
 use FormaPago\Service\FormaPagoManager;
@@ -28,7 +29,7 @@ class PedidoManagerFactory
         $ivaManager = $container->get(IvaManager::class); 
         $formaPagoManager = $container->get(FormaPagoManager::class);
         $formaEnvioManager = $container->get(FormaEnvioManager::class);
-        return new PedidoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager,
-        $formaPagoManager,$formaEnvioManager);
+        $bienesManager = $container->get(BienesManager::class);  
+        return new PedidoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager,$formaEnvioManager, $bienesManager);
     }
 }

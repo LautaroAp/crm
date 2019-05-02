@@ -10,6 +10,8 @@ use Persona\Service\PersonaManager;
 use Iva\Service\IvaManager;
 use FormaPago\Service\FormaPagoManager;
 use FormaEnvio\Service\FormaEnvioManager;
+use Bienes\Service\BienesManager;
+
 /**
  * This is the factory class for PresupuestoManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
@@ -28,7 +30,8 @@ class PresupuestoManagerFactory
         $ivaManager = $container->get(IvaManager::class); 
         $formaPagoManager = $container->get(FormaPagoManager::class);
         $formaEnvioManager = $container->get(FormaEnvioManager::class); 
-        return new PresupuestoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, 
-        $ivaManager, $formaPagoManager, $formaEnvioManager);
+        $bienesManager = $container->get(BienesManager::class);  
+
+        return new PresupuestoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $bienesManager);
     }
 }

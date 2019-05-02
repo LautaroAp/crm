@@ -97,8 +97,13 @@ function mostrarAccionesComerciales(id_persona){
     });
 }
 
-function cambiarEstado(estado, event){
+function cambiarEstado(estado, event,tipoTransaccion,idPersona){
     var idTransaccion = event.target.id;
-    $.post('/remito/ajax/cambiarEstado/' + idTransaccion+ '/'+estado);
+    var edo = estado.replace("_", " ");
+    if (confirm("Se cambiará el estado de la transacción a "+ edo +" ¿Desea continuar?")) {
+        $.post('/'+tipoTransaccion+'/ajax/cambiarEstado/' + idTransaccion+ '/'+estado);
+    }
+    mostrarTransacciones(idPersona);
+
 }
 

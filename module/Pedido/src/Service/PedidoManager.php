@@ -40,9 +40,10 @@ class PedidoManager extends TransaccionManager
         $bienesTransaccionManager,
         $ivaManager,
         $formaPagoManager,
-        $formaEnvioManager
+        $formaEnvioManager, 
+        $bienesManager
     ) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager);
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager);
         $this->entityManager = $entityManager;
         $this->tipo = "PEDIDO";
     }
