@@ -497,10 +497,10 @@ class Bienes {
             $output .= '"Categoria": "' . $this->getCategoria()->getJSON() .'", ';
         }
         $output .= '"Precio": "' . $this->getPrecio() .'", ';
-        $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
-        $output .= '"Dto ($)": "' . $this->getPrecio_final_dto() .'", ';
-        $output .= '"Iva (%)": "' . $this->getValorIva() .'", ';
-        $output .= '"IVA ($)": "' . $this->getIvaPeso() .'", ';
+        $output .= '"Dto": "' . $this->getDescuento() .'", ';
+        $output .= '"ImpDto": "' . $this->getPrecio_final_dto() .'", ';
+        $output .= '"IVA": "' . $this->getValorIva() .'", ';
+        $output .= '"ImpIVA": "' . $this->getIvaPeso() .'", ';
         if (!is_null($this->unidad)){
             $output .= '"Unidad": "' . $this->getUnidad() .'", ';
         }
@@ -553,11 +553,11 @@ class Bienes {
         $output = "";
         $output .= '"Id": "' . "" .'", ';
         $output .= '"Bien": ' . $this->getJsonBien() .', ';
-        $output .= '"IVA (%)": ' . $this->getIva()->getJSON() .', ';
-        $output .= '"IVA ($)": "' . $this->getIvaPeso() .'", ';
-        $output .= '"Dto ($)": "' . $this->getPrecio_final_dto() .'", ';
+        $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
+        $output .= '"ImpIVA": "' . $this->getIvaPeso() .'", ';
+        $output .= '"ImpDto": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"Cantidad": "' . "" .'", ';
-        $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
+        $output .= '"Dto": "' . $this->getDescuento() .'", ';
         $output .= '"Tipo": "' . $this->getTipo() .'", ';
         $output .= '"Stock": "' . $this->getStock() .'", ';
         $output .= '"Totales": "' . $this->getPrecio_final_iva_dto() .'" ';

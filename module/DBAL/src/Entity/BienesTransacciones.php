@@ -229,12 +229,12 @@ class BienesTransacciones {
             $output .= '"Bien": ' . $this->getBien()->getJSON() .', ';
         }
         if (!is_null($this->getIva())){
-            $output .= '"IVA (%)": ' . $this->getIva()->getJSON() .', ';
+            $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
         }        
-        $output .= '"IVA ($)": "' . $this->getIvaPeso() .'", ';
+        $output .= '"ImpIVA": "' . $this->getIvaPeso() .'", ';
         $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
-        $output .= '"Dto (%)": "' . $this->getDescuento() .'", ';
-        $output .= '"Dto ($)": "' . $this->getPrecioDto() .'", ';
+        $output .= '"Dto": "' . $this->getDescuento() .'", ';
+        $output .= '"ImpDto": "' . $this->getPrecioDto() .'", ';
         if (!is_null($this->getTransaccion())){
             $output .= '"Numero Transaccion": "' . $this->getTransaccion()->getId() .'", ';
         }
