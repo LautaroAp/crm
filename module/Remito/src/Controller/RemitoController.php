@@ -235,17 +235,8 @@ class RemitoController extends TransaccionController{
     if (!is_null($remito)) {
         $items = $remito->getTransaccion()->getBienesTransacciones();
     }
-   
     $json = "";
-
-    $items_array = $this->getItemsArray($items);
-    foreach ($items_array as $array) {
-        $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
-        $json .= $item->getJson() . ',';
-        
-    }
-    $json = substr($json, 0, -1);
-    $json = '[' . $json . ']';     
+    $json = $this->getJsonFromObjectList($items); 
    
     $persona = $remito->getTransaccion()->getPersona();
     $tipoPersona = null;

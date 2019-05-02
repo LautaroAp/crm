@@ -140,14 +140,6 @@ class PedidoController extends TransaccionController
         }
         //SINO LOS TOMO DEL PEDIDO Y GUARDO ESO EN LA SESION PARA CONTINUAR TRABAJANDO CON LA SESION
         else{
-            // $items_array = $this->getItemsArray($items);
-            // foreach ($items_array as $array) {
-            //     $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
-            //     $json .= $item->getJson() . ',';
-               
-            // }
-            // $json = substr($json, 0, -1);
-            // $json = '[' . $json . ']';
             $json = $this->getJsonFromObjectList($items);
             $_SESSION['TRANSACCIONES']['PEDIDO'] = $json;
         }
@@ -266,15 +258,7 @@ class PedidoController extends TransaccionController
         }
        
         $json = "";
-    
-        $items_array = $this->getItemsArray($items);
-        foreach ($items_array as $array) {
-            $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
-            $json .= $item->getJson() . ',';
-            
-        }
-        $json = substr($json, 0, -1);
-        $json = '[' . $json . ']';     
+        $json = $this->getJsonFromObjectList($items);
        
         $persona = $pedido->getTransaccion()->getPersona();
         $tipoPersona = null;
