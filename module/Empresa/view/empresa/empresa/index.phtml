@@ -26,30 +26,23 @@ if (isset($_SESSION['MENSAJES']['empresa'])) {
     </nav>
 </div>
 
-<!-- Inicio: Datos de Empresa -->
+<!-- Inicio: Datos Generales -->
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
-                DATOS DE EMPRESA
+                DATOS GENERALES
             </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6 ficha-empresa-p">
                         <p><label>Nombre:</label> <?php echo ($empresa->getNombre()); ?></p>
-                        <p><label>Dirección:</label> <?php echo ($empresa->getDireccion()); ?></p>
                         <p><label>Teléfono:</label> <?php echo ($empresa->getTelefono()); ?></p>
                         <p><label>Email:</label> <?php echo ($empresa->getMail()); ?></p>
-                        <p><label>Movil:</label> <?php echo ($empresa->getMovil()); ?></p> 
                         <p><label>Fax:</label> <?php echo ($empresa->getFax()); ?></p>
                         <p><label>Página web:</label> <?php echo ($empresa->getWeb()); ?></p>
-                        <p><label>CUIT/CUIL:</label> <?php echo ($empresa->getCuit_cuil()); ?></p>
                     </div>
                     <div class="col-md-6 ficha-empresa-p">
-                        <p><label>Punto de Venta:</label> <?php echo ($empresa->getPunto_venta()); ?></p>
-                        <p><label>Vencimiento CAI:</label> <?php echo ($empresa->getVencimiento_cai()->format('d/m/Y')); ?></p>
-                        <p><label>Razón Social:</label> <?php echo ($empresa->getRazon_social()); ?></p>
-                        <p><label>Condición IVA:</label> <?php echo ($empresa->getNombreCondicionIva()); ?></p>
                         <p><label>Localidad:</label> <?php echo ($empresa->getLocalidad()); ?></p>
                         <p><label>Provincia:</label> <?php echo ($empresa->getProvincia()); ?></p>
                         <p><label>Pais:</label> <?php echo ($empresa->getPais()); ?></p>
@@ -60,8 +53,31 @@ if (isset($_SESSION['MENSAJES']['empresa'])) {
         </div>
     </div>
 </div>
-<!-- Fin: Datos de Empresa -->
 
+<!-- Inicio: Datos de Facturación -->
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default sombra-ficha">
+            <div class="panel-heading text-center titulo-espaciado">
+                DATOS DE FACTURACIÓN
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6 ficha-empresa-p">
+                        <p><label>Razón Social:</label> <?php echo ($empresa->getRazon_social()); ?></p>
+                        <p><label>CUIT/CUIL:</label> <?php echo ($empresa->getCuit_cuil()); ?></p>
+                        <p><label>Domicilio Fiscal:</label> <?php echo ($empresa->getDireccion()); ?></p>
+                    </div>
+                    <div class="col-md-6 ficha-empresa-p">
+                        <p><label>Condición IVA:</label> <?php echo ($empresa->getNombreCondicionIva()); ?></p>
+                        <p><label>Vencimiento CAI:</label> <?php echo ($empresa->getVencimiento_cai()->format('d/m/Y')); ?></p>
+                        <p><label>Punto de Venta:</label> <?php echo (str_pad($empresa->getPunto_venta(), 5, "0", STR_PAD_LEFT)); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Parametros de Empresa-->
 <div class="container margen">

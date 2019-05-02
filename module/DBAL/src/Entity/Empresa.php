@@ -54,14 +54,23 @@ class Empresa {
      * @ORM\Column(name="WEB", nullable=true, type="string", length=255)
      */
     protected $web;
+
     /**
      * @ORM\Column(name="CUIT_CUIL", nullable=true, type="string", length=255)
      */
     protected $cuit_cuil;
+
+    /**
+     * @ORM\Column(name="INGRESOS_BRUTOS", nullable=true, type="string", length=255)
+     */
+    protected $ingresos_brutos;
+
     /**
      * @ORM\Column(name="VENCIMIENTO_CAI", nullable=true, type="datetime")
      */
-    protected $vencimiento_cai;/**
+    protected $vencimiento_cai;
+
+    /**
      * @ORM\Column(name="RAZON_SOCIAL", nullable=true, type="string", length=255)
      */
     protected $razon_social;
@@ -347,6 +356,26 @@ class Empresa {
     public function setPunto_venta($punto_venta)
     {
         $this->punto_venta = $punto_venta;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of ingresos_brutos
+     */ 
+    public function getIngresos_brutos()
+    {
+        return $this->ingresos_brutos;
+    }
+
+    /**
+     * Set the value of ingresos_brutos
+     *
+     * @return  self
+     */ 
+    public function setIngresos_brutos($ingresos_brutos)
+    {
+        $this->ingresos_brutos = $ingresos_brutos;
 
         return $this;
     }
