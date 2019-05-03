@@ -179,4 +179,5 @@ class BienesTransaccionesManager {
             $this->removeBienTransaccion($bienTransaccion);
         }
     }
+
 }

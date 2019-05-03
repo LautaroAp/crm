@@ -217,6 +217,9 @@ class BienesManager {
         return $this->entityManager->getRepository(Bienes::class)->findBy(['categoria'=>$idCategoria, 'tipo'=>$tipoBien]);
     }
     
-
+    public function addStock($bien, $cantidad){
+        $bien->addStock($cantidad);
+        $this->entityManager->flush();
+    }
     
 }

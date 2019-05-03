@@ -6,6 +6,7 @@ use DBAL\Entity\Moneda;
 use DBAL\Entity\Remito;
 use DBAL\Entity\Pedido;
 use DBAL\Entity\Persona;
+use DBAL\Entity\Bienes;
 use DBAL\Entity\BienesTransacciones;
 use DBAL\Entity\Transaccion;
 use Zend\Paginator\Paginator;
@@ -40,8 +41,9 @@ class RemitoManager extends TransaccionManager{
         $bienesTransaccionManager,
         $ivaManager,
         $formaPagoManager,
-        $formaEnvioManager) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager);
+        $formaEnvioManager,
+        $bienesManager) {
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager);
         $this->entityManager = $entityManager;
         $this->tipo = "REMITO";
     }
@@ -136,5 +138,20 @@ class RemitoManager extends TransaccionManager{
         return $this->entityManager->getRepository(Pedido::class)->findOneBy(['transaccion'=>$idTransaccionPrevia]);
     }
 
-  
+    public function devolverStock($items){
+        foreach ($items as $item){
+            $bien = $item->getBien();
+            $this->bienesManager->addStock($bien,$item->getCantidad());
+        }
+    }
+    
+    public function cambiarEstadoTransaccion($idTransaccion, $estado){
+        $transaccion = $this->getTransaccionId($idTransaccion);
+        if ($estado=="ANULADO"){
+            $items = $transaccion->getBienesTransacciones();
+            $this->devolverStock($items);
+        }
+        $transaccion->setEstado($estado);
+        $this->entityManager->flush();
+    }
 }

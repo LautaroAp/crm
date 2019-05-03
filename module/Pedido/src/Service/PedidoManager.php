@@ -143,5 +143,9 @@ class PedidoManager extends TransaccionManager
     public function getPresupuestoPrevio($numPresupuesto){
         return $this->entityManager->getRepository(Presupuesto::class)->findOneBy(['numero'=>$numPresupuesto]);
     }
-   
+    public function cambiarEstadoTransaccion($idTransaccion, $estado){
+        $transaccion = $this->getTransaccionId($idTransaccion);
+        $transaccion->setEstado($estado);
+        $this->entityManager->flush();
+    }
 }

@@ -116,4 +116,10 @@ class PresupuestoManager extends TransaccionManager{
         $this->entityManager->flush();
     }
 
+    public function cambiarEstadoTransaccion($idTransaccion, $estado){
+        $transaccion = $this->getTransaccionId($idTransaccion);
+        $transaccion->setEstado($estado);
+        $this->entityManager->flush();
+    }
+
 }

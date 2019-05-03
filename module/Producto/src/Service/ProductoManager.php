@@ -82,7 +82,6 @@ class ProductoManager
             $bien = $this->bienesManager->addBien($data);
             $producto->setBien($bien);
         }
-        $producto->setPresentacion($data['presentacion']);
         $producto->setReposicion($data['reposicion']);
     }
 

@@ -125,7 +125,7 @@ class TransaccionManager {
             }
             $transaccion->setMoneda($moneda);
         }
-        $transaccion->setEstado("S"); //S ES ACTIVO COMO EN CLIENTES
+        $transaccion->setEstado("ACTIVO");
         $transaccion->setMonto(substr($data['total_general'], 2));
         $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
         ->findOneBy(['usuario' => $data['responsable']]);     
@@ -233,21 +233,5 @@ class TransaccionManager {
         return $transacciones;
     }
 
-    public function devolverStock($items){
-        foreach ($items as $item){
-            $bien = $item->getBien();
-            if (strtoupper($bien->getTipo())=="PRODUCTO"){
-                $bien->addStock($item->getCantidad());
-            }
-        }
-    }
     
-    public function cambiarEstadoTransaccion($idTransaccion, $estado){
-        $transaccion = $this->getTransaccionId($idTransaccion);
-        if ((strtoupper($transaccion->getTipo())=="REMITO") && (strtoupper($estado=="ANULADO"))){
-            $this->devolverStock($transaccion->getItems());
-        }
-        $transaccion->setEstado($estado);
-        $this->entityManager->flush();
-    }
 }
