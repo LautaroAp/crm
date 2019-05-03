@@ -100,7 +100,7 @@ class BienesManager {
             $bien->setStock($data['stock']);
         }
         if (isset($data['unidad'])){
-            $bien->setUnidad($data['unidad']);
+            $bien->setUnidad_medida($data['unidad']);
         }
         if (isset($data['codigo'])){
             $bien->setCodigo($data['codigo']);

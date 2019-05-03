@@ -213,14 +213,15 @@ class RemitoController extends TransaccionController{
     }
 
     public function eliminarItemAction(){
-        $this->layout()->setTemplate('layout/nulo');
+        // $this->layout()->setTemplate('layout/nulo');
         $pos = $this->params()->fromRoute('id');
-        $id = $this->params()->fromRoute('id2');
         $array = json_decode($_SESSION['TRANSACCIONES']['REMITO']);
         array_splice($array, $pos, 1);
         $json = json_encode($array);
         $_SESSION['TRANSACCIONES']['REMITO']= $json;
+
         $view = new ViewModel();
+        $view->setTemplate('layout/nulo');
         $view->setTerminal(true);
         return $view;
     }
