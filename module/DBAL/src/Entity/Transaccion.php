@@ -84,9 +84,14 @@ class Transaccion {
     protected $estado;
 
     /**
-     * @ORM\Column(name="MONTO", nullable=true, type="decimal")
+     * @ORM\Column(name="IMPORTE_TOTAL", nullable=true, type="decimal")
      */
-    protected $monto;
+    protected $importe_total;
+
+    /**
+     * @ORM\Column(name="SUBTOTAL", nullable=true, type="decimal")
+     */
+    protected $subtotal;
 
     /**
      * @ORM\Column(name="BONIFICACION_GENERAL", nullable=true, type="decimal")
@@ -335,21 +340,21 @@ class Transaccion {
     }
 
     /**
-     * Get the value of monto
+     * Get the value of importe_total
      */ 
     public function getMonto()
     {
-        return $this->monto;
+        return $this->importe_total;
     }
 
     /**
-     * Set the value of monto
+     * Set the value of importe_total
      *
      * @return  self
      */ 
-    public function setMonto($monto)
+    public function setMonto($importe_total)
     {
-        $this->monto = $monto;
+        $this->importe_total = $importe_total;
 
         return $this;
     }
@@ -382,8 +387,8 @@ class Transaccion {
         if (!is_null($this->bienesTransacciones)){
             $descripcion.= " por ". COUNT($this->bienesTransacciones) ." items ";
         }
-        if (!is_null($this->monto)){
-            $descripcion.= " por un monto de $ ". $this->monto;
+        if (!is_null($this->importe_total)){
+            $descripcion.= " por un monto de $ ". $this->importe_total;
         }
         if (!is_null($this->detalle)){
             $descripcion.= " en concepto de: ".$this->detalle;
@@ -647,6 +652,26 @@ class Transaccion {
     public function setNumeroTransaccionTipo($numeroTransaccionTipo)
     {
         $this->numeroTransaccionTipo = $numeroTransaccionTipo;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of subtotal
+     */ 
+    public function getSubtotal()
+    {
+        return $this->subtotal;
+    }
+
+    /**
+     * Set the value of subtotal
+     *
+     * @return  self
+     */ 
+    public function setSubtotal($subtotal)
+    {
+        $this->subtotal = $subtotal;
 
         return $this;
     }

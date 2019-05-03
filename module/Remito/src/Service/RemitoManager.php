@@ -152,11 +152,11 @@ class RemitoManager extends TransaccionManager{
             $items = $transaccion->getBienesTransacciones();
             foreach($items as $item){
                 $bien= $item->getBien();
-                // if (strtoupper($bien->getTipo())=="PRODUCTO"){
+                if (strtoupper($bien->getTipo())=="PRODUCTO"){
                     $stock = $bien->getStock();
                     $stock = $stock + $item->getCantidad();
                     $bien->setStock($stock);
-                // }
+                }
             }
         }
         $transaccion->setEstado($estado);

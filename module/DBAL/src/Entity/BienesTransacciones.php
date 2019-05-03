@@ -60,11 +60,16 @@ class BienesTransacciones {
      */
     protected $estadoEntrega;
 
-        /**
+    /**
      * @ORM\Column(name="ESTADO_FACTURA", nullable=true, type="string")
      */
     protected $estadoFactura;
 
+    /**
+     * @ORM\Column(name="PRECIO_ORIGINAL", nullable=true, type="decimal")
+     */
+    
+    protected $precioOriginal;
     /**
      * Get the value of id
      */ 
@@ -310,6 +315,26 @@ class BienesTransacciones {
     public function setEstadoFactura($estadoFactura)
     {
         $this->estadoFactura = $estadoFactura;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of precioOriginal
+     */ 
+    public function getPrecioOriginal()
+    {
+        return $this->precioOriginal;
+    }
+
+    /**
+     * Set the value of precioOriginal
+     *
+     * @return  self
+     */ 
+    public function setPrecioOriginal($precioOriginal)
+    {
+        $this->precioOriginal = $precioOriginal;
 
         return $this;
     }

@@ -127,6 +127,7 @@ class TransaccionManager {
         }
         $transaccion->setEstado("ACTIVO");
         $transaccion->setMonto(substr($data['total_general'], 2));
+        $transaccion->setSubtotal(substr($data['subtotal_general'], 2));
         $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
         ->findOneBy(['usuario' => $data['responsable']]);     
         $transaccion->setResponsable($ejecutivo);
