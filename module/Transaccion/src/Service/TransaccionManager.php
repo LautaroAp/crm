@@ -8,6 +8,7 @@ use DBAL\Entity\Persona;
 use DBAL\Entity\Ejecutivo;
 use DBAL\Entity\BienesTransacciones;
 use DBAL\Entity\Empresa;
+use DBAL\Entity\Bienes;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 use DateInterval;
@@ -28,13 +29,14 @@ class TransaccionManager {
     protected $ivaManager;
     protected $formaPagoManager;
     protected $formaEnvioManager;
+    protected $bienesManager;
     // protected $empresaManager;
     
     /**
      * Constructs the service.
      */
     public function __construct($entityManager, $personaManager, $bienesTransaccionesManager, $ivaManager,
-    $formaPagoManager, $formaEnvioManager, $monedaManager/*, $empresaManager*/) {
+    $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager/*, $empresaManager*/) {
         $this->entityManager = $entityManager;
         $this->personaManager= $personaManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
@@ -42,6 +44,7 @@ class TransaccionManager {
         $this->formaPagoManager = $formaPagoManager;
         $this->formaEnvioManager = $formaEnvioManager;
         $this->monedaManager = $monedaManager;
+        $this->bienesManager = $bienesManager;
         // $this->empresaManager = $empresaManager;
 
  
@@ -228,5 +231,23 @@ class TransaccionManager {
     public function getTransaccionesPersonaTipo($idPersona,$tipoTransaccion){
         $transacciones = $this->entityManager->getRepository(Transaccion::class)->findBy(['persona'=>$idPersona, 'tipo_trasaccion'=>strtoupper($tipoTransaccion)]);
         return $transacciones;
+    }
+
+    public function devolverStock($items){
+        foreach ($items as $item){
+            $bien = $item->getBien();
+            if (strtoupper($bien->getTipo())=="PRODUCTO"){
+                $bien->addStock($item->getCantidad());
+            }
+        }
+    }
+    
+    public function cambiarEstadoTransaccion($idTransaccion, $estado){
+        $transaccion = $this->getTransaccionId($idTransaccion);
+        if ((strtoupper($transaccion->getTipo())=="REMITO") && (strtoupper($estado=="ANULADO"))){
+            $this->devolverStock($transaccion->getItems());
+        }
+        $transaccion->setEstado($estado);
+        $this->entityManager->flush();
     }
 }

@@ -266,7 +266,7 @@ class ClientesController extends HuellaController
         $id_persona = $this->params()->fromRoute('id');
         $cliente = $this->clientesManager->getClienteIdPersona($id_persona);
         $transacciones = $cliente->getPersona()->getTransacciones();
-        $view = new ViewModel(['transacciones' => $transacciones]);
+        $view = new ViewModel(['transacciones' => $transacciones, 'id_persona'=>$id_persona]);
         return $view;
     }
 

@@ -10,7 +10,7 @@ use FormaPago\Service\FormaPagoManager;
 use FormaEnvio\Service\FormaEnvioManager;
 use Moneda\Service\MonedaManager;
 use Empresa\Service\EmpresaManager;
-
+use Bienes\Service\BienesManager;
 /**
  * This is the factory class for TransaccionManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
@@ -29,10 +29,11 @@ class TransaccionManagerFactory
         $formaPagoManager= $container->get(FormaPagoManager::class);
         $formaEnvioManager= $container->get(FormaEnvioManager::class);
         $monedaManager= $container->get(MonedaManager::class);
+        $bienesManager = $container->get(BienesManager::class);  
+
         // $empresaManager= $container->get(EmpresaManager::class);
 
 
-        return new TransaccionManager($entityManager,$personaManager, $bienesTransaccionesManager, $ivaManager,
-    $formaPagoManager, $formaEnvioManager, $monedaManager/*, $empresaManager*/);
+        return new TransaccionManager($entityManager,$personaManager, $bienesTransaccionesManager, $ivaManager,$formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager/*, $empresaManager*/);
     }
 }

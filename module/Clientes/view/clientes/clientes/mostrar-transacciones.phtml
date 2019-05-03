@@ -1,4 +1,3 @@
-<!-- <script src="/js/ajax.js"></script> -->
 <script>
 $(document).ready(function() {
     $('#tabla_eventos').DataTable({
@@ -9,6 +8,7 @@ $(document).ready(function() {
         }
     });
 });
+var idPersona = <?= $id_persona ?>;
 </script>
 
 <table id="tabla_eventos" class="display">
@@ -18,14 +18,19 @@ $(document).ready(function() {
             <th class="">Responsable</th>
             <th class="">Tipo</th>
             <th class="detalle-width">Detalle</th>
+            <th class="">Estado</th> 
             <th class=""></th>
         </tr>
     </thead>
     <tbody id="cuerpo_eventos" role="button" class="">
+      
         <?php foreach ($transacciones as $transaccion) :
             $idTransaccion = $transaccion->getId();
             $tipoTransaccion = $transaccion->getTipo();
         ?>
+        <script>
+            var tipoTransaccion = "<?= $tipoTransaccion ?>";
+        </script>
         <tr id="<?= $transaccion->getId() ?>" class="vpEvento">
             <td id="<?= $transaccion->getId() ?>">
                 <?php
@@ -43,15 +48,27 @@ $(document).ready(function() {
                 }
                 ?></td>
             <td><?= $transaccion->getDescripcion() ?></td>
+            <td><?= str_replace("_"," ",$transaccion->getEstado()) ?></td>
             <!-- PDF + BOTON REMITO -->
             <td id="<?= $transaccion->getId() ?>" class="">
                 <div class="dropdown">                    
                     <!-- boton editar -->
                     <?php if (ucfirst($transaccion->getTipo())!="Remito"){ ?>
-                        <a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>"
-                        type="button" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </a>
+                        <ul class="nav navbar-nav navbar-menu-font"> 
+                            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                            style="margin-right: 4px;">
+                            <span class="glyphicon glyphicon-check"></span></button>
+                            <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                onclick="cambiarEstado('ACTIVO', event, tipoTransaccion, idPersona)">
+                                Activo</a></li>
+                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                onclick="cambiarEstado('ANULADO', event, tipoTransaccion, idPersona)">
+                                Anulado</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>">Editar</a><li>
+                            </ul>
+                        </ul>                       
                     <?php } else { ?>
                     <!-- boton remito -->
                         <ul class="nav navbar-nav navbar-menu-font"> 
@@ -60,17 +77,17 @@ $(document).ready(function() {
                             <span class="glyphicon glyphicon-check"></span></button>
                             <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
                                 <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                onclick="cambiarEstado('ANULADO', event)">
-                                Anulado</a></li>
-                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                onclick="cambiarEstado('A_ENTREGAR', event)">
+                                onclick="cambiarEstado('A_ENTREGAR', event, tipoTransaccion, idPersona)">
                                 A entregar</a></li>
                                 <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                onclick="cambiarEstado('ENTREGADO', event)">
-                                Entregado</a></li>
+                                onclick="cambiarEstado('ANULADO', event, tipoTransaccion, idPersona)">
+                                Anulado</a></li>
                                 <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                onclick="cambiarEstado('CONFORMADO', event)">
+                                onclick="cambiarEstado('CONFORMADO', event, tipoTransaccion, idPersona)">
                                 Conformado</a></li>
+                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                onclick="cambiarEstado('ENTREGADO', event, tipoTransaccion, idPersona)">
+                                Entregado</a></li>
                             </ul>
                         </ul>
                     <?php } ?>
