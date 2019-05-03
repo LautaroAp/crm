@@ -228,46 +228,50 @@ class RemitoController extends TransaccionController{
 
     // PDF
    public function pdfAction() {
-    $this->layout()->setTemplate('layout/nulo');
-    $id_transaccion = $this->params()->fromRoute('id');
-    $remito = $this->remitoManager->getRemitoFromTransaccionId($id_transaccion);
-    $items = array();
+        $this->layout()->setTemplate('layout/nulo');
+        $id_transaccion = $this->params()->fromRoute('id');
+        $remito = $this->remitoManager->getRemitoFromTransaccionId($id_transaccion);
+        $items = array();
 
-    if (!is_null($remito)) {
-        $items = $remito->getTransaccion()->getBienesTransacciones();
-    }
-    $json = "";
-    $json = $this->getJsonFromObjectList($items); 
-   
-    $persona = $remito->getTransaccion()->getPersona();
-    $tipoPersona = null;
+        if (!is_null($remito)) {
+            $items = $remito->getTransaccion()->getBienesTransacciones();
+        }
+       
+        $json = "";
+        $json = $this->getJsonFromObjectList($items);
+        $persona = $remito->getTransaccion()->getPersona();
+        $tipoPersona = null;
+           
+        $empresa = $this->empresaManager->getEmpresa();
 
-    $numTransacciones = $remito->getTransaccion()->getNumero();
-    $numRemito = $remito->getNumero();
-    $monedasJson = $this->getJsonMonedas();
-    $formasPagoJson = $this->getJsonFormasPago();
-    $formasEnvioJson = $this->getJsonFormasEnvio();
-    $ivasJson = $this->getJsonIvas();
-    $transaccion = $remito->getTransaccion();
-    $transaccionJson = $remito->getTransaccion()->getJSON();
-    $presupuestos = $this->remitoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
-    $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
-    $this->reiniciarParams();
-    return new ViewModel([
-        'persona' => $persona,
-        'tipoPersona' => $tipoPersona,
-        'numTransacciones' => $numTransacciones,
-        'numRemito' => $numRemito,
-        'json' => $json,
-        'formasPagoJson' => $formasPagoJson,
-        'formasEnvioJson' => $formasEnvioJson,
-        'monedasJson' => $monedasJson,
-        'remito' => $remito,
-        'transaccion' => $transaccion,
-        'transaccionJson' => $transaccionJson,
-        'ivasJson' => $ivasJson,
-        'presupuestosJson' => $jsonPrespuestos,
-        'itemsTransaccionJson' =>"[]",
+        $numTransacciones = $remito->getTransaccion()->getNumero();
+        $numRemito = $remito->getNumero();
+        $monedasJson = $this->getJsonMonedas();
+        $formasPagoJson = $this->getJsonFormasPago();
+        $ivasJson = $this->getJsonIvas();
+        $transaccion = $remito->getTransaccion();
+        $transaccionJson = $remito->getTransaccion()->getJSON();
+        $pedidos = $this->remitoManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
+        $pedidoPrevio = $this->remitoManager->getPedidoPrevioFromTransaccion($remito->getTransaccion()->getTransaccionPrevia());
+        $jsonPedidos = $this->getJsonFromObjectList($pedidos);
+        $this->reiniciarParams();
+        return new ViewModel([
+            // 'items' => $items,
+            'persona' => $persona,
+            'tipoPersona' => $tipoPersona,
+            'numTransacciones' => $numTransacciones,
+            'numRemito' => $numRemito,
+            'json' => $json,
+            'formasPagoJson' => $formasPagoJson,
+            'monedasJson' => $monedasJson,
+            'formasEnvioJson'=>"[]",
+            'transaccionJson' => $transaccionJson,
+            'transaccion' => $transaccion,
+            'ivasJson' => $ivasJson,
+            'pedidosJson' => $jsonPedidos,
+            'itemsTransaccionJson' =>"[]",
+            'pedidoPrevio'=> $pedidoPrevio,
+            'empresa' => $empresa,
         ]);
     }
 
