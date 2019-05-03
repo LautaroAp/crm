@@ -1,5 +1,3 @@
-// var items=[];
-// var items;
 var tipoTransaccion;
 var idPersona;
 var ivas;
@@ -10,8 +8,6 @@ var transaccion_ant = null;
 function setIvas(arrayIvas) {
     ivas = arrayIvas;
 }
-
-
 
 function addItems(bienesTransacciones, tipo, id) {
     if (bienesTransacciones==null){
@@ -159,6 +155,62 @@ function formatPercent(number) {
 }
 
 
+// function calcularSubcampos() {
+//     var table = document.getElementById("table_bienes");
+//     var sumBonificacion = 0;
+//     var sumSubtotal = 0;
+//     var sumIva = 0;
+//     var bonificacion_general = 0;
+//     var descuento = 0;
+//     var cantidad = 0;
+//     var precio_unitario_dto = 0;
+//     var iva = 0;
+//     var subtotal = 0;
+//     var sumVentaBruta = 0;
+//     for (var i = 1; i < table.rows.length; i++) {
+//         //CANTIDAD ES LA COLUMNA 2
+//         cantidad = table.rows[i].cells[2].innerHTML;
+//         //PRECIO UNITARIO ES LA COLUMNA 3
+//         precio_unitario = table.rows[i].cells[3].innerHTML;
+//         precio_unitario = parseFloat(precio_unitario.substring(2, precio_unitario.length));
+//         //DESCUENTO ES LA COLUMNA 4
+//         descuento = table.rows[i].cells[4].innerHTML;
+//         descuento = descuento.substring(0, descuento.length - 2);
+//         descuento = (parseFloat(descuento) * precio_unitario / 100);
+//         precio_unitario_dto = precio_unitario - descuento;
+//         sumBonificacion = sumBonificacion + descuento * cantidad;
+//         //IVA ES LA COLUMNA 
+//         iva = table.rows[i].cells[6].innerHTML;
+//         iva = iva.substring(0, iva.length - 2);
+//         sumIva = sumIva + (parseFloat(iva) * precio_unitario_dto / 100) * cantidad;
+
+//         //SUBTOTAL ES LA COLUMNA 8
+//         subtotal = table.rows[i].cells[8].innerHTML;
+//         subtotal = parseFloat(subtotal.substring(2, subtotal.length));
+//         sumSubtotal = sumSubtotal + parseFloat(subtotal);
+//         sumVentaBruta = sumVentaBruta + cantidad * precio_unitario;
+
+//     }
+
+//     bonificacion_general = $("#bonificacion_general").val();
+//     recargo_general = $("#recargo_general").val();
+//     if (!recargo_general) {
+//         recargo_general = 0;
+//     }
+//     var total_general = sumSubtotal - (sumSubtotal * bonificacion_general / 100) + (sumSubtotal * recargo_general / 100);
+//     var bonificacion_importe = sumSubtotal * bonificacion_general / 100;
+//     var recargo_importe = sumSubtotal * recargo_general / 100;
+//     $("#subtotal_general").val(formatMoney(parseFloat(sumSubtotal).toFixed(2)));
+//     $("#bonificacion_importe").val(formatMoney(parseFloat(bonificacion_importe).toFixed(2)));
+//     $("#recargo_importe").val(formatMoney(parseFloat(recargo_importe).toFixed(2)));
+//     $("#venta_bruta").val(formatMoney(parseFloat(sumVentaBruta).toFixed(2)));
+//     $("#descuento_total").val(formatMoney(parseFloat(sumBonificacion).toFixed(2)));
+//     $("#iva_total").val(formatMoney(parseFloat(sumIva).toFixed(2)));
+//     $("#total_general").val(formatMoney(parseFloat(total_general).toFixed(2)));
+//     $("#jsonitems").val(JSON.stringify(items));
+// }
+
+
 function calcularSubcampos() {
     var table = document.getElementById("table_bienes");
     var sumBonificacion = 0;
@@ -171,39 +223,37 @@ function calcularSubcampos() {
     var iva = 0;
     var subtotal = 0;
     var sumVentaBruta = 0;
-    for (var i = 1; i < table.rows.length; i++) {
-        //CANTIDAD ES LA COLUMNA 2
-        cantidad = table.rows[i].cells[2].innerHTML;
-        //PRECIO UNITARIO ES LA COLUMNA 3
-        precio_unitario = table.rows[i].cells[3].innerHTML;
-        precio_unitario = parseFloat(precio_unitario.substring(2, precio_unitario.length));
-        //DESCUENTO ES LA COLUMNA 4
-        descuento = table.rows[i].cells[4].innerHTML;
-        descuento = descuento.substring(0, descuento.length - 2);
+
+    for (var i = 0; i < items.length; i++) {
+        // CANTIDAD
+        cantidad = items[i]["Cantidad"];
+        //PRECIO UNITARIO
+        precio_unitario = items[i]["Bien"]["Precio"];
+        //DESCUENTO
+        descuento = items[i]["Dto"];
         descuento = (parseFloat(descuento) * precio_unitario / 100);
         precio_unitario_dto = precio_unitario - descuento;
         sumBonificacion = sumBonificacion + descuento * cantidad;
-        //IVA ES LA COLUMNA 
-        iva = table.rows[i].cells[6].innerHTML;
-        iva = iva.substring(0, iva.length - 2);
+        //IVA
+        iva = items[i]["IVA"]["Valor"];
         sumIva = sumIva + (parseFloat(iva) * precio_unitario_dto / 100) * cantidad;
-
-        //SUBTOTAL ES LA COLUMNA 8
-        subtotal = table.rows[i].cells[8].innerHTML;
-        subtotal = parseFloat(subtotal.substring(2, subtotal.length));
+        //SUBTOTAL
+        subtotal = items[i]["Totales"];
         sumSubtotal = sumSubtotal + parseFloat(subtotal);
-        sumVentaBruta = sumVentaBruta + cantidad * precio_unitario;
-
+        sumVentaBruta = sumVentaBruta + cantidad * precio_unitario;       
     }
 
     bonificacion_general = $("#bonificacion_general").val();
     recargo_general = $("#recargo_general").val();
+
     if (!recargo_general) {
         recargo_general = 0;
     }
+
     var total_general = sumSubtotal - (sumSubtotal * bonificacion_general / 100) + (sumSubtotal * recargo_general / 100);
     var bonificacion_importe = sumSubtotal * bonificacion_general / 100;
     var recargo_importe = sumSubtotal * recargo_general / 100;
+
     $("#subtotal_general").val(formatMoney(parseFloat(sumSubtotal).toFixed(2)));
     $("#bonificacion_importe").val(formatMoney(parseFloat(bonificacion_importe).toFixed(2)));
     $("#recargo_importe").val(formatMoney(parseFloat(recargo_importe).toFixed(2)));

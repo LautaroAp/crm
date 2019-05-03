@@ -119,7 +119,7 @@ class Bienes {
     /**
     * @ORM\Column(name="UNIDAD_MEDIDA", nullable=true, type="string")
     */
-    protected $unidad;
+    protected $unidad_medida;
 
     /**
      * Get the value of id
@@ -498,11 +498,11 @@ class Bienes {
         }
         $output .= '"Precio": "' . $this->getPrecio() .'", ';
         $output .= '"Dto": "' . $this->getDescuento() .'", ';
-        $output .= '"ImpDto": "' . $this->getPrecio_final_dto() .'", ';
+        $output .= '"PrecioDto": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"IVA": "' . $this->getValorIva() .'", ';
         $output .= '"ImpIVA": "' . $this->getIvaPeso() .'", ';
-        if (!is_null($this->unidad)){
-            $output .= '"Unidad": "' . $this->getUnidad() .'", ';
+        if (!is_null($this->unidad_medida)){
+            $output .= '"UnidadMedida": "' . $this->getUnidad_medida() .'", ';
         }
         $output .= '"Tipo": "' . $this->getTipo() .'", ';
         $output .= '"Stock": "' . $this->getStock() .'", ';
@@ -589,9 +589,9 @@ class Bienes {
     /**
      * Get the value of unidad
      */ 
-    public function getUnidad()
+    public function getUnidad_medida()
     {
-        return $this->unidad;
+        return $this->unidad_medida;
     }
 
     /**
@@ -599,9 +599,9 @@ class Bienes {
      *
      * @return  self
      */ 
-    public function setUnidad($unidad)
+    public function setUnidad_medida($unidad_medida)
     {
-        $this->unidad = $unidad;
+        $this->unidad_medida = $unidad_medida;
 
         return $this;
     }
