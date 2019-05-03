@@ -148,8 +148,16 @@ class RemitoManager extends TransaccionManager{
     public function cambiarEstadoTransaccion($idTransaccion, $estado){
         $transaccion = $this->getTransaccionId($idTransaccion);
         if ($estado=="ANULADO"){
+            // $this->devolverStock($items);
             $items = $transaccion->getBienesTransacciones();
-            $this->devolverStock($items);
+            foreach($items as $item){
+                $bien= $item->getBien();
+                // if (strtoupper($bien->getTipo())=="PRODUCTO"){
+                    $stock = $bien->getStock();
+                    $stock = $stock + $item->getCantidad();
+                    $bien->setStock($stock);
+                // }
+            }
         }
         $transaccion->setEstado($estado);
         $this->entityManager->flush();

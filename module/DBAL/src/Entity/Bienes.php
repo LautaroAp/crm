@@ -606,8 +606,5 @@ class Bienes {
         return $this;
     }
 
-    public function addStock($cantidad){
-        // $this->$stock =  $this->$stock + $cantidad;
-        $this->$stock= 9999;
-    }
+    
 }
