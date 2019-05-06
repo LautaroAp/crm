@@ -66,12 +66,14 @@ if (isset($_SESSION['MENSAJES']['empresa'])) {
                     <div class="col-md-6 ficha-empresa-p">
                         <p><label>Razón Social:</label> <?php echo ($empresa->getRazon_social()); ?></p>
                         <p><label>CUIT/CUIL:</label> <?php echo ($empresa->getCuit_cuil()); ?></p>
-                        <p><label>Domicilio Fiscal:</label> <?php echo ($empresa->getDireccion()); ?></p>
+                        <p><label>Ingresos Brutos:</label> <?php echo ($empresa->getIngresos_brutos()); ?></p>
+                        <p><label>Fecha de Inicio de Actividades:</label> <?php echo ($empresa->getFecha_inicio_actividades()->format('d/m/Y')); ?></p>
                     </div>
                     <div class="col-md-6 ficha-empresa-p">
+                        <p><label>Domicilio Fiscal:</label> <?php echo ($empresa->getDireccion()); ?></p>
                         <p><label>Condición IVA:</label> <?php echo ($empresa->getNombreCondicionIva()); ?></p>
-                        <p><label>Vencimiento CAI:</label> <?php echo ($empresa->getVencimiento_cai()->format('d/m/Y')); ?></p>
                         <p><label>Punto de Venta:</label> <?php echo (str_pad($empresa->getPunto_venta(), 5, "0", STR_PAD_LEFT)); ?></p>
+                        <p><label>Vencimiento CAI:</label> <?php echo ($empresa->getVencimiento_cai()->format('d/m/Y')); ?></p>
                     </div>
                 </div>
             </div>

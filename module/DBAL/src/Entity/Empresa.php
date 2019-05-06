@@ -120,6 +120,11 @@ class Empresa {
      * @ORM\JoinColumn(name="MONEDA", referencedColumnName="ID")
      */
     private $moneda;
+
+    /**
+     * @ORM\Column(name="FECHA_INICIO_ACTIVIDADES", nullable=true, type="datetime")
+     */
+    protected $fecha_inicio_actividades;
     
     function getNombre() {
         return $this->nombre;
@@ -376,6 +381,26 @@ class Empresa {
     public function setIngresos_brutos($ingresos_brutos)
     {
         $this->ingresos_brutos = $ingresos_brutos;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of fecha_inicio_actividades
+     */ 
+    public function getFecha_inicio_actividades()
+    {
+        return $this->fecha_inicio_actividades;
+    }
+
+    /**
+     * Set the value of fecha_inicio_actividades
+     *
+     * @return  self
+     */ 
+    public function setFecha_inicio_actividades($fecha_inicio_actividades)
+    {
+        $this->fecha_inicio_actividades = $fecha_inicio_actividades;
 
         return $this;
     }
