@@ -13,7 +13,6 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
     <tbody>
         <tr>
             <td>Producto</td>
-            <td><?php echo(utf8_decode("Presentación"))?></td>
             <td><?php echo(utf8_decode("Descripción"))?></td>
             <td>Marca</td>
             <td><?php echo(utf8_decode("Categoría"))?></td>
@@ -37,27 +36,30 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 
         </tr>
         <?php foreach ($resultado as $producto): 
+            $bien = $producto->getBien();
+
         ?>
             <tr>
-                <td><?php echo(utf8_decode($producto->getNombre())); ?></td>
-                <td><?php echo(utf8_decode($producto->getDescripcion()));?></td>
-                <td><?php echo(utf8_decode($producto->getMarca()));?></td>
-                <td><?php echo(utf8_decode($producto->getCategoriaNombre()));?></td>
-                <td><?php echo(utf8_decode($producto->getCodigo_producto()));?></td>
-                <td><?php echo(utf8_decode($producto->getStock()));?></td>
-                <td><?php echo(utf8_decode($producto->getCodigo_barras()));?></td>
+                <td><?php echo(utf8_decode($bien->getNombre())); ?></td>
+                <td><?php echo(utf8_decode($bien->getDescripcion()));?></td>
+                <td><?php echo(utf8_decode($bien->getMarca()));?></td>
+                <td><?php echo(utf8_decode($bien->getCategoriaNombre()));?></td>
+                <td><?php echo(utf8_decode($bien->getCodigo()));?></td>
+                <td><?php echo(utf8_decode($bien->getStock()));?></td>
+                <td><?php echo(utf8_decode($bien->getCodigo_barras()));?></td>
                 <td><?php echo(utf8_decode($producto->getReposicion()));?></td>
                 <td><?php echo(utf8_decode($producto->getPrecio_compra()));?></td>
                 <td><?php echo(utf8_decode($producto->getCostos_directos()));?></td>
                 <td><?php echo(utf8_decode($producto->getGastos_directos()));?></td>
+                <td><?php echo(utf8_decode($producto->getPrecio_compra_total()));?></td>
                 <td><?php echo(utf8_decode($producto->getContribucion_marginal_valor()));?></td>
                 <td><?php echo(utf8_decode($producto->getContribucion_marginal_porcentual()));?></td>
                 <td><?php echo(utf8_decode($producto->getPrecio_venta()));?></td>
-                <td><?php echo(utf8_decode($producto->getDescuento()));?></td>
-                <td><?php echo(utf8_decode($producto->getPrecio_venta_dto()));?></td>
-                <td><?php echo(utf8_decode($producto->getValorIva()));?></td>
-                <td><?php echo(utf8_decode($producto->getPrecio_final_iva()));?></td>
-                <td><?php echo(utf8_decode($producto->getPrecio_final_iva_dto()));?></td>
+                <td><?php echo(utf8_decode($bien->getDescuento()));?></td>
+                <td><?php echo(utf8_decode($bien->getPrecio_final_dto()));?></td>
+                <td><?php echo(utf8_decode($bien->getValorIva()));?></td>
+                <td><?php echo(utf8_decode($bien->getPrecio_final_iva()));?></td>
+                <td><?php echo(utf8_decode($bien->getPrecio_final_iva_dto()));?></td>
             </tr>
         <?php endforeach;?>
     </tbody>

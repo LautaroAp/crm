@@ -1,22 +1,39 @@
 var tipoTransaccion;
 var idPersona;
 var ivas;
+var precioActualizado;
 
 var transaccion = null;
 var transaccion_ant = null;
+
+$(document).ready(function () {
+    $('#btnModalGuardar').click(function(){
+        if (items.length==0){
+            $('#msjModal').html("Por favor, agregue items a la transacción para continuar");
+            $('#btnModalAceptar').hide()
+            $('#btnModalCancelar').html("Aceptar");           
+        }
+        else{
+            $('#msjModal').html("¿Está seguro que desea agregar este presupuesto?");
+            $('#btnModalAceptar').show();
+            $('#btnModalCancelar').html("Cancelar");    
+        }
+       
+    });
+});
 
 function setIvas(arrayIvas) {
     ivas = arrayIvas;
 }
 
-function addItems(bienesTransacciones, tipo, id) {
+function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
+    precioActualizado = actualizarPrecio;
     if (bienesTransacciones==null){
         bienesTransacciones = [];
     }
     $(document).ready(function () {
         $('#table_bienes').DataTable({
-            "order": [0, 'desc'],
-
+            aaSorting: [],
             "language": {
                 "url": "/json/spanish.json"
             }
@@ -30,18 +47,14 @@ function addItems(bienesTransacciones, tipo, id) {
     }
     divContainer = document.createElement("div");
     divContainer.setAttribute("id", "div_table_bienes");
-
     var parentDiv = document.getElementById("contenido_bienes");
     parentDiv.innerHTML = "";
     parentDiv.appendChild(divContainer);
-
     table = document.createElement("table");
     table.setAttribute("id", "table_bienes");
     table.setAttribute("class", "display");
-
     var thead = document.createElement("thead");
     var col = ["Nombre", "Descripcion", "Cantidad", "Precio", "Dto", "ImpDto", "IVA", "ImpIVA", "Totales", ""];
-
     var tr = thead.insertRow(-1);
     for (var i = 0; i < col.length; i++) {
         var th = document.createElement("th");
@@ -68,12 +81,9 @@ function addItems(bienesTransacciones, tipo, id) {
     }
     thead.appendChild(tr);
     table.appendChild(thead);
-
     var tbody = document.createElement("tbody");
     tbody.setAttribute("role", "button");
     var value = null;
-
-
     for (var i = 0; i < bienesTransacciones.length; i++) {
         var item = bienesTransacciones[i];
         tr = tbody.insertRow(-1);
@@ -85,13 +95,19 @@ function addItems(bienesTransacciones, tipo, id) {
             var tabCell = tr.insertCell(-1);
             tabCell.setAttribute("id", i + "_" + col[j]);
             tabCell.setAttribute("class", "click");
-            var precio = item["Bien"]["Precio"];
+            var precio;
+            if(precioActualizado){
+                precio = item["Bien"]["Precio"];
+            }
+            else{
+                precio = item["Precio Original"];
+            }
             var dto = item["Bien"]["Dto"];
             var cantidad = item["Cantidad"];
             var dtoPeso = (precio * dto / 100) * cantidad;
             var precioDto = precio - dtoPeso;     
             var iva = item["IVA"]["Valor"];
-            if (col[j] == "Nombre" || col[j] == "Descripcion" || col[j] == "Precio") {
+            if (col[j] == "Nombre" || col[j] == "Descripcion") {
                 value = item["Bien"][col[j]];
             } else if (col[j] == "IVA") {
                 value = iva;
@@ -105,7 +121,11 @@ function addItems(bienesTransacciones, tipo, id) {
                 value = formatPercent((parseFloat(value)).toFixed(2));
                 tabCell.setAttribute("ondblclick", "makeEditable(event)");
             }
-            if ((col[j] == "Precio") || (col[j] == "Totales")) {
+            if (col[j] == "Precio") {
+                value = precio;
+                value = formatMoney(value);
+            }            
+            if (col[j] == "Totales") {
                 if (value) {
                     value = formatMoney(value);
                 }
@@ -127,7 +147,7 @@ function addItems(bienesTransacciones, tipo, id) {
         btn.setAttribute('class', 'btn btn-default btn-sm glyphicon glyphicon-trash'); // set attributes ...
         btn.setAttribute('id', i);
         btn.setAttribute('value', 'Borrar');
-        btn.setAttribute("onclick", "removerBien2(event,id)");
+        btn.setAttribute("onclick", "removerBien(id)");
         var tabCell = tr.insertCell(-1);
         tabCell.setAttribute("class", "click");
         tabCell.appendChild(btn);
@@ -153,63 +173,6 @@ function formatMoney(number) {
 function formatPercent(number) {
     return number.toLocaleString('en-US') + ' %';
 }
-
-
-// function calcularSubcampos() {
-//     var table = document.getElementById("table_bienes");
-//     var sumBonificacion = 0;
-//     var sumSubtotal = 0;
-//     var sumIva = 0;
-//     var bonificacion_general = 0;
-//     var descuento = 0;
-//     var cantidad = 0;
-//     var precio_unitario_dto = 0;
-//     var iva = 0;
-//     var subtotal = 0;
-//     var sumVentaBruta = 0;
-//     for (var i = 1; i < table.rows.length; i++) {
-//         //CANTIDAD ES LA COLUMNA 2
-//         cantidad = table.rows[i].cells[2].innerHTML;
-//         //PRECIO UNITARIO ES LA COLUMNA 3
-//         precio_unitario = table.rows[i].cells[3].innerHTML;
-//         precio_unitario = parseFloat(precio_unitario.substring(2, precio_unitario.length));
-//         //DESCUENTO ES LA COLUMNA 4
-//         descuento = table.rows[i].cells[4].innerHTML;
-//         descuento = descuento.substring(0, descuento.length - 2);
-//         descuento = (parseFloat(descuento) * precio_unitario / 100);
-//         precio_unitario_dto = precio_unitario - descuento;
-//         sumBonificacion = sumBonificacion + descuento * cantidad;
-//         //IVA ES LA COLUMNA 
-//         iva = table.rows[i].cells[6].innerHTML;
-//         iva = iva.substring(0, iva.length - 2);
-//         sumIva = sumIva + (parseFloat(iva) * precio_unitario_dto / 100) * cantidad;
-
-//         //SUBTOTAL ES LA COLUMNA 8
-//         subtotal = table.rows[i].cells[8].innerHTML;
-//         subtotal = parseFloat(subtotal.substring(2, subtotal.length));
-//         sumSubtotal = sumSubtotal + parseFloat(subtotal);
-//         sumVentaBruta = sumVentaBruta + cantidad * precio_unitario;
-
-//     }
-
-//     bonificacion_general = $("#bonificacion_general").val();
-//     recargo_general = $("#recargo_general").val();
-//     if (!recargo_general) {
-//         recargo_general = 0;
-//     }
-//     var total_general = sumSubtotal - (sumSubtotal * bonificacion_general / 100) + (sumSubtotal * recargo_general / 100);
-//     var bonificacion_importe = sumSubtotal * bonificacion_general / 100;
-//     var recargo_importe = sumSubtotal * recargo_general / 100;
-//     $("#subtotal_general").val(formatMoney(parseFloat(sumSubtotal).toFixed(2)));
-//     $("#bonificacion_importe").val(formatMoney(parseFloat(bonificacion_importe).toFixed(2)));
-//     $("#recargo_importe").val(formatMoney(parseFloat(recargo_importe).toFixed(2)));
-//     $("#venta_bruta").val(formatMoney(parseFloat(sumVentaBruta).toFixed(2)));
-//     $("#descuento_total").val(formatMoney(parseFloat(sumBonificacion).toFixed(2)));
-//     $("#iva_total").val(formatMoney(parseFloat(sumIva).toFixed(2)));
-//     $("#total_general").val(formatMoney(parseFloat(total_general).toFixed(2)));
-//     $("#jsonitems").val(JSON.stringify(items));
-// }
-
 
 function calcularSubcampos() {
     var table = document.getElementById("table_bienes");
@@ -295,11 +258,10 @@ function selectItem(e, pos) {
     }
 }
 
-function removerBien(event, id) {
+function removerBien(id) {
     //el id indica el inicio de donde se borra y el 1 la cantidad de elementos eliminados
-    
     items.splice(id, 1);
-    addItems(items, tipoTransaccion, idPersona);
+    addItems(items, tipoTransaccion, idPersona, precioActualizado);
 }
 
 function removerBien2(event, id) {
@@ -378,7 +340,13 @@ function isFormatMoney(inputValue) {
 
 function getNumberValue(inputValue) {
     if (isFormatDescuento(inputValue)) {
-        return inputValue.substring(0, inputValue.length - 2);
+        if (inputValue.indexOf(' ')>0){
+            inputValue=inputValue.substring(0, inputValue.indexOf(' '));
+        }
+        if (inputValue.indexOf('%')>0){
+            inputValue=inputValue.substring(0, inputValue.indexOf('%'));
+        }
+        return inputValue
     } else if (isFormatMoney(inputValue)) {
         return inputValue.substring(2, inputValue.length);
     }
@@ -394,8 +362,6 @@ function getAttribute(tdId) {
 }
 
 function controlStock(attribute, inputValue){
-    console.log(items[index]["Bien"]["Stock"]);
-    console.log(inputValue);
     inputValue = parseFloat(inputValue);
     if (items[index]["Bien"]["Tipo"]=="PRODUCTO"){
         if (attribute=="Cantidad"){
@@ -446,8 +412,8 @@ function actualizarJson(fila) {
             items[fila]["IVA"] = ivajson;
         }
     }
-    console.log("despues de actualizar items queda ");
-    console.log(items);
+    // console.log("despues de actualizar items queda ");
+    // console.log(items);
     $("#jsonitems").val(JSON.stringify(items));
     // persistItemsInSession();
 }
@@ -463,7 +429,6 @@ function actualizarFila(tdId) {
         descuento = getNumberValue(descuento);
         iva = document.getElementById(index + "_IVA").innerText;
         iva = getNumberValue(iva);
-        console.log(iva);
         cantxprecio = cant * precio;
         dto$ = cantxprecio  * descuento / 100;
         cantxprecioydto =cantxprecio -cantxprecio  * descuento / 100;
@@ -499,8 +464,6 @@ function saveTd(tdId) {
             td.innerText = inputValue;
         }
     }
-    console.log("items 2");
-    console.log(items);
     actualizarFila(tdId);
 }
 
@@ -553,10 +516,6 @@ function makeEditable(event) {
 
 
         var option = document.createElement("option");
-        // option.value = "-1";
-        // option.text = "NO DEFINIDO";
-        // selectList.appendChild(option);
-
         for (var i = 0; i < ivas.length; i++) {
             var option = document.createElement("option");
             option.value = ivas[i]['Id'];
@@ -609,7 +568,7 @@ function addItemToTable() {
         //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
         // $("#jsonitems").val(JSON.stringify(items));
         $("#jsonitems").val(JSON.stringify(items));
-        addItems(items, tipoTransaccion, idPersona); // Se rompe * * *
+        addItems(items, tipoTransaccion, idPersona, precioActualizado); // Se rompe * * *
 
     };
 }
@@ -618,8 +577,6 @@ function updateOutputSelect() {
     // Elimina items sobrantes del json "output" y deja solo el seleccionado
     var result;
     var aux = Array.from(json_items);
-    console.log("aux");
-    console.log(aux);
     for (i = 0; i < aux.length; i++) {
         if (aux[i]["value"] == $('#item_id').val()) {
             result = aux.splice(i, 1);
@@ -649,11 +606,15 @@ function updateOutputSelect() {
             "Precio": result[0]["precio"],
             "Totales": result[0]["totales"],
             "Tipo": result[0]['tipo'],
-            "Stock": result[0]['stock']
+            "Stock": result[0]['stock'],
         },
         "Cantidad": item_cantidad,
         "Dto": item_descuento,
         "IVA": item_iva,
+        "ImpIva": item_iva * item_subtotal /100,
+        "Subtotal":item_subtotal,
+        "ImpDto": item_descuento * item_subtotal /100,
+        "Precio Original": item_subtotal,
         "Id": "",
         "Totales": item_subtotal
     }
@@ -702,4 +663,31 @@ function verificaStockDisponible(output) {
    }
    return true;
     
+}
+
+function actualizarPrecios(){
+    precioActualizado=true;
+
+    for (var i = 0; i < items.length; i++) {
+        // CANTIDAD
+        cantidad = items[i]["Cantidad"];
+        //PRECIO UNITARIO ACTUALIZADO
+        precio_unitario = items[i]["Bien"]["Precio"];
+        //DESCUENTO
+        descuento = items[i]["Dto"];
+        descuento = (parseFloat(descuento) * precio_unitario / 100);
+        precio_unitario_dto = precio_unitario - descuento;
+        //IVA
+        iva = items[i]["IVA"]["Valor"];
+
+        //SUBTOTAL
+        subtotal = precio_unitario_dto + (precio_unitario_dto * (iva/100));
+        // items[i]["Totales"] = parseFloat(subtotal);
+        items[i]["Totales"] = String(parseFloat(subtotal));
+
+    }
+    addItems(items, tipoTransaccion, idPersona, precioActualizado);
+
+    calcularSubcampos();
+
 }

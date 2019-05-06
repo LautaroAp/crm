@@ -162,7 +162,7 @@ class Evento {
      */ 
     public function getTipo_persona()
     {
-        return $this->tipo_persona;
+        return ucwords(strtolower($this->tipo_persona));
     }
 
     /**

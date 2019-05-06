@@ -120,7 +120,7 @@ $raza_manejo = $cliente->getRazaManejo();
                             <option value="<?php if (isset($version)) {echo $version;} else{echo "";} ?>" hidden=""><?php if (isset($version)) {echo ($version);} else{echo ("Seleccionar Versión");} ?></option>
                             <option value="Productores">Productores</option>
                             <option value="Veterinarios">Veterinarios</option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                         </select>
                     </div>
                 </div>
@@ -167,7 +167,7 @@ $raza_manejo = $cliente->getRazaManejo();
                             <option value="<?php if(isset($profesion)){ echo ($profesion->getId()); }?>" hidden="">  
                                 <?php if(isset($profesion)){ echo($profesion->getNombre()); } else {echo ("Seleccionar Profesión");}?>
                             </option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                             <?php foreach ($profesiones as $profesion) : ?>
                                 <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
                             <?php endforeach; ?>
@@ -213,7 +213,7 @@ $raza_manejo = $cliente->getRazaManejo();
                             <option value="<?php if(isset($condicion_iva)){ echo ($condicion_iva->getId()); }?>" hidden="">  
                                 <?php if(isset($condicion_iva)){ echo($condicion_iva->getNombre()); } else {echo ("Seleccionar");}?>
                             </option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                             <?php foreach ($condiciones_iva as $condicion_iva) : ?>
                                 <option value="<?php echo ($condicion_iva->getId()); ?>"><?php echo ($condicion_iva->getNombre()); ?></option>
                             <?php endforeach; ?>

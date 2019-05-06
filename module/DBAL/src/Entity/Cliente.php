@@ -199,7 +199,7 @@ class Cliente {
     }
 
     public function getCiudad() {
-        return $this->ciudad;
+        return ucwords(strtolower($this->ciudad));
     }
 
     public function setCiudad($ciudad) {
@@ -208,7 +208,7 @@ class Cliente {
     }
 
     public function getProfesion() {
-        return $this->profesion;
+        return  $this->profesion;
     }
 
     public function setProfesion($profesion) {
@@ -221,12 +221,12 @@ class Cliente {
         if (is_null($profesion)) {
             return null;
         } else {
-            return $this->getProfesion()->getNombre();
+            return  ucwords(strtolower($this->getProfesion()->getNombre()));
         }
     }
 
     public function getEmpresa() {
-        return $this->empresa;
+        return  ucwords(strtolower($this->empresa));
     }
 
     public function setEmpresa($empresa) {
@@ -235,7 +235,7 @@ class Cliente {
     }
 
     public function getActividad() {
-        return $this->actividad;
+        return  ucwords(strtolower($this->actividad));
     }
 
     public function setActividad($actividad) {
@@ -272,7 +272,7 @@ class Cliente {
 
    
     public function getSkype() {
-        return $this->skype;
+        return  strtolower($this->skype);
     }
 
     public function setSkype($skype) {
@@ -295,7 +295,7 @@ class Cliente {
         if (is_null($categoria)) {
             return null;
         } else {
-            return $categoria->getNombre();
+            return  ucwords(strtolower($categoria->getNombre()));
         }
     }
 
@@ -335,23 +335,6 @@ class Cliente {
         return $this;
     }
 
-    // function getNombreLicenciaCliente() {
-    //     if (is_null($this->licencia)) {
-    //         return null;
-    //     } else {
-    //         return $this->licencia->getNombre();
-    //     }
-    // }
-
-    // function getLicencia() {
-    //     return $this->licencia;
-    // }
-
-    // function setLicencia($licencia) {
-    //     $this->licencia = $licencia;
-    //     return $this;
-    // }
-
     public function getVersion() {
         return $this->version;
     }
@@ -369,8 +352,6 @@ class Cliente {
     public function getUsuarios() {
         return $this->usuarios;
     }
-
-
 
     public function isPrimeraVenta() {
         $array_eventos = $this->getEventos();
@@ -470,7 +451,7 @@ class Cliente {
         if (is_null($this->servicio)) {
             return null;
         } else {
-            return $this->servicio->getBien()->getNombre();;
+            return  ucwords(strtolower($this->servicio->getBien()->getNombre()));
         }
     }
     

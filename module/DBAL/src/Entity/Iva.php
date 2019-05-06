@@ -77,7 +77,7 @@ class Iva
      */ 
     public function getNombre()
     {
-        return $this->nombre;
+        return ucwords(strtolower($this->nombre));
     }
 
     /**

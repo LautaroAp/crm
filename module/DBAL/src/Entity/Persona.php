@@ -117,7 +117,7 @@ class Persona {
      */ 
     public function getNombre()
     {
-        return $this->nombre;
+        return ucwords(strtolower($this->nombre));
     }
 
     /**
@@ -157,7 +157,7 @@ class Persona {
      */ 
     public function getEmail()
     {
-        return $this->email;
+        return strtolower($this->email);
     }
 
     /**
@@ -214,7 +214,7 @@ class Persona {
      */ 
     public function getRazon_social()
     {
-        return $this->razon_social;
+        return ucwords(strtolower($this->razon_social));
     }
 
     /**
@@ -253,7 +253,7 @@ class Persona {
         if (is_null($this->condicion_iva)) {
             return null;
         } else {
-            return $this->condicion_iva->getNombre();
+            return ucwords(strtolower($this->condicion_iva->getNombre()));
         }
     }
 

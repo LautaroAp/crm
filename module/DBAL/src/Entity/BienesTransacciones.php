@@ -240,6 +240,7 @@ class BienesTransacciones {
         $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
         $output .= '"Dto": "' . $this->getDescuento() .'", ';
         $output .= '"ImpDto": "' . $this->getPrecioDto() .'", ';
+        $output .= '"Precio Original": "' . $this->getPrecioOriginal() .'", ';
         if (!is_null($this->getTransaccion())){
             $output .= '"Numero Transaccion": "' . $this->getTransaccion()->getId() .'", ';
         }

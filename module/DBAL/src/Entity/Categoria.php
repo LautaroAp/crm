@@ -107,12 +107,21 @@ class Categoria
     }
 
     public function getJSON(){
+
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Nombre": ' . $this->getNombre() .', ';
-        $output .= '"Descripcion": ' . $this->getDescripcion() .', ';
+        $output .= '"Nombre": "' . $this->getNombre() .'", ';
+        $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
         $output .= '"Tipo": "' . $this->getTipo() .'" ';
-              
+        // $output = '"bien": {'.$output.'}';
+
         return  '{'.$output.'}' ;
+        // $output = "";
+        // $output .= '"Id": "' . $this->getId() .'", ';
+        // $output .= '"Nombre": ' . $this->getNombre() .', ';
+        // $output .= '"Descripcion": ' . $this->getDescripcion() .', ';
+        // $output .= '"Tipo": "' . $this->getTipo() .'" ';
+              
+        // return  '{'.$output.'}' ;
     }
 }

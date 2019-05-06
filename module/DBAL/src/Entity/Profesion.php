@@ -37,7 +37,7 @@ class Profesion {
     }
 
     function getNombre() {
-        return $this->nombre;
+        return ucwords(strtolower($this->nombre));
     }
 
     function setId($id_profesion) {

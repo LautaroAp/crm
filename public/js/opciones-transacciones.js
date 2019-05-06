@@ -26,7 +26,7 @@ function completarMonedas(monedas){
 
     var option = document.createElement("option");
     option.value = "-1";
-    option.text = "NO DEFINIDO";
+    option.text = "No definido";
     selectList.appendChild(option);
 
     for (var i = 0; i < monedas.length; i++) {
@@ -74,7 +74,7 @@ function completarFormasPago(formasPago, transaccion=null){
 
     var option = document.createElement("option");
     option.value = "-1";
-    option.text = "NO DEFINIDO";
+    option.text = "No definido";
     selectList.appendChild(option);
 
     for (var i = 0; i < formasPago.length; i++) {
@@ -120,7 +120,7 @@ function completarFormasEnvio(formasEnvio, transaccion=null){
 
     var option = document.createElement("option");
     option.value = "-1";
-    option.text = "NO DEFINIDO";
+    option.text = "No definido";
     selectList.appendChild(option);
 
     for (var i = 0; i < formasEnvio.length; i++) {

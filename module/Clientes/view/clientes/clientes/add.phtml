@@ -92,7 +92,7 @@ $this->headTitle($title);
                             <option value="-1" hidden="">Seleccionar Versión</option>
                             <option value="Productores">Productores</option>
                             <option value="Veterinarios">Veterinarios</option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                         </select>
                     </div>
                 </div>
@@ -136,7 +136,7 @@ $this->headTitle($title);
                         <label>Profesión</label>
                         <select class="form-control" id="profesion" name="profesion">
                             <option value="" hidden="">Seleccionar Profesión</option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                             <?php foreach ($profesiones as $profesion) : ?>
                                 <option value="<?php echo ($profesion->getId()); ?>"><?php echo ($profesion->getNombre()); ?></option>
                             <?php endforeach; ?>
@@ -177,7 +177,7 @@ $this->headTitle($title);
                         <label>Condición de IVA</label>
                         <select class="form-control" id="condicion_iva" name="condicion_iva">
                             <option value="" hidden="">Seleccionar</option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                             <?php foreach ($condiciones_iva as $condicion_iva) : ?>
                                 <option value="<?php echo ($condicion_iva->getId()); ?>"><?php echo ($condicion_iva->getNombre()); ?></option>
                             <?php endforeach; ?>

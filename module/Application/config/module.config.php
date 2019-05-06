@@ -216,6 +216,16 @@ return [
                             ],
                         ],
                     ],
+                    'backup' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/backup',
+                            'defaults' => [
+                                'controller' => \Proveedor\Controller\ProveedorController::class,
+                                'action' => 'backup',
+                            ],
+                        ],
+                    ],
                     //  Gestion Actividades
                     'gestionEventosProveedores' => [
                         'type' => Literal::class,

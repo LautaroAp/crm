@@ -129,7 +129,7 @@ $this->headTitle($title);
                         <label>Condición de IVA</label>
                         <select class="form-control" id="condicion_iva" name="condicion_iva">
                             <option value="" hidden="">Seleccionar</option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                             <?php foreach ($condiciones_iva as $condicion_iva) : ?>
                                 <option value="<?php echo ($condicion_iva->getId()); ?>"><?php echo ($condicion_iva->getNombre()); ?></option>
                             <?php endforeach; ?>

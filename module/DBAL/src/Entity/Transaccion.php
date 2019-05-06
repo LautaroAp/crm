@@ -469,7 +469,7 @@ class Transaccion {
 
     public function getNombreFormaPago(){
         if (is_null($this->formaPago)) {
-            return "NO DEFINIDO";
+            return "No definido";
         } else {
             return $this->formaPago->getNombre();
         }

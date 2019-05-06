@@ -195,27 +195,27 @@ if(transaccionPreviaNum!=null){
                         <div class="autocomplete form-group col-sm-2 margin-padding-xs">
                             <label>Código</label>
                             <input type="text" class="form-control" name="item_codigo" id="item_codigo"
-                                placeholder="Código">
+                                placeholder="Código" onkeypress="return pulsar(event)" >
                         </div>
                         <div class="autocomplete form-group col-sm-4 margin-padding-xs">
                             <label>Producto / Servicio</label>
                             <input type="text" class="form-control" name="item_nombre" id="item_nombre"
-                                placeholder="Producto Y Servicio">
-                        </div>
-                        <div class="form-group col-sm-2 margin-padding-xs">
-                            <label>Stock Disponible</label>
-                            <input type="text" class="form-control" name="item_stock" id="item_stock"
-                                placeholder="Stock Disponible">
+                                placeholder="Producto Y Servicio"  onkeypress="return pulsar(event)" >
                         </div>
                         <div class="form-group col-sm-2 margin-padding-xs">
                             <label>Cantidad</label>
                             <input type="number" class="form-control" name="item_cantidad" id="item_cantidad" min="1"
                                 max="99" value="" placeholder="Cantidad" onkeypress="return justNumbers(event)">
                         </div>
+                        <div class="form-group col-sm-2 margin-padding-xs">
+                            <label>Stock Disponible</label>
+                            <input type="text" class="form-control" name="item_stock" id="item_stock"
+                                placeholder="Stock Disponible" readonly>
+                        </div>
                         <div class="form-group col-sm-1 margin-padding-xs">
                             <label>&nbsp;</label>
                             <button type="button" class="btn btn-default" onclick="addItemToTable()">
-                                <span class="glyphicon glyphicon-plus"></span> Agregar
+                                <span class="glyphicon glyphicon-plus"  onkeypress="return pulsar(event)"></span> Agregar
                             </button>
                         </div>
                 </div>
@@ -267,16 +267,19 @@ if(transaccionPreviaNum!=null){
                             var items = <?php echo ($json); ?>;
                             var idPersona = <?php echo ($persona->getId()); ?>;
                             // Crear Tabla
-                            addItems(items, "pedido", idPersona);
+                            addItems(items, "pedido", idPersona, false);
                             </script>
                         </div>
                         <br>
                     </div>
-                    <div class="container" hidden="true">
+                    <div class="container" hidden="true" >
                         <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion' => 'pedido', 'accion' => 'agregar', 'id' => $persona->getId()]); ?>"
-                            type="button">
-                            <span class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar
-                                Item</span> </a>
+                        type="button">
+                        <span class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar Item</span> </a>
+                    </div>
+                    <div class="container" >
+                        <button  type="button" class="btn btn-default" onclick="actualizarPrecios()"><span class="glyphicon glyphicon-refresh"></span>
+                       Actualizar Precios </button>
                     </div>
                 </div>
             </div>
@@ -418,11 +421,11 @@ if(transaccionPreviaNum!=null){
                     <h4 class="modal-title">Editar pedido</h4>
                 </div>
                 <div class="modal-body">
-                    <p>¿Está seguro que desea editar este pedido?</p>
+                    <p id="msjModal">¿Está seguro que desea guardar este pedido?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-default">Aceptar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button id="btnModalAceptar" type="submit" class="btn btn-default">Aceptar</button>
+                    <button id="btnModalCancelar" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -463,7 +466,7 @@ if(transaccionPreviaNum!=null){
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a data-toggle="modal" data-target="#myModal">
+                <a id="btnModalGuardar" data-toggle="modal" data-target="#myModal">
                     <img src="<?= $this->basePath('img/crm/aceptar.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha img-submenu-sm zoom" role="button">
                 </a>

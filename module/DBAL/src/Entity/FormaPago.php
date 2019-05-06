@@ -134,7 +134,7 @@ class FormaPago
      */ 
     public function getNombre()
     {
-        return $this->nombre;
+        return ($this->nombre);
     }
 
     /**

@@ -148,7 +148,7 @@ class Proveedor {
     }
 
     public function getCiudad() {
-        return $this->ciudad;
+        return ucwords(strtolower($this->ciudad));
     }
 
     public function setCiudad($ciudad) {
@@ -157,7 +157,7 @@ class Proveedor {
     }
 
     public function getEmpresa() {
-        return $this->empresa;
+        return ucwords(strtolower($this->empresa));
     }
 
     public function setEmpresa($empresa) {
@@ -205,7 +205,7 @@ class Proveedor {
         if (is_null($categoria)) {
             return null;
         } else {
-            return $categoria->getNombre();
+            return ucwords(strtolower($categoria->getNombre()));
         }
     }
 
@@ -318,7 +318,7 @@ class Proveedor {
      */ 
     public function getActividad()
     {
-        return $this->actividad;
+        return ucwords(strtolower($this->actividad));
     }
 
     /**
@@ -338,7 +338,7 @@ class Proveedor {
      */ 
     public function getCargo()
     {
-        return $this->cargo;
+        return ucwords(strtolower($this->cargo));
     }
 
     /**

@@ -40,7 +40,7 @@ class Provincia {
 
     function getNombre_pais(){
         if (is_null($this->pais)){
-            return 'NO DEFINIDO';
+            return 'No definido';
         }
         else{
             return $this->pais->getNombre();

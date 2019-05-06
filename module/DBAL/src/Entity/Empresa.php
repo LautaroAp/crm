@@ -126,7 +126,7 @@ class Empresa {
     }
 
     function getDireccion() {
-        return $this->direccion;
+        return ucwords(strtolower($this->direccion));
     }
 
     function getTelefono() {
@@ -134,7 +134,7 @@ class Empresa {
     }
 
     function getMail() {
-        return $this->mail;
+        return strtolower($this->mail);
     }
 
     function getMovil() {
@@ -158,23 +158,23 @@ class Empresa {
     }
 
     function getRazon_social() {
-        return $this->razon_social;
+        return ucwords(strtolower($this->razon_social));
     }
 
     function getTipo_iva() {
-        return $this->tipo_iva;
+        return ucwords(strtolower($this->tipo_iva));
     }
 
     function getLocalidad() {
-        return $this->localidad;
+        return ucwords(strtolower($this->localidad));
     }
 
     function getProvincia() {
-        return $this->provincia;
+        return ucwords(strtolower($this->provincia));
     }
 
     function getPais() {
-        return $this->pais;
+        return ucwords(strtolower($this->pais));
     }
 
     function getCP() {

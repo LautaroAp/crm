@@ -23,7 +23,7 @@ $(document).ready(function() {
             <li class="breadcrumb-item active" aria-current="page">Formas de Envío</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
-            <li class="pull-right"><a href="empresa" id="volver">Volver</a></li>
+            <li class="pull-right"><a href="<?= $this->url('herramientas'); ?>" id="volver">Volver</a></li>
         </ol>
     </nav>
 </div>
@@ -165,7 +165,7 @@ $(document).ready(function() {
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="/empresa">
+                <a href="<?= $this->url('herramientas'); ?>">
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha zoom">
                 </a>

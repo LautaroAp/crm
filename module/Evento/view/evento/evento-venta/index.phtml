@@ -172,7 +172,7 @@ else{
                                 <td><?= $evento->getTipo(); ?></td>
                                 <td><?= $evento->getNombrePersona(); ?></td>
                                 <td><?php 
-                                        if(!is_null($evento->getPersona())){echo ($evento->getPersona()->getTipo());}
+                                        if(!is_null($evento->getPersona())){echo ucwords(strtolower(($evento->getPersona()->getTipo())));}
                                     ?>
                                 </td>
 

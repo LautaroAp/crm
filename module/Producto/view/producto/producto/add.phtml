@@ -55,7 +55,7 @@
                         <label>Categoría</label>
                         <select class="form-control" id="categoria" name="categoria">
                             <option value="" hidden="">Seleccionar Categoría</option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                             <?php foreach ($categorias as $categoria) : ?>
                                 <option value="<?= $categoria->getId(); ?>">
                                     <?= $categoria->getNombre(); ?>
@@ -67,7 +67,7 @@
                         <label>Proveedor</label>
                         <select class="form-control" id="proveedor" name="proveedor" required>
                             <option value="" hidden="">Seleccionar Proveedor</option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                             <?php foreach ($proveedores as $proveedor) : ?>
                                 <option value="<?= $proveedor->getId(); ?>">
                                     <?= $proveedor->getPersona()->getNombre(); ?>

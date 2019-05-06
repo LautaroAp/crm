@@ -70,7 +70,7 @@ if ($tipoPersona=="proveedor"){
                             <option value="<?php if(isset($categoria_eve)){ echo ($categoria_eve->getId()); }?>" hidden="">  
                                 <?php if(isset($categoria_eve)){ echo($categoria_eve->getNombre()); } else {echo ("Seleccionar Categoria");}?>
                             </option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                             <?php foreach ($categoriaeventos as $categoria) : ?>
                                 <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
                             <?php endforeach; ?>

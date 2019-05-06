@@ -216,14 +216,14 @@ class PedidoController extends TransaccionController
     }
 
     public function eliminarItemAction(){
-        // $this->layout()->setTemplate('layout/nulo');
-        $pos = $this->params()->fromRoute('id');
-        $array = json_decode($_SESSION['TRANSACCIONES']['PEDIDO']);
-        array_splice($array, $pos, 1);
-        $json = json_encode($array);
-        $_SESSION['TRANSACCIONES']['PEDIDO']= $json;
-
-        $view = new ViewModel();
+        $items = $_POST['json'];
+        $index = $_POST['index'];
+       
+        $itemsArray = json_decode($items, true);
+        $itemsArray = array_splice($itemsArray, $index, 1);
+        $json = json_encode($itemsArray);
+        
+        $view = new ViewModel(['json'=>$json]);
         $view->setTemplate('layout/nulo');
         $view->setTerminal(true);
         return $view;

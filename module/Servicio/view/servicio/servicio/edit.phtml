@@ -77,7 +77,7 @@ $proveedor = $bien->getProveedor();
                              <option value="<?php if(isset($categoria)){ echo ($categoria->getId()); }?>" hidden="">  
                                 <?php if(isset($categoria)){ echo $categoria->getNombre(); } else {echo ("Seleccionar Categoría");}?>
                             </option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                             <?php foreach ($categorias as $categoria) : ?>
                                 <option value="<?= $categoria->getId(); ?>">
                                     <?= $categoria->getNombre(); ?>
@@ -91,7 +91,7 @@ $proveedor = $bien->getProveedor();
                             <option value="<?php if(isset($proveedor)){ echo ($proveedor->getId()); }?>" hidden="">  
                                 <?php if(isset($proveedor)){ echo $proveedor->getPersona()->getNombre(); } else {echo ("Seleccionar Proveedor");}?>
                             </option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                             <?php foreach ($proveedores as $proveedor) : ?>
                                 <option value="<?= $proveedor->getId(); ?>">
                                     <?= $proveedor->getPersona()->getNombre(); ?>

@@ -109,7 +109,7 @@ function addTransaccionItems(){
     // removeItemsAnteriores();
     items= itemsTransaccion;
     // items = (items.concat(itemsTransaccion));
-    addItems(items, tipoTransaccion, idPersona);
+    addItems(items, tipoTransaccion, idPersona, precioActualizado);
 }
 
 function completeItems(id){

@@ -159,7 +159,11 @@ class BienesTransaccionesManager {
         else{
             $bien = $this->bienesManager->getBienId($array['Bien']);
         }
+       
         $bienTransaccion->setBien($bien);
+         if (isset($array['Bien']['Precio'])){
+            $bienTransaccion->setPrecioOriginal($array['Bien']['Precio']);
+        }
         $bienTransaccion->setCantidad($array['Cantidad']);
         $bienTransaccion->setDescuento($array['Dto']);
         if (isset($array['IVA']['Id'])){

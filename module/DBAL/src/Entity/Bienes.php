@@ -350,7 +350,7 @@ class Bienes {
 
     public function getNombreCategoria(){
         if (!is_null($this->categoria)){
-            return $this->categoria->getNombre();
+            return  ucwords(strtolower($this->categoria->getNombre()));
         }
         return null;
     }
@@ -365,20 +365,6 @@ class Bienes {
 
         return $this;
     }
-
-    // public function getValorIVa(){
-    //     if(is_null($this->iva)){
-    //         return null;
-    //     }
-    //     return $this->iva->getValor();
-    // }
-
-    // public function getStringIva(){
-    //     if(is_null($this->iva)){
-    //         return "";
-    //     }
-    //     return strval($this->getValorIVa());
-    // }
 
     public function getCategoriaNombre(){
         if(is_null($this->categoria)){
@@ -494,8 +480,8 @@ class Bienes {
         $output .= '"Nombre": "' . $this->getNombre() .'", ';
         $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
         if (!is_null($this->getCategoria())){
-            $output .= '"Categoria": "' . $this->getCategoria()->getJSON() .'", ';
-        }
+            $output .= '"Categoria": ' . $this->getCategoria()->getJSON() .', ';
+        }     
         $output .= '"Precio": "' . $this->getPrecio() .'", ';
         $output .= '"Dto": "' . $this->getDescuento() .'", ';
         $output .= '"PrecioDto": "' . $this->getPrecio_final_dto() .'", ';

@@ -160,7 +160,7 @@ $url = "/proveedores/listado/ficha/".$id;
                             <option value="<?php if(isset($condicion_iva)){ echo ($condicion_iva->getId()); }?>" hidden="">  
                                 <?php if(isset($condicion_iva)){ echo($condicion_iva->getNombre()); } else {echo ("Seleccionar");}?>
                             </option>
-                            <option value="-1">NO DEFINIDO</option>
+                            <option value="-1">No definido</option>
                             <?php foreach ($condiciones_iva as $condicion_iva) : ?>
                                 <option value="<?php echo ($condicion_iva->getId()); ?>"><?php echo ($condicion_iva->getNombre()); ?></option>
                             <?php endforeach; ?>
