@@ -404,4 +404,13 @@ class Empresa {
 
         return $this;
     }
+
+    public function getFecha_inicio_actividades_formato()
+    {
+        if (is_null($this->fecha_inicio_actividades)) {
+            return null;
+        } else {
+            return $this->fecha_inicio_actividades->format('d/m/Y');
+        }
+    }
 }

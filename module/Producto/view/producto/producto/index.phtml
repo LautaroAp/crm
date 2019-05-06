@@ -59,8 +59,8 @@
                                 <td><?= $bien->getDescripcion() ?></td>
                                 <td><?= $bien->getCategoriaNombre() ?></td>
                                 <td><?= $bien->getStock() ?></td>
-                                <td><?php echo "$ " . number_format($bien->getPrecio(), 2, ",", "."); ?></td>
-                                <td><?php echo "$ " . number_format($bien->getPrecio() * $bien->getStock(), 2, ",", "."); ?></td>
+                                <td align="right"><?php echo "$ " . number_format($bien->getPrecio(), 2, ",", "."); ?></td>
+                                <td align="right"><?php echo "$ " . number_format($bien->getPrecio() * $bien->getStock(), 2, ",", "."); ?></td>
                                 <td>
                                     <div class="pull-right">
                                         <a class="btn btn-default btn-sm" href="<?= $this->url('gestionProductosServicios/gestionProductos/editar',

@@ -63,10 +63,10 @@ $this->headTitle('Servicios');
                                     <td><?php echo ($bien->getCodigo()); ?></td>
                                     <td><?php echo ($bien->getNombre()); ?></td>
                                     <td><?php echo ($bien->getCategoriaNombre()); ?></td>
-                                    <td><?php echo "$ " . number_format($bien->getPrecio(), 2, ",", "."); ?></td>
-                                    <td><?php echo ($bien->getDescuento() . " %"); ?></td>
-                                    <td><?php echo "$ " . number_format($bien->getPrecio_final_iva(), 2, ",", "."); ?></td>
-                                    <td><?php echo "$ " . number_format($bien->getPrecio_final_iva_dto(), 2, ",", "."); ?></td>
+                                    <td align="right"><?php echo "$ " . number_format($bien->getPrecio(), 2, ",", "."); ?></td>
+                                    <td align="center"><?php echo ($bien->getDescuento() . " %"); ?></td>
+                                    <td align="right"><?php echo "$ " . number_format($bien->getPrecio_final_iva(), 2, ",", "."); ?></td>
+                                    <td align="right"><?php echo "$ " . number_format($bien->getPrecio_final_iva_dto(), 2, ",", "."); ?></td>
                                     <td>
                                         <div class="pull-right">
                                             <a class="btn btn-default btn-sm" href="<?= $this->url('gestionProductosServicios/gestionServicios/editar', ['action' => 'edit', 'tipo'=>'servicio','id' => $servicio->getId()]); ?>">

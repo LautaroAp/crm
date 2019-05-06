@@ -398,6 +398,15 @@ table.dataTable tr.item-seleccion > .sorting_1 {
     -webkit-box-shadow: 0px 0px 5px 0px #555555;
 }
 
+
+.aling-center{
+    text-align: center !important;
+}
+
+.aling-right{
+    text-align: right !important;
+}
+
 /****************************************************************************************/
 .autocomplete-items {
     position: absolute;

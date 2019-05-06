@@ -25,18 +25,23 @@ function calculaCostoTotalCompra() {
    
 
     // Precio Total de Compra
-    $total = parseFloat($('#precio_compra').val());
-    $total = $total + parseFloat($('#costos_directos').val());
-    $total = ($total + parseFloat($('#gastos_directos').val())).toFixed(2);
+    $total = parseFloat(revertirFormato($('#precio_compra').val()));
+    $total = $total + parseFloat(revertirFormato($('#costos_directos').val()));
+    $total = ($total + parseFloat(revertirFormato($('#gastos_directos').val())));
+
+
+    $total = aplicaFormato($total.toString());
+
+
     if ($total) {
         $("#precio_compra_total").val($total);
     } else {
         $("#precio_compra_total").val("0");
     }
     // Precio Venta
-    calculaCMPorcentual();
+    // calculaCMPorcentual();
     // Precio Final
-    calculaDescuentoIVA();
+    // calculaDescuentoIVA();
 }
 
 // Contribucion Marginal Valor
@@ -170,6 +175,7 @@ function calculaDescuentoIVA() {
 }
 
 $(document).ready(function() {
+
     $(".formato-numero").on({
 
         "focus": function (event) {
@@ -183,12 +189,31 @@ $(document).ready(function() {
             });
         }
     });
+
+    $("#revert").click(function(){
+
+        var numero = $("#number").val();
+
+        numero = revertirFormato(numero)
+
+        alert(numero);
+
+        numero = numero.replace(/\D/g, "")
+            .replace(/([0-9])([0-9]{2})$/, '$1,$2')
+            .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+
+        $("#number2").val(numero)
+
+    });
+
+
 });
 
 function aplicaFormato(numero){
-    return numero.replace(/\D/g, "")
+    var result = numero.replace(/\D/g, "")
             .replace(/([0-9])([0-9]{2})$/, '$1,$2')
             .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+    return result;
 }
 
 function revertirFormato(numero){

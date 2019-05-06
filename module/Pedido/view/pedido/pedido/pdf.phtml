@@ -132,7 +132,7 @@ for ($i=1; $i <= 3; $i++) {
                     <td width="3%" style="border-right: 0.5px solid black;"></td>
                     <td width="3%"></td>
                     <th width="2%"></th>
-                    <td width="45%"><strong>Ingresos Brutos: </strong></td>
+                    <td width="45%"><strong>Ingresos Brutos: </strong>'. $empresa->getIngresos_brutos() .'</td>
                 </tr>
                 <tr>
                     <td width="45%"></td>
@@ -140,7 +140,7 @@ for ($i=1; $i <= 3; $i++) {
                     <td width="3%" style="border-right: 0.5px solid black;"></td>
                     <td width="3%"></td>
                     <th width="2%"></th>
-                    <td width="45%"><strong>Fecha de Inicio de Actividades: </strong></td>
+                    <td width="45%"><strong>Fecha de Inicio de Actividades: </strong>'. $empresa->getFecha_inicio_actividades_formato() .'</td>
                 </tr>
             </tbody>
         </table>
