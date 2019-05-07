@@ -408,13 +408,18 @@ table.dataTable tr.item-seleccion > .sorting_1 {
     font-weight: bold;
 }
 
-
 .transaccion-anulada{
     color: red;
     font-weight: bold;
-
 }
 
+.aling-center{
+    text-align: center !important;
+}
+
+.aling-right{
+    text-align: right !important;
+}
 
 /****************************************************************************************/
 .autocomplete-items {

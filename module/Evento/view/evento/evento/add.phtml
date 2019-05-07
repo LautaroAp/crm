@@ -93,7 +93,7 @@ $form->prepare();
                         <label>Acción Comercial</label>
                         <select class="form-control" id="accion_comercial" name="accion_comercial" required>
                             <option value="" hidden="">Seleccionar</option>
-                            <option value="-1">No definido</option>
+                            <!-- <option value="-1">No definido</option> -->
                             <?php foreach ($tipos as $tipo) : ?>
                                 <option value="<?php echo ($tipo->getId()); ?>"><?php echo ($tipo->getNombre()); ?></option>
                             <?php endforeach; ?>

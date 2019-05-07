@@ -571,6 +571,14 @@ class Transaccion {
         return $this;
     }
 
+    public function getNombreFormaEnvio(){
+        if (is_null($this->formaEnvio)) {
+            return "NO DEFINIDO";
+        } else {
+            return $this->formaEnvio->getNombre();
+        }
+    }
+
     public function getJSON(){
 
         $output = "";

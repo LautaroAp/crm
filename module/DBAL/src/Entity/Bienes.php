@@ -481,15 +481,16 @@ class Bienes {
         $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
         if (!is_null($this->getCategoria())){
             $output .= '"Categoria": ' . $this->getCategoria()->getJSON() .', ';
+        }
+        else{
+            $output .= '"Categoria": "' . "" .'", ';
         }     
         $output .= '"Precio": "' . $this->getPrecio() .'", ';
         $output .= '"Dto": "' . $this->getDescuento() .'", ';
         $output .= '"PrecioDto": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"IVA": "' . $this->getValorIva() .'", ';
         $output .= '"ImpIVA": "' . $this->getIvaPeso() .'", ';
-        if (!is_null($this->unidad_medida)){
-            $output .= '"UnidadMedida": "' . $this->getUnidad_medida() .'", ';
-        }
+        $output .= '"UnidadMedida": "' . $this->getUnidad_medida() .'", ';
         $output .= '"Tipo": "' . $this->getTipo() .'", ';
         $output .= '"Stock": "' . $this->getStock() .'", ';
         $output .= '"Totales": "' . $this->getPrecio_final_iva_dto() .'" ';

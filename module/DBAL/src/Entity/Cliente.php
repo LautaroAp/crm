@@ -88,14 +88,7 @@ class Cliente {
      * @ORM\JoinColumn(name="ID_CATEGORIA_CLIENTE", referencedColumnName="ID")
      */
     private $categoria;
-
-    // /**
-    //  * Many Clientes have One Categoria.
-    //  * @ORM\ManyToOne(targetEntity="Licencia")
-    //  * @ORM\JoinColumn(name="ID_LICENCIA", referencedColumnName="ID_LICENCIA")
-    //  */
-    // private $licencia;
-
+    
     /**
      * Many Clientes have One Categoria.
      * @ORM\ManyToOne(targetEntity="Servicio")
@@ -127,11 +120,6 @@ class Cliente {
      * @ORM\Column(name="FECHA_ULTIMO_PAGO", type="datetime")
      */
     private $fecha_ultimo_pago;
-
-    // /**
-    //  * @ORM\Column(name="LICENCIA_ACTUAL", nullable=true, type="string", length=255)
-    //  */
-    // private $licencia_actual;
 
     /**
      * @ORM\Column(name="DNI_CLIENTE", nullable=true, type="string")

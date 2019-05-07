@@ -134,9 +134,13 @@ class RemitoManager extends TransaccionManager{
     }
 
     public function getPedidoPrevioFromTransaccion($transaccionPrevia){
-        $idTransaccionPrevia= $transaccionPrevia->getId();
-        return $this->entityManager->getRepository(Pedido::class)->findOneBy(['transaccion'=>$idTransaccionPrevia]);
+        if(!is_null($transaccionPrevia)){
+             $idTransaccionPrevia= $transaccionPrevia->getId();
+            return $this->entityManager->getRepository(Pedido::class)->findOneBy(['transaccion'=>$idTransaccionPrevia]);
+        }
+        return null;
     }
+       
 
     public function devolverStock($items){
         foreach ($items as $item){

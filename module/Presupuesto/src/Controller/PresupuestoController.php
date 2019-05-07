@@ -240,50 +240,50 @@ class PresupuestoController extends TransaccionController{
 
    // PDF
    public function pdfAction() {
-    $this->layout()->setTemplate('layout/nulo');
-    $id_transaccion = $this->params()->fromRoute('id');
-    $presupuesto = $this->presupuestoManager->getPresupuestoFromTransaccionId($id_transaccion);
-    $items = array();
+        $this->layout()->setTemplate('layout/nulo');
+        $id_transaccion = $this->params()->fromRoute('id');
+        $presupuesto = $this->presupuestoManager->getPresupuestoFromTransaccionId($id_transaccion);
+        $items = array();
 
-    if (!is_null($presupuesto)) {
-        $items = $presupuesto->getTransaccion()->getBienesTransacciones();
-    }
-   
-    $json = "";
-    $json = $this->getJsonFromObjectList($items);
-    $persona = $presupuesto->getTransaccion()->getPersona();
-    $tipoPersona = null;
-
-    $empresa = $this->empresaManager->getEmpresa();
+        if (!is_null($presupuesto)) {
+            $items = $presupuesto->getTransaccion()->getBienesTransacciones();
+        }
     
-    $numTransacciones = $presupuesto->getTransaccion()->getNumero();
-    $numPresupuesto = $presupuesto->getNumero();
-    $monedasJson = $this->getJsonMonedas();
-    $formasPagoJson = $this->getJsonFormasPago();
-    $formasEnvioJson = $this->getJsonFormasEnvio();
-    $ivasJson = $this->getJsonIvas();
-    $transaccion = $presupuesto->getTransaccion();
-    $transaccionJson = $presupuesto->getTransaccion()->getJSON();
-    $presupuestos = $this->presupuestoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
-    $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
-    $this->reiniciarParams();
-    return new ViewModel([
-        'persona' => $persona,
-        'tipoPersona' => $tipoPersona,
-        'numTransacciones' => $numTransacciones,
-        'numPresupuesto' => $numPresupuesto,
-        'json' => $json,
-        'formasPagoJson' => $formasPagoJson,
-        'formasEnvioJson' => $formasEnvioJson,
-        'monedasJson' => $monedasJson,
-        'presupuesto' => $presupuesto,
-        'transaccion' => $transaccion,
-        'transaccionJson' => $transaccionJson,
-        'ivasJson' => $ivasJson,
-        'presupuestosJson' => $jsonPrespuestos,
-        'itemsTransaccionJson' =>"[]",
-        'empresa' => $empresa,
-        ]);
+        $json = "";
+        $json = $this->getJsonFromObjectList($items);
+        $persona = $presupuesto->getTransaccion()->getPersona();
+        $tipoPersona = null;
+
+        $empresa = $this->empresaManager->getEmpresa();
+        
+        $numTransacciones = $presupuesto->getTransaccion()->getNumero();
+        $numPresupuesto = $presupuesto->getNumero();
+        $monedasJson = $this->getJsonMonedas();
+        $formasPagoJson = $this->getJsonFormasPago();
+        $formasEnvioJson = $this->getJsonFormasEnvio();
+        $ivasJson = $this->getJsonIvas();
+        $transaccion = $presupuesto->getTransaccion();
+        $transaccionJson = $presupuesto->getTransaccion()->getJSON();
+        $presupuestos = $this->presupuestoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+        $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
+        $this->reiniciarParams();
+        return new ViewModel([
+            'persona' => $persona,
+            'tipoPersona' => $tipoPersona,
+            'numTransacciones' => $numTransacciones,
+            'numPresupuesto' => $numPresupuesto,
+            'json' => $json,
+            'formasPagoJson' => $formasPagoJson,
+            'formasEnvioJson' => $formasEnvioJson,
+            'monedasJson' => $monedasJson,
+            'presupuesto' => $presupuesto,
+            'transaccion' => $transaccion,
+            'transaccionJson' => $transaccionJson,
+            'ivasJson' => $ivasJson,
+            'presupuestosJson' => $jsonPrespuestos,
+            'itemsTransaccionJson' =>"[]",
+            'empresa' => $empresa,
+            ]);
     }
     public function cambiarEstadoAction(){
         $this->layout()->setTemplate('layout/nulo');

@@ -96,7 +96,7 @@ for ($i=1; $i <= 3; $i++) {
                 <tr style="font-size: 14px; font-weight: bold;">
                     <th align="center" width="45%">'. $empresa->getNombre() .'</th>
                     <th width="2%"></th>
-                    <th align="center" width="6%" border="1">&nbsp;P</th>
+                    <th align="center" width="6%" border="0.5">&nbsp;P</th>
                     <th width="2%"></th>
                     <th align="left" width="45%">'. strtoupper($transaccion->getNombre()) .'</th>
                 </tr>
@@ -105,7 +105,7 @@ for ($i=1; $i <= 3; $i++) {
                 <tr>
                     <td width="45%"><strong>Razón Social: </strong>'. $empresa->getRazon_social() .'</td>
                     <th width="2%"></th>
-                    <td width="3%" style="border-right: 1px solid black;"></td>
+                    <td width="3%" style="border-right: 0.5px solid black;"></td>
                     <td width="3%"></td>
                     <th width="2%"></th>
                     <td width="45%"><strong>Punto de Venta: </strong>'. str_pad($empresa->getPunto_venta(), 5, "0", STR_PAD_LEFT) .'&nbsp;<strong> Comp. Nro: </strong>'. str_pad($numPresupuesto, 6, "0", STR_PAD_LEFT) .'</td>
@@ -113,7 +113,7 @@ for ($i=1; $i <= 3; $i++) {
                 <tr>
                     <td width="45%"><strong>Domicilio Comercial: </strong>'. $empresa->getDireccion() .'</td>
                     <th width="2%"></th>
-                    <td width="3%" style="border-right: 1px solid black;"></td>
+                    <td width="3%" style="border-right: 0.5px solid black;"></td>
                     <td width="3%"></td>
                     <th width="2%"></th>
                     <td width="45%"><strong>Fecha de Emisión: </strong>'. $transaccion->getFecha_transaccion()->format('d/m/Y') .'</td>
@@ -121,7 +121,7 @@ for ($i=1; $i <= 3; $i++) {
                 <tr>
                     <td width="45%"><strong>Condición frente al IVA: </strong>'. $empresa->getNombreCondicionIva() .'</td>
                     <th width="2%"></th>
-                    <td width="3%" style="border-right: 1px solid black;"></td>
+                    <td width="3%" style="border-right: 0.5px solid black;"></td>
                     <td width="3%"></td>
                     <th width="2%"></th>
                     <td width="45%"><strong>CUIT: </strong>'. $empresa->getCuit_cuil() .'</td>
@@ -129,18 +129,18 @@ for ($i=1; $i <= 3; $i++) {
                 <tr>
                     <td width="45%"></td>
                     <th width="2%"></th>
-                    <td width="3%" style="border-right: 1px solid black;"></td>
+                    <td width="3%" style="border-right: 0.5px solid black;"></td>
                     <td width="3%"></td>
                     <th width="2%"></th>
-                    <td width="45%"><strong>Ingresos Brutos: </strong></td>
+                    <td width="45%"><strong>Ingresos Brutos: </strong>'. $empresa->getIngresos_brutos() .'</td>
                 </tr>
                 <tr>
                     <td width="45%"></td>
                     <th width="2%"></th>
-                    <td width="3%" style="border-right: 1px solid black;"></td>
+                    <td width="3%" style="border-right: 0.5px solid black;"></td>
                     <td width="3%"></td>
                     <th width="2%"></th>
-                    <td width="45%"><strong>Fecha de Inicio de Actividades: </strong></td>
+                    <td width="45%"><strong>Fecha de Inicio de Actividades: </strong>'. $empresa->getFecha_inicio_actividades_formato() .'</td>
                 </tr>
             </tbody>
         </table>
@@ -314,7 +314,7 @@ for ($i=1; $i <= 3; $i++) {
         <table border="0" cellspacing="0" cellpadding="3">
             <tbody>
                 <tr>
-                    <td><p>'. $observaciones .'</p></td>
+                    <td><p>'. "" .'</p></td>
                 </tr>
             </tbody>
         </table>

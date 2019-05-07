@@ -247,6 +247,7 @@ class PedidoController extends TransaccionController
         return $view;
    }
 
+    // PDF
     public function pdfAction() {
         $this->layout()->setTemplate('layout/nulo');
         $id_transaccion = $this->params()->fromRoute('id');
@@ -262,6 +263,8 @@ class PedidoController extends TransaccionController
        
         $persona = $pedido->getTransaccion()->getPersona();
         $tipoPersona = null;
+
+        $empresa = $this->empresaManager->getEmpresa();
 
         $numTransacciones = $pedido->getTransaccion()->getNumero();
         $numPedido = $pedido->getNumero();
@@ -289,6 +292,7 @@ class PedidoController extends TransaccionController
             'ivasJson' => $ivasJson,
             'presupuestosJson' => $jsonPrespuestos,
             'itemsTransaccionJson' =>"[]",
+            'empresa' => $empresa,
         ]);
     }
 
