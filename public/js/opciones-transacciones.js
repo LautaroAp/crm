@@ -41,48 +41,62 @@ function completarFormasPago(formasPago, transaccion=null){
     arrayFormasPago=formasPago;
     var myDiv = document.getElementById("formasPago");
 
+    var selectList = document.getElementById("forma_pago");
+    // var option = 
+
+    if(selectList != null){
+        if (transaccion){
+            if ("Forma de Pago" in transaccion == true){
+                $("#forma_pago").val(transaccion["Forma de Pago"]["Id"]).change();
+            }
+        }
+    }
     //Create and append select list
-    var selectList = document.createElement("select");
-    selectList.id = "forma_pago";
-    selectList.name="forma_pago";
-    selectList.setAttribute("onchange", "changeBonificacionRecargo()");
-    selectList.setAttribute("class", "form-control");
-    myDiv.appendChild(selectList);
-    console.log(formasPago);
-    //Create and append the options
-    var option = document.createElement("option");
-    if (transaccion){
-        if ("Forma de Pago" in transaccion == true){
-        option.value = transaccion["Forma de Pago"]["Id"];
-        option.text = transaccion["Forma de Pago"]["Nombre"];
-        recargo= parseFloat(transaccion["Recargo general"]).toFixed(2);
-        bonificacion = parseFloat(transaccion["Bonificacion general"]).toFixed(2);
+    else {    
+        selectList = document.createElement("select");
+        selectList.id = "forma_pago";
+        selectList.name="forma_pago";
+        selectList.setAttribute("onchange", "changeBonificacionRecargo()");
+        selectList.setAttribute("class", "form-control");
+        myDiv.appendChild(selectList);
+        console.log(formasPago);
+        //Create and append the options
+        var option = document.createElement("option");
+        if (transaccion){
+            if ("Forma de Pago" in transaccion == true){
+                option.value = transaccion["Forma de Pago"]["Id"];
+                option.text = transaccion["Forma de Pago"]["Nombre"];
+                recargo= parseFloat(transaccion["Recargo general"]).toFixed(2);
+                bonificacion = parseFloat(transaccion["Bonificacion general"]).toFixed(2);
+            }
+            else{
+                option.value = "-1";
+                option.text = "Seleccionar Forma de Pago";
+            }
         }
         else{
             option.value = "-1";
             option.text = "Seleccionar Forma de Pago";
         }
-    }
-    else{
-        option.value = "-1";
-        option.text = "Seleccionar Forma de Pago";
-    }
 
-    option.setAttribute("hidden","");
-    selectList.appendChild(option);
-
-
-    var option = document.createElement("option");
-    option.value = "-1";
-    option.text = "No definido";
-    selectList.appendChild(option);
-
-    for (var i = 0; i < formasPago.length; i++) {
-        var option = document.createElement("option");
-        option.value = formasPago[i]['Id'];
-        option.text = formasPago[i]['Nombre'];
+        option.setAttribute("hidden","");
         selectList.appendChild(option);
+
+
+        var option = document.createElement("option");
+        option.value = "-1";
+        option.text = "No definido";
+        selectList.appendChild(option);
+
+        for (var i = 0; i < formasPago.length; i++) {
+            var option = document.createElement("option");
+            option.value = formasPago[i]['Id'];
+            option.text = formasPago[i]['Nombre'];
+            selectList.appendChild(option);
+        }
+    
     }
+
 }
 
 function completarFormasEnvio(formasEnvio, transaccion=null){

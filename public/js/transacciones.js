@@ -123,6 +123,7 @@ function completeItems(id){
         $('#id_transaccion_previa').val(idTransaccion);
         $.post( '/' + tipoTransaccion + '/ajax/getItemsTransaccion/' + idTransaccion, function (data) {
             $('#div_transaccion').html(data);
+            // Ejecuto Scripts desde la vista get-items-transaccion.phtml
         });
     }
 }

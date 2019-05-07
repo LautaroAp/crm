@@ -59,15 +59,6 @@ class EventoManager {
                         ->find($id);
     }
 
-    // public function getEventoFromForm($form, $data) {
-    //     $form->setData($data);
-    //     if ($form->isValid()) {
-    //         $data = $form->getData();
-    //         $evento = $this->addEvento($data);
-    //     }
-    //     return $evento;
-    // }
-
     public function getEstado() {
         return $this->estado;
     }
