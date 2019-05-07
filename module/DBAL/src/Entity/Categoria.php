@@ -56,7 +56,7 @@ class Categoria
      * Get the value of nombre
      */
     public function getNombre() {
-        return $this->nombre;
+        return ucwords(strtolower($this->nombre));
     }
 
     /**

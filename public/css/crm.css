@@ -398,6 +398,24 @@ table.dataTable tr.item-seleccion > .sorting_1 {
     -webkit-box-shadow: 0px 0px 5px 0px #555555;
 }
 
+.transaccion-activa{
+    color: green;
+    font-weight: bold;
+}
+
+.transaccion-pendiente{
+    color: rgb(18, 93, 155);
+    font-weight: bold;
+}
+
+
+.transaccion-anulada{
+    color: red;
+    font-weight: bold;
+
+}
+
+
 /****************************************************************************************/
 .autocomplete-items {
     position: absolute;

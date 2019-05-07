@@ -102,6 +102,9 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
             else{
                 precio = item["Precio Original"];
             }
+            if(!precio){
+                precio = 0;
+            }
             var dto = item["Bien"]["Dto"];
             var cantidad = item["Cantidad"];
             var dtoPeso = (precio * dto / 100) * cantidad;
@@ -118,6 +121,7 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
                 tabCell.setAttribute("ondblclick", "makeEditable(event)");
             }
             if ((col[j] == "Dto") || (col[j] == "IVA")) {
+                if (!value){value=0;}
                 value = formatPercent((parseFloat(value)).toFixed(2));
                 tabCell.setAttribute("ondblclick", "makeEditable(event)");
             }
@@ -126,6 +130,7 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
                 value = formatMoney(value);
             }            
             if (col[j] == "Totales") {
+                if (!value){value=0;}
                 if (value) {
                     value = formatMoney(value);
                 }
