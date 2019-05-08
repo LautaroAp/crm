@@ -14,7 +14,6 @@ function completarMonedas(monedas){
     selectList.name="moneda";
     selectList.setAttribute("class", "form-control");
     myDiv.appendChild(selectList);
-    console.log(monedas);
     //Create and append the options
 
     var option = document.createElement("option");
@@ -48,7 +47,6 @@ function completarFormasPago(formasPago, transaccion=null){
     selectList.setAttribute("onchange", "changeBonificacionRecargo()");
     selectList.setAttribute("class", "form-control");
     myDiv.appendChild(selectList);
-    console.log(formasPago);
     //Create and append the options
     var option = document.createElement("option");
     if (transaccion){
@@ -88,7 +86,6 @@ function completarFormasPago(formasPago, transaccion=null){
 function completarFormasEnvio(formasEnvio, transaccion=null){
     arrayFormasEnvio=formasEnvio;
     var myDiv = document.getElementById("formasEnvio");
-
     //Create and append select list
     var selectList = document.createElement("select");
     selectList.id = "forma_envio";
@@ -96,7 +93,6 @@ function completarFormasEnvio(formasEnvio, transaccion=null){
     // selectList.setAttribute("onchange", "changeBonificacionRecargo()");
     selectList.setAttribute("class", "form-control");
     myDiv.appendChild(selectList);
-    console.log(formasEnvio);
     //Create and append the options
     var option = document.createElement("option");
     if (transaccion){
@@ -113,16 +109,12 @@ function completarFormasEnvio(formasEnvio, transaccion=null){
         option.value = "-1";
         option.text = "Seleccionar Forma de Envio";
     }
-
     option.setAttribute("hidden","");
     selectList.appendChild(option);
-
-
     var option = document.createElement("option");
     option.value = "-1";
     option.text = "No definido";
     selectList.appendChild(option);
-
     for (var i = 0; i < formasEnvio.length; i++) {
         var option = document.createElement("option");
         option.value = formasEnvio[i]['Id'];

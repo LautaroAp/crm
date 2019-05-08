@@ -100,11 +100,6 @@ function processData(data){
     console.log(data);
 }
 
-
-function removeItemsAnteriores(){
-    //items = $(items).not(itemsAnteriores).get();
-    // console.log(items);
-}
 function addTransaccionItems(){
     // removeItemsAnteriores();
     items= itemsTransaccion;

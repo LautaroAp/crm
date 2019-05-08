@@ -105,7 +105,6 @@ class TransaccionManager {
     }
 
     private function setData($transaccion, $data){
-
         if (isset($data['numero_transaccion'])){
             $transaccion->setNumero($data['numero_transaccion']);
         }
