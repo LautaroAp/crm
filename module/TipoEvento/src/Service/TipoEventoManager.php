@@ -155,16 +155,6 @@ class TipoEventoManager {
         $entityManager->flush();
     }
 
-    // public function getTabla($tipoPersona) {
-    //     $query = $this->getTipos($tipoPersona);
-    //     $pag = new ORMPaginator($query);
-    //     $pag->setUseOutputWalkers(true);
-    //     $adapter = new DoctrineAdapter($pag);
-    //     $this->total = COUNT($adapter);
-    //     $paginator = new Paginator($adapter);
-    //     return $paginator;
-    // }
-
     public function getTabla($tipoPersona) {
         $query = $this->getTipos($tipoPersona);
         return $query->getResult();
@@ -180,6 +170,20 @@ class TipoEventoManager {
         $queryBuilder->setParameter("$t",'%'.$tipoPersona.'%');
         return $queryBuilder->getQuery();
     }
+
+    // public function getTipos($tipoPersona){
+    //     $queryBuilder = $this->entityManager->createQueryBuilder();
+    //     $queryBuilder->select('T')
+    //             ->from(TipoEvento::class, 'T');
+    //     $nombreCampo="tipoPersona";
+    //     $tipoCategoria="categoria_evento";
+    //     $t=1;
+    //     $c=16;
+    //     $queryBuilder->where("T.$nombreCampo  LIKE ?$t");
+    //     $queryBuilder->andwhere("T.$tipoCategoria  NOT LIKE ?$c");
+    //     $queryBuilder->setParameter("$t",'%'.$tipoPersona.'%');
+    //     return $queryBuilder->getQuery();
+    // }
 
     private function tryAddTipoEvento($tipoevento) {
         try {

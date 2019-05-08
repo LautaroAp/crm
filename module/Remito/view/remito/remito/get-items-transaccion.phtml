@@ -3,5 +3,7 @@
 <script>
     itemsAnteriores = itemsTransaccion;
     itemsTransaccion = <?= $itemsTransaccionJson ?>;
+    transaccionJson = <?= $transaccionJson ?>;
     addTransaccionItems();
+    completarFormasPago(formasPago, transaccionJson);
 </script>

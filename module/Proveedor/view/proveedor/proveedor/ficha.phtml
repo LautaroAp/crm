@@ -457,7 +457,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             </div>
             <div class="modal-body">
                 <p>
-                    ¿Está seguro que desea eliminar el cliente:
+                    ¿Está seguro que desea eliminar el proveedor:
                     "
                     <?= $this->escapeHtml($persona->getNombre()) ?>"
                     ?<br>
@@ -519,7 +519,7 @@ if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
             <div>
                 <a role="button" name="<?= $proveedor->getId() ?>" id="<?= $proveedor->getId() ?>" data-toggle="modal" data-target="#exampleModal<?= $proveedor->getId() ?>">
                     <img src="<?php
-                                if ($persona->getEstado() == " S") {
+                                if ($persona->getEstado() == "S") {
                                     echo ($this->basePath('img/crm/proveedor_remove_v.png'));
                                 } else {
                                     echo ($this->basePath('img/crm/proveedor_add_v.png'));

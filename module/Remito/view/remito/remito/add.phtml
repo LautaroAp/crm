@@ -4,9 +4,7 @@
 <script src="/js/opciones-transacciones.js"></script>
 <script src="/js/transacciones.js"></script>
 
-<!-- Script -->
-<!-- PROBLEMAS CON EL DATETIMEPICKER -- JQUERY TIENE QUE SER MENOR A 2.2 -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
 <!-- jQuery UI -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -21,7 +19,6 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
-<!-- <link href="http://twitter.github.com/bootstrap/assets/css/docs.css" rel="stylesheet"> -->
 
 <script type="text/javascript">
 $(function() {
@@ -62,6 +59,7 @@ var itemsAnteriores =null;
 var transaccionPreviaNum = null;
 var transaccionPreviaId = null;
 var itemsTransaccionPrevia = null;
+var transaccionJson = null;
 </script>
 <!-- php -->
 <?php
@@ -354,62 +352,6 @@ $responsable = $this->identity();
                     <script>
                     calcularSubcampos();
                     </script>
-                </div>
-            </div>
-        </div>
-
-        <!-- Datos -->
-        <div class="row form-row">
-            <div class="panel panel-default sombra-ficha">
-                <div class="panel-heading titulo-espaciado">
-                    DATOS DE ENVÍO
-                </div>
-                <div class="panel-body">
-                    <!-- Entrega y Factura al Momento -->
-                    <div class="row form-row">
-                        <div class="form-check col-md-4">
-                            <input type="checkbox" value="" id="EntregaDomicilioFacturacion"
-                                name="EntregaDomicilioFacturacion" data-toggle="collapse" data-parent="#accordion"
-                                data-target="#collapseEntregaDomicilioFacturacion" aria-expanded="true"
-                                aria-controls="collapseEntregaDomicilioFacturacion">
-                            <label class="form-check-label" for="EntregaDomicilioFacturacion">Entrega en Domicilio de
-                                Facturación</label>
-                        </div>
-                        <div class="form-check col-md-4">
-                            <input type="checkbox" class="form-check-input" name="entrega_momento" id="entrega_momento">
-                            <label class="form-check-label" for="entrega_momento">Entrega al momento de la Venta</label>
-                        </div>
-                        <div class="form-check col-md-4">
-                            <input type="checkbox" class="form-check-input" name="factura_momento" id="factura_momento">
-                            <label class="form-check-label" for="factura_momento">Factura al momento de la Venta</label>
-                        </div>
-                    </div>
-                    <!-- Forma de Pago + Fecha -->
-                    <div class="row form-row">
-                        <div class="form-group col-md-12">
-
-                            <div class="row form-row collapse" id="collapseEntregaDomicilioFacturacion">
-                                <br>
-                                <div class="form-group col-md-3">
-                                    <label>Fecha de Entrega</label>
-                                    <div class='input-group date' id='datetimepicker3'>
-                                        <input type='text' class="form-control" name="fecha_entrega"
-                                            value="<?= $date ?>" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-3" id="formasEnvio">
-                                    <label>Formas de Envío</label>
-                                    <script>
-                                    var formasEnvio = <?php echo ($formasEnvioJson); ?>;
-                                    completarFormasEnvio(formasEnvio);
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

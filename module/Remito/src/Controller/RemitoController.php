@@ -280,9 +280,14 @@ class RemitoController extends TransaccionController{
         $this->layout()->setTemplate('layout/nulo');
         $idTransaccion = $this->params()->fromRoute('id');
         $transaccion = $this->remitoManager->getTransaccionId($idTransaccion);
+        $transaccionJson = $transaccion->getJSON();
         $items = $transaccion->getBienesTransacciones();
         $itemsTransaccionJson = $this->getJsonFromObjectList($items);
-        $view = new ViewModel(['itemsTransaccionJson'=>$itemsTransaccionJson]);
+        $view = new ViewModel([
+            'itemsTransaccionJson'=>$itemsTransaccionJson,
+            'transaccionJson' => $transaccionJson,
+        ]);
+        // $view->setTemplate('layout/nulo');
         $view->setTerminal(true);
         return $view;
    }

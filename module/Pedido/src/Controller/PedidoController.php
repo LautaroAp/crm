@@ -204,7 +204,6 @@ class PedidoController extends TransaccionController
             'transaccion' => $transaccion,
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
-            'transaccionJson'=>"[]",
             'presupuestosJson' => $jsonPrespuestos,
             'itemsTransaccionJson' =>"[]",
         ]);
@@ -243,6 +242,7 @@ class PedidoController extends TransaccionController
         $items = $transaccion->getBienesTransacciones();
         $itemsTransaccionJson = $this->getJsonFromObjectList($items);
         $view = new ViewModel(['itemsTransaccionJson'=>$itemsTransaccionJson]);
+        // $view->setTemplate('layout/nulo');
         $view->setTerminal(true);
         return $view;
    }

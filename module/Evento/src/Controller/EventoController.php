@@ -81,7 +81,6 @@ class EventoController extends HuellaController {
             $this->prepararBreadcrumbs("Agregar Evento", "/evento/add/proveedor/".$Id, "Ficha Proveedor");
         }
         $persona= $this->personaManager->getPersona($Id);
-        $cliente = $this->clienteManager->getClienteIdPersona($persona->getId());
         $tipoEventos = $this->getArrayTipos(strtoupper($tipo));
         $form = $this->eventoManager->createForm($tipoEventos);
         if ($this->getRequest()->isPost()) {
