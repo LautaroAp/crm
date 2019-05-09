@@ -53,9 +53,26 @@ class PresupuestoController extends TransaccionController{
     }
 
    
-    private function getTipo(){
+    // private function getTipo($tipo_persona=null)
+    // {
+    //     if(!is_null($tipo_persona)){
+    //         return "presupuesto";
+    //     }
+    //     else{
+    //          if (strtoupper($tipo_persona) =="CLIENTE"){
+    //         return "presupuesto";
+    //         }
+    //         else{
+    //             return "solicitud de presupuesto";
+    //         }
+    //     }
+       
+    // }
+       
+    public function getTipo(){
         return "presupuesto";
     }
+    
 
     public function addAction() {
         $json="[]";
@@ -89,13 +106,13 @@ class PresupuestoController extends TransaccionController{
 
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $data['tipo'] = $this->getTipo();
+            $data['tipo'] = $this->getTipo($persona->getTipo());
             $data['persona'] = $persona;
             $this->presupuestoManager->add($data);
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             } else {
-                $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+                $this->redirect()->toRoute('proveedores/ficha',['action'=>'ficha', 'id' =>$persona->getId()]);
             }
         }
         $numTransacciones = $this->presupuestoManager->getTotalTransacciones() + 1;
@@ -121,16 +138,16 @@ class PresupuestoController extends TransaccionController{
         ]);
     }
 
-    public function addItemAction()
-    {
-        if ($this->getRequest()->isPost()) {
-            $data = $this->params()->fromPost();
-            $data['tipo'] = $this->getTipo();
-            $this->procesarAddAction($data);
-            $this->redirect()->toRoute('home');
-        }
-        return new ViewModel([]);
-    }
+    // public function addItemAction()
+    // {
+    //     if ($this->getRequest()->isPost()) {
+    //         $data = $this->params()->fromPost();
+    //         $data['tipo'] = $this->getTipo();
+    //         $this->procesarAddAction($data);
+    //         $this->redirect()->toRoute('home');
+    //     }
+    //     return new ViewModel([]);
+    // }
 
 
     public function editAction() {
@@ -174,14 +191,14 @@ class PresupuestoController extends TransaccionController{
         }
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $data['tipo'] = $this->getTipo();
+            $data['tipo'] = $this->getTipo($persona->getTipo());
             $data['persona'] = $persona;
             $this->presupuestoManager->edit($presupuesto, $data);
             $url = $data['url'];
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             } else {
-                $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+                $this->redirect()->toRoute('proveedores/ficha',['action'=>'ficha', 'id' =>$persona->getId()]);
             }
         }
         $numTransacciones = $presupuesto->getTransaccion()->getNumero();

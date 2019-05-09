@@ -54,6 +54,8 @@ if(!is_null($transaccion->getFecha_vencimiento())){
 
 $url = "/clientes/listado/ficha/" . $persona->getId();
 $responsable = $this->identity();
+$tipoPersona = strtoupper($persona->getTipo());
+
 ?>
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
@@ -65,6 +67,8 @@ var json_items_nombres = <?= $json_bienes ?>;
 var output;
 var ivas = <?= $ivasJson ?>;
 setIvas(ivas);
+var tipoPersona = "<?= $tipoPersona ?>";
+
 </script>
 
 <!-- Document -->
@@ -137,8 +141,8 @@ setIvas(ivas);
                             <input type="text" class="form-control" name="numero_presupuesto" id="numero_presupuesto" 
                             value="<?= $numPresupuesto ?>" style="max-width: 250px;" readonly>
                         </div>
-                        <input type="hidden" id="responsable" name="responsable" value=<?= $responsable ?> >
-                        <input type="hidden" id="url" name="url" value=<?= $url ?> >
+                        <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>" >
+                        <input type="hidden" id="url" name="url" value="<?= $url ?>" >
                     </div>
                 </div>
             </div>

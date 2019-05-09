@@ -37,11 +37,11 @@ $proveedor = $bien->getProveedor();
                     <div class="form-group col-md-6">
                         <label>Nombre</label>
                         <input type="text" required="true" class="form-control" name="nombre" placeholder="Ingresar nombre"
-                            value=<?php echo($bien->getNombre());?>>
+                            value="<?php echo($bien->getNombre());?>">
                     </div>
                     <div class="form-group col-md-6">
                         <label>Descripción</label>
-                        <input type="text" class="form-control" name="descripcion" placeholder="Ingresar descripción" value=<?php echo($bien->getDescripcion());?>>
+                        <input type="text" class="form-control" name="descripcion" placeholder="Ingresar descripción" value="<?php echo($bien->getDescripcion());?>">
                     </div>
                 </div>
                 <!-- 2da fila -->
@@ -54,7 +54,7 @@ $proveedor = $bien->getProveedor();
                     <div class="form-group col-md-6">
                         <label>Marca</label>
                         <input type="text" class="form-control" name="marca" placeholder="Ingresar marca" 
-                            value=<?php echo($bien->getMarca()); ?>>
+                            value="<?php echo($bien->getMarca()); ?>">
                     </div>
                 </div>
                 <!-- 3ra fila -->
@@ -118,11 +118,11 @@ $proveedor = $bien->getProveedor();
                     <div class="form-group col-md-4">
                         <label>Precio</label>
                         <input type="text" class="form-control" name="precio_venta" id="precio_venta" 
-                            value=<?php echo($bien->getPrecio());?> onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
+                            value="<?php echo($bien->getPrecio());?>" onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
                     </div>
                     <div class="form-group col-md-2">
                         <label>% Descuento</label>
-                        <input type="text" class="form-control" name="descuento" id="descuento" value=<?php echo($bien->getDescuento());?>
+                        <input type="text" class="form-control" name="descuento" id="descuento" value="<?php echo($bien->getDescuento());?>"
                             onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
                     </div>
                     <div class="form-group col-md-2">
@@ -140,7 +140,7 @@ $proveedor = $bien->getProveedor();
                     </div>
                     <div class="form-group col-md-4">
                         <label>Total IVA $</label>
-                        <input type="text" class="form-control" name="iva_total" id="iva_total" value=<?php echo($bien->getIva_gravado());?>>
+                        <input type="text" class="form-control" name="iva_total" id="iva_total" value="<?php echo($bien->getIva_gravado());?>">
                     </div>
                    
                 </div>
@@ -152,15 +152,15 @@ $proveedor = $bien->getProveedor();
                 <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>Precio Público con Dto</label>
-                        <input type="text" class="form-control" name="precio_publico_dto" id="precio_publico_dto" readonly value=<?php echo($bien->getPrecio_final_dto());?> >
+                        <input type="text" class="form-control" name="precio_publico_dto" id="precio_publico_dto" readonly value="<?php echo($bien->getPrecio_final_dto());?>" >
                     </div>
                     <div class="form-group col-md-4">
                         <label>Precio Público + IVA</label>
-                        <input type="text" class="form-control" name="precio_publico_iva" id="precio_publico_iva"  readonly value=<?php echo($bien->getPrecio_final_iva());?>  >
+                        <input type="text" class="form-control" name="precio_publico_iva" id="precio_publico_iva"  readonly value="<?php echo($bien->getPrecio_final_iva());?>">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Precio Público +IVA con Dto.</label>
-                        <input type="text" class="form-control" name="precio_publico_iva_dto" id="precio_publico_iva_dto"  readonly value=<?php echo($bien->getPrecio_final_iva_dto());?> >
+                        <input type="text" class="form-control" name="precio_publico_iva_dto" id="precio_publico_iva_dto"  readonly value="<?php echo($bien->getPrecio_final_iva_dto());?>" >
                     </div>
                 </div>
             </div>

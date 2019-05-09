@@ -46,11 +46,8 @@ if(!is_null($transaccion->getTransaccionPrevia())){
 } else {
     $transaccionPreviaNum = -1;
 }
-// if (!is_null($pedidoPrevio)){
-//     $transaccionPreviaNum = $pedidoPrevio->getNumeroTransaccionTipo();
-// } else {
-//     $transaccionPreviaNum = -1;
-// }
+$tipoPersona = strtoupper($persona->getTipo());
+
 ?>
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
@@ -75,6 +72,8 @@ var itemsTransaccionPrevia = null;
 if(transaccionPreviaNum!=null){
     getItemsTransaccionPrevia();
 }
+var tipoPersona = "<?= $tipoPersona ?>";
+
 </script>
 
 <!-- Document -->

@@ -69,7 +69,7 @@ class Transaccion {
     /**
      * @ORM\Column(name="TIPO", nullable=true, type="string", length=255)
      */
-    protected $tipo_trasaccion;
+    protected $tipo_transaccion;
 
     /**
      * 
@@ -223,21 +223,21 @@ class Transaccion {
     }
 
     /**
-     * Get the value of tipo_trasaccion
+     * Get the value of tipo_transaccion
      */ 
     public function getTipo()
     {
-        return $this->tipo_trasaccion;
+        return $this->tipo_transaccion;
     }
 
     /**
-     * Set the value of tipo_trasaccion
+     * Set the value of tipo_transaccion
      *
      * @return  self
      */ 
-    public function setTipo($tipo_trasaccion)
+    public function setTipo($tipo_transaccion)
     {
-        $this->tipo_trasaccion = $tipo_trasaccion;
+        $this->tipo_transaccion = $tipo_transaccion;
 
         return $this;
     }

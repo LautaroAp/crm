@@ -23,16 +23,14 @@ var idPersona = <?= $id_persona ?>;
         </tr>
     </thead>
     <tbody id="cuerpo_eventos" role="button" class="">
-       
-
+      
         <?php foreach ($transacciones as $transaccion) :
             $idTransaccion = $transaccion->getId();
-            $tipoTransaccion = $transaccion->getTipo();
+            $tipoTransaccion = $transaccion->getTipo("proveedor");
         ?>
         <script>
             var tipoTransaccion = "<?= $tipoTransaccion ?>";
         </script>
-           
         <tr id="<?= $transaccion->getId() ?>" class="vpEvento">
             <td id="<?= $transaccion->getId() ?>">
                 <?php
@@ -43,18 +41,23 @@ var idPersona = <?= $id_persona ?>;
             <td> <?php echo ($transaccion->getResponsable()->getUsuario()); ?> </td>
             <td id="<?= $transaccion->getId() ?>" class="">
                 <?php
-                    if (!is_null($transaccion->getTipo())) {
-                        echo (ucfirst($transaccion->getTipo()));
-                    } else {
-                        echo ('No definido');
-                    }
+                    switch ($tipoTransaccion) {
+                        case "pedido":
+                            echo (ucfirst("orden de pedido"));
+                            break;
+                        case "presupuesto":
+                            echo (ucfirst("solicitud de presupuesto"));
+                            break;
+                        default:
+                            echo (ucfirst($tipoTransaccion)); 
+                    }      
                 ?></td>
             <td><?= $transaccion->getDescripcion() ?></td>
             <!-- PDF + BOTON REMITO -->
             <?php if (($transaccion->getEstado()=="ACTIVO")||($transaccion->getEstado()=="CONFORMADO"||  ($transaccion->getEstado()=="ENTREGADO"))){?>
                 <td class="transaccion-activa"><?= $transaccion->getEstado() ?></td>
             <?php } else if($transaccion->getEstado()=="A_ENTREGAR") { ?>
-                <td class="transaccion-pendiente"><?= str_replace("_"," ",$transaccion->getEstado()) ?></td>
+                <td class="transaccion-pendiente">PENDIENTE</td>
             <?php } else if($transaccion->getEstado()=="ANULADO") { ?>
                 <td class="transaccion-anulada"><?= $transaccion->getEstado() ?></td>
             <?php } ?>
@@ -62,7 +65,7 @@ var idPersona = <?= $id_persona ?>;
             <td id="<?= $transaccion->getId() ?>" class="">
                 <div class="dropdown">                    
                     <!-- boton editar -->
-                    <?php if (ucfirst($tipoTransaccion)!="Remito"){ ?>
+                    <?php if (ucfirst($transaccion->getTipo())!="Remito"){ ?>
                         <ul class="nav navbar-nav navbar-menu-font"> 
                             <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
                             style="margin-right: 4px;">
@@ -87,7 +90,7 @@ var idPersona = <?= $id_persona ?>;
                             <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
                                 <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
                                 onclick="cambiarEstado('A_ENTREGAR', event, tipoTransaccion, idPersona)">
-                                A entregar</a></li>
+                                Pendiente de entrega</a></li>
                                 <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
                                 onclick="cambiarEstado('ANULADO', event, tipoTransaccion, idPersona)">
                                 Anulado</a></li>
@@ -100,11 +103,7 @@ var idPersona = <?= $id_persona ?>;
                             </ul>
                         </ul>
                     <?php } ?>
-                    <!-- boton pdf -->
-                    <a href="<?= $this->url($transaccion->getTipo().'/pdf', ['id' => (int)$transaccion->getId()]) ?>"
-                        type="button" class="btn btn-default btn-sm" target="blank">
-                            <span class="glyphicon glyphicon-file"></span>
-                    </a>
+                     
                 </div>
             </td>
         </tr>

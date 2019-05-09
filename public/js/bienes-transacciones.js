@@ -425,19 +425,29 @@ function getAttribute(tdId) {
 
 function controlStock(attribute, inputValue){
     inputValue = parseFloat(inputValue);
-    if (items[index]["Bien"]["Tipo"]=="PRODUCTO"){
-        if (attribute=="Cantidad"){
-            var stock = parseFloat(items[index]["Bien"]["Stock"]);
-            if(stock<=inputValue){
-                if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")) {
-                    return true
-                } else {
-                    return false;
+    if(tipoPersona=="CLIENTE"){
+        if (items[index]["Bien"]["Tipo"]=="PRODUCTO"){
+            if (attribute=="Cantidad"){
+                var stock = parseFloat(items[index]["Bien"]["Stock"]);
+                if(stock<=inputValue){
+                    console.log(tipoTransaccion);
+                    if (tipoTransaccion=="remito"){
+                        alert("No se puede agregar el item dado que la cantidad sobrepasa el stock disponible");
+                        return false;
+                    }
+                    else{
+                        if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")){
+                            return true
+                        } else {
+                            return false;
+                        }
+                    }
                 }
             }
         }
+        return true;
     }
-    return true;
+    
 }
 function saveValueInJson(tdId, inputValue) {
     //recibo "0_Cantidad" separo en indice 0 y atributo Cantidad
@@ -707,22 +717,32 @@ function clearAddItem() {
 }
 
 function verificaStockDisponible(output) {
-   if (output["Bien"]["Tipo"]=="PRODUCTO"){
-       var cant = parseFloat(output["Cantidad"]);
-       if (cant > 0) {
-            if (cant > parseFloat(output["Bien"]["Stock"])) {
-                if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")) {
-                    return true
+    if(tipoPersona=="CLIENTE"){
+        if (output["Bien"]["Tipo"]=="PRODUCTO"){
+            var cant = parseFloat(output["Cantidad"]);
+            if (cant > 0) {
+                if (cant > parseFloat(output["Bien"]["Stock"])) {
+                    console.log(tipoTransaccion);
+                    if (tipoTransaccion=="remito"){
+                        alert("No se puede agregar el item dado que la cantidad sobrepasa el stock disponible");
+                        return false;
+                    }
+                    else{
+                        if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")){
+                            return true
+                        } else {
+                            return false;
+                        }
+                    }
                 } else {
-                    return false;
+                    return true;
                 }
-            } else {
-                return true;
+            } 
+            else {
+                return false;
             }
-        } else {
-            return false;
         }
-   }
+    }
    return true;
     
 }

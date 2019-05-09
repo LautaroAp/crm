@@ -85,16 +85,31 @@ function seleccionarItem(e) {
 
 // Llama a mostrarTransaccionesAction en ClientesController
 function mostrarTransacciones(id_persona){
-    $.post('/clientes/ajax/mostrarTransacciones/' + id_persona, function (data) {
+    if (tipo_persona=="cliente"){
+        $.post('/clientes/ajax/mostrarTransacciones/' + id_persona, function (data) {
         $('#eventos').html(data);
-    });
+        });
+    }
+    else{
+        $.post('/proveedores/ajax/mostrarTransacciones/' + id_persona, function (data) {
+            $('#eventos').html(data);
+            });
+    }
+   
 }
 
 // Llama a mostrarAccionesComercialesAction en ClientesController
 function mostrarAccionesComerciales(id_persona){
-    $.post('/clientes/ajax/mostrarAccionesComerciales/' + id_persona, function (data) {
+    if (tipo_persona=="cliente"){
+        $.post('/clientes/ajax/mostrarAccionesComerciales/' + id_persona, function (data) {
         $('#eventos').html(data);
-    });
+        });
+    }else{
+        $.post('/proveedores/ajax/mostrarAccionesComerciales/' + id_persona, function (data) {
+            $('#eventos').html(data);
+            });
+    }
+   
 }
 
 function cambiarEstado(estado, event,tipoTransaccion,idPersona){
