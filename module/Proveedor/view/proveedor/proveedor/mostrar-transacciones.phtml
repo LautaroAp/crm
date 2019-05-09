@@ -19,7 +19,7 @@ var idPersona = <?= $id_persona ?>;
             <th class="">Tipo</th>
             <th class="detalle-width">Detalle</th>
             <th class="">Estado</th> 
-            <th class=""></th>
+            <th class="col-btn-width"></th>
         </tr>
     </thead>
     <tbody id="cuerpo_eventos" role="button" class="">
@@ -103,7 +103,11 @@ var idPersona = <?= $id_persona ?>;
                             </ul>
                         </ul>
                     <?php } ?>
-                     
+                    <!-- boton pdf -->
+                    <a href="<?= $this->url($transaccion->getTipo().'/pdf', ['id' => (int)$transaccion->getId()]) ?>"
+                        type="button" class="btn btn-default btn-sm" target="blank">
+                        <span class="glyphicon glyphicon-file"></span>
+                    </a> 
                 </div>
             </td>
         </tr>
