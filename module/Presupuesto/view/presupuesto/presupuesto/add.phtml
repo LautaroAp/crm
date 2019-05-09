@@ -226,10 +226,20 @@ setIvas(ivas);
                         </div>
                         <br>                     
                     </div>
-                    <div class="container">
-                        <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion' => 'presupuesto', 'accion' => 'agregar', 'id' => $persona->getId()]); ?>"
-                        type="button">
-                        <span class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar Item</span> </a>
+                    <div class="row form-row">
+                        <div class="container" hidden="true" >
+                            <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion' => 'presupuesto', 'accion' => 'agregar', 'id' => $persona->getId()]); ?>"
+                            type="button">
+                            <span class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar Item</span> </a>
+                        </div>
+                        <div class="form-group col-md-2" >
+                            <button  type="button" class="btn btn-default" onclick="actualizarPrecios()"><span class="glyphicon glyphicon-refresh"></span>
+                             Actualizar Precios </button>
+                        </div>
+                        <div  class="form-group col-md-2">
+                            <button  type="button" class="btn btn-default" onclick="borrarItems()"><span class="glyphicon glyphicon-refresh"></span>
+                            Vaciar Items </button>
+                        </div>
                     </div>
                 </div>
             </div>

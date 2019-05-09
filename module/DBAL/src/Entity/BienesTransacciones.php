@@ -235,7 +235,9 @@ class BienesTransacciones {
         }
         if (!is_null($this->getIva())){
             $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
-        }        
+        }else{
+            $output .= '"IVA": "' . "" .'", ';
+        }       
         $output .= '"ImpIVA": "' . $this->getIvaPeso() .'", ';
         $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
         $output .= '"Dto": "' . $this->getDescuento() .'", ';

@@ -2,7 +2,6 @@ var tipoTransaccion;
 var idPersona;
 var ivas;
 var precioActualizado;
-
 var transaccion = null;
 var transaccion_ant = null;
 
@@ -105,47 +104,77 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
             if(!precio){
                 precio = 0;
             }
-            var dto = item["Bien"]["Dto"];
-            var cantidad = item["Cantidad"];
-            var dtoPeso = (precio * dto / 100) * cantidad;
-            var precioDto = precio - dtoPeso;     
-            var iva = item["IVA"]["Valor"];
-            if (col[j] == "Nombre" || col[j] == "Descripcion") {
-                value = item["Bien"][col[j]];
-            } else if (col[j] == "IVA") {
-                value = iva;
-            } else {
-                value = item[col[j]];
+            ////////////////////VALORES SI EL PRECIO ESTA ACTUALIZADO O NO/////////////////////
+            var dto, cantidad, dtoPeso, precioDto, iva, precio;
+            if (precioActualizado){
+                precio = item["Bien"]["Precio"];
+                dto = item["Bien"]["Dto"];
+                cantidad = item["Cantidad"];
+                dtoPeso = (precio * dto / 100) * cantidad;
+                precioDto = (cantidad * precio) - dtoPeso;  
+                iva = item["Bien"]["IVA"];
+                console.log(iva);
+            }else{
+                precio = item["Precio Original"];
+                dto= item["Dto"];
+                cantidad = item["Cantidad"];
+                dtoPeso = (precio * dto / 100) * cantidad;
+                precioDto = (cantidad * precio) - dtoPeso;  
+                iva = item["IVA"]["Valor"];
+                console.log(precio);
             }
-            if (col[j] == "Cantidad") {
-                tabCell.setAttribute("ondblclick", "makeEditable(event)");
+            //////////////////////////////////////////////////////////////////////////////////
+            switch (col[j]) {
+                case 'Nombre':
+                    value = item["Bien"][col[j]];
+                    break;
+                case 'Descripcion':
+                    value = item["Bien"][col[j]];
+                    break;
+                case 'Cantidad':
+                    value = item[col[j]];
+                    console.log("CANTIDAD "+value);
+                    tabCell.setAttribute("ondblclick", "makeEditable(event)");
+                    break;
+                case 'Dto':
+                    value =dto;
+                    if (!value){value=0;}
+                    value = formatPercent((parseFloat(value)).toFixed(2));
+                    tabCell.setAttribute("ondblclick", "makeEditable(event)");
+                    break;
+                case 'ImpDto':
+                    value = formatMoney((parseFloat(dtoPeso)).toFixed(2));
+                    console.log("IMPDTO ES "+value);
+                    break;
+                case 'IVA':
+                    value = iva;
+                    if (!value){value=0;}
+                    value = formatPercent((parseFloat(value)).toFixed(2));
+                    tabCell.setAttribute("ondblclick", "makeEditable(event)");
+                    break;
+                case 'ImpIVA':
+                    value =(precioDto * (iva / 100));
+                    if (!value){ value=0};
+                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    break;
+                case 'Precio':
+                    value = precio;
+                    if(!value){value = 0;}
+                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    console.log("en precio pone "+value);
+                    break;
+                case 'Totales':
+                    if (!iva){iva = 0;}
+                    var subtotal = precioDto + precioDto * iva / 100;
+                    value = subtotal;
+                    if (!value){value=0;}
+                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    break
+                default:
+                    value = item[col[j]];
             }
-            if ((col[j] == "Dto") || (col[j] == "IVA")) {
-                if (!value){value=0;}
-                value = formatPercent((parseFloat(value)).toFixed(2));
-                tabCell.setAttribute("ondblclick", "makeEditable(event)");
-            }
-            if (col[j] == "Precio") {
-                value = precio;
-                value = formatMoney(value);
-            }            
-            if (col[j] == "Totales") {
-                if (!value){value=0;}
-                if (value) {
-                    value = formatMoney(value);
-                }
-            }
-            if (col[j] == "ImpDto") {
-                value = formatMoney((parseFloat(dtoPeso)).toFixed(2));
-            }
-            if ((col[j] == "ImpIVA")) {
-                value = precioDto * iva / 100;
-                value = formatMoney((parseFloat(value)).toFixed(2));
-            }
-
             tabCell.innerHTML = value;
         }
-
         // Botones
         var btn = document.createElement('button');
         btn.setAttribute('type', 'button');
@@ -163,8 +192,6 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
     calcularSubcampos();
-
-
 }
 
 function getItems() {
@@ -192,23 +219,53 @@ function calcularSubcampos() {
     var subtotal = 0;
     var sumVentaBruta = 0;
 
-    for (var i = 0; i < items.length; i++) {
-        // CANTIDAD
-        cantidad = items[i]["Cantidad"];
-        //PRECIO UNITARIO
-        precio_unitario = items[i]["Bien"]["Precio"];
-        //DESCUENTO
-        descuento = items[i]["Dto"];
-        descuento = (parseFloat(descuento) * precio_unitario / 100);
-        precio_unitario_dto = precio_unitario - descuento;
-        sumBonificacion = sumBonificacion + descuento * cantidad;
-        //IVA
-        iva = items[i]["IVA"]["Valor"];
-        sumIva = sumIva + (parseFloat(iva) * precio_unitario_dto / 100) * cantidad;
-        //SUBTOTAL
-        subtotal = items[i]["Totales"];
-        sumSubtotal = sumSubtotal + parseFloat(subtotal);
-        sumVentaBruta = sumVentaBruta + cantidad * precio_unitario;       
+    if (actualizarPrecios){
+        for (var i = 0; i < items.length; i++) {
+            // CANTIDAD
+            cantidad = items[i]["Cantidad"];
+            //PRECIO UNITARIO
+            precio_unitario = items[i]["Bien"]["Precio"];
+            if (!precio_unitario){precio_unitario=0;}
+            //DESCUENTO
+            descuento = items[i]["Bien"]["Dto"];
+            if (!descuento){descuento =0;}
+            descuento = (parseFloat(descuento) * precio_unitario / 100);
+            precio_unitario_dto = precio_unitario - descuento;
+            sumBonificacion = sumBonificacion + descuento * cantidad;
+            //IVA
+            iva = items[i]["Bien"]["IVA"];
+            if (!iva){iva =0;}
+            sumIva = sumIva + (parseFloat(iva) * precio_unitario_dto / 100) * cantidad;
+            //SUBTOTAL
+            subtotal = items[i]["Totales"];
+            if (!subtotal){subtotal = 0;}
+            sumSubtotal = sumSubtotal + parseFloat(subtotal);
+            sumVentaBruta = sumVentaBruta + cantidad * precio_unitario;       
+        }
+    }
+    else{
+        for (var i = 0; i < items.length; i++) {
+            // CANTIDAD
+            cantidad = items[i]["Cantidad"];
+            //PRECIO UNITARIO
+            precio_unitario = items[i]["Precio Original"];
+            if (!precio_unitario){precio_unitario=0;}
+            //DESCUENTO
+            descuento = items[i]["Dto"];
+            if (!descuento){descuento =0;}
+            descuento = (parseFloat(descuento) * precio_unitario / 100);
+            precio_unitario_dto = precio_unitario - descuento;
+            sumBonificacion = sumBonificacion + descuento * cantidad;
+            //IVA
+            iva = items[i]["IVA"]["Valor"];
+            if (!iva){iva =0;}
+            sumIva = sumIva + (parseFloat(iva) * precio_unitario_dto / 100) * cantidad;
+            //SUBTOTAL
+            subtotal = items[i]["Totales"];
+            if (!subtotal){subtotal = 0;}
+            sumSubtotal = sumSubtotal + parseFloat(subtotal);
+            sumVentaBruta = sumVentaBruta + cantidad * precio_unitario;       
+        }
     }
 
     bonificacion_general = $("#bonificacion_general").val();
@@ -247,7 +304,7 @@ function selectItem(e, pos) {
         $("#item_precio").val(items[pos]["Precio"]);
         $("#cantidad").val(1);
         $("#descuento").val(items[pos]["Dto"]);
-        $("#iva option:selected").html(items[pos]["Iva"]);
+        $("#iva option:selected").html(items[pos]["IVA"]);
         $("#subtotal").val(items[pos]["Precio"]);
         $("#idbien").val(items[pos]["Id"]);
         calculaSubtotal();
@@ -606,7 +663,7 @@ function updateOutputSelect() {
             "Descripcion": result[0]["descripcion"],
             "Dto": result[0]["descuento"],
             "Id": result[0]["value"],
-            "Iva": result[0]["iva"],
+            "IVA": result[0]["iva"],
             "Nombre": result[0]["nombre"],
             "Precio": result[0]["precio"],
             "Totales": result[0]["totales"],
@@ -672,27 +729,29 @@ function verificaStockDisponible(output) {
 
 function actualizarPrecios(){
     precioActualizado=true;
-
     for (var i = 0; i < items.length; i++) {
         // CANTIDAD
         cantidad = items[i]["Cantidad"];
         //PRECIO UNITARIO ACTUALIZADO
         precio_unitario = items[i]["Bien"]["Precio"];
         //DESCUENTO
-        descuento = items[i]["Dto"];
+        descuento = items[i]["Bien"]["Dto"];
         descuento = (parseFloat(descuento) * precio_unitario / 100);
         precio_unitario_dto = precio_unitario - descuento;
         //IVA
-        iva = items[i]["IVA"]["Valor"];
-
+        iva = items[i]["Bien"]["IVA"];
         //SUBTOTAL
         subtotal = precio_unitario_dto + (precio_unitario_dto * (iva/100));
-        // items[i]["Totales"] = parseFloat(subtotal);
+        // items[i]["Totales"] = parseFloat(subtotal)
         items[i]["Totales"] = String(parseFloat(subtotal));
 
     }
     addItems(items, tipoTransaccion, idPersona, precioActualizado);
-
     calcularSubcampos();
+}
 
+function borrarItems(){
+    items = [];
+    addItems(items, tipoTransaccion, idPersona, precioActualizado);
+    calcularSubcampos();
 }

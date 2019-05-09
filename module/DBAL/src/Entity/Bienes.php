@@ -494,7 +494,6 @@ class Bienes {
         $output .= '"Tipo": "' . $this->getTipo() .'", ';
         $output .= '"Stock": "' . $this->getStock() .'", ';
         $output .= '"Totales": "' . $this->getPrecio_final_iva_dto() .'" ';
-
         return  '{'.$output.'}' ;
     }
     public function addBienesTransacciones($bienesTransacciones) {
