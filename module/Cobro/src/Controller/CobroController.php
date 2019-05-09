@@ -91,6 +91,8 @@ class CobroController extends TransaccionController
         $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
         $pedidos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
         $jsonPedidos = $this->getJsonFromObjectList($pedidos);
+        $transacciones = $this->cobroManager->getTransacciones();
+        $jsonTransacciones = $this->getJsonFromObjectList($transacciones);
         $this->reiniciarParams();
         return new ViewModel([
             'persona' => $persona,
@@ -106,12 +108,11 @@ class CobroController extends TransaccionController
             'transaccionJson'=>"[]",
             'presupuestosJson' => $jsonPrespuestos,
             'pedidosJson' => $jsonPedidos,
+            'transaccionesJson' => $jsonTransacciones,
             'itemsTransaccionJson' =>"[]",
 
         ]);
     }
-
-    
 
     public function addItemAction()
    {
@@ -123,8 +124,6 @@ class CobroController extends TransaccionController
        }
        return new ViewModel([]);
    }
-
-
 
     public function editAction() {
         $id_transaccion = $this->params()->fromRoute('id');

@@ -31,6 +31,183 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
         bienesTransacciones = [];
     }
     $(document).ready(function () {
+        // $("#table_bienes").dataTable().fnDestroy();
+        $('#table_bienes').DataTable({
+            destroy: true,
+            paging: false,
+            searching: false,
+            aaSorting: [],
+            "language": {
+                "url": "/json/spanish.json"
+            }
+        });
+    });
+    tipoTransaccion = tipo;
+    idPersona = id;
+
+    var divContainer = document.getElementById("div_table_bienes");
+    if (divContainer != null) {
+        divContainer.parentNode.removeChild(divContainer);
+    }
+
+    
+    divContainer = document.createElement("div");
+    divContainer.setAttribute("id", "div_table_bienes");
+    var parentDiv = document.getElementById("contenido_bienes");
+    parentDiv.innerHTML = "";
+    parentDiv.appendChild(divContainer);
+    table = document.createElement("table");
+    table.setAttribute("id", "table_bienes");
+    table.setAttribute("class", "display");
+    var thead = document.createElement("thead");
+    var col = ["Nombre", "Descripcion", "Cantidad", "Precio", "Dto", "ImpDto", "IVA", "ImpIVA", "Totales", ""];
+    var tr = thead.insertRow(-1);
+    for (var i = 0; i < col.length; i++) {
+        var th = document.createElement("th");
+        switch (col[i]) {
+            case 'Nombre':
+                th.innerHTML = "Producto / Servicio"; 
+                break;
+            case 'Dto':
+                th.innerHTML = "Dto (%)";
+                break;
+            case 'ImpDto':
+                th.innerHTML = "Dto ($)";
+                break;
+            case 'IVA':
+                th.innerHTML = "IVA (%)"; 
+                break;
+            case 'ImpIVA':
+                th.innerHTML = "IVA ($)";
+                break;
+            default:
+                th.innerHTML = col[i];
+          }
+        tr.appendChild(th);
+    }
+    thead.appendChild(tr);
+    table.appendChild(thead);
+    var tbody = document.createElement("tbody");
+    tbody.setAttribute("role", "button");
+    var value = null;
+    for (var i = 0; i < bienesTransacciones.length; i++) {
+        var item = bienesTransacciones[i];
+        tr = tbody.insertRow(-1);
+        // tr.onclick= selectItem(item["id"]);
+        tr.setAttribute("id", i);
+        tr.setAttribute("class", "click");
+        //    tr.setAttribute("onclick","selectItem(event,id)");
+        for (var j = 0; j < col.length - 1; j++) {
+            var tabCell = tr.insertCell(-1);
+            tabCell.setAttribute("id", i + "_" + col[j]);
+            tabCell.setAttribute("class", "click");
+            var precio;
+            if(precioActualizado){
+                precio = item["Bien"]["Precio"];
+            }
+            else{
+                precio = item["Precio Original"];
+            }
+            if(!precio){
+                precio = 0;
+            }
+            ////////////////////VALORES SI EL PRECIO ESTA ACTUALIZADO O NO/////////////////////
+            var dto, cantidad, dtoPeso, precioDto, iva, precio;
+            if (precioActualizado){
+                precio = item["Bien"]["Precio"];
+                dto = item["Bien"]["Dto"];
+                cantidad = item["Cantidad"];
+                dtoPeso = (precio * dto / 100) * cantidad;
+                precioDto = (cantidad * precio) - dtoPeso;  
+                iva = item["Bien"]["IVA"];
+                console.log(iva);
+            }else{
+                precio = item["Precio Original"];
+                dto= item["Dto"];
+                cantidad = item["Cantidad"];
+                dtoPeso = (precio * dto / 100) * cantidad;
+                precioDto = (cantidad * precio) - dtoPeso;  
+                iva = item["IVA"]["Valor"];
+                console.log(precio);
+            }
+            //////////////////////////////////////////////////////////////////////////////////
+            switch (col[j]) {
+                case 'Nombre':
+                    value = item["Bien"][col[j]];
+                    break;
+                case 'Descripcion':
+                    value = item["Bien"][col[j]];
+                    break;
+                case 'Cantidad':
+                    value = item[col[j]];
+                    console.log("CANTIDAD "+value);
+                    tabCell.setAttribute("ondblclick", "makeEditable(event)");
+                    break;
+                case 'Dto':
+                    value =dto;
+                    if (!value){value=0;}
+                    value = formatPercent((parseFloat(value)).toFixed(2));
+                    tabCell.setAttribute("ondblclick", "makeEditable(event)");
+                    break;
+                case 'ImpDto':
+                    value = formatMoney((parseFloat(dtoPeso)).toFixed(2));
+                    console.log("IMPDTO ES "+value);
+                    break;
+                case 'IVA':
+                    value = iva;
+                    if (!value){value=0;}
+                    value = formatPercent((parseFloat(value)).toFixed(2));
+                    tabCell.setAttribute("ondblclick", "makeEditable(event)");
+                    break;
+                case 'ImpIVA':
+                    value =(precioDto * (iva / 100));
+                    if (!value){ value=0};
+                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    break;
+                case 'Precio':
+                    value = precio;
+                    if(!value){value = 0;}
+                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    console.log("en precio pone "+value);
+                    break;
+                case 'Totales':
+                    if (!iva){iva = 0;}
+                    var subtotal = precioDto + precioDto * iva / 100;
+                    value = subtotal;
+                    if (!value){value=0;}
+                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    break
+                default:
+                    value = item[col[j]];
+            }
+            tabCell.innerHTML = value;
+        }
+        // Botones
+        var btn = document.createElement('button');
+        btn.setAttribute('type', 'button');
+        btn.setAttribute('class', 'btn btn-default btn-sm glyphicon glyphicon-trash'); // set attributes ...
+        btn.setAttribute('id', i);
+        btn.setAttribute('value', 'Borrar');
+        btn.setAttribute("onclick", "removerBien(id)");
+        var tabCell = tr.insertCell(-1);
+        tabCell.setAttribute("class", "click");
+        tabCell.appendChild(btn);
+    }
+    table.appendChild(tbody);
+
+    // var divContainer = document.getElementById("div_table_bienes");
+    divContainer.innerHTML = "";
+    divContainer.appendChild(table);
+    calcularSubcampos();
+}
+
+// ADD TRANSACCION PARA MODUO PAGO
+function addTransaccion(bienesTransacciones, tipo, id) {
+    precioActualizado = true;
+    if (bienesTransacciones==null){
+        bienesTransacciones = [];
+    }
+    $(document).ready(function () {
         $('#table_bienes').DataTable({
             aaSorting: [],
             "language": {

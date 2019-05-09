@@ -616,8 +616,10 @@ class Transaccion {
         if (!(is_null($this->numeroTransaccionTipo))){
             $output .= '"Numero Tipo Transaccion": ' . $this->getNumeroTransaccionTipo().', ';
         }
-        
-        $output .= '"Bonificacion General": "' . $this->getBonificacionGeneral() .'" ';
+        $output .= '"Importe Total": ' . $this->getMonto() .', ';
+        $output .= '"Importe Bonificacion": ' . $this->getBonificacionImporte() .', ';
+        $output .= '"Importe Recargo": ' . $this->getRecargoImporte() .', ';
+        $output .= '"Subtotal": "' . $this->getSubtotal() .'" ';
 
 
 

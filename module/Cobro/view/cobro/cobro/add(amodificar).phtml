@@ -53,7 +53,13 @@ var output;
 var ivas = <?= $ivasJson ?>;
 var idPersona = <?php echo ($persona->getId()); ?>;
 setIvas(ivas);
-var jsonPrespuestos = <?= $presupuestosJson ?>;
+
+var jsonPresupuestos = <?= $presupuestosJson ?>;
+var jsonPedidos = <?= $pedidosJson ?>;
+var jsonTransacciones = <?= $transaccionesJson ?>;
+
+var jsonModalTransaccion = <?= $presupuestosJson ?>;
+
 var itemsTransaccionJson = <?= $itemsTransaccionJson ?>;
 items.concat(itemsTransaccionJson);
 var itemsTransaccion =null;
@@ -132,12 +138,19 @@ var transaccionJson = null;
                             <input type="text" class="form-control" name="numero_cobro" id="numero_cobro"
                                 value="<?= $numCobro ?>" style="max-width: 250px;" readonly>
                         </div>
-                        <div class="form-group col-md-2">
-                            <label>Presupuesto</label>
+                        <div class="form-group col-md-4">
+                            <label>Buscar Transacción</label>
                             <div class="autocomplete input-group">
                                 <input type="text" class="form-control" name="transaccion_buscada" id="transaccion_buscada" value="" readonly>
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i></button>
+                                    <!-- Presupuesto -->
+                                    <button type="button" id="btn_modal_presupuesto" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones">
+                                        <i class="glyphicon glyphicon-search"></i> Presupuesto
+                                    </button>
+                                    <!-- Pedido -->
+                                    <button type="button" id="btn_modal_pedido" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones">
+                                        <i class="glyphicon glyphicon-search"></i> Pedido
+                                    </button>
                                 </span>
                             </div>
                         </div>
@@ -148,19 +161,76 @@ var transaccionJson = null;
                 </div>
             </div>
         </div>
+
+        
+        <!-- Datos de Cobro -->
+        <div class="row form-row">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading titulo-espaciado">
+                    LISTADO DE TRANSACCIONES
+                </div>
+                <div class="panel-body">
+                    <!-- Fecha + Datos de Persona -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <label>Tipo de Transacción</label>
+                            <select class="form-control" name="" id="">
+                                <option value="">Presupuesto</option>
+                                <option value="">Pedido</option>
+                                <option value="">Remito</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Nro de Transacción</label>
+                            <div class="autocomplete input-group">
+                                <input type="text" class="form-control" name="transaccion_buscada" id="transaccion_buscada" value="">
+                                <span class="input-group-btn">
+                                    <button type="button" id="btn_modal_transaccion_pago" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Listado de Items -->
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
                     LISTADO DE PRODUCTOS Y SERVICIOS
                 </div>
-
                 <!-- Form Autocompletado -->
                 <div class="container" style="padding-top:10px;">
                     <form method="post" autocomplete="off">
 
-                        <input type="hidden" class="form-control" name="item_id" id="item_id">
+                        
+                        <div class="row form-row">
+                            <div class="form-group col-md-3">
+                                <label>Tipo de Transacción</label>
+                                <select class="form-control" name="" id="">
+                                    <option value="">Presupuesto</option>
+                                    <option value="">Pedido</option>
+                                    <option value="">Remito</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Nro de Transacción</label>
+                                <div class="autocomplete input-group">
+                                    <input type="text" class="form-control" name="transaccion_buscada" id="transaccion_buscada" value="">
+                                    <span class="input-group-btn">
+                                        <button type="button" id="btn_modal_transaccion_pago" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
+
+                        <input type="hidden" class="form-control" name="item_id" id="item_id">
                         <div class="autocomplete form-group col-sm-2 margin-padding-xs">
                             <label>Código</label>
                             <input type="text" class="form-control" name="item_codigo" id="item_codigo"
@@ -188,43 +258,7 @@ var transaccionJson = null;
                             </button>
                         </div>
                 </div>
-                <!-- Detalles de Producto Y Servicio -->
-                <div class="container" style="">
-                    <label>
-                        <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion"
-                            data-target="#collapseDetalles" aria-expanded="true" aria-controls="collapseDetalles"
-                            name="Detalles" id="Detalles">
-                        Mostrar Detalles
-                    </label>
-                    <div class="container row collapse" id="collapseDetalles">
-                        <table class="table table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Descripción</th>
-                                    <th>Categoría</th>
-                                    <th>Precio</th>
-                                    <th>Dto (%)</th>
-                                    <th>Precio c/Dto.</th>
-                                    <th>% IVA</th>
-                                    <th>Precio c/IVA</th>
-                                    <th>Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td id="item_descripcion"></td>
-                                    <td id="item_categoria"></td>
-                                    <td id="item_precio"></td>
-                                    <td id="item_descuento"></td>
-                                    <td id="item_descuento_precio"></td>
-                                    <td id="item_iva"></td>
-                                    <td id="item_iva_precio"></td>
-                                    <td id="item_subtotal"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+   
                 <script src="/js/autocomplete.js"></script>
                 <input type="hidden" id="jsonitems" name="jsonitems" size="200">
 
@@ -236,7 +270,7 @@ var transaccionJson = null;
                             var items = <?php echo ($json); ?>;
                             
                             // Crear Tabla
-                            addItems(items, "cobro", idPersona, true);
+                            addTransaccion(items, "cobro", idPersona, true);
                             </script>
                         </div>
                         <br>                     
@@ -391,18 +425,19 @@ var transaccionJson = null;
             </div>
         </div>
     </div>
+    <!-- MODAL TRANSACCIONES -->
     <div id="modalTransacciones" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Seleccionar Presupuesto </h4>
+                    <h4 class="modal-title">Seleccionar Transacción </h4>
                 </div>
                 <div class="modal-body">
                     <div class="panel panel-body" id="contenido_transacciones">
                     <div id="div_table_transacciones">
                         <script>
-                        completarTransacciones(jsonPrespuestos);
+                        completarTransacciones(jsonModalTransaccion);
                         </script>
                     </div>
                     <br>                     

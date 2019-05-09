@@ -4,12 +4,14 @@ var transacciones;
 $(document).ready(function(){
     // LOAD MODAL PRESUPUESTOS
     $("#btn_modal_presupuesto").click(function(){
+        $("#table_bienes").dataTable().fnDestroy();
         jsonModalTransaccion = jsonPresupuestos;
         completarTransacciones(jsonModalTransaccion);
     });
     
     // LOAD MODAL PEDIDOS
     $("#btn_modal_pedido").click(function(){
+        $("#table_bienes").dataTable().fnDestroy();
         jsonModalTransaccion = jsonPedidos;
         completarTransacciones(jsonModalTransaccion);
     });
@@ -20,6 +22,7 @@ function completarTransacciones(transacciones_anteriores){
     transacciones= transacciones_anteriores;
     $(document).ready(function () {
         $('#table_transacciones').DataTable({
+            destroy: true,
             paging: false,
             searching: false,
             
