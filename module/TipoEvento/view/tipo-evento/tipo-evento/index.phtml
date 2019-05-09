@@ -144,7 +144,7 @@ if ($tipoPersona=="proveedor"){
                                 <?php
                                 if (isset($tipoeventos)) {
                                     foreach ($tipoeventos as $tipo) :
-                                        ?>
+                                        $id2 = null;?>
                                         <tr>
                                             <td><?php echo ($tipo->getNombre()); ?></td>
                                             <td><?php echo ($tipo->getNombreCategoriaEvento()); ?></td>
@@ -173,10 +173,24 @@ if ($tipoPersona=="proveedor"){
                                                     <h4 class="modal-title">Eliminar evento</h4>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>
-                                                        ¿Está seguro que desea eliminar el evento: 
-                                                        "<?= $this->escapeHtml($tipo->getNombre()) ?>"?
-                                                    </p>
+                                                    <div class="">
+                                                        <p>
+                                                            ¿Está seguro que desea eliminar el evento: 
+                                                            "<?= $this->escapeHtml($tipo->getNombre()) ?>"?
+                                                        </p>
+                                                    </div>
+                                                    <div class="" hidden>
+                                                        <label>
+                                                            <input type="checkbox" value="" name="tipoevento_check" id="tipoevento_check">
+                                                                Reempleazar existentes por:
+                                                        </label>
+                                                        <select class="form-control" id="nuevo_tipo_evento" name="nuevo_tipo_evento">
+                                                            <option value="" hidden="">Seleccionar Evento</option>
+                                                            <?php foreach ($tipoeventos as $tipo_re) : ?>
+                                                                <option value="<?php echo ($tipo_re->getId()); ?>"><?php echo ($tipo_re->getNombre()); ?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <a href="<?= $this->url('actividades/borrar', ['action' => 'remove', 'id' => $tipo->getId()]); ?>" onclick="bloqueaPantalla()" type="button">

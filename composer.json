@@ -65,6 +65,7 @@
             "Transaccion\\": "module/Transaccion/src/",
             "BienesTransacciones\\": "module/BienesTransacciones/src/",
             "Remito\\": "module/Remito/src/",
+            "Cobro\\": "module/Cobro/src/",
             "FormaPago\\": "module/FormaPago/src/",
             "FormaEnvio\\": "module/FormaEnvio/src/",
             "DatoAdicional\\": "module/DatoAdicional/src/"

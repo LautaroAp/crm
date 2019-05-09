@@ -55,6 +55,7 @@ class TipoEventoManager {
     public function getTodosTipos(){
         return $this->entityManager->getRepository(TipoEvento::class)->findAll();
     }
+    
     /**
      * This method adds a new tipoevento.
      */
@@ -125,8 +126,6 @@ class TipoEventoManager {
         ));
     }
 
-    
-
     public function removeTipoEvento($tipoevento) {
         if ($this->tryRemoveTipoEvento($tipoevento)) {
             $_SESSION['MENSAJES']['tipo_evento'] = 1;
@@ -170,20 +169,6 @@ class TipoEventoManager {
         $queryBuilder->setParameter("$t",'%'.$tipoPersona.'%');
         return $queryBuilder->getQuery();
     }
-
-    // public function getTipos($tipoPersona){
-    //     $queryBuilder = $this->entityManager->createQueryBuilder();
-    //     $queryBuilder->select('T')
-    //             ->from(TipoEvento::class, 'T');
-    //     $nombreCampo="tipoPersona";
-    //     $tipoCategoria="categoria_evento";
-    //     $t=1;
-    //     $c=16;
-    //     $queryBuilder->where("T.$nombreCampo  LIKE ?$t");
-    //     $queryBuilder->andwhere("T.$tipoCategoria  NOT LIKE ?$c");
-    //     $queryBuilder->setParameter("$t",'%'.$tipoPersona.'%');
-    //     return $queryBuilder->getQuery();
-    // }
 
     private function tryAddTipoEvento($tipoevento) {
         try {

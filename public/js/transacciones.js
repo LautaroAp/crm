@@ -1,9 +1,28 @@
 
 var transacciones;
+
+$(document).ready(function(){
+    // LOAD MODAL PRESUPUESTOS
+    $("#btn_modal_presupuesto").click(function(){
+        jsonModalTransaccion = jsonPresupuestos;
+        completarTransacciones(jsonModalTransaccion);
+    });
+    
+    // LOAD MODAL PEDIDOS
+    $("#btn_modal_pedido").click(function(){
+        jsonModalTransaccion = jsonPedidos;
+        completarTransacciones(jsonModalTransaccion);
+    });
+    
+});
+
 function completarTransacciones(transacciones_anteriores){
     transacciones= transacciones_anteriores;
     $(document).ready(function () {
         $('#table_transacciones').DataTable({
+            paging: false,
+            searching: false,
+            
             "order": [0, 'desc'],
 
             "language": {

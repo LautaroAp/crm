@@ -401,8 +401,9 @@ $id_persona = $persona->getId();
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="transaccion-font">
-                                        <span class="glyphicon glyphicon-credit-card"></span>&nbsp; Cobro
+                                    <a href="<?= $this->url("cobro/agregar", ['id' => $persona->getId()]); ?>"
+                                        class="transaccion-font">
+                                        <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp; Cobro
                                     </a>
                                 </li>
                             </ul>

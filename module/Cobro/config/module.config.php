@@ -5,24 +5,24 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace TipoEvento;
+namespace Cobro;
 
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
+use Zend\Router\Http\Literal;
 use Application;
 
-return [ 
+
+return [
+   
    'router' => [
         'routes' => [
-            'actividades' => [
+            'cobro' => [
                 'type'    => Segment::class,
                 'options' => [
-                    // 'route'    => '/clientes/actividadesCliente',
-                    'route' =>'/actividades',
+                    'route'    => '/cobro',
                     'defaults' => [
-                        'controller'    => Controller\TipoEventoController::class,
-                        'action'        => 'index',
+                        'controller' => \Cobro\Controller\CobroController::class,
+                        'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
@@ -30,7 +30,7 @@ return [
                     'editar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '[/:tipo]/edit[/:id]',
+                            'route' => '/edit[/:id]',
                             'defaults' => [
                                 'action' => 'edit',
                             ],
@@ -42,7 +42,7 @@ return [
                     'agregar' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/add',
+                            'route' => '/add[/:id]',
                             'defaults' => [
                                 'action' => 'add',
                             ],
@@ -51,10 +51,21 @@ return [
                     'borrar' => [
                         'type' => Segment::class,
                         'options' => [
-                            // 'route' => '/remove[/:id]',
-                            'route' => '/remove[/:id[/:id2]]',
+                            'route' => '/remove[/:id]',
                             'defaults' => [
                                 'action' => 'remove',
+                            ],
+                            'constraints' => [
+                                'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'addItem' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/item[/:id]',
+                            'defaults' => [
+                                'action' => 'addItem',
                             ],
                             'constraints' => [
                                 'id' => '[0-9]\d*',
@@ -64,12 +75,37 @@ return [
                     'page' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/page[/:tipo[/:id]]',
+                            'route' => '/page[/:id[/:estado]]',
                             'defaults' => [
+                                'controller' => \Cobro\Controller\CobroController::class,
                                 'action' => 'index',
                             ],
                             'constraints' => [
                                 'id' => '[0-9]\d*',
+                            ],
+                        ],
+                    ],
+                    'ajax' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '/ajax[/:action[/:id[/:id2]]]',
+                            'defaults' => [
+                                'controller' => \Cobro\Controller\CobroController::class,                             
+                            ],
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[a-zA-Z0-9_-]*',
+                                'id2' => '[a-zA-Z0-9_-]*',
+                            ],
+                        ],
+                    ],
+                    'pdf' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/pdf[/:id]',
+                            'defaults' => [
+                                'controller' => \Cobro\Controller\CobroController::class,
+                                'action' => 'pdf',
                             ],
                         ],
                     ],
@@ -78,19 +114,20 @@ return [
         ],
     ],       
     
+    
  'controllers' => array(
         'factories' => [
-            Controller\TipoEventoController::class => Controller\Factory\TipoEventoControllerFactory::class,
+            Controller\CobroController::class => Controller\Factory\CobroControllerFactory::class,
         ],
      ),
      'view_manager' => array(
          'template_path_stack' => array(
-             'tipoevento' => __DIR__ . '/../view',
+             'cobro' => __DIR__ . '/../view',
          ),
      ),
     'service_manager' => array(
         'factories' => array(
-            Service\TipoEventoManager::class => Service\Factory\TipoEventoManagerFactory::class,
+            Service\CobroManager::class => Service\Factory\CobroManagerFactory::class,
         ),
     )
  ];

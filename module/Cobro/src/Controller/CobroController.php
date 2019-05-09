@@ -1,30 +1,30 @@
 <?php
-namespace Pedido\Controller;
+namespace Cobro\Controller;
 
 use Transaccion\Controller\TransaccionController;
-use Pedido\Service\PedidoManager;
+use Cobro\Service\CobroManager;
 
 use Zend\View\Model\ViewModel;
 use DBAL\Entity\BienesTransacciones;
 
-class PedidoController extends TransaccionController
+class CobroController extends TransaccionController
 {
 
     /**
-     * Pedido manager.
-     * @var User\Service\PedidoManager 
+     * Cobro manager.
+     * @var User\Service\CobroManager 
      */
-    protected $pedidoManager;
+    protected $cobroManager;
     private $clientesManager;
     private $proveedorManager;
     private $bienesTransaccionesManager;
     private $bienesManager;
     
-    public function __construct($pedidoManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager) {
-        parent::__construct($pedidoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager, $empresaManager);
+    public function __construct($cobroManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager) {
+        parent::__construct($cobroManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager, $empresaManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
-        $this->pedidoManager = $pedidoManager;
+        $this->cobroManager = $cobroManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->bienesManager = $bienesManager;
     }
@@ -37,14 +37,14 @@ class PedidoController extends TransaccionController
 
     private function getTipo()
     {
-        return "pedido";
+        return "cobro";
     }
 
     public function addAction()
     {
         $json="[]";
-        if (isset($_SESSION['TRANSACCIONES']['PEDIDO'])) {
-            $json = $_SESSION['TRANSACCIONES']['PEDIDO'];
+        if (isset($_SESSION['TRANSACCIONES']['COBRO'])) {
+            $json = $_SESSION['TRANSACCIONES']['COBRO'];
         }
         // Obtengo todos los Bienes
         $bienes = $this->bienesManager->getBienes();
@@ -74,28 +74,29 @@ class PedidoController extends TransaccionController
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
-            $this->pedidoManager->add($data);
+            $this->cobroManager->add($data);
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             } else {
                 $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             }
         }
-        $numTransacciones = $this->pedidoManager->getTotalTransacciones() + 1;
-        $numPedido = $this->pedidoManager->getTotalPedidos() + 1;
+        $numTransacciones = $this->cobroManager->getTotalTransacciones() + 1;
+        $numCobro = $this->cobroManager->getTotalCobros() + 1;
         $monedasJson = $this->getJsonMonedas();
         $formasPagoJson = $this->getJsonFormasPago();
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
-        $presupuestos = $this->pedidoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+        $presupuestos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
         $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
+        $pedidos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
+        $jsonPedidos = $this->getJsonFromObjectList($pedidos);
         $this->reiniciarParams();
         return new ViewModel([
-            // 'items' => $items,
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,
             'numTransacciones' => $numTransacciones,
-            'numPedido' => $numPedido,
+            'numCobro' => $numCobro,
             'json' => $json,
             'json_bienes' => $json_bienes,
             'formasPagoJson' => $formasPagoJson,
@@ -104,6 +105,7 @@ class PedidoController extends TransaccionController
             'ivasJson' => $ivasJson,
             'transaccionJson'=>"[]",
             'presupuestosJson' => $jsonPrespuestos,
+            'pedidosJson' => $jsonPedidos,
             'itemsTransaccionJson' =>"[]",
 
         ]);
@@ -126,25 +128,25 @@ class PedidoController extends TransaccionController
 
     public function editAction() {
         $id_transaccion = $this->params()->fromRoute('id');
-        $pedido = $this->pedidoManager->getPedidoFromTransaccionId($id_transaccion);
+        $cobro = $this->cobroManager->getCobroFromTransaccionId($id_transaccion);
         $items = array();
 
-        if (!is_null($pedido)) {
-            $items = $pedido->getTransaccion()->getBienesTransacciones();
+        if (!is_null($cobro)) {
+            $items = $cobro->getTransaccion()->getBienesTransacciones();
         }
        
         $json = "";
         //SI HAY ITEMS CARGADOS EN LA SESION LOS TOMO DE AHI 
-        if ((isset($_SESSION['TRANSACCIONES']['PEDIDO']))){
-            $json = $_SESSION['TRANSACCIONES']['PEDIDO'];
+        if ((isset($_SESSION['TRANSACCIONES']['COBRO']))){
+            $json = $_SESSION['TRANSACCIONES']['COBRO'];
         }
-        //SINO LOS TOMO DEL PEDIDO Y GUARDO ESO EN LA SESION PARA CONTINUAR TRABAJANDO CON LA SESION
+        //SINO LOS TOMO DEL COBRO Y GUARDO ESO EN LA SESION PARA CONTINUAR TRABAJANDO CON LA SESION
         else{
             $json = $this->getJsonFromObjectList($items);
-            $_SESSION['TRANSACCIONES']['PEDIDO'] = $json;
+            $_SESSION['TRANSACCIONES']['COBRO'] = $json;
         }
        
-        $persona = $pedido->getTransaccion()->getPersona();
+        $persona = $cobro->getTransaccion()->getPersona();
         $tipoPersona = null;
         // Obtengo todos los Bienes
         $bienes = $this->bienesManager->getBienes();
@@ -169,8 +171,8 @@ class PedidoController extends TransaccionController
 
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
-            // $data['items'] = $_SESSION['TRANSACCIONES']['PEDIDO'];
-            $this->pedidoManager->edit($pedido, $data);
+            // $data['items'] = $_SESSION['TRANSACCIONES']['COBRO'];
+            $this->cobroManager->edit($cobro, $data);
             $url = $data['url'];
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
@@ -178,15 +180,15 @@ class PedidoController extends TransaccionController
                 $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             }
         }
-        $numTransacciones = $pedido->getTransaccion()->getNumero();
-        $numPedido = $pedido->getNumero();
+        $numTransacciones = $cobro->getTransaccion()->getNumero();
+        $numCobro = $cobro->getNumero();
         $monedasJson = $this->getJsonMonedas();
         $formasPagoJson = $this->getJsonFormasPago();
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
-        $transaccion = $pedido->getTransaccion();
-        $transaccionJson = $pedido->getTransaccion()->getJSON();
-        $presupuestos = $this->pedidoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+        $transaccion = $cobro->getTransaccion();
+        $transaccionJson = $cobro->getTransaccion()->getJSON();
+        $presupuestos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
         $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
         $this->reiniciarParams();
         return new ViewModel([
@@ -194,13 +196,13 @@ class PedidoController extends TransaccionController
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,
             'numTransacciones' => $numTransacciones,
-            'numPedido' => $numPedido,
+            'numCobro' => $numCobro,
             'json' => $json,
             'json_bienes' => $json_bienes,
             'formasPagoJson' => $formasPagoJson,
             'formasEnvioJson' => $formasEnvioJson,
             'monedasJson' => $monedasJson,
-            'pedido' => $pedido,
+            'cobro' => $cobro,
             'transaccion' => $transaccion,
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
@@ -211,7 +213,7 @@ class PedidoController extends TransaccionController
 
     public function setItemsAction(){
         $items = $_POST['json'];
-        $_SESSION['TRANSACCIONES']['PEDIDO'] = $items;
+        $_SESSION['TRANSACCIONES']['COBRO'] = $items;
     }
 
     public function eliminarItemAction(){
@@ -238,7 +240,7 @@ class PedidoController extends TransaccionController
    public function getItemsTransaccionAction(){
         $this->layout()->setTemplate('layout/nulo');
         $idTransaccion = $this->params()->fromRoute('id');
-        $transaccion = $this->pedidoManager->getTransaccionId($idTransaccion);
+        $transaccion = $this->cobroManager->getTransaccionId($idTransaccion);
         $transaccionJson = $transaccion->getJSON();
         $items = $transaccion->getBienesTransacciones();
         $itemsTransaccionJson = $this->getJsonFromObjectList($items);
@@ -254,42 +256,42 @@ class PedidoController extends TransaccionController
     public function pdfAction() {
         $this->layout()->setTemplate('layout/nulo');
         $id_transaccion = $this->params()->fromRoute('id');
-        $pedido = $this->pedidoManager->getPedidoFromTransaccionId($id_transaccion);
+        $cobro = $this->cobroManager->getCobroFromTransaccionId($id_transaccion);
         $items = array();
 
-        if (!is_null($pedido)) {
-            $items = $pedido->getTransaccion()->getBienesTransacciones();
+        if (!is_null($cobro)) {
+            $items = $cobro->getTransaccion()->getBienesTransacciones();
         }
        
         $json = "";
         $json = $this->getJsonFromObjectList($items);
        
-        $persona = $pedido->getTransaccion()->getPersona();
+        $persona = $cobro->getTransaccion()->getPersona();
         $tipoPersona = null;
 
         $empresa = $this->empresaManager->getEmpresa();
 
-        $numTransacciones = $pedido->getTransaccion()->getNumero();
-        $numPedido = $pedido->getNumero();
+        $numTransacciones = $cobro->getTransaccion()->getNumero();
+        $numCobro = $cobro->getNumero();
         $monedasJson = $this->getJsonMonedas();
         $formasPagoJson = $this->getJsonFormasPago();
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
-        $transaccion = $pedido->getTransaccion();
-        $transaccionJson = $pedido->getTransaccion()->getJSON();
-        $presupuestos = $this->pedidoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+        $transaccion = $cobro->getTransaccion();
+        $transaccionJson = $cobro->getTransaccion()->getJSON();
+        $presupuestos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
         $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
         $this->reiniciarParams();
         return new ViewModel([
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,
             'numTransacciones' => $numTransacciones,
-            'numPedido' => $numPedido,
+            'numCobro' => $numCobro,
             'json' => $json,
             'formasPagoJson' => $formasPagoJson,
             'formasEnvioJson' => $formasEnvioJson,
             'monedasJson' => $monedasJson,
-            'pedido' => $pedido,
+            'cobro' => $cobro,
             'transaccion' => $transaccion,
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
@@ -303,7 +305,7 @@ class PedidoController extends TransaccionController
    public function getItemsPreviosAction(){
         $this->layout()->setTemplate('layout/nulo');
         $numPresupuesto = $this->params()->fromRoute('id');
-        $presupuesto = $this->pedidoManager->getPresupuestoPrevio($numPresupuesto);
+        $presupuesto = $this->cobroManager->getPresupuestoPrevio($numPresupuesto);
         $itemsTransaccionJson="[]";
         if ($presupuesto!=null){
             $transaccion = $presupuesto->getTransaccion();
@@ -319,7 +321,7 @@ class PedidoController extends TransaccionController
         $this->layout()->setTemplate('layout/nulo');
         $idTransaccion = $this->params()->fromRoute('id');
         $estado= $this->params()->fromRoute('id2');
-        $this->pedidoManager->cambiarEstadoTransaccion($idTransaccion, $estado);
+        $this->cobroManager->cambiarEstadoTransaccion($idTransaccion, $estado);
         $view = new ViewModel();
         $view->setTerminal(true);
         return $view;

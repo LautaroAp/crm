@@ -46,6 +46,7 @@ return [
     'Transaccion',
     'BienesTransacciones',
     'Remito',
+    'Cobro',
     'FormaPago',
     'FormaEnvio',
     'DatoAdicional'

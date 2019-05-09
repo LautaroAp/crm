@@ -287,7 +287,6 @@ class RemitoController extends TransaccionController{
             'itemsTransaccionJson'=>$itemsTransaccionJson,
             'transaccionJson' => $transaccionJson,
         ]);
-        // $view->setTemplate('layout/nulo');
         $view->setTerminal(true);
         return $view;
    }
