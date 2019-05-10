@@ -34,7 +34,6 @@ class CobroController extends TransaccionController
 
     }
 
-
     private function getTipo()
     {
         return "cobro";
@@ -74,6 +73,8 @@ class CobroController extends TransaccionController
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
+            $data['tipo_persona'] = $tipoPersona;
+            
             $this->cobroManager->add($data);
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
@@ -81,6 +82,7 @@ class CobroController extends TransaccionController
                 $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             }
         }
+
         $numTransacciones = $this->cobroManager->getTotalTransacciones() + 1;
         $numCobro = $this->cobroManager->getTotalCobros() + 1;
         $monedasJson = $this->getJsonMonedas();
@@ -94,6 +96,7 @@ class CobroController extends TransaccionController
         $transacciones = $this->cobroManager->getTransacciones();
         $jsonTransacciones = $this->getJsonFromObjectList($transacciones);
         $this->reiniciarParams();
+
         return new ViewModel([
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,

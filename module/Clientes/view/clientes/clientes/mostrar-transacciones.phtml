@@ -58,46 +58,70 @@ var idPersona = <?= $id_persona ?>;
             <?php } ?>
             
             <td id="<?= $transaccion->getId() ?>" class="">
-                <div class="dropdown">                    
-                    <!-- boton editar -->
-                    <?php if (ucfirst($transaccion->getTipo())!="Remito"){ ?>
-                        <ul class="nav navbar-nav navbar-menu-font"> 
-                            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
-                            style="margin-right: 4px;">
-                            <span class="glyphicon glyphicon-check"></span></button>
-                            <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
-                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                onclick="cambiarEstado('ACTIVO', event, tipoTransaccion, idPersona)">
-                                Activo</a></li>
-                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                onclick="cambiarEstado('ANULADO', event, tipoTransaccion, idPersona)">
-                                Anulado</a></li>
-                                <li class="divider"></li>
-                                <li><a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>">Editar</a><li>
-                            </ul>
-                        </ul>                       
-                    <?php } else { ?>
-                    <!-- boton remito -->
-                        <ul class="nav navbar-nav navbar-menu-font"> 
-                            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
-                            style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
-                            <span class="glyphicon glyphicon-check"></span></button>
-                            <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
-                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                onclick="cambiarEstado('A_ENTREGAR', event, tipoTransaccion, idPersona)">
-                                A entregar</a></li>
-                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                onclick="cambiarEstado('ANULADO', event, tipoTransaccion, idPersona)">
-                                Anulado</a></li>
-                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                onclick="cambiarEstado('CONFORMADO', event, tipoTransaccion, idPersona)">
-                                Conformado</a></li>
-                                <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                onclick="cambiarEstado('ENTREGADO', event, tipoTransaccion, idPersona)">
-                                Entregado</a></li>
-                            </ul>
-                        </ul>
-                    <?php } ?>
+                <div class="dropdown">
+                    <?php
+                        switch (ucfirst($transaccion->getTipo())) {
+                            case "Remito":
+                                ?>    
+                                <!-- boton remito -->
+                                <ul class="nav navbar-nav navbar-menu-font"> 
+                                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                    style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
+                                    <span class="glyphicon glyphicon-check"></span></button>
+                                    <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('A_ENTREGAR', event, tipoTransaccion, idPersona)">
+                                        A entregar</a></li>
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ANULADO', event, tipoTransaccion, idPersona)">
+                                        Anulado</a></li>
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('CONFORMADO', event, tipoTransaccion, idPersona)">
+                                        Conformado</a></li>
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ENTREGADO', event, tipoTransaccion, idPersona)">
+                                        Entregado</a></li>
+                                    </ul>
+                                </ul>
+                                <?php
+                            break;
+                            case "Cobro":
+                                ?>
+                                <ul class="nav navbar-nav navbar-menu-font"> 
+                                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                    style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
+                                    <span class="glyphicon glyphicon-check"></span></button>
+                                    <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ANULADO', event, tipoTransaccion, idPersona)">
+                                        Anulado</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>">Editar</a><li>
+                                    </ul>
+                                </ul>  
+                                <?php
+                            break;
+                            default:
+                                ?>
+                                <ul class="nav navbar-nav navbar-menu-font"> 
+                                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                    style="margin-right: 4px;">
+                                    <span class="glyphicon glyphicon-check"></span></button>
+                                    <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ACTIVO', event, tipoTransaccion, idPersona)">
+                                        Activo</a></li>
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ANULADO', event, tipoTransaccion, idPersona)">
+                                        Anulado</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>">Editar</a><li>
+                                    </ul>
+                                </ul>  
+                                <?php
+                            break;
+                        }
+                    ?>
                     <!-- boton pdf -->
                     <a href="<?= $this->url($transaccion->getTipo().'/pdf', ['id' => (int)$transaccion->getId()]) ?>"
                         type="button" class="btn btn-default btn-sm" target="blank">

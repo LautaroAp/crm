@@ -6,6 +6,8 @@ use DBAL\Entity\Moneda;
 use DBAL\Entity\Cobro;
 use DBAL\Entity\Presupuesto;
 use DBAL\Entity\Persona;
+use DBAL\Entity\Cliente;
+use DBAL\Entity\Empresa;
 use DBAL\Entity\BienesTransacciones;
 use DBAL\Entity\Transaccion;
 use Zend\Paginator\Paginator;
@@ -83,24 +85,6 @@ class CobroManager extends TransaccionManager
             $cobro->setNumero($data['numero_cobro']);
             $transaccion->setNumeroTransaccionTipo($data['numero_cobro']);
         }
-     
-        // $fecha_entrega = null;
-        // if (isset($data['fecha_entrega'])) {
-        //     $fecha_entrega = \DateTime::createFromFormat('d/m/Y', $data['fecha_entrega']);
-        //     $cobro->setFecha_entrega($fecha_entrega);
-        // }
-
-        // if (isset($data['forma_envio'])) {
-        //     $cobro->setForma_envio($data['forma_envio']);
-        // }
-
-        // if (isset($data['ingresos_brutos'])) {
-        //     $cobro->setIngresos_brutos($data['ingresos_brutos']);
-        // }
-        // if (isset($data['lugar_entrega'])) {
-        //     $cobro->setLugar_entrega($data['lugar_entrega']);
-        // }
-
         return $cobro;
     }
 
@@ -111,6 +95,7 @@ class CobroManager extends TransaccionManager
     {
         $transaccion = parent::edit($cobro->getTransaccion(), $data);
         $cobro = $this->setData($cobro, $data, $transaccion);
+        $this->actualizaFechas($data);
         // Apply changes to database.
         $this->entityManager->flush();
         return true;
@@ -121,6 +106,7 @@ class CobroManager extends TransaccionManager
         $transaccion = parent::add($data);
         $cobro = new Cobro();
         $cobro = $this->setData($cobro, $data, $transaccion);
+        $this->actualizaFechas($data);
         // Apply changes to database.
         $this->entityManager->persist($cobro);
         $this->entityManager->flush();
@@ -143,9 +129,110 @@ class CobroManager extends TransaccionManager
     public function getPresupuestoPrevio($numPresupuesto){
         return $this->entityManager->getRepository(Presupuesto::class)->findOneBy(['numero'=>$numPresupuesto]);
     }
+
     public function cambiarEstadoTransaccion($idTransaccion, $estado){
         $transaccion = $this->getTransaccionId($idTransaccion);
         $transaccion->setEstado($estado);
+        $this->revierteFechas($transaccion);
         $this->entityManager->flush();
+    }
+
+    public function actualizaFechas($data) {
+        $tipo_persona = $data['tipo_persona'];
+        $fecha_transaccion = \DateTime::createFromFormat('d/m/Y', $data['fecha_transaccion']);
+        $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_transaccion']);
+
+        // Ultimo Contacto
+        if (is_null($tipo_persona->getFechaUltimoContacto())) {
+            $tipo_persona->setFechaUltimoContacto($fecha_transaccion);
+        } else {
+            if ($fecha_transaccion > $tipo_persona->getFechaUltimoContacto()) {
+                $tipo_persona->setFechaUltimoContacto($fecha_transaccion);
+            }
+        }
+
+        // Fecha Compra
+        if (is_null($tipo_persona->getFechaCompra())) {
+            $tipo_persona->setFechaCompra($fecha_transaccion);
+        }
+       
+        // Fecha Ultimo Pago
+        if (is_null($tipo_persona->getFechaUltimoPago())) {
+            $tipo_persona->setFechaUltimoPago($fecha_transaccion);
+        }
+        elseif ($fecha_transaccion > $tipo_persona->getFechaUltimoPago()) {
+            $tipo_persona->setFechaUltimoPago($fecha_transaccion); 
+        }
+        
+        // Fecha Vencimiento
+        $empresa = $this->entityManager->getRepository(Empresa::class)->find(1);
+        $interval = 'P' . $empresa->getParametro_vencimiento() . 'M';
+        $fecha_vencimiento->add(new DateInterval($interval));
+        if ($fecha_vencimiento > $tipo_persona->getVencimiento()) {
+            $tipo_persona->setVencimiento($fecha_vencimiento);
+        }
+        
+    }
+
+    public function revierteFechas($transaccion) {
+                
+        // FILTRAR POR PERSONA  Y OBTENER CLIENTE O PROVEEDOR *****************************************************
+
+        // $tipo_persona = $transaccion->getPersona()->getId();
+        // $this->entityManager->getRepository(Cliente::class)->findOneBy(['id'=>$transaccion->getPersona()->getId()]);
+
+        // if ($transaccion->getPersona()->getTipo() == "CLIENTE") {
+        //     $tipo_persona = $this->entityManager->getRepository(Cliente::class)->findOneBy(['id'=>$transaccion->getPersona()->getId()]);
+        // } elseif ($transaccion->getPersona()->getTipo() == "PROVEEDOR") {
+        //     $tipo_persona = $this->entityManager->getRepository(Proveedores::class)->findOneBy(['id'=>$transaccion->getPersona()->getId()]);
+        // }
+
+        // NO ANDAAAAAAAAAAAAAAAAAAAA
+
+        $id_persona = $transaccion->getPersona()->getId();
+
+        $transacciones = $this->getTransacciones();
+        // $fecha_anulada = \DateTime::createFromFormat('d/m/Y', $transaccion->getFecha_transaccion());
+        // $fecha_anulada = $transaccion->getFecha_transaccion();
+
+        $tipo_persona = $this->entityManager->getRepository(Cliente::class)->findOneBy(['persona' => $id_persona]);
+
+        // $tipo_persona->setFechaCompra($fecha_anulada);
+
+        $tipo_persona->setCiudad("CAMBIA CIUDAD");
+
+        $fecha_transaccion_anterior = null;
+        $fecha_vencimiento_anterior = null;
+    
+        // foreach ($transacciones as $e) {
+        //     if( ($e->getTipo() == "cobro") && ($e->getEstado() == "ACTIVO") ){
+        //         $fecha_transaccion = \DateTime::createFromFormat('d/m/Y', $e->getFecha_transaccion());
+        //         $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $e->getFecha_transaccion());
+
+
+                
+        //         // SI ENCONTRO FECHA ANTERIOR
+        //         if($fecha_anulada > $fecha_transaccion) {
+        //             $fecha_transaccion_anterior = $fecha_transaccion;
+        //             $fecha_vencimiento_anterior = $fecha_vencimiento;
+        //         } else {
+        //             break;
+        //         }            
+        //     }
+        // }
+
+        // // Fecha Compra
+        // if($fecha_anulada == $tipo_persona->getFechaCompra()){
+        //     $tipo_persona->setFechaCompra($fecha_transaccion_anterior);
+        // }
+        // // Fecha Ultimo Pago
+        // $tipo_persona->setFechaUltimoPago($fecha_transaccion_anterior);
+        // // Fecha Vencimiento
+        // if(!is_null($fecha_vencimiento_anterior)){
+        //     $empresa = $this->entityManager->getRepository(Empresa::class)->find(1);
+        //     $interval = 'P' . $empresa->getParametro_vencimiento() . 'M';
+        //     $fecha_vencimiento_anterior->add(new DateInterval($interval));
+        //     $tipo_persona->setVencimiento($fecha_vencimiento_anterior);
+        // }
     }
 }

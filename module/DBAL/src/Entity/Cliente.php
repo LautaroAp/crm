@@ -342,7 +342,7 @@ class Cliente {
     }
 
     public function isPrimeraVenta() {
-        $array_eventos = $this->getEventos();
+        $array_eventos = $this->persona->getEventos();
         if (is_null($this->fecha_compra)) {
             return true;
         }

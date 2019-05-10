@@ -154,7 +154,7 @@ class BienesTransaccionesManager {
 
     public function bienTransaccionFromArray($array){
         $bienTransaccion = new BienesTransacciones();
-        var_dump($array);
+        // var_dump($array);
         if (isset($array['Bien']['Id'])){
             $bien = $this->bienesManager->getBienId($array['Bien']['Id']);
         }
