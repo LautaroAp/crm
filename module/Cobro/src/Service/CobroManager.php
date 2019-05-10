@@ -199,7 +199,8 @@ class CobroManager extends TransaccionManager
 
         // $tipo_persona->setFechaCompra($fecha_anulada);
 
-        $tipo_persona->setCiudad("CAMBIA CIUDAD");
+        $tipo_persona->setCiudad("CCIUDAD");
+        $tipo_persona->setRazaManejo("YYYYY");
 
         $fecha_transaccion_anterior = null;
         $fecha_vencimiento_anterior = null;
