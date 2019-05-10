@@ -200,6 +200,7 @@ class PersonaManager {
             $queryBuilder->andWhere('P.tipo IN (:tipos)')
                 ->setParameter('tipos', $tipos);
         }
+        $queryBuilder->orderBy('P.id', 'DESC');
         return $queryBuilder->getQuery();
     }
 
