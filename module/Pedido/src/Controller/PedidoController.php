@@ -35,11 +35,26 @@ class PedidoController extends TransaccionController
     }
 
 
-    private function getTipo()
-    {
+    // private function getTipo($tipo_persona=null)
+    // {
+    //     if(!is_null($tipo_persona)){
+    //         return "pedido";
+    //     }
+    //     else{
+    //          if (strtoupper($tipo_persona) =="CLIENTE"){
+    //         return "pedido";
+    //         }
+    //         else{
+    //             return "orden de compra";
+    //         }
+    //     }
+       
+    // }
+
+    public function getTipo(){
         return "pedido";
     }
-
+    
     public function addAction()
     {
         $json="[]";
@@ -78,7 +93,7 @@ class PedidoController extends TransaccionController
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             } else {
-                $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+                $this->redirect()->toRoute('proveedores/ficha',['action'=>'ficha', 'id' =>$persona->getId()]);
             }
         }
         $numTransacciones = $this->pedidoManager->getTotalTransacciones() + 1;
@@ -111,16 +126,16 @@ class PedidoController extends TransaccionController
 
     
 
-    public function addItemAction()
-   {
-       if ($this->getRequest()->isPost()) {
-           $data = $this->params()->fromPost();
-           $data['tipo'] = $this->getTipo();
-           $this->procesarAddAction($data);
-           $this->redirect()->toRoute('home');
-       }
-       return new ViewModel([]);
-   }
+//     public function addItemAction()
+//    {
+//        if ($this->getRequest()->isPost()) {
+//            $data = $this->params()->fromPost();
+//            $data['tipo'] = $this->getTipo();
+//            $this->procesarAddAction($data);
+//            $this->redirect()->toRoute('home');
+//        }
+//        return new ViewModel([]);
+//    }
 
 
 
@@ -167,7 +182,7 @@ class PedidoController extends TransaccionController
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
 
-            $data['tipo'] = $this->getTipo();
+            $data['tipo'] = $this->getTipo($persona->getTipo());
             $data['persona'] = $persona;
             // $data['items'] = $_SESSION['TRANSACCIONES']['PEDIDO'];
             $this->pedidoManager->edit($pedido, $data);
@@ -175,7 +190,7 @@ class PedidoController extends TransaccionController
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             } else {
-                $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+                $this->redirect()->toRoute('proveedores/ficha',['action'=>'ficha', 'id' =>$persona->getId()]);
             }
         }
         $numTransacciones = $pedido->getTransaccion()->getNumero();

@@ -73,7 +73,7 @@ class Categoria
      * Get the value of descripcion
      */
     public function getDescripcion() {
-        return $this->descripcion;
+        return ucwords(strtolower($this->descripcion));
     }
 
     /**

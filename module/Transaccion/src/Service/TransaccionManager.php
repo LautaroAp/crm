@@ -180,10 +180,18 @@ class TransaccionManager {
             // $transaccion->addBienesTransacciones($item);
             if (strtoupper($transaccion->getNombre())=="REMITO"){
                 $bien= $item->getBien();
+                $tipoPersona = $transaccion->getPersona()->getTipo();
                 if (strtoupper($bien->getTipo())=="PRODUCTO"){
-                    $stock = $bien->getStock();
-                    $stock = $stock - $item->getCantidad();
-                    $bien->setStock($stock);
+                    if (strtoupper($tipoPersona)=="CLIENTE"){
+                        $stock = $bien->getStock();
+                        $stock = $stock - $item->getCantidad();
+                        $bien->setStock($stock);
+                    }
+                    else if (strtoupper($tipoPersona)=="PROVEEDOR"){
+                        $stock = $bien->getStock();
+                        $stock = $stock + $item->getCantidad();
+                        $bien->setStock($stock);
+                    }
                 }
             }
             $item= $this->bienesTransaccionesManager->add($item);
@@ -228,8 +236,18 @@ class TransaccionManager {
         $entityManager->flush();
     }
 
+    public function eliminarFormasEnvio($id) {
+        $entityManager = $this->entityManager;
+        $transacciones = $this->entityManager->getRepository(Transaccion::class)->findBy(['formaEnvio'=>$id]);
+        foreach ($transacciones as $transaccion) {
+            $transaccion->setFormaEnvio(null);
+        }
+        $entityManager->flush();
+    }
+
+
     public function getTransaccionesPersonaTipo($idPersona,$tipoTransaccion){
-        $transacciones = $this->entityManager->getRepository(Transaccion::class)->findBy(['persona'=>$idPersona, 'tipo_trasaccion'=>strtoupper($tipoTransaccion)]);
+        $transacciones = $this->entityManager->getRepository(Transaccion::class)->findBy(['persona'=>$idPersona, 'tipo_transaccion'=>strtoupper($tipoTransaccion)]);
         return $transacciones;
     }
 

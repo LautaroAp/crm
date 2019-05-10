@@ -142,6 +142,11 @@
     width: 50% !important;
 }
 
+.col-btn-width{
+    min-width: 60px !important;
+}
+
+
 .col-botones-width{
     width: 60px !important;
 }

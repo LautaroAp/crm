@@ -40,6 +40,8 @@ $(function() {
 $date = date('d-m-Y');
 $url = "/clientes/listado/ficha/" . $persona->getId();
 $responsable = $this->identity();
+$tipoPersona = strtoupper($persona->getTipo());
+
 ?>
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
@@ -60,6 +62,8 @@ var transaccionPreviaNum = null;
 var transaccionPreviaId = null;
 var itemsTransaccionPrevia = null;
 var transaccionJson = null;
+var tipoPersona = "<?= $tipoPersona ?>";
+
 </script>
 <!-- php -->
 <?php

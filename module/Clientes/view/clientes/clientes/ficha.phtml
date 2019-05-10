@@ -11,8 +11,11 @@ $this->headTitle('Detalles del Cliente');
 // }
 
 $id_persona = $persona->getId();
-
+$tipo_persona = strtolower($persona->getTipo());
 ?>
+<script>
+    var tipo_persona= "<?= $tipo_persona ?>";
+</script>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
