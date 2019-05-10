@@ -188,23 +188,44 @@ class CobroManager extends TransaccionManager
         // }
 
         // NO ANDAAAAAAAAAAAAAAAAAAAA
-
+    
         $id_persona = $transaccion->getPersona()->getId();
 
         // $transacciones = $this->getTransacciones();
         // $fecha_anulada = \DateTime::createFromFormat('d/m/Y', $transaccion->getFecha_transaccion());
-        // $fecha_anulada = $transaccion->getFecha_transaccion();
-
+        $fecha_anulada = $transaccion->getFecha_transaccion();
         $tipo_persona = $this->entityManager->getRepository(Cliente::class)->findOneBy(['persona' => $id_persona]);
+        $fecha_compra = $tipo_persona->getFechaCompra();
 
-        // $tipo_persona->setFechaCompra($fecha_anulada);
+        if ($fecha_compra != $fecha_anulada){
+            $fecha_transaccion_anterior = null;
+            $fecha_vencimiento_anterior = null;
+            $cobros_previos = $this->entityManager->getRepository(Transaccion::class)->findBy(['persona' => $id_persona, 'tipo_transaccion' => "Cobro", 'estado'=>"ACTIVO"], array('fecha_transaccion' => 'DESC'));
 
-        $tipo_persona->setCiudad("CIUDAD");
-        $tipo_persona->setRazaManejo("YYYYY");
+            foreach ($cobros_previos as $cobro){
+                $fecha_transaccion = $cobro->getFecha_transaccion();
+                if($fecha_anulada > $fecha_transaccion) {
+                    $fecha_transaccion_anterior = $fecha_transaccion;
+                    $fecha_vencimiento_anterior = $fecha_vencimiento;
+                    break;        
+                } 
+            }
+            // Fecha Compra
+            if($fecha_anulada == $tipo_persona->getFechaCompra()){
+                $tipo_persona->setFechaCompra($fecha_transaccion_anterior);
+            }
+            // Fecha Ultimo Pago
+            $tipo_persona->setFechaUltimoPago($fecha_transaccion_anterior);
+            // Fecha Vencimiento
+            // if(!is_null($fecha_vencimiento_anterior)){
+            //     $empresa = $this->entityManager->getRepository(Empresa::class)->find(1);
+            //     $interval = 'P' . $empresa->getParametro_vencimiento() . 'M';
+            //     $fecha_vencimiento_anterior->add(new DateInterval($interval));
+            //     $tipo_persona->setVencimiento($fecha_vencimiento_anterior);
+            // }
+        }
 
-        $fecha_transaccion_anterior = null;
-        $fecha_vencimiento_anterior = null;
-    
+        
         // foreach ($transacciones as $e) {
         //     if( ($e->getTipo() == "cobro") && ($e->getEstado() == "ACTIVO") ){
         //         $fecha_transaccion = \DateTime::createFromFormat('d/m/Y', $e->getFecha_transaccion());
