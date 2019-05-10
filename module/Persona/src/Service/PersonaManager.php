@@ -236,4 +236,13 @@ class PersonaManager {
         $persona = $this->getPersona($cliente->getId());
         $persona->setEstado($estado);
     }
+
+    public function eliminarCondicionIva($id){
+        $personas = $this->entityManager->getRepository(Persona::class)->findBy(['condicion_iva'=>$id]);
+        foreach ($personas as $persona) {
+             $persona->setCondicion_iva(null);
+        }
+        $this->entityManager->flush();
+    }
+
 }

@@ -112,13 +112,34 @@ function mostrarAccionesComerciales(id_persona){
    
 }
 
-function cambiarEstado(estado, event,tipoTransaccion,idPersona){
+//Permite cambiar el estado de una transaccion
+function cambiarEstado(estado, event, tipoTransaccion, idPersona){
     var idTransaccion = event.target.id;
     var edo = estado.replace("_", " ");
     if (confirm("Se cambiará el estado de la transacción a "+ edo +" ¿Desea continuar?")) {
-        $.post('/'+tipoTransaccion+'/ajax/cambiarEstado/' + idTransaccion+ '/'+estado);
+        $.ajax({
+            "dataType": "text",
+            "type": "POST",
+            "data": "temp",
+            "url": '/'+tipoTransaccion+'/ajax/cambiarEstado/' + idTransaccion+ '/'+estado,
+            "success": function (msg) {
+                mostrarTransacciones(idPersona);
+            },
+            "error": function (msg) {
+                console.log("1-error!");
+            }
+        }).done(function (msg) {
+            console.log("1-done!");
+        })
     }
-    mostrarTransacciones(idPersona);
-
 }
+
+// function cambiarEstado2(estado, event,tipoTransaccion,idPersona){
+//     var idTransaccion = event.target.id;
+//     var edo = estado.replace("_", " ");
+//     if (confirm("Se cambiará el estado de la transacción a "+ edo +" ¿Desea continuar?")) {
+//         $.post('/'+tipoTransaccion+'/ajax/cambiarEstado/' + idTransaccion+ '/'+estado);
+//     }
+//     mostrarTransacciones(idPersona);
+// }
 

@@ -23,6 +23,16 @@ $form->get('submit')
         ->setAttributes(['class' => 'btn btn-info'])
         ->setValue('Guardar');
 $form->prepare();
+
+$url = ""; $label ="";
+if (!$ejecutivo->isActivo()){
+    $url = "herramientas/ejecutivos/inactivos";
+    $label ="Ejecutivos inactivos";
+}
+else{
+    $url = "herramientas/ejecutivos";
+    $label ="Ejecutivos";
+}
 ?>
 <?= $this->form()->openTag($form); ?>
 <div class="container padding-cero">
@@ -31,15 +41,12 @@ $form->prepare();
     style="margin:0px;">
             <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
             <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
-            <li class="breadcrumb-item"><a href="<?= $this->url('ejecutivos'); ?>">Ejecutivos</a></li>
-            <?php if (!$ejecutivo->isActivo()){ ?>
-                <li class="breadcrumb-item"><a href="<?= $this->url('ejecutivos/inactivos'); ?>">Inactivos</a></li>
-            <?php } ?>
+            <li class="breadcrumb-item"><a href="<?= $this->url($url); ?>"><?= $label ?></a></li>
             <li class="breadcrumb-item active" aria-current="page">Editar Ejecutivo</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
                     style="margin:0px;">
-            <li class="pull-right"><a  href="<?= $this->url('ejecutivos/inactivos'); ?>" id="volver">Volver</a></li>
+            <li class="pull-right"><a  href="<?= $this->url($url); ?>" id="volver">Volver</a></li>
         </ol>
     </nav>
 </div>

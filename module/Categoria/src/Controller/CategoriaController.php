@@ -37,7 +37,7 @@ class CategoriaController extends HuellaController {
 
 
     public function __construct($entityManager, $categoriaManager, $tipoEventoManager,  $clientesManager
-    , $productoManager, $servicioManager, $proveedorManager) {
+    , $productoManager, $servicioManager, $proveedorManager, $personaManager) {
         $this->entityManager = $entityManager;
         $this->categoriaManager = $categoriaManager;
         $this->tipoEventoManager = $tipoEventoManager;
@@ -46,6 +46,7 @@ class CategoriaController extends HuellaController {
         $this->servicioManager= $servicioManager;
         // $this->licenciaManager=$licenciaManager;
         $this->proveedorManager=$proveedorManager;
+        $this->personaManager= $personaManager;
     }
 
     public function indexAction() {
@@ -148,7 +149,7 @@ class CategoriaController extends HuellaController {
         }elseif (strtoupper($tipo)==strtoupper("evento")){
             $this->tipoEventoManager->eliminarCategoriaEventos($id);
         }elseif (strtoupper($tipo)==strtoupper("iva")){
-            $this->clientesManager->eliminarCondicionIva($id);
+            $this->personaManager->eliminarCondicionIva($id);
         }
     }
 

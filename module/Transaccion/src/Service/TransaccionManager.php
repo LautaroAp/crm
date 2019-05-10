@@ -236,6 +236,16 @@ class TransaccionManager {
         $entityManager->flush();
     }
 
+    public function eliminarFormasEnvio($id) {
+        $entityManager = $this->entityManager;
+        $transacciones = $this->entityManager->getRepository(Transaccion::class)->findBy(['formaEnvio'=>$id]);
+        foreach ($transacciones as $transaccion) {
+            $transaccion->setFormaEnvio(null);
+        }
+        $entityManager->flush();
+    }
+
+
     public function getTransaccionesPersonaTipo($idPersona,$tipoTransaccion){
         $transacciones = $this->entityManager->getRepository(Transaccion::class)->findBy(['persona'=>$idPersona, 'tipo_transaccion'=>strtoupper($tipoTransaccion)]);
         return $transacciones;

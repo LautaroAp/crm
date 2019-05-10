@@ -48,10 +48,6 @@ class Persona {
      * @ORM\Column(name="TIPO", nullable=true, type="string", length=10)
      */
     private $tipo;
-    /**
-     * Get the value of id
-     */ 
-
 
     /**
      * 
