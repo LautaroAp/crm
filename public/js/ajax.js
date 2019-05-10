@@ -123,7 +123,11 @@ function cambiarEstado(estado, event, tipoTransaccion, idPersona){
             "data": "temp",
             "url": '/'+tipoTransaccion+'/ajax/cambiarEstado/' + idTransaccion+ '/'+estado,
             "success": function (msg) {
-                mostrarTransacciones(idPersona);
+                if (tipoTransaccion!="cobro"){
+                    mostrarTransacciones(idPersona);
+                }else{
+                    document.location.reload();
+                }
             },
             "error": function (msg) {
                 console.log("1-error!");

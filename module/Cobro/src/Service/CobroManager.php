@@ -191,7 +191,7 @@ class CobroManager extends TransaccionManager
 
         $id_persona = $transaccion->getPersona()->getId();
 
-        $transacciones = $this->getTransacciones();
+        // $transacciones = $this->getTransacciones();
         // $fecha_anulada = \DateTime::createFromFormat('d/m/Y', $transaccion->getFecha_transaccion());
         // $fecha_anulada = $transaccion->getFecha_transaccion();
 
@@ -199,7 +199,7 @@ class CobroManager extends TransaccionManager
 
         // $tipo_persona->setFechaCompra($fecha_anulada);
 
-        $tipo_persona->setCiudad("CCIUDAD");
+        $tipo_persona->setCiudad("CIUDAD");
         $tipo_persona->setRazaManejo("YYYYY");
 
         $fecha_transaccion_anterior = null;

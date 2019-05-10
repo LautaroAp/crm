@@ -23,15 +23,14 @@ var idPersona = <?= $id_persona ?>;
         </tr>
     </thead>
     <tbody id="cuerpo_eventos" role="button" class="">
-       
-
         <?php foreach ($transacciones as $transaccion) :
             $idTransaccion = $transaccion->getId();
             $tipoTransaccion = $transaccion->getTipo();
         ?>
-        <script>
-            var tipoTransaccion = "<?= $tipoTransaccion ?>";
-        </script>
+            <script>
+                var tipoTransaccion = "<?= $tipoTransaccion ?>";
+                console.log(tipoTransaccion);
+            </script>
            
         <tr id="<?= $transaccion->getId() ?>" class="vpEvento">
             <td id="<?= $transaccion->getId() ?>">
@@ -95,7 +94,7 @@ var idPersona = <?= $id_persona ?>;
                                     <span class="glyphicon glyphicon-check"></span></button>
                                     <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
                                         <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                        onclick="cambiarEstado('ANULADO', event, tipoTransaccion, idPersona)">
+                                        onclick="cambiarEstado('ANULADO', event, '<?= $tipoTransaccion ?>', idPersona)">
                                         Anulado</a></li>
                                         <li class="divider"></li>
                                         <li><a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>">Editar</a><li>

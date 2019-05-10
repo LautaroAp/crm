@@ -90,8 +90,8 @@ class EventoVentaController extends EventoController
             $accionComercial= $this->tipoEventoManager->getTipoEventoId($parametros['tipo']);
         }
         if (!isset($parametros['ventas_y'])){
-            $parametros['ventas_y'] = date("Y");}
-
+            $parametros['ventas_y'] = date("Y");
+        }
         $eventos = $this->eventoVentaManager->getEventosFiltrados($parametros);
         $total = $this->eventoVentaManager->getTotalFiltrados($parametros);
         if (!is_null($tipoPersona) and ($tipoPersona!="-1")){
