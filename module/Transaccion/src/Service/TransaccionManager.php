@@ -248,7 +248,15 @@ class TransaccionManager {
 
     public function getTransaccionesPersonaTipo($idPersona,$tipoTransaccion){
         $transacciones = $this->entityManager->getRepository(Transaccion::class)->findBy(['persona'=>$idPersona, 'tipo_transaccion'=>strtoupper($tipoTransaccion)]);
-        return $transacciones;
+        // return $transacciones;
+
+        $transaccionesActivas = [];
+        foreach ($transacciones as $transaccion){
+            if (strtoupper($transaccion->getEstado())!="ANULADO"){
+                array_push($transaccionesActivas, $transaccion);
+            }
+        }
+        return $transaccionesActivas;
     }
 
     

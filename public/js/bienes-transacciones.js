@@ -49,7 +49,6 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
     if (divContainer != null) {
         divContainer.parentNode.removeChild(divContainer);
     }
-
     
     divContainer = document.createElement("div");
     divContainer.setAttribute("id", "div_table_bienes");

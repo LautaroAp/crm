@@ -47,17 +47,17 @@ if(!is_null($transaccion->getFecha_transaccion())){
     $fecha_transaccion = $date;
 }
 
-if(!is_null($transaccion->getFecha_vencimiento())){
-    $fecha_vencimiento = $transaccion->getFecha_vencimiento()->format('d/m/Y');
-} else {
-    $fecha_vencimiento = $date;
-}
+// if(!is_null($transaccion->getFecha_vencimiento())){
+//     $fecha_vencimiento = $transaccion->getFecha_vencimiento()->format('d/m/Y');
+// } else {
+//     $fecha_vencimiento = $date;
+// }
 
-if(!is_null($cobro->getFecha_entrega())){
-    $fecha_entrega = $cobro->getFecha_entrega()->format('d/m/Y');
-} else {
-    $fecha_entrega = $date;
-}
+// if(!is_null($cobro->getFecha_entrega())){
+//     $fecha_entrega = $cobro->getFecha_entrega()->format('d/m/Y');
+// } else {
+//     $fecha_entrega = $date;
+// }
 
 if(!is_null($transaccion->getTransaccionPrevia())){
     $transaccionPreviaNum = $transaccion->getTransaccionPrevia()->getNumeroTransaccionTipo();
@@ -287,7 +287,7 @@ var transaccionJson = null;
             </div>
         </div>
 
-        <!-- Datos de Envio-->
+        <!-- Datos de Envio
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
@@ -298,8 +298,8 @@ var transaccionJson = null;
                         <div class="form-group col-md-3" id="formasEnvio">
                             <label>Forma de Envío</label>
                             <script>
-                                var formasEnvio = <?php echo ($formasEnvioJson); ?>;
-                                var transaccionJson = <?php echo ($transaccionJson); ?>;
+                                var formasEnvio = <?php //echo ($formasEnvioJson); ?>;
+                                var transaccionJson = <?php //echo ($transaccionJson); ?>;
                                 completarFormasEnvio(formasEnvio,transaccionJson);
                             </script>
                         </div>
@@ -307,7 +307,6 @@ var transaccionJson = null;
                             <label>Fecha de Entrega</label>
                             <div class='input-group date' id='datetimepicker3'>
                                 <input type='text' class="form-control" name="fecha_entrega"
-                                    value="<?= $fecha_entrega ?>" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -316,7 +315,7 @@ var transaccionJson = null;
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Datos Económicos -->
         <div class="row form-row">
@@ -364,13 +363,13 @@ var transaccionJson = null;
                             completarFormasPago(formasPago, transaccionJson);
                             </script>
                         </div>
-                        <div id="div_bonificacion" class="form-group col-md-2">
+                        <div id="div_bonificacion" class="form-group col-md-3">
                             <label>% Bonificación</label>
                             <input type="text" class="form-control" name="bonificacion_general"
                                 id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
                                 onkeyup="calcularSubcampos()">
                         </div>
-                        <div id="div_recargo" class="form-group col-md-2">
+                        <div id="div_recargo" class="form-group col-md-3">
                             <label>% Recargo</label>
                             <input type="text" class="form-control" name="recargo_general" id="recargo_general"
                                 value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()">
@@ -394,15 +393,6 @@ var transaccionJson = null;
                             <label>Total General ($)</label>
                             <input type="text" class="form-control" name="total_general" id="total_general" value="0"
                                 readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>Fecha de Vencimiento</label>
-                            <div class='input-group date' id='datetimepicker2'>
-                                <input type='text' class="form-control" name="fecha_vencimiento" value="<?= $fecha_vencimiento ?>" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
                         </div>
                     </div>
                     <script>
