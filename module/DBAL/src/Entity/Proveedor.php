@@ -218,15 +218,6 @@ class Proveedor {
         return $this;
     }
 
-    public function getVencimiento() {
-        return $this->vencimiento;
-    }
-
-    public function setVencimiento($vencimiento) {
-        $this->vencimiento = $vencimiento;
-        return $this;
-    }
-
     function getFechaUltimoContacto() {
         return $this->fecha_ultimo_contacto;
     }

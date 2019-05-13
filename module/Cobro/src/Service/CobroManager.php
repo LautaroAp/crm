@@ -167,10 +167,13 @@ class CobroManager extends TransaccionManager
         // Fecha Vencimiento
         $empresa = $this->entityManager->getRepository(Empresa::class)->find(1);
         $interval = 'P' . $empresa->getParametro_vencimiento() . 'M';
-        $fecha_vencimiento->add(new DateInterval($interval));
-        if ($fecha_vencimiento > $tipo_persona->getVencimiento()) {
-            $tipo_persona->setVencimiento($fecha_vencimiento);
+        if(strtoupper($tipo_persona->getPersona()->getTipo())=="CLIENTE") {
+              $fecha_vencimiento->add(new DateInterval($interval));
+            if ($fecha_vencimiento > $tipo_persona->getVencimiento()) {
+                $tipo_persona->setVencimiento($fecha_vencimiento);
+            }
         }
+      
         
     }
 

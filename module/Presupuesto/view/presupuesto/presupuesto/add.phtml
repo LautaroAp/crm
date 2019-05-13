@@ -40,14 +40,15 @@ $(function() {
 <!-- php -->
 <?php
 $date = date('d-m-Y');
-$url1 =""; $url2=""; $url3=""; $label1=""; $label2=""; $label3="";
+$url1 =""; $url2=""; $url3=""; $label1=""; $label2=""; $label3=""; $label4="";
 if ($persona->getTipo() =="CLIENTE"){
-    $url = "/clientes";
-    $label1="Cliente";
+    $url1 = "/clientes";
+    $label1="Clientes";
     $url2= "/clientes/listado";
     $label2="Listado";
     $label3="Ficha Cliente";
     $url3= "/clientes/listado/ficha/" . $persona->getId();
+    $label4="Agregar Presupuesto";
 }
 if ($persona->getTipo() =="PROVEEDOR"){
     $label1="Proveedores";
@@ -56,11 +57,11 @@ if ($persona->getTipo() =="PROVEEDOR"){
     $url2= "/proveedores/listado";
     $label3="Ficha Proveedor";
     $url3= "/proveedores/listado/ficha/" . $persona->getId();
+    $label4="Agregar Solicitud de Presupuesto";
+
 }
 $responsable = $this->identity();
 $tipoPersona = strtoupper($persona->getTipo());
-
-
 ?>
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
@@ -83,12 +84,12 @@ setIvas(ivas);
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="<?= $url1 ?>"><?= $label1 ?></a></li>
             <li class="breadcrumb-item"><a href="<?= $url2 ?>"><?= $label2 ?></a></li>
-            <li class="breadcrumb-item"><a href="<?= $url3 ?>" >Ficha</a></li>
+            <li class="breadcrumb-item"><a href="<?= $url3 ?>" ><?= $label3 ?></a></li>
 
-            <li class="breadcrumb-item active" aria-current="page">Agregar Presupuesto</li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $label4 ?></li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
-            <li class="pull-right"><a href="/productosservicios/servicios" id="volver">Volver</a></li>
+            <li class="pull-right"><a href="<?= $url3 ?>" id="volver">Volver</a></li>
         </ol>
     </nav>
 </div>

@@ -79,7 +79,7 @@ class CobroController extends TransaccionController
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             } else {
-                $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+                $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             }
         }
 
@@ -185,7 +185,7 @@ class CobroController extends TransaccionController
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             } else {
-                $this->redirect()->toRoute('proveedor/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+                $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             }
         }
         $numTransacciones = $cobro->getTransaccion()->getNumero();

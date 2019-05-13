@@ -342,8 +342,9 @@ $tipo_persona = strtolower($persona->getTipo());
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="transaccion-font">
-                                        <span class="glyphicon glyphicon-credit-card" ></span>&nbsp; Pago
+                                <a href="<?= $this->url("cobro/agregar", ['id' => $persona->getId()]); ?>"
+                                        class="transaccion-font">
+                                        <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp; Pago
                                     </a>
                                 </li>
                             </ul>

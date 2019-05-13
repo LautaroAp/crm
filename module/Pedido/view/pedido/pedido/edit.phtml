@@ -64,7 +64,27 @@ if(!is_null($transaccion->getTransaccionPrevia())){
 } else {
     $transaccionPreviaNum = -1;
 }
-$url = "/clientes/listado/ficha/" . $persona->getId();
+
+$url1 =""; $url2=""; $url3=""; $label1=""; $label2=""; $label3=""; $label4="";
+if ($persona->getTipo() =="CLIENTE"){
+    $url1 = "/clientes";
+    $label1="Cliente";
+    $url2= "/clientes/listado";
+    $label2="Listado";
+    $label3="Ficha Cliente";
+    $url3= "/clientes/listado/ficha/" . $persona->getId();
+    $label4 ="Editar Pedido";
+}
+if ($persona->getTipo() =="PROVEEDOR"){
+    $label1="Proveedores";
+    $url1= "/proveedores";
+    $label2="Listado";
+    $url2= "/proveedores/listado";
+    $label3="Ficha Proveedor";
+    $url3= "/proveedores/listado/ficha/" . $persona->getId();
+    $label4 ="Editar Orden de Compra";
+
+}
 $responsable = $this->identity();
 $tipoPersona = strtoupper($persona->getTipo());
 ?>
@@ -100,14 +120,14 @@ var tipoPersona = "<?= $tipoPersona ?>";
     <nav aria-label="breadcrumb">
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/clientes">Clientes</a></li>
-            <li class="breadcrumb-item"><a href="/clientes/listado">Listado</a></li>
-            <li class="breadcrumb-item"><a href="<?= $url ?>">Ficha</a></li>
+            <li class="breadcrumb-item"><a href="<?= $url1 ?>"><?= $label1 ?></a></li>
+            <li class="breadcrumb-item"><a href="<?= $url2 ?>"><?= $label2 ?></a></li>
+            <li class="breadcrumb-item"><a href="<?= $url3 ?>" ><?= $label3 ?></a></li>
 
-            <li class="breadcrumb-item active" aria-current="page">Editar Pedido</li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $label4 ?></li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
-            <li class="pull-right"><a href="/productosservicios/servicios" id="volver">Volver</a></li>
+            <li class="pull-right"><a href="<?= $url3 ?>" id="volver">Volver</a></li>
         </ol>
     </nav>
 </div>
@@ -177,7 +197,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             </div>
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
-                        <input type="hidden" id="url" name="url" value="<?= $url ?>">
+                        <input type="hidden" id="url" name="url" value="<?= $url3 ?>">
                         <input type="hidden" id="id_transaccion_previa" name="id_transaccion_previa">
                     </div>
                 </div>
@@ -488,7 +508,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
         </div>
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $url ?>">
+                <a href="<?= $url3 ?>">
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha zoom"></a>
             </div>

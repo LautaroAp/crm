@@ -457,13 +457,13 @@ function calcularSubcampos() {
 
 function reiniciarSubcampos(){
     $("#forma_pago").val(-1).change();
-    $("#subtotal_general").val(formatMoney(parseFloat(0).toFixed(2)));
-    $("#bonificacion_importe").val(formatMoney(parseFloat(0).toFixed(2)));
-    $("#recargo_importe").val(formatMoney(parseFloat(0).toFixed(2)));
-    $("#venta_bruta").val(formatMoney(parseFloat(0).toFixed(2)));
-    $("#descuento_total").val(formatMoney(parseFloat(0).toFixed(2)));
-    $("#iva_total").val(formatMoney(parseFloat(0).toFixed(2)));
-    $("#total_general").val(formatMoney(parseFloat(0).toFixed(2)));
+    $("#subtotal_general").val("0.00");
+    $("#bonificacion_importe").val("0.00");
+    $("#recargo_importe").val("0.00");
+    $("#venta_bruta").val("0.00");
+    $("#descuento_total").val("0.00");
+    $("#iva_total").val("0.00");
+    $("#total_general").val("0.00");
     $("#jsonitems").val(JSON.stringify(items));
     console.log("reinicio");
 }
@@ -954,6 +954,6 @@ function borrarItems(){
     $('#' + transaccion).toggleClass('item-');
 
     addItems(items, tipoTransaccion, idPersona, precioActualizado);
-    reiniciarSubcampos();
+    // reiniciarSubcampos();
     completarTransacciones(transacciones);
 }
