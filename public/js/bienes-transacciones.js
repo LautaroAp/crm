@@ -13,7 +13,7 @@ $(document).ready(function () {
             $('#btnModalCancelar').html("Aceptar");           
         }
         else{
-            $('#msjModal').html("¿Está seguro que desea agregar este presupuesto?");
+            $('#msjModal').html("¿Está seguro que desea agregar esta transacción?");
             $('#btnModalAceptar').show();
             $('#btnModalCancelar').html("Cancelar");    
         }
@@ -119,7 +119,6 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
                 dtoPeso = (precio * dto / 100) * cantidad;
                 precioDto = (cantidad * precio) - dtoPeso;  
                 iva = item["Bien"]["IVA"];
-                console.log(iva);
             }else{
                 precio = item["Precio Original"];
                 dto= item["Dto"];
@@ -127,7 +126,6 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
                 dtoPeso = (precio * dto / 100) * cantidad;
                 precioDto = (cantidad * precio) - dtoPeso;  
                 iva = item["IVA"]["Valor"];
-                console.log(precio);
             }
             //////////////////////////////////////////////////////////////////////////////////
             switch (col[j]) {
@@ -139,7 +137,6 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
                     break;
                 case 'Cantidad':
                     value = item[col[j]];
-                    console.log("CANTIDAD "+value);
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
                 case 'Dto':
@@ -150,7 +147,6 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
                     break;
                 case 'ImpDto':
                     value = formatMoney((parseFloat(dtoPeso)).toFixed(2));
-                    console.log("IMPDTO ES "+value);
                     break;
                 case 'IVA':
                     value = iva;
@@ -167,7 +163,6 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
                     value = precio;
                     if(!value){value = 0;}
                     value = formatMoney((parseFloat(value)).toFixed(2));
-                    console.log("en precio pone "+value);
                     break;
                 case 'Totales':
                     if (!iva){iva = 0;}
@@ -289,7 +284,6 @@ function addTransaccion(bienesTransacciones, tipo, id) {
                 dtoPeso = (precio * dto / 100) * cantidad;
                 precioDto = (cantidad * precio) - dtoPeso;  
                 iva = item["Bien"]["IVA"];
-                console.log(iva);
             }else{
                 precio = item["Precio Original"];
                 dto= item["Dto"];
@@ -297,7 +291,6 @@ function addTransaccion(bienesTransacciones, tipo, id) {
                 dtoPeso = (precio * dto / 100) * cantidad;
                 precioDto = (cantidad * precio) - dtoPeso;  
                 iva = item["IVA"]["Valor"];
-                console.log(precio);
             }
             //////////////////////////////////////////////////////////////////////////////////
             switch (col[j]) {
@@ -309,7 +302,6 @@ function addTransaccion(bienesTransacciones, tipo, id) {
                     break;
                 case 'Cantidad':
                     value = item[col[j]];
-                    console.log("CANTIDAD "+value);
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
                 case 'Dto':
@@ -320,7 +312,6 @@ function addTransaccion(bienesTransacciones, tipo, id) {
                     break;
                 case 'ImpDto':
                     value = formatMoney((parseFloat(dtoPeso)).toFixed(2));
-                    console.log("IMPDTO ES "+value);
                     break;
                 case 'IVA':
                     value = iva;
@@ -337,7 +328,6 @@ function addTransaccion(bienesTransacciones, tipo, id) {
                     value = precio;
                     if(!value){value = 0;}
                     value = formatMoney((parseFloat(value)).toFixed(2));
-                    console.log("en precio pone "+value);
                     break;
                 case 'Totales':
                     if (!iva){iva = 0;}
@@ -463,6 +453,19 @@ function calcularSubcampos() {
     $("#iva_total").val(formatMoney(parseFloat(sumIva).toFixed(2)));
     $("#total_general").val(formatMoney(parseFloat(total_general).toFixed(2)));
     $("#jsonitems").val(JSON.stringify(items));
+}
+
+function reiniciarSubcampos(){
+    $("#forma_pago").val(-1).change();
+    $("#subtotal_general").val(formatMoney(parseFloat(0).toFixed(2)));
+    $("#bonificacion_importe").val(formatMoney(parseFloat(0).toFixed(2)));
+    $("#recargo_importe").val(formatMoney(parseFloat(0).toFixed(2)));
+    $("#venta_bruta").val(formatMoney(parseFloat(0).toFixed(2)));
+    $("#descuento_total").val(formatMoney(parseFloat(0).toFixed(2)));
+    $("#iva_total").val(formatMoney(parseFloat(0).toFixed(2)));
+    $("#total_general").val(formatMoney(parseFloat(0).toFixed(2)));
+    $("#jsonitems").val(JSON.stringify(items));
+    console.log("reinicio");
 }
 
 var item = null;
@@ -948,6 +951,9 @@ function actualizarPrecios(){
 
 function borrarItems(){
     items = [];
+    $('#' + transaccion).toggleClass('item-');
+
     addItems(items, tipoTransaccion, idPersona, precioActualizado);
-    calcularSubcampos();
+    reiniciarSubcampos();
+    completarTransacciones(transacciones);
 }

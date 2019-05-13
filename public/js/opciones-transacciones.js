@@ -58,7 +58,6 @@ function completarFormasPago(formasPago, transaccion=null){
         selectList.setAttribute("onchange", "changeBonificacionRecargo()");
         selectList.setAttribute("class", "form-control");
         myDiv.appendChild(selectList);
-        console.log(formasPago);
         //Create and append the options
         var option = document.createElement("option");
         if (transaccion){

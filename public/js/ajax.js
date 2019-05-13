@@ -6,11 +6,9 @@ function seleccionarFila(e) {
     if ($('#' + elementId).hasClass('table-seleccion')) {
         // Guardo id de evento
         eventos.push(elementId);
-        console.log(eventos);
     } else {
         // Elimino id de evento
         eventos.splice($.inArray(elementId, eventos), 1);
-        console.log(eventos);
     }
 }
 
@@ -76,7 +74,6 @@ function seleccionarItem(e) {
         }
         // Guardo id de item seleccionado
         item = elementId;
-        console.log(item);
     } else {
         // Reseteo el item
         item = null;

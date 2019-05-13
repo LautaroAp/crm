@@ -41,6 +41,7 @@ $(function() {
 $date = date('d-m-Y');
 $url = "/clientes/listado/ficha/" . $persona->getId();
 $responsable = $this->identity();
+$tipoPersona = strtoupper($persona->getTipo());
 ?>
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
@@ -56,9 +57,10 @@ setIvas(ivas);
 
 var jsonPresupuestos = <?= $presupuestosJson ?>;
 var jsonPedidos = <?= $pedidosJson ?>;
+var jsonRemitos = <?= $remitosJson ?>;
 var jsonModalTransaccion = <?= $presupuestosJson ?>;
-
 var itemsTransaccionJson = <?= $itemsTransaccionJson ?>;
+
 items.concat(itemsTransaccionJson);
 var itemsTransaccion =null;
 var itemsAnteriores =null;
@@ -66,6 +68,7 @@ var transaccionPreviaNum = null;
 var transaccionPreviaId = null;
 var itemsTransaccionPrevia = null;
 var transaccionJson = null;
+var tipoPersona = "<?= $tipoPersona ?>";
 </script>
 
 <!-- Document -->
@@ -136,22 +139,22 @@ var transaccionJson = null;
                             <input type="text" class="form-control" name="numero_cobro" id="numero_cobro"
                                 value="<?= $numCobro ?>" style="max-width: 250px;" readonly>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>Buscar Transacción</label>
                             <div class="autocomplete input-group">
-                                <input type="text" class="form-control" name="transaccion_buscada" id="transaccion_buscada" value="" readonly>
-                                <span class="input-group-btn">
-                                    <!-- Presupuesto -->
-                                    <button type="button" id="btn_modal_presupuesto" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones">
-                                        <i class="glyphicon glyphicon-search"></i> Presupuesto
-                                    </button>
-                                    <!-- Pedido -->
-                                    <button type="button" id="btn_modal_pedido" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones">
-                                        <i class="glyphicon glyphicon-search"></i> Pedido
-                                    </button>
-                                </span>
+                                <select class="form-control" id="tipoTransaccion" name="tipoTransaccion">
+                                    <option value="Presupuesto">Presupuesto</option>
+                                    <option value="Pedido">Pedido</option>
+                                    <option value="Remito">Remito</option>
+                                    <option value="Factura">Factura</option>
+                                    <option value="NotaCredito">Nota de Crédito</option>
+                                    <option value="NotaDebito">Nota de Débito</option>
+                                </select>
+                                <span class="input-group-btn">                        <button type="button" id="btn-modal" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i>
+                                </button></span>
                             </div>
                         </div>
+
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
                         <input type="hidden" id="url" name="url" value="<?= $url ?>">
                         <input type="hidden" id="id_transaccion_previa" name="id_transaccion_previa">
@@ -259,37 +262,7 @@ var transaccionJson = null;
                 </div>
             </div>
         </div>
-
-        <!-- Datos de Envio-->
-        <div class="row form-row" hidden>
-            <div class="panel panel-default sombra-ficha">
-                <div class="panel-heading titulo-espaciado">
-                    DATOS DE ENVÍO
-                </div>
-                <div class="panel-body">
-                    <div class="row form-row">
-                        <div class="form-group col-md-3" id="formasEnvio">
-                            <label>Forma de Envío</label>
-                            <script>
-                                var formasEnvio = <?php echo ($formasEnvioJson); ?>;
-                                completarFormasEnvio(formasEnvio);
-                            </script>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>Fecha de Entrega</label>
-                            <div class='input-group date' id='datetimepicker3'>
-                                <input type='text' class="form-control" name="fecha_entrega"
-                                    value="<?= $date ?>" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        
         <!-- Datos Economicos -->
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
@@ -361,7 +334,7 @@ var transaccionJson = null;
                             <input type="text" class="form-control" name="recargo_importe" id="recargo_importe" value="0" readonly>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Total General ($)</label>
+                            <label>Importe Total ($)</label>
                             <input type="text" class="form-control" name="total_general" id="total_general" value="0"
                                 readonly>
                         </div>
@@ -413,7 +386,7 @@ var transaccionJson = null;
                     <div class="panel panel-body" id="contenido_transacciones">
                     <div id="div_table_transacciones">
                         <script>
-                        completarTransacciones(jsonModalTransaccion);
+                        // completarTransacciones(jsonModalTransaccion);
                         </script>
                     </div>
                     <br>                     

@@ -3,23 +3,57 @@ var transacciones;
 
 $(document).ready(function(){
     // LOAD MODAL PRESUPUESTOS
-    $("#btn_modal_presupuesto").click(function(){
-        $("#table_bienes").dataTable().fnDestroy();
-        jsonModalTransaccion = jsonPresupuestos;
-        completarTransacciones(jsonModalTransaccion);
-    });
+    // $("#btn_modal_presupuesto").click(function(){
+    //     $("#table_bienes").dataTable().fnDestroy();
+    //     jsonModalTransaccion = jsonPresupuestos;
+    //     completarTransacciones(jsonModalTransaccion);
+    // });
     
     // LOAD MODAL PEDIDOS
-    $("#btn_modal_pedido").click(function(){
-        $("#table_bienes").dataTable().fnDestroy();
-        jsonModalTransaccion = jsonPedidos;
+    // $("#btn_modal_pedido").click(function(){
+    //     $("#table_bienes").dataTable().fnDestroy();
+    //     jsonModalTransaccion = jsonPedidos;
+    //     completarTransacciones(jsonModalTransaccion);
+    // });
+    
+    $("#btn-modal").click(function(){
+        optionSelected= $("#tipoTransaccion option:selected").val();
+        console.log(optionSelected);
+        jsonModalTransaccion=[];
+        switch (optionSelected) {
+            case 'Presupuesto':
+                jsonModalTransaccion = jsonPresupuestos;
+                break;
+            case 'Pedido':
+                jsonModalTransaccion = jsonPedidos;
+                break;
+            case 'Remito':
+                jsonModalTransaccion = jsonRemitos;
+                break;
+            case 'Factura':
+                jsonModalTransaccion = jsonPresupuestos;
+                break;
+            case 'NotaCredito':
+                jsonModalTransaccion = jsonPresupuestos;
+                break;
+            case 'NotaDebito':
+               
+                jsonModalTransaccion = jsonPresupuestos;
+                break;
+            default:
+                jsonModalTransaccion = jsonPresupuestos;
+          }
         completarTransacciones(jsonModalTransaccion);
     });
     
 });
 
 function completarTransacciones(transacciones_anteriores){
+    // $("#table_bienes").dataTable().fnDestroy();
+    // $('#table_bienes').empty(); 
     transacciones= transacciones_anteriores;
+    transaccion_ant = null;
+    transaccion = null;
     $(document).ready(function () {
         $('#table_transacciones').DataTable({
             destroy: true,
@@ -76,9 +110,9 @@ function completarTransacciones(transacciones_anteriores){
         // Botones
         var btn = document.createElement('button');
         btn.setAttribute('type', 'button');
-        // alert(transaccionPrevia);
-        // alert(transacciones[i]["Id"]);
+
         if (transaccionPreviaNum!=null && transaccionPreviaNum==transacciones[i]["Numero Tipo Transaccion"]){
+            console.log("lo pone como chequeado");
             btn.setAttribute('class', 'btn btn-default btn-sm  glyphicon glyphicon-check ');
             transaccion = i+"button";
         }
@@ -103,16 +137,20 @@ function getTransaccion(buttonId){
 
 function selectTransaccion(id){
     if ($('#' + id).hasClass('glyphicon-unchecked')){
+        console.log("uncheked");
         $('#' + id).removeClass('glyphicon-unchecked');
         $('#' + id).addClass('glyphicon-check');
+        console.log("cheked");
+
         var indexTransaccion = getTransaccion(id);
 
         transaccion_ant = transaccion;
         if (transaccion_ant!=null) {
             $('#' + transaccion_ant).removeClass('glyphicon-check');
             $('#' + transaccion_ant).addClass('glyphicon-unchecked');
+            console.log("uncheked");
         }
-        // Guardo id de la fila seleccionada
+        //Guardo id de la fila seleccionada
         transaccion = id;
         completeItems(indexTransaccion);
     }
@@ -130,6 +168,7 @@ function addTransaccionItems(){
 }
 
 function completeItems(id){
+
     if (id!=null){
         var transaccion_selected = transacciones[id];
         var idTransaccion = transaccion_selected["Id"];

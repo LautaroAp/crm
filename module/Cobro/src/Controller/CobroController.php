@@ -89,10 +89,15 @@ class CobroController extends TransaccionController
         $formasPagoJson = $this->getJsonFormasPago();
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
+        ////////////////////////////PRESUPUESTOS PREVIOS///////////////////////////
         $presupuestos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
         $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
+        ////////////////////////////PEDIDOS PREVIOS///////////////////////////
         $pedidos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
         $jsonPedidos = $this->getJsonFromObjectList($pedidos);
+        ////////////////////////////REMITOS PREVIOS///////////////////////////
+        $remitos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"REMITO");
+        $jsonRemitos = $this->getJsonFromObjectList($remitos);
         $transacciones = $this->cobroManager->getTransacciones();
         $jsonTransacciones = $this->getJsonFromObjectList($transacciones);
         $this->reiniciarParams();
@@ -111,6 +116,7 @@ class CobroController extends TransaccionController
             'transaccionJson'=>"[]",
             'presupuestosJson' => $jsonPrespuestos,
             'pedidosJson' => $jsonPedidos,
+            'remitosJson' => $jsonRemitos,
             'transaccionesJson' => $jsonTransacciones,
             'itemsTransaccionJson' =>"[]",
 
@@ -170,9 +176,9 @@ class CobroController extends TransaccionController
         }
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
+            $data['tipo_persona'] = $tipoPersona;
             // $data['items'] = $_SESSION['TRANSACCIONES']['COBRO'];
             $this->cobroManager->edit($cobro, $data);
             $url = $data['url'];
@@ -190,8 +196,15 @@ class CobroController extends TransaccionController
         $ivasJson = $this->getJsonIvas();
         $transaccion = $cobro->getTransaccion();
         $transaccionJson = $cobro->getTransaccion()->getJSON();
+        ////////////////////////////PRESUPUESTOS PREVIOS///////////////////////////
         $presupuestos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
         $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
+        ////////////////////////////PEDIDOS PREVIOS///////////////////////////
+        $pedidos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
+        $jsonPedidos = $this->getJsonFromObjectList($pedidos);
+        ////////////////////////////REMITOS PREVIOS///////////////////////////
+        $remitos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"REMITO");
+        $jsonRemitos = $this->getJsonFromObjectList($remitos);
         $this->reiniciarParams();
         return new ViewModel([
             // 'items' => $items,
@@ -209,6 +222,8 @@ class CobroController extends TransaccionController
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
             'presupuestosJson' => $jsonPrespuestos,
+            'pedidosJson' => $jsonPedidos,
+            'remitosJson' => $jsonRemitos,
             'itemsTransaccionJson' =>"[]",
         ]);
     }
