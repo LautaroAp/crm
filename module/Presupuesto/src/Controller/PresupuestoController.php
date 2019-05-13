@@ -303,11 +303,12 @@ class PresupuestoController extends TransaccionController{
             ]);
     }
     public function cambiarEstadoAction(){
-        $this->layout()->setTemplate('layout/nulo');
+        // $this->layout()->setTemplate('layout/nulo');
         $idTransaccion = $this->params()->fromRoute('id');
         $estado= $this->params()->fromRoute('id2');
         $this->presupuestoManager->cambiarEstadoTransaccion($idTransaccion, $estado);
         $view = new ViewModel();
+        $view->setTemplate('layout/nulo');
         $view->setTerminal(true);
         return $view;
     }

@@ -53,11 +53,7 @@ if(!is_null($transaccion->getFecha_vencimiento())){
     $fecha_vencimiento = $date;
 }
 
-if(!is_null($cobro->getFecha_entrega())){
-    $fecha_entrega = $cobro->getFecha_entrega()->format('d/m/Y');
-} else {
-    $fecha_entrega = $date;
-}
+
 
 if(!is_null($transaccion->getTransaccionPrevia())){
     $transaccionPreviaNum = $transaccion->getTransaccionPrevia()->getNumeroTransaccionTipo();
@@ -78,8 +74,12 @@ var json_items_nombres = <?= $json_bienes ?>;
 var output;
 var ivas = <?= $ivasJson ?>;
 setIvas(ivas);
-var jsonPrespuestos = <?= $presupuestosJson ?>;
+
+var jsonPresupuestos = <?= $presupuestosJson ?>;
+var jsonPedidos = <?= $pedidosJson ?>;
+var jsonModalTransaccion = <?= $presupuestosJson ?>;
 var itemsTransaccionJson = <?= $itemsTransaccionJson ?>;
+
 items.concat(itemsTransaccionJson);
 var itemsTransaccion =null;
 var itemsAnteriores =null;
@@ -288,7 +288,7 @@ var transaccionJson = null;
         </div>
 
         <!-- Datos de Envio-->
-        <div class="row form-row">
+        <div class="row form-row" hidden>
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
                     DATOS DE ENVÍO
@@ -364,13 +364,13 @@ var transaccionJson = null;
                             completarFormasPago(formasPago, transaccionJson);
                             </script>
                         </div>
-                        <div id="div_bonificacion" class="form-group col-md-2">
+                        <div id="div_bonificacion" class="form-group col-md-3">
                             <label>% Bonificación</label>
                             <input type="text" class="form-control" name="bonificacion_general"
                                 id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
                                 onkeyup="calcularSubcampos()">
                         </div>
-                        <div id="div_recargo" class="form-group col-md-2">
+                        <div id="div_recargo" class="form-group col-md-3">
                             <label>% Recargo</label>
                             <input type="text" class="form-control" name="recargo_general" id="recargo_general"
                                 value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()">
@@ -391,11 +391,11 @@ var transaccionJson = null;
                             <input type="text" class="form-control" name="recargo_importe" id="recargo_importe" value="<?php if (!is_null($transaccion->getRecargoImporte())){echo $transaccion->getRecargoImporte();} else {echo(0);} ?>" readonly>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Total General ($)</label>
+                            <label>Importe Total ($)</label>
                             <input type="text" class="form-control" name="total_general" id="total_general" value="0"
                                 readonly>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-2" hidden>
                             <label>Fecha de Vencimiento</label>
                             <div class='input-group date' id='datetimepicker2'>
                                 <input type='text' class="form-control" name="fecha_vencimiento" value="<?= $fecha_vencimiento ?>" />
