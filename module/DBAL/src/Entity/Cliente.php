@@ -187,7 +187,7 @@ class Cliente {
     }
 
     public function getCiudad() {
-        return ucwords(strtolower($this->ciudad));
+        return (($this->ciudad));
     }
 
     public function setCiudad($ciudad) {
@@ -209,12 +209,12 @@ class Cliente {
         if (is_null($profesion)) {
             return null;
         } else {
-            return  ucwords(strtolower($this->getProfesion()->getNombre()));
+            return  (($this->getProfesion()->getNombre()));
         }
     }
 
     public function getEmpresa() {
-        return  ucwords(strtolower($this->empresa));
+        return  (($this->empresa));
     }
 
     public function setEmpresa($empresa) {
@@ -223,7 +223,7 @@ class Cliente {
     }
 
     public function getActividad() {
-        return  ucwords(strtolower($this->actividad));
+        return  (($this->actividad));
     }
 
     public function setActividad($actividad) {
@@ -283,7 +283,7 @@ class Cliente {
         if (is_null($categoria)) {
             return null;
         } else {
-            return  ucwords(strtolower($categoria->getNombre()));
+            return  (($categoria->getNombre()));
         }
     }
 
@@ -439,7 +439,7 @@ class Cliente {
         if (is_null($this->servicio)) {
             return null;
         } else {
-            return  ucwords(strtolower($this->servicio->getBien()->getNombre()));
+            return  (($this->servicio->getBien()->getNombre()));
         }
     }
     
