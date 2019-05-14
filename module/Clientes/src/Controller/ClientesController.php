@@ -57,6 +57,7 @@ class ClientesController extends HuellaController
         $provincia = $this->clientesManager->getProvincia();
         $categorias = $this->clientesManager->getCategoriasCliente($tipo);
         $condiciones_iva = $this->clientesManager->getCondicionIva('iva');
+
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
             $_SESSION['PARAMETROS_CLIENTE'] = $parametros;
@@ -66,11 +67,13 @@ class ClientesController extends HuellaController
         } else {
             $parametros = array();
         }
+
         $paginator = $this->clientesManager->getTablaFiltrado($parametros, "S");
         $total_clientes = $this->clientesManager->getTotal();
         $pag = $this->getPaginator($paginator);
         $volver = $this->getUltimaUrl();
         $_SESSION['CATEGORIA']['TIPO'] = "CLIENTE";
+
         return new ViewModel([
             'personas' => $pag,
             'paises' => $pais,

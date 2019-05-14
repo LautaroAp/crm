@@ -57,12 +57,22 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                             </button>
                         </div>
                     </div>
-                    <label>
-                        <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion"
-                            data-target="#collapseBusquedaAvanzada" aria-expanded="true"
-                            aria-controls="collapseBusquedaAvanzada" name="busquedaAvanzada" id="busquedaAvanzada">
-                        Búsqueda avanzada
-                    </label>
+                    <div class="row form-row">
+                        <div class="form-group col-md-3">
+                            <label>
+                                <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion"
+                                    data-target="#collapseBusquedaAvanzada" aria-expanded="true"
+                                    aria-controls="collapseBusquedaAvanzada" name="busquedaAvanzada" id="busquedaAvanzada">
+                                Búsqueda avanzada
+                            </label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>
+                                <input type="checkbox" value="1" name="usuariosAdicionales" id="usuariosAdicionales" >
+                                Filtrar Usuarios Adicionales
+                            </label>
+                        </div>
+                    </div>
                     <div class="row form-row collapse" id="collapseBusquedaAvanzada">
                         <div class="form-group col-md-3">
                             <input type="text" class="form-control" id="empresa" name="empresa" placeholder="Empresa"
@@ -99,9 +109,10 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                     style="vertical-align: center;">
                     <thead>
                         <tr>
-                            <th class="th-sm">Cliente</th>
+                            <th class="th-sm">Nombre</th>
                             <th class="th-sm">Teléfono</th>
                             <th class="th-sm">Email</th>
+                            <th class="th-sm">Tipo</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -118,7 +129,10 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                             echo ('</td>');
                             echo ('<td>');
                             echo ($persona->getEmail());
-                            echo ('</td>'); 
+                            echo ('</td>');
+                            echo ('<td>');
+                            echo ($persona->getTipo());
+                            echo ('</td>');
                         ?>
                         <td class="table-items-right">
                             <a class="btn btn-default btn-sm"

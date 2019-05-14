@@ -66,6 +66,7 @@ class ClientesManager {
     public function getPersona($idPersona){
         return $this->entityManager->getRepository(Persona::class)->findOneBy(['id' => $idPersona]);
     }
+
     //esta funcion es usada por el controller para obtener todos los clientes
     //que cumplen con los parametros
     public function getTablaFiltrado($parametros, $estado) {
@@ -82,9 +83,18 @@ class ClientesManager {
 
     public function getClientes($parametros, $estado){
         $tipos= ['CLIENTE','USUARIO'];
+        if (in_array('usuariosAdicionales',$parametros)){
+            $tipos= ['CLIENTE'];
+        }
+
+        // $tipos= ['CLIENTE'];
+        // if (in_array('usuariosAdicionales',$parametros)){
+        //     $tipos= ['CLIENTE','USUARIO'];
+        // }
+
         $parametros+=['estado'=>$estado];
         $params_cliente=$this->diferenciarParametros($parametros,"CLIENTE");
-        $params_persona=$this->diferenciarParametros($parametros,"PERSONA");
+        $params_persona=$this->diferenciarParametros($parametros,"PERSONA");        
         if (in_array('busquedaAvanzada', $parametros)){
             // unset($parametros['busquedaAvanzada']);
             $clientes= $this->buscarClientes($params_cliente)->getResult();
@@ -124,15 +134,20 @@ class ClientesManager {
 
     protected function limpiarParametros($param) {
         foreach ($param as $filtro => $valor) {
-            if ($filtro != 'busquedaAvanzada'){
-                 if (empty($valor)) {
-                unset($param[$filtro]);
-                 } else {
-                trim($param[$filtro]);
-                 }
-            }
-            else{
-                $param[$filtro]=true;
+            switch ($filtro) {
+                case 'busquedaAvanzada':
+                    $param[$filtro]=true;
+                    break;
+                case 'usuariosAdicionales':
+                    $param[$filtro]=true;
+                    break;
+                default:
+                    if (empty($valor)) {
+                    unset($param[$filtro]);
+                     } else {
+                    trim($param[$filtro]);
+                     }
+                    break;
             }
         }
         return ($param);
@@ -192,6 +207,8 @@ class ClientesManager {
         }
         return $queryBuilder->getQuery();
     }
+
+
 
     public function addCliente($data) {
         $cliente = new Cliente();
@@ -274,27 +291,8 @@ class ClientesManager {
 
 
 
-    // private function addDatosLicencia($cliente, $data) {
-    //     if ($data['licencia'] == "-1") {
-    //         $cliente->setLicencia(null);
-    //     } else {
-    //         $licencia = $this->getLicencia($data['licencia']);
-    //         $cliente->setLicencia($licencia);
-    //     }
-    //     if ($data['version'] == "-1") {
-    //         $cliente->setVersion(null);
-    //     } else {
-    //         $cliente->setVersion($data['version']);
-    //     }
-    // }
-       
     private function addDatosServicio($cliente, $data) {
-        // if ($data['categoria_servicio'] == "-1") {
-        //     $cliente->setServicio(null);
-        // } else {
-        //     $categoriaServicio = $this->getCategoriaId($data['categoria_servicio']);
-        //     $cliente->setCategoriaServicio($categoria_servicio);
-        // }
+       
         if ($data['servicio'] == "-1") {
             $cliente->setServicio(null);
         } else {
@@ -307,13 +305,6 @@ class ClientesManager {
             $cliente->setVersion($data['version']);
         }
     }
-
-    // private function addDatosGanaderos($cliente, $data) {
-        
-    //     $cliente->setAnimales($data['animales'])
-    //             ->setEstablecimientos($data['establecimientos'])
-    //             ->setRazaManejo($data['raza_manejo']);
-    // }
 
     public function deleteCliente($id) {
         $entityManager = $this->entityManager;
@@ -424,16 +415,7 @@ class ClientesManager {
                         ->findAll();
     }
 
-    // public function getLicencia($id = null) {
-    //     if (isset($id)) {
-    //         return $this->entityManager
-    //                         ->getRepository(Licencia::class)
-    //                         ->findOneBy(['id' => $id]);
-    //     }
-    //     return $this->entityManager
-    //                     ->getRepository(Licencia::class)
-    //                     ->findAll();
-    // }
+  
 
     public function getServicio($id = null) {
         if (isset($id)) {
@@ -454,16 +436,7 @@ class ClientesManager {
         return $provincias;
     }
 
-    // public function eliminarLicenciaClientes($id) {
-    //     $entityManager = $this->entityManager;
-    //     $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['licencia'=>$id]);
-    //     foreach ($clientes as $cliente) {
-    //         $cliente->setLicencia(null)
-    //                  ->setVersion(null);
-    //     }
-    //     $entityManager->flush();
-    // }
-
+   
     public function eliminarServicioClientes($id) {
         $entityManager = $this->entityManager;
         $clientes = $this->entityManager->getRepository(Cliente::class)->findBy(['servicio'=>$id]);
