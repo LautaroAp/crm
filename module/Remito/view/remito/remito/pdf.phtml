@@ -32,23 +32,23 @@ $pdf->SetAutoPageBreak(TRUE, 20);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 // Generates Original / Duplicate / Triplicate
-for ($i=1; $i <= 3; $i++) { 
+for ($i=1; $i <= 1; $i++) { 
     switch ($i){
         case 1:
             $copia = "ORIGINAL";
             // Start First Page Group
             $pdf->startPageGroup();
         break;
-        case 2:
-            $copia = "DUPLICADO";
-            // Start First Page Group
-            $pdf->startPageGroup();
-        break;
-        case 3;
-            $copia = "TRIPLICADO";
-            // Start First Page Group
-            $pdf->startPageGroup();
-        break;
+        // case 2:
+        //     $copia = "DUPLICADO";
+        //     // Start First Page Group
+        //     $pdf->startPageGroup();
+        // break;
+        // case 3;
+        //     $copia = "TRIPLICADO";
+        //     // Start First Page Group
+        //     $pdf->startPageGroup();
+        // break;
         default :
             // end
         break;
@@ -291,7 +291,7 @@ for ($i=1; $i <= 3; $i++) {
     // reset pointer to the last page
     $pdf->lastPage();
 
-}
+} // foreach end
 
 //Close and output PDF document
 $pdf->Output('example_006.pdf', 'I');

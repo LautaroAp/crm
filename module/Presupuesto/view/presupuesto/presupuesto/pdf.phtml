@@ -1,5 +1,5 @@
 <?php
-var_dump(json_decode($json), true); die();
+// var_dump(json_decode($json), true); die();
 
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF {
@@ -32,23 +32,23 @@ $pdf->SetAutoPageBreak(TRUE, 20);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 // Generates Original / Duplicate / Triplicate
-for ($i=1; $i <= 3; $i++) { 
+for ($i=1; $i <= 1; $i++) { 
     switch ($i){
         case 1:
             $copia = "ORIGINAL";
             // Start First Page Group
             $pdf->startPageGroup();
         break;
-        case 2:
-            $copia = "DUPLICADO";
-            // Start First Page Group
-            $pdf->startPageGroup();
-        break;
-        case 3;
-            $copia = "TRIPLICADO";
-            // Start First Page Group
-            $pdf->startPageGroup();
-        break;
+        // case 2:
+        //     $copia = "DUPLICADO";
+        //     // Start First Page Group
+        //     $pdf->startPageGroup();
+        // break;
+        // case 3;
+        //     $copia = "TRIPLICADO";
+        //     // Start First Page Group
+        //     $pdf->startPageGroup();
+        // break;
         default :
             // end
         break;
@@ -156,9 +156,9 @@ for ($i=1; $i <= 3; $i++) {
         <table border="0" cellspacing="0" cellpadding="3">
             <tbody>
                 <tr>
-                    <td><strong>Período Facturado Desde: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
-                    <td><strong>Hasta: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
-                    <td><strong>Fecha de Vto. para el pago: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
+                    <td><strong>Período de Vigencia: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
@@ -326,10 +326,10 @@ for ($i=1; $i <= 3; $i++) {
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     // Info
-    $html = '<strong style="font-size: 12px;">DOCUMENTO NO VÁLIDO COMO FACTURA</strong>';
+    // $html = '<strong style="font-size: 12px;">DOCUMENTO NO VÁLIDO COMO FACTURA</strong>';
     // output the HTML content
-    $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, 'C', true);
-    $pdf->Ln(1);
+    // $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, 'C', true);
+    // $pdf->Ln(1);
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -339,7 +339,7 @@ for ($i=1; $i <= 3; $i++) {
     // reset pointer to the last page
     $pdf->lastPage();
 
-}
+} // foreach end
 
 //Close and output PDF document
 $pdf->Output('example_006.pdf', 'I');
