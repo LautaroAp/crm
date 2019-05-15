@@ -31,6 +31,8 @@ class ClientesController extends HuellaController
     protected $tipoEventosManager;
     protected $personaManager;
     protected $servicioManager;
+    protected $tipoFacturaManager;
+
 
     public function __construct(
         $clientesManager,
@@ -38,7 +40,8 @@ class ClientesController extends HuellaController
         $eventoManager,
         $personaManager,
         $datoAdicionalManager,
-        $servicioManager
+        $servicioManager,
+        $tipoFacturaManager
     ) {
         $this->clientesManager = $clientesManager;
         $this->tipoEventosManager = $tipoEventosManager;
@@ -46,6 +49,7 @@ class ClientesController extends HuellaController
         $this->personaManager = $personaManager;
         $this->datoAdicionalManager = $datoAdicionalManager;
         $this->servicioManager = $servicioManager;
+        $this->tipoFacturaManager = $tipoFacturaManager;
     }
 
     public function indexAction(){
@@ -57,6 +61,7 @@ class ClientesController extends HuellaController
         $provincia = $this->clientesManager->getProvincia();
         $categorias = $this->clientesManager->getCategoriasCliente($tipo);
         $condiciones_iva = $this->clientesManager->getCondicionIva('iva');
+
         if ($request->isPost()) {
             $parametros = $this->params()->fromPost();
             $_SESSION['PARAMETROS_CLIENTE'] = $parametros;
@@ -66,11 +71,13 @@ class ClientesController extends HuellaController
         } else {
             $parametros = array();
         }
+
         $paginator = $this->clientesManager->getTablaFiltrado($parametros, "S");
         $total_clientes = $this->clientesManager->getTotal();
         $pag = $this->getPaginator($paginator);
         $volver = $this->getUltimaUrl();
         $_SESSION['CATEGORIA']['TIPO'] = "CLIENTE";
+
         return new ViewModel([
             'personas' => $pag,
             'paises' => $pais,
@@ -111,7 +118,7 @@ class ClientesController extends HuellaController
         // $licencia = $this->clientesManager->getLicencia();
         $servicio = $this->clientesManager->getServicio();
         $categoriasServicio = $this->clientesManager->getCategoriasServicio();
-
+        $tiposFactura = $this->tipoFacturaManager->getTipoFacturas();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $cliente = $this->clientesManager->addCliente($data);
@@ -125,7 +132,7 @@ class ClientesController extends HuellaController
             'profesiones' => $profesion,
             'paises' => $pais,
             'provincias' => $provincia,
-            // 'licencias' => $licencia,
+            'tiposFactura' => $tiposFactura,
             'servicios' => $servicio,
             'categoriasServicio' => $categoriasServicio,
             'tipo' => $tipo,
@@ -153,7 +160,7 @@ class ClientesController extends HuellaController
         $profesion = $this->clientesManager->getProfesion();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
-        // $licencia = $this->clientesManager->getLicencia(); 
+        $tiposFactura = $this->tipoFacturaManager->getTipoFacturas();
         $servicio = $this->clientesManager->getServicio(); 
         $categoriasServicio = $this->clientesManager->getCategoriasServicio();
         if ($request->isPost()) {
@@ -170,7 +177,7 @@ class ClientesController extends HuellaController
             'profesiones' => $profesion,
             'paises' => $pais,
             'provincias' => $provincia,
-            // 'licencias' => $licencia,
+            'tiposFactura' => $tiposFactura,
             'servicios' => $servicio,
             'categoriasServicio' => $categoriasServicio,
             'tipo' => $tipo,

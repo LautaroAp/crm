@@ -186,6 +186,8 @@ class CobroManager extends TransaccionManager
             $tipo_persona = $this->entityManager->getRepository(Proveedor::class)->findOneBy(['persona' => $id_persona]);
         }
    
+        $tipo_persona->setCiudad("ZZZZZZZZZZZZZ");
+
         if($transaccion->getFecha_transaccion()) {
             $fecha_anulada = $transaccion->getFecha_transaccion()->format('d/m/Y');
         } else {

@@ -56,7 +56,7 @@ class Categoria
      * Get the value of nombre
      */
     public function getNombre() {
-        return ucwords(strtolower($this->nombre));
+        return (($this->nombre));
     }
 
     /**
@@ -73,7 +73,7 @@ class Categoria
      * Get the value of descripcion
      */
     public function getDescripcion() {
-        return ucwords(strtolower($this->descripcion));
+        return (($this->descripcion));
     }
 
     /**

@@ -164,7 +164,7 @@ class Producto
      * Get the value of nombre
      */
     public function getNombre(){
-        return ucwords(strtolower($this->nombre));
+        return (($this->nombre));
     }
 
     /**

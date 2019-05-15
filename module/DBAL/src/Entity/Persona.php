@@ -121,7 +121,7 @@ class Persona {
      */ 
     public function getNombre()
     {
-        return ucwords(strtolower($this->nombre));
+        return (($this->nombre));
     }
 
     /**
@@ -218,7 +218,7 @@ class Persona {
      */ 
     public function getRazon_social()
     {
-        return ucwords(strtolower($this->razon_social));
+        return (($this->razon_social));
     }
 
     /**
@@ -257,7 +257,7 @@ class Persona {
         if (is_null($this->condicion_iva)) {
             return null;
         } else {
-            return ucwords(strtolower($this->condicion_iva->getNombre()));
+            return (($this->condicion_iva->getNombre()));
         }
     }
 
@@ -385,5 +385,13 @@ class Persona {
         $this->tipo_factura = $tipo_factura;
 
         return $this;
+    }
+
+    public function getNombreTipoFactura() {
+        if (is_null($this->tipo_factura)) {
+            return null;
+        } else {
+            return (($this->tipo_factura->getNombre()));
+        }
     }
 }

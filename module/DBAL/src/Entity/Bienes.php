@@ -350,7 +350,7 @@ class Bienes {
 
     public function getNombreCategoria(){
         if (!is_null($this->categoria)){
-            return  ucwords(strtolower($this->categoria->getNombre()));
+            return  (($this->categoria->getNombre()));
         }
         return null;
     }

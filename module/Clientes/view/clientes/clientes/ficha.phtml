@@ -128,7 +128,7 @@ $tipo_persona = strtolower($persona->getTipo());
                         <p><label>País:</label> <?php echo ($cliente->getNombrePaisCliente()); ?></p>
                         <br>
                         <p><label>Condición de IVA:</label> <?= $persona->getNombreCondicionIva(); ?></p>
-                        <p><label>Tipo de Factura:</label> Factura A */hacer tabla/*</p>
+                        <p><label>Tipo de Factura:</label> <?= $persona->getNombreTipoFactura(); ?></p>
                         <p><label>Banco:</label> <?= $persona->getBanco(); ?></p>
                         <p><label>CBU:</label> <?= $persona->getCbu(); ?></p>
                         <p><label>CUIT/CUIL:</label> <?= $persona->getCuit_cuil(); ?></p>

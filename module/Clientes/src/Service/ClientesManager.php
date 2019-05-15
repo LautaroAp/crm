@@ -86,6 +86,12 @@ class ClientesManager {
         if (in_array('usuariosAdicionales',$parametros)){
             $tipos= ['CLIENTE'];
         }
+
+        // $tipos= ['CLIENTE'];
+        // if (in_array('usuariosAdicionales',$parametros)){
+        //     $tipos= ['CLIENTE','USUARIO'];
+        // }
+
         $parametros+=['estado'=>$estado];
         $params_cliente=$this->diferenciarParametros($parametros,"CLIENTE");
         $params_persona=$this->diferenciarParametros($parametros,"PERSONA");        

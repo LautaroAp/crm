@@ -119,7 +119,6 @@ class CobroController extends TransaccionController
             'remitosJson' => $jsonRemitos,
             'transaccionesJson' => $jsonTransacciones,
             'itemsTransaccionJson' =>"[]",
-
         ]);
     }
 
