@@ -67,7 +67,7 @@ $proveedor = $bien->getProveedor();
                     <div class="form-group col-md-6">
                         <label>Categoría</label>
                         <select class="form-control place_holder dropdown" id="categoria" name="categoria">
-                             <option value="<?php if(isset($categoria)){ echo ($categoria->getId()); }?>" hidden="">  
+                             <option value="<?php if(isset($categoria)){ echo ($categoria->getId()); } else{echo (-1);} ?>" hidden="">  
                                 <?php if(isset($categoria)){ echo $categoria->getNombre(); } else {echo ("Seleccionar Categoría");}?>
                             </option>
                             <option value="-1">No definido</option>
@@ -81,7 +81,7 @@ $proveedor = $bien->getProveedor();
                     <div class="form-group col-md-6">
                         <label>Proveedor</label>
                         <select class="form-control place_holder dropdown" id="proveedor" name="proveedor">
-                                <option value="<?php if(isset($proveedor)){ echo ($proveedor->getId()); }?>" hidden="">  
+                                <option value="<?php if(isset($proveedor)){ echo ($proveedor->getId()); } else{echo (-1);} ?>" hidden="">  
                                     <?php if(isset($proveedor)){ echo $proveedor->getPersona()->getNombre(); } else {echo ("Seleccionar Proveedor");}?>
                                 </option>
                                 <option value="-1">No definido</option>

@@ -54,7 +54,7 @@ $url = "/proveedores/listado/ficha/".$id;
                         <div class="form-group col-md-4">
                             <label>País</label>
                             <select class="form-control place_holder dropdown" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
-                                <option value="<?php if(isset($pais)){ echo ($pais->getId()); }?>" hidden="">  
+                                <option value="<?php if(isset($pais)){ echo ($pais->getId()); } else{echo (-1);} ?>" hidden="">  
                                     <?php if(isset($pais)){ echo($pais->getNombre()); } else {echo ("Seleccionar País");}?>
                                 </option>
                                 <?php foreach ($paises as $pais) : ?>
@@ -65,7 +65,7 @@ $url = "/proveedores/listado/ficha/".$id;
                         <div class="form-group col-md-4">
                             <label>Categoría</label>
                             <select class="form-control place_holder dropdown" id="categoria" name="categoria">
-                                <option value="<?php if(isset($categoria)){ echo ($categoria->getId()); }?>" hidden="">  
+                                <option value="<?php if(isset($categoria)){ echo ($categoria->getId()); } else{echo (-1);} ?>" hidden="">  
                                     <?php if(isset($categoria)){ echo($categoria->getNombre()); } else {echo ("Seleccionar Categoría");}?>
                                 </option>                           
                                 <?php foreach ($categorias as $categoria) : ?>
@@ -83,7 +83,7 @@ $url = "/proveedores/listado/ficha/".$id;
                         <div class="form-group col-md-4" id="div_provincias">
                             <label>Provincia</label>
                             <select class="form-control place_holder dropdown" id="ops_provincias" name="provincia">
-                                <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); }?>" hidden="">  
+                                <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); } else{echo (-1);}?>" hidden="">  
                                     <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
                                 </option>
                             </select>
@@ -160,7 +160,7 @@ $url = "/proveedores/listado/ficha/".$id;
                     <div class="form-group col-md-4">
                         <label>Condición de IVA</label>
                         <select class="form-control place_holder dropdown" id="condicion_iva" name="condicion_iva">
-                            <option value="<?php if(isset($condicion_iva)){ echo ($condicion_iva->getId()); }?>" hidden="">  
+                            <option value="<?php if(isset($condicion_iva)){ echo ($condicion_iva->getId()); } else{echo (-1);} ?>" hidden="">  
                                 <?php if(isset($condicion_iva)){ echo($condicion_iva->getNombre()); } else {echo ("Seleccionar");}?>
                             </option>
                             <option value="-1">No definido</option>

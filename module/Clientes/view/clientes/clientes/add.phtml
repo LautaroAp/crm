@@ -49,7 +49,7 @@ $this->headTitle($title);
                 <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>País</label>
-                        <select class="form-control place_holder dropdown requerido" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
+                        <select class="form-control place_holder dropdown" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
                             <option value="-1" hidden="" selected>Seleccionar País</option>
                             <?php foreach ($paises as $pais) : ?>
                                 <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
@@ -60,6 +60,7 @@ $this->headTitle($title);
                         <label>Provincia</label>
                         <div id="div_provincias">
                             <select class="form-control place_holder dropdown" id="ops_provincias" name="provincia">
+                                <option value="-1" hidden="" selected></option>
                             </select>
                         </div>
                     </div> 
@@ -110,7 +111,7 @@ $this->headTitle($title);
                     <div class="form-group col-md-4">
                         <label>Categoría de Cliente *</label>
                         <select class="form-control requerido place_holder dropdown" id="categoria" name="categoria" required>
-                            <option value="-1" hidden="">Seleccionar Categoría</option>
+                            <option value="" hidden="">Seleccionar Categoría</option>
                             <?php foreach ($categorias as $categoria) : ?>
                             <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
                             <?php endforeach; ?>
