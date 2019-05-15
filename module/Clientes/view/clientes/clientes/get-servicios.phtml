@@ -2,8 +2,7 @@
 <script src="/js/clientes.js"></script>
 
 <select class="form-control place_holder dropdown" id="servicio" name="servicio">
-    <option value="-1" hidden="" selected>Seleccionar Servicio</option>    
-    <option value="<?php if(isset($servicio)){ echo ($servicio->getId()); }?>" hidden="">  
+    <option value="<?php if(isset($servicio)){ echo ($servicio->getId()); } else {echo (-1);}?>" hidden="">  
             <?php if(isset($servicio)){ echo($servicio->getBien()->getNombre()); } else {echo ("Seleccionar Servicio");}?>
         </option> 
         <?php foreach ($servicios as $servicio) : ?>
