@@ -246,4 +246,13 @@ class PersonaManager {
         $this->entityManager->flush();
     }
 
+    public function eliminarTipoFactura($id) {
+        $personas = $this->entityManager->getRepository(Persona::class)->findBy(['tipo_factura'=>$id]);
+        foreach ($personas as $persona) {
+             $persona->setTipo_factura(null);
+        }
+        $this->entityManager->flush();
+    }
+
+
 }
