@@ -102,6 +102,10 @@ class ProveedorController extends HuellaController
             $data = $this->params()->fromPost();
             $proveedor = $this->proveedorManager->addProveedor($data);
             $id_persona = $proveedor->getPersona()->getId();
+            // Evento Automatico ALTA
+            $persona = $proveedor->getPersona();
+            $data_alta = $this->datosAlta();
+            $this->eventoManager->addEvento($data_alta, $persona); 
             $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $id_persona]);
         }
         $volver = $this->getUltimaUrl();
@@ -233,5 +237,15 @@ class ProveedorController extends HuellaController
         $eventos = $persona->getEventos();
         $view = new ViewModel(['eventos' => $eventos]);
         return $view;
+    }
+
+    public function datosAlta(){
+        $data = [];
+        $data['id_cliente'] = '';
+        $data['ejecutivo'] = $_SESSION['EJECUTIVO'];
+        $data['fecha_evento'] = date('d/m/Y');;
+        $data['accion_comercial'] = '1';
+        $data['detalle'] = 'Registro de Alta';
+        return $data;
     }
 }

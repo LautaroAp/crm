@@ -17,8 +17,7 @@ class PersonaManagerFactory
     {        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $viewRenderer = $container->get('ViewRenderer');
-        $config = $container->get('Config');
-                        
+        $config = $container->get('Config');       
         return new PersonaManager($entityManager, $viewRenderer, $config);
     }
 }

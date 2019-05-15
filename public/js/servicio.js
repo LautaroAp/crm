@@ -1,3 +1,10 @@
+$(document).ready(function() {
+    /* * * * * * * * * * * * * PLACE HOLDER EN SELECT * * * * * * * * * * * */
+    jQuery(".dropdown").change(function () {
+        jQuery(this).removeClass("place_holder");
+    });
+});
+
 function justNumbers(e) {
     var keynum = window.event ? window.event.keyCode : e.which;
     if ((keynum == 0) || (keynum == 8) || (keynum == 46))

@@ -1,3 +1,6 @@
+<!-- scripts -->
+<script src="/js/clientes.js"></script>
+
 <?php
 $title = 'Agregar Cliente';
 $this->headTitle($title);
@@ -30,8 +33,8 @@ $this->headTitle($title);
                 <!-- Fila 1 -->
                 <div class="row form-row">
                     <div class="form-group col-md-4">
-                        <label>Nombre y Apellido</label>
-                        <input type="text" class="form-control" name="nombre" placeholder="Ingresar Nombre y Apellido" required="">
+                        <label>Nombre y Apellido *</label>
+                        <input type="text" class="form-control requerido" name="nombre" placeholder="Ingresar Nombre y Apellido" required>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Teléfono</label>
@@ -46,8 +49,8 @@ $this->headTitle($title);
                 <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>País</label>
-                        <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)" required="">
-                            <option value="" hidden="">Seleccionar País</option>
+                        <select class="form-control place_holder dropdown requerido" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
+                            <option value="-1" hidden="" selected>Seleccionar País</option>
                             <?php foreach ($paises as $pais) : ?>
                                 <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
                             <?php endforeach; ?>
@@ -56,8 +59,8 @@ $this->headTitle($title);
                     <div class="form-group col-md-4">
                         <label>Provincia</label>
                         <div id="div_provincias">
-                        <select class="form-control" id="ops_provincias" name="provincia" required="">
-                        </select>
+                            <select class="form-control place_holder dropdown" id="ops_provincias" name="provincia">
+                            </select>
                         </div>
                     </div> 
                     <div class="form-group col-md-4">
@@ -71,8 +74,9 @@ $this->headTitle($title);
                 <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>Categoria de Servicio</label>
-                        <select class="form-control" id="categoria_servicio" name="categoria_servicio" onchange="actualizarServicios(this.value)" required="">
-                            <option value="" hidden="">Seleccionar Categoria</option>
+                        <select class="form-control place_holder dropdown" id="categoria_servicio" name="categoria_servicio" onchange="actualizarServicios(this.value)">
+                            <option value="-1" hidden="" selected>Seleccionar Categoría</option>
+                            <option value="-1">No definido</option>
                             <?php foreach ($categoriasServicio as $c) : ?>
                                 <option value="<?php echo ($c->getId()); ?>"><?php echo ($c->getNombre()); ?></option>
                             <?php endforeach; ?>
@@ -81,14 +85,15 @@ $this->headTitle($title);
                     <div class="form-group col-md-4">
                         <label>Servicio</label>
                         <div id="div_servicios">
-                        <select class="form-control" id="servicio" name="servicio" required="">
-                        </select>
+                            <select class="form-control place_holder dropdown" id="servicio" name="servicio">
+                                <option value="-1" hidden="" selected></option>
+                            </select>
                         </div>
                     </div> 
                     
                     <div class="form-group col-md-4">
                         <label>Versión</label>
-                        <select class="form-control" id="version" name="version">
+                        <select class="form-control place_holder dropdown" id="version" name="version">
                             <option value="-1" hidden="">Seleccionar Versión</option>
                             <option value="Productores">Productores</option>
                             <option value="Veterinarios">Veterinarios</option>
@@ -103,9 +108,9 @@ $this->headTitle($title);
                         <input type="text" class="form-control" name="skype" placeholder="Ingresar Skype">
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Categoría de Cliente</label>
-                        <select class="form-control" id="categoria" name="categoria" required="">
-                            <option value="" hidden="">Seleccionar Categoría</option>
+                        <label>Categoría de Cliente *</label>
+                        <select class="form-control requerido place_holder dropdown" id="categoria" name="categoria" required>
+                            <option value="-1" hidden="">Seleccionar Categoría</option>
                             <?php foreach ($categorias as $categoria) : ?>
                             <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
                             <?php endforeach; ?>
@@ -134,7 +139,7 @@ $this->headTitle($title);
                     </div>
                     <div class="form-group col-md-4">
                         <label>Profesión</label>
-                        <select class="form-control" id="profesion" name="profesion">
+                        <select class="form-control place_holder dropdown" id="profesion" name="profesion">
                             <option value="" hidden="">Seleccionar Profesión</option>
                             <option value="-1">No definido</option>
                             <?php foreach ($profesiones as $profesion) : ?>
@@ -175,8 +180,8 @@ $this->headTitle($title);
                     </div>
                     <div class="form-group col-md-4">
                         <label>Condición de IVA</label>
-                        <select class="form-control" id="condicion_iva" name="condicion_iva">
-                            <option value="" hidden="">Seleccionar</option>
+                        <select class="form-control place_holder dropdown" id="condicion_iva" name="condicion_iva">
+                            <option value="-1" hidden="">Seleccionar</option>
                             <option value="-1">No definido</option>
                             <?php foreach ($condiciones_iva as $condicion_iva) : ?>
                                 <option value="<?php echo ($condicion_iva->getId()); ?>"><?php echo ($condicion_iva->getNombre()); ?></option>

@@ -4,7 +4,6 @@ namespace Clientes\Service;
 
 use DBAL\Entity\Cliente;
 use DBAL\Entity\Usuario;
-// use DBAL\Entity\Licencia;
 use DBAL\Entity\Servicio;
 use DBAL\Entity\Pais;
 use DBAL\Entity\Provincia;
@@ -214,10 +213,7 @@ class ClientesManager {
         $cliente = new Cliente();
         $this->addDatosParticulares($cliente, $data);
         $this->addDatosLaborales($cliente, $data);
-        // $this->addDatosFacturacion($cliente, $data);
-        // $this->addDatosLicencia($cliente, $data);
         $this->addDatosServicio($cliente, $data);
-        // $this->addDatosGanaderos($cliente, $data);        
         $persona = $this->personaManager->addPersona($data, $this->tipo);
         $cliente->setPersona($persona);
         $this->tryAddCliente($cliente);
@@ -239,10 +235,7 @@ class ClientesManager {
     public function updateCliente($cliente, $data) {
         $this->addDatosParticulares($cliente, $data);
         $this->addDatosLaborales($cliente, $data);
-        // $this->addDatosFacturacion($cliente, $data);
-        // $this->addDatosLicencia($cliente, $data);
         $this->addDatosServicio($cliente, $data);
-        // $this->addDatosGanaderos($cliente, $data);
         $this->personaManager->updatePersona($cliente->getPersona(), $data);
         if ($this->tryUpdateCliente($cliente)) {
             $_SESSION['MENSAJES']['ficha_cliente'] = 1;
@@ -281,7 +274,7 @@ class ClientesManager {
         $cliente->setEmpresa($data['empresa'])
                 ->setCargo($data['cargo'])
                 ->setActividad($data['actividad']);
-        if ($data['profesion'] == "-1") {
+        if (($data['profesion'] == "-1") || ($data['profesion'] == "")) {
             $cliente->setProfesion(null);
         } else {
             $profesion = $this->getProfesion($data['profesion']);
@@ -293,13 +286,13 @@ class ClientesManager {
 
     private function addDatosServicio($cliente, $data) {
        
-        if ($data['servicio'] == "-1") {
+        if (($data['servicio'] == "-1") || ($data['servicio'] == "")) {
             $cliente->setServicio(null);
         } else {
             $servicio = $this->getServicio($data['servicio']);
             $cliente->setServicio($servicio);
         }
-        if ($data['version'] == "-1") {
+        if (($data['version'] == "-1") || ($data['version'] == "")) {
             $cliente->setVersion(null);
         } else {
             $cliente->setVersion($data['version']);
