@@ -13,6 +13,12 @@ $(document).ready(function() {
       $("#ops_provincias").val(null);
     });
 
+/* * * * * * * * * * * * * PLACE HOLDER EN SELECT * * * * * * * * * * * */
+
+  jQuery(".dropdown").change(function () {
+      jQuery(this).removeClass("place_holder");
+  });
+
 });
 
 

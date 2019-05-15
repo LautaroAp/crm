@@ -1,4 +1,7 @@
-<select class="form-control" id="ops_provincias" name="provincia">
+<!-- scripts -->
+<script src="/js/clientes.js"></script>
+
+<select class="form-control place_holder dropdown" id="ops_provincias" name="provincia">
     <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); }?>" hidden="">  
         <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
     </option> 

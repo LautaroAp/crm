@@ -1,3 +1,6 @@
+<!-- scripts -->
+<script src="/js/clientes.js"></script>
+
 <?php
 $title = 'Editar Cliente';
 $this->headTitle($title);
@@ -12,7 +15,6 @@ $ciudad = $cliente->getCiudad();
 $empresa = $cliente->getEmpresa();
 $cargo = $cliente->getCargo();
 $categoria = $cliente->getCategoria();
-// $licencia = $cliente->getLicencia();
 $servicio = $cliente->getServicio();
 $version = $cliente->getVersion();
 $profesion = $cliente->getProfesion();
@@ -53,8 +55,8 @@ $raza_manejo = $cliente->getRazaManejo();
                 <!-- Fila 1 -->
                 <div class="row form-row">
                     <div class="form-group col-md-4">
-                        <label>Nombre y Apellido</label>
-                        <input type="text" class="form-control" name="nombre" value="<?= $nombre ?>" required="">
+                        <label>Nombre y Apellido *</label>
+                        <input type="text" class="form-control requerido" name="nombre" value="<?= $nombre ?>" required>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Teléfono</label>
@@ -69,7 +71,7 @@ $raza_manejo = $cliente->getRazaManejo();
                 <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>País</label>
-                        <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)" required="">
+                        <select class="form-control place_holder dropdown" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)" >
                             <option value="<?php if(!is_null($pais)){echo $pais->getId();} else {echo (-1);} ?>" hidden=""> <?php if (isset($pais)){echo $pais->getNombre();} else{echo ("Seleccionar País");} ?></option>
                             <?php foreach ($paises as $pais) : ?>
                                 <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
@@ -79,7 +81,7 @@ $raza_manejo = $cliente->getRazaManejo();
                     <div class="form-group col-md-4">
                         <label>Provincia</label>
                         <div id="div_provincias">
-                        <select class="form-control" id="ops_provincias" name="provincia" required="">
+                        <select class="form-control place_holder dropdown" id="ops_provincias" name="provincia">
                             <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); }?>" hidden=""> 
                                    <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
                             </option>
@@ -88,7 +90,6 @@ $raza_manejo = $cliente->getRazaManejo();
                     </div> 
                     <div class="form-group col-md-4">
                         <label>Ciudad</label>
-                        
                         <input type="text" class="form-control" name="ciudad" value="<?= $ciudad ?>">
                     </div>
                 </div>
@@ -96,7 +97,7 @@ $raza_manejo = $cliente->getRazaManejo();
                     <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>Categoria de Servicio</label>
-                        <select class="form-control" id="categoria_servicio" name="categoria_servicio" onchange="actualizarServicios(this.value)" required="">
+                        <select class="form-control place_holder dropdown" id="categoria_servicio" name="categoria_servicio" onchange="actualizarServicios(this.value)">
                             <option value="<?php if (isset($servicio)) 
                             {echo $servicio->getIdCategoria();} else{echo "";} ?> " hidden=""><?php if (isset($servicio))
                             {echo($servicio->getNombreCategoria());} else{echo ("Seleccionar Categoria");}?></option>
@@ -108,7 +109,7 @@ $raza_manejo = $cliente->getRazaManejo();
                     <div class="form-group col-md-4">
                         <label>Servicio</label>
                         <div id="div_servicios">
-                        <select class="form-control" id="servicio" name="servicio" required="">
+                        <select class="form-control place_holder dropdown" id="servicio" name="servicio">
                         <option value="<?php if(isset($servicio)){ echo ($servicio->getId()); }?>" hidden=""> 
                                    <?php if(isset($servicio)){ echo($servicio->getNombre()); } else {echo ("Seleccionar Servicio");}?>
                             </option>
@@ -117,7 +118,7 @@ $raza_manejo = $cliente->getRazaManejo();
                     </div> 
                     <div class="form-group col-md-4">
                         <label>Versión</label>
-                        <select class="form-control" id="version" name="version">
+                        <select class="form-control place_holder dropdown" id="version" name="version">
                             <option value="<?php if (isset($version)) {echo $version;} else{echo "";} ?>" hidden=""><?php if (isset($version)) {echo ($version);} else{echo ("Seleccionar Versión");} ?></option>
                             <option value="Productores">Productores</option>
                             <option value="Veterinarios">Veterinarios</option>
@@ -132,8 +133,8 @@ $raza_manejo = $cliente->getRazaManejo();
                         <input type="text" class="form-control" name="skype" value="<?= $skype ?>" >
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Categoría de Cliente</label>
-                        <select class="form-control" id="categoria" name="categoria" required="">
+                        <label>Categoría de Cliente *</label>
+                        <select class="form-control requerido place_holder dropdown" id="categoria" name="categoria" required>
                         <option value="<?php if (isset($categoria)) {echo $categoria->getId();} else{echo "";} ?>" hidden=""> <?php if (isset($categoria)){echo($categoria->getNombre());} else {echo ("Seleccionar Categoría");} ?> </option>
                             <?php foreach ($categorias as $categoria) : ?>
                             <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
@@ -164,7 +165,7 @@ $raza_manejo = $cliente->getRazaManejo();
                     </div>
                     <div class="form-group col-md-4">
                         <label>Profesión</label>
-                        <select class="form-control" id="profesion" name="profesion">
+                        <select class="form-control place_holder dropdown" id="profesion" name="profesion">
                             <option value="<?php if(isset($profesion)){ echo ($profesion->getId()); }?>" hidden="">  
                                 <?php if(isset($profesion)){ echo($profesion->getNombre()); } else {echo ("Seleccionar Profesión");}?>
                             </option>
@@ -210,7 +211,7 @@ $raza_manejo = $cliente->getRazaManejo();
                     </div>
                     <div class="form-group col-md-4">
                         <label>Condición de IVA</label>
-                        <select class="form-control" id="condicion_iva" name="condicion_iva">
+                        <select class="form-control place_holder dropdown" id="condicion_iva" name="condicion_iva">
                             <option value="<?php if(isset($condicion_iva)){ echo ($condicion_iva->getId()); }?>" hidden="">  
                                 <?php if(isset($condicion_iva)){ echo($condicion_iva->getNombre()); } else {echo ("Seleccionar");}?>
                             </option>
@@ -222,7 +223,7 @@ $raza_manejo = $cliente->getRazaManejo();
                     </div>
                     <div class="form-group col-md-4">
                         <label>Tipo de Factura</label>
-                        <select class="form-control" id="tipo_factura" name="tipo_factura">
+                        <select class="form-control  place_holder dropdown" id="tipo_factura" name="tipo_factura">
                         <option value="<?php if(isset($tipo_factura)){ echo ($tipo_factura->getId()); }?>" hidden=""><?php if(isset($tipo_factura)){ echo($tipo_factura->getNombre()); } else {echo ("Seleccionar");}?>
                             </option>  
                             <option value="" hidden="">Seleccionar</option>

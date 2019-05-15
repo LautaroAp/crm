@@ -1,3 +1,6 @@
+<!-- scripts -->
+<script src="/js/proveedores.js"></script>
+
 <?php
 $title = 'Editar Proveedor';
 $this->headTitle($title);
@@ -11,6 +14,7 @@ $ciudad = $proveedor->getCiudad();
 $empresa = $proveedor->getEmpresa();
 $categoria = $proveedor->getCategoria();
 $condicion_iva = $persona->getCondicion_iva();
+$tipo_factura = $persona->getTipo_factura();
 $actividad = $proveedor->getActividad();
 $cargo = $proveedor->getCargo();
 $skype = $proveedor->getSkype();
@@ -45,12 +49,24 @@ $url = "/proveedores/listado/ficha/".$id;
                     <div class="row form-row">  
                         <input type="hidden" name="id" value="<?= $id ?>">
                         <div class="form-group col-md-4">
-                            <label>Nombre</label>
-                            <input type="text" class="form-control" name="nombre" value="<?php echo($nombre); ?>" placeholder="Ingresar Nombre">
+                            <label>Nombre *</label>
+                            <input type="text" class="form-control requerido" name="nombre" value="<?php echo($nombre); ?>" placeholder="Ingresar Nombre" required>
                         </div>
                         <div class="form-group col-md-4">
+                            <label>Teléfono</label>
+                            <input type="text" class="form-control" name="telefono" value="<?php echo($telefono); ?>" placeholder="Ingresar Teléfono">
+                        </div>
+                         <div class="form-group col-md-4">
+                            <label>Email</label>
+                            <input type="text" class="form-control" name="email" 
+                                value="<?php echo($email); ?>" placeholder="Ingresar Email">
+                        </div>
+                    </div>
+                    <!-- 2da fila -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-4">
                             <label>País</label>
-                            <select class="form-control" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
+                            <select class="form-control place_holder dropdown" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)">
                                 <option value="<?php if(isset($pais)){ echo ($pais->getId()); }?>" hidden="">  
                                     <?php if(isset($pais)){ echo($pais->getNombre()); } else {echo ("Seleccionar País");}?>
                                 </option>
@@ -59,9 +75,24 @@ $url = "/proveedores/listado/ficha/".$id;
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="form-group col-md-4" id="div_provincias">
+                            <label>Provincia</label>
+                            <select class="form-control place_holder dropdown" id="ops_provincias" name="provincia">
+                                <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); }?>" hidden="">  
+                                    <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Ciudad</label>
+                            <input type="text" class="form-control" name="ciudad" value="<?php echo($ciudad); ?>" placeholder="Ingresar Ciudad">
+                        </div>
+                    </div>
+                    <!-- 3ra fila -->
+                    <div class="row form-row">
                         <div class="form-group col-md-4">
                             <label>Categoría</label>
-                            <select class="form-control" id="categoria" name="categoria">
+                            <select class="form-control place_holder dropdown" id="categoria" name="categoria">
                                 <option value="<?php if(isset($categoria)){ echo ($categoria->getId()); }?>" hidden="">  
                                     <?php if(isset($categoria)){ echo($categoria->getNombre()); } else {echo ("Seleccionar Categoría");}?>
                                 </option>                           
@@ -70,37 +101,10 @@ $url = "/proveedores/listado/ficha/".$id;
                                 <?php endforeach; ?>
                             </select>
                         </div> 
-                    </div>
-                    <!-- 2da fila -->
-                    <div class="row form-row">
-                        <div class="form-group col-md-4">
-                            <label>Teléfono</label>
-                            <input type="text" class="form-control" name="telefono" value="<?php echo($telefono); ?>" placeholder="Ingresar Teléfono">
-                        </div>
-                        <div class="form-group col-md-4" id="div_provincias">
-                            <label>Provincia</label>
-                            <select class="form-control" id="ops_provincias" name="provincia" required="">
-                                <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); }?>" hidden="">  
-                                    <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
-                                </option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-4">
+                         <div class="form-group col-md-4">
                             <label>Skype</label>
                             <input type="text" class="form-control" name="skype" value="<?php echo($skype); ?>" placeholder="Ingresar Skype">
                         </div> 
-                    </div>
-                    <!-- 3ra fila -->
-                    <div class="row form-row">
-                        <div class="form-group col-md-4">
-                            <label>Email</label>
-                            <input type="text" class="form-control" name="email" 
-                                value="<?php echo($email); ?>" placeholder="Ingresar Email">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Ciudad</label>
-                            <input type="text" class="form-control" name="ciudad" value="<?php echo($ciudad); ?>" placeholder="Ingresar Ciudad">
-                        </div>
                     </div>
             </div>
         </div>
@@ -156,7 +160,7 @@ $url = "/proveedores/listado/ficha/".$id;
                     </div>
                     <div class="form-group col-md-4">
                         <label>Condición de IVA</label>
-                        <select class="form-control" id="condicion_iva" name="condicion_iva">
+                        <select class="form-control place_holder dropdown" id="condicion_iva" name="condicion_iva">
                             <option value="<?php if(isset($condicion_iva)){ echo ($condicion_iva->getId()); }?>" hidden="">  
                                 <?php if(isset($condicion_iva)){ echo($condicion_iva->getNombre()); } else {echo ("Seleccionar");}?>
                             </option>
@@ -167,18 +171,26 @@ $url = "/proveedores/listado/ficha/".$id;
                         </select>
                     </div>
                     <div class="form-group col-md-4">
+                        <label>Tipo de Factura</label>
+                        <select class="form-control  place_holder dropdown" id="tipo_factura" name="tipo_factura">
+                        <option value="<?php if(isset($tipo_factura)){ echo ($tipo_factura->getId()); }?>" hidden=""><?php if(isset($tipo_factura)){ echo($tipo_factura->getNombre()); } else {echo ("Seleccionar");}?>
+                            </option>  
+                            <option value="" hidden="">Seleccionar</option>
+                            <option value="-1">No definido</option>
+                            <?php foreach ($tiposFactura as $tipo_factura) : ?>
+                                <option value="<?php echo ($tipo_factura->getId()); ?>"><?php echo ($tipo_factura->getNombre()); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>    
+                   
+                </div>
+                <div class="row form-row">
+                    <div class="form-group col-md-2">
                         <label>Banco</label>
                         <input type="text" class="form-control" name="banco" 
                             value="<?= $persona->getBanco(); ?>" placeholder="Ingresar Banco">
                     </div>
-                </div>
-                <div class="row form-row">
-                    <div class="form-group col-md-4">
-                        <label>Dirección de Facturación</label>
-                        <input type="text" class="form-control" name="direccion_facturacion" 
-                            value="<?= $persona->getDireccion_facturacion(); ?>" placeholder="Ingresar Dirección de Facturación">
-                    </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-2">
                         <label>CUIT/CUIL</label>
                         <input type="text" class="form-control" name="cuit_cuil"
                         value="<?= $persona->getCuit_cuil(); ?>" placeholder="Ingresar CUIT/CUIL">
@@ -187,6 +199,11 @@ $url = "/proveedores/listado/ficha/".$id;
                         <label>CBU</label>
                         <input type="text" class="form-control" name="cbu"
                             value="<?= $persona->getCbu(); ?>" placeholder="Ingresar CBU">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Dirección de Facturación</label>
+                        <input type="text" class="form-control" name="direccion_facturacion" 
+                            value="<?= $persona->getDireccion_facturacion(); ?>" placeholder="Ingresar Dirección de Facturación">
                     </div>
                 </div>
             </div>

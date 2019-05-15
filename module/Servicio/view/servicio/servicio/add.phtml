@@ -28,8 +28,8 @@
                 <!-- 1ra fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-6">
-                        <label>Nombre</label>
-                        <input type="text" required="true" class="form-control" name="nombre" placeholder="Ingresar nombre">
+                        <label>Nombre *</label>
+                        <input type="text" required="true" class="form-control requerido" name="nombre" placeholder="Ingresar nombre" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Descripción</label>
@@ -39,8 +39,8 @@
                 <!-- 2da fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-6">
-                        <label>Código</label>
-                        <input type="text" required="true" class="form-control" name="codigo" placeholder="Ingresar código">
+                        <label>Código de Servicio *</label>
+                        <input type="text" required="true" class="form-control requerido" name="codigo" placeholder="Ingresar código" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Marca</label>
@@ -65,8 +65,8 @@
                 <div class="row form-row">
                     <div class="form-group col-md-6">
                     <label>Categoría</label>
-                        <select class="form-control" id="categoria" name="categoria">
-                            <option value="" hidden="">Seleccionar Categoría</option>
+                        <select class="form-control place_holder dropdown" id="categoria" name="categoria">
+                            <option value="-1" hidden="">Seleccionar Categoría</option>
                             <option value="-1">No definido</option>
                             <?php foreach ($categorias as $categoria) : ?>
                                 <option value="<?= $categoria->getId(); ?>">
@@ -77,8 +77,8 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label>Proveedor</label>
-                        <select class="form-control" id="proveedor" name="proveedor" required>
-                            <option value="" hidden="">Seleccionar Proveedor</option>
+                        <select class="form-control place_holder dropdown" id="proveedor" name="proveedor">
+                            <option value="-1" hidden="">Seleccionar Proveedor</option>
                             <option value="-1">No definido</option>
                             <?php foreach ($proveedores as $proveedor) : ?>
                                 <option value="<?= $proveedor->getId(); ?>">

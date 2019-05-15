@@ -35,9 +35,9 @@ $proveedor = $bien->getProveedor();
                 <!-- 1ra fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-6">
-                        <label>Nombre</label>
-                        <input type="text" required="true" class="form-control" name="nombre" placeholder="Ingresar nombre"
-                            value="<?php echo($bien->getNombre());?>">
+                        <label>Nombre *</label>
+                        <input type="text" required="true" class="form-control requerido" name="nombre" placeholder="Ingresar nombre"
+                            value="<?php echo($bien->getNombre());?>" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Descripción</label>
@@ -47,9 +47,9 @@ $proveedor = $bien->getProveedor();
                 <!-- 2da fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-6">
-                        <label>Código de Servicio</label>
-                        <input type="text" class="form-control" name="codigo"
-                            value="<?= $bien->getCodigo(); ?>">
+                        <label>Código de Servicio *</label>
+                        <input type="text" class="form-control requerido" name="codigo"
+                            value="<?= $bien->getCodigo(); ?>" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Marca</label>
@@ -73,7 +73,7 @@ $proveedor = $bien->getProveedor();
                 <div class="row form-row">
                     <div class="form-group col-md-6">
                         <label>Categoría</label>
-                        <select class="form-control" id="categoria" name="categoria">
+                        <select class="form-control place_holder dropdown" id="categoria" name="categoria">
                              <option value="<?php if(isset($categoria)){ echo ($categoria->getId()); }?>" hidden="">  
                                 <?php if(isset($categoria)){ echo $categoria->getNombre(); } else {echo ("Seleccionar Categoría");}?>
                             </option>
@@ -87,7 +87,7 @@ $proveedor = $bien->getProveedor();
                     </div>
                     <div class="form-group col-md-6">
                         <label>Proveedor</label>
-                        <select class="form-control" id="proveedor" name="proveedor" required>
+                        <select class="form-control place_holder dropdown" id="proveedor" name="proveedor">
                             <option value="<?php if(isset($proveedor)){ echo ($proveedor->getId()); }?>" hidden="">  
                                 <?php if(isset($proveedor)){ echo $proveedor->getPersona()->getNombre(); } else {echo ("Seleccionar Proveedor");}?>
                             </option>

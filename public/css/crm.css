@@ -2,6 +2,15 @@
     color: rgb(110, 111, 111) !important;
 } */
 
+/* select:invalid { color: gray !important; } */
+
+.place_holder{
+    color: gray !important;
+}
+option{
+    color: #000000 !important;
+}
+
 .enlace {
     display:inline;
     border:0;
@@ -425,6 +434,11 @@ table.dataTable tr.item-seleccion > .sorting_1 {
 .aling-right{
     text-align: right !important;
 }
+
+.requerido{
+    background-color: rgb(255, 248, 220) !important;
+}
+
 
 /****************************************************************************************/
 .autocomplete-items {

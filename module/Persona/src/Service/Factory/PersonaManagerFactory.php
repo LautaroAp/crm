@@ -16,9 +16,7 @@ class PersonaManagerFactory
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
-        $tipoFacturaManager = $container->get(TipoFacturaManager::class);
-                
-                        
+        $tipoFacturaManager = $container->get(TipoFacturaManager::class);   
         return new PersonaManager($entityManager, $tipoFacturaManager);
     }
 }

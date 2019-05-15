@@ -4,6 +4,7 @@ namespace Persona\Service;
 
 use DBAL\Entity\Persona;
 use DBAL\Entity\Categoria;
+use DBAL\Entity\Evento;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
@@ -44,6 +45,7 @@ class PersonaManager {
     public function addPersona($data, $tipo) {
         $persona = new Persona();
         $persona=$this->setData($persona, $data,$tipo, "S");
+        // $this->$eventoManager->
         $this->tryAddPersona($persona);
         return $persona;
     }

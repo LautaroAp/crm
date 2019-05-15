@@ -24,17 +24,21 @@ class ProveedorController extends HuellaController
      */
     protected $tipoEventosManager;
     protected $personaManager;
+    protected $tipoFacturaManager;
 
     public function __construct(
         $proveedorManager,
         $tipoEventosManager,
         $eventoManager,
-        $personaManager
+        $personaManager,
+        $tipoFacturaManager
     ) {
         $this->proveedorManager = $proveedorManager;
         $this->tipoEventosManager = $tipoEventosManager;
         $this->eventoManager = $eventoManager;
         $this->personaManager = $personaManager;
+        $this->tipoFacturaManager = $tipoFacturaManager;
+
     }
 
     public function indexAction(){
@@ -94,6 +98,7 @@ class ProveedorController extends HuellaController
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->proveedorManager->getCategoriasProveedor($tipo);
         $condiciones_iva = $this->proveedorManager->getCondicionIva('iva');
+        $tiposFactura = $this->tipoFacturaManager->getTipoFacturas();
         $pais = $this->proveedorManager->getPais();
         $provincia = $this->proveedorManager->getProvincia();
         // $licencia = $this->proveedorManager->getLicencia();
@@ -102,6 +107,10 @@ class ProveedorController extends HuellaController
             $data = $this->params()->fromPost();
             $proveedor = $this->proveedorManager->addProveedor($data);
             $id_persona = $proveedor->getPersona()->getId();
+            // Evento Automatico ALTA
+            $persona = $proveedor->getPersona();
+            $data_alta = $this->datosAlta();
+            $this->eventoManager->addEvento($data_alta, $persona); 
             $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $id_persona]);
         }
         $volver = $this->getUltimaUrl();
@@ -110,7 +119,7 @@ class ProveedorController extends HuellaController
             'condiciones_iva' => $condiciones_iva,
             'paises' => $pais,
             'provincias' => $provincia,
-            // 'licencias' => $licencia,
+            'tiposFactura' => $tiposFactura,
             'tipo' => $tipo,
             'volver' => $volver,
         ]);
@@ -135,7 +144,7 @@ class ProveedorController extends HuellaController
         $condiciones_iva = $this->proveedorManager->getCondicionIva('iva');
         $pais = $this->proveedorManager->getPais();
         $provincia = $this->proveedorManager->getProvincia();
-        // $licencia = $this->proveedorManager->getLicencia();
+        $tiposFactura = $this->tipoFacturaManager->getTipoFacturas();
         $_SESSION['TIPOEVENTO']['TIPO']=$tipo;
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
@@ -150,7 +159,7 @@ class ProveedorController extends HuellaController
             'condiciones_iva' => $condiciones_iva,
             'paises' => $pais,
             'provincias' => $provincia,
-            // 'licencias' => $licencia,
+            'tiposFactura' => $tiposFactura,
             'tipo' => $tipo,
             'volver' => $volver,
         ]);
@@ -233,5 +242,15 @@ class ProveedorController extends HuellaController
         $eventos = $persona->getEventos();
         $view = new ViewModel(['eventos' => $eventos]);
         return $view;
+    }
+
+    public function datosAlta(){
+        $data = [];
+        $data['id_cliente'] = '';
+        $data['ejecutivo'] = $_SESSION['EJECUTIVO'];
+        $data['fecha_evento'] = date('d/m/Y');;
+        $data['accion_comercial'] = '1';
+        $data['detalle'] = 'Registro de Alta';
+        return $data;
     }
 }
