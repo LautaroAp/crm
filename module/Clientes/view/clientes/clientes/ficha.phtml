@@ -553,7 +553,7 @@ $tipo_persona = strtolower($persona->getTipo());
                     $ruta = 'clientes/inactivos';
                 }
                 ?>
-                <a href="<?= $volver ?>" role="button">
+                <a href="<?= $this->url('gestionClientes/listado'); ?>" role="button">
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha zoom">
                 </a>
