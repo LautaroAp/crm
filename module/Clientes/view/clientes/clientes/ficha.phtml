@@ -131,7 +131,7 @@ $tipo_persona = strtolower($persona->getTipo());
                         <p><label>País:</label> <?php echo ($cliente->getNombrePaisCliente()); ?></p>
                         <br>
                         <p><label>Condición de IVA:</label> <?= $persona->getNombreCondicionIva(); ?></p>
-                        <!-- <p><label>Tipo de Factura:</label></p> -->
+                        <p><label>Tipo de Factura:</label> <?= $persona->getNombreTipoFactura(); ?></p>
                         <p><label>Banco:</label> <?= $persona->getBanco(); ?></p>
                         <p><label>CBU:</label> <?= $persona->getCbu(); ?></p>
                         <p><label>CUIT/CUIL:</label> <?= $persona->getCuit_cuil(); ?></p>
@@ -557,7 +557,7 @@ $tipo_persona = strtolower($persona->getTipo());
                     $ruta = 'clientes/inactivos';
                 }
                 ?>
-                <a href="<?= $volver ?>" role="button">
+                <a href="<?= $this->url('gestionClientes/listado'); ?>" role="button">
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha zoom">
                 </a>

@@ -10,6 +10,7 @@ use Evento\Service\EventoManager;
 use Persona\Service\PersonaManager;
 use DatoAdicional\Service\DatoAdicionalManager;
 use Servicio\Service\ServicioManager;
+use TipoFactura\Service\TipoFacturaManager;
 
 class ClientesControllerFactory implements FactoryInterface {
     
@@ -20,8 +21,9 @@ class ClientesControllerFactory implements FactoryInterface {
         $personaManager = $container->get(PersonaManager::class);
         $datoAdicionalManager = $container->get(DatoAdicionalManager::class);
         $servicioManager = $container->get(ServicioManager::class);
+        $tipoFacturaManager = $container->get(TipoFacturaManager::class);
 
         return new ClientesController($clientesManager, $tipoEventosManager,
-         $eventoManager, $personaManager, $datoAdicionalManager, $servicioManager);
+         $eventoManager, $personaManager, $datoAdicionalManager, $servicioManager, $tipoFacturaManager);
     }    
 }

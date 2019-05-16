@@ -19,6 +19,7 @@ $servicio = $cliente->getServicio();
 $version = $cliente->getVersion();
 $profesion = $cliente->getProfesion();
 $condicion_iva = $persona->getCondicion_iva();
+$tipo_factura = $persona->getTipo_factura();
 $actividad = $cliente->getActividad();
 $animales = $cliente->getAnimales();
 $establecimientos = $cliente->getEstablecimientos();
@@ -221,18 +222,25 @@ $raza_manejo = $cliente->getRazaManejo();
                         </select>
                     </div>
                     <div class="form-group col-md-4">
+                        <label>Tipo de Factura</label>
+                        <select class="form-control  place_holder dropdown" id="tipo_factura" name="tipo_factura">
+                        <option value="<?php if(isset($tipo_factura)){ echo ($tipo_factura->getId()); }?>" hidden=""><?php if(isset($tipo_factura)){ echo($tipo_factura->getNombre()); } else {echo ("Seleccionar");}?>
+                            </option>  
+                            <option value="" hidden="">Seleccionar</option>
+                            <option value="-1">No definido</option>
+                            <?php foreach ($tiposFactura as $tipo_factura) : ?>
+                                <option value="<?php echo ($tipo_factura->getId()); ?>"><?php echo ($tipo_factura->getNombre()); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>                   
+                </div>
+                <div class="row form-row">
+                    <div class="form-group col-md-2">
                         <label>Banco</label>
                         <input type="text" class="form-control" name="banco" 
                             value="<?= $persona->getBanco(); ?>" placeholder="Ingresar Banco">
                     </div>
-                </div>
-                <div class="row form-row">
-                    <div class="form-group col-md-4">
-                        <label>Dirección de Facturación</label>
-                        <input type="text" class="form-control" name="direccion_facturacion" 
-                            value="<?= $persona->getDireccion_facturacion(); ?>" placeholder="Ingresar Dirección de Facturación">
-                    </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-2">
                         <label>CUIT/CUIL</label>
                         <input type="text" class="form-control" name="cuit_cuil"
                         value="<?= $persona->getCuit_cuil(); ?>" placeholder="Ingresar CUIT/CUIL">
@@ -242,6 +250,12 @@ $raza_manejo = $cliente->getRazaManejo();
                         <input type="text" class="form-control" name="cbu"
                             value="<?= $persona->getCbu(); ?>" placeholder="Ingresar CBU">
                     </div>
+                    <div class="form-group col-md-4">
+                        <label>Dirección de Facturación</label>
+                        <input type="text" class="form-control" name="direccion_facturacion" 
+                            value="<?= $persona->getDireccion_facturacion(); ?>" placeholder="Ingresar Dirección de Facturación">
+                    </div>
+                    
                 </div>
             </div>
         </div>

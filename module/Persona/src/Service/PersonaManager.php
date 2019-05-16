@@ -22,25 +22,14 @@ class PersonaManager {
      */
     private $entityManager;
 
-    /**
-     * PHP template renderer.
-     * @var type 
-     */
-    private $viewRenderer;
-
-    /**
-     * Application config.
-     * @var type 
-     */
-    private $config;
+    private $tipoFacturaManager;
 
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) {
+    public function __construct($entityManager, $tipoFacturaManager) {
         $this->entityManager = $entityManager;
-        $this->viewRenderer = $viewRenderer;
-        $this->config = $config;
+        $this->tipoFacturaManager = $tipoFacturaManager;
     }
 
     //La funcion getTabla() devuelve tabla de clientes sin filtro    
@@ -103,6 +92,10 @@ class PersonaManager {
         }
         if (isset($data['cuit_cuil'])){
             $persona->setCuit_cuil($data['cuit_cuil']);
+        }
+        if (isset($data['tipo_factura'])){
+            $tipoFactura = $this->tipoFacturaManager->getTipoFactura($data['tipo_factura']);
+            $persona->setTipo_factura($tipoFactura);
         }
     }
 
@@ -247,5 +240,14 @@ class PersonaManager {
         }
         $this->entityManager->flush();
     }
+
+    public function eliminarTipoFactura($id) {
+        $personas = $this->entityManager->getRepository(Persona::class)->findBy(['tipo_factura'=>$id]);
+        foreach ($personas as $persona) {
+             $persona->setTipo_factura(null);
+        }
+        $this->entityManager->flush();
+    }
+
 
 }

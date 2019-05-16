@@ -103,6 +103,14 @@ class Persona {
      */
     private $direccion_facturacion;
 
+    
+    /**
+     * Many Personas have One TipoFactura.
+     * @ORM\ManyToOne(targetEntity="TipoFactura")
+     * @ORM\JoinColumn(name="ID_TIPO_FACTURA", referencedColumnName="ID")
+     */
+    private $tipo_factura;
+
     public function getId()
     {
         return $this->id;
@@ -358,4 +366,32 @@ class Persona {
         return  '{'.$output.'}' ;
     }
 
+
+    /**
+     * Get many Personas have One TipoFactura.
+     */ 
+    public function getTipo_factura()
+    {
+        return $this->tipo_factura;
+    }
+
+    /**
+     * Set many Personas have One TipoFactura.
+     *
+     * @return  self
+     */ 
+    public function setTipo_factura($tipo_factura)
+    {
+        $this->tipo_factura = $tipo_factura;
+
+        return $this;
+    }
+
+    public function getNombreTipoFactura() {
+        if (is_null($this->tipo_factura)) {
+            return null;
+        } else {
+            return (($this->tipo_factura->getNombre()));
+        }
+    }
 }

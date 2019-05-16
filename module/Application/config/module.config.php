@@ -653,6 +653,16 @@ return [
                             ],
                         ],
                     ],
+                    'tipofactura' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/tipofactura',
+                            'defaults' => [
+                                'controller' => \TipoFactura\Controller\TipoFacturaController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
                     'backup' => [
                         'type' => Segment::class,
                         'options' => [

@@ -34,6 +34,19 @@ $this->headTitle($title);
                         <input type="text" class="form-control requerido" name="nombre" placeholder="Ingresar Nombre y Apellido" required>
                     </div>
                     <div class="form-group col-md-4">
+                        <label>Teléfono</label>
+                        <input type="text" class="form-control" name="telefono" placeholder="Ingresar Teléfono">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="email" placeholder="Ingresar Email">
+                    </div>
+                   
+                    
+                </div>
+                <!-- Fila 2 -->
+                <div class="row form-row">
+                     <div class="form-group col-md-4">
                         <label>País</label>
                         <select class="form-control place_holder dropdown" id="pais" name="pais" onchange="actualizarDatosProvincias(this.value)" >
                             <option value="-1" hidden="">Seleccionar País</option>
@@ -41,22 +54,6 @@ $this->headTitle($title);
                                 <option value="<?php echo ($pais->getId()); ?>"><?php echo ($pais->getNombre()); ?></option>
                             <?php endforeach; ?>
                         </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Categoría</label>
-                        <select class="form-control place_holder dropdown" id="categoria" name="categoria">
-                            <option value="-1" hidden="">Seleccionar Categoría</option>
-                            <?php foreach ($categorias as $categoria) : ?>
-                            <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-                <!-- Fila 2 -->
-                <div class="row form-row">
-                    <div class="form-group col-md-4">
-                        <label>Teléfono</label>
-                        <input type="text" class="form-control" name="telefono" placeholder="Ingresar Teléfono">
                     </div>
                     <div class="form-group col-md-4">
                         <label>Provincia</label>
@@ -67,19 +64,25 @@ $this->headTitle($title);
                         </div>
                     </div> 
                     <div class="form-group col-md-4">
-                        <label>Skype</label>
-                        <input type="text" class="form-control" name="skype" placeholder="Ingresar Skype">
+                        <label>Ciudad</label>
+                        <input type="text" class="form-control" name="ciudad" placeholder="Ingresar Ciudad">
                     </div>
+                    
                 </div>
                 <!-- Fila 3 -->
                 <div class="row form-row">
                     <div class="form-group col-md-4">
-                        <label>Email</label>
-                        <input type="text" class="form-control" name="email" placeholder="Ingresar Email">
+                        <label>Categoría</label>
+                        <select class="form-control place_holder dropdown" id="categoria" name="categoria">
+                            <option value="-1" hidden="">Seleccionar Categoría</option>
+                            <?php foreach ($categorias as $categoria) : ?>
+                            <option value="<?php echo ($categoria->getId()); ?>"><?php echo ($categoria->getNombre()); ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Ciudad</label>
-                        <input type="text" class="form-control" name="ciudad" placeholder="Ingresar Ciudad">
+                        <label>Skype</label>
+                        <input type="text" class="form-control" name="skype" placeholder="Ingresar Skype">
                     </div>
                 </div>
             </div> 
@@ -140,16 +143,22 @@ $this->headTitle($title);
                         </select>
                     </div>
                     <div class="form-group col-md-4">
+                        <label>Tipo de Factura</label>
+                        <select class="form-control  place_holder dropdown" id="tipo_factura" name="tipo_factura">
+                            <option value="" hidden="">Seleccionar</option>
+                            <option value="-1">No definido</option>
+                            <?php foreach ($tiposFactura as $tipo_factura) : ?>
+                                <option value="<?php echo ($tipo_factura->getId()); ?>"><?php echo ($tipo_factura->getNombre()); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>          
+                </div>
+                <div class="row form-row">
+                    <div class="form-group col-md-2">
                         <label>Banco</label>
                         <input type="text" class="form-control" name="banco" placeholder="Ingresar Banco">
                     </div>
-                </div>
-                <div class="row form-row">
-                    <div class="form-group col-md-4">
-                        <label>Dirección de Facturación</label>
-                        <input type="text" class="form-control" name="direccion_facturacion" placeholder="Ingresar Dirección de Facturación">
-                    </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-2">
                         <label>CUIT/CUIL</label>
                         <input type="text" class="form-control" name="cuit_cuil" placeholder="Ingresar CUIT/CUIL">
                     </div>
@@ -157,6 +166,10 @@ $this->headTitle($title);
                         <label>CBU</label>
                         <input type="text" class="form-control" name="cbu" placeholder="Ingresar CBU">
                     </div>
+                    <div class="form-group col-md-4">
+                        <label>Dirección de Facturación</label>
+                        <input type="text" class="form-control" name="direccion_facturacion" placeholder="Ingresar Dirección de Facturación">
+                    </div>         
                 </div>
             </div>
         </div>

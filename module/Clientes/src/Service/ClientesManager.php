@@ -472,6 +472,7 @@ class ClientesManager {
         $this->entityManager->flush();
     }
 
+
     public function getTransacciones($idPersona){
         return $this->transaccionManager->getTransaccionesPersona($idPersona);
     }

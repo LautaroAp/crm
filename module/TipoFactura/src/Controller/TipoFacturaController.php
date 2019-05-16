@@ -17,15 +17,17 @@ class TipoFacturaController extends HuellaController {
      * @var User\Service\TipoFacturaManager 
      */
     protected $TipoFacturaManager;
+    private $personaManager;
 
-    public function __construct($entityManager, $tipoFacturaManager) {
+    public function __construct($entityManager, $tipoFacturaManager, $personaManager) {
         $this->entityManager = $entityManager;
         $this->tipoFacturaManager = $tipoFacturaManager;
+        $this->personaManager = $personaManager;
     }
 
     public function indexAction() {
         // $view = $this->procesarIndexAction();
-        $view = $this->procesarIndexAction();
+        $view = $this->procesarAddAction();
         return $view;
     }
 
@@ -36,7 +38,19 @@ class TipoFacturaController extends HuellaController {
         ]);
     }
 
-    
+    private function procesarAddAction() {
+        $tipoFacturas = $this->tipoFacturaManager->getTipoFacturas();
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $this->limpiarParametros($data);
+            $this->tipoFacturaManager->addTipoFactura($data);
+            return $this->redirect()->toRoute("herramientas/tipofactura");
+            
+        }
+        return new ViewModel([
+            'tipoFacturas' => $tipoFacturas,
+        ]);
+    }
 
     public function editAction() {
         $view = $this->procesarEditAction();
@@ -46,20 +60,28 @@ class TipoFacturaController extends HuellaController {
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         // $this->prepararBreadcrumbs("Editar", "/edit/".$id, "Tipo de factura");
-        $tipoFactura = $this->tipoFacuraManager->getTipoFactura($id);
+        $tipoFactura = $this->tipoFacturaManager->getTipoFactura($id);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $this->tipoFacuraManager->updateTipoFactura($tipoFactura, $data);
+            $this->tipoFacturaManager->updateTipoFactura($tipoFactura, $data);
             return $this->redirect()->toRoute('herramientas/tipofactura');
         }
         return new ViewModel(array(
-            'factura' => $tipoFactura,
+            'tipoFactura' => $tipoFactura,
         ));
     }
 
     public function removeAction() {
         $view = $this->procesarRemoveAction();
         return $view;
+    }
+
+    public function procesarRemoveAction() {
+        $id = (int) $this->params()->fromRoute('id', -1);
+        $tipoFactura = $this->tipoFacturaManager->getTipoFactura($id);
+        $this->personaManager->eliminarTipoFactura($id);
+        $this->tipoFacturaManager->removeTipoFactura($tipoFactura);
+        return $this->redirect()->toRoute('herramientas/tipofactura');
     }
 
     public function viewAction() {
