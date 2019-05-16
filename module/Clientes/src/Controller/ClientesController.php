@@ -289,6 +289,15 @@ class ClientesController extends HuellaController
         return $view;
     }
 
+    public function mostrarCuentaCorrienteAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $id_persona = $this->params()->fromRoute('id');
+        $cliente = $this->clientesManager->getClienteIdPersona($id_persona);
+        $transacciones = $cliente->getPersona()->getTransacciones();
+        $view = new ViewModel(['transacciones' => $transacciones, 'id_persona'=>$id_persona]);
+        return $view;
+    }
+
     public function backupAction(){
         $this->layout()->setTemplate('layout/nulo');
         $resultado = $this->clientesManager->getListaClientes();

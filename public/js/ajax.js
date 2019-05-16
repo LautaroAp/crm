@@ -80,7 +80,7 @@ function seleccionarItem(e) {
     }
 }
 
-// Llama a mostrarTransaccionesAction en ClientesController
+// Llama a mostrarTransaccionesAction en Controller
 function mostrarTransacciones(id_persona){
     if (tipo_persona=="cliente"){
         $.post('/clientes/ajax/mostrarTransacciones/' + id_persona, function (data) {
@@ -95,7 +95,7 @@ function mostrarTransacciones(id_persona){
    
 }
 
-// Llama a mostrarAccionesComercialesAction en ClientesController
+// Llama a mostrarAccionesComercialesAction en Controller
 function mostrarAccionesComerciales(id_persona){
     if (tipo_persona=="cliente"){
         $.post('/clientes/ajax/mostrarAccionesComerciales/' + id_persona, function (data) {
@@ -103,6 +103,20 @@ function mostrarAccionesComerciales(id_persona){
         });
     }else{
         $.post('/proveedores/ajax/mostrarAccionesComerciales/' + id_persona, function (data) {
+            $('#eventos').html(data);
+            });
+    }
+   
+}
+
+// Llama a mostrarAccionesComercialesAction en Controller
+function mostrarCuentaCorriente(id_persona){
+    if (tipo_persona=="cliente"){
+        $.post('/clientes/ajax/mostrarCuentaCorriente/' + id_persona, function (data) {
+        $('#eventos').html(data);
+        });
+    }else{
+        $.post('/proveedores/ajax/mostrarCuentaCorriente/' + id_persona, function (data) {
             $('#eventos').html(data);
             });
     }
