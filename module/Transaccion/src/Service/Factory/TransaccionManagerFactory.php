@@ -12,6 +12,7 @@ use Moneda\Service\MonedaManager;
 use Empresa\Service\EmpresaManager;
 use Bienes\Service\BienesManager;
 use CuentaCorriente\Service\CuentaCorrienteManager;
+
 /**
  * This is the factory class for TransaccionManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
@@ -34,6 +35,6 @@ class TransaccionManagerFactory
         $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);  
 
 
-        return new TransaccionManager($entityManager,$personaManager, $bienesTransaccionesManager, $ivaManager,$formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager);
+    return new TransaccionManager($entityManager,$personaManager, $bienesTransaccionesManager, $ivaManager,$formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager);
     }
 }

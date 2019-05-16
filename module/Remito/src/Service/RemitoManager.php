@@ -44,7 +44,8 @@ class RemitoManager extends TransaccionManager{
         $formaEnvioManager,
         $bienesManager, 
         $cuentaCorrienteManager) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager);
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, 
+                            $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager);
         $this->entityManager = $entityManager;
         $this->tipo = "REMITO";
     }
@@ -83,8 +84,9 @@ class RemitoManager extends TransaccionManager{
         $remito=$this->setData($remito, $data, $transaccion);
 
         $this->entityManager->persist($remito);
+        // $this->entityManager->flush();
+        // $this->setNumeroCuentaCorriente($transaccion, $remito->getNumero());
         $this->entityManager->flush();
-        $this->setNumeroCuentaCorriente($transaccion, $remito->getNumero());
 
         return $remito;
     }
@@ -94,6 +96,8 @@ class RemitoManager extends TransaccionManager{
         $transaccion = parent::add($data);
         $remito = new Remito();
         $remito = $this->setData($remito, $data, $transaccion);
+        $this->cuentaCorrienteManager->add($transaccion);
+
         // Apply changes to database.
         $this->entityManager->persist($remito);
         $this->entityManager->flush();
@@ -115,6 +119,7 @@ class RemitoManager extends TransaccionManager{
     public function edit($remito, $data) {
         $transaccion = parent::edit($remito->getTransaccion(), $data);
         $remito = $this->setData($remito, $data, $transaccion);
+
         // Apply changes to database.
         $this->entityManager->flush();
         return true;

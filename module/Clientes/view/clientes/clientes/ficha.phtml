@@ -324,6 +324,7 @@ $tipo_persona = strtolower($persona->getTipo());
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <br>
                     <a href="<?= $this->url('usuarios', ['action' => 'add', 'id' => $persona->getId()]); ?>"
                         type="button">
                         <span class="btn btn-default">
@@ -373,7 +374,7 @@ $tipo_persona = strtolower($persona->getTipo());
                             </button>
                         </div>
                         <!-- Cuenta Corriente -->
-                        <div class="btn-group pull-right">
+                        <div class="btn-group padding-md pull-right">
                             <button type="button" class="btn btn-default" style="font-weight: bold;"
                                 onclick="mostrarCuentaCorriente(<?= $id_persona ?>)">Cuenta Corriente</button>
                         </div>

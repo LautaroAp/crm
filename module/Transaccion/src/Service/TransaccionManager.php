@@ -82,7 +82,7 @@ class TransaccionManager {
 
     public function getTabla() {
         // Create the adapter
-        $adapter = new SelectableAdapter($sthis->entityManager->getRepository(Transaccion::class)); // An object repository implements Selectable
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(Transaccion::class)); // An object repository implements Selectable
         // Create the paginator itself
         $paginator = new Paginator($adapter);
         return ($paginator);
@@ -202,9 +202,7 @@ class TransaccionManager {
     public function edit($transaccion, $data) {
         $items = json_decode($data['jsonitems'], true);
         $transaccion=$this->setData($transaccion, $data);
-        // $this->setItems($transaccion, $data['items']);
         $this->setItems($transaccion,$items);        
-        $this->cuentaCorrienteManager->edit($transaccion);
         $this->entityManager->flush();
         return $transaccion;
     }
@@ -213,10 +211,8 @@ class TransaccionManager {
         $transaccion = new Transaccion();
         $items = json_decode($data['jsonitems'], true);
         $transaccion=$this->setData($transaccion, $data);
-        // $this->setItems($transaccion, $data['items']);
         $this->entityManager->persist($transaccion);    
         $this->setItems($transaccion,$items);
-        $this->cuentaCorrienteManager->add($transaccion);
         $this->entityManager->flush();
         return $transaccion;
     }
@@ -262,10 +258,10 @@ class TransaccionManager {
         return $transaccionesActivas;
     }
 
-    public function setNumeroCuentaCorriente($transaccion, $numero){
-        $registro = $this->cuentaCorrienteManager->getRegistroTransaccion($transaccion);
-        $registro->setNroTipoTransaccion($numero);
-        $this->entityManager->flush();
-    }
+    // public function setNumeroCuentaCorriente($transaccion, $numero){
+    //     $registro = $this->cuentaCorrienteManager->getRegistroTransaccion($transaccion);
+    //     $registro->setNroTipoTransaccion($numero);
+    //     $this->entityManager->flush();
+    // }
     
 }
