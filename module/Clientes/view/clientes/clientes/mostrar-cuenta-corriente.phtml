@@ -1,0 +1,132 @@
+<script>
+$(document).ready(function() {
+    $('#tabla_ventas').DataTable({
+        "order": [0, 'desc'],
+
+        "language": {
+            "url": "/json/spanish.json"
+        }
+    });
+
+    $('#tabla_cobros').DataTable({
+        "order": [0, 'desc'],
+
+        "language": {
+            "url": "/json/spanish.json"
+        }
+    });
+});
+var idPersona = <?= $id_persona ?>;
+</script>
+
+<!-- * * * * * * * * * * * * * * * DATATABLE VENTAS * * * * * * * * * * * * * * * -->
+<div class="col-lg-6">
+    <div class="panel panel-default sombra-ficha">
+        <div class="panel-heading text-center titulo-espaciado">
+            VENTAS
+        </div>
+        <div class="panel-body">
+            <table id="tabla_ventas" class="display">
+                <thead>
+                    <tr>
+                        <th class="">Fecha</th>
+                        <th class="">Tipo</th>
+                        <th class="">Nro</th> 
+                        <th class="">Importe</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo_eventos" role="button" class="">
+                    <?php foreach ($transacciones as $transaccion) :
+                        $idTransaccion = $transaccion->getId();
+                        $tipoTransaccion = $transaccion->getTipo();
+                    ?>
+                        <script>
+                            var tipoTransaccion = "<?= $tipoTransaccion ?>";
+                        </script>
+                    
+                    <tr id="<?= $transaccion->getId() ?>" class="vpEvento">
+                        <!-- FECHA -->
+                        <td id="<?= $transaccion->getId() ?>">
+                            <?php
+                            if (!is_null($transaccion->getFecha_transaccion())) {
+                                echo ($transaccion->getFecha_transaccion()->format('Y/m/d'));
+                            }
+                            ?></td>
+                        <!-- TIPO -->
+                        <td id="<?= $transaccion->getId() ?>" class="">
+                            <?php
+                                if (!is_null($transaccion->getTipo())) {
+                                    echo (ucfirst($transaccion->getTipo()));
+                                } else {
+                                    echo ('No definido');
+                                }
+                            ?></td>
+                        <!-- NRO -->
+                        <td><?= $transaccion->getNumeroTransaccionTipo() ?></td>
+                        <!-- IMPORTE -->
+                        <td><?= $transaccion->getMonto() ?></td>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- * * * * * * * * * * * * * * * DATATABLE COBROS * * * * * * * * * * * * * * * -->
+<div class="col-lg-6">
+    <div class="panel panel-default sombra-ficha">
+        <div class="panel-heading text-center titulo-espaciado">
+            COBROS
+        </div>
+        <div class="panel-body">
+            <table id="tabla_cobros" class="display">
+                <thead>
+                    <tr>
+                        <th class="">Fecha</th>
+                        <th class="">Tipo</th>
+                        <th class="">Nro</th> 
+                        <th class="">Importe</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo_eventos" role="button" class="">
+                    <?php foreach ($transacciones as $transaccion) :
+                        $idTransaccion = $transaccion->getId();
+                        $tipoTransaccion = $transaccion->getTipo();
+                    ?>
+                        <script>
+                            var tipoTransaccion = "<?= $tipoTransaccion ?>";
+                        </script>
+                    
+                    <tr id="<?= $transaccion->getId() ?>" class="vpEvento">
+                        <!-- FECHA -->
+                        <td id="<?= $transaccion->getId() ?>">
+                            <?php
+                            if (!is_null($transaccion->getFecha_transaccion())) {
+                                echo ($transaccion->getFecha_transaccion()->format('Y/m/d'));
+                            }
+                            ?></td>
+                        <!-- TIPO -->
+                        <td id="<?= $transaccion->getId() ?>" class="">
+                            <?php
+                                if (!is_null($transaccion->getTipo())) {
+                                    echo (ucfirst($transaccion->getTipo()));
+                                } else {
+                                    echo ('No definido');
+                                }
+                            ?></td>
+                        <!-- NRO -->
+                        <td><?= $transaccion->getNumeroTransaccionTipo() ?></td>
+                        <!-- IMPORTE -->
+                        <td><?= $transaccion->getMonto() ?></td>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
