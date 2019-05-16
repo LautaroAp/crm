@@ -49,5 +49,6 @@ return [
     'Cobro',
     'FormaPago',
     'FormaEnvio',
-    'DatoAdicional'
+    'DatoAdicional',
+    'CuentaCorriente'
 ];

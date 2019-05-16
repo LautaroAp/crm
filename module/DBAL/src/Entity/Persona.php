@@ -356,16 +356,21 @@ class Persona {
         return $this->datos_adicionales;
     }
 
-    public function getJson(){
+    public function getJson($autocompletar = true){
         $output = "";
-        $output .= '"value": "' . $this->getId() .'", ';
-        $output .= '"label": "' . $this->getNombre() .'", ';
-        $output .= '"nro": "' . $this->getId() .'", ';        
-        $output .= '"nombre": "' . $this->getNombre() .'" ';
-        
+        if ($autocompletar){
+            $output .= '"value": "' . $this->getId() .'", ';
+            $output .= '"label": "' . $this->getNombre() .'", ';
+            $output .= '"nro": "' . $this->getId() .'", ';        
+            $output .= '"nombre": "' . $this->getNombre() .'" ';
+        }else{
+            $output .= '"Id": "' . $this->getId() .'", ';
+            $output .= '"Nombre": "' . $this->getNombre() .'", ';
+            $output .= '"Email": "' . $this->getEmail() .'", ';        
+            $output .= '"Estado": "' . $this->getEstado() .'" ';
+        }
         return  '{'.$output.'}' ;
     }
-
 
     /**
      * Get many Personas have One TipoFactura.

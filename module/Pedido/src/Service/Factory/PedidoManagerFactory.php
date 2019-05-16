@@ -11,6 +11,8 @@ use Persona\Service\PersonaManager;
 use Iva\Service\IvaManager;
 use FormaPago\Service\FormaPagoManager;
 use FormaEnvio\Service\FormaEnvioManager;
+use CuentaCorriente\Service\CuentaCorrienteManager;
+
 /**
  * This is the factory class for PedidoManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
@@ -30,6 +32,8 @@ class PedidoManagerFactory
         $formaPagoManager = $container->get(FormaPagoManager::class);
         $formaEnvioManager = $container->get(FormaEnvioManager::class);
         $bienesManager = $container->get(BienesManager::class);  
-        return new PedidoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager,$formaEnvioManager, $bienesManager);
+        $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);  
+
+        return new PedidoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager,$formaEnvioManager, $bienesManager, $cuentaCorrienteManager);
     }
 }

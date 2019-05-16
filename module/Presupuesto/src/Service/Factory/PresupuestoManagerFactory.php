@@ -11,6 +11,7 @@ use Iva\Service\IvaManager;
 use FormaPago\Service\FormaPagoManager;
 use FormaEnvio\Service\FormaEnvioManager;
 use Bienes\Service\BienesManager;
+use CuentaCorriente\Service\CuentaCorrienteManager;
 
 /**
  * This is the factory class for PresupuestoManager service. The purpose of the factory
@@ -31,7 +32,8 @@ class PresupuestoManagerFactory
         $formaPagoManager = $container->get(FormaPagoManager::class);
         $formaEnvioManager = $container->get(FormaEnvioManager::class); 
         $bienesManager = $container->get(BienesManager::class);  
+        $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);  
 
-        return new PresupuestoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $bienesManager);
+        return new PresupuestoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $bienesManager, $cuentaCorrienteManager);
     }
 }

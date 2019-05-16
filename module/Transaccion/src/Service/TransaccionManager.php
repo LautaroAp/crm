@@ -7,6 +7,7 @@ use DBAL\Entity\Categoria;
 use DBAL\Entity\Persona;
 use DBAL\Entity\Ejecutivo;
 use DBAL\Entity\BienesTransacciones;
+use DBAL\Entity\CuentaCorriente;
 use DBAL\Entity\Empresa;
 use DBAL\Entity\Bienes;
 use Zend\Paginator\Paginator;
@@ -30,13 +31,13 @@ class TransaccionManager {
     protected $formaPagoManager;
     protected $formaEnvioManager;
     protected $bienesManager;
-    // protected $empresaManager;
+    protected $cuentaCorrienteManager;
     
     /**
      * Constructs the service.
      */
     public function __construct($entityManager, $personaManager, $bienesTransaccionesManager, $ivaManager,
-    $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager/*, $empresaManager*/) {
+    $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager) {
         $this->entityManager = $entityManager;
         $this->personaManager= $personaManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
@@ -45,7 +46,7 @@ class TransaccionManager {
         $this->formaEnvioManager = $formaEnvioManager;
         $this->monedaManager = $monedaManager;
         $this->bienesManager = $bienesManager;
-        // $this->empresaManager = $empresaManager;
+        $this->cuentaCorrienteManager = $cuentaCorrienteManager;
 
  
     }
