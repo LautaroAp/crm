@@ -32,6 +32,7 @@ class ClientesController extends HuellaController
     protected $personaManager;
     protected $servicioManager;
     protected $tipoFacturaManager;
+    protected $cuentaCorrienteManager;
 
 
     public function __construct(
@@ -41,7 +42,8 @@ class ClientesController extends HuellaController
         $personaManager,
         $datoAdicionalManager,
         $servicioManager,
-        $tipoFacturaManager
+        $tipoFacturaManager,
+        $cuentaCorrienteManager
     ) {
         $this->clientesManager = $clientesManager;
         $this->tipoEventosManager = $tipoEventosManager;
@@ -50,6 +52,7 @@ class ClientesController extends HuellaController
         $this->datoAdicionalManager = $datoAdicionalManager;
         $this->servicioManager = $servicioManager;
         $this->tipoFacturaManager = $tipoFacturaManager;
+        $this->cuentaCorrienteManager = $cuentaCorrienteManager;
     }
 
     public function indexAction(){
@@ -292,9 +295,9 @@ class ClientesController extends HuellaController
     public function mostrarCuentaCorrienteAction(){
         $this->layout()->setTemplate('layout/nulo');
         $id_persona = $this->params()->fromRoute('id');
-        $cliente = $this->clientesManager->getClienteIdPersona($id_persona);
-        $transacciones = $cliente->getPersona()->getTransacciones();
-        $view = new ViewModel(['transacciones' => $transacciones, 'id_persona'=>$id_persona]);
+        $ventas = $this->cuentaCorrienteManager->getVentas($id_persona);
+        $cobros = $this->cuentaCorrienteManager->getCobros($id_persona);
+        $view = new ViewModel(['cobros' => $cobros, 'ventas'=>$ventas ,'id_persona'=>$id_persona]);
         return $view;
     }
 

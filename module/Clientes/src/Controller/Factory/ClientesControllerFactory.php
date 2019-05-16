@@ -11,6 +11,7 @@ use Persona\Service\PersonaManager;
 use DatoAdicional\Service\DatoAdicionalManager;
 use Servicio\Service\ServicioManager;
 use TipoFactura\Service\TipoFacturaManager;
+use CuentaCorriente\Service\CuentaCorrienteManager;
 
 class ClientesControllerFactory implements FactoryInterface {
     
@@ -22,8 +23,9 @@ class ClientesControllerFactory implements FactoryInterface {
         $datoAdicionalManager = $container->get(DatoAdicionalManager::class);
         $servicioManager = $container->get(ServicioManager::class);
         $tipoFacturaManager = $container->get(TipoFacturaManager::class);
+        $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);
 
         return new ClientesController($clientesManager, $tipoEventosManager,
-         $eventoManager, $personaManager, $datoAdicionalManager, $servicioManager, $tipoFacturaManager);
+         $eventoManager, $personaManager, $datoAdicionalManager, $servicioManager, $tipoFacturaManager, $cuentaCorrienteManager);
     }    
 }

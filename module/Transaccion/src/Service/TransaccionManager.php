@@ -203,7 +203,8 @@ class TransaccionManager {
         $items = json_decode($data['jsonitems'], true);
         $transaccion=$this->setData($transaccion, $data);
         // $this->setItems($transaccion, $data['items']);
-        $this->setItems($transaccion,$items);
+        $this->setItems($transaccion,$items);        
+        $this->cuentaCorrienteManager->edit($transaccion);
         $this->entityManager->flush();
         return $transaccion;
     }
@@ -215,6 +216,7 @@ class TransaccionManager {
         // $this->setItems($transaccion, $data['items']);
         $this->entityManager->persist($transaccion);    
         $this->setItems($transaccion,$items);
+        $this->cuentaCorrienteManager->add($transaccion);
         $this->entityManager->flush();
         return $transaccion;
     }
@@ -260,5 +262,10 @@ class TransaccionManager {
         return $transaccionesActivas;
     }
 
+    public function setNumeroCuentaCorriente($transaccion, $numero){
+        $registro = $this->cuentaCorrienteManager->getRegistroTransaccion($transaccion);
+        $registro->setNroTipoTransaccion($numero);
+        $this->entityManager->flush();
+    }
     
 }

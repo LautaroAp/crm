@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="CUENTA_CORRIENTE")
  */
-class BienesTransacciones {
+class CuentaCorriente {
     //put your code here
     
     /**

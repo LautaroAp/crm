@@ -84,6 +84,8 @@ class RemitoManager extends TransaccionManager{
 
         $this->entityManager->persist($remito);
         $this->entityManager->flush();
+        $this->setNumeroCuentaCorriente($transaccion, $remito->getNumero());
+
         return $remito;
     }
 

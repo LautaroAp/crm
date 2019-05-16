@@ -36,35 +36,38 @@ class CuentaCorrienteManager {
                         ->findOneById($id);
     }
 
-    public function getTransaccionesTipos($idPersona, $tipos){
+    public function getTransaccionesTipos($persona, $tipos){
         $queryBuilder = $this->entityManager->createQueryBuilder();
         $queryBuilder->select('T')
                      ->from(CuentaCorriente::class, 'T');
-        $queryBuilder->where("T.persona = ?$p")->setParameter("$p", $idPersona);
-        $queryBuilder->andWhere('T.tipo_actividad IN (:tipos)')->setParameter('tipos', $tipos);
+        $nombreCampo="persona";
+        $queryBuilder->where("T.persona = :p")->setParameter('p',$persona);
+        $queryBuilder->andWhere('T.tipoActividad IN (:tipos)')->setParameter('tipos', $tipos);
         $queryBuilder->orderBy('T.fecha', 'DESC');
-        return $queryBuilder->getQuery();
+        return $queryBuilder->getQuery()->getResult();
     }
 
-    public function getVentas($persona){
-        $idPersona = $persona->getId();
+    public function getVentas($idPersona){
+        $persona = $this->personaManager->getPersona($idPersona);
         if(strtoupper($persona->getTipo())=="CLIENTE"){
             $tipos = ["remito", "factura"];
         }else{
             $tipos = ["recibo"];
         }
-        $transacciones = $this->getTransaccionesTipos($idPersona,$tipos);
+
+        $transacciones = $this->getTransaccionesTipos($persona,$tipos);
         return $transacciones;
     }
     
-    public function getCobros($persona){
-        $idPersona = $persona->getId();
+    public function getCobros($idPersona){
+        $persona = $this->personaManager->getPersona($idPersona);
         if(strtoupper($persona->getTipo())=="CLIENTE"){
             $tipos = ["recibo"];
         }else{
             $tipos =["remito", "factura"]; 
         }
-        $transacciones = $this->getTransaccionesTipos($idPersona,$tipos);
+
+        $transacciones = $this->getTransaccionesTipos($persona,$tipos);
         return $transacciones;
     }
 
@@ -72,18 +75,22 @@ class CuentaCorrienteManager {
      * This method adds a new register.
      */
     public function add($transaccion) {
-        $cuentaCorriente = new CuentaCorriente();
-        $cuentaCorriente=$this->setData($cuentaCorriente, $transaccion);
-        $this->entityManager->persist($cuentaCorriente);
-        $this->entityManager->flush();
-        return $cuentaCorriente;
+        $tipoTransaccion = strtoupper($transaccion->getTipo());
+        if ($tipoTransaccion=="REMITO"||$tipoTransaccion=="FACTURA" ||$tipoTransaccion=="RECIBO"){
+            $cuentaCorriente = new CuentaCorriente();
+            $cuentaCorriente=$this->setData($cuentaCorriente, $transaccion);
+            $this->entityManager->persist($cuentaCorriente);
+            $this->entityManager->flush();
+            return $cuentaCorriente;
+        }
+        return null;
     }
 
     private function setData($cuentaCorriente, $transaccion){
         $cuentaCorriente->setPersona($transaccion->getPersona());
         $cuentaCorriente->setTransaccion($transaccion);
         $cuentaCorriente->setMonto($transaccion->getMonto());
-        $cuentaCorriente->setFecha($transaccion->getFecha());
+        $cuentaCorriente->setFecha($transaccion->getFecha_transaccion());
         $cuentaCorriente->setNroTipoTransaccion($transaccion->getNumeroTransaccionTipo());
         $cuentaCorriente->setTipoActividad($transaccion->getTipo());
         return $cuentaCorriente;
@@ -92,11 +99,14 @@ class CuentaCorrienteManager {
     /**
      * This method updates data of an existing servicio.
      */
-    public function update($cuentaCorriente, $transaccion) {
-        $cuentaCorriente=$this->setData($cuentaCorriente, $transaccion);
+    public function edit($transaccion) {
+        $cuentaCorriente = $this->entityManager->getRegistroTransaccion($transaccion);
+        if (!is_null($cuentaCorriente)){
+            $cuentaCorriente=$this->setData($cuentaCorriente, $transaccion);
         // Apply changes to database.
         $this->entityManager->flush();
         return true;
+        }
     }
 
     public function getRegistroTransaccion($transaccion){

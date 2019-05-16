@@ -36,35 +36,31 @@ var idPersona = <?= $id_persona ?>;
                     </tr>
                 </thead>
                 <tbody id="cuerpo_eventos" role="button" class="">
-                    <?php foreach ($transacciones as $transaccion) :
-                        $idTransaccion = $transaccion->getId();
-                        $tipoTransaccion = $transaccion->getTipo();
+                    <?php foreach ($ventas as $venta) :
+                        $idTransaccion = $venta->getId();
+                        $tipoTransaccion = $venta->getTipoActividad();
                     ?>
-                        <script>
-                            var tipoTransaccion = "<?= $tipoTransaccion ?>";
-                        </script>
-                    
-                    <tr id="<?= $transaccion->getId() ?>" class="vpEvento">
+                    <tr id="<?= $venta->getId() ?>" class="vpEvento">
                         <!-- FECHA -->
-                        <td id="<?= $transaccion->getId() ?>">
+                        <td id="<?= $venta->getId() ?>">
                             <?php
-                            if (!is_null($transaccion->getFecha_transaccion())) {
-                                echo ($transaccion->getFecha_transaccion()->format('Y/m/d'));
+                            if (!is_null($venta->getFecha())) {
+                                echo ($venta->getFecha()->format('Y/m/d'));
                             }
                             ?></td>
                         <!-- TIPO -->
-                        <td id="<?= $transaccion->getId() ?>" class="">
+                        <td id="<?= $venta->getId() ?>" class="">
                             <?php
-                                if (!is_null($transaccion->getTipo())) {
-                                    echo (ucfirst($transaccion->getTipo()));
+                                if (!is_null($venta->getTipoActividad())) {
+                                    echo (ucfirst($venta->getTipoActividad()));
                                 } else {
                                     echo ('No definido');
                                 }
                             ?></td>
                         <!-- NRO -->
-                        <td><?= $transaccion->getNumeroTransaccionTipo() ?></td>
+                        <td><?= $venta->getNroTipoTransaccion() ?></td>
                         <!-- IMPORTE -->
-                        <td><?= $transaccion->getMonto() ?></td>
+                        <td><?= $venta->getMonto() ?></td>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -91,36 +87,31 @@ var idPersona = <?= $id_persona ?>;
                         <th class="">Importe</th>
                     </tr>
                 </thead>
-                <tbody id="cuerpo_eventos" role="button" class="">
-                    <?php foreach ($transacciones as $transaccion) :
-                        $idTransaccion = $transaccion->getId();
-                        $tipoTransaccion = $transaccion->getTipo();
+                <?php foreach ($cobros as $cobro) :
+                        $idTransaccion = $cobro->getId();
+                        $tipoTransaccion = $cobro->getTipoActividad();
                     ?>
-                        <script>
-                            var tipoTransaccion = "<?= $tipoTransaccion ?>";
-                        </script>
-                    
-                    <tr id="<?= $transaccion->getId() ?>" class="vpEvento">
+                    <tr id="<?= $cobro->getId() ?>" class="vpEvento">
                         <!-- FECHA -->
-                        <td id="<?= $transaccion->getId() ?>">
+                        <td id="<?= $cobro->getId() ?>">
                             <?php
-                            if (!is_null($transaccion->getFecha_transaccion())) {
-                                echo ($transaccion->getFecha_transaccion()->format('Y/m/d'));
+                            if (!is_null($cobro->getFecha())) {
+                                echo ($cobro->getFecha()->format('Y/m/d'));
                             }
                             ?></td>
                         <!-- TIPO -->
-                        <td id="<?= $transaccion->getId() ?>" class="">
+                        <td id="<?= $cobro->getId() ?>" class="">
                             <?php
-                                if (!is_null($transaccion->getTipo())) {
-                                    echo (ucfirst($transaccion->getTipo()));
+                                if (!is_null($cobro->getTipoActividad())) {
+                                    echo (ucfirst($cobro->getTipoActividad()));
                                 } else {
                                     echo ('No definido');
                                 }
                             ?></td>
                         <!-- NRO -->
-                        <td><?= $transaccion->getNumeroTransaccionTipo() ?></td>
+                        <td><?= $cobro->getNroTipoTransaccion() ?></td>
                         <!-- IMPORTE -->
-                        <td><?= $transaccion->getMonto() ?></td>
+                        <td><?= $cobro->getMonto() ?></td>
                         </td>
                     </tr>
                     <?php endforeach; ?>
