@@ -1,3 +1,6 @@
+
+<script src="/js/cuenta-corriente.js"></script>
+
 <script>
 $(document).ready(function() {
     $('#tabla_ventas').DataTable({
@@ -50,15 +53,7 @@ var idPersona = <?= $id_persona ?>;
                                 }
                                 ?></td>
                             <!-- TIPO -->
-                            <td id="<?= $venta->getId() ?>" class="">
-                                <?php
-                                    if (!is_null($venta->getTipoActividad())) {
-                                        echo (ucfirst($venta->getTipoActividad()));
-                                    } else {
-                                        echo ('No definido');
-                                    }
-                                ?>
-                            </td>
+                            <td><?= ucfirst($venta->getTipoActividad()) ?></td>
                             <!-- NRO -->
                             <td><?= str_pad($venta->getNroTipoTransaccion(), 4, "0", STR_PAD_LEFT) ?></td>
                             <!-- IMPORTE -->
@@ -141,13 +136,13 @@ var idPersona = <?= $id_persona ?>;
                 <div class="row form-row">
                     <div class="form-group col-md-12">
                         <label>Total en Ventas</label>
-                        <input type="text" class="form-control" name="" id="" value="" readonly>
+                        <input type="text" class="form-control" name="total_ventas" id="total_ventas" value="$ 0.00" readonly>
                     </div>
                 </div>
                 <div class="row form-row">
                     <div class="form-group col-md-12">
                         <label>Total Facturado</label>
-                        <input type="text" class="form-control" name="" id="" value="" readonly>
+                        <input type="text" class="form-control" name="total_facturado" id="total_facturado" value="$ 0.00" readonly>
                     </div>
                 </div>
             </div>
@@ -159,20 +154,20 @@ var idPersona = <?= $id_persona ?>;
             <div class="panel-body">
                 <div class="row form-row">
                     <div class="form-group col-md-12">
-                        <label>Saldo pendiente de Cobro</label>
-                        <input type="text" class="form-control" name="" id="" value="" readonly>
+                        <label id="titulo_saldo">Saldo del cliente</label>
+                        <input type="text" class="form-control" name="saldo_pendiente_cobro" id="saldo_pendiente_cobro" value="$ 0.00" readonly>
                     </div>
                 </div>
                 <div class="row form-row">
                     <div class="form-group col-md-12">
                         <label>Pendiente a Facturar</label>
-                        <input type="text" class="form-control" name="" id="" value="" readonly>
+                        <input type="text" class="form-control" name="saldo_pendiente_factura" id="saldo_pendiente_factura" value="$ 0.00" readonly>
                     </div>
                 </div>
                 <div class="row form-row">
                     <div class="form-group col-md-12">
-                        <label>Cuenta Corriente Global</label>
-                        <input type="text" class="form-control" name="" id="" value="" readonly>
+                        <label id="titulo_gral">Cuenta Corriente Global</label>
+                        <input type="text" class="form-control" name="cuenta_corriente_global" id="cuenta_corriente_global" value="$ 0.00" readonly>
                     </div>
                 </div>
             </div>
@@ -185,10 +180,14 @@ var idPersona = <?= $id_persona ?>;
                 <div class="row form-row">
                     <div class="form-group col-md-12">
                         <label>Total en Cobros</label>
-                        <input type="text" class="form-control" name="" id="" value="" readonly>
+                        <input type="text" class="form-control" name="total_cobros" id="total_cobros" value="$ 0.00" readonly>
                     </div>
                 </div>
             </div>
         </div>
     </div> 
 </div>
+
+<script>
+    calcularCuentaCorriente();
+</script>

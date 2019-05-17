@@ -54,6 +54,8 @@ if(!is_null($transaccion->getTransaccionPrevia())){
 }
 $url = "/clientes/listado/ficha/" . $persona->getId();
 $responsable = $this->identity();
+$tipoPersona = strtoupper($persona->getTipo());
+
 ?>
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
@@ -83,6 +85,8 @@ if(transaccionPreviaNum!=null){
     getItemsTransaccionPrevia();
 }
 var transaccionJson = null;
+var tipoPersona = "<?= $tipoPersona ?>";
+
 </script>
 
 <!-- Document -->

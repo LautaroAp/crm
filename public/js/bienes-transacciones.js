@@ -702,6 +702,7 @@ function saveTd(tdId) {
         inputValue = select.options[select.selectedIndex].text;
     } else {
         inputValue = document.getElementById(inputId).value;
+        console.log(inputValue);
     }
     numValue = getNumberValue(inputValue);
     inputElement = document.getElementById(inputId);

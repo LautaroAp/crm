@@ -97,8 +97,11 @@ class CobroManager extends TransaccionManager
         $transaccion = parent::edit($cobro->getTransaccion(), $data);
         $cobro = $this->setData($cobro, $data, $transaccion);
         $this->actualizaFechas($data);
+
         // Apply changes to database.
         $this->entityManager->flush();
+        $this->cuentaCorrienteManager->edit($transaccion);
+
         return true;
     }
 
@@ -108,6 +111,8 @@ class CobroManager extends TransaccionManager
         $cobro = new Cobro();
         $cobro = $this->setData($cobro, $data, $transaccion);
         $this->actualizaFechas($data);
+        $this->cuentaCorrienteManager->add($transaccion);
+
         // Apply changes to database.
         $this->entityManager->persist($cobro);
         $this->entityManager->flush();

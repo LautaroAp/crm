@@ -62,7 +62,7 @@ class CuentaCorrienteManager {
     public function getCobros($idPersona){
         $persona = $this->personaManager->getPersona($idPersona);
         if(strtoupper($persona->getTipo())=="CLIENTE"){
-            $tipos = ["recibo"];
+            $tipos = ["cobro"];
         }else{
             $tipos =["remito", "factura"]; 
         }
@@ -76,7 +76,7 @@ class CuentaCorrienteManager {
      */
     public function add($transaccion) {
         $tipoTransaccion = strtoupper($transaccion->getTipo());
-        if ($tipoTransaccion=="REMITO"||$tipoTransaccion=="FACTURA" ||$tipoTransaccion=="RECIBO"){
+        if ($tipoTransaccion=="REMITO"||$tipoTransaccion=="FACTURA" ||$tipoTransaccion=="RECIBO" || $tipoTransaccion=="COBRO"){
             $cuentaCorriente = new CuentaCorriente();
             $cuentaCorriente=$this->setData($cuentaCorriente, $transaccion);
             $this->entityManager->persist($cuentaCorriente);
@@ -100,19 +100,18 @@ class CuentaCorrienteManager {
      * This method updates data of an existing servicio.
      */
     public function edit($transaccion) {
-        $cuentaCorriente = $this->entityManager->getRegistroTransaccion($transaccion);
+        $cuentaCorriente = $this->getRegistroTransaccion($transaccion);
         if (!is_null($cuentaCorriente)){
             $cuentaCorriente=$this->setData($cuentaCorriente, $transaccion);
-        // Apply changes to database.
-        $this->entityManager->flush();
-        return true;
+            // Apply changes to database.
+            $this->entityManager->flush();
+            return true;
         }
     }
 
     public function getRegistroTransaccion($transaccion){
         $idTransaccion = $transaccion->getId();
-        return $this->entityManager->getRepository(CuentaCorriente::class)
-                        ->findOneBy(['transaccion',$idTransaccion]);
+        return $this->entityManager->getRepository(CuentaCorriente::class)->findOneBy(['transaccion'=>$idTransaccion]);
     }
 
     public function remove($transaccion) {
