@@ -7,12 +7,47 @@
 
 namespace CuentaCorriente;
 
+use Zend\Router\Http\Segment;
+
 return [
     'router' => [
-        'routes' =>[],
+        'routes' =>[
+            'cuentacorriente' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route' =>'/cuentacorriente',
+                    'defaults' => [
+                        'controller' => Controller\CuentaCorrienteController::class, 
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'ajax' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '/ajax[/:action[/:id]]',
+                            'defaults' => [
+                                'controller' => Controller\CuentaCorrienteController::class,                               
+                            ],
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[a-zA-Z0-9_-]*',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
     ],
+    'controllers' => array(
+        'factories' => [
+            Controller\CuentaCorrienteController::class => Controller\Factory\CuentaCorrienteControllerFactory::class,
+        ],
+     ),
      'view_manager' => array(
          'template_path_stack' => array(
+            'cuentacorriente' => __DIR__ . '/../view',
          ),
      ),
     'service_manager' => array(

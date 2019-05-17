@@ -25,19 +25,22 @@ class ProveedorController extends HuellaController
     protected $tipoEventosManager;
     protected $personaManager;
     protected $tipoFacturaManager;
+    protected $cuentaCorrienteManager;
 
     public function __construct(
         $proveedorManager,
         $tipoEventosManager,
         $eventoManager,
         $personaManager,
-        $tipoFacturaManager
+        $tipoFacturaManager,
+        $cuentaCorrienteManager
     ) {
         $this->proveedorManager = $proveedorManager;
         $this->tipoEventosManager = $tipoEventosManager;
         $this->eventoManager = $eventoManager;
         $this->personaManager = $personaManager;
         $this->tipoFacturaManager = $tipoFacturaManager;
+        $this->cuentaCorrienteManager = $cuentaCorrienteManager;
 
     }
 
@@ -241,6 +244,15 @@ class ProveedorController extends HuellaController
         $persona = $this->personaManager->getPersona($id_persona);
         $eventos = $persona->getEventos();
         $view = new ViewModel(['eventos' => $eventos]);
+        return $view;
+    }
+
+    public function mostrarCuentaCorrienteAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $id_persona = $this->params()->fromRoute('id');
+        $ventas = $this->cuentaCorrienteManager->getVentas($id_persona);
+        $cobros = $this->cuentaCorrienteManager->getCobros($id_persona);
+        $view = new ViewModel(['cobros' => $cobros, 'ventas'=>$ventas ,'id_persona'=>$id_persona]);
         return $view;
     }
 
