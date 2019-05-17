@@ -9,6 +9,7 @@ use TipoEvento\Service\TipoEventoManager;
 use Evento\Service\EventoManager;
 use Persona\Service\PersonaManager;
 use TipoFactura\Service\TipoFacturaManager;
+use CuentaCorriente\Service\CuentaCorrienteManager;
 
 class ProveedorControllerFactory implements FactoryInterface {
     
@@ -18,8 +19,9 @@ class ProveedorControllerFactory implements FactoryInterface {
         $eventoManager = $container->get(EventoManager::class);
         $personaManager = $container->get(PersonaManager::class);
         $tipoFacturaManager = $container->get(TipoFacturaManager::class);
+        $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);
 
         return new ProveedorController($proveedorManager, $tipoEventosManager,
-         $eventoManager, $personaManager, $tipoFacturaManager);
+         $eventoManager, $personaManager, $tipoFacturaManager, $cuentaCorrienteManager);
     }    
 }

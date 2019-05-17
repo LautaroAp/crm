@@ -1,3 +1,6 @@
+<!-- scripts -->
+<script src="/js/proveedores.js"></script>
+
 <?php
 $this->headTitle('Detalles del Proveedor');
 // if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
@@ -307,14 +310,15 @@ $tipo_persona = strtolower($persona->getTipo());
                                 class="btn btn-default">
                                 <span class="glyphicon glyphicon-plus" ></span>
                             </a>
-                        </div>
-                        <!-- Eliminar Evento -->
-                        <div class="btn-group pull-right">
-                            <button type="button" class="btn btn-default" style="font-weight: bold;">Eliminar Evento</button>
-                            <a role="button" class="btn btn-default" data-toggle="modal" data-target="#eventoModal">
+                            <a role="button" id="eliminar_evento" class="btn btn-default" data-toggle="modal" data-target="#eventoModal">
                                 <span class="glyphicon glyphicon-minus" ></span>
                             </a>
-                        </div> 
+                        </div>
+                        <!-- Cuenta Corriente -->
+                        <div class="btn-group padding-md pull-right">
+                            <button type="button" class="btn btn-default" style="font-weight: bold;"
+                                onclick="mostrarCuentaCorriente(<?= $id_persona ?>)">Cuenta Corriente</button>
+                        </div>
                     </div>
 
                     <!--Menu Transaccion-->
@@ -345,7 +349,7 @@ $tipo_persona = strtolower($persona->getTipo());
                                 <li>
                                 <a href="<?= $this->url("cobro/agregar", ['id' => $persona->getId()]); ?>"
                                         class="transaccion-font">
-                                        <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp; Pago
+                                        <span class="glyphicon glyphicon-credit-card"></span>&nbsp; Pago
                                     </a>
                                 </li>
                             </ul>
@@ -367,7 +371,7 @@ $tipo_persona = strtolower($persona->getTipo());
                                 </li>
                                 <li>
                                     <a href="#" class="transaccion-font">
-                                        <span class="glyphicon glyphicon-tags" ></span>&nbsp; Nota de Crédito C/Pago
+                                        <span class="glyphicon glyphicon-tags"></span>&nbsp; Nota de Crédito C/Pago
                                     </a>
                                 </li>
                             </ul>
@@ -433,11 +437,12 @@ $tipo_persona = strtolower($persona->getTipo());
                 </button>
             </div>
             <div class="modal-body">
-                <p>¿Está seguro que desea eliminar los eventos seleccionados?</p>
+                <p id="eliminar_evento_1">¿Está seguro que desea eliminar las eventos seleccionados?</p>
+                <p id="eliminar_evento_0" hidden>No hay evento/s seleccionados</p>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-default" onclick="eliminaEventos()">Aceptar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button id="eliminar_evento_aceptar" class="btn btn-default" onclick="eliminaEventos()">Aceptar</button>
+                <button id="eliminar_evento_cerrar" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
