@@ -28,38 +28,47 @@ class CuentaCorrienteController extends HuellaController
     }
 
     public function indexAction() {
-        $request = $this->getRequest();
-        $transaccion =$this->params()->fromRoute('transaccion');
-        $accion = $this->params()->fromRoute('accion');
-        $id_persona = $this->params()->fromRoute('id');
-        $ivas = $this->ivaManager->getIvas();
+        // $request = $this->getRequest();
+        // $transaccion =$this->params()->fromRoute('transaccion');
+        // $accion = $this->params()->fromRoute('accion');
+        // $id_persona = $this->params()->fromRoute('id');
+        // $ivas = $this->ivaManager->getIvas();
 
-        if ($request->isPost()) {
-            //SI SE COMPLETO EL FORMULARIO DE BUSQUEDA TOMO ESOS PARAMETROS Y LOS GUARDO EN LA SESION 
-            $parametros = $this->params()->fromPost();
-            $_SESSION['PARAMETROS_BIENES'] = $parametros;
-        }
+        // if ($request->isPost()) {
+        //     //SI SE COMPLETO EL FORMULARIO DE BUSQUEDA TOMO ESOS PARAMETROS Y LOS GUARDO EN LA SESION 
+        //     $parametros = $this->params()->fromPost();
+        //     $_SESSION['PARAMETROS_BIENES'] = $parametros;
+        // }
 
-        if (isset($_SESSION['PARAMETROS_BIENES'])) {
-            //SI HAY PARAMETROS GUARDADOS EN LA SESION TOMAR ESOS PARAMETROS 
-            $parametros = $_SESSION['PARAMETROS_BIENES'];
-        } else {
-            //SI NO HAY PARAMETROS CREAR NUEVOS
-            $parametros = array();
-        }
+        // if (isset($_SESSION['PARAMETROS_BIENES'])) {
+        //     //SI HAY PARAMETROS GUARDADOS EN LA SESION TOMAR ESOS PARAMETROS 
+        //     $parametros = $_SESSION['PARAMETROS_BIENES'];
+        // } else {
+        //     //SI NO HAY PARAMETROS CREAR NUEVOS
+        //     $parametros = array();
+        // }
 
-        $parametros = $this->limpiarParametros($parametros);
-        if (($this->agregar($parametros)) and (!$this->busqueda($parametros))){
-            return $this->addItem($parametros, $transaccion, $id_persona, $accion);
-        }
+        // $parametros = $this->limpiarParametros($parametros);
+        // if (($this->agregar($parametros)) and (!$this->busqueda($parametros))){
+        //     return $this->addItem($parametros, $transaccion, $id_persona, $accion);
+        // }
         // $cuentaCorriente = $this->cuentaCorrienteManager->getCuentaCorrienteFiltrados2($parametros);
 
-        return new ViewModel([
-            'cuentaCorriente' => $cuentaCorriente,
-            'ivas' => $ivas,
-            'transaccion' => $transaccion,
-            'id_persona' => $id_persona
+        $ventas = $this->cuentaCorrienteManager->getVentas();
+        $cobros = $this->cuentaCorrienteManager->getCobros();
+        $view = new ViewModel([
+            'cobros' => $cobros,
+            'ventas'=>$ventas,
+            // 'id_persona'=>$id_persona
         ]);
+        return $view;
+
+        // return new ViewModel([
+        //     'cuentaCorriente' => $cuentaCorriente,
+            // 'ivas' => $ivas,
+            // 'transaccion' => $transaccion,
+            // 'id_persona' => $id_persona
+        // ]);
     }
 
     // private function addItem($parametros, $transaccion, $id_persona, $accion){

@@ -47,28 +47,43 @@ class CuentaCorrienteManager {
         return $queryBuilder->getQuery()->getResult();
     }
 
-    public function getVentas($idPersona){
-        $persona = $this->personaManager->getPersona($idPersona);
-        if(strtoupper($persona->getTipo())=="CLIENTE"){
-            $tipos = ["remito", "factura"];
-        }else{
-            $tipos = ["recibo"];
+    public function getVentas($idPersona = null){
+        if(isset($idPersona)){
+            $persona = $this->personaManager->getPersona($idPersona);
+            if(strtoupper($persona->getTipo())=="CLIENTE"){
+                $tipos = ["remito", "factura"];
+            }else{
+                $tipos = ["cobro"];
+            }
+            $transacciones = $this->getTransaccionesTipos($persona,$tipos);
+            return $transacciones;    
+        } else {
+            return $this->entityManager
+                        ->getRepository(CuentaCorriente::class)
+                        // ->findAll();
+                        ->findBy(['tipoActividad' => ['remito','nota_debito']]);
         }
-
-        $transacciones = $this->getTransaccionesTipos($persona,$tipos);
-        return $transacciones;
+        
     }
     
-    public function getCobros($idPersona){
-        $persona = $this->personaManager->getPersona($idPersona);
-        if(strtoupper($persona->getTipo())=="CLIENTE"){
-            $tipos = ["cobro"];
-        }else{
-            $tipos =["remito", "factura"]; 
+    public function getCobros($idPersona = null){
+        if(isset($idPersona)){
+            $persona = $this->personaManager->getPersona($idPersona);
+            if(strtoupper($persona->getTipo())=="CLIENTE"){
+                $tipos = ["cobro"];
+            }else{
+                $tipos =["remito", "factura"]; 
+            }
+
+            $transacciones = $this->getTransaccionesTipos($persona,$tipos);
+            return $transacciones;    
+        } else {
+            return $this->entityManager
+                        ->getRepository(CuentaCorriente::class)
+                        ->findBy(['tipoActividad' => ['cobro']]);
         }
 
-        $transacciones = $this->getTransaccionesTipos($persona,$tipos);
-        return $transacciones;
+        
     }
 
     /**

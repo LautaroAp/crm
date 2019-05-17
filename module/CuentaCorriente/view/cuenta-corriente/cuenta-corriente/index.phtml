@@ -32,7 +32,6 @@ $(document).ready(function() {
         }
     });
 });
-// var idPersona = <?= $id_persona ?>;
 </script>
 
 <script type="text/javascript">
@@ -64,193 +63,182 @@ $(function() {
     </nav>
 </div>
 
-<!-- Formulario -->
-<form id="busqueda" method="post">
-    <div class="container margen">
-        <div class="row form-row">
+<div class="container margen">
 
-
-        </div>
-
-        <div>
-
-            <div class="row">
-                <!-- * * * * * * * * * * * * * * * DATATABLE VENTAS * * * * * * * * * * * * * * * -->
-                <div class="col-lg-6">
-                    <div class="panel panel-default sombra-ficha">
-                        <div class="panel-heading text-center titulo-espaciado">
-                            VENTAS
-                        </div>
-                        <div class="panel-body">
-                            <table id="tabla_ventas" class="display">
-                                <thead>
-                                    <tr>
-                                        <th class="">Fecha</th>
-                                        <th class="">Tipo</th>
-                                        <th class="">Nro</th>
-                                        <th class="">Importe</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="cuerpo_eventos" role="button" class="">
-                                    <?php foreach ($ventas as $venta) :
+    <div class="row">
+        <!-- * * * * * * * * * * * * * * * DATATABLE VENTAS * * * * * * * * * * * * * * * -->
+        <div class="col-lg-6">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading text-center titulo-espaciado">
+                    VENTAS
+                </div>
+                <div class="panel-body">
+                    <table id="tabla_ventas" class="display">
+                        <thead>
+                            <tr>
+                                <th class="">Fecha</th>
+                                <th class="">Tipo</th>
+                                <th class="">Nro</th>
+                                <th class="">Importe</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpo_eventos" role="button" class="">
+                            <?php foreach ($ventas as $venta) :
                                         $idTransaccion = $venta->getId();
                                         $tipoTransaccion = $venta->getTipoActividad();
                                         ?>
-                                    <tr id="<?= $venta->getId() ?>" class="vpEvento">
-                                        <!-- FECHA -->
-                                        <td id="<?= $venta->getId() ?>">
-                                            <?php
+                            <tr id="<?= $venta->getId() ?>" class="vpEvento">
+                                <!-- FECHA -->
+                                <td id="<?= $venta->getId() ?>">
+                                    <?php
                                                 if (!is_null($venta->getFecha())) {
                                                     echo ($venta->getFecha()->format('Y/m/d'));
                                                 }
                                                 ?></td>
-                                        <!-- TIPO -->
-                                        <td id="<?= $venta->getId() ?>" class="">
-                                            <?php
+                                <!-- TIPO -->
+                                <td id="<?= $venta->getId() ?>" class="">
+                                    <?php
                                                 if (!is_null($venta->getTipoActividad())) {
                                                     echo (ucfirst($venta->getTipoActividad()));
                                                 } else {
                                                     echo ('No definido');
                                                 }
                                                 ?>
-                                        </td>
-                                        <!-- NRO -->
-                                        <td><?= str_pad($venta->getNroTipoTransaccion(), 4, "0", STR_PAD_LEFT) ?></td>
-                                        <!-- IMPORTE -->
-                                        <td><?= ("$ " . number_format($venta->getMonto(), 2, ",", ".")); ?></td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                                </td>
+                                <!-- NRO -->
+                                <td><?= str_pad($venta->getNroTipoTransaccion(), 4, "0", STR_PAD_LEFT) ?></td>
+                                <!-- IMPORTE -->
+                                <td><?= ("$ " . number_format($venta->getMonto(), 2, ",", ".")); ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 </div>
-                <!-- * * * * * * * * * * * * * * * DATATABLE COBROS * * * * * * * * * * * * * * * -->
-                <div class="col-lg-6">
-                    <div class="panel panel-default sombra-ficha">
-                        <div class="panel-heading text-center titulo-espaciado">
-                            COBROS
-                        </div>
-                        <div class="panel-body">
-                            <table id="tabla_cobros" class="display">
-                                <thead>
-                                    <tr>
-                                        <th class="">Fecha</th>
-                                        <th class="">Tipo</th>
-                                        <th class="">Nro</th>
-                                        <th class="">Importe</th>
-                                    </tr>
-                                </thead>
-                                <?php foreach ($cobros as $cobro) :
+            </div>
+        </div>
+
+        <!-- * * * * * * * * * * * * * * * DATATABLE COBROS * * * * * * * * * * * * * * * -->
+        <div class="col-lg-6">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading text-center titulo-espaciado">
+                    COBROS
+                </div>
+                <div class="panel-body">
+                    <table id="tabla_cobros" class="display">
+                        <thead>
+                            <tr>
+                                <th class="">Fecha</th>
+                                <th class="">Tipo</th>
+                                <th class="">Nro</th>
+                                <th class="">Importe</th>
+                            </tr>
+                        </thead>
+                        <?php foreach ($cobros as $cobro) :
                                     $idTransaccion = $cobro->getId();
                                     $tipoTransaccion = $cobro->getTipoActividad();
                                     ?>
-                                <tr id="<?= $cobro->getId() ?>" class="vpEvento">
-                                    <!-- FECHA -->
-                                    <td id="<?= $cobro->getId() ?>">
-                                        <?php
+                        <tr id="<?= $cobro->getId() ?>" class="vpEvento">
+                            <!-- FECHA -->
+                            <td id="<?= $cobro->getId() ?>">
+                                <?php
                                             if (!is_null($cobro->getFecha())) {
                                                 echo ($cobro->getFecha()->format('Y/m/d'));
                                             }
                                             ?>
-                                    </td>
-                                    <!-- TIPO -->
-                                    <td id="<?= $cobro->getId() ?>" class="">
-                                        <?php
+                            </td>
+                            <!-- TIPO -->
+                            <td id="<?= $cobro->getId() ?>" class="">
+                                <?php
                                             if (!is_null($cobro->getTipoActividad())) {
                                                 echo (ucfirst($cobro->getTipoActividad()));
                                             } else {
                                                 echo ('No definido');
                                             }
                                             ?>
-                                    </td>
-                                    <!-- NRO -->
-                                    <td><?= str_pad($cobro->getNroTipoTransaccion(), 4, "0", STR_PAD_LEFT) ?></td>
-                                    <!-- IMPORTE -->
-                                    <td><?= ("$ " . number_format($cobro->getMonto(), 2, ",", ".")); ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                            </td>
+                            <!-- NRO -->
+                            <td><?= str_pad($cobro->getNroTipoTransaccion(), 4, "0", STR_PAD_LEFT) ?></td>
+                            <!-- IMPORTE -->
+                            <td><?= ("$ " . number_format($cobro->getMonto(), 2, ",", ".")); ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- * * * * * * * * * * * * * * * RESUMEN * * * * * * * * * * * * * * * -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading text-center titulo-espaciado">
+                    RESUMEN
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- TOTAL VENTAS -->
+        <div class="col-md-4">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-body">
+                    <div class="row form-row">
+                        <div class="form-group col-md-12">
+                            <label>Total en Ventas</label>
+                            <input type="text" class="form-control" name="" id="" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-12">
+                            <label>Total Facturado</label>
+                            <input type="text" class="form-control" name="" id="" value="" readonly>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- * * * * * * * * * * * * * * * RESUMEN * * * * * * * * * * * * * * * -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default sombra-ficha">
-                        <div class="panel-heading text-center titulo-espaciado">
-                            RESUMEN
+        </div>
+        <!-- TOTAL CC -->
+        <div class="col-md-4">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-body">
+                    <div class="row form-row">
+                        <div class="form-group col-md-12">
+                            <label>Saldo pendiente de Cobro</label>
+                            <input type="text" class="form-control" name="" id="" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-12">
+                            <label>Pendiente a Facturar</label>
+                            <input type="text" class="form-control" name="" id="" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-12">
+                            <label>Cuenta Corriente Global</label>
+                            <input type="text" class="form-control" name="" id="" value="" readonly>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <!-- TOTAL VENTAS -->
-                <div class="col-md-4">
-                    <div class="panel panel-default sombra-ficha">
-                        <div class="panel-body">
-                            <div class="row form-row">
-                                <div class="form-group col-md-12">
-                                    <label>Total en Ventas</label>
-                                    <input type="text" class="form-control" name="" id="" value="" readonly>
-                                </div>
-                            </div>
-                            <div class="row form-row">
-                                <div class="form-group col-md-12">
-                                    <label>Total Facturado</label>
-                                    <input type="text" class="form-control" name="" id="" value="" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- TOTAL CC -->
-                <div class="col-md-4">
-                    <div class="panel panel-default sombra-ficha">
-                        <div class="panel-body">
-                            <div class="row form-row">
-                                <div class="form-group col-md-12">
-                                    <label>Saldo pendiente de Cobro</label>
-                                    <input type="text" class="form-control" name="" id="" value="" readonly>
-                                </div>
-                            </div>
-                            <div class="row form-row">
-                                <div class="form-group col-md-12">
-                                    <label>Pendiente a Facturar</label>
-                                    <input type="text" class="form-control" name="" id="" value="" readonly>
-                                </div>
-                            </div>
-                            <div class="row form-row">
-                                <div class="form-group col-md-12">
-                                    <label>Cuenta Corriente Global</label>
-                                    <input type="text" class="form-control" name="" id="" value="" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- TOTAL COBROS -->
-                <div class="col-md-4">
-                    <div class="panel panel-default sombra-ficha">
-                        <div class="panel-body">
-                            <div class="row form-row">
-                                <div class="form-group col-md-12">
-                                    <label>Total en Cobros</label>
-                                    <input type="text" class="form-control" name="" id="" value="" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
         </div>
 
-</form>
-<!-- Fin: Panel Botones -->
+        <!-- TOTAL COBROS -->
+        <div class="col-md-4">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-body">
+                    <div class="row form-row">
+                        <div class="form-group col-md-12">
+                            <label>Total en Cobros</label>
+                            <input type="text" class="form-control" name="" id="" value="" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
