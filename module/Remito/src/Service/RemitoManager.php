@@ -170,6 +170,7 @@ class RemitoManager extends TransaccionManager{
                     $bien->setStock($stock);
                 }
             }
+            $this->cuentaCorrienteManager->remove($transaccion);
         }
         $transaccion->setEstado($estado);
         $this->entityManager->flush();

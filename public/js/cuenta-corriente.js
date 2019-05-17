@@ -1,3 +1,4 @@
+tipoPersona="";
 function getNumberValue(inputValue) {
     inputValue = inputValue.substring(2, inputValue.length);
     inputValue = inputValue.replace(".", "", "gi");
@@ -11,14 +12,15 @@ function formatMoney(number) {
 }
 
 
-function calcularCuentaCorriente(){
+function calcularCuentaCorriente(tipo){
+    tipoPersona= tipo;
     var table = document.getElementById("tabla_ventas");
     var sumRemitos = 0;
     var sumFacturados = 0;
     for (var i = 1, row; row = table.rows[i]; i++) {        
         var tipo = row.cells[1].innerHTML;
         var monto = row.cells[3].innerHTML;
-
+        console.log(tipo);
         if (tipo=="Remito"){
              sumRemitos = sumRemitos + parseFloat(getNumberValue(monto));
         }
@@ -41,7 +43,12 @@ function calcularCuentaCorriente(){
     var saldoPendienteCobro = sumFacturados - sumCobros;
     if (saldoPendienteCobro<0){
         var saldoPendienteCobro2 = saldoPendienteCobro * -1;
-        $('#titulo_saldo').text("Saldo del cliente (a favor)");
+        if(tipoPersona=="CLIENTE"){
+            $('#titulo_saldo').text("Saldo del cliente a favor");
+        }
+        else{
+            $('#titulo_saldo').text("Saldo a favor ");
+        }
         $('#saldo_pendiente_cobro').val(formatMoney(saldoPendienteCobro2.toFixed(2)));
 
     }else{
@@ -52,7 +59,7 @@ function calcularCuentaCorriente(){
     var cuentaCorrienteGlobal = saldoPendienteCobro + prodSinFacturar;
     $('#saldo_pendiente_factura').val(formatMoney(prodSinFacturar.toFixed(2)));
     if (cuentaCorrienteGlobal<0){
-        $('#titulo_gral').text("Cuenta Corriente Global (a favor)");
+        $('#titulo_gral').text("Cuenta Corriente Global a favor");
         cuentaCorrienteGlobal = cuentaCorrienteGlobal * -1;        
     }
     $('#cuenta_corriente_global').val(formatMoney(cuentaCorrienteGlobal.toFixed(2)));

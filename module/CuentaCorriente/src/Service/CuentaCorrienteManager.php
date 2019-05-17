@@ -50,11 +50,11 @@ class CuentaCorrienteManager {
     public function getVentas($idPersona = null){
         if(isset($idPersona)){
             $persona = $this->personaManager->getPersona($idPersona);
-            if(strtoupper($persona->getTipo())=="CLIENTE"){
+            // if(strtoupper($persona->getTipo())=="CLIENTE"){
                 $tipos = ["remito", "factura"];
-            }else{
-                $tipos = ["cobro"];
-            }
+            // }else{
+            //     $tipos = ["cobro"];
+            // }
             $transacciones = $this->getTransaccionesTipos($persona,$tipos);
             return $transacciones;    
         } else {
@@ -69,11 +69,11 @@ class CuentaCorrienteManager {
     public function getCobros($idPersona = null){
         if(isset($idPersona)){
             $persona = $this->personaManager->getPersona($idPersona);
-            if(strtoupper($persona->getTipo())=="CLIENTE"){
+            // if(strtoupper($persona->getTipo())=="CLIENTE"){
                 $tipos = ["cobro"];
-            }else{
-                $tipos =["remito", "factura"]; 
-            }
+            // }else{
+            //     $tipos =["remito", "factura"]; 
+            // }
 
             $transacciones = $this->getTransaccionesTipos($persona,$tipos);
             return $transacciones;    
@@ -130,7 +130,7 @@ class CuentaCorrienteManager {
     }
 
     public function remove($transaccion) {
-        $cuentaCorriente = $this->entityManager->getRegistroTransaccion($transaccion);
+        $cuentaCorriente = $this->getRegistroTransaccion($transaccion);
         $this->entityManager->remove($cuentaCorriente);
         $this->entityManager->flush();
     }

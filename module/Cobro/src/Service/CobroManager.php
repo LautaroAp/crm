@@ -140,6 +140,9 @@ class CobroManager extends TransaccionManager
         $transaccion = $this->getTransaccionId($idTransaccion);
         $transaccion->setEstado($estado);
         $this->revierteFechas($transaccion);
+        if (strtoupper($estado)=="ANULADO"){
+            $this->cuentaCorrienteManager->remove($transaccion);
+        }
         $this->entityManager->flush();
     }
 

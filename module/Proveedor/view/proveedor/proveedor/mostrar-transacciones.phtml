@@ -48,6 +48,9 @@ var idPersona = <?= $id_persona ?>;
                         case "presupuesto":
                             echo (ucfirst("solicitud de presupuesto"));
                             break;
+                        case "cobro":
+                        echo (ucfirst("pago"));
+                        break;
                         default:
                             echo (ucfirst($tipoTransaccion)); 
                     }      

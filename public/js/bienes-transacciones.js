@@ -624,9 +624,8 @@ function controlStock(attribute, inputValue){
                 }
             }
         }
-        return true;
     }
-    
+    return true;
 }
 function saveValueInJson(tdId, inputValue) {
     //recibo "0_Cantidad" separo en indice 0 y atributo Cantidad
@@ -914,13 +913,8 @@ function verificaStockDisponible(output) {
                             return false;
                         }
                     }
-                } else {
-                    return true;
-                }
+                } 
             } 
-            else {
-                return false;
-            }
         }
     }
    return true;
