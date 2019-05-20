@@ -5,6 +5,7 @@ namespace Empresa\Service;
 use DBAL\Entity\Empresa;
 use DBAL\Entity\Categoria;
 use Empresa\Form\EmpresaForm;
+use Moneda\Service\MonedaManager;
 
 /**
  * This service is responsible for adding/editing empresas
@@ -18,25 +19,14 @@ class EmpresaManager {
      */
     private $entityManager;
 
-    /**
-     * PHP template renderer.
-     * @var type 
-     */
-    private $viewRenderer;
-
-    /**
-     * Application config.
-     * @var type 
-     */
-    private $config;
+    private $monedaManager;
 
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $viewRenderer, $config) {
+    public function __construct($entityManager, $monedaManager) {
         $this->entityManager = $entityManager;
-        $this->viewRenderer = $viewRenderer;
-        $this->config = $config;
+        $this->monedaManager = $monedaManager;
     }
 
     public function setVencimientos($vencimientos) {
@@ -105,18 +95,20 @@ class EmpresaManager {
 
         $vencimiento_cai = \DateTime::createFromFormat('d/m/Y', $data['vencimiento_cai']);
         $empresa->setVencimiento_cai($vencimiento_cai);
-        $inicio_actividades = \DateTime::createFromFormat('d/m/Y', $data['inicio_actividades']);
-        $empresa->setFecha_inicio_actividades($inicio_actividades);
-
+        if (!is_null($data['inicio_actividades']) &&  ($data['inicio_actividades']!="")){
+            $inicio_actividades = \DateTime::createFromFormat('d/m/Y', $data['inicio_actividades']);
+            $empresa->setFecha_inicio_actividades($inicio_actividades);
+        } 
         $empresa->setRazon_social($data['razon_social']);
         $empresa->setPunto_venta($data['punto_venta']);
         if (isset($data['condicion_iva'])){
             $condicion_iva = $this->getCategoria($data['condicion_iva']);
             $empresa->setCondicion_iva($condicion_iva);
         }
-        // if (isset($data['moneda'])){
-        //     $empresa->setMoneda($data['moneda']);
-        // }
+        if (isset($data['moneda'])){
+            $moneda = $this->monedaManager->getMonedaId($data['moneda']);
+            $empresa->setMoneda($moneda);
+        }
         $empresa->setLocalidad($data['localidad']);
         $empresa->setProvincia($data['provincia']);
         $empresa->setPais($data['pais']);
@@ -126,13 +118,8 @@ class EmpresaManager {
 
         $_SESSION['ELEMSPAG']= $data['elems_pagina'];
         
-        if ($this->tryUpdateEmpresa($empresa)) {
-            $_SESSION['MENSAJES']['empresa'] = 1;
-            $_SESSION['MENSAJES']['empresa_msj'] = 'Datos editados correctamente';
-        } else {
-            $_SESSION['MENSAJES']['empresa'] = 0;
-            $_SESSION['MENSAJES']['empresa_msj'] = 'Error al editar empresa';
-        }
+        $this->entityManager->flush();
+
         return true;
     }
 
@@ -163,6 +150,7 @@ class EmpresaManager {
             return true;
         } catch (\Exception $e) {
             $this->entityManager->rollBack();
+            echo "Failed: " . $e->getMessage();
             return false;
         }
     }

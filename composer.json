@@ -69,8 +69,8 @@
             "FormaPago\\": "module/FormaPago/src/",
             "FormaEnvio\\": "module/FormaEnvio/src/",
             "DatoAdicional\\": "module/DatoAdicional/src/",
-            "CuentaCorriente\\": "module/CuentaCorriente/src/"
-
+            "CuentaCorriente\\": "module/CuentaCorriente/src/",
+            "Factura\\": "module/Factura/src/"
         }
     },
     "autoload-dev": {

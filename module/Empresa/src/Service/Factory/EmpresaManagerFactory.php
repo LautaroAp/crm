@@ -3,7 +3,7 @@ namespace Empresa\Service\Factory;
 
 use Interop\Container\ContainerInterface;
 use Empresa\Service\EmpresaManager;
-
+use Moneda\Service\MonedaManager;
 /**
  * This is the factory class for EmpresaManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
@@ -16,9 +16,7 @@ class EmpresaManagerFactory
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
-        $viewRenderer = $container->get('ViewRenderer');
-        $config = $container->get('Config');
-                        
-        return new EmpresaManager($entityManager, $viewRenderer, $config);
+        $monedaManager = $container->get(MonedaManager::class);
+        return new EmpresaManager($entityManager,$monedaManager);
     }
 }

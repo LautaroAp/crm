@@ -102,6 +102,20 @@ var idPersona = <?= $id_persona ?>;
                                 </ul>  
                                 <?php
                             break;
+                            case "Factura":
+                                ?>
+                                <ul class="nav navbar-nav navbar-menu-font"> 
+                                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                    style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
+                                    <span class="glyphicon glyphicon-check"></span></button>
+                                    <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        Anulado</a></li>
+                                    </ul>
+                                </ul>  
+                                <?php
+                            break;
                             default:
                                 ?>
                                 <ul class="nav navbar-nav navbar-menu-font"> 

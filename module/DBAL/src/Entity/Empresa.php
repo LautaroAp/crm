@@ -413,4 +413,22 @@ class Empresa {
             return $this->fecha_inicio_actividades->format('d/m/Y');
         }
     }
+
+    public function getJSON(){
+        $output = "";
+        $output .= '"Id": "' . $this->getId() .'", ';
+        $output .= '"Nombre": "' . $this->getNombre() .'", ';
+        $output .= '"Direccion": "' . $this->getDireccion() .'", ';
+        $output .= '"Telefono": "' . $this->getTelefono() .'", ';
+        $output .= '"Mail": "' . $this->getMail() .'", ';
+        $output .= '"Razon Social": "' . $this->getRazon_social() .'", ';
+        if (!is_null($this->getMoneda())){
+            $output .= '"Moneda": ' . $this->getMoneda()->getJSON() .', ';
+        }
+        
+        $output .= '"CUIT": "' . $this->getCuit_cuil() .'" ';
+        
+        return  '{'.$output.'}' ;
+    }
+
 }

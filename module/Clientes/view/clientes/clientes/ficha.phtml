@@ -403,7 +403,7 @@ $tipo_persona = strtolower($persona->getTipo());
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="transaccion-font">
+                                    <a href="<?= $this->url("factura/agregar", ['id' => $persona->getId()]); ?>" class="transaccion-font">
                                         <span class="glyphicon glyphicon-list-alt"></span>&nbsp; Factura
                                     </a>
                                 </li>

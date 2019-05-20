@@ -121,6 +121,7 @@ class PresupuestoController extends TransaccionController{
         $formasPagoJson = $this->getJsonFormasPago();
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
+        $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
         $this->reiniciarParams();
         return new ViewModel([
             // 'items' => $items,
@@ -134,21 +135,10 @@ class PresupuestoController extends TransaccionController{
             'formasEnvioJson' => $formasEnvioJson,
             'monedasJson' => $monedasJson,
             'ivasJson' => $ivasJson,
+            'empresaJson' => $empresaJson,
             'transaccionJson'=>"[]",
         ]);
     }
-
-    // public function addItemAction()
-    // {
-    //     if ($this->getRequest()->isPost()) {
-    //         $data = $this->params()->fromPost();
-    //         $data['tipo'] = $this->getTipo();
-    //         $this->procesarAddAction($data);
-    //         $this->redirect()->toRoute('home');
-    //     }
-    //     return new ViewModel([]);
-    // }
-
 
     public function editAction() {
         $id_transaccion = $this->params()->fromRoute('id');
@@ -209,7 +199,7 @@ class PresupuestoController extends TransaccionController{
         $ivasJson = $this->getJsonIvas();
         $transaccion = $presupuesto->getTransaccion();
         $transaccionJson = $presupuesto->getTransaccion()->getJSON();
-
+        $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
         $this->reiniciarParams();
         return new ViewModel([
             // 'items' => $items,
@@ -225,6 +215,7 @@ class PresupuestoController extends TransaccionController{
             'transaccion' => $transaccion,
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
+            'empresaJson' => $empresaJson
         ]);
     }
 

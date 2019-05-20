@@ -50,5 +50,6 @@ return [
     'FormaPago',
     'FormaEnvio',
     'DatoAdicional',
-    'CuentaCorriente'
+    'CuentaCorriente',
+    'Factura'
 ];

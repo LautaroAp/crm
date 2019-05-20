@@ -2,10 +2,9 @@
 <script src="/js/bienes-transacciones.js"></script>
 <script src="/js/item.js"></script>
 <script src="/js/opciones-transacciones.js"></script>
+<script src="/js/transacciones.js"></script>
 
-<!-- Script -->
-<!-- PROBLEMAS CON EL DATETIMEPICKER -- JQUERY TIENE QUE SER MENOR A 2.2 -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
 <!-- jQuery UI -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -43,12 +42,12 @@ $date = date('d-m-Y');
 $url1 =""; $url2=""; $url3=""; $label1=""; $label2=""; $label3=""; $label4="";
 if ($persona->getTipo() =="CLIENTE"){
     $url1 = "/clientes";
-    $label1="Clientes";
+    $label1="Cliente";
     $url2= "/clientes/listado";
     $label2="Listado";
     $label3="Ficha Cliente";
     $url3= "/clientes/listado/ficha/" . $persona->getId();
-    $label4="Agregar Presupuesto";
+    $label4= "Agregar Factura";
 }
 if ($persona->getTipo() =="PROVEEDOR"){
     $label1="Proveedores";
@@ -57,7 +56,7 @@ if ($persona->getTipo() =="PROVEEDOR"){
     $url2= "/proveedores/listado";
     $label3="Ficha Proveedor";
     $url3= "/proveedores/listado/ficha/" . $persona->getId();
-    $label4="Agregar Solicitud de Presupuesto";
+    $label4= "Agregar Pago";
 
 }
 $responsable = $this->identity();
@@ -71,16 +70,30 @@ var json_items = <?= $json_bienes ?>;
 var json_items_codigos = <?= $json_bienes ?>;
 var json_items_nombres = <?= $json_bienes ?>;
 var output;
-var empresa = "<?= $empresaJson ?>";
 var ivas = <?= $ivasJson ?>;
-var tipoPersona = "<?= $tipoPersona ?>";
+var idPersona = <?php echo ($persona->getId()); ?>;
 setIvas(ivas);
+
+var jsonPresupuestos = <?= $presupuestosJson ?>;
+var jsonPedidos = <?= $pedidosJson ?>;
+var jsonRemitos = <?= $remitosJson ?>;
+var jsonModalTransaccion = <?= $presupuestosJson ?>;
+var itemsTransaccionJson = <?= $itemsTransaccionJson ?>;
+
+items.concat(itemsTransaccionJson);
+var itemsTransaccion =null;
+var itemsAnteriores =null;
+var transaccionPreviaNum = null;
+var transaccionPreviaId = null;
+var itemsTransaccionPrevia = null;
+var transaccionJson = null;
+var tipoPersona = "<?= $tipoPersona ?>";
 </script>
 
 <!-- Document -->
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
-        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="<?= $url1 ?>"><?= $label1 ?></a></li>
             <li class="breadcrumb-item"><a href="<?= $url2 ?>"><?= $label2 ?></a></li>
@@ -96,11 +109,11 @@ setIvas(ivas);
 <!-- Formulario -->
 <form method="post">
     <div class="container margen">
-        <!-- Datos de Presupuesto -->
+        <!-- Datos de Factura -->
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
-                    PRESUPUESTO
+                    FACTURA
                 </div>
                 <div class="panel-body">
                     <!-- Fecha + Datos de Persona -->
@@ -136,103 +149,50 @@ setIvas(ivas);
                     </div>
                     <!-- Datos de Transaccion -->
                     <div class="row form-row">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
                             <label>Número de Transacción</label>
-                            <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion" 
-                            value="<?= $numTransacciones ?>" readonly style="max-width: 250px;">
+                            <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion"
+                                value="<?= $numTransacciones ?>" style="max-width: 250px;" readonly>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Número de Factura</label>
+                            <input type="text" class="form-control" name="numero_factura" id="numero_factura"
+                                value="<?= $numFactura ?>" style="max-width: 250px;" readonly>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Número de Presupuesto</label>
-                            <input type="text" class="form-control" name="numero_presupuesto" id="numero_presupuesto" 
-                            value="<?= $numPresupuesto ?>" style="max-width: 250px;" readonly>
+                            <label>Buscar Transacción</label>
+                            <div class="autocomplete input-group">
+                                <select class="form-control" id="tipoTransaccion" name="tipoTransaccion">
+                                    <option value="Presupuesto">Presupuesto</option>
+                                    <option value="Pedido">Pedido</option>
+                                    <option value="Remito">Remito</option>
+                                    <option value="Factura">Factura</option>
+                                    <option value="NotaCredito">Nota de Crédito</option>
+                                    <option value="NotaDebito">Nota de Débito</option>
+                                </select>
+                                <span class="input-group-btn">
+                                    <button type="button" id="btn-modal" class="btn btn-default" data-toggle="modal" 
+                                        data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </span>
+                            </div>
                         </div>
-                        <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>" >
-                        <input type="hidden" id="url" name="url" value="<?= $url3 ?>" >
+
+                        <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
+                        <input type="hidden" id="url" name="url" value="<?= $url3 ?>">
+                        <input type="hidden" id="id_transaccion_previa" name="id_transaccion_previa">
+                        <input type="hidden" id="jsonitems" name="jsonitems">
 
                     </div>
                 </div>
             </div>
         </div>
-         <!-- Tabla de Items -->
         <!-- Listado de Items -->
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
-                    LISTADO DE PRODUCTOS Y SERVICIOS
+                    DETALLES DE LA FACTURA
                 </div>
-
-                <!-- Form Autocompletado -->
-                <div class="container" style="padding-top:10px;">
-                    <form method="post" autocomplete="off">
-
-                        <input type="hidden" class="form-control" name="item_id" id="item_id">
-
-                        <div class="autocomplete form-group col-sm-2 margin-padding-xs">
-                            <label>Código</label>
-                            <input type="text" class="form-control" name="item_codigo" id="item_codigo"
-                                placeholder="Código" onkeypress="return pulsar(event)" >
-                        </div>
-                        <div class="autocomplete form-group col-sm-4 margin-padding-xs">
-                            <label>Producto / Servicio</label>
-                            <input type="text" class="form-control" name="item_nombre" id="item_nombre"
-                                placeholder="Producto Y Servicio"  onkeypress="return pulsar(event)" >
-                        </div>
-                        <div class="form-group col-sm-2 margin-padding-xs">
-                            <label>Cantidad</label>
-                            <input type="number" class="form-control" name="item_cantidad" id="item_cantidad" min="1"
-                                max="99" value="" placeholder="Cantidad" onkeypress="return justNumbers(event)">
-                        </div>
-                        <div class="form-group col-sm-2 margin-padding-xs">
-                            <label>Stock Disponible</label>
-                            <input type="text" class="form-control" name="item_stock" id="item_stock"
-                                placeholder="Stock Disponible" readonly>
-                        </div>
-                        <div class="form-group col-sm-1 margin-padding-xs">
-                            <label>&nbsp;</label>
-                            <button type="button" class="btn btn-default" onclick="addItemToTable()">
-                                <span class="glyphicon glyphicon-plus"  onkeypress="return pulsar(event)"></span> Agregar
-                            </button>
-                        </div>
-                </div>
-                <!-- Detalles de Producto Y Servicio -->
-                <div class="container" style="">
-                    <label>
-                        <input type="checkbox" value="" data-toggle="collapse" data-parent="#accordion"
-                            data-target="#collapseDetalles" aria-expanded="true" aria-controls="collapseDetalles"
-                            name="Detalles" id="Detalles">
-                        Mostrar Detalles
-                    </label>
-                    <div class="container row collapse" id="collapseDetalles">
-                        <table class="table table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Descripción</th>
-                                    <th>Categoría</th>
-                                    <th>Precio</th>
-                                    <th>Dto (%)</th>
-                                    <th>Precio c/Dto.</th>
-                                    <th>% IVA</th>
-                                    <th>Precio c/IVA</th>
-                                    <th>Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td id="item_descripcion"></td>
-                                    <td id="item_categoria"></td>
-                                    <td id="item_precio"></td>
-                                    <td id="item_descuento"></td>
-                                    <td id="item_descuento_precio"></td>
-                                    <td id="item_iva"></td>
-                                    <td id="item_iva_precio"></td>
-                                    <td id="item_subtotal"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <script src="/js/autocomplete.js"></script>
-                <input type="hidden" id="jsonitems" name="jsonitems" size="200">
 
                 <!-- Tabla de Items -->
                 <div class="panel panel-body" >
@@ -240,62 +200,21 @@ setIvas(ivas);
                         <div id="div_table_items">
                             <script>
                             var items = <?php echo ($json); ?>;
-                            var idPersona = <?php echo ($persona->getId()); ?>;
                             // Crear Tabla
-                            addItems(items, "presupuesto", idPersona, true);
+                            addItems(items, "factura", idPersona, true);
                             </script>
                         </div>
                         <br>                     
                     </div>
-                    <div class="row form-row">
-                        <div class="container" hidden="true" >
-                            <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion' => 'presupuesto', 'accion' => 'agregar', 'id' => $persona->getId()]); ?>"
-                            type="button">
-                            <span class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar Item</span> </a>
-                        </div>
-                        <div class="form-group col-md-2" >
-                            <button  type="button" class="btn btn-default" onclick="actualizarPrecios()"><span class="glyphicon glyphicon-refresh"></span>
-                             Actualizar Precios </button>
-                        </div>
-                        <div  class="form-group col-md-2">
-                            <button  type="button" class="btn btn-default" onclick="borrarItems()"><span class="glyphicon glyphicon-refresh"></span>
-                            Vaciar Items </button>
-                        </div>
+                    <div class="container" hidden="true" >
+                        <a href="<?= $this->url('bienes', ['action' => 'index', 'transaccion' => 'factura', 'accion' => 'agregar', 'id' => $persona->getId()]); ?>"
+                        type="button">
+                        <span class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar Item</span> </a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Datos de Envio-->
-        <div class="row form-row">
-            <div class="panel panel-default sombra-ficha">
-                <div class="panel-heading titulo-espaciado">
-                    DATOS DE ENVÍO
-                </div>
-                <div class="panel-body">
-                    <div class="row form-row">
-                        <div class="form-group col-md-3" id="formasEnvio">
-                            <label>Forma de Envío</label>
-                            <script>
-                                var formasEnvio = <?php echo ($formasEnvioJson); ?>;
-                                completarFormasEnvio(formasEnvio);
-                            </script>
-                        </div>
-                        <div class="form-group col-md-2" hidden>
-                            <label>Fecha de Entrega</label>
-                            <div class='input-group date' id='datetimepicker3'>
-                                <input type='text' class="form-control" name="fecha_entrega"
-                                    value="<?= $date ?>" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        
         <!-- Datos Economicos -->
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
@@ -305,7 +224,6 @@ setIvas(ivas);
                 <div class="panel-body">
                     <!-- Totales -->
                     <div class="row form-row">
-
                         <div class="form-group col-md-3">
                             <label>Venta Bruta ($)</label>
                             <input type="text" class="form-control" name="venta_bruta" id="venta_bruta"
@@ -329,31 +247,29 @@ setIvas(ivas);
                     <div class="row form-row">
                         <div class="form-group col-md-3" id="monedas">
                             <label>Moneda</label>
-                            <script>
-                            var monedas = <?php echo ($monedasJson); ?>;
-                            completarMonedas(monedas);
-                            </script>
+                            <input type="text" class="form-control" name="input_moneda" id="input_moneda"
+                                value="" readonly>
+                            
                         </div>
                         <div class="form-group col-md-3" id="formasPago">
                             <label>Forma de Pago</label>
-                            <script>
-                            var formasPago = <?php echo ($formasPagoJson); ?>;
-                            completarFormasPago(formasPago);
-                            </script>
+                            <input type="text" class="form-control" name="input_forma_pago" id="input_forma_pago"
+                                value="" readonly>
                         </div>
                         <div id="div_bonificacion" class="form-group col-md-3">
                             <label>% Bonificación</label>
                             <input type="text" class="form-control" name="bonificacion_general"
                                 id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
-                                onkeyup="calcularSubcampos()">
+                                onkeyup="calcularSubcampos()" readonly>
                         </div>
                         <div id="div_recargo" class="form-group col-md-3">
                             <label>% Recargo</label>
                             <input type="text" class="form-control" name="recargo_general" id="recargo_general"
-                                value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()">
+                                value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" readonly>
                         </div>
                         <script>
-                        setBonificacionRecargo();
+                            setBonificacionRecargo();
+                            var monedas = <?php echo ($monedasJson); ?>;
                         </script>
                     </div>
                     <!-- Total -->
@@ -369,12 +285,13 @@ setIvas(ivas);
                         </div>
                         <div class="form-group col-md-3">
                             <label>Importe Total ($)</label>
-                            <input type="text" class="form-control" name="total_general" id="total_general" value="0" readonly>
+                            <input type="text" class="form-control" name="total_general" id="total_general" value="0"
+                                readonly>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-2" hidden>
                             <label>Fecha de Vencimiento</label>
                             <div class='input-group date' id='datetimepicker2'>
-                                <input type='text' class="form-control" name="fecha_vencimiento" value="<?= $date ?>" />
+                                <input type='text' class="form-control" name="fecha_vencimiento" value="<?= $date ?>" readonly>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -387,16 +304,18 @@ setIvas(ivas);
                 </div>
             </div>
         </div>
+    </div>
+
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Agregar presupuesto</h4>
+                    <h4 class="modal-title">Agregar factura</h4>
                 </div>
                 <div class="modal-body">
-                    <p id="msjModal">¿Está seguro que desea agregar este presupuesto?</p>
+                    <p id="msjModal">¿Está seguro que desea agregar esta factura?</p>
                 </div>
                 <div class="modal-footer">
                     <button id="btnModalAceptar" type="submit" class="btn btn-default">Aceptar</button>
@@ -405,15 +324,46 @@ setIvas(ivas);
             </div>
         </div>
     </div>
+    <!-- MODAL TRANSACCIONES -->
+    <div id="modalTransacciones" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Seleccionar Transacción </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-body" id="contenido_transacciones">
+                    <div id="div_table_transacciones">
+                        <script>
+                        // completarTransacciones(jsonModalTransaccion);
+                        </script>
+                    </div>
+                    <br>                     
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="completeItems()" data-dismiss="modal">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+                
 </form>
 
+<div id="div_transaccion">
+</div> 
+<div id="div_items_transaccion_previa">
+</div> 
 <!-- Inicio: Panel Botones -->
 <div class="container margen">
     <div class="row img-centrar">
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <a id="btnModalGuardar" data-toggle="modal" data-target="#myModal">
-                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>" class="img-rounded img-responsive img-texto-derecha img-submenu-sm zoom" role="button">
+                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha img-submenu-sm zoom" role="button">
                 </a>
             </div>
             <div class="ficha-cliente-label">
@@ -423,7 +373,8 @@ setIvas(ivas);
         <div class="col ficha-cliente-p img-centrar">
             <div>
                 <a href="<?= $url3 ?>">
-                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" class="img-rounded img-responsive img-texto-derecha zoom"></a>
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha zoom"></a>
             </div>
             <div class="ficha-cliente-label">
                 <label>Volver</label>
@@ -431,4 +382,4 @@ setIvas(ivas);
         </div>
     </div>
 </div>
-<!-- Fin: Panel Botones --> 
+<!-- Fin: Panel Botones -->
