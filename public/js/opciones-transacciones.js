@@ -5,6 +5,7 @@ var recargo=null;
 var bonificacion = null;
 
 function completarMonedas(monedas, transaccion=null){
+    console.log(empresa);
     arrayMonedas=monedas;
     var myDiv = document.getElementById("monedas");
     var selectList = document.getElementById("select_monedas");
@@ -26,7 +27,6 @@ function completarMonedas(monedas, transaccion=null){
             selectList.setAttribute("readonly", true);
         }
         myDiv.appendChild(selectList);
-
         //Create and append the options
         var option = document.createElement("option");
         if (transaccion){
@@ -35,32 +35,22 @@ function completarMonedas(monedas, transaccion=null){
                 option.text = transaccion["Moneda"]["Nombre"];
             }
             else{
-                option.value = "-1";
-                option.text = "Seleccionar Moneda";
+                option.value = empresa["Moneda"]["Id"];
+                option.text = empresa["Moneda"]["Nombre"];
                 if(tipoTransaccion == "factura"){
                     option.setAttribute("disabled", true);
                 }
             }
         }
         else{
-            option.value = "-1";
-            option.text = "Seleccionar Moneda";
+            option.value = empresa["Moneda"]["Id"];
+            option.text = empresa["Moneda"]["Nombre"];
             if(tipoTransaccion == "factura"){
                 option.setAttribute("disabled", true);
             }
         }
-
         option.setAttribute("hidden","");
         selectList.appendChild(option);
-
-        var option = document.createElement("option");
-        option.value = "-1";
-        option.text = "No definido";
-        if(tipoTransaccion == "factura"){
-            option.setAttribute("disabled", true);
-        }
-        selectList.appendChild(option);
-
         for (var i = 0; i < monedas.length; i++) {
             var option = document.createElement("option");
             option.value = monedas[i]['Id'];
@@ -70,7 +60,6 @@ function completarMonedas(monedas, transaccion=null){
             }
             selectList.appendChild(option);
         }
-        selectList.selectedIndex = empresa["Moneda"]["Id"]-1;
 }
     
 }

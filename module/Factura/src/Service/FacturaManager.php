@@ -112,7 +112,8 @@ class FacturaManager extends TransaccionManager
         $factura = $this->setData($factura, $data, $transaccion);
         $this->actualizaFechas($data);
         $this->cuentaCorrienteManager->add($transaccion);
-
+        $transaccionPrevia = $transaccion->getTransaccionPrevia();
+        $this->cuentaCorrienteManager->setFacturado($transaccionPrevia);
         // Apply changes to database.
         $this->entityManager->persist($factura);
         $this->entityManager->flush();

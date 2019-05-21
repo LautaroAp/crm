@@ -1,24 +1,71 @@
 
 <script src="/js/cuenta-corriente.js"></script>
+<!-- Datetime Picker -->
+<!-- <script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
+<script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css"> -->
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+    });
+    $('#datetimepicker2').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
+</script>
+<!-- Fin -> Datetime Picker -->
 
 <script>
+   $.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = ( $('#min').val());
+        var max = ( $('#max').val());
+
+        var date = ( data[0] ); // use data for the date column
+        console.log("min "+min);
+        console.log("max "+max);
+        console.log("date" +date);
+        // if ( ( isNaN( min ) && isNaN( max ) ) ||
+        //      ( isNaN( min ) && date <= max ) ||
+        //      ( min <= date   && isNaN( max ) ) ||
+        //      ( min <= date   && date <= max ) )
+        // {
+        //     return true;
+        // }
+        // return false;
+        return true;
+    }
+);
+
 $(document).ready(function() {
-    $('#tabla_ventas').DataTable({
+    var table1 = $('#tabla_ventas').DataTable({
         "order": [0, 'desc'],
-
         "language": {
             "url": "/json/spanish.json"
         }
     });
+    // $('#min, #max').keyup( function() {
+    //     alert("cambio");
+    //     table1.draw();
+    // } );
+    $('#filtroFecha').click( function() {
+        alert("cambio");
+        table1.draw();
+    } );
 
-    $('#tabla_cobros').DataTable({
+    var table2 = $('#tabla_cobros').DataTable({
         "order": [0, 'desc'],
-
         "language": {
             "url": "/json/spanish.json"
         }
     });
+    // $('#min, #max').keyup( function() {
+    //     table2.draw();
+    // } );
 });
+
 var idPersona = <?= $id_persona ?>;
 </script>
 
@@ -30,6 +77,34 @@ var idPersona = <?= $id_persona ?>;
                 VENTAS
             </div>
             <div class="panel-body">
+                <div class="row form-row">
+                    <div class="form-inline col-sm-12">
+                        <div class="form-group">
+                            <label>Filtrar desde:&nbsp;</label>
+                            <div class='input-group date width-fecha' id='datetimepicker1'>
+                            <input type='text' class="form-control" name="min" id="min" value="" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        <!-- </div> -->
+                        <!-- <div class="form-group"> -->
+                            <label>&nbsp;hasta:&nbsp;</label>
+                            <div class='input-group date width-fecha' id='datetimepicker2'>
+                                <input type='text' class="form-control" name="max" id="max" value="" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        <!-- </div> -->
+                        <!-- <div class="form-group"> -->
+                            <button type="button" class="form-control btn btn-default" name="filtroFecha" id="filtroFecha" value="">
+                                    <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br>
                 <table id="tabla_ventas" class="display">
                     <thead>
                         <tr>

@@ -142,6 +142,11 @@ class Transaccion {
     */
     protected $numeroTransaccionTipo;
 
+      /**
+     * @ORM\Column(name="FACTURADO", nullable=true, type="boolean")
+    */
+    protected $facturado;
+
     /**
      * Get the value of id
      */ 
@@ -682,6 +687,26 @@ class Transaccion {
     public function setSubtotal($subtotal)
     {
         $this->subtotal = $subtotal;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of facturado
+     */ 
+    public function getFacturado()
+    {
+        return $this->facturado;
+    }
+
+    /**
+     * Set the value of facturado
+     *
+     * @return  self
+     */ 
+    public function setFacturado($facturado)
+    {
+        $this->facturado = $facturado;
 
         return $this;
     }

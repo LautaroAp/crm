@@ -43,6 +43,7 @@ class CuentaCorrienteManager {
         $nombreCampo="persona";
         $queryBuilder->where("T.persona = :p")->setParameter('p',$persona);
         $queryBuilder->andWhere('T.tipoActividad IN (:tipos)')->setParameter('tipos', $tipos);
+        $queryBuilder->andWhere("T.facturado = :f")->setParameter('f',false);
         $queryBuilder->orderBy('T.fecha', 'DESC');
         return $queryBuilder->getQuery()->getResult();
     }
@@ -108,6 +109,14 @@ class CuentaCorrienteManager {
         $cuentaCorriente->setFecha($transaccion->getFecha_transaccion());
         $cuentaCorriente->setNroTipoTransaccion($transaccion->getNumeroTransaccionTipo());
         $cuentaCorriente->setTipoActividad($transaccion->getTipo());
+
+        //SE GUARDAN LAS FACTURAS COMO NO FACTURADOS PARA HACER MAS FACIL LA CONSULTA SQL
+        //PARA OBTENER LAS VENTAS 
+        if (strtoupper($transaccion->getTipo())=="FACTURA"){
+            $cuentaCorriente->setFacturado(false);
+        }else{
+            $cuentaCorriente->setFacturado($transaccion->getFacturado());
+        }
         return $cuentaCorriente;
     }
 
@@ -133,6 +142,14 @@ class CuentaCorrienteManager {
         $cuentaCorriente = $this->getRegistroTransaccion($transaccion);
         $this->entityManager->remove($cuentaCorriente);
         $this->entityManager->flush();
+    }
+
+    public function setFacturado($transaccionPrevia){
+        $idTP = $transaccionPrevia->getId();
+        $registro =$this->entityManager->getRepository(CuentaCorriente::class)->findOneBy(['transaccion'=>$idTP]);
+        if (!is_null($registro)){   
+            $registro->setFacturado(true);
+        }
     }
 
 }

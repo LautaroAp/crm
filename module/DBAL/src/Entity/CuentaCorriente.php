@@ -55,6 +55,12 @@ class CuentaCorriente {
     
     protected $nroTipoTransaccion;
 
+      /**
+     * @ORM\Column(name="FACTURADO", nullable=true, type="boolean")
+    */
+    protected $facturado;
+
+
     
     public function getJSON(){
         $output = "";
@@ -212,6 +218,26 @@ class CuentaCorriente {
     public function setNroTipoTransaccion($nroTipoTransaccion)
     {
         $this->nroTipoTransaccion = $nroTipoTransaccion;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of facturadp
+     */ 
+    public function getFacturado()
+    {
+        return $this->facturado;
+    }
+
+    /**
+     * Set the value of facturadp
+     *
+     * @return  self
+     */ 
+    public function setFacturado($facturado)
+    {
+        $this->facturado = $facturado;
 
         return $this;
     }

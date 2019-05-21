@@ -161,9 +161,19 @@ class TransaccionManager {
             $formaEnvio = $this->formaEnvioManager->getFormaEnvioId($data['forma_envio']);
             $transaccion->setFormaEnvio($formaEnvio);
         }
+        $transaccionPrevia = null;
         if(isset($data['id_transaccion_previa'])){           
             $transaccionPrevia = $this->getTransaccionId($data['id_transaccion_previa']);
             $transaccion->setTransaccionPrevia($transaccionPrevia);
+        }
+        if (strtoupper($data['tipo']) !="FACTURA"){
+            $transaccion->setFacturado(false);
+        }
+        else{
+            if (!is_null($transaccionPrevia)){
+                $transaccionPrevia->setFacturado(true);
+            }
+            $transaccion->setFacturado(true);
         }
         return $transaccion;
     }
