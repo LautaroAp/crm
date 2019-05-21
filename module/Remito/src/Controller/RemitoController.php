@@ -93,9 +93,10 @@ class RemitoController extends TransaccionController{
         $ivasJson = $this->getJsonIvas();
         $pedidos = $this->remitoManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
         $jsonPedidos = $this->getJsonFromObjectList($pedidos);
+        $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
+
         $this->reiniciarParams();
         return new ViewModel([
-            // 'items' => $items,
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,
             'numTransacciones' => $numTransacciones,
@@ -108,6 +109,7 @@ class RemitoController extends TransaccionController{
             'formasEnvioJson'=>"[]",
             'transaccionJson'=>"[]",
             'pedidosJson' => $jsonPedidos,
+            'empresaJson' => $empresaJson,
             'itemsTransaccionJson' =>"[]",
 
         ]);
@@ -185,9 +187,10 @@ class RemitoController extends TransaccionController{
         $pedidos = $this->remitoManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
         $pedidoPrevio = $this->remitoManager->getPedidoPrevioFromTransaccion($remito->getTransaccion()->getTransaccionPrevia());
         $jsonPedidos = $this->getJsonFromObjectList($pedidos);
+        $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
+
         $this->reiniciarParams();
         return new ViewModel([
-            // 'items' => $items,
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,
             'numTransacciones' => $numTransacciones,
@@ -201,6 +204,7 @@ class RemitoController extends TransaccionController{
             'transaccion' => $transaccion,
             'ivasJson' => $ivasJson,
             'pedidosJson' => $jsonPedidos,
+            'empresaJson' => $empresaJson,
             'itemsTransaccionJson' =>"[]",
             'pedidoPrevio'=> $pedidoPrevio,
         ]);

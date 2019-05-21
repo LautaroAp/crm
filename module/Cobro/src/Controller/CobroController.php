@@ -39,6 +39,7 @@ class CobroController extends TransaccionController
         return "cobro";
     }
 
+    // // // // // // // // // // ADD ACTION // // // // // // // // // // 
     public function addAction()
     {
         $json="[]";
@@ -100,6 +101,7 @@ class CobroController extends TransaccionController
         $jsonRemitos = $this->getJsonFromObjectList($remitos);
         $transacciones = $this->cobroManager->getTransacciones();
         $jsonTransacciones = $this->getJsonFromObjectList($transacciones);
+        $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
         $this->reiniciarParams();
 
         return new ViewModel([
@@ -118,6 +120,7 @@ class CobroController extends TransaccionController
             'pedidosJson' => $jsonPedidos,
             'remitosJson' => $jsonRemitos,
             'transaccionesJson' => $jsonTransacciones,
+            'empresaJson' => $empresaJson,
             'itemsTransaccionJson' =>"[]",
         ]);
     }
@@ -133,6 +136,7 @@ class CobroController extends TransaccionController
        return new ViewModel([]);
    }
 
+   // // // // // // // // // // EDIT ACTION // // // // // // // // // //
     public function editAction() {
         $id_transaccion = $this->params()->fromRoute('id');
         $cobro = $this->cobroManager->getCobroFromTransaccionId($id_transaccion);
@@ -204,7 +208,9 @@ class CobroController extends TransaccionController
         ////////////////////////////REMITOS PREVIOS///////////////////////////
         $remitos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"REMITO");
         $jsonRemitos = $this->getJsonFromObjectList($remitos);
+        $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
         $this->reiniciarParams();
+
         return new ViewModel([
             // 'items' => $items,
             'persona' => $persona,
@@ -223,6 +229,7 @@ class CobroController extends TransaccionController
             'presupuestosJson' => $jsonPrespuestos,
             'pedidosJson' => $jsonPedidos,
             'remitosJson' => $jsonRemitos,
+            'empresaJson' => $empresaJson,
             'itemsTransaccionJson' =>"[]",
         ]);
     }

@@ -85,6 +85,7 @@ if(transaccionPreviaNum!=null){
     getItemsTransaccionPrevia();
 }
 var transaccionJson = null;
+var empresa = <?= $empresaJson ?>;
 var tipoPersona = "<?= $tipoPersona ?>";
 
 </script>
@@ -166,9 +167,9 @@ var tipoPersona = "<?= $tipoPersona ?>";
                                     <option value="Presupuesto">Presupuesto</option>
                                     <option value="Pedido">Pedido</option>
                                     <option value="Remito">Remito</option>
-                                    <option value="Factura">Factura</option>
+                                    <!-- <option value="Factura">Factura</option>
                                     <option value="NotaCredito">Nota de Crédito</option>
-                                    <option value="NotaDebito">Nota de Débito</option>
+                                    <option value="NotaDebito">Nota de Débito</option> -->
                                 </select>
                                 <span class="input-group-btn">                        <button type="button" id="btn-modal" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i>
                                 </button></span>

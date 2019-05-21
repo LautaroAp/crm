@@ -173,8 +173,7 @@ function completeItems(id){
         var transaccion_selected = transacciones[id];
         var idTransaccion = transaccion_selected["Id"];
         var numTransaccion = transaccion_selected["Numero Tipo Transaccion"];
-        // alert(tipoTransaccion);
-        // alert(idTransaccion);
+        // alert("tipoTransaccion = " + tipoTransaccion);
         $('#transaccion_buscada').val(numTransaccion);
         $('#id_transaccion_previa').val(idTransaccion);
         $.post( '/' + tipoTransaccion + '/ajax/getItemsTransaccion/' + idTransaccion, function (data) {

@@ -76,15 +76,16 @@ var jsonModalTransaccion = <?= $presupuestosJson ?>;
 var itemsTransaccionJson = <?= $itemsTransaccionJson ?>;
 
 items.concat(itemsTransaccionJson);
-var itemsTransaccion =null;
-var itemsAnteriores =null;
+var itemsTransaccion = null;
+var itemsAnteriores = null;
 var transaccionPreviaNum = <?= $transaccionPreviaNum ?>;
-if (transaccionPreviaNum=== -1){transaccionPreviaNum=null};
+if (transaccionPreviaNum === -1){transaccionPreviaNum = null};
 var itemsTransaccionPrevia = null;
-if(transaccionPreviaNum!=null){
+if(transaccionPreviaNum != null){
     getItemsTransaccionPrevia();
 }
 var transaccionJson = null;
+var empresa = <?= $empresaJson ?>;
 var tipoPersona = "<?= $tipoPersona ?>";
 
 </script>

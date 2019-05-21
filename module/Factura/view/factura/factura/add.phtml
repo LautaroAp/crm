@@ -61,10 +61,12 @@ if ($persona->getTipo() =="PROVEEDOR"){
 }
 $responsable = $this->identity();
 $tipoPersona = strtoupper($persona->getTipo());
+// var_dump(json_decode($transaccionJson),true); die();
 ?>
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
 <script>
+var tipoTransaccion ="factura";
 var items = [];
 var json_items = <?= $json_bienes ?>;
 var json_items_codigos = <?= $json_bienes ?>;
@@ -87,6 +89,7 @@ var transaccionPreviaNum = null;
 var transaccionPreviaId = null;
 var itemsTransaccionPrevia = null;
 var transaccionJson = null;
+var empresa = <?= $empresaJson ?>;
 var tipoPersona = "<?= $tipoPersona ?>";
 </script>
 
@@ -166,9 +169,9 @@ var tipoPersona = "<?= $tipoPersona ?>";
                                     <option value="Presupuesto">Presupuesto</option>
                                     <option value="Pedido">Pedido</option>
                                     <option value="Remito">Remito</option>
-                                    <option value="Factura">Factura</option>
+                                    <!-- <option value="Factura">Factura</option>
                                     <option value="NotaCredito">Nota de Crédito</option>
-                                    <option value="NotaDebito">Nota de Débito</option>
+                                    <option value="NotaDebito">Nota de Débito</option> -->
                                 </select>
                                 <span class="input-group-btn">
                                     <button type="button" id="btn-modal" class="btn btn-default" data-toggle="modal" 
@@ -247,14 +250,20 @@ var tipoPersona = "<?= $tipoPersona ?>";
                     <div class="row form-row">
                         <div class="form-group col-md-3" id="monedas">
                             <label>Moneda</label>
-                            <input type="text" class="form-control" name="input_moneda" id="input_moneda"
-                                value="" readonly>
+                            <script>
+                            var monedas = <?php echo ($monedasJson); ?>;
+                            completarMonedas(monedas);
+                            </script>
+                            <!-- <input type="text" class="form-control" name="input_moneda" id="input_moneda" value="" readonly> -->
                             
                         </div>
                         <div class="form-group col-md-3" id="formasPago">
                             <label>Forma de Pago</label>
-                            <input type="text" class="form-control" name="input_forma_pago" id="input_forma_pago"
-                                value="" readonly>
+                            <script>
+                            var formasPago = <?php echo ($formasPagoJson); ?>;
+                            completarFormasPago(formasPago);
+                            </script>
+                            <!-- <input type="text" class="form-control" name="input_forma_pago" id="input_forma_pago" value="" readonly> -->
                         </div>
                         <div id="div_bonificacion" class="form-group col-md-3">
                             <label>% Bonificación</label>
@@ -330,7 +339,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Seleccionar Transacción </h4>
+                    <h4 class="modal-title">Seleccionar Transacción</h4>
                 </div>
                 <div class="modal-body">
                     <div class="panel panel-body" id="contenido_transacciones">

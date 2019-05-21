@@ -4,110 +4,133 @@ var arrayFormasEnvio;
 var recargo=null;
 var bonificacion = null;
 
-function completarMonedas(monedas, transaccion=null){+
-    console.log(transaccion);
+function completarMonedas(monedas, transaccion=null){
     arrayMonedas=monedas;
     var myDiv = document.getElementById("monedas");
-    var inputMonedas = document.getElementById("input_moneda");
-    if (inputMonedas != null){
-        $("#input_moneda").val(transaccion["Moneda"]["Nombre"]);
+    var selectList = document.getElementById("select_monedas");
+    if(selectList != null){
+        if (transaccion){
+            if ("Moneda" in transaccion == true){
+                $("#select_monedas").val(transaccion["Moneda"]["Id"]);
+            }
+        }
     }
-    else{
-        //Create and append select list
+    //Create and append select list
+    else {
         var selectList = document.createElement("select");
         selectList.id = "select_monedas";
         selectList.name="moneda";
         selectList.setAttribute("class", "form-control");
+        // SI ES FACTURA "Disable all except the selected option")
+        if(tipoTransaccion == "factura"){
+            selectList.setAttribute("readonly", true);
+        }
         myDiv.appendChild(selectList);
+
         //Create and append the options
+        var option = document.createElement("option");
+        if (transaccion){
+            if ("Moneda" in transaccion == true){
+                option.value = transaccion["Moneda"]["Id"];
+                option.text = transaccion["Moneda"]["Nombre"];
+            }
+            else{
+                option.value = "-1";
+                option.text = "Seleccionar Moneda";
+                if(tipoTransaccion == "factura"){
+                    option.setAttribute("disabled", true);
+                }
+            }
+        }
+        else{
+            option.value = "-1";
+            option.text = "Seleccionar Moneda";
+            if(tipoTransaccion == "factura"){
+                option.setAttribute("disabled", true);
+            }
+        }
 
-        // var option = document.createElement("option");
-        // option.value = "-1";
-        // option.text = "Seleccionar Moneda";
-        // option.setAttribute("hidden","");
-        // selectList.appendChild(option);
+        option.setAttribute("hidden","");
+        selectList.appendChild(option);
 
-
-        // var option = document.createElement("option");
-        // option.value = "-1";
-        // option.text = "No definido";
-        // selectList.appendChild(option);
+        var option = document.createElement("option");
+        option.value = "-1";
+        option.text = "No definido";
+        if(tipoTransaccion == "factura"){
+            option.setAttribute("disabled", true);
+        }
+        selectList.appendChild(option);
 
         for (var i = 0; i < monedas.length; i++) {
             var option = document.createElement("option");
             option.value = monedas[i]['Id'];
             option.text = monedas[i]['Nombre'];
+            if(tipoTransaccion == "factura"){
+                option.setAttribute("disabled", true);
+            }
             selectList.appendChild(option);
         }
         selectList.selectedIndex = empresa["Moneda"]["Id"]-1;
-
-    }
-
+}
     
 }
+
 
 function completarFormasPago(formasPago, transaccion=null){
     arrayFormasPago=formasPago;
     var myDiv = document.getElementById("formasPago");
-
-    var inputFormaPago = document.getElementById("input_forma_pago");
-    //SI ES UN INPUT ES PORQUE  ES FACTURA
-    if (inputFormaPago!= null){
-        $("#input_forma_pago").val(transaccion["Forma de Pago"]["Nombre"]);
-    }
-    else{
-        var selectList = document.getElementById("forma_pago");
-        if(selectList != null){
-            if (transaccion){
-                if ("Forma de Pago" in transaccion == true){
-                    $("#forma_pago").val(transaccion["Forma de Pago"]["Id"]).change();
-                }
+    var selectList = document.getElementById("forma_pago");
+    if(selectList != null){
+        if (transaccion){
+            if ("Forma de Pago" in transaccion == true){
+                $("#forma_pago").val(transaccion["Forma de Pago"]["Id"]).change();
             }
         }
-        //Create and append select list
-        else {    
-            selectList = document.createElement("select");
-            selectList.id = "forma_pago";
-            selectList.name="forma_pago";
-            selectList.setAttribute("onchange", "changeBonificacionRecargo()");
-            selectList.setAttribute("class", "form-control");
-            myDiv.appendChild(selectList);
-            //Create and append the options
-            var option = document.createElement("option");
-            if (transaccion){
-                if ("Forma de Pago" in transaccion == true){
-                    option.value = transaccion["Forma de Pago"]["Id"];
-                    option.text = transaccion["Forma de Pago"]["Nombre"];
-                    recargo= parseFloat(transaccion["Recargo general"]).toFixed(2);
-                    bonificacion = parseFloat(transaccion["Bonificacion general"]).toFixed(2);
-                }
-                else{
-                    option.value = "-1";
-                    option.text = "Seleccionar Forma de Pago";
-                }
+    }
+    //Create and append select list
+    else {    
+        selectList = document.createElement("select");
+        selectList.id = "forma_pago";
+        selectList.name="forma_pago";
+        selectList.setAttribute("onchange", "changeBonificacionRecargo()");
+        selectList.setAttribute("class", "form-control");
+        myDiv.appendChild(selectList);
+        //Create and append the options
+        var option = document.createElement("option");
+        if (transaccion){
+            if ("Forma de Pago" in transaccion == true){
+                option.value = transaccion["Forma de Pago"]["Id"];
+                option.text = transaccion["Forma de Pago"]["Nombre"];
+                recargo= parseFloat(transaccion["Recargo general"]).toFixed(2);
+                bonificacion = parseFloat(transaccion["Bonificacion general"]).toFixed(2);
             }
             else{
                 option.value = "-1";
                 option.text = "Seleccionar Forma de Pago";
             }
-
-            option.setAttribute("hidden","");
-            selectList.appendChild(option);
-
-
-            var option = document.createElement("option");
-            option.value = "-1";
-            option.text = "No definido";
-            selectList.appendChild(option);
-
-            for (var i = 0; i < formasPago.length; i++) {
-                var option = document.createElement("option");
-                option.value = formasPago[i]['Id'];
-                option.text = formasPago[i]['Nombre'];
-                selectList.appendChild(option);
-            }
         }
+        else{
+            option.value = "-1";
+            option.text = "Seleccionar Forma de Pago";
+        }
+
+        option.setAttribute("hidden","");
+        selectList.appendChild(option);
+
+        var option = document.createElement("option");
+        option.value = "-1";
+        option.text = "No definido";
+        selectList.appendChild(option);
+
+        for (var i = 0; i < formasPago.length; i++) {
+            var option = document.createElement("option");
+            option.value = formasPago[i]['Id'];
+            option.text = formasPago[i]['Nombre'];
+            selectList.appendChild(option);
+        }
+    
     }
+
 }
 
 

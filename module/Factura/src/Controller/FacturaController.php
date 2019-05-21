@@ -99,6 +99,7 @@ class FacturaController extends TransaccionController
         $jsonRemitos = $this->getJsonFromObjectList($remitos);
         $transacciones = $this->facturaManager->getTransacciones();
         $jsonTransacciones = $this->getJsonFromObjectList($transacciones);
+        $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
         $this->reiniciarParams();
 
         return new ViewModel([
@@ -117,6 +118,7 @@ class FacturaController extends TransaccionController
             'pedidosJson' => $jsonPedidos,
             'remitosJson' => $jsonRemitos,
             'transaccionesJson' => $jsonTransacciones,
+            'empresaJson' => $empresaJson,
             'itemsTransaccionJson' =>"[]",
         ]);
     }
@@ -133,117 +135,13 @@ class FacturaController extends TransaccionController
    }
 
      public function editAction() {
-    //     $id_transaccion = $this->params()->fromRoute('id');
-    //     $factura = $this->facturaManager->getFacturaFromTransaccionId($id_transaccion);
-    //     $items = array();
-
-    //     if (!is_null($factura)) {
-    //         $items = $factura->getTransaccion()->getBienesTransacciones();
-    //     }
-       
-    //     $json = "";
-    //     //SI HAY ITEMS CARGADOS EN LA SESION LOS TOMO DE AHI 
-    //     if ((isset($_SESSION['TRANSACCIONES']['FACTURA']))){
-    //         $json = $_SESSION['TRANSACCIONES']['FACTURA'];
-    //     }
-    //     //SINO LOS TOMO DEL FACTURA Y GUARDO ESO EN LA SESION PARA CONTINUAR TRABAJANDO CON LA SESION
-    //     else{
-    //         $json = $this->getJsonFromObjectList($items);
-    //         $_SESSION['TRANSACCIONES']['FACTURA'] = $json;
-    //     }
-       
-    //     $persona = $factura->getTransaccion()->getPersona();
-    //     $tipoPersona = null;
-    //     // Obtengo todos los Bienes
-    //     $bienes = $this->bienesManager->getBienes();
-
-    //     // Creo JSON con Nombres de todos los Productos y Servicios
-    //     $json_bienes = "";
-
-    //     // $response[] = array("value"=>"1","label"=>"Soporte");
-    //     foreach ($bienes as $bien) {
-    //         $json_bienes .= $bien->getJsonBien() . ',';
-    //     }
-    //     $json_bienes = substr($json_bienes, 0, -1);
-    //     $json_bienes = '[' . $json_bienes . ']';
-
-    //     if ($persona->getTipo() == "CLIENTE") {
-    //         $tipoPersona = $this->clientesManager->getClienteIdPersona($persona->getId());
-    //     } elseif ($persona->getTipo() == "PROVEEDOR") {
-    //         $tipoPersona = $this->proveedorManager->getProveedorIdPersona($persona->getId());
-    //     }
-    //     if ($this->getRequest()->isPost()) {
-    //         $data = $this->params()->fromPost();
-    //         $data['tipo'] = $this->getTipo();
-    //         $data['persona'] = $persona;
-    //         $data['tipo_persona'] = $tipoPersona;
-    //         // $data['items'] = $_SESSION['TRANSACCIONES']['FACTURA'];
-    //         $this->facturaManager->edit($factura, $data);
-    //         $url = $data['url'];
-    //         if ($persona->getTipo() == "CLIENTE") {
-    //             $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
-    //         } else {
-    //             $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
-    //         }
-    //     }
-    //     $numTransacciones = $factura->getTransaccion()->getNumero();
-    //     $numFactura = $factura->getNumero();
-    //     $monedasJson = $this->getJsonMonedas();
-    //     $formasPagoJson = $this->getJsonFormasPago();
-    //     $formasEnvioJson = $this->getJsonFormasEnvio();
-    //     $ivasJson = $this->getJsonIvas();
-    //     $transaccion = $factura->getTransaccion();
-    //     $transaccionJson = $factura->getTransaccion()->getJSON();
-    //     ////////////////////////////PRESUPUESTOS PREVIOS///////////////////////////
-    //     $presupuestos = $this->facturaManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
-    //     $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
-    //     ////////////////////////////PEDIDOS PREVIOS///////////////////////////
-    //     $pedidos = $this->facturaManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
-    //     $jsonPedidos = $this->getJsonFromObjectList($pedidos);
-    //     ////////////////////////////REMITOS PREVIOS///////////////////////////
-    //     $remitos = $this->facturaManager->getTransaccionesPersonaTipo($persona->getId(),"REMITO");
-    //     $jsonRemitos = $this->getJsonFromObjectList($remitos);
-    //     $this->reiniciarParams();
-    //     return new ViewModel([
-    //         // 'items' => $items,
-    //         'persona' => $persona,
-    //         'tipoPersona' => $tipoPersona,
-    //         'numTransacciones' => $numTransacciones,
-    //         'numFactura' => $numFactura,
-    //         'json' => $json,
-    //         'json_bienes' => $json_bienes,
-    //         'formasPagoJson' => $formasPagoJson,
-    //         'formasEnvioJson' => $formasEnvioJson,
-    //         'monedasJson' => $monedasJson,
-    //         'factura' => $factura,
-    //         'transaccion' => $transaccion,
-    //         'transaccionJson' => $transaccionJson,
-    //         'ivasJson' => $ivasJson,
-    //         'presupuestosJson' => $jsonPrespuestos,
-    //         'pedidosJson' => $jsonPedidos,
-    //         'remitosJson' => $jsonRemitos,
-    //         'itemsTransaccionJson' =>"[]",
-    //     ]);
+        // Similar a Remito
     }
 
     public function setItemsAction(){
         $items = $_POST['json'];
         $_SESSION['TRANSACCIONES']['FACTURA'] = $items;
     }
-
-    // public function eliminarItemAction(){
-    //     $items = $_POST['json'];
-    //     $index = $_POST['index'];
-       
-    //     $itemsArray = json_decode($items, true);
-    //     $itemsArray = array_splice($itemsArray, $index, 1);
-    //     $json = json_encode($itemsArray);
-        
-    //     $view = new ViewModel(['json'=>$json]);
-    //     $view->setTemplate('layout/nulo');
-    //     $view->setTerminal(true);
-    //     return $view;
-    // }
 
     public function getJsonFormasEnvio()
    {

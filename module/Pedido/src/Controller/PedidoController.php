@@ -34,23 +34,6 @@ class PedidoController extends TransaccionController
 
     }
 
-
-    // private function getTipo($tipo_persona=null)
-    // {
-    //     if(!is_null($tipo_persona)){
-    //         return "pedido";
-    //     }
-    //     else{
-    //          if (strtoupper($tipo_persona) =="CLIENTE"){
-    //         return "pedido";
-    //         }
-    //         else{
-    //             return "orden de compra";
-    //         }
-    //     }
-       
-    // }
-
     public function getTipo(){
         return "pedido";
     }
@@ -104,6 +87,9 @@ class PedidoController extends TransaccionController
         $ivasJson = $this->getJsonIvas();
         $presupuestos = $this->pedidoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
         $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
+        $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
+
+
         $this->reiniciarParams();
         return new ViewModel([
             // 'items' => $items,
@@ -119,25 +105,11 @@ class PedidoController extends TransaccionController
             'ivasJson' => $ivasJson,
             'transaccionJson'=>"[]",
             'presupuestosJson' => $jsonPrespuestos,
+            'empresaJson' => $empresaJson,
             'itemsTransaccionJson' =>"[]",
 
         ]);
     }
-
-    
-
-//     public function addItemAction()
-//    {
-//        if ($this->getRequest()->isPost()) {
-//            $data = $this->params()->fromPost();
-//            $data['tipo'] = $this->getTipo();
-//            $this->procesarAddAction($data);
-//            $this->redirect()->toRoute('home');
-//        }
-//        return new ViewModel([]);
-//    }
-
-
 
     public function editAction() {
         $id_transaccion = $this->params()->fromRoute('id');
@@ -203,6 +175,8 @@ class PedidoController extends TransaccionController
         $transaccionJson = $pedido->getTransaccion()->getJSON();
         $presupuestos = $this->pedidoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
         $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
+        $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
+        
         $this->reiniciarParams();
         return new ViewModel([
             // 'items' => $items,
@@ -220,6 +194,7 @@ class PedidoController extends TransaccionController
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
             'presupuestosJson' => $jsonPrespuestos,
+            'empresaJson' => $empresaJson,
             'itemsTransaccionJson' =>"[]",
         ]);
     }

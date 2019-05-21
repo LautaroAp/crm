@@ -51,23 +51,6 @@ class PresupuestoController extends TransaccionController{
 
     public function indexAction() {
     }
-
-   
-    // private function getTipo($tipo_persona=null)
-    // {
-    //     if(!is_null($tipo_persona)){
-    //         return "presupuesto";
-    //     }
-    //     else{
-    //          if (strtoupper($tipo_persona) =="CLIENTE"){
-    //         return "presupuesto";
-    //         }
-    //         else{
-    //             return "solicitud de presupuesto";
-    //         }
-    //     }
-       
-    // }
        
     public function getTipo(){
         return "presupuesto";
@@ -122,6 +105,7 @@ class PresupuestoController extends TransaccionController{
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
         $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
+
         $this->reiniciarParams();
         return new ViewModel([
             // 'items' => $items,
@@ -200,6 +184,7 @@ class PresupuestoController extends TransaccionController{
         $transaccion = $presupuesto->getTransaccion();
         $transaccionJson = $presupuesto->getTransaccion()->getJSON();
         $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
+
         $this->reiniciarParams();
         return new ViewModel([
             // 'items' => $items,
