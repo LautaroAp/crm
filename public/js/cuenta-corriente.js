@@ -17,27 +17,38 @@ function calcularCuentaCorriente(tipo){
     var table = document.getElementById("tabla_ventas");
     var sumRemitos = 0;
     var sumFacturados = 0;
-    for (var i = 1, row; row = table.rows[i]; i++) {        
-        var tipo = row.cells[1].innerHTML;
-        var monto = row.cells[3].innerHTML;
-        console.log(tipo);
-        if (tipo=="Remito"){
-             sumRemitos = sumRemitos + parseFloat(getNumberValue(monto));
-        }
-        else{
-            sumFacturados = sumFacturados + parseFloat(getNumberValue(monto));
+
+    // for (var i = 1, row; row = table.rows[i]; i++) {        
+    for (var i = 1; i<table.rows.length; i++) {        
+        var row = table.rows[i];
+        if (row.cells[1]){
+            var tipo = row.cells[1].innerHTML;
+            var monto = row.cells[3].innerHTML;
+            console.log(tipo);
+            if (tipo=="Remito"){
+                sumRemitos = sumRemitos + parseFloat(getNumberValue(monto));
+            }
+            else{
+                sumFacturados = sumFacturados + parseFloat(getNumberValue(monto));
+            }
         }
     }
     $('#total_ventas').val(formatMoney(sumRemitos.toFixed(2)));
     $('#total_facturado').val(formatMoney(sumFacturados.toFixed(2)));
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    var table = document.getElementById("tabla_cobros");
+    var table2 = document.getElementById("tabla_cobros");
     var sumCobros = 0;
-    for (var j = 1, row; r = table.rows[j]; j++) {        
-        var tipo = r.cells[1].innerHTML;
-        var monto = r.cells[3].innerHTML;
-        sumCobros = sumCobros + parseFloat(getNumberValue(monto));
+    // for (var j = 1, r; r = table.rows[j]; j++) {        
+    for (var j = 1; j<table2.rows.length; j++) {        
+        var r = table2.rows[j];
+        if (r.cells[1]){
+            var tipo = r.cells[1].innerHTML;
+            var monto = r.cells[3].innerHTML;
+            sumCobros = sumCobros + parseFloat(getNumberValue(monto));
+        }
+       
     }
+
     $('#total_cobros').val(formatMoney(sumCobros.toFixed(2)));
 
     var saldoPendienteCobro = sumFacturados - sumCobros;
@@ -55,6 +66,8 @@ function calcularCuentaCorriente(tipo){
         $('#saldo_pendiente_cobro').val(formatMoney(saldoPendienteCobro.toFixed(2)));
 
     }
+    console.log(sumRemitos);
+    console.log(sumFacturados);
     var prodSinFacturar = sumRemitos - sumFacturados;
     var cuentaCorrienteGlobal = saldoPendienteCobro + prodSinFacturar;
     $('#saldo_pendiente_factura').val(formatMoney(prodSinFacturar.toFixed(2)));

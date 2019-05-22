@@ -86,4 +86,13 @@ class TipoFactura
 
         return $this;
     }
+
+    public function getJSON(){
+
+        $output = "";
+        $output .= '"Id": "' . $this->getId() .'", ';
+        $output .= '"Nombre": "' . $this->getNombre() .'" ';
+    
+        return  '{'.$output.'}' ;
+    }
 }

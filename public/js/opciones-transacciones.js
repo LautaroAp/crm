@@ -65,6 +65,43 @@ function completarMonedas(monedas, transaccion=null){
 }
 
 
+function completarTiposFactura (tiposFactura, tipoFacturaPersona){
+    var myDiv = document.getElementById("tipos_factura");
+    var selectList = document.getElementById("select_facturas");
+    if(selectList != null){
+        if (transaccion){
+            if (tipoFacturaPersona!="Seleccionar tipo de factura"){
+                $("#select_facturas").val(tipoFacturaPersona);
+            }
+        }
+    }
+    else {
+        var selectList = document.createElement("select");
+        selectList.id = "select_facturas";
+        selectList.name="tipo_factura";
+        selectList.setAttribute("class", "form-control");
+        myDiv.appendChild(selectList);
+        //Create and append the options
+        var option = document.createElement("option");
+        if (tipoFacturaPersona!="Seleccionar tipo de factura"){
+                option.value = tipoFacturaPersona['Id'];
+                option.text = tipoFacturaPersona['Nombre'];
+        }
+        else{
+            option.value = "-1";
+            option.text = tipoFacturaPersona;
+        }
+        option.setAttribute("hidden","");
+        selectList.appendChild(option);
+        for (var i = 0; i < tiposFactura.length; i++) {
+            var option = document.createElement("option");
+            option.value = tiposFactura[i]['Id'];
+            option.text = tiposFactura[i]['Nombre'];
+            selectList.appendChild(option);
+        }
+    }
+}
+
 function completarFormasPago(formasPago, transaccion=null){
     arrayFormasPago=formasPago;
     var myDiv = document.getElementById("formasPago");
