@@ -37,6 +37,12 @@ class Factura {
      */
     private $transaccion_factura;
 
+    /**
+     * Many Services have One Transaccion.
+     * @ORM\ManyToOne(targetEntity="TipoFactura")
+     * @ORM\JoinColumn(name="ID_TIPO_FACTURA", referencedColumnName="ID")
+     */
+    private $tipo_factura;
    
 
     /**
@@ -115,6 +121,26 @@ class Factura {
     public function setTransaccion_factura($transaccion_factura)
     {
         $this->transaccion_factura = $transaccion_factura;
+
+        return $this;
+    }
+
+    /**
+     * Get many Services have One Transaccion.
+     */ 
+    public function getTipo_factura()
+    {
+        return $this->tipo_factura;
+    }
+
+    /**
+     * Set many Services have One Transaccion.
+     *
+     * @return  self
+     */ 
+    public function setTipo_factura($tipo_factura)
+    {
+        $this->tipo_factura = $tipo_factura;
 
         return $this;
     }
