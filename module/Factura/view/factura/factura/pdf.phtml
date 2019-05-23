@@ -99,7 +99,7 @@ for ($i=1; $i <= 3; $i++) {
                 <tr style="font-size: 14px; font-weight: bold;">
                     <th align="center" width="45%">'. $empresa->getNombre() .'</th>
                     <th width="2%"></th>
-                    <th align="center" width="6%" border="0.5">&nbsp;'. $tipo_factura .'</th>
+                    <th align="center" width="6%" border="0.5" style="font-size: 18px;">&nbsp;'. $tipo_factura .'</th>
                     <th width="2%"></th>
                     <th align="left" width="45%">'. strtoupper($transaccion->getNombre()) .'</th>
                 </tr>
@@ -260,12 +260,12 @@ for ($i=1; $i <= 3; $i++) {
     // $pdf->writeHTML($pdf->getY(), true, false, true, false, '');
  
     // Position in mm from bottom
-    if($pdf->getY() > 208){
-        $pdf->AddPage();
-    }
+    // if($pdf->getY() > 208){
+    //     $pdf->AddPage();
+    // }
 
     // Table of totals
-    $pdf->SetY(-85);
+    $pdf->SetY(-100);
     $html = '
         <table border="0" cellspacing="0" cellpadding="3">
             <tbody>
@@ -335,17 +335,57 @@ for ($i=1; $i <= 3; $i++) {
         </table>
     ';
     // output the HTML content
-    $pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
-    $pdf->Ln(1);
+    // $pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
+    // $pdf->Ln(1);
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     // Info
     $html = '<strong style="font-size: 12px;">DOCUMENTO NO VÁLIDO COMO FACTURA</strong>';
     // output the HTML content
-    $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, 'C', true);
+    // $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, 'C', true);
+    // $pdf->Ln(1);
+
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+    // $pdf->SetXY(110, 200);
+    $pdf->Image('public/img/crm/logo_afip.png', '', '', 30, 8, '', '', 'T', false, 300, '', false, false, 1, false, false, false);
     $pdf->Ln(1);
 
+
+    // Observaciones
+    $html = '
+        <table border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td width="18%"></td>
+                    <td width="42%"><strong><i>'. "Comprobante Autorizado" .'</i></strong></td>
+                    <td align="right" width="20%"><strong>'. "CAE Nº: " .'</strong></td>
+                    <td width="20%"><strong>'. "" .'</strong></td>
+                </tr>
+                <tr>
+                    <td style="line-height:8px;"></td>
+                </tr>
+                <tr>
+                    <td width="60%">
+                        <small><i>'. "Esta Administración Federal no se responsabiliza por los datos ingresados en el detalle de la operación" .'</i></small>
+                    </td>
+                    <td align="right" width="20%"><strong>'. "Fecha de vto. de CAE: " .'</strong></td>
+                    <td width="20%"><strong>'. "" .'</strong></td>
+                </tr>
+                <tr>
+                    <td width="60%">
+                        <strong>'. "BARCODE_IMG" .'</strong>
+                    </td>
+                    <td width="40%"></td>
+                </tr>
+            </tbody>
+        </table>
+    ';
+    // output the HTML content
+    $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, '', true);
+    $pdf->Ln(1);
+    
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     $htmlData = '</body></html>';
