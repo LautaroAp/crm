@@ -62,7 +62,7 @@ if ($persona->getTipo() =="PROVEEDOR"){
 $responsable = $this->identity();
 $tipoPersona = strtoupper($persona->getTipo());
 if ($tipoFacturaPersonaJson==""){
-    $tipoFacturaPersonaJson="Seleccionar tipo de factura";
+    $tipoFacturaPersonaJson="-1";
 }
 // var_dump(json_decode($transaccionJson),true); die();
 ?>
