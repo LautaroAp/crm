@@ -14,6 +14,7 @@ class MYPDF extends TCPDF {
         
 		// Page number
         $this->Cell(0, 10, 'Pag '.$this->getPageNumGroupAlias().'/'.$this->getPageGroupAlias(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+        
     }
      
 }
@@ -32,7 +33,7 @@ $pdf->SetAutoPageBreak(TRUE, 10);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 // Generates Original / Duplicate / Triplicate
-for ($i=1; $i <= 1; $i++) {  
+for ($i=1; $i <= 3; $i++) {  
     switch ($i){
         case 1:
             $copia = "ORIGINAL";
@@ -98,7 +99,7 @@ for ($i=1; $i <= 1; $i++) {
                 <tr style="font-size: 14px; font-weight: bold;">
                     <th align="center" width="45%">'. $empresa->getNombre() .'</th>
                     <th width="2%"></th>
-                    <th align="center" width="6%" border="0.5">&nbsp;'. $tipo_factura .'</th>
+                    <th align="center" width="6%" border="0.5" style="font-size: 18px;">&nbsp;'. $tipo_factura .'</th>
                     <th width="2%"></th>
                     <th align="left" width="45%">'. strtoupper($transaccion->getNombre()) .'</th>
                 </tr>
@@ -334,17 +335,55 @@ for ($i=1; $i <= 1; $i++) {
         </table>
     ';
     // output the HTML content
-    $pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
-    $pdf->Ln(1);
+    // $pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
+    // $pdf->Ln(1);
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     // Info
     $html = '<strong style="font-size: 12px;">DOCUMENTO NO VÁLIDO COMO FACTURA</strong>';
     // output the HTML content
-    $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, 'C', true);
+    // $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, 'C', true);
+    // $pdf->Ln(1);
+
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+    // $pdf->SetXY(110, 200);
+    $pdf->Image('public/img/crm/logo_afip.png', '', '', 30, 8, '', '', 'T', false, 300, '', false, false, 1, false, false, false);
     $pdf->Ln(1);
 
+
+    // Observaciones
+    $html = '
+        <table border="0" cellspacing="0" cellpadding="3">
+            <tbody>
+                <tr>
+                    <td align="center" width="50%">
+                        <strong><i>'. "Comprobante Autorizado" .'</i></strong>
+                        <br>
+                        <small>
+                            <i style="line-height:20px;">
+                                '. "Esta Administración Federal no se responsabiliza por los datos ingresados en el detalle de la operación" .'
+                            </i>
+                        </small>
+                        <br>
+                        <strong>'. "BARCODE_IMG" .'</strong>
+                        <br>
+                        <span style="font-size: 6px;">'. "BARCODE_NUM" .'</span>
+                    </td>
+                    <td align="right" width="50%">
+                        <strong>'. "CAE Nº: " .'</strong>
+                        <br>
+                        <strong>'. "Fecha de vto. de CAE: " .'</strong>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    ';
+    // output the HTML content
+    $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, '', true);
+    $pdf->Ln(1);
+    
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     $htmlData = '</body></html>';
