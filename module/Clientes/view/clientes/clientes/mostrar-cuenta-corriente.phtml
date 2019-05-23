@@ -10,32 +10,56 @@
         $('#datetimepicker1').datetimepicker({
             format: 'DD/MM/YYYY'
         });
-    });
-    $('#datetimepicker2').datetimepicker({
+        $('#datetimepicker2').datetimepicker({
         format: 'DD/MM/YYYY'
+        });
+        $('#datetimepicker3').datetimepicker({
+        format: 'DD/MM/YYYY'
+        });
+        $('#datetimepicker4').datetimepicker({
+        format: 'DD/MM/YYYY'
+        });
     });
+  
+    
 </script>
 <!-- Fin -> Datetime Picker -->
 
 <script>
    $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
-        var min = ( $('#min').val());
-        var max = ( $('#max').val());
+        var min = $("#min").val();
+        var min_date = moment(min, "DD-MM-YYYY");
+        var max = $("#max").val();
+        var max_date = moment(max, "DD-MM-YYYY");
+        var min2 = $("#min2").val();
+        var min2_date = moment(min2, "DD-MM-YYYY");
+        var max2 = $("#max2").val();
+        var max2_date = moment(max2, "DD-MM-YYYY");
+        
+        var date = data[0]; // use data for the date column
+        date = moment(date, "YYYY-MM-DD");
 
-        var date = ( data[0] ); // use data for the date column
-        console.log("min "+min);
-        console.log("max "+max);
-        console.log("date" +date);
-        // if ( ( isNaN( min ) && isNaN( max ) ) ||
-        //      ( isNaN( min ) && date <= max ) ||
-        //      ( min <= date   && isNaN( max ) ) ||
-        //      ( min <= date   && date <= max ) )
-        // {
-        //     return true;
-        // }
-        // return false;
-        return true;
+        var tipoTransaccion = data[1];
+        if (tipoTransaccion=="Remito"|| tipoTransaccion=="Factura"){
+            if ( ( isNaN( min_date ) && isNaN( max_date ) ) ||
+             ( isNaN( min_date ) && date <= max_date ) ||
+             ( min_date <= date   && isNaN( max_date ) ) ||
+             ( min_date <= date   && date <= max_date )){
+                return true;
+            }
+            return false;
+        }else{
+            if ( ( isNaN( min2_date ) && isNaN( max2_date ) ) ||
+             ( isNaN( min2_date ) && date <= max2_date ) ||
+             ( min2_date <= date   && isNaN( max2_date ) ) ||
+             ( min2_date <= date   && date <= max2_date )){
+                return true;
+            }
+            return false;
+        }
+        
+        return false;        
     }
 );
 
@@ -46,13 +70,13 @@ $(document).ready(function() {
             "url": "/json/spanish.json"
         }
     });
-    // $('#min, #max').keyup( function() {
-    //     alert("cambio");
-    //     table1.draw();
-    // } );
-    $('#filtroFecha').click( function() {
-        alert("cambio");
+
+    $('#filtroFecha1').click( function() {
         table1.draw();
+        var div_resumen = document.getElementById("titulo_resumen");
+        div_resumen.innerHTML="RESUMEN DEL PERÍODO SELECCIONADO";
+        calcularCuentaCorriente("CLIENTE");
+
     } );
 
     var table2 = $('#tabla_cobros').DataTable({
@@ -61,9 +85,12 @@ $(document).ready(function() {
             "url": "/json/spanish.json"
         }
     });
-    // $('#min, #max').keyup( function() {
-    //     table2.draw();
-    // } );
+    $('#filtroFecha2').click( function() {
+        table2.draw();
+        var div_resumen = document.getElementById("titulo_resumen");
+        div_resumen.innerHTML="RESUMEN DEL PERÍODO SELECCIONADO";
+        calcularCuentaCorriente("CLIENTE");
+    } );
 });
 
 var idPersona = <?= $id_persona ?>;
@@ -82,20 +109,20 @@ var idPersona = <?= $id_persona ?>;
                         <div class="form-group">
                             <label>Filtrar desde:&nbsp;</label>
                             <div class='input-group date width-fecha' id='datetimepicker1'>
-                            <input type='text' class="form-control" name="min" id="min" value="" placeholder="DD/MM/YYYY"/>
+                            <input type='text' class="form-control min" name="min" id="min" value="" placeholder="DD/MM/YYYY"/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                             <label>&nbsp;hasta:&nbsp;</label>
                             <div class='input-group date width-fecha' id='datetimepicker2'>
-                                <input type='text' class="form-control" name="max" id="max" value="" placeholder="DD/MM/YYYY"/>
+                                <input type='text' class="form-control max" name="max" id="max" value="" placeholder="DD/MM/YYYY"/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                             <div class="form-group">
-                                <button type="button" class="form-control btn btn-default" name="filtroFecha" id="filtroFecha" value="">
+                                <button type="button" class="form-control btn btn-default" name="filtroFecha1" id="filtroFecha1" value="">
                                         <span class="glyphicon glyphicon-search"></span>
                                 </button>
                             </div>
@@ -145,6 +172,32 @@ var idPersona = <?= $id_persona ?>;
                 COBROS
             </div>
             <div class="panel-body">
+                <div class="row form-row">
+                    <div class="form-inline col-sm-12">
+                        <div class="form-group">
+                            <label>Filtrar desde:&nbsp;</label>
+                            <div class='input-group date width-fecha' id='datetimepicker3'>
+                            <input type='text' class="form-control min" name="min2" id="min2" value="" placeholder="DD/MM/YYYY"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                            <label>&nbsp;hasta:&nbsp;</label>
+                            <div class='input-group date width-fecha' id='datetimepicker4'>
+                                <input type='text' class="form-control max" name="max2" id="max2" value="" placeholder="DD/MM/YYYY"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="form-control btn btn-default" name="filtroFecha2" id="filtroFecha2" value="">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
                 <table id="tabla_cobros" class="display">
                     <thead>
                         <tr>
@@ -194,7 +247,7 @@ var idPersona = <?= $id_persona ?>;
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default sombra-ficha">
-            <div class="panel-heading text-center titulo-espaciado">
+            <div class="panel-heading text-center titulo-espaciado" id="titulo_resumen">
                 RESUMEN
             </div>
         </div>
