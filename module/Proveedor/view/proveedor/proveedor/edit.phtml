@@ -75,14 +75,16 @@ $url = "/proveedores/listado/ficha/".$id;
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="form-group col-md-4" id="div_provincias">
+                        <div class="form-group col-md-4">
                             <label>Provincia</label>
-                            <select class="form-control place_holder dropdown" id="ops_provincias" name="provincia">
-                                <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); }?>" hidden="">  
-                                    <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
-                                </option>
-                            </select>
-                        </div>
+                            <div id="div_provincias">
+                                <select class="form-control place_holder dropdown" id="ops_provincias" name="provincia">
+                                    <option value="<?php if(isset($provincia)){ echo ($provincia->getId()); } else {echo (-1);}?>" hidden=""> 
+                                        <?php if(isset($provincia)){ echo($provincia->getNombre_provincia()); } else {echo ("Seleccionar Provincia");}?>
+                                    </option>
+                                </select>
+                            </div>
+                        </div> 
                         <div class="form-group col-md-4">
                             <label>Ciudad</label>
                             <input type="text" class="form-control" name="ciudad" value="<?php echo($ciudad); ?>" placeholder="Ingresar Ciudad">
