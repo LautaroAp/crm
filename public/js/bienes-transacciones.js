@@ -67,6 +67,9 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
             case 'Nombre':
                 th.innerHTML = "Producto / Servicio"; 
                 break;
+            case 'Cantidad':
+                th.innerHTML = "Cant."; 
+            break;
             case 'Dto':
                 th.innerHTML = "Dto (%)";
                 break;

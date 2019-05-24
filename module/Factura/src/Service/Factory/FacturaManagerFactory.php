@@ -12,6 +12,7 @@ use Iva\Service\IvaManager;
 use FormaPago\Service\FormaPagoManager;
 use FormaEnvio\Service\FormaEnvioManager;
 use CuentaCorriente\Service\CuentaCorrienteManager;
+use TipoFactura\Service\TipoFacturaManager;
 /**
  * This is the factory class for FacturaManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
@@ -31,7 +32,9 @@ class FacturaManagerFactory
         $formaPagoManager = $container->get(FormaPagoManager::class);
         $formaEnvioManager = $container->get(FormaEnvioManager::class);
         $bienesManager = $container->get(BienesManager::class); 
-        $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);   
-        return new FacturaManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager,$formaEnvioManager, $bienesManager, $cuentaCorrienteManager);
+        $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);
+        $tipoFacturaManager = $container->get(TipoFacturaManager::class);   
+   
+        return new FacturaManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager,$formaEnvioManager, $bienesManager, $cuentaCorrienteManager, $tipoFacturaManager);
     }
 }

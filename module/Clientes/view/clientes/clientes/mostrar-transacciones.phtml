@@ -50,9 +50,9 @@ var idPersona = <?= $id_persona ?>;
                 ?></td>
             <td><?= $transaccion->getDescripcion() ?></td>
             <!-- PDF + BOTON REMITO -->
-            <?php if (($transaccion->getEstado()=="ACTIVO")||($transaccion->getEstado()=="CONFORMADO"||  ($transaccion->getEstado()=="ENTREGADO"))){?>
+            <?php if (($transaccion->getEstado()=="ACTIVO")||($transaccion->getEstado()=="CONFORMADO")||  ($transaccion->getEstado()=="ENTREGADO") ||  ($transaccion->getEstado()=="A_ENTREGAR")){?>
                 <td class="transaccion-activa"><?= $transaccion->getEstado() ?></td>
-            <?php } else if($transaccion->getEstado()=="A_ENTREGAR") { ?>
+            <?php } else if($transaccion->getEstado()=="FACTURADO") { ?>
                 <td class="transaccion-pendiente"><?= str_replace("_"," ",$transaccion->getEstado()) ?></td>
             <?php } else if($transaccion->getEstado()=="ANULADO") { ?>
                 <td class="transaccion-anulada"><?= $transaccion->getEstado() ?></td>
@@ -67,7 +67,7 @@ var idPersona = <?= $id_persona ?>;
                                 <!-- boton remito -->
                                 <ul class="nav navbar-nav navbar-menu-font"> 
                                     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
-                                    style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
+                                    style="margin-right: 4px;" <?php if (($transaccion->getEstado()=="ANULADO")||  ($transaccion->getEstado()=="FACTURADO")) {echo "disabled";} ?>>
                                     <span class="glyphicon glyphicon-check"></span></button>
                                     <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
                                         <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 

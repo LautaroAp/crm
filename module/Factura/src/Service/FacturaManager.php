@@ -32,6 +32,7 @@ class FacturaManager extends TransaccionManager
     protected $bienesTransaccionManager;
     protected $ivaManager;
     private $tipo;
+    private $tipoFacturaManager;
     /**
      * Constructs the service.
      */
@@ -44,11 +45,13 @@ class FacturaManager extends TransaccionManager
         $formaPagoManager,
         $formaEnvioManager, 
         $bienesManager,
-        $cuentaCorrienteManager
+        $cuentaCorrienteManager,
+        $tipoFacturaManager
     ) {
         parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager);
         $this->entityManager = $entityManager;
         $this->tipo = "COBRO";
+        $this->tipoFacturaManager = $tipoFacturaManager;
     }
 
     public function getFacturas()
@@ -85,6 +88,13 @@ class FacturaManager extends TransaccionManager
         if (isset($data['numero_factura'])) {
             $factura->setNumero($data['numero_factura']);
             $transaccion->setNumeroTransaccionTipo($data['numero_factura']);
+        }
+        if (isset($data['tipo_factura'])){
+            if ($data['tipo_factura']!=-1){
+                $idFactura = $data['tipo_factura'];
+                $tipoFactura = $this->tipoFacturaManager->getTipoFactura($idFactura);
+                $factura->setTipo_factura($tipoFactura);
+            }
         }
         return $factura;
     }

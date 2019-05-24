@@ -62,7 +62,7 @@ if ($persona->getTipo() =="PROVEEDOR"){
 $responsable = $this->identity();
 $tipoPersona = strtoupper($persona->getTipo());
 if ($tipoFacturaPersonaJson==""){
-    $tipoFacturaPersonaJson="Seleccionar tipo de factura";
+    $tipoFacturaPersonaJson="-1";
 }
 // var_dump(json_decode($transaccionJson),true); die();
 ?>
@@ -165,11 +165,11 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             <input type="text" class="form-control" name="numero_factura" id="numero_factura"
                                 value="<?= $numFactura ?>" style="max-width: 250px;" readonly>
                         </div>
-                        <div class="form-group col-md-2" id="tipos_factura" hidden="true">
+                        <div class="form-group col-md-2" id="tipos_factura" >
                             <label>Tipo de Factura</label>
                             <script>
                                 var tiposFactura = <?php echo ($tiposFacturaJson); ?>;
-                                var tipoFacturaPersona = <?php echo ($tipoFacturaPersonaJson); ?>;
+                                var tipoFacturaPersona = "<?= $tipoFacturaPersonaJson ?>";
                                 completarTiposFactura(tiposFactura, tipoFacturaPersona);
                             </script>        
                         </div>

@@ -707,7 +707,9 @@ class Transaccion {
     public function setFacturado($facturado)
     {
         $this->facturado = $facturado;
-
+        if (($facturado==true) && (strtoupper($this->tipo_transaccion)!="FACTURA")){
+            $this->estado="FACTURADO";
+        }
         return $this;
     }
 }

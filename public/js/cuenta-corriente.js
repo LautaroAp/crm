@@ -52,29 +52,29 @@ function calcularCuentaCorriente(tipo){
     $('#total_cobros').val(formatMoney(sumCobros.toFixed(2)));
 
     var saldoPendienteCobro = sumFacturados - sumCobros;
-    if (saldoPendienteCobro<0){
-        var saldoPendienteCobro2 = saldoPendienteCobro * -1;
-        if(tipoPersona=="CLIENTE"){
-            $('#titulo_saldo').text("Saldo del cliente a favor");
-        }
-        else{
-            $('#titulo_saldo').text("Saldo a favor ");
-        }
-        $('#saldo_pendiente_cobro').val(formatMoney(saldoPendienteCobro2.toFixed(2)));
+    // if (saldoPendienteCobro<0){
+    //     var saldoPendienteCobro2 = saldoPendienteCobro * -1;
+    //     if(tipoPersona=="CLIENTE"){
+    //         $('#titulo_saldo').text("Saldo del cliente a favor");
+    //     }
+    //     else{
+    //         $('#titulo_saldo').text("Saldo a favor ");
+    //     }
+    //     $('#saldo_pendiente_cobro').val(formatMoney(saldoPendienteCobro2.toFixed(2)));
 
-    }else{
+    // }else{
         $('#saldo_pendiente_cobro').val(formatMoney(saldoPendienteCobro.toFixed(2)));
 
-    }
+    // }
     console.log(sumRemitos);
     console.log(sumFacturados);
     var prodSinFacturar = sumRemitos - sumFacturados;
     var cuentaCorrienteGlobal = saldoPendienteCobro + prodSinFacturar;
     $('#saldo_pendiente_factura').val(formatMoney(prodSinFacturar.toFixed(2)));
-    if (cuentaCorrienteGlobal<0){
-        $('#titulo_gral').text("Cuenta Corriente Global a favor");
-        cuentaCorrienteGlobal = cuentaCorrienteGlobal * -1;        
-    }
+    // if (cuentaCorrienteGlobal<0){
+    //     $('#titulo_gral').text("Cuenta Corriente Global a favor");
+    //     cuentaCorrienteGlobal = cuentaCorrienteGlobal * -1;        
+    // }
     $('#cuenta_corriente_global').val(formatMoney(cuentaCorrienteGlobal.toFixed(2)));
 
 }
