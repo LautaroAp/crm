@@ -1,30 +1,30 @@
 <?php
-namespace Factura\Controller;
+namespace NotaDebito\Controller;
 
 use Transaccion\Controller\TransaccionController;
-use Factura\Service\FacturaManager;
+use NotaDebito\Service\NotaDebitoManager;
 
 use Zend\View\Model\ViewModel;
 use DBAL\Entity\BienesTransacciones;
 
-class FacturaController extends TransaccionController
+class NotaDebitoController extends TransaccionController
 {
 
     /**
-     * Factura manager.
-     * @var User\Service\FacturaManager 
+     * NotaDebito manager.
+     * @var User\Service\NotaDebitoManager 
      */
-    protected $facturaManager;
+    protected $notaDebitoManager;
     private $clientesManager;
     private $proveedorManager;
     private $bienesTransaccionesManager;
     private $bienesManager;
     
-    public function __construct($facturaManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager, $tipoFacturaManager) {
-        parent::__construct($facturaManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager, $empresaManager);
+    public function __construct($notaDebitoManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager, $tipoFacturaManager) {
+        parent::__construct($notaDebitoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager, $empresaManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
-        $this->facturaManager = $facturaManager;
+        $this->notaDebitoManager = $notaDebitoManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->bienesManager = $bienesManager;
         $this->tipoFacturaManager = $tipoFacturaManager;
@@ -37,7 +37,7 @@ class FacturaController extends TransaccionController
 
     private function getTipo()
     {
-        return "factura";
+        return "notaDebito";
     }
 
     public function addAction()
@@ -75,7 +75,7 @@ class FacturaController extends TransaccionController
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
             $data['tipo_persona'] = $tipoPersona;
-            $this->facturaManager->add($data);
+            $this->notaDebitoManager->add($data);
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
             } else {
@@ -83,43 +83,44 @@ class FacturaController extends TransaccionController
             }
         }
 
-        $numTransacciones = $this->facturaManager->getTotalTransacciones() + 1;
-        $numFactura = $this->facturaManager->getTotalFacturas() + 1;
+        $numTransacciones = $this->notaDebitoManager->getTotalTransacciones() + 1;
+        $numNotaDebito = $this->notaDebitoManager->getTotalNotaDebitos() + 1;
         $monedasJson = $this->getJsonMonedas();
         $formasPagoJson = $this->getJsonFormasPago();
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
         ////////////////////////////PRESUPUESTOS PREVIOS///////////////////////////
-        $presupuestos = $this->facturaManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+        $presupuestos = $this->notaDebitoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
         $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
         ////////////////////////////PEDIDOS PREVIOS///////////////////////////
-        $pedidos = $this->facturaManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
+        $pedidos = $this->notaDebitoManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
         $jsonPedidos = $this->getJsonFromObjectList($pedidos);
         ////////////////////////////REMITOS PREVIOS///////////////////////////
-        $remitos = $this->facturaManager->getTransaccionesPersonaTipo($persona->getId(),"REMITO");
+        $remitos = $this->notaDebitoManager->getTransaccionesPersonaTipo($persona->getId(),"REMITO");
         $jsonRemitos = $this->getJsonFromObjectList($remitos);
 
-        $transacciones = $this->facturaManager->getTransacciones();
+        $transacciones = $this->notaDebitoManager->getTransacciones();
         $jsonTransacciones = $this->getJsonFromObjectList($transacciones);
-        
+
         $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
-        
+
         $tiposFactura= $this->tipoFacturaManager->getTipoFacturas();
         $tiposFacturaJson =$this->getJsonFromObjectList($tiposFactura);
-        
+        // var_dump(json_decode($tiposFacturaJson), true); die();
+
         $this->reiniciarParams();
-        
         $tipoFacturaPersona = $persona->getTipo_factura();
         $tipoFacturaPersonaJson ="";
-        
+
         if ($tipoFacturaPersona!=null){
             $tipoFacturaPersonaJson= $tipoFacturaPersona->getJSON();
         }
+
         return new ViewModel([
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,
             'numTransacciones' => $numTransacciones,
-            'numFactura' => $numFactura,
+            'numNotaDebito' => $numNotaDebito,
             'json' => $json,
             'json_bienes' => $json_bienes,
             'formasPagoJson' => $formasPagoJson,
@@ -168,7 +169,7 @@ class FacturaController extends TransaccionController
    public function getItemsTransaccionAction(){
         $this->layout()->setTemplate('layout/nulo');
         $idTransaccion = $this->params()->fromRoute('id');
-        $transaccion = $this->facturaManager->getTransaccionId($idTransaccion);
+        $transaccion = $this->notaDebitoManager->getTransaccionId($idTransaccion);
         $transaccionJson = $transaccion->getJSON();
         $items = $transaccion->getBienesTransacciones();
         $itemsTransaccionJson = $this->getJsonFromObjectList($items);
@@ -184,30 +185,30 @@ class FacturaController extends TransaccionController
     public function pdfAction() {
         $this->layout()->setTemplate('layout/nulo');
         $id_transaccion = $this->params()->fromRoute('id');
-        $factura = $this->facturaManager->getFacturaFromTransaccionId($id_transaccion);
+        $notaDebito = $this->notaDebitoManager->getNotaDebitoFromTransaccionId($id_transaccion);
         $items = array();
 
-        if (!is_null($factura)) {
-            $items = $factura->getTransaccion()->getBienesTransacciones();
+        if (!is_null($notaDebito)) {
+            $items = $notaDebito->getTransaccion()->getBienesTransacciones();
         }
        
         $json = "";
         $json = $this->getJsonFromObjectList($items);
        
-        $persona = $factura->getTransaccion()->getPersona();
+        $persona = $notaDebito->getTransaccion()->getPersona();
         $tipoPersona = null;
 
         $empresa = $this->empresaManager->getEmpresa();
 
-        $numTransacciones = $factura->getTransaccion()->getNumero();
-        $numFactura = $factura->getNumero();
+        $numTransacciones = $notaDebito->getTransaccion()->getNumero();
+        $numNotaDebito = $notaDebito->getNumero();
         $monedasJson = $this->getJsonMonedas();
         $formasPagoJson = $this->getJsonFormasPago();
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
-        $transaccion = $factura->getTransaccion();
-        $transaccionJson = $factura->getTransaccion()->getJSON();
-        $presupuestos = $this->facturaManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+        $transaccion = $notaDebito->getTransaccion();
+        $transaccionJson = $notaDebito->getTransaccion()->getJSON();
+        $presupuestos = $this->notaDebitoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
         $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
         $tiposFactura= $this->tipoFacturaManager->getTipoFacturas();
         $tiposFacturaJson =$this->getJsonFromObjectList($tiposFactura);
@@ -222,12 +223,12 @@ class FacturaController extends TransaccionController
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,
             'numTransacciones' => $numTransacciones,
-            'numFactura' => $numFactura,
+            'numNotaDebito' => $numNotaDebito,
             'json' => $json,
             'formasPagoJson' => $formasPagoJson,
             'formasEnvioJson' => $formasEnvioJson,
             'monedasJson' => $monedasJson,
-            'factura' => $factura,
+            'notaDebito' => $notaDebito,
             'transaccion' => $transaccion,
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
@@ -243,7 +244,7 @@ class FacturaController extends TransaccionController
    public function getItemsPreviosAction(){
         $this->layout()->setTemplate('layout/nulo');
         $numPresupuesto = $this->params()->fromRoute('id');
-        $presupuesto = $this->facturaManager->getPresupuestoPrevio($numPresupuesto);
+        $presupuesto = $this->notaDebitoManager->getPresupuestoPrevio($numPresupuesto);
         $itemsTransaccionJson="[]";
         if ($presupuesto!=null){
             $transaccion = $presupuesto->getTransaccion();
@@ -259,7 +260,7 @@ class FacturaController extends TransaccionController
         // $this->layout()->setTemplate('layout/nulo');
         $idTransaccion = $this->params()->fromRoute('id');
         $estado= $this->params()->fromRoute('id2');
-        $this->facturaManager->cambiarEstadoTransaccion($idTransaccion, $estado);
+        $this->notaDebitoManager->cambiarEstadoTransaccion($idTransaccion, $estado);
         
         $view = new ViewModel();
         $view->setTemplate('layout/nulo');

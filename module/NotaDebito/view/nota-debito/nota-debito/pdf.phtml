@@ -88,8 +88,8 @@ for ($i=1; $i <= 3; $i++) {
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    if($factura->getTipo_factura()){
-        $tipo_factura = $factura->getTipo_factura()->getNombre();
+    if($notaDebito->getTipo_notaDebito()){
+        $tipo_notaDebito = $notaDebito->getTipo_notaDebito()->getNombre();
     }
 
     // Datos Empresa y Comprobante
@@ -99,7 +99,7 @@ for ($i=1; $i <= 3; $i++) {
                 <tr style="font-size: 14px; font-weight: bold;">
                     <th align="center" width="45%">'. $empresa->getNombre() .'</th>
                     <th width="2%"></th>
-                    <th align="center" width="6%" border="0.5" style="font-size: 18px;">&nbsp;'. $tipo_factura .'</th>
+                    <th align="center" width="6%" border="0.5" style="font-size: 18px;">&nbsp;'. $tipo_notaDebito .'</th>
                     <th width="2%"></th>
                     <th align="left" width="45%">'. strtoupper($transaccion->getNombre()) .'</th>
                 </tr>
@@ -111,7 +111,7 @@ for ($i=1; $i <= 3; $i++) {
                     <td width="3%" style="border-right: 0.5px solid black;"></td>
                     <td width="3%"></td>
                     <th width="2%"></th>
-                    <td width="45%"><strong>Punto de Venta: </strong>'. str_pad($empresa->getPunto_venta(), 5, "0", STR_PAD_LEFT) .'&nbsp;<strong> Comp. Nro: </strong>'. str_pad($numFactura, 6, "0", STR_PAD_LEFT) .'</td>
+                    <td width="45%"><strong>Punto de Venta: </strong>'. str_pad($empresa->getPunto_venta(), 5, "0", STR_PAD_LEFT) .'&nbsp;<strong> Comp. Nro: </strong>'. str_pad($numCobro, 6, "0", STR_PAD_LEFT) .'</td>
                 </tr>
                 <tr>
                     <td width="45%"><strong>Domicilio Comercial: </strong>'. $empresa->getDireccion() .'</td>
@@ -154,12 +154,12 @@ for ($i=1; $i <= 3; $i++) {
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    // Periodo de Facturacion y Fechas
+    // Periodo de NotaDebitocion y Fechas
     $html = '
         <table border="0" cellspacing="0" cellpadding="3">
             <tbody>
                 <tr>
-                    <td><strong>Período facturado desde: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
+                    <td><strong>Período notaDebitodo desde: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
                     <td><strong>Hasta: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
                     <td><strong>Fecha de vto. para el pago: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
                 </tr>
@@ -188,7 +188,7 @@ for ($i=1; $i <= 3; $i++) {
                 </tr>
                 <tr>
                     <td><strong>Condición frente al IVA: </strong>'. $persona->getNombreCondicionIva() .'</td>
-                    <td><strong>Domicilio Comercial: </strong>'. $persona->getDireccion_facturacion() .'</td>
+                    <td><strong>Domicilio Comercial: </strong>'. $persona->getDireccion_notaDebitocion() .'</td>
                 </tr>
                 <tr>
                     <td><strong>Condición de venta: </strong>'. $transaccion->getNombreFormaPago() .'</td>

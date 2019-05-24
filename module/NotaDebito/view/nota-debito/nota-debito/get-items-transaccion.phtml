@@ -1,0 +1,10 @@
+<!-- <input type="text" id="itemsPresupuesto" hidden="true" value="<?= $itemsTransaccionJson ?>" > -->
+<script src="/js/transacciones.js"></script>
+<script>
+    itemsAnteriores = itemsTransaccion;
+    itemsTransaccion = <?= $itemsTransaccionJson ?>;
+    transaccionJson = <?= $transaccionJson ?>;
+    addTransaccionItems();
+    completarFormasPago(formasPago, transaccionJson);
+    completarMonedas(monedas, transaccionJson);
+</script>

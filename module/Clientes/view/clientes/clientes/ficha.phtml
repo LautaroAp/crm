@@ -420,8 +420,8 @@ $tipo_persona = strtolower($persona->getTipo());
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="transaccion-font">
-                                        <span class="glyphicon glyphicon-tags"></span>&nbsp; Nota de Débito
+                                    <a href="<?= $this->url("notaDebito/agregar", ['id' => $persona->getId()]); ?>" class="transaccion-font">
+                                        <span class="glyphicon glyphicon-list-alt"></span>&nbsp; Nota de Débito
                                     </a>
                                 </li>
                                 <li>
