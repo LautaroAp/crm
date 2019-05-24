@@ -70,7 +70,8 @@
             "FormaEnvio\\": "module/FormaEnvio/src/",
             "DatoAdicional\\": "module/DatoAdicional/src/",
             "CuentaCorriente\\": "module/CuentaCorriente/src/",
-            "Factura\\": "module/Factura/src/"
+            "Factura\\": "module/Factura/src/",
+            "NotaDebito\\": "module/NotaDebito/src/"
         }
     },
     "autoload-dev": {

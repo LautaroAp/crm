@@ -51,5 +51,6 @@ return [
     'FormaEnvio',
     'DatoAdicional',
     'CuentaCorriente',
-    'Factura'
+    'Factura',
+    'NotaDebito'
 ];
