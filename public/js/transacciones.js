@@ -2,19 +2,6 @@
 var transacciones;
 
 $(document).ready(function(){
-    // LOAD MODAL PRESUPUESTOS
-    // $("#btn_modal_presupuesto").click(function(){
-    //     $("#table_bienes").dataTable().fnDestroy();
-    //     jsonModalTransaccion = jsonPresupuestos;
-    //     completarTransacciones(jsonModalTransaccion);
-    // });
-    
-    // LOAD MODAL PEDIDOS
-    // $("#btn_modal_pedido").click(function(){
-    //     $("#table_bienes").dataTable().fnDestroy();
-    //     jsonModalTransaccion = jsonPedidos;
-    //     completarTransacciones(jsonModalTransaccion);
-    // });
     
     $("#btn-modal").click(function(){
         optionSelected= $("#tipoTransaccion option:selected").val();
@@ -131,6 +118,7 @@ function completarTransacciones(transacciones_anteriores){
     divContainer.appendChild(table);
 }
 
+
 function getTransaccion(buttonId){
     return  buttonId.substring(0, buttonId.indexOf('b'));
 }
@@ -152,7 +140,12 @@ function selectTransaccion(id){
         }
         //Guardo id de la fila seleccionada
         transaccion = id;
-        completeItems(indexTransaccion);
+        if (tipoTransaccion!="notaCredito"){
+            completeItems(indexTransaccion);
+        }
+        else{
+            completeDetalles(indexTransaccion);
+        }
     }
 }
 

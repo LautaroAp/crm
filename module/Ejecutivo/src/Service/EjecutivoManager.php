@@ -69,6 +69,8 @@ class EjecutivoManager {
         $ejecutivo->setUsuario($data['usuario']);
         $ejecutivo->setClave($data['clave']);
         $ejecutivo->setPersona($persona);
+        $ejecutivo->activar();
+        
         if ($this->tryAddEjecutivo($ejecutivo)) {
             $_SESSION['MENSAJES']['ejecutivo'] = 1;
             $_SESSION['MENSAJES']['ejecutivo_msj'] = 'Ejecutivo agregado correctamente';

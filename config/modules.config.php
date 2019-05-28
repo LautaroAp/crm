@@ -52,5 +52,6 @@ return [
     'DatoAdicional',
     'CuentaCorriente',
     'Factura',
-    'NotaDebito'
+    'NotaDebito',
+    'NotaCredito'
 ];

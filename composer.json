@@ -71,7 +71,9 @@
             "DatoAdicional\\": "module/DatoAdicional/src/",
             "CuentaCorriente\\": "module/CuentaCorriente/src/",
             "Factura\\": "module/Factura/src/",
-            "NotaDebito\\": "module/NotaDebito/src/"
+            "NotaDebito\\": "module/NotaDebito/src/",
+            "NotaCredito\\": "module/NotaCredito/src/"
+
         }
     },
     "autoload-dev": {

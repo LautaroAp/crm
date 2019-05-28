@@ -256,7 +256,13 @@ class TransaccionManager {
 
 
     public function getTransaccionesPersonaTipo($idPersona,$tipoTransaccion){
-        $transacciones = $this->entityManager->getRepository(Transaccion::class)->findBy(['persona'=>$idPersona, 'tipo_transaccion'=>strtoupper($tipoTransaccion), 'facturado'=>false]);
+        if (strtoupper($tipoTransaccion)!="FACTURA"){
+            $transacciones = $this->entityManager->getRepository(Transaccion::class)->findBy(['persona'=>$idPersona, 'tipo_transaccion'=>strtoupper($tipoTransaccion), 'facturado'=>false]);
+        }
+        else{
+             $transacciones = $this->entityManager->getRepository(Transaccion::class)->findBy(['persona'=>$idPersona, 'tipo_transaccion'=>strtoupper($tipoTransaccion)]);
+        }
+       
         // return $transacciones;
 
         $transaccionesActivas = [];

@@ -198,7 +198,8 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
     calcularSubcampos();
 }
 
-// ADD TRANSACCION PARA MODUO PAGO
+
+// ADD TRANSACCION PARA MODO PAGO
 function addTransaccion(bienesTransacciones, tipo, id) {
     precioActualizado = true;
     if (bienesTransacciones==null){

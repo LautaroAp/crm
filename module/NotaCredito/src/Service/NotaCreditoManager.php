@@ -1,9 +1,9 @@
 <?php
 
-namespace NotaDebito\Service;
+namespace NotaCredito\Service;
 
 use DBAL\Entity\Moneda;
-use DBAL\Entity\NotaDebito;
+use DBAL\Entity\NotaCredito;
 use DBAL\Entity\Presupuesto;
 use DBAL\Entity\Persona;
 use DBAL\Entity\Cliente;
@@ -16,10 +16,10 @@ use Transaccion\Service\TransaccionManager;
 use DateInterval;
 
 /**
- * Esta clase se encarga de obtener y modificar los datos de los notaDebitos 
+ * Esta clase se encarga de obtener y modificar los datos de los notaCreditos 
  * 
  */
-class NotaDebitoManager extends TransaccionManager
+class NotaCreditoManager extends TransaccionManager
 {
 
     /**
@@ -48,54 +48,54 @@ class NotaDebitoManager extends TransaccionManager
     ) {
         parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager);
         $this->entityManager = $entityManager;
-        $this->tipo = "NOTA DE DEBITO";
+        $this->tipo = "NOTA DE CREDITO";
     }
 
-    public function getNotaDebitos()
+    public function getNotaCreditos()
     {
-        $notaDebitos = $this->entityManager->getRepository(NotaDebito::class)->findAll();
-        return $notaDebitos;
+        $notaCreditos = $this->entityManager->getRepository(NotaCredito::class)->findAll();
+        return $notaCreditos;
     }
 
-    public function getNotaDebitoId($id)
+    public function getNotaCreditoId($id)
     {
-        return $this->entityManager->getRepository(NotaDebito::class)
+        return $this->entityManager->getRepository(NotaCredito::class)
             ->find($id);
     }
 
-    public function getNotaDebitoFromTransaccionId($id)
+    public function getNotaCreditoFromTransaccionId($id)
     {
-        return $this->entityManager->getRepository(NotaDebito::class)
+        return $this->entityManager->getRepository(NotaCredito::class)
             ->findOneBy(['transaccion' => $id]);
     }
 
     public function getTabla()
     {
         // Create the adapter
-        $adapter = new SelectableAdapter($this->entityManager->getRepository(NotaDebito::class));
+        $adapter = new SelectableAdapter($this->entityManager->getRepository(NotaCredito::class));
         // Create the paginator itself
         $paginator = new Paginator($adapter);
         return ($paginator);
     }
 
 
-    private function setData($notaDebito, $data, $transaccion)
+    private function setData($notaCredito, $data, $transaccion)
     {
-        $notaDebito->setTransaccion($transaccion);
-        if (isset($data['numero_notaDebito'])) {
-            $notaDebito->setNumero($data['numero_notaDebito']);
-            $transaccion->setNumeroTransaccionTipo($data['numero_notaDebito']);
+        $notaCredito->setTransaccion($transaccion);
+        if (isset($data['numero_notaCredito'])) {
+            $notaCredito->setNumero($data['numero_notaCredito']);
+            $transaccion->setNumeroTransaccionTipo($data['numero_notaCredito']);
         }
-        return $notaDebito;
+        return $notaCredito;
     }
 
     /**
-     * This method updates data of an existing notaDebito.
+     * This method updates data of an existing notaCredito.
      */
-    public function edit($notaDebito, $data)
+    public function edit($notaCredito, $data)
     {
-        $transaccion = parent::edit($notaDebito->getTransaccion(), $data);
-        $notaDebito = $this->setData($notaDebito, $data, $transaccion);
+        $transaccion = parent::edit($notaCredito->getTransaccion(), $data);
+        $notaCredito = $this->setData($notaCredito, $data, $transaccion);
         $this->actualizaFechas($data);
 
         // Apply changes to database.
@@ -108,28 +108,28 @@ class NotaDebitoManager extends TransaccionManager
     public function add($data)
     {
         $transaccion = parent::add($data);
-        $notaDebito = new NotaDebito();
-        $notaDebito = $this->setData($notaDebito, $data, $transaccion);
+        $notaCredito = new NotaCredito();
+        $notaCredito = $this->setData($notaCredito, $data, $transaccion);
         $this->actualizaFechas($data);
         $this->cuentaCorrienteManager->add($transaccion);
         $transaccionPrevia = $transaccion->getTransaccionPrevia();
-        $this->cuentaCorrienteManager->setNotaDebitodo($transaccionPrevia);
+        $this->cuentaCorrienteManager->setNotaCreditodo($transaccionPrevia);
         // Apply changes to database.
-        $this->entityManager->persist($notaDebito);
+        $this->entityManager->persist($notaCredito);
         $this->entityManager->flush();
-        return $notaDebito;
+        return $notaCredito;
     }
 
-    public function getTotalNotaDebitos()
+    public function getTotalNotaCreditos()
     {
-        $notaDebitos = $this->getNotaDebitos();
-        return COUNT($notaDebitos);
+        $notaCreditos = $this->getNotaCreditos();
+        return COUNT($notaCreditos);
     }
 
-    public function remove($notaDebito)
+    public function remove($notaCredito)
     {
-        parent::remove($notaDebito->getTransaccion());
-        $this->entityManager->remove($notaDebito);
+        parent::remove($notaCredito->getTransaccion());
+        $this->entityManager->remove($notaCredito);
         $this->entityManager->flush();
     }
 
@@ -145,5 +145,4 @@ class NotaDebitoManager extends TransaccionManager
         }
         $this->entityManager->flush();
     }
-
 }
