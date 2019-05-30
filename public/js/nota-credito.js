@@ -117,7 +117,9 @@ function addDetalleToTable() {
 }
 
 function completeDetalles(id){ 
+    
     if (id!=null){
+        detalles=[];
         var transaccion_selected = transacciones[id];
         output = {
             "Factura":transaccion_selected,

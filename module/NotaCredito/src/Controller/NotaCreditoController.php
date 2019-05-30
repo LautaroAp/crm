@@ -46,20 +46,7 @@ class NotaCreditoController extends TransaccionController
         if (isset($_SESSION['TRANSACCIONES']['NOTA_CREDITO'])) {
             $json = $_SESSION['TRANSACCIONES']['NOTA_CREDITO'];
         }
-        // Obtengo todos los Bienes
-        $bienes = $this->bienesManager->getBienes();
-
-        // Creo JSON con Nombres de todos los Productos y Servicios
-        $json_bienes = "";
-
-        // $response[] = array("value"=>"1","label"=>"Soporte");
-        foreach ($bienes as $bien) {
-            $json_bienes .= $bien->getJsonBien() . ',';
-        }
-
-        $json_bienes = substr($json_bienes, 0, -1);
-        $json_bienes = '[' . $json_bienes . ']';
-
+     
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         $tipoPersona = null;
@@ -103,7 +90,6 @@ class NotaCreditoController extends TransaccionController
             'numTransacciones' => $numTransacciones,
             'numNotaCredito' => $numNotaCredito,
             'json' => $json,
-            'json_bienes' => $json_bienes,
             'formasPagoJson' => $formasPagoJson,
             'formasEnvioJson' => $formasEnvioJson,
             'monedasJson' => $monedasJson,

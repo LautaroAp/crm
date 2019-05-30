@@ -36,8 +36,6 @@ $(document).ready(function(){
 });
 
 function completarTransacciones(transacciones_anteriores){
-    // $("#table_bienes").dataTable().fnDestroy();
-    // $('#table_bienes').empty(); 
     transacciones= transacciones_anteriores;
     transaccion_ant = null;
     transaccion = null;
@@ -125,14 +123,15 @@ function getTransaccion(buttonId){
 
 function selectTransaccion(id){
     if ($('#' + id).hasClass('glyphicon-unchecked')){
-        console.log("uncheked");
+        // console.log("uncheked");
         $('#' + id).removeClass('glyphicon-unchecked');
         $('#' + id).addClass('glyphicon-check');
-        console.log("cheked");
+        // console.log("cheked");
+        console.log("transaccion ant era "+ transaccion_ant);
 
         var indexTransaccion = getTransaccion(id);
-
         transaccion_ant = transaccion;
+        console.log("transaccion ant es "+ transaccion);
         if (transaccion_ant!=null) {
             $('#' + transaccion_ant).removeClass('glyphicon-check');
             $('#' + transaccion_ant).addClass('glyphicon-unchecked');
