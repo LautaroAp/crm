@@ -185,10 +185,12 @@ class TransaccionManager {
             $this->bienesTransaccionesManager->borrarBienesTransacciones($itemsAnteriores);
         }
         foreach($items as $array ){
+            // var_dump($items, true); die();
             $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
             // $item = $this->bienesTransaccionesManager->getBienTransaccionFromJson($json);
             $item->setTransaccion($transaccion);
-            // $transaccion->addBienesTransacciones($item);
+
+            // MODIFICO STOCK EN CASO DE REMITO
             if (strtoupper($transaccion->getNombre())=="REMITO"){
                 $bien= $item->getBien();
                 $tipoPersona = $transaccion->getPersona()->getTipo();
@@ -205,6 +207,39 @@ class TransaccionManager {
                     }
                 }
             }
+
+            // MODIFICO STOCK EN CASO DE FACTURA
+            if (strtoupper($transaccion->getNombre()) == "FACTURA"){
+                $transaccion_facturar = null;
+                if(isset($array["Numero Transaccion"])){
+                    $transaccion_facturar = $this->entityManager->getRepository(Transaccion::class)
+                                            ->findOneBy(['numero_transaccion' => $array["Numero Transaccion"]]);
+                }
+
+                $transaccion_tipo = null;
+                if($transaccion_facturar){
+                    $transaccion_tipo = $transaccion_facturar->getNombre();
+                }
+
+                if (strtoupper($transaccion_tipo) != "REMITO"){
+                    $bien= $item->getBien();
+                    $tipoPersona = $transaccion->getPersona()->getTipo();
+                    if (strtoupper($bien->getTipo())=="PRODUCTO"){
+                        if (strtoupper($tipoPersona)=="CLIENTE"){
+                            $stock = $bien->getStock();
+                            $stock = $stock - $item->getCantidad();
+                            $bien->setStock($stock);
+                        }
+                        else if (strtoupper($tipoPersona)=="PROVEEDOR"){
+                            $stock = $bien->getStock();
+                            $stock = $stock + $item->getCantidad();
+                            $bien->setStock($stock);
+                        }
+                    }
+                }
+                
+            }
+
             $item= $this->bienesTransaccionesManager->add($item);
         }
     }
