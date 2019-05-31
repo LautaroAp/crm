@@ -42,8 +42,13 @@ $tipo_persona = strtolower($persona->getTipo());
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading text-center titulo-espaciado">
                     DATOS DE PERFIL
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseDatosPerfil" aria-expanded="true"
+                        aria-controls="collapseDatosPerfil">
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon-menu-hamburger btn-collapse"
+                                id="d_adicionales" ></i></span>
+                    </a>
                 </div>
-                <div class="panel-body padding-top-cero" style="min-height: 350px;">
+                <div class="panel-body padding-top-cero">
                     <div class="ficha-cliente-p img-centrar ">
                         <div>
                             <figure>
@@ -70,7 +75,7 @@ $tipo_persona = strtolower($persona->getTipo());
                         </div>
                     </div>
                     <br>
-                    <div class="row">
+                    <div class="row collapse" id="collapseDatosPerfil">
                         <div class="col-sm-6 ficha-cliente-p margen-bot-cero">
                             <p><label>Empresa:</label> <?= $cliente->getEmpresa(); ?></p>
                             <p><label>Cargo:</label> <?= $cliente->getCargo(); ?></p>
@@ -114,9 +119,14 @@ $tipo_persona = strtolower($persona->getTipo());
         <div class="col-md-5">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading text-center titulo-espaciado">
-                    DATOS GENERALES
+                    DATOS DE FACTURACIÓN
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseDatosFacturacion" aria-expanded="true"
+                        aria-controls="collapseDatosFacturacion">
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon-menu-hamburger btn-collapse"
+                                id="d_adicionales" ></i></span>
+                    </a>
                 </div>
-                <div class="panel-body" style="min-height: 350px;">
+                <div class="panel-body">
                     <div class="ficha-cliente-p margen">
                         <p><label>Razón Social:</label> <?= $persona->getRazon_social(); ?></p>
                         <p><label>Dirección de Facturación:</label> <?= $persona->getDireccion_facturacion(); ?></p>
@@ -124,11 +134,13 @@ $tipo_persona = strtolower($persona->getTipo());
                         <p><label>Provincia:</label> <?php echo ($cliente->getNombreProvinciaCliente()); ?></p>
                         <p><label>País:</label> <?php echo ($cliente->getNombrePaisCliente()); ?></p>
                         <br>
-                        <p><label>Condición de IVA:</label> <?= $persona->getNombreCondicionIva(); ?></p>
-                        <p><label>Tipo de Factura:</label> <?= $persona->getNombreTipoFactura(); ?></p>
-                        <p><label>Banco:</label> <?= $persona->getBanco(); ?></p>
-                        <p><label>CBU:</label> <?= $persona->getCbu(); ?></p>
-                        <p><label>CUIT/CUIL:</label> <?= $persona->getCuit_cuil(); ?></p>
+                        <div class="collapse" id="collapseDatosFacturacion">
+                            <p><label>Condición de IVA:</label> <?= $persona->getNombreCondicionIva(); ?></p>
+                            <p><label>Tipo de Factura:</label> <?= $persona->getNombreTipoFactura(); ?></p>
+                            <p><label>Banco:</label> <?= $persona->getBanco(); ?></p>
+                            <p><label>CBU:</label> <?= $persona->getCbu(); ?></p>
+                            <p><label>CUIT/CUIL:</label> <?= $persona->getCuit_cuil(); ?></p>
+                        </div>
                     </div>
                 </div>
             </div>
