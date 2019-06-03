@@ -145,11 +145,13 @@ class CuentaCorrienteManager {
     }
 
     public function setFacturado($transaccionPrevia){
-        $idTP = $transaccionPrevia->getId();
-        $registro =$this->entityManager->getRepository(CuentaCorriente::class)->findOneBy(['transaccion'=>$idTP]);
-        if (!is_null($registro)){   
-            $registro->setFacturado(true);
-        }
+        if($transaccionPrevia){
+            $idTP = $transaccionPrevia->getId();
+            $registro =$this->entityManager->getRepository(CuentaCorriente::class)->findOneBy(['transaccion'=>$idTP]);
+            if (!is_null($registro)){   
+                $registro->setFacturado(true);
+            }
+        } 
     }
 
 }

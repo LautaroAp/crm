@@ -813,20 +813,9 @@ function addItemToTable() {
     // Compara el Stock Disponible con la Cantidad ingresada
     updateOutputSelect();
     if (verificaStockDisponible(output)) {
-        // Elimina items sobrantes del json "output" y deja solo el seleccionado
-        // busco BIEN segun ID
-        // * * * (Ya lo tengo, esta completo en "output")...
-        // updateOutputSelect();
-        // le concateno el BIEN a "ITEMS" (agregar a un json)
-
         items.push(output);
-        // persistItemsInSession();
-        // luego:
-        //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
-        // $("#jsonitems").val(JSON.stringify(items));
         $("#jsonitems").val(JSON.stringify(items));
-        addItems(items, tipoTransaccion, idPersona, precioActualizado); // Se rompe * * *
-
+        addItems(items, tipoTransaccion, idPersona, precioActualizado);
     };
 }
 
