@@ -30,20 +30,6 @@ class NotaDebito {
      */
     private $transaccion;
 
-    /**
-     * Many Services have One Transaccion.
-     * @ORM\ManyToOne(targetEntity="Transaccion")
-     * @ORM\JoinColumn(name="ID_TRANSACCION_NOTA_DEBITO", referencedColumnName="ID")
-     */
-    private $transaccion_notaDebito;
-
-    /**
-     * Many Services have One Transaccion.
-     * @ORM\ManyToOne(targetEntity="TipoFactura")
-     * @ORM\JoinColumn(name="ID_TIPO_NOTA_DEBITO", referencedColumnName="ID")
-     */
-    private $tipo_factura;
-   
 
     /**
      * Get the value of id_cobro
@@ -101,26 +87,6 @@ class NotaDebito {
     public function setTransaccion($transaccion)
     {
         $this->transaccion = $transaccion;
-
-        return $this;
-    }
-
-    /**
-     * Get many Services have One Transaccion.
-     */ 
-    public function getTransaccion_notaDebito()
-    {
-        return $this->transaccion_notaDebito;
-    }
-
-    /**
-     * Set many Services have One Transaccion.
-     *
-     * @return  self
-     */ 
-    public function setTransaccion_notaDebito($transaccion_notaDebito)
-    {
-        $this->transaccion_notaDebito = $transaccion_notaDebito;
 
         return $this;
     }

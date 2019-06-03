@@ -1,7 +1,7 @@
 var tipoTransaccion;
-function addDetallesNota(detalles, tipo, id){
-    if (detalles==null){
-        detalles = [];
+function addDetallesNota(items, tipo, id){
+    if (items==null){
+        items = [];
     }
     $(document).ready(function () {
         $('#table_bienes').DataTable({
@@ -32,7 +32,7 @@ function addDetallesNota(detalles, tipo, id){
     table.setAttribute("class", "display");
     var thead = document.createElement("thead");
 
-    var col = ["Factura", "Detalle", "Monto", ""];
+    var col = ["Transaccion", "Detalle", "Monto", ""];
     var tr = thead.insertRow(-1);
     for (var i = 0; i < col.length; i++) {
         var th = document.createElement("th");
@@ -44,8 +44,8 @@ function addDetallesNota(detalles, tipo, id){
     var tbody = document.createElement("tbody");
     tbody.setAttribute("role", "button");
     var value = null;
-    for (var i = 0; i < detalles.length; i++) {
-        var detalle = detalles[i];
+    for (var i = 0; i < items.length; i++) {
+        var detalle = items[i];
         tr = tbody.insertRow(-1);
         // tr.onclick= selectdetalle(detalle["id"]);
         tr.setAttribute("id", i);
@@ -57,15 +57,15 @@ function addDetallesNota(detalles, tipo, id){
             tabCell.setAttribute("class", "click");
             //////////////////////////////////////////////////////////////////////////////////
             switch (col[j]) {
-                case 'Factura':
-                    value = detalle["Factura"]["Numero Tipo Transaccion"];
+                case 'Transaccion':
+                    value = detalle["Transaccion Previa"]["Numero Tipo Transaccion"];
                     break;
                 case 'Detalle':
                     value = detalle[col[j]];
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
                 case 'Monto':
-                    value = detalle["Factura"]["Subtotal"];
+                    value = detalle["Transaccion Previa"]["Subtotal"];
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
                 default:
@@ -94,8 +94,9 @@ function addDetallesNota(detalles, tipo, id){
 
 function removerDetalle(id) {
     //el id indica el inicio de donde se borra y el 1 la cantidad de elementos eliminados
-    detalles.splice(id, 1);
-    addDetallesNota(detalles, tipoTransaccion, idPersona);
+    items.splice(id, 1);
+    addDetallesNota(items, tipoTransaccion, idPersona);
+    calcularTotal();
 }
 
 function addDetalleToTable() {
@@ -103,33 +104,53 @@ function addDetalleToTable() {
     var monto = $("#nota_monto").val();
 
     output = {
-        "Factura": {
+        "Transaccion Previa": {
             "Id":"",
             "Numero Tipo Transaccion": "-",
-            "Subtotal": monto
+            "Subtotal": formatMoney((parseFloat(monto)).toFixed(2))
         },
         "Detalle": detalle
     }
-    detalles.push(output);
-    console.log(detalles);
-    $("#jsondetalles").val(JSON.stringify(detalles));
-    addDetallesNota(detalles, tipoTransaccion, idPersona);
+    items.push(output);
+    console.log(items);
+    $("#jsonitems").val(JSON.stringify(items));
+    addDetallesNota(items, tipoTransaccion, idPersona);
+    borrarCampos();
+    calcularTotal();
 }
 
 function completeDetalles(id){ 
     
     if (id!=null){
-        detalles=[];
+        items=[];
         var transaccion_selected = transacciones[id];
         mensaje = "Anula Factura "+ transaccion_selected["Numero Tipo Transaccion"];
         output = {
-            "Factura":transaccion_selected,
+            "Transaccion Previa":transaccion_selected,
             "Detalle": mensaje
         }
     }
-    detalles.push(output);
-    console.log(detalles);
-    $("#jsondetalles").val(JSON.stringify(detalles));
-    addDetallesNota(detalles, tipoTransaccion, idPersona);
+    items.push(output);
+    console.log(items);
+    $("#jsonitems").val(JSON.stringify(items));
+    addDetallesNota(items, tipoTransaccion, idPersona);
+    borrarCampos();
+    calcularTotal();
 }
 
+function borrarCampos(){
+    $("#nota_detalle").val("");
+    $("#nota_monto").val("");
+}
+
+function calcularTotal(){
+    var table = document.getElementById("table_bienes");
+    var sumTotal = 0;
+    for (var i = 0; i < items.length; i++) {
+        subtotal = items[i]["Transaccion Previa"]["Subtotal"];
+        subtotal = getNumberValue(subtotal);
+        sumTotal = sumTotal + parseFloat(subtotal);
+    }
+    $("#total_general").val(formatMoney((parseFloat(sumTotal)).toFixed(2)));
+
+}

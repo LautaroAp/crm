@@ -383,23 +383,7 @@ class Transaccion {
         return $this;
     }
 
-    public function getDescripcion(){
-        $descripcion = "";
-        if (!is_null($this->nombre)){
-            $descripcion .= $this->nombre;
-        }
-        if (!is_null($this->bienesTransacciones)){
-            $descripcion.= " por ". COUNT($this->bienesTransacciones) ." items ";
-        }
-        if (!is_null($this->importe_total)){
-            $descripcion.= " por un monto de $ ". $this->importe_total;
-        }
-        if (!is_null($this->detalle)){
-            $descripcion.= " en concepto de: ".$this->detalle;
-        }
-        return $descripcion;
-    }
-
+    
     /**
      * Get the value of bonificacionGeneral
      */ 
@@ -711,4 +695,23 @@ class Transaccion {
         }
         return $this;
     }
+
+    public function getDescripcion(){
+    
+        $descripcion = "";
+        if (!is_null($this->nombre)){
+            $descripcion .= $this->nombre;
+        }
+        if (!is_null($this->bienesTransacciones)){
+            $descripcion.= " por ". COUNT($this->bienesTransacciones) ." items ";
+        }
+        if (!is_null($this->importe_total)){
+            $descripcion.= " por un monto de $ ". $this->importe_total;
+        }
+        if (!is_null($this->detalle)){
+            $descripcion.= " en concepto de: ".$this->detalle;
+        }
+        return $descripcion;
+    }
+ 
 }

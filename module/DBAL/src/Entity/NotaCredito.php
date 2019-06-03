@@ -30,20 +30,12 @@ class NotaCredito {
      */
     private $transaccion;
 
-    /**
-     * Many Services have One Transaccion.
-     * @ORM\ManyToOne(targetEntity="Transaccion")
-     * @ORM\JoinColumn(name="ID_TRANSACCION_NOTA_CREDITO", referencedColumnName="ID")
-     */
-    private $transaccion_notaCredito;
 
     /**
-     * Many Services have One Transaccion.
-     * @ORM\ManyToOne(targetEntity="TipoFactura")
-     * @ORM\JoinColumn(name="ID_TIPO_NOTA_CREDITO", referencedColumnName="ID")
+     * @ORM\Column(name="CONCEPTO", nullable=true, type="string")
      */
-    private $tipo_factura;
-   
+    protected $concepto;
+
 
     /**
      * Get the value of id_cobro
@@ -105,25 +97,6 @@ class NotaCredito {
         return $this;
     }
 
-    /**
-     * Get many Services have One Transaccion.
-     */ 
-    public function getTransaccion_notaCredito()
-    {
-        return $this->transaccion_notaCredito;
-    }
-
-    /**
-     * Set many Services have One Transaccion.
-     *
-     * @return  self
-     */ 
-    public function setTransaccion_notaCredito($transaccion_notaCredito)
-    {
-        $this->transaccion_notaCredito = $transaccion_notaCredito;
-
-        return $this;
-    }
 
     /**
      * Get many Services have One Transaccion.
@@ -141,6 +114,26 @@ class NotaCredito {
     public function setTipo_factura($tipo_factura)
     {
         $this->tipo_factura = $tipo_factura;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of concepto
+     */ 
+    public function getConcepto()
+    {
+        return $this->concepto;
+    }
+
+    /**
+     * Set the value of concepto
+     *
+     * @return  self
+     */ 
+    public function setConcepto($concepto)
+    {
+        $this->concepto = $concepto;
 
         return $this;
     }

@@ -175,13 +175,15 @@ class BienesTransaccionesManager {
 
     public function bienTransaccionFromArray($array){
         $bienTransaccion = new BienesTransacciones();
-        if (isset($array['Bien']['Id'])){
-            $bien = $this->bienesManager->getBienId($array['Bien']['Id']);
+        if (isset($array['Bien'])){
+            if (isset($array['Bien']['Id'])){
+                $bien = $this->bienesManager->getBienId($array['Bien']['Id']);
+            }
+            else{
+                $bien = $this->bienesManager->getBienId($array['Bien']);
+            }
+            $bienTransaccion->setBien($bien);
         }
-        else{
-            $bien = $this->bienesManager->getBienId($array['Bien']);
-        }
-        $bienTransaccion->setBien($bien);
         if (isset($array['Bien']['Precio']) && $array['Bien']['Precio']!=''){
             $bienTransaccion->setPrecioOriginal($array['Bien']['Precio']);
         }
@@ -202,8 +204,8 @@ class BienesTransaccionesManager {
         }
         if (isset($array['Totales'])){
             $subtotal = $array['Totales'];
+            $bienTransaccion->setSubtotal($subtotal);
         }
-        $bienTransaccion->setSubtotal($subtotal);
         return $bienTransaccion;
     }
 

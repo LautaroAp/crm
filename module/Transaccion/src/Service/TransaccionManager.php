@@ -127,7 +127,9 @@ class TransaccionManager {
         }
         $transaccion->setEstado("ACTIVO");
         $transaccion->setMonto(substr($data['total_general'], 2));
-        $transaccion->setSubtotal(substr($data['subtotal_general'], 2));
+        if (isset($data['subtotal_general'])){
+            $transaccion->setSubtotal(substr($data['subtotal_general'], 2));
+        }
         $ejecutivo = $this->entityManager->getRepository(Ejecutivo::class)
         ->findOneBy(['usuario' => $data['responsable']]);     
         $transaccion->setResponsable($ejecutivo);
@@ -144,11 +146,16 @@ class TransaccionManager {
         if (isset($data['bonificacion_general']) and $data['bonificacion_general']!=''){
             $transaccion->setBonificacionGeneral($data['bonificacion_general']);
         }
-        $transaccion->setBonificacionImporte(substr($data['bonificacion_importe'],2));
+        if (isset($data['bonificacion_importe'])){
+            $transaccion->setBonificacionImporte(substr($data['bonificacion_importe'],2));
+
+        }
         if (isset($data['recargo_general']) and $data['recargo_general']!=''){
             $transaccion->setRecargoGeneral($data['recargo_general']);
         }
-        $transaccion->setRecargoImporte(substr($data['recargo_importe'],2));
+        if (isset($data['recargo_importe'])){
+            $transaccion->setRecargoImporte(substr($data['recargo_importe'],2));
+        }
         if (isset($data['iva_general'])){
             $iva = $this->ivaManager->getIvaId($data['iva_general']);
         }
@@ -156,7 +163,6 @@ class TransaccionManager {
             $formaPago = $this->formaPagoManager->getFormaPagoId($data['forma_pago']);
             $transaccion->setFormaPago($formaPago);
         }
-
         if(isset($data['forma_envio'])){           
             $formaEnvio = $this->formaEnvioManager->getFormaEnvioId($data['forma_envio']);
             $transaccion->setFormaEnvio($formaEnvio);
@@ -189,6 +195,10 @@ class TransaccionManager {
             $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
             // $item = $this->bienesTransaccionesManager->getBienTransaccionFromJson($json);
             $item->setTransaccion($transaccion);
+            if (isset($array["Transaccion Previa"])){
+                $transaccionPrevia = $this->getTransaccionId($array["Transaccion Previa"]["Id"]);
+                $item->setTransaccionPrevia($transaccionPrevia);
+            }
 
             // MODIFICO STOCK EN CASO DE REMITO
             if (strtoupper($transaccion->getNombre())=="REMITO"){

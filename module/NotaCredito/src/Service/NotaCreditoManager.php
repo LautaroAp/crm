@@ -86,6 +86,9 @@ class NotaCreditoManager extends TransaccionManager
             $notaCredito->setNumero($data['numero_notaCredito']);
             $transaccion->setNumeroTransaccionTipo($data['numero_notaCredito']);
         }
+        if (isset($data['concepto'])) {
+            $notaCredito->setConcepto($data['concepto']);
+        }
         return $notaCredito;
     }
 
@@ -96,8 +99,6 @@ class NotaCreditoManager extends TransaccionManager
     {
         $transaccion = parent::edit($notaCredito->getTransaccion(), $data);
         $notaCredito = $this->setData($notaCredito, $data, $transaccion);
-        $this->actualizaFechas($data);
-
         // Apply changes to database.
         $this->entityManager->flush();
         $this->cuentaCorrienteManager->edit($transaccion);
@@ -110,10 +111,7 @@ class NotaCreditoManager extends TransaccionManager
         $transaccion = parent::add($data);
         $notaCredito = new NotaCredito();
         $notaCredito = $this->setData($notaCredito, $data, $transaccion);
-        $this->actualizaFechas($data);
         $this->cuentaCorrienteManager->add($transaccion);
-        $transaccionPrevia = $transaccion->getTransaccionPrevia();
-        $this->cuentaCorrienteManager->setNotaCreditodo($transaccionPrevia);
         // Apply changes to database.
         $this->entityManager->persist($notaCredito);
         $this->entityManager->flush();

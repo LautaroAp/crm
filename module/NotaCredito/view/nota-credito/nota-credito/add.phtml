@@ -69,7 +69,7 @@ $tipoPersona = strtoupper($persona->getTipo());
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
 <script>
 var tipoTransaccion ="Nota de Credito";
-var detalles = [];
+var items = [];
 var output;
 var ivas = <?= $ivasJson ?>;
 var idPersona = <?php echo ($persona->getId()); ?>;
@@ -215,9 +215,9 @@ var tipoPersona = "<?= $tipoPersona ?>";
                     <div class="panel panel-body" id="contenido_bienes">
                         <div id="div_table_items">
                             <script>
-                            var detalles = <?php echo ($json); ?>;
+                            var items = <?php echo ($json); ?>;
                             // Crear Tabla
-                            addDetallesNota(detalles, "Nota de Credito", idPersona);
+                            addDetallesNota(items, "Nota de Credito", idPersona);
                             </script>
                         </div>
                         <br>                     
@@ -284,27 +284,12 @@ var tipoPersona = "<?= $tipoPersona ?>";
                 </div>
                 <div class="panel-body">
                     <!-- Totales -->
-                    <div class="row form-row">
-                        <div class="form-group col-md-3">
-                            <label>Venta Bruta ($)</label>
-                            <input type="text" class="form-control" name="venta_bruta" id="venta_bruta"
-                                value="Precio x Cantidad" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Descuento Global ($)</label>
-                            <input type="text" class="form-control" name="descuento_total" id="descuento_total" value="0" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>IVA Total ($)</label>
-                            <input type="text" class="form-control" name="iva_total" id="iva_total" value="0" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Total ($)</label>
-                            <input type="text" class="form-control" name="subtotal_general" id="subtotal_general"
-                                value="0" readonly>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>En concepto de </label>
+                            <textarea name="concepto" id ="concepto" class="form-control detalle-width" rows="4" placeholder="Ingresar detalle de actividad" required=""></textarea>
                         </div>
                     </div>
-                    <!-- Forma de Pago + Fecha -->
                     <div class="row form-row">
                         <div class="form-group col-md-3" id="monedas">
                             <label>Moneda</label>
@@ -312,44 +297,6 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             var monedas = <?php echo ($monedasJson); ?>;
                             completarMonedas(monedas);
                             </script>
-                        </div>
-                        <div class="form-group col-md-3" id="formasPago">
-                            <label>Forma de Pago</label>
-                            <script>
-                            var formasPago = <?php echo ($formasPagoJson); ?>;
-                            completarFormasPago(formasPago);
-                            </script>
-                        </div>
-                        <div id="div_bonificacion" class="form-group col-md-3">
-                            <label>% Bonificación</label>
-                            <input type="text" class="form-control" name="bonificacion_general"
-                                id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
-                                onkeyup="calcularSubcampos()">
-                        </div>
-                        <div id="div_recargo" class="form-group col-md-3">
-                            <label>% Recargo</label>
-                            <input type="text" class="form-control" name="recargo_general" id="recargo_general"
-                                value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()">
-                        </div>
-                        <script>
-                        setBonificacionRecargo();
-                        </script>
-                    </div>
-                    <!-- Total -->
-                    <div class="row form-row">
-                        <div class="form-group col-md-3">
-                            <label>Importe de Bonificación ($)</label>
-                            <input type="text" class="form-control" name="bonificacion_importe" id="bonificacion_importe" value="0"
-                                readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Importe de Recargo ($)</label>
-                            <input type="text" class="form-control" name="recargo_importe" id="recargo_importe" value="0" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Importe Total ($)</label>
-                            <input type="text" class="form-control" name="total_general" id="total_general" value="0"
-                                readonly>
                         </div>
                         <div class="form-group col-md-2">
                             <label>Fecha de Vencimiento</label>
@@ -360,6 +307,12 @@ var tipoPersona = "<?= $tipoPersona ?>";
                                 </span>
                             </div>
                         </div>
+                        <div class="form-group col-md-3">
+                            <label>Total ($)</label>
+                            <input type="text" class="form-control" name="total_general" id="total_general"
+                                value="0" readonly>
+                        </div>                   
+                       
                     </div>
                     <script>
                     calcularSubcampos();
