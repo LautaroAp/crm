@@ -70,6 +70,18 @@ class BienesTransacciones {
      */
     
     protected $precioOriginal;
+
+    /**
+     * @ORM\Column(name="DETALLE", nullable=true, type="string")
+     */
+    protected $detalle;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Transaccion")
+     * @ORM\JoinColumn(name="ID_TRANSACCION", referencedColumnName="ID")
+     */
+    private $transaccionPrevia;
+
     /**
      * Get the value of id
      */ 
@@ -271,6 +283,12 @@ class BienesTransacciones {
         else{
             $salida['Transaccion']= null;
         }
+        if(!is_null($this->transaccionPrevia)){
+            $salida['Transaccion Previa'] = $this->transaccionPrevia->getId();
+        }
+        if(!is_null($this->descripcion)){
+            $salida['Detalle']= $this->detalle;
+        }
         $salida['Bien'] = $this->bien->getId();
         $salida['Cantidad'] = $this->cantidad;
         $salida['Dto (%)'] = $this->descuento;
@@ -338,6 +356,46 @@ class BienesTransacciones {
     public function setPrecioOriginal($precioOriginal)
     {
         $this->precioOriginal = $precioOriginal;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of detalle
+     */ 
+    public function getDetalle()
+    {
+        return $this->detalle;
+    }
+
+    /**
+     * Set the value of detalle
+     *
+     * @return  self
+     */ 
+    public function setDetalle($detalle)
+    {
+        $this->detalle = $detalle;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of transaccionPrevia
+     */ 
+    public function getTransaccionPrevia()
+    {
+        return $this->transaccionPrevia;
+    }
+
+    /**
+     * Set the value of transaccionPrevia
+     *
+     * @return  self
+     */ 
+    public function setTransaccionPrevia($transaccionPrevia)
+    {
+        $this->transaccionPrevia = $transaccionPrevia;
 
         return $this;
     }

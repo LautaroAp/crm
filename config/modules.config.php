@@ -53,5 +53,5 @@ return [
     'CuentaCorriente',
     'Factura',
     'NotaDebito',
-    'NotaCredito'
+    'NotaCredito',
 ];

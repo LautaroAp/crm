@@ -79,8 +79,12 @@ class BienesTransaccionesManager {
     }
     
     private function setData($bienTransaccion, $data){
-        $bienTransaccion->setNombre($data['nombre']);
-        $bienTransaccion->setDescripcion($data['descripcion']);
+        if (isset($data['nombre'])){
+            $bienTransaccion->setNombre($data['nombre']);
+        }
+        if (isset($data['descripcion'])){
+            $bienTransaccion->setDescripcion($data['descripcion']);
+        }
         if($data['categoria'] == "-1"){
             $bienTransaccion->setCategoria(null);
         } else {
@@ -93,18 +97,35 @@ class BienesTransaccionesManager {
             $prov=$this->proveedorManager->getProveedor($data['proveedor']);
             $bienTransaccion->setProveedor($prov);
         }
-        $bienTransaccion->setPrecio($data['precio_venta']);
-        $bienTransaccion->setIva_gravado($data['iva_total']);
-        $iva=$this->ivaManager->getIva($data['iva']);
-        $bienTransaccion->setIva($iva);
-        $bienTransaccion->setPrecio($data['precio_venta']);
+        if (isset($data['precio_venta'])){
+            $bienTransaccion->setPrecio($data['precio_venta']);
+        }
+        if (isset($data['iva_total'])){
+            $bienTransaccion->setIva_gravado($data['iva_total']);
+            $iva=$this->ivaManager->getIva($data['iva']);
+            $bienTransaccion->setIva($iva);
+        }
+        if (isset($data['precio_venta'])){
+            $bienTransaccion->setPrecio($data['precio_venta']);
+        }
         if (isset($data['descuento']) and $data['descuento']!=''){
             $bienTransaccion->setDescuento($data['descuento']);
-        }        
-        $bienTransaccion->setPrecio_final_dto($data['precio_publico_dto']);
-        $bienTransaccion->setPrecio_final_iva($data['precio_publico_iva']);
-        $bienTransaccion->setPrecio_final_iva_dto($data['precio_publico_iva_dto']);
-        $bienTransaccion->setTipo($data['tipo']);
+        }   
+        if (isset($data['detalle']) and $data['detalle']!=''){
+            $bienTransaccion->setDetalle($data['detalle']);
+        }         
+        if (isset($data['precio_publico_dto'])){
+            $bienTransaccion->setPrecio_final_dto($data['precio_publico_dto']);
+        }
+        if (isset($data['precio_publico_iva'])){
+            $bienTransaccion->setPrecio_final_iva($data['precio_publico_iva']);
+        }
+        if (isset($data['precio_publico_iva_dto'])){
+            $bienTransaccion->setPrecio_final_iva_dto($data['precio_publico_iva_dto']);
+        }
+        if (isset($data['tipo'])){
+            $bienTransaccion->setTipo($data['tipo']);
+        }
         //MONEDA
         return $bienTransaccion;
     }
@@ -164,18 +185,24 @@ class BienesTransaccionesManager {
         if (isset($array['Bien']['Precio']) && $array['Bien']['Precio']!=''){
             $bienTransaccion->setPrecioOriginal($array['Bien']['Precio']);
         }
-        $bienTransaccion->setCantidad($array['Cantidad']);
+        if (isset($array['Cantidad'])){
+            $bienTransaccion->setCantidad($array['Cantidad']);
+        }
         if (isset($array['Dto']) && $array['Dto']!=''){
             $bienTransaccion->setDescuento($array['Dto']);
         }
-        if (isset($array['IVA']['Id'])){
+        if (isset($array['IVA'])){
+            if (isset($array['IVA']['Id'])){
             $iva = $this->ivaManager->getIva($array['IVA']['Id']);
+            }
+            else{
+                $iva=$this->ivaManager->getIva($array['IVA']);
+            }        
+            $bienTransaccion->setIva($iva);
         }
-        else{
-            $iva=$this->ivaManager->getIva($array['IVA']);
+        if (isset($array['Totales'])){
+            $subtotal = $array['Totales'];
         }
-        $bienTransaccion->setIva($iva);
-        $subtotal = $array['Totales'];
         $bienTransaccion->setSubtotal($subtotal);
         return $bienTransaccion;
     }

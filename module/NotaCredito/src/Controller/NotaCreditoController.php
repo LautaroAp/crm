@@ -37,7 +37,7 @@ class NotaCreditoController extends TransaccionController
 
     private function getTipo()
     {
-        return "notaCredito";
+        return "Nota de Credito";
     }
 
     public function addAction()
@@ -79,6 +79,9 @@ class NotaCreditoController extends TransaccionController
         ////////////////////////////FACTURAS PREVIAS///////////////////////////
         $facturas = $this->notaCreditoManager->getTransaccionesPersonaTipo($persona->getId(),"Factura");
         $facturasJson = $this->getJsonFromObjectList($facturas);
+        ////////////////////////////REMITOS CONFORMADOS PREVIOS/////////////////////////////
+        $remitosConformados = $this->getRemitosConformados($persona);
+        $remitosConformadosJson = $this->getJsonFromObjectList($remitosConformados);
 
         $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
         // var_dump(json_decode($tiposFacturaJson), true); die();
@@ -96,11 +99,22 @@ class NotaCreditoController extends TransaccionController
             'ivasJson' => $ivasJson,
             'transaccionJson'=>"[]",
             'facturasJson' => $facturasJson,
+            'remitosConformadosJson'=>$remitosConformadosJson,
             'empresaJson' => $empresaJson,
             'itemsTransaccionJson' =>"[]",
         ]);
     }
 
+    private function getRemitosConformados($persona){
+        $salida = [];
+        $remitos = $this->notaCreditoManager->getTransaccionesPersonaTipo($persona->getId(),"Remito");
+        foreach ($remitos as $remito){
+            if (strtoupper($remito->getEstado())=="CONFORMADO"){
+                array_push($salida, $remito);
+            }
+        }
+        return $salida;
+    }
     public function addItemAction()
    {
        if ($this->getRequest()->isPost()) {

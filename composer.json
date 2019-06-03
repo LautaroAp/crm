@@ -74,6 +74,7 @@
             "NotaDebito\\": "module/NotaDebito/src/",
             "NotaCredito\\": "module/NotaCredito/src/"
 
+
         }
     },
     "autoload-dev": {

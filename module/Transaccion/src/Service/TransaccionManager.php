@@ -209,20 +209,22 @@ class TransaccionManager {
         }
     }
 
+    
     public function edit($transaccion, $data) {
-        $items = json_decode($data['jsonitems'], true);
         $transaccion=$this->setData($transaccion, $data);
-        $this->setItems($transaccion,$items);        
+        $items = json_decode($data['jsonitems'], true);
+        $this->setItems($transaccion,$items);
         $this->entityManager->flush();
         return $transaccion;
     }
 
     public function add($data) {
         $transaccion = new Transaccion();
-        $items = json_decode($data['jsonitems'], true);
         $transaccion=$this->setData($transaccion, $data);
-        $this->entityManager->persist($transaccion);    
+        $this->entityManager->persist($transaccion); 
+        $items = json_decode($data['jsonitems'], true);
         $this->setItems($transaccion,$items);
+    
         $this->entityManager->flush();
         return $transaccion;
     }

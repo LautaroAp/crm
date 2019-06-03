@@ -32,7 +32,7 @@ function addDetallesNota(detalles, tipo, id){
     table.setAttribute("class", "display");
     var thead = document.createElement("thead");
 
-    var col = ["Factura", "Detalle de la nota", "Monto", ""];
+    var col = ["Factura", "Detalle", "Monto", ""];
     var tr = thead.insertRow(-1);
     for (var i = 0; i < col.length; i++) {
         var th = document.createElement("th");
@@ -60,7 +60,7 @@ function addDetallesNota(detalles, tipo, id){
                 case 'Factura':
                     value = detalle["Factura"]["Numero Tipo Transaccion"];
                     break;
-                case 'Detalle de la nota':
+                case 'Detalle':
                     value = detalle[col[j]];
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
@@ -108,7 +108,7 @@ function addDetalleToTable() {
             "Numero Tipo Transaccion": "-",
             "Subtotal": monto
         },
-        "Detalle de la nota": detalle
+        "Detalle": detalle
     }
     detalles.push(output);
     console.log(detalles);
@@ -121,9 +121,10 @@ function completeDetalles(id){
     if (id!=null){
         detalles=[];
         var transaccion_selected = transacciones[id];
+        mensaje = "Anula Factura "+ transaccion_selected["Numero Tipo Transaccion"];
         output = {
             "Factura":transaccion_selected,
-            "Detalle de la nota": "Factura anulada"
+            "Detalle": mensaje
         }
     }
     detalles.push(output);

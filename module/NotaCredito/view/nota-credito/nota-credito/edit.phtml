@@ -60,7 +60,7 @@ $tipoPersona = strtoupper($persona->getTipo());
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
 <script>
-var tipoTransaccion ="notaCredito";
+var tipoTransaccion ="Nota de Credito";
 var items = [];
 var json_items = <?= $json_bienes ?>;
 var json_items_codigos = <?= $json_bienes ?>;
@@ -271,7 +271,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             var items = <?php echo ($json); ?>;
                             var idPersona = <?php echo ($persona->getId()); ?>;
                             // Crear Tabla
-                            addItems(items, "notaCredito", idPersona, false);
+                            addItems(items, "Nota de Credito", idPersona, false);
                             </script>
                         </div>
                         <br>

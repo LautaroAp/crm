@@ -77,7 +77,6 @@ class Transaccion {
      */
     private $bienesTransacciones;
 
-
     /**
      * @ORM\Column(name="ESTADO", type="string")
      */

@@ -18,7 +18,7 @@ $(document).ready(function(){
                 jsonModalTransaccion = jsonRemitos;
                 break;
             case 'Factura':
-                jsonModalTransaccion = jsonPresupuestos;
+                jsonModalTransaccion = jsonFacturas;
                 break;
             case 'NotaCredito':
                 jsonModalTransaccion = jsonPresupuestos;
@@ -42,10 +42,11 @@ function completarTransacciones(transacciones_anteriores){
     $(document).ready(function () {
         $('#table_transacciones').DataTable({
             destroy: true,
-            paging: false,
-            searching: false,
+            paging: true,
+            lengthMenu: [[5,10,25,50,-1],[5,10,25,50,"Todos"]],
+            searching: true,
             
-            "order": [0, 'desc'],
+            "order": [0, 'asc'],
 
             "language": {
                 "url": "/json/spanish.json"
@@ -139,7 +140,7 @@ function selectTransaccion(id){
         }
         //Guardo id de la fila seleccionada
         transaccion = id;
-        if (tipoTransaccion!="notaCredito"){
+        if (tipoTransaccion!="Nota de Credito"){
             completeItems(indexTransaccion);
         }
         else{
