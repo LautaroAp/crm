@@ -150,24 +150,6 @@ for ($i=1; $i <= 1; $i++) {
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    // Periodo de Facturacion y Fechas
-    $html = '
-        <table border="0" cellspacing="0" cellpadding="3">
-            <tbody>
-                <tr>
-                    <td><strong>Forma de Envío: </strong>'. $transaccion->getNombreFormaEnvio() .'</td>
-                    
-                    <td><strong>Fecha de Vto. para el pago: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
-                </tr>
-            </tbody>
-        </table>
-    ';
-    // output the HTML content
-    $pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
-    $pdf->Ln(1);
-
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
     if( (is_null($persona->getRazon_social())) || ($persona->getRazon_social() == "") ){
         $nombre_razonsocial = $persona->getNombre();
     } else {
@@ -204,15 +186,11 @@ for ($i=1; $i <= 1; $i++) {
         <table border="0.1" cellspacing="0" cellpadding="3">
             <thead>
                 <tr bgcolor="silver" style="font-weight: bold;" nobr="true">
-                    <th border="0.5" align="center" width="8%"> Código</th>
-                    <th border="0.5" align="center" width="23%">Producto / Servicio</th>
-                    <th border="0.5" align="center" width="9%">Cantidad</th>
-                    <th border="0.5" align="center" width="10%">U. Medida</th>
-                    <th border="0.5" align="center" width="11%">Precio Unit.</th>
-                    <th border="0.5" align="center" width="8%">% Dto.</th>
-                    <th border="0.5" align="center" width="11%">Imp. Dto.</th>
-                    <th border="0.5" align="center" width="9%">% IVA</th>
-                    <th border="0.5" align="center" width="11%">Subtotal</th>
+                    <th border="0.5" align="center" width="30%">Valores</th>
+                    <th border="0.5" align="center" width="30%">Entidad</th>
+                    <th border="0.5" align="center" width="10%">Nro</th>
+                    <th border="0.5" align="center" width="15%">Importe</th>
+                    <th border="0.5" align="center" width="15%">Fecha Acred</th>
                 </tr>
             </thead>
             <tbody>
@@ -228,15 +206,11 @@ for ($i=1; $i <= 1; $i++) {
         $imp_dto = $item->Bien->Precio * ($item->Dto/100);
         $html .= '
                 <tr nobr="true">
-                    <td align="left" width="8%">' . $item->Bien->Codigo . '</td>
-                    <td align="left" width="23%">' . $item->Bien->Nombre .'</td>
-                    <td align="right" width="9%">' . $item->Cantidad .'</td>
-                    <td align="center" width="10%">' . $item->Bien->UnidadMedida .'</td>
-                    <td align="right" width="11%">' . number_format($item->Bien->Precio, 2, ",", ".") .'</td>
-                    <td align="center" width="8%">' . number_format($item->Dto, 2, ",", ".") .'</td>
-                    <td align="right" width="11%">' . number_format($imp_dto, 2, ",", ".") .'</td>
-                    <td align="center" width="9%">' . number_format($item->IVA->Valor, 2, ",", ".") .'</td>
-                    <td align="right" width="11%">' . number_format($item->Totales, 2, ",", ".") .'</td>
+                    <td align="center" width="30%">' . "" . '</td>
+                    <td align="center" width="30%">' . "" .'</td>
+                    <td align="center" width="10%">' . "" .'</td>
+                    <td align="center" width="15%">' . "" .'</td>
+                    <td align="center" width="15%">' . "" .'</td>
                 </tr>
         ';
     };
@@ -256,78 +230,56 @@ for ($i=1; $i <= 1; $i++) {
     // $pdf->writeHTML($pdf->getY(), true, false, true, false, '');
 
     // Position in mm from bottom
-    if($pdf->getY() > 230 ){
+    if($pdf->getY() > 206 ){
         // $pdf->writeHTML($pdf->getY(), true, false, true, false, '');
         $pdf->AddPage();
     }
-
-    // Table of totals
-    $pdf->SetY(-70);
-    $html = '
-        <table border="0" cellspacing="0" cellpadding="3">
-            <tbody>
-                <tr nobr="true">
-                    <td width="60%">
-                    </td>
-                    <td width="40%">
-                        <table border="0" cellspacing="0" cellpadding="3">
-                            <tbody>
-                                <tr>
-                                    <td align="right" width="70%"><strong>Subtotal: $</strong></td>
-                                    <td align="right" width="30%">'. number_format($subtotal, 2, ",", ".") .'</td>
-                                </tr>
-                                <tr>
-                                    <td align="right" width="70%">
-                                        <strong>Bonif: </strong>'. number_format($transaccion->getBonificacionGeneral(), 2, ",", ".") .' %  
-                                        <strong> Importe Bonif: $</strong>
-                                    </td>
-                                    <td align="right" width="30%">'. number_format($transaccion->getBonificacionImporte(), 2, ",", ".") .'</td>
-                                </tr>
-                                <tr>
-                                    <td align="right" width="70%"><strong>Subtotal c/Bonif: $</strong></td>
-                                    <td align="right" width="30%">'. number_format($transaccion->getMonto(), 2, ",", ".") .'</td>
-                                </tr>
-                                <tr>
-                                    <td align="right" width="70%"><strong>Importe Otros Tributos: $</strong></td>
-                                    <td align="right" width="30%">'. number_format(0, 2, ",", ".") .'</td>
-                                </tr>
-                                <tr>
-                                    <td align="right" width="70%"><strong>Importe Total: $</strong></td>
-                                    <td align="right" width="30%">'. number_format($transaccion->getMonto(), 2, ",", ".") .'</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    ';
-    // output the HTML content
-    $pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
-    $pdf->Ln(1);
-
+    
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    // Observaciones
+    $pdf->SetY(-85);
+
+    // TOTAL EN LETRAS
     $html = '
         <table border="0" cellspacing="0" cellpadding="3">
             <tbody>
                 <tr>
-                    <td><p>'. "" .'</p></td>
+                    <td style="font-size: 14px;"><strong>Total: $ </strong>'. number_format($transaccion->getMonto(), 2, ",", ".") .'</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 9px;"><strong>Recibí/mos la suma de: </strong>'. "" .'</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 9px;"><strong>Por concepto de: </strong>'. "" .'</td>
                 </tr>
             </tbody>
         </table>
     ';
     // output the HTML content
-    $pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
-    $pdf->Ln(1);
+    $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, '', true);
+    $pdf->Ln(20);
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    // Info
-    $html = '<strong style="font-size: 12px;">DOCUMENTO NO VÁLIDO COMO FACTURA</strong>';
+    // TOTAL + FIRMA
+    $html = '
+        <table border="0" cellspacing="0" cellpadding="3">
+            <tbody>
+                <tr>
+                    <td>'. "" .'</td>
+                    <td>'. "" .'</td>
+                    <td style="border-bottom: 0.5px solid black;">'. "" .'</td>
+                </tr>
+                <tr>
+                    <td>'. "" .'</td>
+                    <td>'. "" .'</td>
+                    <td align="center">'. "Firma y Aclaración" .'</td>
+                </tr>
+            </tbody>
+        </table>
+    ';
     // output the HTML content
-    $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, 'C', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, '', true);
     $pdf->Ln(1);
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
