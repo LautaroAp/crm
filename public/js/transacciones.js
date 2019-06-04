@@ -166,7 +166,7 @@ function completeItems(id){
         var idTransaccion = transaccion_selected["Id"];
         var numTransaccion = transaccion_selected["Numero Tipo Transaccion"];
         // alert("tipoTransaccion = " + tipoTransaccion);
-        $('#transaccion_buscada').val(numTransaccion);
+        $('#transaccion_buscada').val(zeroFill(numTransaccion,5));
         $('#id_transaccion_previa').val(idTransaccion);
         $.post( '/' + tipoTransaccion + '/ajax/getItemsTransaccion/' + idTransaccion, function (data) {
             $('#div_transaccion').html(data);
@@ -181,4 +181,24 @@ function getItemsTransaccionPrevia(){
     $.post( '/' + tipoTransaccion + '/ajax/getItemsPrevios/' + transaccionPreviaNum, function (data) {
         $('#div_items_transaccion_previa').html(data);
     });
+}
+
+function zeroFill(number, width) {
+    var numberOutput = Math.abs(number); /* Valor absoluto del número */
+    var length = number.toString().length; /* Largo del número */ 
+    var zero = "0"; /* String de cero */  
+    
+    if (width <= length) {
+        if (number < 0) {
+             return ("-" + numberOutput.toString()); 
+        } else {
+             return numberOutput.toString(); 
+        }
+    } else {
+        if (number < 0) {
+            return ("-" + (zero.repeat(width - length)) + numberOutput.toString()); 
+        } else {
+            return ((zero.repeat(width - length)) + numberOutput.toString()); 
+        }
+    }
 }

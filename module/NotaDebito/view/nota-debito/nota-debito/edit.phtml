@@ -60,7 +60,7 @@ $tipoPersona = strtoupper($persona->getTipo());
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
 <script>
-var tipoTransaccion ="notaDebito";
+var tipoTransaccion ="Nota de Debito";
 var items = [];
 var json_items = <?= $json_bienes ?>;
 var json_items_codigos = <?= $json_bienes ?>;
@@ -168,7 +168,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
                                     <option value="Pedido">Pedido</option>
                                     <option value="Remito">Remito</option>
                                     <!-- <option value="NotaDebito">NotaDebito</option>
-                                    <option value="NotaCredito">Nota de Crédito</option>
+                                    <option value="NotaDebito">Nota de Crédito</option>
                                     <option value="NotaDebito">Nota de Débito</option> -->
                                 </select>
                                 <span class="input-group-btn">                        <button type="button" id="btn-modal" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i>
@@ -271,7 +271,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             var items = <?php echo ($json); ?>;
                             var idPersona = <?php echo ($persona->getId()); ?>;
                             // Crear Tabla
-                            addItems(items, "notaDebito", idPersona, false);
+                            addItems(items, "Nota de Debito", idPersona, false);
                             </script>
                         </div>
                         <br>
@@ -392,10 +392,10 @@ var tipoPersona = "<?= $tipoPersona ?>";
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Editar notaDebito</h4>
+                    <h4 class="modal-title">Editar Nota de Débito</h4>
                 </div>
                 <div class="modal-body">
-                    <p id="msjModal">¿Está seguro que desea guardar esta notaDebito?</p>
+                    <p id="msjModal">¿Está seguro que desea guardar esta transacción?</p>
                 </div>
                 <div class="modal-footer">
                     <button id="btnModalAceptar" type="submit" class="btn btn-default">Aceptar</button>

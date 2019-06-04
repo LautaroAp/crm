@@ -151,23 +151,30 @@ $responsable = $this->identity();
                     <!-- Datos de Transaccion -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Número de Transacción</label>
+                            <label>Nro. de Transacción</label>
                             <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion" 
-                            value="<?= $numTransacciones ?>" readonly style="max-width: 250px;">
+                            value="<?= str_pad($numTransacciones, 5, "0", STR_PAD_LEFT) ?>" readonly style="max-width: 250px;">
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Número de Remito</label>
+                            <label>Nro. de Remito</label>
                             <input type="text" class="form-control" name="numero_remito" id="numero_remito" 
-                            value="<?= $numRemito ?>" style="max-width: 250px;" readonly>
+                            value="<?= str_pad($numRemito, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Número de Pedido</label>
+                            <label>Seleccionar Pedido</label>
                             <div class="autocomplete input-group">
                                 <input type="text" class="form-control" name="transaccion_buscada" id="transaccion_buscada" value="" readonly>
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i></button>
                                 </span>
                             </div>
+                        </div>
+                        <div class="form-group col-md-2" id="tipos_notaCredito">
+                            <label>Tipo de Remito</label>
+                            <select class="form-control" name="oficial" id="oficial" require>
+                                <option value="1" selected>No Oficial</option>
+                                <option value="2">Oficial</option>
+                            </select>
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
                         <input type="hidden" id="url" name="url" value="<?= $url3 ?>">

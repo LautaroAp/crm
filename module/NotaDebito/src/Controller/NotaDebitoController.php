@@ -37,29 +37,16 @@ class NotaDebitoController extends TransaccionController
 
     private function getTipo()
     {
-        return "notaDebito";
+        return "Nota de Debito";
     }
 
     public function addAction()
     {
         $json="[]";
-        if (isset($_SESSION['TRANSACCIONES']['FACTURA'])) {
-            $json = $_SESSION['TRANSACCIONES']['FACTURA'];
+        if (isset($_SESSION['TRANSACCIONES']['NOTA_DEBITO'])) {
+            $json = $_SESSION['TRANSACCIONES']['NOTA_DEBITO'];
         }
-        // Obtengo todos los Bienes
-        $bienes = $this->bienesManager->getBienes();
-
-        // Creo JSON con Nombres de todos los Productos y Servicios
-        $json_bienes = "";
-
-        // $response[] = array("value"=>"1","label"=>"Soporte");
-        foreach ($bienes as $bien) {
-            $json_bienes .= $bien->getJsonBien() . ',';
-        }
-
-        $json_bienes = substr($json_bienes, 0, -1);
-        $json_bienes = '[' . $json_bienes . ']';
-
+     
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         $tipoPersona = null;
@@ -89,56 +76,45 @@ class NotaDebitoController extends TransaccionController
         $formasPagoJson = $this->getJsonFormasPago();
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
-        ////////////////////////////PRESUPUESTOS PREVIOS///////////////////////////
-        $presupuestos = $this->notaDebitoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
-        $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
-        ////////////////////////////PEDIDOS PREVIOS///////////////////////////
-        $pedidos = $this->notaDebitoManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
-        $jsonPedidos = $this->getJsonFromObjectList($pedidos);
-        ////////////////////////////REMITOS PREVIOS///////////////////////////
-        $remitos = $this->notaDebitoManager->getTransaccionesPersonaTipo($persona->getId(),"REMITO");
-        $jsonRemitos = $this->getJsonFromObjectList($remitos);
-
-        $transacciones = $this->notaDebitoManager->getTransacciones();
-        $jsonTransacciones = $this->getJsonFromObjectList($transacciones);
+        ////////////////////////////FACTURAS PREVIAS///////////////////////////
+        $facturas = $this->notaDebitoManager->getTransaccionesPersonaTipo($persona->getId(),"Factura");
+        $facturasJson = $this->getJsonFromObjectList($facturas);
+        ////////////////////////////REMITOS CONFORMADOS PREVIOS/////////////////////////////
+        $remitosConformados = $this->getRemitosConformados($persona);
+        $remitosConformadosJson = $this->getJsonFromObjectList($remitosConformados);
 
         $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
-
-        $tiposFactura= $this->tipoFacturaManager->getTipoFacturas();
-        $tiposFacturaJson =$this->getJsonFromObjectList($tiposFactura);
         // var_dump(json_decode($tiposFacturaJson), true); die();
 
         $this->reiniciarParams();
-        $tipoFacturaPersona = $persona->getTipo_factura();
-        $tipoFacturaPersonaJson ="";
-
-        if ($tipoFacturaPersona!=null){
-            $tipoFacturaPersonaJson= $tipoFacturaPersona->getJSON();
-        }
-
         return new ViewModel([
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,
             'numTransacciones' => $numTransacciones,
             'numNotaDebito' => $numNotaDebito,
             'json' => $json,
-            'json_bienes' => $json_bienes,
             'formasPagoJson' => $formasPagoJson,
             'formasEnvioJson' => $formasEnvioJson,
             'monedasJson' => $monedasJson,
             'ivasJson' => $ivasJson,
             'transaccionJson'=>"[]",
-            'presupuestosJson' => $jsonPrespuestos,
-            'pedidosJson' => $jsonPedidos,
-            'remitosJson' => $jsonRemitos,
-            'transaccionesJson' => $jsonTransacciones,
+            'facturasJson' => $facturasJson,
+            'remitosConformadosJson'=>$remitosConformadosJson,
             'empresaJson' => $empresaJson,
-            'tiposFacturaJson'=>$tiposFacturaJson,
-            'tipoFacturaPersonaJson' => $tipoFacturaPersonaJson,
             'itemsTransaccionJson' =>"[]",
         ]);
     }
 
+    private function getRemitosConformados($persona){
+        $salida = [];
+        $remitos = $this->notaDebitoManager->getTransaccionesPersonaTipo($persona->getId(),"Remito");
+        foreach ($remitos as $remito){
+            if (strtoupper($remito->getEstado())=="CONFORMADO"){
+                array_push($salida, $remito);
+            }
+        }
+        return $salida;
+    }
     public function addItemAction()
    {
        if ($this->getRequest()->isPost()) {
@@ -156,7 +132,7 @@ class NotaDebitoController extends TransaccionController
 
     public function setItemsAction(){
         $items = $_POST['json'];
-        $_SESSION['TRANSACCIONES']['FACTURA'] = $items;
+        $_SESSION['TRANSACCIONES']['NOTA DE DEBITO'] = $items;
     }
 
     public function getJsonFormasEnvio()
@@ -208,16 +184,9 @@ class NotaDebitoController extends TransaccionController
         $ivasJson = $this->getJsonIvas();
         $transaccion = $notaDebito->getTransaccion();
         $transaccionJson = $notaDebito->getTransaccion()->getJSON();
-        $presupuestos = $this->notaDebitoManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
-        $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
-        $tiposFactura= $this->tipoFacturaManager->getTipoFacturas();
-        $tiposFacturaJson =$this->getJsonFromObjectList($tiposFactura);
+        $facturas = $this->notaDebitoManager->getTransaccionesPersonaTipo($persona->getId(),"Factura");
+        $facturasJson = $this->getJsonFromObjectList($facturas);
 
-        $tipoFacturaPersona = $persona->getTipo_factura();
-        $tipoFacturaPersonaJson ="";
-        if ($tipoFacturaPersona!=null){
-            $tipoFacturaPersonaJson= $tipoFacturaPersona->getJSON();
-        }
         $this->reiniciarParams();
         return new ViewModel([
             'persona' => $persona,
@@ -232,9 +201,7 @@ class NotaDebitoController extends TransaccionController
             'transaccion' => $transaccion,
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
-            'presupuestosJson' => $jsonPrespuestos,
-            'tiposFacturaJson'=>$tiposFacturaJson,
-            'tipoFacturaPersonaJson' => $tipoFacturaPersonaJson,
+            'facturasJson' => $facturasJson,
             'itemsTransaccionJson' =>"[]",
             'empresa' => $empresa,
         ]);

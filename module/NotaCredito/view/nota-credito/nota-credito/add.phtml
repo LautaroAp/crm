@@ -144,34 +144,21 @@ var tipoPersona = "<?= $tipoPersona ?>";
                     <!-- Datos de Transaccion -->
                     <div class="row form-row">
                         <div class="form-group col-md-2">
-                            <label>Número de Transacción</label>
+                            <label>Nro. de Transacción</label>
                             <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion"
-                                value="<?= $numTransacciones ?>" style="max-width: 250px;" readonly>
+                                value="<?= str_pad($numTransacciones, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Número de Nota Credito</label>
+                            <label>Nro. Nota de Crédito</label>
                             <input type="text" class="form-control" name="numero_notaCredito" id="numero_notaCredito"
-                                value="<?= $numNotaCredito ?>" style="max-width: 250px;" readonly>
+                                value="<?= str_pad($numNotaCredito, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
-                        <div class="form-group col-md-2" id="tipos_notaCredito" hidden="true">
-                            <label>Tipo de Nota de Crédito</label>
-                            <script>
-
-                            </script>        
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Buscar Transacción</label>
-                            <div class="autocomplete input-group">
-                                <select class="form-control" id="tipoTransaccion" name="tipoTransaccion">
-                                    <option value="Factura">Factura</option>
-                                    <option value="Remito">Remito Conformado</option>
-                                </select>
-                                <span class="input-group-btn">
-                                    <button type="button" id="btn-modal" class="btn btn-default" data-toggle="modal" 
-                                        data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i>
-                                    </button>
-                                </span>
-                            </div>
+                        <div class="form-group col-md-2" id="tipos_notaCredito">
+                            <label>Tipo Nota de Crédito</label>
+                            <select class="form-control" name="oficial" id="oficial" require>
+                                <option value="1" selected>No Oficial</option>
+                                <option value="2">Oficial</option>
+                            </select>
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
                         <input type="hidden" id="url" name="url" value="<?= $url3 ?>">
@@ -191,22 +178,41 @@ var tipoPersona = "<?= $tipoPersona ?>";
                 <!-- Agregar Renglon-->
                 <div class="container" style="padding-top:10px;">
                     <form method="post" autocomplete="off">
-                        <input type="hidden" class="form-control" name="item_id" id="item_id">
-                        <div class="form-group col-sm-8 margin-padding-xs">
-                            <label>Detalle</label>
-                            <input type="text" class="form-control" name="nota_detalle" id="nota_detalle"
-                                placeholder="Detalle" >
+                        <div class="container row">
+                            <div class="form-group col-md-3 margin-padding-xs">
+                                <label>Agregar transacción previa</label>
+                                <div class="autocomplete input-group">
+                                    <select class="form-control" id="tipoTransaccion" name="tipoTransaccion">
+                                        <option value="Factura">Factura</option>
+                                        <option value="Remito">Remito Conformado</option>
+                                    </select>
+                                    <span class="input-group-btn">
+                                        <button type="button" id="btn-modal" class="btn btn-default" data-toggle="modal" 
+                                            data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group col-sm-2 margin-padding-xs">
-                            <label>Monto</label>
-                            <input type="text" class="form-control" name="nota_monto" id="nota_monto"
-                                placeholder="Monto"  onkeypress="return justNumbers(event);">
-                        </div>
-                        <div class="form-group col-sm-1 margin-padding-xs">
-                            <label>&nbsp;</label>
-                            <button type="button" class="btn btn-default" onclick="addDetalleToTable()">
-                                <span class="glyphicon glyphicon-plus"  onkeypress="return pulsar(event)"></span> Agregar
-                            </button>
+                        <!-- <br> -->
+                        <div class="container row">
+                            <input type="hidden" class="form-control" name="item_id" id="item_id">
+                            <div class="form-group col-sm-8 margin-padding-xs">
+                                <label>Detalle</label>
+                                <input type="text" class="form-control" name="nota_detalle" id="nota_detalle"
+                                    placeholder="Detalle" >
+                            </div>
+                            <div class="form-group col-sm-2 margin-padding-xs">
+                                <label>Monto</label>
+                                <input type="text" class="form-control" name="nota_monto" id="nota_monto"
+                                    placeholder="Monto"  onkeypress="return justNumbers(event);">
+                            </div>
+                            <div class="form-group col-sm-1 margin-padding-xs">
+                                <label>&nbsp;</label>
+                                <button type="button" class="btn btn-default" onclick="addDetalleToTable()">
+                                    <span class="glyphicon glyphicon-plus"  onkeypress="return pulsar(event)"></span> Agregar
+                                </button>
+                            </div>
                         </div>
                 </div>
                 <!-- Tabla de Detalles -->
@@ -283,12 +289,6 @@ var tipoPersona = "<?= $tipoPersona ?>";
                 </div>
                 <div class="panel-body">
                     <!-- Totales -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>En concepto de </label>
-                            <textarea name="concepto" id ="concepto" class="form-control detalle-width" rows="4" placeholder="Ingresar detalle de actividad" required=""></textarea>
-                        </div>
-                    </div>
                     <div class="row form-row">
                         <div class="form-group col-md-3" id="monedas">
                             <label>Moneda</label>
@@ -297,7 +297,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             completarMonedas(monedas);
                             </script>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label>Fecha de Vencimiento</label>
                             <div class='input-group date' id='datetimepicker2'>
                                 <input type='text' class="form-control" name="fecha_vencimiento" value="<?= $date ?>" />
@@ -311,7 +311,12 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             <input type="text" class="form-control" name="total_general" id="total_general"
                                 value="0" readonly>
                         </div>                   
-                       
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-9">
+                            <label>En concepto de</label>
+                            <textarea name="concepto" id ="concepto" class="form-control" rows="2" placeholder="Ingresar concepto de la transacción" required=""></textarea>
+                        </div>
                     </div>
                     <script>
                     calcularSubcampos();

@@ -148,14 +148,14 @@ var tipoPersona = "<?= $tipoPersona ?>";
                     <!-- Datos de Transaccion -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Número de Transacción</label>
+                            <label>Nro. de Transacción</label>
                             <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion" 
-                            value="<?= $numTransacciones ?>" readonly style="max-width: 250px;">
+                            value="<?= str_pad($numTransacciones, 5, "0", STR_PAD_LEFT) ?>" readonly style="max-width: 250px;">
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Número de Presupuesto</label>
+                            <label>Nro. de Presupuesto</label>
                             <input type="text" class="form-control" name="numero_presupuesto" id="numero_presupuesto" 
-                            value="<?= $numPresupuesto ?>" style="max-width: 250px;" readonly>
+                            value="<?= str_pad($numPresupuesto, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>" >
                         <input type="hidden" id="url" name="url" value="<?= $url3 ?>" >

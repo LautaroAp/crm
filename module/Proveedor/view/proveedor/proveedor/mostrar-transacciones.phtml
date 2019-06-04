@@ -26,9 +26,16 @@ var idPersona = <?= $id_persona ?>;
         <?php foreach ($transacciones as $transaccion) :
             $idTransaccion = $transaccion->getId();
             $tipoTransaccion = $transaccion->getTipo();
+            if ($tipoTransaccion=="Nota de Credito"){
+                $tipoTransaccion="notaCredito";
+            }
+            if ($tipoTransaccion=="Nota de Debito"){
+                $tipoTransaccion="notaDebito";
+            }
         ?>
             <script>
                 var tipoTransaccion = "<?= $tipoTransaccion ?>";
+                console.log(tipoTransaccion);
             </script>
            
         <tr id="<?= $transaccion->getId() ?>" class="vpEvento">
@@ -41,25 +48,17 @@ var idPersona = <?= $id_persona ?>;
             <td> <?php echo ($transaccion->getResponsable()->getUsuario()); ?> </td>
             <td id="<?= $transaccion->getId() ?>" class="">
                 <?php
-                    switch ($tipoTransaccion) {
-                        case "pedido":
-                            echo (ucfirst("orden de compra"));
-                            break;
-                        case "presupuesto":
-                            echo (ucfirst("solicitud de presupuesto"));
-                            break;
-                        case "cobro":
-                        echo (ucfirst("pago"));
-                        break;
-                        default:
-                            echo (ucfirst($tipoTransaccion)); 
-                    }      
+                    if (!is_null($transaccion->getTipo())) {
+                        echo (ucfirst($transaccion->getTipo()));
+                    } else {
+                        echo ('No definido');
+                    }
                 ?></td>
             <td><?= $transaccion->getDescripcion() ?></td>
             <!-- PDF + BOTON REMITO -->
-            <?php if (($transaccion->getEstado()=="ACTIVO")||($transaccion->getEstado()=="CONFORMADO"||  ($transaccion->getEstado()=="ENTREGADO"))){?>
+            <?php if (($transaccion->getEstado()=="ACTIVO")||($transaccion->getEstado()=="CONFORMADO")||  ($transaccion->getEstado()=="ENTREGADO") ||  ($transaccion->getEstado()=="A_ENTREGAR")){?>
                 <td class="transaccion-activa"><?= $transaccion->getEstado() ?></td>
-            <?php } else if($transaccion->getEstado()=="A_ENTREGAR") { ?>
+            <?php } else if($transaccion->getEstado()=="FACTURADO") { ?>
                 <td class="transaccion-pendiente"><?= str_replace("_"," ",$transaccion->getEstado()) ?></td>
             <?php } else if($transaccion->getEstado()=="ANULADO") { ?>
                 <td class="transaccion-anulada"><?= $transaccion->getEstado() ?></td>
@@ -70,24 +69,24 @@ var idPersona = <?= $id_persona ?>;
                     <?php
                         switch (ucfirst($transaccion->getTipo())) {
                             case "Remito":
-                                ?>    
+                                ?>  
                                 <!-- boton remito -->
                                 <ul class="nav navbar-nav navbar-menu-font"> 
                                     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
-                                    style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
+                                    style="margin-right: 4px;" <?php if (($transaccion->getEstado()=="ANULADO")||  ($transaccion->getEstado()=="FACTURADO")) {echo "disabled";} ?>>
                                     <span class="glyphicon glyphicon-check"></span></button>
                                     <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
                                         <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                        onclick="cambiarEstado('A_ENTREGAR', event, tipoTransaccion, idPersona)">
+                                        onclick="cambiarEstado('A_ENTREGAR', event, '<?= $transaccion->getTipo() ?>', idPersona)">
                                         A entregar</a></li>
                                         <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                        onclick="cambiarEstado('ANULADO', event, tipoTransaccion, idPersona)">
+                                        onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
                                         Anulado</a></li>
                                         <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                        onclick="cambiarEstado('CONFORMADO', event, tipoTransaccion, idPersona)">
+                                        onclick="cambiarEstado('CONFORMADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
                                         Conformado</a></li>
                                         <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                        onclick="cambiarEstado('ENTREGADO', event, tipoTransaccion, idPersona)">
+                                        onclick="cambiarEstado('ENTREGADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
                                         Entregado</a></li>
                                     </ul>
                                 </ul>
@@ -101,13 +100,55 @@ var idPersona = <?= $id_persona ?>;
                                     <span class="glyphicon glyphicon-check"></span></button>
                                     <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
                                         <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                        onclick="cambiarEstado('ANULADO', event, tipoTransaccion, idPersona)">
+                                        onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
                                         Anulado</a></li>
                                         <li class="divider"></li>
                                         <li><a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>">Editar</a><li>
                                     </ul>
                                 </ul>  
                                 <?php
+                            break;
+                            case "Factura":
+                                ?>
+                                <ul class="nav navbar-nav navbar-menu-font"> 
+                                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                    style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
+                                    <span class="glyphicon glyphicon-check"></span></button>
+                                    <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        Anulado</a></li>
+                                    </ul>
+                                </ul>  
+                                <?php
+                            break;
+                            case "Nota de Credito":
+                            ?>
+                            <ul class="nav navbar-nav navbar-menu-font"> 
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
+                                <span class="glyphicon glyphicon-check"></span></button>
+                                <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                    <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                    onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                    Anulado</a></li>
+                                </ul>
+                            </ul>  
+                            <?php
+                            break;
+                            case "Nota de Debito":
+                            ?>
+                            <ul class="nav navbar-nav navbar-menu-font"> 
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
+                                <span class="glyphicon glyphicon-check"></span></button>
+                                <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                    <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                    onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                    Anulado</a></li>
+                                </ul>
+                            </ul>  
+                            <?php
                             break;
                             default:
                                 ?>
@@ -117,10 +158,10 @@ var idPersona = <?= $id_persona ?>;
                                     <span class="glyphicon glyphicon-check"></span></button>
                                     <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
                                         <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                        onclick="cambiarEstado('ACTIVO', event, tipoTransaccion, idPersona)">
+                                        onclick="cambiarEstado('ACTIVO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
                                         Activo</a></li>
                                         <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
-                                        onclick="cambiarEstado('ANULADO', event, tipoTransaccion, idPersona)">
+                                        onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
                                         Anulado</a></li>
                                         <li class="divider"></li>
                                         <li><a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>">Editar</a><li>
@@ -131,7 +172,7 @@ var idPersona = <?= $id_persona ?>;
                         }
                     ?>
                     <!-- boton pdf -->
-                    <a href="<?= $this->url($transaccion->getTipo().'/pdf', ['id' => (int)$transaccion->getId()]) ?>"
+                    <a href="<?= $this->url($tipoTransaccion.'/pdf', ['id' => (int)$transaccion->getId()]) ?>"
                         type="button" class="btn btn-default btn-sm" target="blank">
                             <span class="glyphicon glyphicon-file"></span>
                     </a>

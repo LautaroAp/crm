@@ -148,17 +148,17 @@ var tipoPersona = "<?= $tipoPersona ?>";
                     <!-- Datos de Transaccion -->
                     <div class="row form-row">
                         <div class="form-group col-md-2">
-                            <label>Número de Transacción</label>
+                            <label>Nro. de Transacción</label>
                             <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion"
-                                value="<?= $numTransacciones ?>" style="max-width: 250px;" readonly>
+                                value="<?= str_pad($numTransacciones, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Número de Pedido</label>
+                            <label>Nro. de Pedido</label>
                             <input type="text" class="form-control" name="numero_pedido" id="numero_pedido"
-                                value="<?= $numPedido ?>" style="max-width: 250px;" readonly>
+                                value="<?= str_pad($numPedido, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Número de Presupuesto</label>
+                            <label>Nro. de Presupuesto</label>
                             <div class="autocomplete input-group">
                                 <input type="text" class="form-control" name="transaccion_buscada" id="transaccion_buscada" value="" readonly>
                                 <span class="input-group-btn">
