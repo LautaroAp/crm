@@ -89,6 +89,9 @@ class CobroManager extends TransaccionManager
         if (isset($data['concepto'])) {
             $cobro->setConcepto($data['concepto']);
         }
+        if (isset($data['total_letras'])) {
+            $cobro->setImporte_letras($data['total_letras']);
+        }
         return $cobro;
     }
 

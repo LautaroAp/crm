@@ -37,6 +37,11 @@ class Cobro {
     protected $concepto;
 
     /**
+     * @ORM\Column(name="IMPORTE_LETRAS", nullable=true, type="string")
+     */
+    protected $importe_letras;
+
+    /**
      * Many Services have One Transaccion.
      * @ORM\ManyToOne(targetEntity="Transaccion")
      * @ORM\JoinColumn(name="ID_TRANSACCION_COBRO", referencedColumnName="ID")
@@ -160,6 +165,26 @@ class Cobro {
     public function setTransaccion_cobro($transaccion_cobro)
     {
         $this->transaccion_cobro = $transaccion_cobro;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_letras
+     */ 
+    public function getImporte_letras()
+    {
+        return $this->importe_letras;
+    }
+
+    /**
+     * Set the value of importe_letras
+     *
+     * @return  self
+     */ 
+    public function setImporte_letras($importe_letras)
+    {
+        $this->importe_letras = $importe_letras;
 
         return $this;
     }

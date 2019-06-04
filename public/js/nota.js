@@ -184,6 +184,7 @@ function calcularTotal(){
         sumTotal = sumTotal + parseFloat(subtotal);
     }
     $("#total_general").val(formatMoney((parseFloat(sumTotal)).toFixed(2)));
+    $("#total_letras").val(intToChar(sumTotal));
 
 }
 

@@ -1,4 +1,5 @@
 <!-- scripts -->
+<script src="/js/conversores.js"></script>
 <script src="/js/nota.js"></script>
 <script src="/js/bienes-transacciones.js"></script>
 <script src="/js/item.js"></script>
@@ -314,7 +315,13 @@ var tipoPersona = "<?= $tipoPersona ?>";
                     </div>
                     <div class="row form-row">
                         <div class="form-group col-md-9">
-                            <label>En concepto de</label>
+                            <label>Recibí/mos la suma:</label>
+                            <textarea name="total_letras" id ="total_letras" class="form-control" rows="2" placeholder="Ingresar importe total en letras" required=""></textarea>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="form-group col-md-9">
+                            <label>En concepto de:</label>
                             <textarea name="concepto" id ="concepto" class="form-control" rows="2" placeholder="Ingresar concepto de la transacción" required=""></textarea>
                         </div>
                     </div>

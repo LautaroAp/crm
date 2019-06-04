@@ -103,8 +103,8 @@ var idPersona = <?= $id_persona ?>;
                                         <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
                                         onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
                                         Anulado</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>">Editar</a><li>
+                                        <!-- <li class="divider"></li> -->
+                                        <li class="hidden"><a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>">Editar</a><li>
                                     </ul>
                                 </ul>  
                                 <?php

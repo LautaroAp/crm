@@ -232,11 +232,15 @@ class BienesTransacciones {
     }
 
     public function getPrecioDto(){
-        if (!is_null($this->getDescuento())){
-            $salida = $this->getDescuento() * $this->getBien()->getPrecio() /100;
-            return $this->getBien()->getPrecio() - $salida;
-        }
-        return $this->getBien()->getPrecio();
+        if($this->getBien()){
+            if (!is_null($this->getDescuento())){
+                $salida = $this->getDescuento() * $this->getBien()->getPrecio() /100;
+                return $this->getBien()->getPrecio() - $salida;
+            }
+            return $this->getBien()->getPrecio();
+        } else {
+            return null;
+        } 
     }
     
     public function getJSON(){

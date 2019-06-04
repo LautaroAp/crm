@@ -457,8 +457,7 @@ function calcularSubcampos() {
     $("#iva_total").val(formatMoney(parseFloat(sumIva).toFixed(2)));
     $("#total_general").val(formatMoney(parseFloat(total_general).toFixed(2)));
     $("#jsonitems").val(JSON.stringify(items));
-    }
-    
+    }    
 }
 
 function reiniciarSubcampos(){
