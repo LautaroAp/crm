@@ -33,7 +33,7 @@ function addDetallesNota(items, tipo, id){
     table.setAttribute("class", "display");
     var thead = document.createElement("thead");
 
-    var col = ["Transaccion", "Detalle", "Monto", ""];
+    var col = ["Transaccion", "Detalle", "Monto", "Eliminar"];
     var tr = thead.insertRow(-1);
     for (var i = 0; i < col.length; i++) {
         var th = document.createElement("th");
@@ -111,6 +111,7 @@ function removerDetalle(id) {
         completarTransacciones(jsonRemitos);
     }
     items.splice(id, 1);
+    $("#jsonitems").val(JSON.stringify(items));
     addDetallesNota(items, tipoTransaccion, idPersona);
     calcularTotal();
 }
