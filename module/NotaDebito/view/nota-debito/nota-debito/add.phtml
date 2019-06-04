@@ -67,7 +67,7 @@ $tipoPersona = strtoupper($persona->getTipo());
 
 <!-- json desde el controller, necesito otro con todos los bienes (nombre + valor) -->
 <script>
-var tipoTransaccion ="Nota de Debito";
+var tipoTransaccion ="nota de debito";
 var items = [];
 var output;
 var ivas = <?= $ivasJson ?>;
@@ -156,8 +156,8 @@ var tipoPersona = "<?= $tipoPersona ?>";
                         <div class="form-group col-md-2" id="tipos_notaCredito">
                             <label>Tipo Nota de Crédito</label>
                             <select class="form-control" name="oficial" id="oficial" require>
-                                <option value="1" selected>No Oficial</option>
-                                <option value="2">Oficial</option>
+                                <option value="0" selected>No Oficial</option>
+                                <option value="1">Oficial</option>
                             </select>
                         </div>
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
@@ -222,7 +222,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             <script>
                             var items = <?php echo ($json); ?>;
                             // Crear Tabla
-                            addDetallesNota(items, "Nota de Debito", idPersona);
+                            addDetallesNota(items, "nota de debito", idPersona);
                             </script>
                         </div>
                         <br>                     

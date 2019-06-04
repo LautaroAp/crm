@@ -26,10 +26,10 @@ var idPersona = <?= $id_persona ?>;
         <?php foreach ($transacciones as $transaccion) :
             $idTransaccion = $transaccion->getId();
             $tipoTransaccion = $transaccion->getTipo();
-            if ($tipoTransaccion=="Nota de Credito"){
+            if ($tipoTransaccion=="nota de credito"){
                 $tipoTransaccion="notaCredito";
             }
-            if ($tipoTransaccion=="Nota de Debito"){
+            if ($tipoTransaccion=="nota de debito"){
                 $tipoTransaccion="notaDebito";
             }
         ?>
@@ -122,7 +122,7 @@ var idPersona = <?= $id_persona ?>;
                                 </ul>  
                                 <?php
                             break;
-                            case "Nota de Credito":
+                            case "nota de credito":
                             ?>
                             <ul class="nav navbar-nav navbar-menu-font"> 
                                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
@@ -136,7 +136,7 @@ var idPersona = <?= $id_persona ?>;
                             </ul>  
                             <?php
                             break;
-                            case "Nota de Debito":
+                            case "nota de debito":
                             ?>
                             <ul class="nav navbar-nav navbar-menu-font"> 
                                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"

@@ -52,7 +52,7 @@ class CuentaCorrienteManager {
         if(isset($idPersona)){
             $persona = $this->personaManager->getPersona($idPersona);
             // if(strtoupper($persona->getTipo())=="CLIENTE"){
-                $tipos = ["remito", "factura"];
+                $tipos = ["remito", "factura", "nota de credito", "nota de debito"];
             // }else{
             //     $tipos = ["cobro"];
             // }
@@ -62,7 +62,7 @@ class CuentaCorrienteManager {
             return $this->entityManager
                         ->getRepository(CuentaCorriente::class)
                         // ->findAll();
-                        ->findBy(['tipoActividad' => ['remito','nota_debito']]);
+                        ->findBy(['tipoActividad' => ['remito']]);
         }
         
     }
@@ -92,7 +92,8 @@ class CuentaCorrienteManager {
      */
     public function add($transaccion) {
         $tipoTransaccion = strtoupper($transaccion->getTipo());
-        if ($tipoTransaccion=="REMITO"||$tipoTransaccion=="FACTURA" ||$tipoTransaccion=="RECIBO" || $tipoTransaccion=="COBRO"){
+        if ($tipoTransaccion=="REMITO"||$tipoTransaccion=="FACTURA" ||$tipoTransaccion=="RECIBO" || $tipoTransaccion=="COBRO"
+        || $tipoTransaccion=="NOTA DE CREDITO" || $tipoTransaccion=="NOTA DE DEBITO"){
             $cuentaCorriente = new CuentaCorriente();
             $cuentaCorriente=$this->setData($cuentaCorriente, $transaccion);
             $this->entityManager->persist($cuentaCorriente);
@@ -105,7 +106,11 @@ class CuentaCorrienteManager {
     private function setData($cuentaCorriente, $transaccion){
         $cuentaCorriente->setPersona($transaccion->getPersona());
         $cuentaCorriente->setTransaccion($transaccion);
-        $cuentaCorriente->setMonto($transaccion->getMonto());
+        if (strtoupper($transaccion->getTipo())=="NOTA DE CREDITO"){
+            $cuentaCorriente->setMonto($transaccion->getMonto()*-1);
+        }else{
+            $cuentaCorriente->setMonto($transaccion->getMonto());
+        }
         $cuentaCorriente->setFecha($transaccion->getFecha_transaccion());
         $cuentaCorriente->setNroTipoTransaccion($transaccion->getNumeroTransaccionTipo());
         $cuentaCorriente->setTipoActividad($transaccion->getTipo());
