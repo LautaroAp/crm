@@ -80,6 +80,21 @@ function seleccionarItem(e) {
     }
 }
 
+// Llama a mostrarTodoAction en Controller
+function mostrarTodo(id_persona){
+    if (tipo_persona=="cliente"){
+        $.post('/clientes/ajax/mostrarTodo/' + id_persona, function (data) {
+        $('#eventos').html(data);
+        });
+    }
+    else{
+        $.post('/proveedores/ajax/mostrarTodo/' + id_persona, function (data) {
+            $('#eventos').html(data);
+            });
+    }
+   
+}
+
 // Llama a mostrarTransaccionesAction en Controller
 function mostrarTransacciones(id_persona){
     if (tipo_persona=="cliente"){

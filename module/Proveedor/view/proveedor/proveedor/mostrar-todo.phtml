@@ -1,0 +1,239 @@
+<script>
+$(document).ready(function() {
+    $('#tabla_eventos').DataTable({
+        "order": [0, 'desc'],
+
+        "language": {
+            "url": "/json/spanish.json"
+        }
+    });
+});
+var idPersona = <?= $id_persona ?>;
+</script>
+
+<table id="tabla_eventos" class="display">
+    <thead>
+        <tr>
+            <th class="" id="fila">Fecha</th>
+            <th class="">Responsable</th>
+            <th class="">Tipo</th>
+            <th class="detalle-width">Detalle</th>
+            <th class="">Estado</th> 
+            <th class="col-btn-width"></th>
+        </tr>
+    </thead>
+    <tbody id="cuerpo_eventos" role="button" class="">
+        <?php foreach ($transacciones as $transaccion) :
+            $idTransaccion = $transaccion->getId();
+            $tipoTransaccion = $transaccion->getTipo();
+            if ($tipoTransaccion=="Nota de Credito"){
+                $tipoTransaccion="notaCredito";
+            }
+            if ($tipoTransaccion=="Nota de Debito"){
+                $tipoTransaccion="notaDebito";
+            }
+        ?>
+            <script>
+                var tipoTransaccion = "<?= $tipoTransaccion ?>";
+                console.log(tipoTransaccion);
+            </script>
+           
+        <tr id="<?= $transaccion->getId() ?>" class="vpEvento">
+            <td id="<?= $transaccion->getId() ?>">
+                <?php
+                if (!is_null($transaccion->getFecha_transaccion())) {
+                    echo ($transaccion->getFecha_transaccion()->format('Y/m/d'));
+                }
+                ?></td>
+            <td> <?php echo ($transaccion->getResponsable()->getUsuario()); ?> </td>
+            <td id="<?= $transaccion->getId() ?>" class="">
+                <?php
+                    if (!is_null($transaccion->getTipo())) {
+                        echo (ucfirst($transaccion->getTipo()));
+                    } else {
+                        echo ('No definido');
+                    }
+                ?></td>
+            <td><?= $transaccion->getDescripcion() ?></td>
+            <!-- PDF + BOTON REMITO -->
+            <?php if (($transaccion->getEstado()=="ACTIVO")||($transaccion->getEstado()=="CONFORMADO")||  ($transaccion->getEstado()=="ENTREGADO") ||  ($transaccion->getEstado()=="A_ENTREGAR")){?>
+                <td class="transaccion-activa"><?= $transaccion->getEstado() ?></td>
+            <?php } else if($transaccion->getEstado()=="FACTURADO") { ?>
+                <td class="transaccion-pendiente"><?= str_replace("_"," ",$transaccion->getEstado()) ?></td>
+            <?php } else if($transaccion->getEstado()=="ANULADO") { ?>
+                <td class="transaccion-anulada"><?= $transaccion->getEstado() ?></td>
+            <?php } ?>
+            
+            <td id="<?= $transaccion->getId() ?>" class="">
+                <div class="dropdown">
+                    <?php
+                        switch (ucfirst($transaccion->getTipo())) {
+                            case "Remito":
+                                ?>  
+                                <!-- boton remito -->
+                                <ul class="nav navbar-nav navbar-menu-font"> 
+                                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                    style="margin-right: 4px;" <?php if (($transaccion->getEstado()=="ANULADO")||  ($transaccion->getEstado()=="FACTURADO")) {echo "disabled";} ?>>
+                                    <span class="glyphicon glyphicon-check"></span></button>
+                                    <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('A_ENTREGAR', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        A entregar</a></li>
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        Anulado</a></li>
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('CONFORMADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        Conformado</a></li>
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ENTREGADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        Entregado</a></li>
+                                    </ul>
+                                </ul>
+                                <?php
+                            break;
+                            case "Cobro":
+                                ?>
+                                <ul class="nav navbar-nav navbar-menu-font"> 
+                                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                    style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
+                                    <span class="glyphicon glyphicon-check"></span></button>
+                                    <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        Anulado</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>">Editar</a><li>
+                                    </ul>
+                                </ul>  
+                                <?php
+                            break;
+                            case "Factura":
+                                ?>
+                                <ul class="nav navbar-nav navbar-menu-font"> 
+                                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                    style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
+                                    <span class="glyphicon glyphicon-check"></span></button>
+                                    <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        Anulado</a></li>
+                                    </ul>
+                                </ul>  
+                                <?php
+                            break;
+                            case "Nota de Credito":
+                            ?>
+                            <ul class="nav navbar-nav navbar-menu-font"> 
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
+                                <span class="glyphicon glyphicon-check"></span></button>
+                                <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                    <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                    onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                    Anulado</a></li>
+                                </ul>
+                            </ul>  
+                            <?php
+                            break;
+                            case "Nota de Debito":
+                            ?>
+                            <ul class="nav navbar-nav navbar-menu-font"> 
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                style="margin-right: 4px;" <?php if($transaccion->getEstado()=="ANULADO"){echo "disabled";} ?>>
+                                <span class="glyphicon glyphicon-check"></span></button>
+                                <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                    <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                    onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                    Anulado</a></li>
+                                </ul>
+                            </ul>  
+                            <?php
+                            break;
+                            default:
+                                ?>
+                                <ul class="nav navbar-nav navbar-menu-font"> 
+                                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownRemito"
+                                    style="margin-right: 4px;">
+                                    <span class="glyphicon glyphicon-check"></span></button>
+                                    <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ACTIVO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        Activo</a></li>
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        Anulado</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="<?= $this->url($transaccion->getTipo().'/editar', ['id' => (int)$transaccion->getId()]) ?>">Editar</a><li>
+                                    </ul>
+                                </ul>  
+                                <?php
+                            break;
+                        }
+                    ?>
+                    <!-- boton pdf -->
+                    <a href="<?= $this->url($tipoTransaccion.'/pdf', ['id' => (int)$transaccion->getId()]) ?>"
+                        type="button" class="btn btn-default btn-sm" target="blank">
+                            <span class="glyphicon glyphicon-file"></span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+
+        <?php foreach ($eventos as $evento) : ?>
+        <tr id="<?= $evento->getId() ?>" onclick="seleccionarFila(event)" class="vpEvento">
+            <td id="<?= $evento->getId() ?>" class="">
+            <?php
+                if (!is_null($evento->getFecha())) {
+                    echo ($evento->getFecha()->format('Y/m/d'));
+                }
+            ?></td>
+            <td id="<?= $evento->getId() ?>" class="">
+                <?php echo ($evento->getUsuarioEjecutivo()); ?></td>
+            <td id="<?= $evento->getId() ?>" class="">
+            <?php
+            if (!is_null($evento->getTipo())) {
+                echo ($evento->getTipo());
+            } else {
+                echo ('No definido');
+            }
+            ?></td>
+            <td></td>
+            <td id="<?= $evento->getId() ?>" class="table-scroll-description">
+                <?php echo (nl2br($evento->getDescripcion())); ?></td>
+            <td id="<?= $evento->getId() ?>" class="">
+                <button name="<?= $evento->getId() ?>" id="<?= $evento->getId() ?>" type="button"
+                    class="btn btn-default btn-sm" data-toggle="modal"
+                    data-target="#vpEventoModal<?= $evento->getId() ?>">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </button>
+            </td>
+
+            <!-- Modal Vista Previa Evento -->
+            <div id="vpEventoModal<?= $evento->getId() ?>" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"> <?php 
+                                                    if (!is_null($evento->getFecha())) {
+                                                        echo ($evento->getFecha()->format('Y/m/d') . " - "
+                                                            . $evento->getTipo());
+                                                    } ?>
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <?php echo (nl2br($evento->getDescripcion())); ?>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

@@ -229,6 +229,16 @@ class ProveedorController extends HuellaController
         ]);
     }
 
+    public function mostrarTodoAction(){
+        $this->layout()->setTemplate('layout/nulo');
+        $id_persona = $this->params()->fromRoute('id');
+        $persona = $this->personaManager->getPersona($id_persona);
+        $transacciones = $persona->getTransacciones();
+        $eventos = $persona->getEventos();
+        $view = new ViewModel(['transacciones' => $transacciones, 'eventos' => $eventos, 'id_persona'=>$id_persona]);
+        return $view;
+    }
+
     public function mostrarTransaccionesAction(){
         $this->layout()->setTemplate('layout/nulo');
         $id_persona = $this->params()->fromRoute('id');
