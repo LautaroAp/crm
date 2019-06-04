@@ -358,10 +358,16 @@ $tipo_persona = strtolower($persona->getTipo());
             <div class="panel-body">
                 <div class="collapse in" id="collapseActividades">
                     <div class="row padding-bot-md">
-                        <!-- Transacciones -->
+                        <!-- Todos -->
                         <div class="btn-group padding-md">
                             <button type="button" class="btn btn-default" style="font-weight: bold;"
-                                onclick="mostrarTransacciones(<?= $id_persona ?>)">Transacciones</button>
+                                onclick="mostrarTodo(<?= $id_persona ?>)">Todos</button>
+                        </div>
+                        <!-- Transacción -->
+                        <div class="btn-group padding-md">
+                            <button type="button" class="btn btn-default" style="font-weight: bold;"
+                                onclick="mostrarTransacciones(<?= $id_persona ?>)">Transacciones
+                            </button>
                             <a role="button" class="btn btn-default" data-toggle="collapse" data-parent="#accordion"
                                 href="#drop" aria-expanded="true" aria-controls="drop">
                                 <span class="glyphicon glyphicon-plus"></span>
@@ -370,7 +376,7 @@ $tipo_persona = strtolower($persona->getTipo());
                         <!-- Acción Comercial -->
                         <div class="btn-group padding-md">
                             <button role="button" class="btn btn-default" style="font-weight: bold;"
-                                onclick="mostrarAccionesComerciales(<?= $id_persona ?>)">Acción Comercial</button>
+                                onclick="mostrarAccionesComerciales(<?= $id_persona ?>)">Acciones Comerciales</button>
                             <a href="<?= $this->url('evento', ['action' => 'add', 'tipo' => 'cliente', 'id' => $persona->getId()]) ?>"
                                 class="btn btn-default">
                                 <span class="glyphicon glyphicon-plus"></span>

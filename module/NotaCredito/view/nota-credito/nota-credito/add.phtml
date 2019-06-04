@@ -145,35 +145,22 @@ var tipoPersona = "<?= $tipoPersona ?>";
                     <!-- Datos de Transaccion -->
                     <div class="row form-row">
                         <div class="form-group col-md-2">
-                            <label>Número de Transacción</label>
+                            <label>Nro. de Transacción</label>
                             <input type="text" class="form-control" name="numero_transaccion" id="numero_transaccion"
-                                value="<?= $numTransacciones ?>" style="max-width: 250px;" readonly>
+                                value="<?= str_pad($numTransacciones, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Número de Nota Credito</label>
+                            <label>Nro. Nota de Crédito</label>
                             <input type="text" class="form-control" name="numero_notaCredito" id="numero_notaCredito"
-                                value="<?= $numNotaCredito ?>" style="max-width: 250px;" readonly>
+                                value="<?= str_pad($numNotaCredito, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
-                        <div class="form-group col-md-2" id="tipos_notaCredito" hidden="true">
-                            <label>Tipo de Nota de Crédito</label>
-                            <script>
-
-                            </script>        
+                        <div class="form-group col-md-2" id="tipos_notaCredito">
+                            <label>Tipo Nota de Crédito</label>
+                            <select class="form-control" name="oficial" id="oficial" require>
+                                <option value="1" selected>No Oficial</option>
+                                <option value="2">Oficial</option>
+                            </select>
                         </div>
-                        <!-- <div class="form-group col-md-3">
-                            <label>Buscar Transacción</label>
-                            <div class="autocomplete input-group">
-                                <select class="form-control" id="tipoTransaccion" name="tipoTransaccion">
-                                    <option value="Factura">Factura</option>
-                                    <option value="Remito">Remito Conformado</option>
-                                </select>
-                                <span class="input-group-btn">
-                                    <button type="button" id="btn-modal" class="btn btn-default" data-toggle="modal" 
-                                        data-target="#modalTransacciones"><i class="glyphicon glyphicon-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </div> -->
                         <input type="hidden" id="responsable" name="responsable" value="<?= $responsable ?>">
                         <input type="hidden" id="url" name="url" value="<?= $url3 ?>">
                         <input type="hidden" id="id_transaccion_previa" name="id_transaccion_previa">
