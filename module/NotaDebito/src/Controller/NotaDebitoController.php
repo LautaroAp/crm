@@ -37,7 +37,7 @@ class NotaDebitoController extends TransaccionController
 
     private function getTipo()
     {
-        return "Nota de Debito";
+        return "nota de debito";
     }
 
     public function addAction()

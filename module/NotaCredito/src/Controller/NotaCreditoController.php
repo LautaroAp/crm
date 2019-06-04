@@ -37,7 +37,7 @@ class NotaCreditoController extends TransaccionController
 
     private function getTipo()
     {
-        return "Nota de Credito";
+        return "nota de credito";
     }
 
     public function addAction()

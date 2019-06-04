@@ -377,7 +377,7 @@ function formatPercent(number) {
 }
 
 function calcularSubcampos() {
-    if (tipoTransaccion!="Nota de Credito"){
+    if (tipoTransaccion!="nota de credito"){
         var table = document.getElementById("table_bienes");
         var sumBonificacion = 0;
         var sumSubtotal = 0;

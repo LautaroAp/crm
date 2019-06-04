@@ -123,7 +123,7 @@ function addDetalleToTable() {
         "Transaccion Previa": {
             "Id":"",
             "Numero Tipo Transaccion": "-",
-            "Subtotal": formatMoney((parseFloat(monto)).toFixed(2)),
+            "Subtotal": monto,
             "Tipo": "indefinido",
             "Index" : "-1"
         },

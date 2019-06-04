@@ -139,7 +139,7 @@ function selectTransaccion(id){
         }
         //Guardo id de la fila seleccionada
         transaccion = id;
-        if (tipoTransaccion!="Nota de Credito"){
+        if (tipoTransaccion!="nota de credito"){
             completeItems(indexTransaccion);
         }
         else{

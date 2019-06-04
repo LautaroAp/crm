@@ -167,6 +167,11 @@ class TransaccionManager {
             $formaEnvio = $this->formaEnvioManager->getFormaEnvioId($data['forma_envio']);
             $transaccion->setFormaEnvio($formaEnvio);
         }
+        if (isset($data['oficial'])){
+            $transaccion->setOficial($data['oficial']);
+        }else{
+            $transaccion->setOficial(false);
+        }
         $transaccionPrevia = null;
         if(isset($data['id_transaccion_previa'])){           
             $transaccionPrevia = $this->getTransaccionId($data['id_transaccion_previa']);

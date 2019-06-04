@@ -604,6 +604,7 @@ class Transaccion {
         }
         $output .= '"Estado": "' . $this->getEstado() .'", ';
         $output .= '"Monto": "' . $this->getMonto() .'", ';
+        $output .= '"Oficial": "' . $this->getOficial() .'", ';
         if (!(is_null($this->transaccionPrevia))){
             $output .= '"Transaccion Previa": ' . $this->getTransaccionPrevia()->getId() .', ';
         }
