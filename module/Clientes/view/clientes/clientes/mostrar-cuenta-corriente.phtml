@@ -65,6 +65,7 @@
 
 $(document).ready(function() {
     var table1 = $('#tabla_ventas').DataTable({
+        lengthMenu: [[5,10,25,50,-1],[5,10,25,50,"Todos"]],
         "order": [0, 'desc'],
         "language": {
             "url": "/json/spanish.json"
@@ -80,6 +81,7 @@ $(document).ready(function() {
     } );
 
     var table2 = $('#tabla_cobros').DataTable({
+        lengthMenu: [[5,10,25,50,-1],[5,10,25,50,"Todos"]],
         "order": [0, 'desc'],
         "language": {
             "url": "/json/spanish.json"

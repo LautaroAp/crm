@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Description of Cobro
  *
- * This class represents a registered cobro.
+ * This class represents a registered notaCredito.
  * @ORM\Entity()
  * @ORM\Table(name="COBRO")
  */
@@ -16,7 +16,7 @@ class Cobro {
      * @ORM\Column(name="ID_COBRO", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id_cobro;
+    protected $id;
     
     /**
      * @ORM\Column(name="NUMERO", nullable=true, type="integer", length=255)
@@ -30,6 +30,12 @@ class Cobro {
      */
     private $transaccion;
 
+
+    /**
+     * @ORM\Column(name="CONCEPTO", nullable=true, type="string")
+     */
+    protected $concepto;
+
     /**
      * Many Services have One Transaccion.
      * @ORM\ManyToOne(targetEntity="Transaccion")
@@ -37,24 +43,22 @@ class Cobro {
      */
     private $transaccion_cobro;
 
-   
-
     /**
      * Get the value of id_cobro
      */ 
-    public function getId_cobro()
+    public function getId()
     {
-        return $this->id_cobro;
+        return $this->id;
     }
 
     /**
-     * Set the value of id_cobro
+     * Set the value of id
      *
      * @return  self
      */ 
-    public function setId_cobro($id_cobro)
+    public function setId($id)
     {
-        $this->id_cobro = $id_cobro;
+        $this->id = $id;
 
         return $this;
     }
@@ -95,6 +99,47 @@ class Cobro {
     public function setTransaccion($transaccion)
     {
         $this->transaccion = $transaccion;
+
+        return $this;
+    }
+
+
+    /**
+     * Get many Services have One Transaccion.
+     */ 
+    public function getTipo_factura()
+    {
+        return $this->tipo_factura;
+    }
+
+    /**
+     * Set many Services have One Transaccion.
+     *
+     * @return  self
+     */ 
+    public function setTipo_factura($tipo_factura)
+    {
+        $this->tipo_factura = $tipo_factura;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of concepto
+     */ 
+    public function getConcepto()
+    {
+        return $this->concepto;
+    }
+
+    /**
+     * Set the value of concepto
+     *
+     * @return  self
+     */ 
+    public function setConcepto($concepto)
+    {
+        $this->concepto = $concepto;
 
         return $this;
     }

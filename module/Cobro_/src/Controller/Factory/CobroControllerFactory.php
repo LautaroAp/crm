@@ -15,7 +15,6 @@ use FormaPago\Service\FormaPagoManager;
 use FormaEnvio\Service\FormaEnvioManager;
 use Iva\Service\IvaManager;
 use Empresa\Service\EmpresaManager;
-use TipoFactura\Service\TipoFacturaManager;
 
 // use Transaccion\Service\TransaccionManager;
 
@@ -41,13 +40,13 @@ class CobroControllerFactory implements FactoryInterface {
         $formaEnvioManager = $container->get(FormaEnvioManager::class);
         $ivaManager = $container->get(IvaManager::class);
         $empresaManager= $container->get(EmpresaManager::class);
-        $tipoFacturaManager = $container->get(TipoFacturaManager::class);
+
 
         // $transaccionManager = $container->get(TransaccionManager::class);            
 
 
         // Instantiate the service and inject dependencies
         return new CobroController($cobroManager, $monedaManager, $personaManager, $clientesManager, 
-        $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager, $empresaManager, $tipoFacturaManager);
+        $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager, $empresaManager);
     }    
 }

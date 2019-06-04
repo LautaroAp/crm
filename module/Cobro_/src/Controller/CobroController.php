@@ -20,14 +20,13 @@ class CobroController extends TransaccionController
     private $bienesTransaccionesManager;
     private $bienesManager;
     
-    public function __construct($cobroManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager, $tipoFacturaManager) {
+    public function __construct($cobroManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager) {
         parent::__construct($cobroManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager, $empresaManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
         $this->cobroManager = $cobroManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->bienesManager = $bienesManager;
-        $this->tipoFacturaManager = $tipoFacturaManager;
     }
 
     public function indexAction()
@@ -40,13 +39,27 @@ class CobroController extends TransaccionController
         return "cobro";
     }
 
+    // // // // // // // // // // ADD ACTION // // // // // // // // // // 
     public function addAction()
     {
         $json="[]";
         if (isset($_SESSION['TRANSACCIONES']['COBRO'])) {
             $json = $_SESSION['TRANSACCIONES']['COBRO'];
         }
-     
+        // Obtengo todos los Bienes
+        $bienes = $this->bienesManager->getBienes();
+
+        // Creo JSON con Nombres de todos los Productos y Servicios
+        $json_bienes = "";
+
+        // $response[] = array("value"=>"1","label"=>"Soporte");
+        foreach ($bienes as $bien) {
+            $json_bienes .= $bien->getJsonBien() . ',';
+        }
+
+        $json_bienes = substr($json_bienes, 0, -1);
+        $json_bienes = '[' . $json_bienes . ']';
+
         $id_persona = $this->params()->fromRoute('id');
         $persona = $this->personaManager->getPersona($id_persona);
         $tipoPersona = null;
@@ -62,6 +75,7 @@ class CobroController extends TransaccionController
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
             $data['tipo_persona'] = $tipoPersona;
+            
             $this->cobroManager->add($data);
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
@@ -76,45 +90,41 @@ class CobroController extends TransaccionController
         $formasPagoJson = $this->getJsonFormasPago();
         $formasEnvioJson = $this->getJsonFormasEnvio();
         $ivasJson = $this->getJsonIvas();
-        ////////////////////////////FACTURAS PREVIAS///////////////////////////
-        $facturas = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"Factura");
-        $facturasJson = $this->getJsonFromObjectList($facturas);
-        ////////////////////////////REMITOS CONFORMADOS PREVIOS/////////////////////////////
-        $remitosConformados = $this->getRemitosConformados($persona);
-        $remitosConformadosJson = $this->getJsonFromObjectList($remitosConformados);
-
+        ////////////////////////////PRESUPUESTOS PREVIOS///////////////////////////
+        $presupuestos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+        $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
+        ////////////////////////////PEDIDOS PREVIOS///////////////////////////
+        $pedidos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
+        $jsonPedidos = $this->getJsonFromObjectList($pedidos);
+        ////////////////////////////REMITOS PREVIOS///////////////////////////
+        $remitos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"REMITO");
+        $jsonRemitos = $this->getJsonFromObjectList($remitos);
+        $transacciones = $this->cobroManager->getTransacciones();
+        $jsonTransacciones = $this->getJsonFromObjectList($transacciones);
         $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
-        // var_dump(json_decode($tiposFacturaJson), true); die();
-
         $this->reiniciarParams();
+
         return new ViewModel([
             'persona' => $persona,
             'tipoPersona' => $tipoPersona,
             'numTransacciones' => $numTransacciones,
             'numCobro' => $numCobro,
             'json' => $json,
+            'json_bienes' => $json_bienes,
             'formasPagoJson' => $formasPagoJson,
             'formasEnvioJson' => $formasEnvioJson,
             'monedasJson' => $monedasJson,
             'ivasJson' => $ivasJson,
             'transaccionJson'=>"[]",
-            'facturasJson' => $facturasJson,
-            'remitosConformadosJson'=>$remitosConformadosJson,
+            'presupuestosJson' => $jsonPrespuestos,
+            'pedidosJson' => $jsonPedidos,
+            'remitosJson' => $jsonRemitos,
+            'transaccionesJson' => $jsonTransacciones,
             'empresaJson' => $empresaJson,
             'itemsTransaccionJson' =>"[]",
         ]);
     }
 
-    private function getRemitosConformados($persona){
-        $salida = [];
-        $remitos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"Remito");
-        foreach ($remitos as $remito){
-            if (strtoupper($remito->getEstado())=="CONFORMADO"){
-                array_push($salida, $remito);
-            }
-        }
-        return $salida;
-    }
     public function addItemAction()
    {
        if ($this->getRequest()->isPost()) {
@@ -126,13 +136,121 @@ class CobroController extends TransaccionController
        return new ViewModel([]);
    }
 
-     public function editAction() {
-        // Similar a Remito
+   // // // // // // // // // // EDIT ACTION // // // // // // // // // //
+    public function editAction() {
+        $id_transaccion = $this->params()->fromRoute('id');
+        $cobro = $this->cobroManager->getCobroFromTransaccionId($id_transaccion);
+        $items = array();
+
+        if (!is_null($cobro)) {
+            $items = $cobro->getTransaccion()->getBienesTransacciones();
+        }
+       
+        $json = "";
+        //SI HAY ITEMS CARGADOS EN LA SESION LOS TOMO DE AHI 
+        if ((isset($_SESSION['TRANSACCIONES']['COBRO']))){
+            $json = $_SESSION['TRANSACCIONES']['COBRO'];
+        }
+        //SINO LOS TOMO DEL COBRO Y GUARDO ESO EN LA SESION PARA CONTINUAR TRABAJANDO CON LA SESION
+        else{
+            $json = $this->getJsonFromObjectList($items);
+            $_SESSION['TRANSACCIONES']['COBRO'] = $json;
+        }
+       
+        $persona = $cobro->getTransaccion()->getPersona();
+        $tipoPersona = null;
+        // Obtengo todos los Bienes
+        $bienes = $this->bienesManager->getBienes();
+
+        // Creo JSON con Nombres de todos los Productos y Servicios
+        $json_bienes = "";
+
+        // $response[] = array("value"=>"1","label"=>"Soporte");
+        foreach ($bienes as $bien) {
+            $json_bienes .= $bien->getJsonBien() . ',';
+        }
+        $json_bienes = substr($json_bienes, 0, -1);
+        $json_bienes = '[' . $json_bienes . ']';
+
+        if ($persona->getTipo() == "CLIENTE") {
+            $tipoPersona = $this->clientesManager->getClienteIdPersona($persona->getId());
+        } elseif ($persona->getTipo() == "PROVEEDOR") {
+            $tipoPersona = $this->proveedorManager->getProveedorIdPersona($persona->getId());
+        }
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $data['tipo'] = $this->getTipo();
+            $data['persona'] = $persona;
+            $data['tipo_persona'] = $tipoPersona;
+            // $data['items'] = $_SESSION['TRANSACCIONES']['COBRO'];
+            $this->cobroManager->edit($cobro, $data);
+            $url = $data['url'];
+            if ($persona->getTipo() == "CLIENTE") {
+                $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            } else {
+                $this->redirect()->toRoute('proveedores/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
+            }
+        }
+        $numTransacciones = $cobro->getTransaccion()->getNumero();
+        $numCobro = $cobro->getNumero();
+        $monedasJson = $this->getJsonMonedas();
+        $formasPagoJson = $this->getJsonFormasPago();
+        $formasEnvioJson = $this->getJsonFormasEnvio();
+        $ivasJson = $this->getJsonIvas();
+        $transaccion = $cobro->getTransaccion();
+        $transaccionJson = $cobro->getTransaccion()->getJSON();
+        ////////////////////////////PRESUPUESTOS PREVIOS///////////////////////////
+        $presupuestos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+        $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
+        ////////////////////////////PEDIDOS PREVIOS///////////////////////////
+        $pedidos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PEDIDO");
+        $jsonPedidos = $this->getJsonFromObjectList($pedidos);
+        ////////////////////////////REMITOS PREVIOS///////////////////////////
+        $remitos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"REMITO");
+        $jsonRemitos = $this->getJsonFromObjectList($remitos);
+        $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
+        $this->reiniciarParams();
+
+        return new ViewModel([
+            // 'items' => $items,
+            'persona' => $persona,
+            'tipoPersona' => $tipoPersona,
+            'numTransacciones' => $numTransacciones,
+            'numCobro' => $numCobro,
+            'json' => $json,
+            'json_bienes' => $json_bienes,
+            'formasPagoJson' => $formasPagoJson,
+            'formasEnvioJson' => $formasEnvioJson,
+            'monedasJson' => $monedasJson,
+            'cobro' => $cobro,
+            'transaccion' => $transaccion,
+            'transaccionJson' => $transaccionJson,
+            'ivasJson' => $ivasJson,
+            'presupuestosJson' => $jsonPrespuestos,
+            'pedidosJson' => $jsonPedidos,
+            'remitosJson' => $jsonRemitos,
+            'empresaJson' => $empresaJson,
+            'itemsTransaccionJson' =>"[]",
+        ]);
     }
 
     public function setItemsAction(){
         $items = $_POST['json'];
         $_SESSION['TRANSACCIONES']['COBRO'] = $items;
+    }
+
+    public function eliminarItemAction(){
+        $items = $_POST['json'];
+        $index = $_POST['index'];
+       
+        $itemsArray = json_decode($items, true);
+        $itemsArray = array_splice($itemsArray, $index, 1);
+        $json = json_encode($itemsArray);
+        
+        $view = new ViewModel(['json'=>$json]);
+        $view->setTemplate('layout/nulo');
+        $view->setTerminal(true);
+        return $view;
     }
 
     public function getJsonFormasEnvio()
@@ -184,9 +302,8 @@ class CobroController extends TransaccionController
         $ivasJson = $this->getJsonIvas();
         $transaccion = $cobro->getTransaccion();
         $transaccionJson = $cobro->getTransaccion()->getJSON();
-        $facturas = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"Factura");
-        $facturasJson = $this->getJsonFromObjectList($facturas);
-
+        $presupuestos = $this->cobroManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
+        $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
         $this->reiniciarParams();
         return new ViewModel([
             'persona' => $persona,
@@ -201,7 +318,7 @@ class CobroController extends TransaccionController
             'transaccion' => $transaccion,
             'transaccionJson' => $transaccionJson,
             'ivasJson' => $ivasJson,
-            'facturasJson' => $facturasJson,
+            'presupuestosJson' => $jsonPrespuestos,
             'itemsTransaccionJson' =>"[]",
             'empresa' => $empresa,
         ]);

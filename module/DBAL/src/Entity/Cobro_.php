@@ -3,20 +3,20 @@ namespace DBAL\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Description of NotaDebito
+ * Description of Cobro
  *
- * This class represents a registered notaDebito.
+ * This class represents a registered cobro.
  * @ORM\Entity()
- * @ORM\Table(name="NOTA_DEBITO")
+ * @ORM\Table(name="COBRO")
  */
-class NotaDebito {
+class Cobro {
 
     /**
      * @ORM\Id
-     * @ORM\Column(name="ID_NOTA_DEBITO", type="integer")
+     * @ORM\Column(name="ID_COBRO", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    protected $id_cobro;
     
     /**
      * @ORM\Column(name="NUMERO", nullable=true, type="integer", length=255)
@@ -30,23 +30,31 @@ class NotaDebito {
      */
     private $transaccion;
 
+    /**
+     * Many Services have One Transaccion.
+     * @ORM\ManyToOne(targetEntity="Transaccion")
+     * @ORM\JoinColumn(name="ID_TRANSACCION_COBRO", referencedColumnName="ID")
+     */
+    private $transaccion_cobro;
+
+   
 
     /**
      * Get the value of id_cobro
      */ 
-    public function getId()
+    public function getId_cobro()
     {
-        return $this->id;
+        return $this->id_cobro;
     }
 
     /**
-     * Set the value of id
+     * Set the value of id_cobro
      *
      * @return  self
      */ 
-    public function setId($id)
+    public function setId_cobro($id_cobro)
     {
-        $this->id = $id;
+        $this->id_cobro = $id_cobro;
 
         return $this;
     }
@@ -94,9 +102,9 @@ class NotaDebito {
     /**
      * Get many Services have One Transaccion.
      */ 
-    public function getTipo_factura()
+    public function getTransaccion_cobro()
     {
-        return $this->tipo_factura;
+        return $this->transaccion_cobro;
     }
 
     /**
@@ -104,9 +112,9 @@ class NotaDebito {
      *
      * @return  self
      */ 
-    public function setTipo_factura($tipo_factura)
+    public function setTransaccion_cobro($transaccion_cobro)
     {
-        $this->tipo_factura = $tipo_factura;
+        $this->transaccion_cobro = $transaccion_cobro;
 
         return $this;
     }

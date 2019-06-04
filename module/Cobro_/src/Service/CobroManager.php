@@ -86,9 +86,6 @@ class CobroManager extends TransaccionManager
             $cobro->setNumero($data['numero_cobro']);
             $transaccion->setNumeroTransaccionTipo($data['numero_cobro']);
         }
-        if (isset($data['concepto'])) {
-            $cobro->setConcepto($data['concepto']);
-        }
         return $cobro;
     }
 
@@ -99,6 +96,8 @@ class CobroManager extends TransaccionManager
     {
         $transaccion = parent::edit($cobro->getTransaccion(), $data);
         $cobro = $this->setData($cobro, $data, $transaccion);
+        $this->actualizaFechas($data);
+
         // Apply changes to database.
         $this->entityManager->flush();
         $this->cuentaCorrienteManager->edit($transaccion);
@@ -113,6 +112,7 @@ class CobroManager extends TransaccionManager
         $cobro = $this->setData($cobro, $data, $transaccion);
         $this->actualizaFechas($data);
         $this->cuentaCorrienteManager->add($transaccion);
+
         // Apply changes to database.
         $this->entityManager->persist($cobro);
         $this->entityManager->flush();
@@ -145,7 +145,6 @@ class CobroManager extends TransaccionManager
         }
         $this->entityManager->flush();
     }
-
 
     public function actualizaFechas($data) {
         $tipo_persona = $data['tipo_persona'];
