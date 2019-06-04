@@ -128,7 +128,6 @@ function selectTransaccion(id){
         $('#' + id).removeClass('glyphicon-unchecked');
         $('#' + id).addClass('glyphicon-check');
         // console.log("cheked");
-        console.log("transaccion ant era "+ transaccion_ant);
 
         var indexTransaccion = getTransaccion(id);
         transaccion_ant = transaccion;

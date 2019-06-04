@@ -146,6 +146,12 @@ class Transaccion {
     */
     protected $facturado;
 
+
+      /**
+     * @ORM\Column(name="OFICIAL", nullable=true, type="boolean")
+    */
+    protected $oficial;
+
     /**
      * Get the value of id
      */ 
@@ -714,4 +720,24 @@ class Transaccion {
         return $descripcion;
     }
  
+
+    /**
+     * Get the value of oficial
+     */ 
+    public function getOficial()
+    {
+        return $this->oficial;
+    }
+
+    /**
+     * Set the value of oficial
+     *
+     * @return  self
+     */ 
+    public function setOficial($oficial)
+    {
+        $this->oficial = $oficial;
+
+        return $this;
+    }
 }

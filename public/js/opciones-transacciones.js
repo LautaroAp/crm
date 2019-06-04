@@ -45,9 +45,6 @@ function completarMonedas(monedas, transaccion=null){
         else{
             option.value = empresa["Moneda"]["Id"];
             option.text = empresa["Moneda"]["Nombre"];
-            if(tipoTransaccion == "factura"){
-                option.setAttribute("disabled", true);
-            }
         }
         option.setAttribute("hidden","");
         selectList.appendChild(option);
