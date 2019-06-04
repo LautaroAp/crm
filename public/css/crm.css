@@ -159,6 +159,10 @@ option{
     width: 50% !important;
 }
 
+.concepto-width{
+    width: 70% !important;
+}
+
 .col-btn-width{
     min-width: 60px !important;
 }
@@ -266,8 +270,10 @@ table.dataTable tr.item-seleccion > .sorting_1 {
 }
 
 .margin-padding-xs {
-    margin: 1px !important;
-    padding: 1px !important;
+    margin-left: 1px !important;
+    margin-right: 1px !important;
+    padding-left: 1px !important;
+    padding-right: 1px !important;
 }
 
 .licencia-sm{

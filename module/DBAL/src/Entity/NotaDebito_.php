@@ -32,12 +32,6 @@ class NotaDebito {
 
 
     /**
-     * @ORM\Column(name="CONCEPTO", nullable=true, type="string")
-     */
-    protected $concepto;
-
-
-    /**
      * Get the value of id_cobro
      */ 
     public function getId()
@@ -97,7 +91,6 @@ class NotaDebito {
         return $this;
     }
 
-
     /**
      * Get many Services have One Transaccion.
      */ 
@@ -114,26 +107,6 @@ class NotaDebito {
     public function setTipo_factura($tipo_factura)
     {
         $this->tipo_factura = $tipo_factura;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of concepto
-     */ 
-    public function getConcepto()
-    {
-        return $this->concepto;
-    }
-
-    /**
-     * Set the value of concepto
-     *
-     * @return  self
-     */ 
-    public function setConcepto($concepto)
-    {
-        $this->concepto = $concepto;
 
         return $this;
     }

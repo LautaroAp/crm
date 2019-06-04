@@ -86,6 +86,9 @@ class NotaDebitoManager extends TransaccionManager
             $notaDebito->setNumero($data['numero_notaDebito']);
             $transaccion->setNumeroTransaccionTipo($data['numero_notaDebito']);
         }
+        if (isset($data['concepto'])) {
+            $notaDebito->setConcepto($data['concepto']);
+        }
         return $notaDebito;
     }
 
@@ -96,8 +99,6 @@ class NotaDebitoManager extends TransaccionManager
     {
         $transaccion = parent::edit($notaDebito->getTransaccion(), $data);
         $notaDebito = $this->setData($notaDebito, $data, $transaccion);
-        $this->actualizaFechas($data);
-
         // Apply changes to database.
         $this->entityManager->flush();
         $this->cuentaCorrienteManager->edit($transaccion);
@@ -110,10 +111,7 @@ class NotaDebitoManager extends TransaccionManager
         $transaccion = parent::add($data);
         $notaDebito = new NotaDebito();
         $notaDebito = $this->setData($notaDebito, $data, $transaccion);
-        $this->actualizaFechas($data);
         $this->cuentaCorrienteManager->add($transaccion);
-        $transaccionPrevia = $transaccion->getTransaccionPrevia();
-        $this->cuentaCorrienteManager->setNotaDebitodo($transaccionPrevia);
         // Apply changes to database.
         $this->entityManager->persist($notaDebito);
         $this->entityManager->flush();
@@ -145,5 +143,4 @@ class NotaDebitoManager extends TransaccionManager
         }
         $this->entityManager->flush();
     }
-
 }
