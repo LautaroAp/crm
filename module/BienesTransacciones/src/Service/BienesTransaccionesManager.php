@@ -206,6 +206,14 @@ class BienesTransaccionesManager {
             $subtotal = $array['Totales'];
             $bienTransaccion->setSubtotal($subtotal);
         }
+        if (isset($array['Transaccion Previa'])){
+            $subtotal = $array['Transaccion Previa']['Subtotal'];
+            $bienTransaccion->setSubtotal($subtotal);
+        }
+        if (isset($array['Detalle'])){
+            $detalle = $array['Detalle'];
+            $bienTransaccion->setDetalle($detalle);
+        }
         return $bienTransaccion;
     }
 

@@ -203,7 +203,7 @@ for ($i=1; $i <= 1; $i++) {
     $count = 0;
     foreach($data as $item){
         $subtotal = $subtotal + $item->Totales;
-        $imp_dto = $item->Bien->Precio * ($item->Dto/100);
+        // $imp_dto = $item->Bien->Precio * ($item->Dto/100);
         $html .= '
                 <tr nobr="true">
                     <td align="center" width="30%">' . "" . '</td>

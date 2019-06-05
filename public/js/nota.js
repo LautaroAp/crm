@@ -32,12 +32,37 @@ function addDetallesNota(items, tipo, id){
     table.setAttribute("id", "table_bienes");
     table.setAttribute("class", "display");
     var thead = document.createElement("thead");
+    var col = ["Nombre", "Descripcion", "Cantidad", "Precio", "Dto", "ImpDto", "IVA", "ImpIVA", "Totales", ""];
 
-    var col = ["Transaccion", "Detalle", "Monto", "Eliminar"];
+    // var col = ["Transaccion", "Detalle", "Monto", "Eliminar"];
     var tr = thead.insertRow(-1);
     for (var i = 0; i < col.length; i++) {
         var th = document.createElement("th");
-        th.innerHTML = col[i]; 
+        switch (col[i]) {
+            case 'Nombre':
+                th.innerHTML = "Código"; 
+                break;
+            case 'Descripcion':
+                th.innerHTML = "Producto/Servicio"; 
+                break;
+            case 'Cantidad':
+                th.innerHTML = "Cant."; 
+            break;
+            case 'Dto':
+                th.innerHTML = "Dto (%)";
+                break;
+            case 'ImpDto':
+                th.innerHTML = "Dto ($)";
+                break;
+            case 'IVA':
+                th.innerHTML = "IVA (%)"; 
+                break;
+            case 'ImpIVA':
+                th.innerHTML = "IVA ($)";
+                break;
+            default:
+                th.innerHTML = col[i];
+          }
         tr.appendChild(th);
     }
     thead.appendChild(tr);
@@ -46,7 +71,7 @@ function addDetallesNota(items, tipo, id){
     tbody.setAttribute("role", "button");
     var value = null;
     for (var i = 0; i < items.length; i++) {
-        var detalle = items[i];
+        var item = items[i];
         tr = tbody.insertRow(-1);
         // tr.onclick= selectdetalle(detalle["id"]);
         tr.setAttribute("id", i);
@@ -56,22 +81,59 @@ function addDetallesNota(items, tipo, id){
             var tabCell = tr.insertCell(-1);
             tabCell.setAttribute("id", i + "_" + col[j]);
             tabCell.setAttribute("class", "click");
+            var dto, cantidad, dtoPeso, precioDto, iva, precio;
+            precio = item["Subtotal"];
+            dto = item["Dto"];
+            cantidad = item["Cantidad"];
+            dtoPeso = (precio * dto / 100) * cantidad;
+            precioDto = (cantidad * precio) - dtoPeso;  
+            iva = item["IVA"];
             //////////////////////////////////////////////////////////////////////////////////
             switch (col[j]) {
-                case 'Transaccion':
-                    value = detalle["Transaccion Previa"]["Numero Tipo Transaccion"];
+                case 'Nombre':
+                    value = item["Codigo"];
                     break;
-                case 'Detalle':
-                    value = detalle[col[j]];
+                case 'Descripcion':
+                    value = item["Detalle"];
+                    break;
+                case 'Cantidad':
+                    value =item["Cantidad"];
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
-                case 'Monto':
-                    value = detalle["Transaccion Previa"]["Subtotal"];
-                    value = formatMoney((parseFloat(value)).toFixed(2)),
+                case 'Dto':
+                    value =item["Dto"];
+                    value = formatPercent((parseFloat(value)).toFixed(2));
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
+                case 'ImpDto':
+                    value =item["ImpDto"];
+                    value = formatMoney((parseFloat(dtoPeso)).toFixed(2));
+                    break;
+                case 'IVA':
+                    value = item["IVA"];
+                    if (!value){value=0;}
+                    value = formatPercent((parseFloat(value)).toFixed(2));
+                    tabCell.setAttribute("ondblclick", "makeEditable(event)");
+                    break;
+                case 'ImpIVA':
+                    value =(precioDto * (iva / 100));
+                    if (!value){ value=0};
+                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    break;
+                case 'Precio':
+                    value = precio;
+                    if(!value){value = 0;}
+                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    break;
+                case 'Totales':
+                    if (!iva){iva = 0;}
+                    var subtotal = precioDto + precioDto * iva / 100;
+                    value = subtotal;
+                    if (!value){value=0;}
+                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    break
                 default:
-                    value = " ";
+                    value = item[col[j]];
             }
             tabCell.innerHTML = value;
         }
@@ -118,15 +180,36 @@ function removerDetalle(id) {
 
 function addDetalleToTable() {
     var detalle = $("#nota_detalle").val();
+    if (detalle==""){
+        alert("Debe completar el detalle ");
+        return;
+    }
     var monto = $("#nota_monto").val();
+    if (monto==""){
+        alert("Ingrese un monto");
+        return;
+    }
+    var cantidad= $("#cantidad").val();
+    if (cantidad==""){cantidad=1;}
+    var indexiva = $("#nota_iva").val();
+    var dto = $("#nota_dto").val();
+    if(dto==""){dto=0;}
+    if(dto==""){dto=0;}
+    // var impDto= monto*cantidad - (monto*cantidad)*dto/100;
+    //PASARLE IVAS
+    // var iva = ivas[indexiva]["Valor"];
+    // var impIva, impDto= 0;
+
     output = {
-        "Transaccion Previa": {
-            "Id":"",
-            "Numero Tipo Transaccion": "-",
-            "Subtotal": monto,
-            "Tipo": "indefinido",
-            "Index" : "-1"
-        },
+        "Id":"",
+        "Codigo":"-",
+        "Cantidad":cantidad,
+        "Numero Tipo Transaccion": "-",
+        "Subtotal": monto,
+        "Tipo": "indefinido",
+        "Index" : "-1",
+        "Dto": dto,
+        "IVA": 0,
         "Detalle": detalle
     }
     items.push(output);
@@ -145,20 +228,34 @@ function completeDetalles(id){
             var transaccion_selected = jsonFacturas[id];
             mensaje = "Anula Factura "+ transaccion_selected["Numero Tipo Transaccion"];
             output = {
-                "Transaccion Previa":transaccion_selected,
-                "Detalle": mensaje,
+                "Id":"",
+                "Codigo":"-",
+                "Cantidad":1,
+                "Numero Tipo Transaccion": "-",
+                "Subtotal": transaccion_selected["Importe Total"],
                 "Tipo":"factura",
-                "Index": id
+                "Index": id,
+                "Dto": transaccion_selected["Bonificacion general"],
+                "IVA": 0,
+                "Detalle": mensaje,
+                "Transaccion Previa":transaccion_selected
             }
            
         }else{
             var transaccion_selected = jsonRemitos[id];
             mensaje = "Anula Remito "+ transaccion_selected["Numero Tipo Transaccion"];
             output = {
-                "Transaccion Previa":transaccion_selected,
+                "Id":"",
+                "Codigo":"-",
+                "Cantidad":1,
+                "Numero Tipo Transaccion": "-",
+                "Subtotal":  transaccion_selected["Importe Total"],
+                "Tipo":"remito",
+                "Index": id,
+                "Dto": transaccion_selected["Bonificacion general"],
+                "IVA": 0,
                 "Detalle": mensaje,
-                "Tipo": "remito",
-                "Index": id
+                "Transaccion Previa":transaccion_selected
             }
         }
     }
@@ -173,18 +270,18 @@ function completeDetalles(id){
 function borrarCampos(){
     $("#nota_detalle").val("");
     $("#nota_monto").val("");
+    $("#nota_dto").val("");
+    $("#cantidad").val("");
 }
 
 function calcularTotal(){
-    var table = document.getElementById("table_bienes");
     var sumTotal = 0;
     for (var i = 0; i < items.length; i++) {
-        subtotal = items[i]["Transaccion Previa"]["Subtotal"];
-        subtotal = getNumberValue(subtotal);
+        subtotal = items[i]["Subtotal"];
         sumTotal = sumTotal + parseFloat(subtotal);
     }
     $("#total_general").val(formatMoney((parseFloat(sumTotal)).toFixed(2)));
-    $("#total_letras").val(intToChar(sumTotal));
+    // $("#total_letras").val(intToChar(sumTotal));
 
 }
 

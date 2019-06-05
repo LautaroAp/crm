@@ -31,6 +31,8 @@ class NotaDebitoManager extends TransaccionManager
     protected $personaManager;
     protected $bienesTransaccionManager;
     protected $ivaManager;
+    private $tipoFacturaManager;
+
     private $tipo;
     /**
      * Constructs the service.
@@ -44,10 +46,13 @@ class NotaDebitoManager extends TransaccionManager
         $formaPagoManager,
         $formaEnvioManager, 
         $bienesManager,
-        $cuentaCorrienteManager
+        $cuentaCorrienteManager,
+        $tipoFacturaManager
+
     ) {
         parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager);
         $this->entityManager = $entityManager;
+        $this->tipoFacturaManager = $tipoFacturaManager;
         $this->tipo = "NOTA DE DEBITO";
     }
 
@@ -88,6 +93,16 @@ class NotaDebitoManager extends TransaccionManager
         }
         if (isset($data['concepto'])) {
             $notaDebito->setConcepto($data['concepto']);
+        }
+        if (isset($data['total_letras'])) {
+            $notaDebito->setImporte_letras($data['total_letras']);
+        }
+        if (isset($data['tipo_factura'])){
+            if ($data['tipo']!=-1){
+                $idTipo = $data['tipo_factura'];
+                $tipo = $this->tipoFacturaManager->getTipoFactura($idTipo);
+                $notaDebito->setTipo($tipo);
+            }
         }
         return $notaDebito;
     }

@@ -83,6 +83,10 @@ class NotaCreditoController extends TransaccionController
         $remitosConformados = $this->getRemitosConformados($persona);
         $remitosConformadosJson = $this->getJsonFromObjectList($remitosConformados);
 
+        $tiposFactura= $this->tipoFacturaManager->getTipoFacturas();
+        $tiposFacturaJson =$this->getJsonFromObjectList($tiposFactura);
+        $tipoFacturaPersona = $persona->getTipo_factura();
+        $tipoFacturaPersonaJson ="";
         $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
         // var_dump(json_decode($tiposFacturaJson), true); die();
 
@@ -101,6 +105,8 @@ class NotaCreditoController extends TransaccionController
             'facturasJson' => $facturasJson,
             'remitosConformadosJson'=>$remitosConformadosJson,
             'empresaJson' => $empresaJson,
+            'tiposFacturaJson'=>$tiposFacturaJson,
+            'tipoFacturaPersonaJson' => $tipoFacturaPersonaJson,
             'itemsTransaccionJson' =>"[]",
         ]);
     }
@@ -168,6 +174,7 @@ class NotaCreditoController extends TransaccionController
             $items = $notaCredito->getTransaccion()->getBienesTransacciones();
         }
        
+        
         $json = "";
         $json = $this->getJsonFromObjectList($items);
        

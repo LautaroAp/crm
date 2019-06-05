@@ -173,6 +173,13 @@ var tipoPersona = "<?= $tipoPersona ?>";
                                 completarTiposFactura(tiposFactura, tipoFacturaPersona);
                             </script>        
                         </div>
+                        <div class="form-group col-md-2" id="tipos_notaCredito">
+                            <label>Validez del documento</label>
+                            <select class="form-control" name="oficial" id="oficial" require>
+                                <option value="0" selected>No Oficial</option>
+                                <option value="1">Oficial</option>
+                            </select>
+                        </div>
                         <div class="form-group col-md-3">
                             <label>Buscar Transacción</label>
                             <div class="autocomplete input-group">

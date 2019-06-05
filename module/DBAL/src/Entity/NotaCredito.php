@@ -36,6 +36,21 @@ class NotaCredito {
      */
     protected $concepto;
 
+    
+    /**
+     * @ORM\Column(name="IMPORTE_LETRAS", nullable=true, type="string")
+     */
+    protected $importe_letras;
+
+        /**
+     * Many Services have One Transaccion.
+     * @ORM\ManyToOne(targetEntity="TipoFactura")
+     * @ORM\JoinColumn(name="ID_TIPO_NOTA_CREDITO", referencedColumnName="ID")
+     */
+    private $tipo;
+   
+
+
 
     /**
      * Get the value of id_cobro
@@ -134,6 +149,46 @@ class NotaCredito {
     public function setConcepto($concepto)
     {
         $this->concepto = $concepto;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_letras
+     */ 
+    public function getImporte_letras()
+    {
+        return $this->importe_letras;
+    }
+
+    /**
+     * Set the value of importe_letras
+     *
+     * @return  self
+     */ 
+    public function setImporte_letras($importe_letras)
+    {
+        $this->importe_letras = $importe_letras;
+
+        return $this;
+    }
+
+    /**
+     * Get many Services have One Transaccion.
+     */ 
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set many Services have One Transaccion.
+     *
+     * @return  self
+     */ 
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
 
         return $this;
     }

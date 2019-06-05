@@ -268,6 +268,9 @@ class BienesTransacciones {
         if (!is_null($this->getEstadoFactura())){
             $output .= '"Estado Factura": "' . $this->getEstadoFactura() .'", ';
         }
+        if (!is_null($this->detalle)){
+            $output .= '"Detalle": "' . $this->getDetalle() .'", ';
+        }
         $output .= '"Totales": "' . $this->getSubtotal() .'" ';
         
         return  '{'.$output.'}' ;
@@ -290,7 +293,7 @@ class BienesTransacciones {
         if(!is_null($this->transaccionPrevia)){
             $salida['Transaccion Previa'] = $this->transaccionPrevia->getId();
         }
-        if(!is_null($this->descripcion)){
+        if(!is_null($this->detalle)){
             $salida['Detalle']= $this->detalle;
         }
         $salida['Bien'] = $this->bien->getId();
