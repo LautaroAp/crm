@@ -237,7 +237,7 @@ for ($i=1; $i <= 1; $i++) {
     
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    $pdf->SetY(-85);
+    $pdf->SetY(-90);
 
     // TOTAL EN LETRAS
     $html = '
@@ -280,7 +280,17 @@ for ($i=1; $i <= 1; $i++) {
     ';
     // output the HTML content
     $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, '', true);
-    $pdf->Ln(1);
+    $pdf->Ln(10);
+
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+    // DOCUMENTO NO OFICIAL
+    $html = '<i style="font-size: 8px;">Documento no Oficial</i>';
+    // output the HTML content
+    if(!$transaccion->getOficial()){
+        $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, 'C', true);
+        $pdf->Ln(1);
+    }
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -291,6 +301,8 @@ for ($i=1; $i <= 1; $i++) {
     $pdf->lastPage();
 
 } // end foreach
+
+
 
 //Close and output PDF document
 $pdf->Output('example_006.pdf', 'I');
