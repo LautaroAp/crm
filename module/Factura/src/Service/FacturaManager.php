@@ -147,13 +147,33 @@ class FacturaManager extends TransaccionManager
         return $this->entityManager->getRepository(Presupuesto::class)->findOneBy(['numero'=>$numPresupuesto]);
     }
 
+    // public function cambiarEstadoTransaccion($idTransaccion, $estado){
+    //     $transaccion = $this->getTransaccionId($idTransaccion);
+
+    //     $transaccion->setEstado($estado);
+    //     $this->revierteFechas($transaccion);
+    //     if (strtoupper($estado)=="ANULADO"){
+    //         $this->cuentaCorrienteManager->remove($transaccion);
+    //     }
+    //     $this->entityManager->flush();
+    // }
+
     public function cambiarEstadoTransaccion($idTransaccion, $estado){
         $transaccion = $this->getTransaccionId($idTransaccion);
-        $transaccion->setEstado($estado);
-        $this->revierteFechas($transaccion);
-        if (strtoupper($estado)=="ANULADO"){
+        if ($estado=="ANULADO"){
+            // $this->devolverStock($items);
+            $items = $transaccion->getBienesTransacciones();
+            foreach($items as $item){
+                $bien= $item->getBien();
+                if (strtoupper($bien->getTipo())=="PRODUCTO"){
+                    $stock = $bien->getStock();
+                    $stock = $stock + $item->getCantidad();
+                    $bien->setStock($stock);
+                }
+            }
             $this->cuentaCorrienteManager->remove($transaccion);
         }
+        $transaccion->setEstado($estado);
         $this->entityManager->flush();
     }
 

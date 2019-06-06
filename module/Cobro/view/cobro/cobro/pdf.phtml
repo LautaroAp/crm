@@ -1,6 +1,36 @@
 <?php
 //var_dump(json_decode($json), true); die();
 
+// HELPER para tabla
+function buildTDTH($descriptor, $options)
+{
+    $output = "";
+
+    foreach ($options as $index => $value){
+        if ($index != "value"){
+            $output.= ' '.$index.' = "'.$value.'"';
+        }
+    }
+
+    $value = "";
+    if (array_key_exists("value", $options)){
+        $value = $options['value'];
+    }    
+
+    $output = "<$descriptor $output>$value</$descriptor>";
+    return $output;
+
+}
+
+function buildTD($options){
+    return buildTDTH('td', $options);
+}
+
+function buildTH($options){
+    return buildTDTH('th', $options);
+}
+
+
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF {
 
@@ -87,8 +117,8 @@ for ($i=1; $i <= 1; $i++) {
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-
     // Datos Empresa y Comprobante
+
     $html = '
         <table border="0" cellspacing="0" cellpadding="4">
             <thead>
@@ -150,6 +180,25 @@ for ($i=1; $i <= 1; $i++) {
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+    // Periodo de Facturacion y Fechas
+    $html = '
+        <table border="0" cellspacing="0" cellpadding="3">
+            <tbody>
+                <tr>
+                    <td><strong>Período facturado desde: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
+                    <td><strong>Hasta: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
+                    <td><strong>Fecha de vto. para el pago: </strong>'. $transaccion->getFecha_vencimiento()->format('d/m/Y') .'</td>
+                </tr>
+            </tbody>
+        </table>
+    ';
+    // output the HTML content
+    $pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
+    $pdf->Ln(1);
+
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+
     if( (is_null($persona->getRazon_social())) || ($persona->getRazon_social() == "") ){
         $nombre_razonsocial = $persona->getNombre();
     } else {
@@ -181,38 +230,45 @@ for ($i=1; $i <= 1; $i++) {
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+    // array[width, value]
+    $datos = [
+                [25, 'Valor'], 
+                [26, 'Entidad'], 
+                [10, 'Nro.'], 
+                [15, 'Importe'], 
+                [12, 'Fecha de Emisión'], 
+                [12, 'Fecha de Acreditación'], 
+            ];
+            
     // make the table items
     $html = '
         <table border="0.1" cellspacing="0" cellpadding="3">
             <thead>
-                <tr bgcolor="silver" style="font-weight: bold;" nobr="true">
-                    <th border="0.5" align="center" width="30%">Valores</th>
-                    <th border="0.5" align="center" width="30%">Entidad</th>
-                    <th border="0.5" align="center" width="10%">Nro</th>
-                    <th border="0.5" align="center" width="15%">Importe</th>
-                    <th border="0.5" align="center" width="15%">Fecha Acred</th>
-                </tr>
-            </thead>
-            <tbody>
-    ';
+                <tr bgcolor="silver" style="font-weight: bold;" nobr="true">';
 
-    // load json data
+    foreach ($datos as $dato){
+        $html .= buildTH(['border'=>'0.5', 'align'=>'center', 'width' => $dato[0]."%", 'value' => $dato[1]]);
+    }               
+    $html .= '
+            </tr>
+        </thead>
+        <tbody>
+        ';
+
+    // BODY
     $data = json_decode($json);
     $subtotal = 0; $imp_dto = 0;
 
     $count = 0;
+    $widths = [25, 26, 10, 15, 12, 12];
     foreach($data as $item){
         $subtotal = $subtotal + $item->Totales;
         $imp_dto = $item->Bien->Precio * ($item->Dto/100);
-        $html .= '
-                <tr nobr="true">
-                    <td align="center" width="30%">' . "" . '</td>
-                    <td align="center" width="30%">' . "" .'</td>
-                    <td align="center" width="10%">' . "" .'</td>
-                    <td align="center" width="15%">' . "" .'</td>
-                    <td align="center" width="15%">' . "" .'</td>
-                </tr>
-        ';
+        $html .= '<tr nobr="true">';
+        foreach ($widths as $width){
+            $html .= buildTD(['align'=>'center', 'width' => $width."%", 'value'=>$width]); 
+        }
+        $html .= '</tr>';
     };
 
     // end of table items
@@ -247,10 +303,10 @@ for ($i=1; $i <= 1; $i++) {
                     <td style="font-size: 14px;"><strong>Total: $ </strong>'. number_format($transaccion->getMonto(), 2, ",", ".") .'</td>
                 </tr>
                 <tr>
-                    <td style="font-size: 9px;"><strong>Recibí/mos la suma de: </strong>'. $cobro->getImporte_letras() .'</td>
+                    <td style="font-size: 9px;"><strong>Recibí(mos) la suma de: </strong>'. $cobro->getImporte_letras() .'</td>
                 </tr>
                 <tr>
-                    <td style="font-size: 9px;"><strong>Por concepto de: </strong>'. $cobro->getConcepto() .'</td>
+                    <td style="font-size: 9px;"><strong>En concepto de: </strong>'. $cobro->getConcepto() .'</td>
                 </tr>
             </tbody>
         </table>
