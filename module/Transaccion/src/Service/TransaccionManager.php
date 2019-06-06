@@ -196,7 +196,6 @@ class TransaccionManager {
             $this->bienesTransaccionesManager->borrarBienesTransacciones($itemsAnteriores);
         }
         foreach($items as $array ){
-            // var_dump($items, true); die();
             $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
             // $item = $this->bienesTransaccionesManager->getBienTransaccionFromJson($json);
             $item->setTransaccion($transaccion);

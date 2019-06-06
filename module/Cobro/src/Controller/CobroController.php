@@ -84,7 +84,6 @@ class CobroController extends TransaccionController
         $remitosConformadosJson = $this->getJsonFromObjectList($remitosConformados);
 
         $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
-        // var_dump(json_decode($tiposFacturaJson), true); die();
 
         $this->reiniciarParams();
         return new ViewModel([

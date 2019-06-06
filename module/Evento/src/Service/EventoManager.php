@@ -67,7 +67,6 @@ class EventoManager {
      * This method adds a new evento.
      */
     public function addEvento($data, $persona) {
-        // var_dump($data, true); die();
         $evento = new Evento();
         $fecha_evento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
         $fecha_vencimiento = \DateTime::createFromFormat('d/m/Y', $data['fecha_evento']);
