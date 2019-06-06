@@ -102,35 +102,33 @@ function addDetallesNota(items, tipo, id){
                     break;
                 case 'Dto':
                     value =item["Dto"];
-                    value = formatPercent((parseFloat(value)).toFixed(2));
+                    value = ((parseFloat(value)).toFixed(2));
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
                 case 'ImpDto':
                     value =item["ImpDto"];
-                    value = formatMoney((parseFloat(dtoPeso)).toFixed(2));
+                    value = ((parseFloat(dtoPeso)).toFixed(2));
                     break;
                 case 'IVA':
-                    value = item["IVA"];
+                    value = item["IVA"]["Valor"];
                     if (!value){value=0;}
-                    value = formatPercent((parseFloat(value)).toFixed(2));
+                    value = ((parseFloat(value)).toFixed(2));
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
                 case 'ImpIVA':
                     value =(precioDto * (iva / 100));
                     if (!value){ value=0};
-                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    value = ((parseFloat(value)).toFixed(2));
                     break;
                 case 'Precio':
                     value = precio;
                     if(!value){value = 0;}
-                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    value = ((parseFloat(value)).toFixed(2));
+                    tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
                 case 'Totales':
-                    if (!iva){iva = 0;}
-                    var subtotal = precioDto + precioDto * iva / 100;
-                    value = subtotal;
-                    if (!value){value=0;}
-                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    value = item["Totales"];
+                    value = ((parseFloat(value)).toFixed(2));
                     break
                 default:
                     value = item[col[j]];
@@ -191,15 +189,17 @@ function addDetalleToTable() {
     }
     var cantidad= $("#cantidad").val();
     if (cantidad==""){cantidad=1;}
-    var indexiva = $("#nota_iva").val();
+    var indexiva = $("#select_ivas").val();
+    if (!indexiva){indexiva=ivas.length-1;}
+    if (indexiva=="-1" ||indexiva==""){indexiva=ivas.length-1;}
     var dto = $("#nota_dto").val();
     if(dto==""){dto=0;}
     if(dto==""){dto=0;}
-    // var impDto= monto*cantidad - (monto*cantidad)*dto/100;
+    var impDto= monto*cantidad - (monto*cantidad)*dto/100;
     //PASARLE IVAS
-    // var iva = ivas[indexiva]["Valor"];
-    // var impIva, impDto= 0;
-
+    var iva = ivas[indexiva]["Valor"];
+    var impIva = impDto * iva/100;
+    var totales= impDto + impDto * iva/100;
     output = {
         "Id":"",
         "Codigo":"-",
@@ -209,8 +209,9 @@ function addDetalleToTable() {
         "Tipo": "indefinido",
         "Index" : "-1",
         "Dto": dto,
-        "IVA": 0,
-        "Detalle": detalle
+        "IVA":  ivas[indexiva],
+        "Detalle": detalle,
+        "Totales": totales
     }
     items.push(output);
     console.log(items);
@@ -236,9 +237,10 @@ function completeDetalles(id){
                 "Tipo":"factura",
                 "Index": id,
                 "Dto": transaccion_selected["Bonificacion general"],
-                "IVA": 0,
+                "IVA":ivas[ivas.length-1],
                 "Detalle": mensaje,
-                "Transaccion Previa":transaccion_selected
+                "Transaccion Previa":transaccion_selected,
+                "Totales": transaccion_selected["Importe Total"]
             }
            
         }else{
@@ -253,9 +255,10 @@ function completeDetalles(id){
                 "Tipo":"remito",
                 "Index": id,
                 "Dto": transaccion_selected["Bonificacion general"],
-                "IVA": 0,
+                "IVA":ivas[ivas.length-1],
                 "Detalle": mensaje,
-                "Transaccion Previa":transaccion_selected
+                "Transaccion Previa":transaccion_selected,
+                "Totales": transaccion_selected["Importe Total"]
             }
         }
     }
@@ -272,21 +275,21 @@ function borrarCampos(){
     $("#nota_monto").val("");
     $("#nota_dto").val("");
     $("#cantidad").val("");
+    document.getElementById("select_ivas").selectedIndex = "-1"; 
+
 }
 
 function calcularTotal(){
     var sumTotal = 0;
     for (var i = 0; i < items.length; i++) {
-        subtotal = items[i]["Subtotal"];
+        subtotal = items[i]["Totales"];
+        console.log(subtotal);
         sumTotal = sumTotal + parseFloat(subtotal);
     }
-    $("#total_general").val(formatMoney((parseFloat(sumTotal)).toFixed(2)));
+    $("#total_general").val((parseFloat(sumTotal)).toFixed(2));
     // $("#total_letras").val(intToChar(sumTotal));
 
 }
-
-
-
 
 ///////////////////////////////////////////////////////////////
 

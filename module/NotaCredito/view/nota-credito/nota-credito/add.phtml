@@ -74,6 +74,8 @@ var tipoTransaccion ="nota de credito";
 var items = [];
 var output;
 var ivas = <?= $ivasJson ?>;
+ivas = ivas.reverse();
+
 var idPersona = <?php echo ($persona->getId()); ?>;
 
 var jsonModalTransaccion = <?= $facturasJson ?>;
@@ -209,12 +211,12 @@ var tipoPersona = "<?= $tipoPersona ?>";
                         <!-- <br> -->
                         <div class="container row">
                             <input type="hidden" class="form-control" name="item_id" id="item_id">
-                            <div class="form-group col-sm-4 margin-padding-xs">
+                            <div class="form-group col-sm-3 margin-padding-xs">
                                 <label>Detalle</label>
                                 <input type="text" class="form-control" name="nota_detalle" id="nota_detalle"
                                     placeholder="Detalle" >
                             </div>
-                            <div class="form-group col-sm-2 margin-padding-xs">
+                            <div class="form-group col-sm-1 margin-padding-xs">
                                 <label>Cantidad</label>
                                 <input type="text" class="form-control" name="cantidad" id="cantidad"
                                     placeholder="Cantidad"  onkeypress="return justNumbers(event);">
@@ -223,6 +225,12 @@ var tipoPersona = "<?= $tipoPersona ?>";
                                 <label>Bonificacion</label>
                                 <input type="text" class="form-control" name="nota_dto" id="nota_dto"
                                     placeholder="Bonificacion"  onkeypress="return justNumbers(event);">
+                            </div>
+                            <div class="form-group col-md-2 margin-padding-xs" id="ivas">
+                                <label>IVA</label>
+                                <script>
+                                    completarIvas(ivas);
+                                </script>
                             </div>
                             <div class="form-group col-sm-2 margin-padding-xs">
                                 <label>Monto</label>
@@ -341,7 +349,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
                         </div>
                     </div>
                     <script>
-                    calcularSubcampos();
+                        calcularTotal();
                     </script>
                 </div>
             </div>

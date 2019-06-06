@@ -38,8 +38,8 @@ function addItems(bienes) {
             else{
                 value = item[col[j]];
             }
-            if ((col[j] == "Dto (%)") || (col[j] == "Iva (%)" )){value = formatPercent(value);}
-            if ((col[j] == "Precio") || (col[j] == "Totales")){value = formatMoney(value);}
+            if ((col[j] == "Dto (%)") || (col[j] == "Iva (%)" )){value = (value);}
+            if ((col[j] == "Precio") || (col[j] == "Totales")){value = (value);}
             tabCell.innerHTML = value;
         }
     }
@@ -50,13 +50,13 @@ function addItems(bienes) {
     divContainer.appendChild(table);
 }
 
-function formatMoney(number) {
-    return '$ ' + number.toLocaleString('en-US');
-}
+// function formatMoney(number) {
+//     return '$ ' + number.toLocaleString('en-US');
+// }
 
-function formatPercent(number) {
-    return number.toLocaleString('en-US') + ' %';
-}
+// function formatPercent(number) {
+//     return number.toLocaleString('en-US') + ' %';
+// }
 
 var item = null;
 var item_ant = null;

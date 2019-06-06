@@ -57,10 +57,29 @@ function completarMonedas(monedas, transaccion=null){
             }
             selectList.appendChild(option);
         }
-}
-    
+    }
 }
 
+function completarIvas (ivas){
+    var myDiv = document.getElementById("ivas");
+    var selectList = document.createElement("select");
+    selectList.id = "select_ivas";
+    selectList.name="iva";
+    selectList.setAttribute("class", "form-control");
+    myDiv.appendChild(selectList);
+    //Create and append the options
+    var option = document.createElement("option");
+    option.value = "-1";
+    option.text = "Seleccionar";
+    option.setAttribute("hidden","");
+    selectList.appendChild(option);
+    for (var i = 0; i < ivas.length; i++) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = ivas[i]['Valor'];
+        selectList.appendChild(option);
+    }
+}
 
 function completarTiposFactura (tiposFactura, tipoFacturaPersona){
     var myDiv = document.getElementById("tipos_factura");
