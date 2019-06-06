@@ -88,8 +88,8 @@ for ($i=1; $i <= 3; $i++) {
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    if($notaCredito->getTipo_notaCredito()){
-        $tipo_notaCredito = $notaCredito->getTipo_notaCredito()->getNombre();
+    if($notaCredito->getTipo()){
+        $tipo_notaCredito = $notaCredito->getTipo()->getNombre();
     }
 
     // Datos Empresa y Comprobante
@@ -111,7 +111,7 @@ for ($i=1; $i <= 3; $i++) {
                     <td width="3%" style="border-right: 0.5px solid black;"></td>
                     <td width="3%"></td>
                     <th width="2%"></th>
-                    <td width="45%"><strong>Punto de Venta: </strong>'. str_pad($empresa->getPunto_venta(), 5, "0", STR_PAD_LEFT) .'&nbsp;<strong> Comp. Nro: </strong>'. str_pad($numCobro, 6, "0", STR_PAD_LEFT) .'</td>
+                    <td width="45%"><strong>Punto de Venta: </strong>'. str_pad($empresa->getPunto_venta(), 5, "0", STR_PAD_LEFT) .'&nbsp;<strong> Comp. Nro: </strong>'. str_pad($numNotaCredito, 6, "0", STR_PAD_LEFT) .'</td>
                 </tr>
                 <tr>
                     <td width="45%"><strong>Domicilio Comercial: </strong>'. $empresa->getDireccion() .'</td>
@@ -188,7 +188,7 @@ for ($i=1; $i <= 3; $i++) {
                 </tr>
                 <tr>
                     <td><strong>Condición frente al IVA: </strong>'. $persona->getNombreCondicionIva() .'</td>
-                    <td><strong>Domicilio Comercial: </strong>'. $persona->getDireccion_notaCredito() .'</td>
+                    <td><strong>Domicilio Comercial: </strong>'. $persona->getDireccion_facturacion() .'</td>
                 </tr>
                 <tr>
                     <td><strong>Condición de venta: </strong>'. $transaccion->getNombreFormaPago() .'</td>
@@ -229,14 +229,13 @@ for ($i=1; $i <= 3; $i++) {
     $count = 0;
     foreach($data as $item){
         $subtotal = $subtotal + $item->Totales;
-        $imp_dto = $item->Bien->Precio * ($item->Dto/100);
+        var_dump($item);
         $html .= '
                 <tr nobr="true">
-                    <td align="left" width="8%">' . $item->Bien->Codigo . '</td>
-                    <td align="left" width="23%">' . $item->Bien->Nombre .'</td>
-                    <td align="right" width="9%">' . $item->Cantidad .'</td>
-                    <td align="center" width="10%">' . $item->Bien->UnidadMedida .'</td>
-                    <td align="right" width="11%">' . number_format($item->Bien->Precio, 2, ",", ".") .'</td>
+                    <td align="left" width="8%">' . " " . '</td>
+                    <td align="left" width="23%">' . $item->Detalle .'</td>
+                    <td align="right" width="9%">' . "1,0" .'</td>
+                    <td align="right" width="11%">' . "unidades" .'</td>
                     <td align="center" width="8%">'. number_format($transaccion->getBonificacionGeneral(), 2, ",", ".") .'</td>
                     <td align="right" width="11%">'. number_format($transaccion->getBonificacionImporte(), 2, ",", ".") .'</td>
                     <td align="center" width="9%">' . number_format($item->IVA->Valor, 2, ",", ".") .'</td>

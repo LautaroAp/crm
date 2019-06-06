@@ -150,12 +150,12 @@ var tipoPersona = "<?= $tipoPersona ?>";
                                 value="<?= str_pad($numTransacciones, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Nro. Nota de Crédito</label>
+                            <label>Nro. Cobro</label>
                             <input type="text" class="form-control" name="numero_cobro" id="numero_cobro"
                                 value="<?= str_pad($numCobro, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
                         <div class="form-group col-md-2" id="tipos_cobro">
-                            <label>Tipo Nota de Crédito</label>
+                            <label>Validez del documento</label>
                             <select class="form-control" name="oficial" id="oficial" require>
                                 <option value="0" selected>No Oficial</option>
                                 <option value="1">Oficial</option>
@@ -245,7 +245,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Agregar Nota de Crédito</h4>
+                    <h4 class="modal-title">Agregar Cobro</h4>
                 </div>
                 <div class="modal-body">
                     <p id="msjModal">¿Está seguro que desea agregar esta transacción?</p>

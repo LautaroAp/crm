@@ -72,13 +72,13 @@ function completarTiposFactura (tiposFactura, tipoFacturaPersona){
     myDiv.appendChild(selectList);
     //Create and append the options
     var option = document.createElement("option");
-    if (tipoFacturaPersona!="-1"){
-            option.value = tipoFacturaPersona['Id'];
-            option.text = tipoFacturaPersona['Nombre'];
+    if ((tipoFacturaPersona=="-1") ||(tipoFacturaPersona==="")){
+           option.value = "";
+           option.text = "Seleccionar";
     }
     else{
-        option.value = "";
-        option.text = "Seleccionar";
+        option.value = tipoFacturaPersona['Id'];
+        option.text = tipoFacturaPersona['Nombre'];
     }
     option.setAttribute("hidden","");
     selectList.appendChild(option);

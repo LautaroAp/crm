@@ -61,6 +61,9 @@ if ($persona->getTipo() =="PROVEEDOR"){
 }
 $responsable = $this->identity();
 $tipoPersona = strtoupper($persona->getTipo());
+if ($tipoFacturaPersonaJson==""){
+    $tipoFacturaPersonaJson="-1";
+}
 
 // var_dump(json_decode($transaccionJson),true); die();
 ?>
@@ -82,6 +85,7 @@ var transaccionPreviaId = null;
 var transaccionJson = null;
 var empresa = <?= $empresaJson ?>;
 var tipoPersona = "<?= $tipoPersona ?>";
+
 </script>
 
 <!-- Document -->
@@ -153,8 +157,16 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             <input type="text" class="form-control" name="numero_notaCredito" id="numero_notaCredito"
                                 value="<?= str_pad($numNotaCredito, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
+                        <div class="form-group col-md-2" id="tipos_factura" >
+                            <label>Tipo de Nota de Credito</label>
+                            <script>
+                                var tiposFactura = <?php echo ($tiposFacturaJson); ?>;
+                                var tipoFacturaPersona = "<?= $tipoFacturaPersonaJson ?>";
+                                completarTiposFactura(tiposFactura, tipoFacturaPersona);
+                            </script>        
+                        </div>
                         <div class="form-group col-md-2" id="tipos_notaCredito">
-                            <label>Tipo Nota de Crédito</label>
+                            <label>Validez del documento</label>
                             <select class="form-control" name="oficial" id="oficial" require>
                                 <option value="0" selected>No Oficial</option>
                                 <option value="1">Oficial</option>
@@ -197,10 +209,20 @@ var tipoPersona = "<?= $tipoPersona ?>";
                         <!-- <br> -->
                         <div class="container row">
                             <input type="hidden" class="form-control" name="item_id" id="item_id">
-                            <div class="form-group col-sm-8 margin-padding-xs">
+                            <div class="form-group col-sm-4 margin-padding-xs">
                                 <label>Detalle</label>
                                 <input type="text" class="form-control" name="nota_detalle" id="nota_detalle"
                                     placeholder="Detalle" >
+                            </div>
+                            <div class="form-group col-sm-2 margin-padding-xs">
+                                <label>Cantidad</label>
+                                <input type="text" class="form-control" name="cantidad" id="cantidad"
+                                    placeholder="Cantidad"  onkeypress="return justNumbers(event);">
+                            </div>
+                            <div class="form-group col-sm-2 margin-padding-xs">
+                                <label>Bonificacion</label>
+                                <input type="text" class="form-control" name="nota_dto" id="nota_dto"
+                                    placeholder="Bonificacion"  onkeypress="return justNumbers(event);">
                             </div>
                             <div class="form-group col-sm-2 margin-padding-xs">
                                 <label>Monto</label>

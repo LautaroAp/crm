@@ -78,8 +78,6 @@ class RemitoManager extends TransaccionManager{
      */
     public function addRemito($data, $items) {
         //llamo a add de la transaccion, retorna una transaccion que se le setea al remito
-        var_dump($data);
-        die();
         $transaccion = parent::add($data,$items);
         
         $remito = new Remito();

@@ -572,7 +572,7 @@ var selectedNow = null;
 
 function isFormatDescuento(inputValue) {
     if (inputValue != null) {
-        return inputValue.substr(inputValue.length - 1) == "%";
+        return inputValue.substring(inputValue.length - 1) == "%";
     }
     return null;
 }
