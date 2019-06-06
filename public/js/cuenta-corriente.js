@@ -7,9 +7,9 @@ function getNumberValue(inputValue) {
 }
 
 
-function formatMoney(number) {
-    return '$ ' + number.toLocaleString('en-US');
-}
+// function formatMoney(number) {
+//     return '$ ' + number.toLocaleString('en-US');
+// }
 
 
 function calcularCuentaCorriente(tipo){
@@ -33,8 +33,8 @@ function calcularCuentaCorriente(tipo){
             }
         }
     }
-    $('#total_ventas').val(formatMoney(sumRemitos.toFixed(2)));
-    $('#total_facturado').val(formatMoney(sumFacturados.toFixed(2)));
+    $('#total_ventas').val((sumRemitos.toFixed(2)));
+    $('#total_facturado').val((sumFacturados.toFixed(2)));
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     var table2 = document.getElementById("tabla_cobros");
     var sumCobros = 0;
@@ -49,7 +49,7 @@ function calcularCuentaCorriente(tipo){
        
     }
 
-    $('#total_cobros').val(formatMoney(sumCobros.toFixed(2)));
+    $('#total_cobros').val((sumCobros.toFixed(2)));
 
     var saldoPendienteCobro = sumFacturados - sumCobros;
     // if (saldoPendienteCobro<0){
@@ -63,19 +63,19 @@ function calcularCuentaCorriente(tipo){
     //     $('#saldo_pendiente_cobro').val(formatMoney(saldoPendienteCobro2.toFixed(2)));
 
     // }else{
-        $('#saldo_pendiente_cobro').val(formatMoney(saldoPendienteCobro.toFixed(2)));
+        $('#saldo_pendiente_cobro').val((saldoPendienteCobro.toFixed(2)));
 
     // }
     console.log(sumRemitos);
     console.log(sumFacturados);
     var prodSinFacturar = sumRemitos - sumFacturados;
     var cuentaCorrienteGlobal = saldoPendienteCobro + prodSinFacturar;
-    $('#saldo_pendiente_factura').val(formatMoney(prodSinFacturar.toFixed(2)));
+    $('#saldo_pendiente_factura').val((prodSinFacturar.toFixed(2)));
     // if (cuentaCorrienteGlobal<0){
     //     $('#titulo_gral').text("Cuenta Corriente Global a favor");
     //     cuentaCorrienteGlobal = cuentaCorrienteGlobal * -1;        
     // }
-    $('#cuenta_corriente_global').val(formatMoney(cuentaCorrienteGlobal.toFixed(2)));
+    $('#cuenta_corriente_global').val((cuentaCorrienteGlobal.toFixed(2)));
 
 }
 

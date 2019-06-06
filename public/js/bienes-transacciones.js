@@ -1,6 +1,5 @@
 var tipoTransaccion;
 var idPersona;
-var ivas;
 var precioActualizado;
 var transaccion = null;
 var transaccion_ant = null;
@@ -21,9 +20,6 @@ $(document).ready(function () {
     });
 });
 
-function setIvas(arrayIvas) {
-    ivas = arrayIvas;
-}
 
 function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
     precioActualizado = actualizarPrecio;
@@ -81,6 +77,9 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
                 break;
             case 'ImpIVA':
                 th.innerHTML = "IVA ($)";
+                break;
+            case 'Totales':
+                th.innerHTML = "Totales ($)";
                 break;
             default:
                 th.innerHTML = col[i];
@@ -145,34 +144,34 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
                 case 'Dto':
                     value =dto;
                     if (!value){value=0;}
-                    value = formatPercent((parseFloat(value)).toFixed(2));
+                    value = (parseFloat(value)).toFixed(2);
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
                 case 'ImpDto':
-                    value = formatMoney((parseFloat(dtoPeso)).toFixed(2));
+                    value = (parseFloat(dtoPeso)).toFixed(2);
                     break;
                 case 'IVA':
                     value = iva;
                     if (!value){value=0;}
-                    value = formatPercent((parseFloat(value)).toFixed(2));
+                    value = (parseFloat(value)).toFixed(2);
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
                 case 'ImpIVA':
                     value =(precioDto * (iva / 100));
                     if (!value){ value=0};
-                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    value = (parseFloat(value)).toFixed(2);
                     break;
                 case 'Precio':
                     value = precio;
                     if(!value){value = 0;}
-                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    value = (parseFloat(value)).toFixed(2);
                     break;
                 case 'Totales':
                     if (!iva){iva = 0;}
                     var subtotal = precioDto + precioDto * iva / 100;
                     value = subtotal;
                     if (!value){value=0;}
-                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    value = (parseFloat(value)).toFixed(2);
                     break
                 default:
                     value = item[col[j]];
@@ -311,34 +310,34 @@ function addTransaccion(bienesTransacciones, tipo, id) {
                 case 'Dto':
                     value =dto;
                     if (!value){value=0;}
-                    value = formatPercent((parseFloat(value)).toFixed(2));
+                    value = parseFloat(value).toFixed(2);
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
                 case 'ImpDto':
-                    value = formatMoney((parseFloat(dtoPeso)).toFixed(2));
+                    value = parseFloat(dtoPeso).toFixed(2);
                     break;
                 case 'IVA':
                     value = iva;
                     if (!value){value=0;}
-                    value = formatPercent((parseFloat(value)).toFixed(2));
+                    value = (parseFloat(value)).toFixed(2);
                     tabCell.setAttribute("ondblclick", "makeEditable(event)");
                     break;
                 case 'ImpIVA':
                     value =(precioDto * (iva / 100));
                     if (!value){ value=0};
-                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    value = (parseFloat(value)).toFixed(2);
                     break;
                 case 'Precio':
                     value = precio;
                     if(!value){value = 0;}
-                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    value = (parseFloat(value)).toFixed(2);
                     break;
                 case 'Totales':
                     if (!iva){iva = 0;}
                     var subtotal = precioDto + precioDto * iva / 100;
                     value = subtotal;
                     if (!value){value=0;}
-                    value = formatMoney((parseFloat(value)).toFixed(2));
+                    value = (parseFloat(value)).toFixed(2);
                     break
                 default:
                     value = item[col[j]];
@@ -368,13 +367,13 @@ function getItems() {
     return items;
 }
 
-function formatMoney(number) {
-    return '$ ' + number.toLocaleString('en-US');
-}
+// function formatMoney(number) {
+//     return '$ ' + number.toLocaleString('en-US');
+// }
 
-function formatPercent(number) {
-    return number.toLocaleString('en-US') + ' %';
-}
+// function formatPercent(number) {
+//     return number.toLocaleString('en-US') + ' %';
+// }
 
 function calcularSubcampos() {
     if (tipoTransaccion!="nota de credito"){
@@ -400,7 +399,7 @@ function calcularSubcampos() {
                 //DESCUENTO
                 descuento = items[i]["Bien"]["Dto"];
                 if (!descuento){descuento =0;}
-                descuento = (parseFloat(descuento) * precio_unitario / 100);
+                descuento = parseFloat(descuento) * precio_unitario / 100;
                 precio_unitario_dto = precio_unitario - descuento;
                 sumBonificacion = sumBonificacion + descuento * cantidad;
                 //IVA
@@ -449,13 +448,13 @@ function calcularSubcampos() {
     var bonificacion_importe = sumSubtotal * bonificacion_general / 100;
     var recargo_importe = sumSubtotal * recargo_general / 100;
 
-    $("#subtotal_general").val(formatMoney(parseFloat(sumSubtotal).toFixed(2)));
-    $("#bonificacion_importe").val(formatMoney(parseFloat(bonificacion_importe).toFixed(2)));
-    $("#recargo_importe").val(formatMoney(parseFloat(recargo_importe).toFixed(2)));
-    $("#venta_bruta").val(formatMoney(parseFloat(sumVentaBruta).toFixed(2)));
-    $("#descuento_total").val(formatMoney(parseFloat(sumBonificacion).toFixed(2)));
-    $("#iva_total").val(formatMoney(parseFloat(sumIva).toFixed(2)));
-    $("#total_general").val(formatMoney(parseFloat(total_general).toFixed(2)));
+    $("#subtotal_general").val((parseFloat(sumSubtotal).toFixed(2)));
+    $("#bonificacion_importe").val((parseFloat(bonificacion_importe).toFixed(2)));
+    $("#recargo_importe").val((parseFloat(recargo_importe).toFixed(2)));
+    $("#venta_bruta").val((parseFloat(sumVentaBruta).toFixed(2)));
+    $("#descuento_total").val((parseFloat(sumBonificacion).toFixed(2)));
+    $("#iva_total").val((parseFloat(sumIva).toFixed(2)));
+    $("#total_general").val((parseFloat(total_general).toFixed(2)));
     $("#jsonitems").val(JSON.stringify(items));
     }    
 }
@@ -608,40 +607,49 @@ function getAttribute(tdId) {
 }
 
 function controlStock(attribute, inputValue){
-    inputValue = parseFloat(inputValue);
-    if(tipoPersona=="CLIENTE"){
-        if (items[index]["Bien"]["Tipo"]=="PRODUCTO"){
-            if (attribute=="Cantidad"){
-                var stock = parseFloat(items[index]["Bien"]["Stock"]);
-                if(stock<=inputValue){
-                    console.log(tipoTransaccion);
-                    if (tipoTransaccion=="remito"){
-                        alert("No se puede agregar el item dado que la cantidad sobrepasa el stock disponible");
-                        return false;
-                    }
-                    else{
-                        if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")){
-                            return true
-                        } else {
+    if (tipoTransaccion=="remito"|| tipoTransaccion=="factura"|| tipoTransaccion=="pedido"){
+        inputValue = parseFloat(inputValue);
+        if(tipoPersona=="CLIENTE"){
+            if (items[index]["Bien"]["Tipo"]=="PRODUCTO"){
+                if (attribute=="Cantidad"){
+                    var stock = parseFloat(items[index]["Bien"]["Stock"]);
+                    if(stock<=inputValue){
+                        console.log(tipoTransaccion);
+                        if (tipoTransaccion=="remito"){
+                            alert("No se puede agregar el item dado que la cantidad sobrepasa el stock disponible");
                             return false;
+                        }
+                        else{
+                            if (confirm("La cantidad ingresada sobrepasa el Stock disponible. ¿Desea continuar?")){
+                                return true
+                            } else {
+                                return false;
+                            }
                         }
                     }
                 }
             }
-        }
+        }  
     }
     return true;
 }
+
 function saveValueInJson(tdId, inputValue) {
     //recibo "0_Cantidad" separo en indice 0 y atributo Cantidad
     index = tdId.substring(0, tdId.indexOf('_'));
     attribute = tdId.substring(tdId.indexOf('_') + 1, tdId.length);
+    console.log(attribute);
     if (inputValue != null) {
         if (controlStock(attribute, inputValue)){
             if (attribute == "IVA") {
                 inputValue = ivas[getIvaFromValue(inputValue)];
             }
-            items[index][attribute] = inputValue;
+            if (attribute=="Precio"){
+                items[index]["Subtotal"] = inputValue;
+            }
+            else{
+                items[index][attribute] = inputValue;
+            }
         }
     }
      //ES NECESARIO GUARDAR LOS CAMBIOS EN EL INPUT HIDDEN DE HTML PARA OBTENER EL JSON CON DATA
@@ -655,22 +663,22 @@ function saveValue(inputId) {
 }
 
 function actualizarJson(fila) {
-    var col = ["Cantidad", "Dto", "IVA", "Totales"];
+    var col = ["Cantidad", "Dto", "IVA", "Precio","Totales"];
     var index = fila + "_";
     for (var j = 0; j < col.length; j++) {
         var subindex = index + col[j];
-        if (col[j] != "IVA") {
-            items[fila][col[j]] = getNumberValue(document.getElementById(subindex).innerText);
-        } else {
+        if (col[j] == "Precio"){
+            items[fila]["Subtotal"] = getNumberValue(document.getElementById(subindex).innerText);
+        }
+        if (col[j]=="IVA"){
             var valorIva = document.getElementById(subindex).innerText;
             var ivajson = ivas[getIvaFromValue(valorIva)];
             items[fila]["IVA"] = ivajson;
+        }else {
+            items[fila][col[j]] = getNumberValue(document.getElementById(subindex).innerText);
         }
     }
-    // console.log("despues de actualizar items queda ");
-    // console.log(items);
     $("#jsonitems").val(JSON.stringify(items));
-    // persistItemsInSession();
 }
 
 function actualizarFila(tdId) {
@@ -687,13 +695,17 @@ function actualizarFila(tdId) {
         cantxprecio = cant * precio;
         dto$ = cantxprecio  * descuento / 100;
         cantxprecioydto =cantxprecio -cantxprecio  * descuento / 100;
-        document.getElementById(index + "_ImpDto").innerText = formatMoney(parseFloat(dto$).toFixed(2));
+        document.getElementById(index + "_ImpDto").innerText = (parseFloat(dto$).toFixed(2));
         subtotal = cantxprecioydto + cantxprecioydto * iva / 100;
         ivaEnPeso =   cantxprecioydto * iva / 100;
-        document.getElementById(index + "_ImpIVA").innerText = formatMoney(parseFloat(ivaEnPeso).toFixed(2));
-        document.getElementById(index + "_Totales").innerText = formatMoney(parseFloat(subtotal).toFixed(2));
+        document.getElementById(index + "_ImpIVA").innerText = (parseFloat(ivaEnPeso).toFixed(2));
+        document.getElementById(index + "_Totales").innerText = (parseFloat(subtotal).toFixed(2));
         actualizarJson(index);
-        calcularSubcampos();
+        if ((tipoTransaccion=="nota de credito")|| (tipoTransaccion=="nota de debito")){
+            calcularTotal();
+        }else{
+            calcularSubcampos();
+        }
     }
 }
 
@@ -704,7 +716,8 @@ function saveTd(tdId) {
     if (getAttribute(tdId) == "IVA") {
         var select = document.getElementById(inputId);
         inputValue = select.options[select.selectedIndex].text;
-    } else {
+    }
+    else {
         inputValue = document.getElementById(inputId).value;
         console.log(inputValue);
     }
@@ -715,8 +728,13 @@ function saveTd(tdId) {
         td = document.getElementById(tdId);
         attribute = getAttribute(tdId);
         if ((attribute == "Dto") || (attribute == "IVA")) {
-            td.innerText = formatPercent((parseFloat(numValue)).toFixed(2));;
-        } else {
+            td.innerText = ((parseFloat(numValue)).toFixed(2));;
+        } 
+        if (attribute=="Precio"){
+            inputValue = ((parseFloat(numValue)).toFixed(2));;
+            td.innerText = inputValue;
+        } 
+        else {
             td.innerText = inputValue;
         }
     }
