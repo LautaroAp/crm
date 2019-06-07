@@ -3,6 +3,7 @@ namespace TipoComprobante\Service\Factory;
 
 use Interop\Container\ContainerInterface;
 use TipoComprobante\Service\TipoComprobanteManager;
+use Comprobante\Service\ComprobanteManager;
 
 /**
  * This is the factory class for TipoComprobanteManager service. The purpose of the factory
@@ -16,6 +17,7 @@ class TipoComprobanteManagerFactory
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
-        return new TipoComprobanteManager($entityManager);
+        $comprobanteManager = $container->get(ComprobanteManager::class);
+        return new TipoComprobanteManager($entityManager, $comprobanteManager);
     }
 }

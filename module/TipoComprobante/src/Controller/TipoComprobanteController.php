@@ -16,13 +16,13 @@ class TipoComprobanteController extends HuellaController {
      * TipoComprobante manager.
      * @var User\Service\TipoComprobanteManager 
      */
-    protected $TipoComprobanteManager;
-    private $personaManager;
+    protected $tipoComprobanteManager;
+    protected $comprobanteManager;
 
-    public function __construct($entityManager, $tipoComprobanteManager, $personaManager) {
+    public function __construct($entityManager, $tipoComprobanteManager, $comprobanteManager) {
         $this->entityManager = $entityManager;
         $this->tipoComprobanteManager = $tipoComprobanteManager;
-        $this->personaManager = $personaManager;
+        $this->comprobanteManager = $comprobanteManager;
     }
 
     public function indexAction() {
@@ -40,6 +40,7 @@ class TipoComprobanteController extends HuellaController {
 
     private function procesarAddAction() {
         $tipoComprobantes = $this->tipoComprobanteManager->getTipoComprobantes();
+        $comprobantes = $this->comprobanteManager->getComprobantes();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->limpiarParametros($data);
@@ -49,6 +50,7 @@ class TipoComprobanteController extends HuellaController {
         }
         return new ViewModel([
             'tipoComprobantes' => $tipoComprobantes,
+            'comprobantes'=> $comprobantes
         ]);
     }
 
@@ -61,6 +63,7 @@ class TipoComprobanteController extends HuellaController {
         $id = (int) $this->params()->fromRoute('id', -1);
         // $this->prepararBreadcrumbs("Editar", "/edit/".$id, "Tipo de comprobante");
         $tipoComprobante = $this->tipoComprobanteManager->getTipoComprobante($id);
+        $comprobantes = $this->comprobanteManager->getComprobantes();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->tipoComprobanteManager->updateTipoComprobante($tipoComprobante, $data);
@@ -68,6 +71,8 @@ class TipoComprobanteController extends HuellaController {
         }
         return new ViewModel(array(
             'tipoComprobante' => $tipoComprobante,
+            'comprobantes'=> $comprobantes
+
         ));
     }
 
@@ -79,7 +84,6 @@ class TipoComprobanteController extends HuellaController {
     public function procesarRemoveAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $tipoComprobante = $this->tipoComprobanteManager->getTipoComprobante($id);
-        $this->personaManager->eliminarTipoComprobante($id);
         $this->tipoComprobanteManager->removeTipoComprobante($tipoComprobante);
         return $this->redirect()->toRoute('herramientas/tipocomprobante');
     }

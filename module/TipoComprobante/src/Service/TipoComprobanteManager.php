@@ -17,12 +17,13 @@ class TipoComprobanteManager {
      * @var Doctrine\ORM\EntityManager
      */
     private $entityManager;
-
+    private $comprobanteManager;
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager) {
+    public function __construct($entityManager, $comprobanteManager) {
         $this->entityManager = $entityManager;
+        $this->comprobanteManager = $comprobanteManager;
     }
 
     public function getTipoComprobantes() {
@@ -67,10 +68,14 @@ class TipoComprobanteManager {
     }
 
     private function addData($tipoComprobante, $data) {
-        // $tipoComprobante->setNombre($data['nombre']);
+
+        $comprobante = $this->comprobanteManager->getComprobante($data['comprobante']);
+      
+        $tipoComprobante->setComprobante($comprobante);
         $tipoComprobante->setDescripcion($data['descripcion']);
         $tipoComprobante->setCodigo($data['codigo']);
-        $tipoComprobante->setTipo(strtoupper($data['tipo']));
+        $tipoComprobante->setTipo(strtoupper($data['tipo'])); 
+        
     }
 
     public function removeTipoComprobante($id) {

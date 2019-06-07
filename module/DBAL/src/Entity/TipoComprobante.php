@@ -60,26 +60,6 @@ class TipoComprobante
 
 
     /**
-     * Get the value of nombre
-     */ 
-    public function getNombre()
-    {
-        // return $this->nombre;
-    }
-
-    /**
-     * Set the value of nombre
-     *
-     * @return  self
-     */ 
-    public function setNombre($nombre)
-    {
-        // $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    /**
      * Get the value of descripcion
      */ 
     public function getDescripcion()
@@ -103,7 +83,7 @@ class TipoComprobante
 
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Nombre": "' . $this->getNombre() .'" ';
+        $output .= '"Comprobante": "' . $this->getComprobante()->getJSON() .'" ';
     
         return  '{'.$output.'}' ;
     }
@@ -146,5 +126,25 @@ class TipoComprobante
         $this->tipo = $tipo;
 
         return $this;
+    }
+
+    /**
+     * Set many Services have One Transaccion.
+     *
+     * @return  self
+     */ 
+    public function setComprobante($comprobante)
+    {
+        $this->comprobante = $comprobante;
+
+        return $this;
+    }
+
+    /**
+     * Get many Services have One Transaccion.
+     */ 
+    public function getComprobante()
+    {
+        return $this->comprobante;
     }
 }

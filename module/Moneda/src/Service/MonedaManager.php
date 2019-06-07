@@ -7,8 +7,8 @@ use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
 /**
- * This service is responsible for adding/editing categoriaProductos
- * and changing categoriaProducto password.
+ * This service is responsible for adding/editing monedas
+ * and changing moneda password.
  */
 class MonedaManager {
 
@@ -37,27 +37,27 @@ class MonedaManager {
 
 
     /**
-     * This method adds a new categoriaProducto.
+     * This method adds a new moneda.
      */
     public function addMoneda($data) {
-        $categoriaProducto = new Moneda();
-        $categoriaProducto->setNombre($data['nombre']);
-        if ($this->tryAddMoneda($categoriaProducto)) {
+        $moneda = new Moneda();
+        $moneda->setNombre($data['nombre']);
+        if ($this->tryAddMoneda($moneda)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría agregada correctamente';
         } else {
             $_SESSION['MENSAJES']['categoria_cliente'] = 0;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Error al agregar categoría';
         }
-        return $categoriaProducto;
+        return $moneda;
     }
 
     /**
-     * This method updates data of an existing categoriaProducto.
+     * This method updates data of an existing moneda.
      */
-    public function updateMoneda($categoriaProducto, $data) {
-        $categoriaProducto->setNombre($data['nombre']);
-        if ($this->tryUpdateMoneda($categoriaProducto)) {
+    public function updateMoneda($moneda, $data) {
+        $moneda->setNombre($data['nombre']);
+        if ($this->tryUpdateMoneda($moneda)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría editada correctamente';
         } else {
@@ -68,9 +68,9 @@ class MonedaManager {
     }
 
     public function removeMoneda($id) {
-        $categoriaProducto= $this->entityManager->getRepository(Moneda::class)
+        $moneda= $this->entityManager->getRepository(Moneda::class)
                         ->find($id);
-        if ($this->tryRemoveMoneda($categoriaProducto)) {
+        if ($this->tryRemoveMoneda($moneda)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría eliminada correctamente';
         } else {
@@ -87,9 +87,9 @@ class MonedaManager {
         return ($paginator);
     }
 
-    private function tryAddMoneda($categoriaProducto) {
+    private function tryAddMoneda($moneda) {
         try {
-            $this->entityManager->persist($categoriaProducto);
+            $this->entityManager->persist($moneda);
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {
@@ -98,7 +98,7 @@ class MonedaManager {
         }
     }
 
-    private function tryUpdateMoneda($categoriaProducto) {
+    private function tryUpdateMoneda($moneda) {
         try {
             $this->entityManager->flush();
             return true;
@@ -108,9 +108,9 @@ class MonedaManager {
         }
     }
 
-    private function tryRemoveMoneda($categoriaProducto) {
+    private function tryRemoveMoneda($moneda) {
         try {
-            $this->entityManager->remove($categoriaProducto);
+            $this->entityManager->remove($moneda);
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {

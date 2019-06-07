@@ -1,3 +1,15 @@
+<script src="/js/bienes-transacciones.js"></script>
+
+<?php
+    $tipoComprobanteId = ""; $tipoComprobanteNombre = "";
+    if (!is_null($tipoComprobante->getComprobante())){
+        $tipoComprobanteId = $tipoComprobante->getComprobante()->getId();
+        $tipoComprobanteNombre = $tipoComprobante->getComprobante()->getNombre();
+    }else{
+        $tipoComprobanteId = "";
+        $tipoComprobanteNombre = "Seleccionar Comprobante";
+    }
+?>
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
@@ -22,9 +34,18 @@
             <div class="panel-body">
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <label>Nombre</label>
-                        <input type="text" class="form-control" name="nombre"
-                            value="<?= $tipoComprobante->getDescripcion(); ?>">
+                        <label>Comprobante</label>
+                        <select class="form-control" id="comprobante" name="comprobante">
+                            <option value="<?= $tipoComprobanteId ?>" hidden=""><?= $tipoComprobanteNombre ?></option>
+                            <?php foreach ($comprobantes as $comprobante) : ?>
+                                <option value="<?php echo ($comprobante->getId()); ?>"><?php echo ($comprobante->getNombre()); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Tipo</label>
+                        <input type="text" class="form-control" name="tipo"
+                            maxlength="1" value="<?= $tipoComprobante->getTipo(); ?>">
                     </div>
                     <div class="form-group col-md-3">
                         <label>Descripción</label>
@@ -36,11 +57,6 @@
                         <input type="text" class="form-control" name="codigo" id="codigo"
                             maxlength="3" onkeypress="return justNumbers(event);"
                             value="<?= $tipoComprobante->getCodigo(); ?>">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label>Tipo</label>
-                        <input type="text" class="form-control" name="tipo"
-                            maxlength="1" value="<?= $tipoComprobante->getTipo(); ?>">
                     </div>
                 </div>
             </div>

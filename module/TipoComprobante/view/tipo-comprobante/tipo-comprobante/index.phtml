@@ -1,6 +1,7 @@
 <!-- scripts -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script src="/js/bienes-transacciones.js"></script>
 
 <script>
 $(document).ready(function() {
@@ -47,9 +48,17 @@ $(document).ready(function() {
                     <form method="post">
                         <div class="row form-row">
                             <div class="form-group col-md-3">
-                                <label>Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre"
-                                    placeholder="Nombre" required>
+                                <label>Comprobante</label>
+                                <select class="form-control" id="comprobante" name="comprobante">
+                                    <option value="" hidden="">Seleccionar Comprobante</option>
+                                    <?php foreach ($comprobantes as $comprobante) : ?>
+                                        <option value="<?php echo ($comprobante->getId()); ?>"><?php echo ($comprobante->getNombre()); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Tipo</label>
+                                <input type="text" class="form-control" name="tipo" placeholder="Tipo" maxlength="1">
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Descripción</label>
@@ -61,12 +70,7 @@ $(document).ready(function() {
                                 <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Código" 
                                     maxlength="3" onkeypress="return justNumbers(event);">
                             </div>
-                            <div class="form-group col-md-2">
-                                <label>Tipo</label>
-                                <input type="text" class="form-control" name="tipo" placeholder="Tipo" maxlength="1">
-                            </div>
                         </div>
-                        <div class="row form-row">
                             <div class="form-group col-md-3">
                                 <button type="button" class="btn btn-default" data-toggle="modal"
                                     data-target="#myModal">
@@ -74,7 +78,6 @@ $(document).ready(function() {
                                     Tipo de Comprobante
                                 </button>
                             </div>
-                        </div>
                         <!-- Modal -->
                         <div id="myModal" class="modal fade" role="dialog">
                             <div class="modal-dialog">
@@ -104,7 +107,7 @@ $(document).ready(function() {
                         <table id="tabla_evento" class="table table-bordred table-hover table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="th-sm">Nombre</th>
+                                    <th class="th-sm">Comprobante</th>
                                     <th class="">Descripción</th>
                                     <th class="">Código</th>
                                     <th class="">Tipo</th>
@@ -115,7 +118,7 @@ $(document).ready(function() {
                                 <?php
                                     foreach ($tipoComprobantes as $tipoComprobante) : ?>
                                     <tr>
-                                        <td><?php echo ($tipoComprobante->getDescripcion()); ?></td>
+                                        <td><?php echo ($tipoComprobante->getComprobante()->getNombre()); ?></td>
                                         <td><?php echo ($tipoComprobante->getDescripcion()); ?></td>
                                         <td><?php echo (str_pad($tipoComprobante->getCodigo(), 3, "0", STR_PAD_LEFT)); ?></td>
                                         <td><?php echo ($tipoComprobante->getTipo()); ?></td>
@@ -140,12 +143,11 @@ $(document).ready(function() {
                                                     <div class="modal-header">
                                                         <button type="button" class="close"
                                                             data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title">Eliminar Forma de Pago</h4>
+                                                        <h4 class="modal-title">Eliminar</h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <p>
-                                                            ¿Está seguro que desea eliminar el tipo de comprobante: 
-                                                            "<?= $this->escapeHtml($tipoComprobante->getDescripcion()) ?>"?
+                                                            ¿Está seguro que desea eliminar el tipo de comprobante seleccionado?
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">
