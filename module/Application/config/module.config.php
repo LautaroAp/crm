@@ -342,16 +342,6 @@ return [
                     ],
                 ],
             ],
-            // 'ventas' => [
-            //     'type' => Literal::class,
-            //     'options' => [
-            //         'route' => '/ventas',
-            //         'defaults' => [
-            //             'controller' => \Evento\Controller\EventoVentaController::class,
-            //             'action' => 'index',
-            //         ],
-            //     ],
-            // ],
             'getTipos'=>[
                 'type' => Segment::class,
                 'options' => [
@@ -659,6 +649,16 @@ return [
                             'route' => '/tipocomprobante',
                             'defaults' => [
                                 'controller' => \TipoComprobante\Controller\TipoComprobanteController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'comprobante' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/comprobante',
+                            'defaults' => [
+                                'controller' => \Comprobante\Controller\ComprobanteController::class,
                                 'action' => 'index',
                             ],
                         ],

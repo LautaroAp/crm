@@ -3,7 +3,7 @@
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
             <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
             <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
-            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas/comprobante'); ?>">Tipos de Comprobantes</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas/comprobante'); ?>">Comprobantes</a></li>
             <li class="breadcrumb-item active" aria-current="page">Editar</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
@@ -17,30 +17,19 @@
     <div class="row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading titulo-espaciado">
-                EDITAR TIPO DE COMPROBANTE
+                EDITAR COMPROBANTE
             </div>
             <div class="panel-body">
                 <div class="form-row">
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label>Nombre</label>
                         <input type="text" class="form-control" name="nombre"
-                            value="<?= $comprobante->getDescripcion(); ?>">
+                            value="<?= $comprobante->getNombre(); ?>">
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-6">
                         <label>Descripción</label>
                         <input type="text" class="form-control" name="descripcion"
                             value="<?= $comprobante->getDescripcion(); ?>">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label>Código</label>
-                        <input type="text" class="form-control" name="codigo" id="codigo"
-                            maxlength="3" onkeypress="return justNumbers(event);"
-                            value="<?= $comprobante->getCodigo(); ?>">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label>Tipo</label>
-                        <input type="text" class="form-control" name="tipo"
-                            maxlength="1" value="<?= $comprobante->getTipo(); ?>">
                     </div>
                 </div>
             </div>

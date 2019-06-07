@@ -66,9 +66,24 @@ class Empresa {
     protected $ingresos_brutos;
 
     /**
+     * @ORM\Column(name="NRO_CAI", nullable=true, type="string")
+     */
+    protected $nro_cai;
+
+    /**
      * @ORM\Column(name="VENCIMIENTO_CAI", nullable=true, type="datetime")
      */
     protected $vencimiento_cai;
+
+    /**
+     * @ORM\Column(name="NRO_CAE", nullable=true, type="string")
+     */
+    protected $nro_cae;
+
+    /**
+     * @ORM\Column(name="VENCIMIENTO_CAE", nullable=true, type="datetime")
+     */
+    protected $vencimiento_cae;
 
     /**
      * @ORM\Column(name="RAZON_SOCIAL", nullable=true, type="string", length=255)
@@ -431,4 +446,64 @@ class Empresa {
         return  '{'.$output.'}' ;
     }
 
+
+    /**
+     * Get the value of nro_cai
+     */ 
+    public function getNro_cai()
+    {
+        return $this->nro_cai;
+    }
+
+    /**
+     * Set the value of nro_cai
+     *
+     * @return  self
+     */ 
+    public function setNro_cai($nro_cai)
+    {
+        $this->nro_cai = $nro_cai;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of nro_cae
+     */ 
+    public function getNro_cae()
+    {
+        return $this->nro_cae;
+    }
+
+    /**
+     * Set the value of nro_cae
+     *
+     * @return  self
+     */ 
+    public function setNro_cae($nro_cae)
+    {
+        $this->nro_cae = $nro_cae;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of vencimiento_cae
+     */ 
+    public function getVencimiento_cae()
+    {
+        return $this->vencimiento_cae;
+    }
+
+    /**
+     * Set the value of vencimiento_cae
+     *
+     * @return  self
+     */ 
+    public function setVencimiento_cae($vencimiento_cae)
+    {
+        $this->vencimiento_cae = $vencimiento_cae;
+
+        return $this;
+    }
 }

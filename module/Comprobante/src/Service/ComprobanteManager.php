@@ -69,8 +69,6 @@ class ComprobanteManager {
     private function addData($comprobante, $data) {
         $comprobante->setNombre($data['nombre']);
         $comprobante->setDescripcion($data['descripcion']);
-        $comprobante->setCodigo($data['codigo']);
-        $comprobante->setTipo(strtoupper($data['tipo']));
     }
 
     public function removeComprobante($id) {
