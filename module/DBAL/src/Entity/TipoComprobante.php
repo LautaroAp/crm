@@ -83,7 +83,11 @@ class TipoComprobante
 
         $output = "";
         $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Comprobante": "' . $this->getComprobante()->getJSON() .'" ';
+        $output .= '"Comprobante": ' . $this->getComprobante()->getJSON() .', ';
+        $output .= '"Tipo": "' . $this->getTipo() .'", ';
+        $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
+        $output .= '"Codigo": "' . $this->getCodigo() .'" ';
+
     
         return  '{'.$output.'}' ;
     }

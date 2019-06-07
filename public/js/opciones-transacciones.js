@@ -104,7 +104,7 @@ function completarTiposFactura (tiposFactura, tipoComprobantePersona){
     for (var i = 0; i < tiposFactura.length; i++) {
         var option = document.createElement("option");
         option.value = tiposFactura[i]['Id'];
-        option.text = tiposFactura[i]['Nombre'];
+        option.text = tiposFactura[i]['Tipo'];
         selectList.appendChild(option);
     }
 }

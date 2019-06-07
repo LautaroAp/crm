@@ -396,7 +396,7 @@ class Persona {
         if (is_null($this->tipo_comprobante)) {
             return null;
         } else {
-            return (($this->tipo_comprobante->getNombre()));
+            return (($this->tipo_comprobante->getTipo()));
         }
     }
 }
