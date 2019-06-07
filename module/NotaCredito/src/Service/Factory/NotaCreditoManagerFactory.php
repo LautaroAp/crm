@@ -12,7 +12,7 @@ use Iva\Service\IvaManager;
 use FormaPago\Service\FormaPagoManager;
 use FormaEnvio\Service\FormaEnvioManager;
 use CuentaCorriente\Service\CuentaCorrienteManager;
-use TipoFactura\Service\TipoFacturaManager;
+use TipoComprobante\Service\TipoComprobanteManager;
 /**
  * This is the factory class for NotaCreditoManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
@@ -32,8 +32,8 @@ class NotaCreditoManagerFactory
         $formaPagoManager = $container->get(FormaPagoManager::class);
         $formaEnvioManager = $container->get(FormaEnvioManager::class);
         $bienesManager = $container->get(BienesManager::class); 
-        $tipoFacturaManager =  $container->get(TipoFacturaManager::class); 
+        $tipoComprobanteManager =  $container->get(TipoComprobanteManager::class); 
         $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);   
-        return new NotaCreditoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager,$formaEnvioManager, $bienesManager, $cuentaCorrienteManager, $tipoFacturaManager);
+        return new NotaCreditoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager,$formaEnvioManager, $bienesManager, $cuentaCorrienteManager, $tipoComprobanteManager);
     }
 }

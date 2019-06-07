@@ -20,14 +20,14 @@ class FacturaController extends TransaccionController
     private $bienesTransaccionesManager;
     private $bienesManager;
     
-    public function __construct($facturaManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager, $tipoFacturaManager) {
+    public function __construct($facturaManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager, $tipoComprobanteManager) {
         parent::__construct($facturaManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager, $empresaManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
         $this->facturaManager = $facturaManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->bienesManager = $bienesManager;
-        $this->tipoFacturaManager = $tipoFacturaManager;
+        $this->tipoComprobanteManager = $tipoComprobanteManager;
     }
 
     public function indexAction()
@@ -104,16 +104,16 @@ class FacturaController extends TransaccionController
         
         $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
         
-        $tiposFactura= $this->tipoFacturaManager->getTipoFacturas();
+        $tiposFactura= $this->tipoComprobanteManager->getTipoComprobantes();
         $tiposFacturaJson =$this->getJsonFromObjectList($tiposFactura);
         
         $this->reiniciarParams();
         
-        $tipoFacturaPersona = $persona->getTipo_factura();
-        $tipoFacturaPersonaJson ="";
+        $tipoComprobantePersona = $persona->getTipo_comprobante();
+        $tipoComprobantePersonaJson ="";
         
-        if ($tipoFacturaPersona!=null){
-            $tipoFacturaPersonaJson= $tipoFacturaPersona->getJSON();
+        if ($tipoComprobantePersona!=null){
+            $tipoComprobantePersonaJson= $tipoComprobantePersona->getJSON();
         }
         return new ViewModel([
             'persona' => $persona,
@@ -133,7 +133,7 @@ class FacturaController extends TransaccionController
             'transaccionesJson' => $jsonTransacciones,
             'empresaJson' => $empresaJson,
             'tiposFacturaJson'=>$tiposFacturaJson,
-            'tipoFacturaPersonaJson' => $tipoFacturaPersonaJson,
+            'tipoComprobantePersonaJson' => $tipoComprobantePersonaJson,
             'itemsTransaccionJson' =>"[]",
         ]);
     }
@@ -209,13 +209,13 @@ class FacturaController extends TransaccionController
         $transaccionJson = $factura->getTransaccion()->getJSON();
         $presupuestos = $this->facturaManager->getTransaccionesPersonaTipo($persona->getId(),"PRESUPUESTO");
         $jsonPrespuestos = $this->getJsonFromObjectList($presupuestos);
-        $tiposFactura= $this->tipoFacturaManager->getTipoFacturas();
+        $tiposFactura= $this->tipoComprobanteManager->getTipoComprobantes();
         $tiposFacturaJson =$this->getJsonFromObjectList($tiposFactura);
 
-        $tipoFacturaPersona = $persona->getTipo_factura();
-        $tipoFacturaPersonaJson ="";
-        if ($tipoFacturaPersona!=null){
-            $tipoFacturaPersonaJson= $tipoFacturaPersona->getJSON();
+        $tipoComprobantePersona = $persona->getTipo_comprobante();
+        $tipoComprobantePersonaJson ="";
+        if ($tipoComprobantePersona!=null){
+            $tipoComprobantePersonaJson= $tipoComprobantePersona->getJSON();
         }
         $this->reiniciarParams();
         return new ViewModel([
@@ -233,7 +233,7 @@ class FacturaController extends TransaccionController
             'ivasJson' => $ivasJson,
             'presupuestosJson' => $jsonPrespuestos,
             'tiposFacturaJson'=>$tiposFacturaJson,
-            'tipoFacturaPersonaJson' => $tipoFacturaPersonaJson,
+            'tipoComprobantePersonaJson' => $tipoComprobantePersonaJson,
             'itemsTransaccionJson' =>"[]",
             'empresa' => $empresa,
         ]);

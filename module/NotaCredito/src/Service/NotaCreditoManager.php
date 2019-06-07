@@ -31,7 +31,7 @@ class NotaCreditoManager extends TransaccionManager
     protected $personaManager;
     protected $bienesTransaccionManager;
     protected $ivaManager;
-    private $tipoFacturaManager;
+    private $tipoComprobanteManager;
 
     private $tipo;
     /**
@@ -47,11 +47,11 @@ class NotaCreditoManager extends TransaccionManager
         $formaEnvioManager, 
         $bienesManager,
         $cuentaCorrienteManager,
-        $tipoFacturaManager
+        $tipoComprobanteManager
     ) {
         parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager);
         $this->entityManager = $entityManager;
-        $this->tipoFacturaManager = $tipoFacturaManager;
+        $this->tipoComprobanteManager = $tipoComprobanteManager;
         $this->tipo = "NOTA DE CREDITO";
     }
 
@@ -96,11 +96,11 @@ class NotaCreditoManager extends TransaccionManager
         if (isset($data['total_letras'])) {
             $notaCredito->setImporte_letras($data['total_letras']);
         }
-        if (isset($data['tipo_factura'])){
+        if (isset($data['tipo_comprobante'])){
             if ($data['tipo']!=-1){
-                $idTipo = $data['tipo_factura'];
-                $tipo = $this->tipoFacturaManager->getTipoFactura($idTipo);
-                $notaCredito->setTipo($tipo);
+                $idTipo = $data['tipo_comprobante'];
+                $tipo = $this->tipoComprobanteManager->getTipoComprobante($idTipo);
+                $notaCredito->setTipo_comprobante($tipo);
             }
         }
         return $notaCredito;

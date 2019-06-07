@@ -44,14 +44,11 @@ class NotaCredito {
 
         /**
      * Many Services have One Transaccion.
-     * @ORM\ManyToOne(targetEntity="TipoFactura")
-     * @ORM\JoinColumn(name="ID_TIPO_NOTA_CREDITO", referencedColumnName="ID")
+     * @ORM\ManyToOne(targetEntity="TipoComprobante")
+     * @ORM\JoinColumn(name="ID_TIPO_COMPROBANTE", referencedColumnName="ID")
      */
-    private $tipo;
+    private $tipo_comprobante;
    
-
-
-
     /**
      * Get the value of id_cobro
      */ 
@@ -112,13 +109,12 @@ class NotaCredito {
         return $this;
     }
 
-
     /**
      * Get many Services have One Transaccion.
      */ 
-    public function getTipo_factura()
+    public function getTipo_comprobante()
     {
-        return $this->tipo_factura;
+        return $this->tipo_comprobante;
     }
 
     /**
@@ -126,9 +122,9 @@ class NotaCredito {
      *
      * @return  self
      */ 
-    public function setTipo_factura($tipo_factura)
+    public function setTipo_comprobante($tipo_comprobante)
     {
-        $this->tipo_factura = $tipo_factura;
+        $this->tipo_comprobante = $tipo_comprobante;
 
         return $this;
     }
@@ -173,23 +169,4 @@ class NotaCredito {
         return $this;
     }
 
-    /**
-     * Get many Services have One Transaccion.
-     */ 
-    public function getTipo()
-    {
-        return $this->tipo;
-    }
-
-    /**
-     * Set many Services have One Transaccion.
-     *
-     * @return  self
-     */ 
-    public function setTipo($tipo)
-    {
-        $this->tipo = $tipo;
-
-        return $this;
-    }
 }

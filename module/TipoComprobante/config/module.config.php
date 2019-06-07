@@ -1,9 +1,9 @@
 <?php
 /**
- * Esta clase configura las rutas del modulo TipoFactura
+ * Esta clase configura las rutas del modulo TipoComprobante
  */
 
-namespace TipoFactura;
+namespace TipoComprobante;
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Zend\Router\Http\Literal;
@@ -14,12 +14,12 @@ use Application;
 return [
    'router' => [
         'routes' => [
-            'tipofactura' => [
+            'tipocomprobante' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/tipofactura',
+                    'route'    => '/tipocomprobante',
                     'defaults' => [
-                        'controller'    => Controller\TipoFacturaController::class,
+                        'controller'    => Controller\TipoComprobanteController::class,
                         'action'        => 'index',
                     ],
                 ],
@@ -69,17 +69,17 @@ return [
     
  'controllers' => array(
         'factories' => [
-            Controller\TipoFacturaController::class => Controller\Factory\TipoFacturaControllerFactory::class,
+            Controller\TipoComprobanteController::class => Controller\Factory\TipoComprobanteControllerFactory::class,
         ],
      ),
      'view_manager' => array(
          'template_path_stack' => array(
-             'TipoFactura' => __DIR__ . '/../view',
+             'TipoComprobante' => __DIR__ . '/../view',
          ),
      ),
     'service_manager' => array(
         'factories' => array(
-            Service\TipoFacturaManager::class => Service\Factory\TipoFacturaManagerFactory::class,
+            Service\TipoComprobanteManager::class => Service\Factory\TipoComprobanteManagerFactory::class,
         ),
     )
  ];

@@ -19,7 +19,7 @@ $(document).ready(function() {
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
             <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
             <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Tipos de Facturas</li>
+            <li class="breadcrumb-item active" aria-current="page">Tipos de Comprobantes</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
             <li class="pull-right"><a href="<?= $this->url('herramientas'); ?>" id="volver">Volver</a></li>
@@ -31,12 +31,12 @@ $(document).ready(function() {
 <!--Bloqueo de pantalla + animacion-->
 <div id="bloquea" class="cargando" style="display:none;"></div>
 <div class="" id="loader"></div>
-<!-- Inicio: Tabla Facturas -->
+<!-- Inicio: Tabla Comprobantes -->
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading text-center titulo-espaciado">
-                TIPOS DE FACTURA
+                TIPOS DE COMPROBANTE
                 <a data-toggle="collapse" data-parent="#accordion" href="#add_tipo_evento" aria-expanded="true"
                     aria-controls="add_tipo_evento">
                     <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
@@ -47,14 +47,23 @@ $(document).ready(function() {
                     <form method="post">
                         <div class="row form-row">
                             <div class="form-group col-md-3">
-                                <label>Tipo de Factura</label>
+                                <label>Nombre</label>
                                 <input type="text" class="form-control" id="nombre" name="nombre"
-                                    placeholder="Forma de Pago" required>
+                                    placeholder="Nombre" required>
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Descripción</label>
                                 <input type="text" class="form-control" name="descripcion"
                                     placeholder="Descripcion" >
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Código</label>
+                                <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Código" 
+                                    maxlength="3" onkeypress="return justNumbers(event);">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Tipo</label>
+                                <input type="text" class="form-control" name="tipo" placeholder="Tipo" maxlength="1">
                             </div>
                         </div>
                         <div class="row form-row">
@@ -62,7 +71,7 @@ $(document).ready(function() {
                                 <button type="button" class="btn btn-default" data-toggle="modal"
                                     data-target="#myModal">
                                     <span class="glyphicon glyphicon-plus"></span>
-                                    Tipo de Factura
+                                    Tipo de Comprobante
                                 </button>
                             </div>
                         </div>
@@ -73,10 +82,10 @@ $(document).ready(function() {
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Agregar Tipo de Factura </h4>
+                                        <h4 class="modal-title">Agregar Tipo de Comprobante </h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p>¿Está seguro que desea agregar este tipo de factura?</p>
+                                        <p>¿Está seguro que desea agregar este tipo de comprobante?</p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-default">Aceptar</button>
@@ -95,32 +104,36 @@ $(document).ready(function() {
                         <table id="tabla_evento" class="table table-bordred table-hover table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="th-sm"> Tipo de Factura</th>
+                                    <th class="th-sm">Nombre</th>
                                     <th class="">Descripción</th>
+                                    <th class="">Código</th>
+                                    <th class="">Tipo</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                    foreach ($tipoFacturas as $tipoFactura) : ?>
+                                    foreach ($tipoComprobantes as $tipoComprobante) : ?>
                                     <tr>
-                                        <td><?php echo ($tipoFactura->getNombre()); ?></td>
-                                        <td><?php echo ($tipoFactura->getDescripcion()); ?></td>                  
-                                        <td id="<?= $tipoFactura->getId() ?>" class="">
+                                        <td><?php echo ($tipoComprobante->getDescripcion()); ?></td>
+                                        <td><?php echo ($tipoComprobante->getDescripcion()); ?></td>
+                                        <td><?php echo (str_pad($tipoComprobante->getCodigo(), 3, "0", STR_PAD_LEFT)); ?></td>
+                                        <td><?php echo ($tipoComprobante->getTipo()); ?></td>
+                                        <td id="<?= $tipoComprobante->getId() ?>" class="">
                                             <div class="pull-right">
-                                                <a href="<?= $this->url('tipofactura/editar', ['id' =>$tipoFactura->getId()]) ?>"
+                                                <a href="<?= $this->url('tipocomprobante/editar', ['id' =>$tipoComprobante->getId()]) ?>"
                                                     type="button" class="btn btn-default btn-sm">
                                                     <span class="glyphicon glyphicon-pencil"></span>
                                                 </a>
-                                                <button name="<?= $tipoFactura->getId() ?>" id="<?= $tipoFactura->getId() ?>" type="button" 
+                                                <button name="<?= $tipoComprobante->getId() ?>" id="<?= $tipoComprobante->getId() ?>" type="button" 
                                                     class="btn btn-default btn-sm" data-toggle="modal" 
-                                                    data-target="#myModal<?= $tipoFactura->getId() ?>">
+                                                    data-target="#myModal<?= $tipoComprobante->getId() ?>">
                                                     <span class="glyphicon glyphicon-trash"></span>
                                                 </button>
                                             </div>
                                         </td>   
                                         <!-- Modal -->
-                                        <div id="myModal<?= $tipoFactura->getId() ?>" class="modal fade" role="dialog">
+                                        <div id="myModal<?= $tipoComprobante->getId() ?>" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
@@ -131,12 +144,12 @@ $(document).ready(function() {
                                                     </div>
                                                     <div class="modal-body">
                                                         <p>
-                                                            ¿Está seguro que desea eliminar el tipo de factura: 
-                                                            "<?= $this->escapeHtml($tipoFactura->getNombre()) ?>"?
+                                                            ¿Está seguro que desea eliminar el tipo de comprobante: 
+                                                            "<?= $this->escapeHtml($tipoComprobante->getDescripcion()) ?>"?
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="<?= $this->url('tipofactura/borrar', ['action' => 'remove', 'id' => $tipoFactura->getId()]); ?>"
+                                                        <a href="<?= $this->url('tipocomprobante/borrar', ['action' => 'remove', 'id' => $tipoComprobante->getId()]); ?>"
                                                             onclick="bloqueaPantalla()" type="button">
                                                             <span class="btn btn-default">Aceptar</span></a>
                                                         <button type="button" class="btn btn-default"

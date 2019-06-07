@@ -10,7 +10,7 @@ use Evento\Service\EventoManager;
 use Persona\Service\PersonaManager;
 use DatoAdicional\Service\DatoAdicionalManager;
 use Servicio\Service\ServicioManager;
-use TipoFactura\Service\TipoFacturaManager;
+use TipoComprobante\Service\TipoComprobanteManager;
 use CuentaCorriente\Service\CuentaCorrienteManager;
 
 class ClientesControllerFactory implements FactoryInterface {
@@ -22,10 +22,10 @@ class ClientesControllerFactory implements FactoryInterface {
         $personaManager = $container->get(PersonaManager::class);
         $datoAdicionalManager = $container->get(DatoAdicionalManager::class);
         $servicioManager = $container->get(ServicioManager::class);
-        $tipoFacturaManager = $container->get(TipoFacturaManager::class);
+        $tipoComprobanteManager = $container->get(TipoComprobanteManager::class);
         $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);
 
         return new ClientesController($clientesManager, $tipoEventosManager,
-         $eventoManager, $personaManager, $datoAdicionalManager, $servicioManager, $tipoFacturaManager, $cuentaCorrienteManager);
+         $eventoManager, $personaManager, $datoAdicionalManager, $servicioManager, $tipoComprobanteManager, $cuentaCorrienteManager);
     }    
 }

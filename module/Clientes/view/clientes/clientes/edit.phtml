@@ -19,7 +19,7 @@ $servicio = $cliente->getServicio();
 $version = $cliente->getVersion();
 $profesion = $cliente->getProfesion();
 $condicion_iva = $persona->getCondicion_iva();
-$tipo_factura = $persona->getTipo_factura();
+$tipo_comprobante = $persona->getTipo_comprobante();
 $actividad = $cliente->getActividad();
 $animales = $cliente->getAnimales();
 $establecimientos = $cliente->getEstablecimientos();
@@ -223,13 +223,13 @@ $raza_manejo = $cliente->getRazaManejo();
                     </div>
                     <div class="form-group col-md-4">
                         <label>Tipo de Factura</label>
-                        <select class="form-control  place_holder dropdown" id="tipo_factura" name="tipo_factura">
-                        <option value="<?php if(isset($tipo_factura)){ echo ($tipo_factura->getId()); }?>" hidden=""><?php if(isset($tipo_factura)){ echo($tipo_factura->getNombre()); } else {echo ("Seleccionar");}?>
+                        <select class="form-control  place_holder dropdown" id="tipo_comprobante" name="tipo_comprobante">
+                        <option value="<?php if(isset($tipo_comprobante)){ echo ($tipo_comprobante->getId()); }?>" hidden=""><?php if(isset($tipo_comprobante)){ echo($tipo_comprobante->getNombre()); } else {echo ("Seleccionar");}?>
                             </option>  
                             <option value="" hidden="">Seleccionar</option>
                             <option value="-1">No definido</option>
-                            <?php foreach ($tiposFactura as $tipo_factura) : ?>
-                                <option value="<?php echo ($tipo_factura->getId()); ?>"><?php echo ($tipo_factura->getNombre()); ?></option>
+                            <?php foreach ($tiposFactura as $tipo_comprobante) : ?>
+                                <option value="<?php echo ($tipo_comprobante->getId()); ?>"><?php echo ($tipo_comprobante->getNombre()); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>                   

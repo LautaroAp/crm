@@ -15,7 +15,7 @@ use FormaPago\Service\FormaPagoManager;
 use FormaEnvio\Service\FormaEnvioManager;
 use Iva\Service\IvaManager;
 use Empresa\Service\EmpresaManager;
-use TipoFactura\Service\TipoFacturaManager;
+use TipoComprobante\Service\TipoComprobanteManager;
 
 // use Transaccion\Service\TransaccionManager;
 
@@ -41,13 +41,13 @@ class NotaCreditoControllerFactory implements FactoryInterface {
         $formaEnvioManager = $container->get(FormaEnvioManager::class);
         $ivaManager = $container->get(IvaManager::class);
         $empresaManager= $container->get(EmpresaManager::class);
-        $tipoFacturaManager = $container->get(TipoFacturaManager::class);
+        $tipoComprobanteManager = $container->get(TipoComprobanteManager::class);
 
         // $transaccionManager = $container->get(TransaccionManager::class);            
 
 
         // Instantiate the service and inject dependencies
         return new NotaCreditoController($notaCreditoManager, $monedaManager, $personaManager, $clientesManager, 
-        $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager, $empresaManager, $tipoFacturaManager);
+        $proveedorManager,$bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager, $empresaManager, $tipoComprobanteManager);
     }    
 }

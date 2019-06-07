@@ -81,23 +81,23 @@ function completarIvas (ivas){
     }
 }
 
-function completarTiposFactura (tiposFactura, tipoFacturaPersona){
+function completarTiposFactura (tiposFactura, tipoComprobantePersona){
     var myDiv = document.getElementById("tipos_factura");
     var selectList = document.createElement("select");
     selectList.id = "select_facturas";
-    selectList.name="tipo_factura";
+    selectList.name="tipo_comprobante";
     selectList.setAttribute("class", "form-control");
     selectList.required=true;    
     myDiv.appendChild(selectList);
     //Create and append the options
     var option = document.createElement("option");
-    if ((tipoFacturaPersona=="-1") ||(tipoFacturaPersona==="")){
+    if ((tipoComprobantePersona=="-1") ||(tipoComprobantePersona==="")){
            option.value = "";
            option.text = "Seleccionar";
     }
     else{
-        option.value = tipoFacturaPersona['Id'];
-        option.text = tipoFacturaPersona['Nombre'];
+        option.value = tipoComprobantePersona['Id'];
+        option.text = tipoComprobantePersona['Nombre'];
     }
     option.setAttribute("hidden","");
     selectList.appendChild(option);

@@ -112,9 +112,9 @@ class Cobro {
     /**
      * Get many Services have One Transaccion.
      */ 
-    public function getTipo_factura()
+    public function getTipo_comprobante()
     {
-        return $this->tipo_factura;
+        return $this->tipo_comprobante;
     }
 
     /**
@@ -122,9 +122,9 @@ class Cobro {
      *
      * @return  self
      */ 
-    public function setTipo_factura($tipo_factura)
+    public function setTipo_comprobante($tipo_comprobante)
     {
-        $this->tipo_factura = $tipo_factura;
+        $this->tipo_comprobante = $tipo_comprobante;
 
         return $this;
     }

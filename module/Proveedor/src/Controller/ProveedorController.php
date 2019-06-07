@@ -24,7 +24,7 @@ class ProveedorController extends HuellaController
      */
     protected $tipoEventosManager;
     protected $personaManager;
-    protected $tipoFacturaManager;
+    protected $tipoComprobanteManager;
     protected $cuentaCorrienteManager;
 
     public function __construct(
@@ -32,14 +32,14 @@ class ProveedorController extends HuellaController
         $tipoEventosManager,
         $eventoManager,
         $personaManager,
-        $tipoFacturaManager,
+        $tipoComprobanteManager,
         $cuentaCorrienteManager
     ) {
         $this->proveedorManager = $proveedorManager;
         $this->tipoEventosManager = $tipoEventosManager;
         $this->eventoManager = $eventoManager;
         $this->personaManager = $personaManager;
-        $this->tipoFacturaManager = $tipoFacturaManager;
+        $this->tipoComprobanteManager = $tipoComprobanteManager;
         $this->cuentaCorrienteManager = $cuentaCorrienteManager;
 
     }
@@ -101,7 +101,7 @@ class ProveedorController extends HuellaController
         $tipo= $this->params()->fromRoute('tipo');
         $categorias = $this->proveedorManager->getCategoriasProveedor($tipo);
         $condiciones_iva = $this->proveedorManager->getCondicionIva('iva');
-        $tiposFactura = $this->tipoFacturaManager->getTipoFacturas();
+        $tiposFactura = $this->tipoComprobanteManager->getTipoComprobantes();
         $pais = $this->proveedorManager->getPais();
         $provincia = $this->proveedorManager->getProvincia();
         // $licencia = $this->proveedorManager->getLicencia();
@@ -147,7 +147,7 @@ class ProveedorController extends HuellaController
         $condiciones_iva = $this->proveedorManager->getCondicionIva('iva');
         $pais = $this->proveedorManager->getPais();
         $provincia = $this->proveedorManager->getProvincia();
-        $tiposFactura = $this->tipoFacturaManager->getTipoFacturas();
+        $tiposFactura = $this->tipoComprobanteManager->getTipoComprobantes();
         $_SESSION['TIPOEVENTO']['TIPO']=$tipo;
         if ($request->isPost()) {
             $data = $this->params()->fromPost();

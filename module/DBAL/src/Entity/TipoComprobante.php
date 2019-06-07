@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * This class represents a registered categoriaProducto.
  * @ORM\Entity()
- * @ORM\Table(name="TIPO_FACTURA")
+ * @ORM\Table(name="TIPO_COMPROBANTE")
  */
-class TipoFactura
+class TipoComprobante
 {
     /**
      * @ORM\Id
@@ -20,14 +20,26 @@ class TipoFactura
     protected $id;
 
     /**
-     * @ORM\Column(name="NOMBRE", nullable=true, type="string")
+     * Many Services have One Transaccion.
+     * @ORM\ManyToOne(targetEntity="Comprobante")
+     * @ORM\JoinColumn(name="ID_COMPROBANTE", referencedColumnName="ID")
      */
-    protected $nombre;
+    protected $comprobante;
 
     /**
      * @ORM\Column(name="DESCRIPCION", nullable=true, type="string")
      */
     protected $descripcion;
+
+    /**
+     * @ORM\Column(name="CODIGO", nullable=true, type="integer")
+     */
+    protected $codigo;
+
+    /**
+     * @ORM\Column(name="TIPO", nullable=true, type="string")
+     */
+    protected $tipo;
 
     /**
      * Get the value of id
@@ -52,7 +64,7 @@ class TipoFactura
      */ 
     public function getNombre()
     {
-        return $this->nombre;
+        // return $this->nombre;
     }
 
     /**
@@ -62,7 +74,7 @@ class TipoFactura
      */ 
     public function setNombre($nombre)
     {
-        $this->nombre = $nombre;
+        // $this->nombre = $nombre;
 
         return $this;
     }
@@ -94,5 +106,45 @@ class TipoFactura
         $output .= '"Nombre": "' . $this->getNombre() .'" ';
     
         return  '{'.$output.'}' ;
+    }
+
+    /**
+     * Get the value of codigo
+     */ 
+    public function getCodigo()
+    {
+        return $this->codigo;
+    }
+
+    /**
+     * Set the value of codigo
+     *
+     * @return  self
+     */ 
+    public function setCodigo($codigo)
+    {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tipo
+     */ 
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set the value of tipo
+     *
+     * @return  self
+     */ 
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
     }
 }

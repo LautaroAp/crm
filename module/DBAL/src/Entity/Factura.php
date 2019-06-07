@@ -39,10 +39,10 @@ class Factura {
 
     /**
      * Many Services have One Transaccion.
-     * @ORM\ManyToOne(targetEntity="TipoFactura")
-     * @ORM\JoinColumn(name="ID_TIPO_FACTURA", referencedColumnName="ID")
+     * @ORM\ManyToOne(targetEntity="TipoComprobante")
+     * @ORM\JoinColumn(name="ID_TIPO_COMPROBANTE", referencedColumnName="ID")
      */
-    private $tipo_factura;
+    private $tipo_comprobante;
    
 
     /**
@@ -128,9 +128,9 @@ class Factura {
     /**
      * Get many Services have One Transaccion.
      */ 
-    public function getTipo_factura()
+    public function getTipo_comprobante()
     {
-        return $this->tipo_factura;
+        return $this->tipo_comprobante;
     }
 
     /**
@@ -138,9 +138,9 @@ class Factura {
      *
      * @return  self
      */ 
-    public function setTipo_factura($tipo_factura)
+    public function setTipo_comprobante($tipo_comprobante)
     {
-        $this->tipo_factura = $tipo_factura;
+        $this->tipo_comprobante = $tipo_comprobante;
 
         return $this;
     }

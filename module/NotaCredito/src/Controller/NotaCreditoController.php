@@ -20,14 +20,14 @@ class NotaCreditoController extends TransaccionController
     private $bienesTransaccionesManager;
     private $bienesManager;
     
-    public function __construct($notaCreditoManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager, $tipoFacturaManager) {
+    public function __construct($notaCreditoManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager, $tipoComprobanteManager) {
         parent::__construct($notaCreditoManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager, $empresaManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
         $this->notaCreditoManager = $notaCreditoManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->bienesManager = $bienesManager;
-        $this->tipoFacturaManager = $tipoFacturaManager;
+        $this->tipoComprobanteManager = $tipoComprobanteManager;
     }
 
     public function indexAction()
@@ -83,10 +83,10 @@ class NotaCreditoController extends TransaccionController
         $remitosConformados = $this->getRemitosConformados($persona);
         $remitosConformadosJson = $this->getJsonFromObjectList($remitosConformados);
 
-        $tiposFactura= $this->tipoFacturaManager->getTipoFacturas();
+        $tiposFactura= $this->tipoComprobanteManager->getTipoComprobantes();
         $tiposFacturaJson =$this->getJsonFromObjectList($tiposFactura);
-        $tipoFacturaPersona = $persona->getTipo_factura();
-        $tipoFacturaPersonaJson ="";
+        $tipoComprobantePersona = $persona->getTipo_comprobante();
+        $tipoComprobantePersonaJson ="";
         $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
 
         $this->reiniciarParams();
@@ -105,7 +105,7 @@ class NotaCreditoController extends TransaccionController
             'remitosConformadosJson'=>$remitosConformadosJson,
             'empresaJson' => $empresaJson,
             'tiposFacturaJson'=>$tiposFacturaJson,
-            'tipoFacturaPersonaJson' => $tipoFacturaPersonaJson,
+            'tipoComprobantePersonaJson' => $tipoComprobantePersonaJson,
             'itemsTransaccionJson' =>"[]",
         ]);
     }
@@ -162,25 +162,20 @@ class NotaCreditoController extends TransaccionController
         return $view;
    }
 
-    // PDF
+    // PDF TIPO A
     public function pdfAction() {
         $this->layout()->setTemplate('layout/nulo');
         $id_transaccion = $this->params()->fromRoute('id');
         $notaCredito = $this->notaCreditoManager->getNotaCreditoFromTransaccionId($id_transaccion);
         $items = array();
-
         if (!is_null($notaCredito)) {
             $items = $notaCredito->getTransaccion()->getBienesTransacciones();
         }
-       
         $json = "";
         $json = $this->getJsonFromObjectList($items);
-       
         $persona = $notaCredito->getTransaccion()->getPersona();
         $tipoPersona = null;
-
         $empresa = $this->empresaManager->getEmpresa();
-
         $numTransacciones = $notaCredito->getTransaccion()->getNumero();
         $numNotaCredito = $notaCredito->getNumero();
         $monedasJson = $this->getJsonMonedas();
@@ -212,7 +207,6 @@ class NotaCreditoController extends TransaccionController
         ]);
     }
 
-   
    public function getItemsPreviosAction(){
         $this->layout()->setTemplate('layout/nulo');
         $numPresupuesto = $this->params()->fromRoute('id');

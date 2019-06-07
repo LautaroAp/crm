@@ -653,12 +653,12 @@ return [
                             ],
                         ],
                     ],
-                    'tipofactura' => [
+                    'tipocomprobante' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/tipofactura',
+                            'route' => '/tipocomprobante',
                             'defaults' => [
-                                'controller' => \TipoFactura\Controller\TipoFacturaController::class,
+                                'controller' => \TipoComprobante\Controller\TipoComprobanteController::class,
                                 'action' => 'index',
                             ],
                         ],

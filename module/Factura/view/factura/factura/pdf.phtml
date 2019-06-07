@@ -87,8 +87,8 @@ for ($i=1; $i <= 3; $i++) {
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    if($factura->getTipo_factura()){
-        $tipo_factura = $factura->getTipo_factura()->getNombre();
+    if($factura->getTipo_comprobante()){
+        $tipo_comprobante = $factura->getTipo_comprobante()->getNombre();
     }
 
     // Datos Empresa y Comprobante
@@ -98,7 +98,7 @@ for ($i=1; $i <= 3; $i++) {
                 <tr style="font-size: 14px; font-weight: bold;">
                     <th align="center" width="45%">'. $empresa->getNombre() .'</th>
                     <th width="2%"></th>
-                    <th align="center" width="6%" border="0.5" style="font-size: 18px;">&nbsp;'. $tipo_factura .'</th>
+                    <th align="center" width="6%" border="0.5" style="font-size: 18px;">&nbsp;'. $tipo_comprobante .'</th>
                     <th width="2%"></th>
                     <th align="left" width="45%">'. strtoupper($transaccion->getNombre()) .'</th>
                 </tr>

@@ -1,25 +1,25 @@
 <?php
 
-namespace TipoFactura\Controller\Factory;
+namespace Comprobante\Controller\Factory;
 
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use TipoFactura\Controller\TipoFacturaController;
-use TipoFactura\Service\TipoFacturaManager;
+use Comprobante\Controller\ComprobanteController;
+use Comprobante\Service\ComprobanteManager;
 use Persona\Service\PersonaManager;
 
 /**
- * Description of TipoFacturaControllerFactory
+ * Description of ComprobanteControllerFactory
  *
  */
-class TipoFacturaControllerFactory implements FactoryInterface {
+class ComprobanteControllerFactory implements FactoryInterface {
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null) {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
-        $tipoFacturaManager = $container->get(TipoFacturaManager::class);
+        $comprobanteManager = $container->get(ComprobanteManager::class);
         $personaManager = $container->get(PersonaManager::class);
 
         // Instantiate the service and inject dependencies
-        return new TipoFacturaController($entityManager, $tipoFacturaManager, $personaManager);
+        return new ComprobanteController($entityManager, $comprobanteManager, $personaManager);
     }
 }

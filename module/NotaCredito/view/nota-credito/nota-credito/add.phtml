@@ -61,8 +61,8 @@ if ($persona->getTipo() =="PROVEEDOR"){
 }
 $responsable = $this->identity();
 $tipoPersona = strtoupper($persona->getTipo());
-if ($tipoFacturaPersonaJson==""){
-    $tipoFacturaPersonaJson="-1";
+if ($tipoComprobantePersonaJson==""){
+    $tipoComprobantePersonaJson="-1";
 }
 
 ?>
@@ -162,8 +162,8 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             <label>Tipo de Nota de Credito</label>
                             <script>
                                 var tiposFactura = <?php echo ($tiposFacturaJson); ?>;
-                                var tipoFacturaPersona = "<?= $tipoFacturaPersonaJson ?>";
-                                completarTiposFactura(tiposFactura, tipoFacturaPersona);
+                                var tipoComprobantePersona = "<?= $tipoComprobantePersonaJson ?>";
+                                completarTiposFactura(tiposFactura, tipoComprobantePersona);
                             </script>        
                         </div>
                         <div class="form-group col-md-2" id="tipos_notaCredito">

@@ -105,11 +105,11 @@ class Persona {
 
     
     /**
-     * Many Personas have One TipoFactura.
-     * @ORM\ManyToOne(targetEntity="TipoFactura")
-     * @ORM\JoinColumn(name="ID_TIPO_FACTURA", referencedColumnName="ID")
+     * Many Personas have One TipoComprobante.
+     * @ORM\ManyToOne(targetEntity="TipoComprobante")
+     * @ORM\JoinColumn(name="ID_TIPO_COMPROBANTE", referencedColumnName="ID")
      */
-    private $tipo_factura;
+    private $tipo_comprobante;
 
     public function getId()
     {
@@ -373,30 +373,30 @@ class Persona {
     }
 
     /**
-     * Get many Personas have One TipoFactura.
+     * Get many Personas have One TipoComprobante.
      */ 
-    public function getTipo_factura()
+    public function getTipo_comprobante()
     {
-        return $this->tipo_factura;
+        return $this->tipo_comprobante;
     }
 
     /**
-     * Set many Personas have One TipoFactura.
+     * Set many Personas have One TipoComprobante.
      *
      * @return  self
      */ 
-    public function setTipo_factura($tipo_factura)
+    public function setTipo_comprobante($tipo_comprobante)
     {
-        $this->tipo_factura = $tipo_factura;
+        $this->tipo_comprobante = $tipo_comprobante;
 
         return $this;
     }
 
-    public function getNombreTipoFactura() {
-        if (is_null($this->tipo_factura)) {
+    public function getNombreTipoComprobante() {
+        if (is_null($this->tipo_comprobante)) {
             return null;
         } else {
-            return (($this->tipo_factura->getNombre()));
+            return (($this->tipo_comprobante->getNombre()));
         }
     }
 }

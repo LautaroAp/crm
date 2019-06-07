@@ -22,14 +22,14 @@ class PersonaManager {
      */
     private $entityManager;
 
-    private $tipoFacturaManager;
+    private $tipoComprobanteManager;
 
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $tipoFacturaManager) {
+    public function __construct($entityManager, $tipoComprobanteManager) {
         $this->entityManager = $entityManager;
-        $this->tipoFacturaManager = $tipoFacturaManager;
+        $this->tipoComprobanteManager = $tipoComprobanteManager;
     }
 
     //La funcion getTabla() devuelve tabla de clientes sin filtro    
@@ -93,9 +93,9 @@ class PersonaManager {
         if (isset($data['cuit_cuil'])){
             $persona->setCuit_cuil($data['cuit_cuil']);
         }
-        if (isset($data['tipo_factura'])){
-            $tipoFactura = $this->tipoFacturaManager->getTipoFactura($data['tipo_factura']);
-            $persona->setTipo_factura($tipoFactura);
+        if (isset($data['tipo_comprobante'])){
+            $tipoComprobante = $this->tipoComprobanteManager->getTipoComprobante($data['tipo_comprobante']);
+            $persona->setTipo_comprobante($tipoComprobante);
         }
     }
 
@@ -241,10 +241,10 @@ class PersonaManager {
         $this->entityManager->flush();
     }
 
-    public function eliminarTipoFactura($id) {
-        $personas = $this->entityManager->getRepository(Persona::class)->findBy(['tipo_factura'=>$id]);
+    public function eliminarTipoComprobante($id) {
+        $personas = $this->entityManager->getRepository(Persona::class)->findBy(['tipo_comprobante'=>$id]);
         foreach ($personas as $persona) {
-             $persona->setTipo_factura(null);
+             $persona->setTipo_comprobante(null);
         }
         $this->entityManager->flush();
     }

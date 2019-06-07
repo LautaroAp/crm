@@ -20,14 +20,14 @@ class CobroController extends TransaccionController
     private $bienesTransaccionesManager;
     private $bienesManager;
     
-    public function __construct($cobroManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager, $tipoFacturaManager) {
+    public function __construct($cobroManager,$monedaManager, $personaManager, $clientesManager, $proveedorManager, $bienesTransaccionesManager, $bienesManager, $formaPagoManager, $formaEnvioManager, $ivaManager,$empresaManager, $tipoComprobanteManager) {
         parent::__construct($cobroManager, $personaManager,  $monedaManager,$ivaManager, $formaPagoManager, $formaEnvioManager, $empresaManager);
         $this->clientesManager = $clientesManager;
         $this->proveedorManager = $proveedorManager;
         $this->cobroManager = $cobroManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
         $this->bienesManager = $bienesManager;
-        $this->tipoFacturaManager = $tipoFacturaManager;
+        $this->tipoComprobanteManager = $tipoComprobanteManager;
     }
 
     public function indexAction()

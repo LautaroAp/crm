@@ -1,11 +1,11 @@
 <?php
 
-namespace TipoFactura\Controller;
+namespace TipoComprobante\Controller;
 
 use Application\Controller\HuellaController;
 use Zend\View\Model\ViewModel;
 
-class TipoFacturaController extends HuellaController {
+class TipoComprobanteController extends HuellaController {
 
     /**
      * @var DoctrineORMEntityManager
@@ -13,15 +13,15 @@ class TipoFacturaController extends HuellaController {
     protected $entityManager;
 
     /**
-     * TipoFactura manager.
-     * @var User\Service\TipoFacturaManager 
+     * TipoComprobante manager.
+     * @var User\Service\TipoComprobanteManager 
      */
-    protected $TipoFacturaManager;
+    protected $TipoComprobanteManager;
     private $personaManager;
 
-    public function __construct($entityManager, $tipoFacturaManager, $personaManager) {
+    public function __construct($entityManager, $tipoComprobanteManager, $personaManager) {
         $this->entityManager = $entityManager;
-        $this->tipoFacturaManager = $tipoFacturaManager;
+        $this->tipoComprobanteManager = $tipoComprobanteManager;
         $this->personaManager = $personaManager;
     }
 
@@ -32,23 +32,23 @@ class TipoFacturaController extends HuellaController {
     }
 
     private function procesarIndexAction() {
-        $tipoFacturas = $this->tipoFacturaManager->getTipoFacturas();
+        $tipoComprobantes = $this->tipoComprobanteManager->getTipoComprobantes();
         return new ViewModel([
-            'tipoFacturas' => $tipoFacturas,
+            'tipoComprobantes' => $tipoComprobantes,
         ]);
     }
 
     private function procesarAddAction() {
-        $tipoFacturas = $this->tipoFacturaManager->getTipoFacturas();
+        $tipoComprobantes = $this->tipoComprobanteManager->getTipoComprobantes();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $this->limpiarParametros($data);
-            $this->tipoFacturaManager->addTipoFactura($data);
-            return $this->redirect()->toRoute("herramientas/tipofactura");
+            $this->tipoComprobanteManager->addTipoComprobante($data);
+            return $this->redirect()->toRoute("herramientas/tipocomprobante");
             
         }
         return new ViewModel([
-            'tipoFacturas' => $tipoFacturas,
+            'tipoComprobantes' => $tipoComprobantes,
         ]);
     }
 
@@ -59,15 +59,15 @@ class TipoFacturaController extends HuellaController {
 
     public function procesarEditAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
-        // $this->prepararBreadcrumbs("Editar", "/edit/".$id, "Tipo de factura");
-        $tipoFactura = $this->tipoFacturaManager->getTipoFactura($id);
+        // $this->prepararBreadcrumbs("Editar", "/edit/".$id, "Tipo de comprobante");
+        $tipoComprobante = $this->tipoComprobanteManager->getTipoComprobante($id);
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-            $this->tipoFacturaManager->updateTipoFactura($tipoFactura, $data);
-            return $this->redirect()->toRoute('herramientas/tipofactura');
+            $this->tipoComprobanteManager->updateTipoComprobante($tipoComprobante, $data);
+            return $this->redirect()->toRoute('herramientas/tipocomprobante');
         }
         return new ViewModel(array(
-            'tipoFactura' => $tipoFactura,
+            'tipoComprobante' => $tipoComprobante,
         ));
     }
 
@@ -78,10 +78,10 @@ class TipoFacturaController extends HuellaController {
 
     public function procesarRemoveAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
-        $tipoFactura = $this->tipoFacturaManager->getTipoFactura($id);
-        $this->personaManager->eliminarTipoFactura($id);
-        $this->tipoFacturaManager->removeTipoFactura($tipoFactura);
-        return $this->redirect()->toRoute('herramientas/tipofactura');
+        $tipoComprobante = $this->tipoComprobanteManager->getTipoComprobante($id);
+        $this->personaManager->eliminarTipoComprobante($id);
+        $this->tipoComprobanteManager->removeTipoComprobante($tipoComprobante);
+        return $this->redirect()->toRoute('herramientas/tipocomprobante');
     }
 
     public function viewAction() {

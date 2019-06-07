@@ -1,21 +1,46 @@
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas/tipocomprobante'); ?>">Tipos de Comprobantes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
+            <li class="pull-right"><a href="<?= $this->url('herramientas'); ?>" id="volver">Volver</a></li>
+        </ol>
+    </nav>
+</div>
+
 <form method="post">
 <div class="container margen">
     <div class="row">
         <div class="panel panel-default sombra-ficha">
             <div class="panel-heading titulo-espaciado">
-                EDITAR TIPO DE FACTURA
+                EDITAR TIPO DE COMPROBANTE
             </div>
             <div class="panel-body">
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label>Tipo de Factura</label>
+                    <div class="form-group col-md-3">
+                        <label>Nombre</label>
                         <input type="text" class="form-control" name="nombre"
-                            value="<?= $tipoFactura->getNombre(); ?>">
+                            value="<?= $tipoComprobante->getDescripcion(); ?>">
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label>Descripción</label>
                         <input type="text" class="form-control" name="descripcion"
-                            value="<?= $tipoFactura->getDescripcion(); ?>">
+                            value="<?= $tipoComprobante->getDescripcion(); ?>">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Código</label>
+                        <input type="text" class="form-control" name="codigo" id="codigo"
+                            maxlength="3" onkeypress="return justNumbers(event);"
+                            value="<?= $tipoComprobante->getCodigo(); ?>">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Tipo</label>
+                        <input type="text" class="form-control" name="tipo"
+                            maxlength="1" value="<?= $tipoComprobante->getTipo(); ?>">
                     </div>
                 </div>
             </div>
@@ -64,7 +89,7 @@
 
         <div class="col ficha-cliente-p img-centrar">
             <div>
-                <a href="<?= $this->url('herramientas/tipofactura') ?>">
+                <a href="<?= $this->url('herramientas/tipocomprobante') ?>">
                     <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
                     class="img-rounded img-responsive img-texto-derecha zoom">
                 </a>

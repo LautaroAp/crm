@@ -1,8 +1,8 @@
 <?php
 
-namespace TipoFactura\Service;
+namespace TipoComprobante\Service;
 
-use DBAL\Entity\TipoFactura;
+use DBAL\Entity\TipoComprobante;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
@@ -10,7 +10,7 @@ use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
  * This service is responsible for adding/editing categoriaProductos
  * and changing categoriaProducto password.
  */
-class TipoFacturaManager {
+class TipoComprobanteManager {
 
     /**
      * Doctrine entity manager.
@@ -25,38 +25,38 @@ class TipoFacturaManager {
         $this->entityManager = $entityManager;
     }
 
-    public function getTipoFacturas() {
-        $tipoFactura = $this->entityManager->getRepository(TipoFactura::class)->findAll();
-        return $tipoFactura;
+    public function getTipoComprobantes() {
+        $tipoComprobante = $this->entityManager->getRepository(TipoComprobante::class)->findAll();
+        return $tipoComprobante;
     }
 
-    public function getTipoFactura($id) {
-        return $this->entityManager->getRepository(TipoFactura::class)
+    public function getTipoComprobante($id) {
+        return $this->entityManager->getRepository(TipoComprobante::class)
                         ->find($id);
     }
 
     /**
      * This method adds a new categoriaProducto.
      */
-    public function addTipoFactura($data) {
-        $tipoFactura = new TipoFactura();
-        $this->addData($tipoFactura, $data);
-        if ($this->tryAddTipoFactura($tipoFactura)) {
+    public function addTipoComprobante($data) {
+        $tipoComprobante = new TipoComprobante();
+        $this->addData($tipoComprobante, $data);
+        if ($this->tryAddTipoComprobante($tipoComprobante)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría agregada correctamente';
         } else {
             $_SESSION['MENSAJES']['categoria_cliente'] = 0;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Error al agregar categoría';
         }
-        return $tipoFactura;
+        return $tipoComprobante;
     }
 
     /**
      * This method updates data of an existing categoriaProducto.
      */
-    public function updateTipoFactura($tipoFactura, $data) {
-        $this->addData($tipoFactura, $data);        
-        if ($this->tryUpdateTipoFactura($tipoFactura)) {
+    public function updateTipoComprobante($tipoComprobante, $data) {
+        $this->addData($tipoComprobante, $data);        
+        if ($this->tryUpdateTipoComprobante($tipoComprobante)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría editada correctamente';
         } else {
@@ -66,15 +66,17 @@ class TipoFacturaManager {
         return true;
     }
 
-    private function addData($tipoFactura, $data) {
-        $tipoFactura->setNombre($data['nombre']);
-        $tipoFactura->setDescripcion($data['descripcion']);
+    private function addData($tipoComprobante, $data) {
+        // $tipoComprobante->setNombre($data['nombre']);
+        $tipoComprobante->setDescripcion($data['descripcion']);
+        $tipoComprobante->setCodigo($data['codigo']);
+        $tipoComprobante->setTipo(strtoupper($data['tipo']));
     }
 
-    public function removeTipoFactura($id) {
-        $tipoFactura= $this->entityManager->getRepository(TipoFactura::class)
+    public function removeTipoComprobante($id) {
+        $tipoComprobante= $this->entityManager->getRepository(TipoComprobante::class)
                         ->find($id);
-        if ($this->tryRemoveTipoFactura($tipoFactura)) {
+        if ($this->tryRemoveTipoComprobante($tipoComprobante)) {
             $_SESSION['MENSAJES']['categoria_cliente'] = 1;
             $_SESSION['MENSAJES']['categoria_cliente_msj'] = 'Categoría eliminada correctamente';
         } else {
@@ -83,9 +85,9 @@ class TipoFacturaManager {
         }
     }
 
-    private function tryAddTipoFactura($tipoFactura) {
+    private function tryAddTipoComprobante($tipoComprobante) {
         try {
-            $this->entityManager->persist($tipoFactura);
+            $this->entityManager->persist($tipoComprobante);
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {
@@ -95,7 +97,7 @@ class TipoFacturaManager {
         }
     }
 
-    private function tryUpdateTipoFactura($tipoFactura) {
+    private function tryUpdateTipoComprobante($tipoComprobante) {
         try {
             $this->entityManager->flush();
             return true;
@@ -106,9 +108,9 @@ class TipoFacturaManager {
         }
     }
 
-    private function tryRemoveTipoFactura($tipoFactura) {
+    private function tryRemoveTipoComprobante($tipoComprobante) {
         try {
-            $this->entityManager->remove($tipoFactura);
+            $this->entityManager->remove($tipoComprobante);
             $this->entityManager->flush();
             return true;
         } catch (\Exception $e) {

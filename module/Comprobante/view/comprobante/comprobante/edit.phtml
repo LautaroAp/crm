@@ -1,0 +1,105 @@
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
+            <li class="breadcrumb-item"><a href="<?= $this->url('home'); ?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas'); ?>">Herramientas</a></li>
+            <li class="breadcrumb-item"><a href="<?= $this->url('herramientas/comprobante'); ?>">Tipos de Comprobantes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
+            <li class="pull-right"><a href="<?= $this->url('herramientas'); ?>" id="volver">Volver</a></li>
+        </ol>
+    </nav>
+</div>
+
+<form method="post">
+<div class="container margen">
+    <div class="row">
+        <div class="panel panel-default sombra-ficha">
+            <div class="panel-heading titulo-espaciado">
+                EDITAR TIPO DE COMPROBANTE
+            </div>
+            <div class="panel-body">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" name="nombre"
+                            value="<?= $comprobante->getDescripcion(); ?>">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Descripción</label>
+                        <input type="text" class="form-control" name="descripcion"
+                            value="<?= $comprobante->getDescripcion(); ?>">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Código</label>
+                        <input type="text" class="form-control" name="codigo" id="codigo"
+                            maxlength="3" onkeypress="return justNumbers(event);"
+                            value="<?= $comprobante->getCodigo(); ?>">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Tipo</label>
+                        <input type="text" class="form-control" name="tipo"
+                            maxlength="1" value="<?= $comprobante->getTipo(); ?>">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inicio: Modal -->
+<div class="container">   
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Editar categoría</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro que desea editar los datos de este categoría?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">Aceptar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+<!-- Fin: Modal -->
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row img-centrar">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a data-toggle="modal" data-target="#myModal">
+                    <img src="<?= $this->basePath('img/crm/aceptar.png') ?>"
+                        class="img-rounded img-responsive img-texto-derecha img-submenu-sm zoom">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Guardar</label>
+            </div>
+        </div>
+
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $this->url('herramientas/comprobante') ?>">
+                    <img src="<?= $this->basePath('img/crm/volver_b.png') ?>" 
+                    class="img-rounded img-responsive img-texto-derecha zoom">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->
+</form>
+

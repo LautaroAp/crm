@@ -31,7 +31,7 @@ class ClientesController extends HuellaController
     protected $tipoEventosManager;
     protected $personaManager;
     protected $servicioManager;
-    protected $tipoFacturaManager;
+    protected $tipoComprobanteManager;
     protected $cuentaCorrienteManager;
 
 
@@ -42,7 +42,7 @@ class ClientesController extends HuellaController
         $personaManager,
         $datoAdicionalManager,
         $servicioManager,
-        $tipoFacturaManager,
+        $tipoComprobanteManager,
         $cuentaCorrienteManager
     ) {
         $this->clientesManager = $clientesManager;
@@ -51,7 +51,7 @@ class ClientesController extends HuellaController
         $this->personaManager = $personaManager;
         $this->datoAdicionalManager = $datoAdicionalManager;
         $this->servicioManager = $servicioManager;
-        $this->tipoFacturaManager = $tipoFacturaManager;
+        $this->tipoComprobanteManager = $tipoComprobanteManager;
         $this->cuentaCorrienteManager = $cuentaCorrienteManager;
     }
 
@@ -120,7 +120,7 @@ class ClientesController extends HuellaController
         $provincia = $this->clientesManager->getProvincia();
         $servicio = $this->clientesManager->getServicio();
         $categoriasServicio = $this->clientesManager->getCategoriasServicio();
-        $tiposFactura = $this->tipoFacturaManager->getTipoFacturas();
+        $tiposFactura = $this->tipoComprobanteManager->getTipoComprobantes();
         if ($request->isPost()) {
             $data = $this->params()->fromPost();
             $cliente = $this->clientesManager->addCliente($data);
@@ -166,7 +166,7 @@ class ClientesController extends HuellaController
         $profesion = $this->clientesManager->getProfesion();
         $pais = $this->clientesManager->getPais();
         $provincia = $this->clientesManager->getProvincia();
-        $tiposFactura = $this->tipoFacturaManager->getTipoFacturas();
+        $tiposFactura = $this->tipoComprobanteManager->getTipoComprobantes();
         $servicio = $this->clientesManager->getServicio(); 
         $categoriasServicio = $this->clientesManager->getCategoriasServicio();
         if ($request->isPost()) {

@@ -144,11 +144,11 @@ $this->headTitle($title);
                     </div>
                     <div class="form-group col-md-4">
                         <label>Tipo de Factura</label>
-                        <select class="form-control  place_holder dropdown" id="tipo_factura" name="tipo_factura">
+                        <select class="form-control  place_holder dropdown" id="tipo_comprobante" name="tipo_comprobante">
                             <option value="" hidden="">Seleccionar</option>
                             <option value="-1">No definido</option>
-                            <?php foreach ($tiposFactura as $tipo_factura) : ?>
-                                <option value="<?php echo ($tipo_factura->getId()); ?>"><?php echo ($tipo_factura->getNombre()); ?></option>
+                            <?php foreach ($tiposFactura as $tipo_comprobante) : ?>
+                                <option value="<?php echo ($tipo_comprobante->getId()); ?>"><?php echo ($tipo_comprobante->getNombre()); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>          
