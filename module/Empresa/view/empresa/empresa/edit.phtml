@@ -199,18 +199,22 @@ $form->prepare();
             </div>
             <div class="row form-row">
                 <div class="form-group col-md-4">
-                    <label>Fecha de Inicio de Actividades</label>
-                    <div class='input-group date' id='datetimepicker1'>
-                        <input type='text' class="form-control" name="inicio_actividades" value="<?php if(!is_null($empresa->getFecha_inicio_actividades())) {echo ($empresa->getFecha_inicio_actividades()->format('d/m/Y'));}?>"/>
+                    <label>Nro. CAE</label>
+                    <input type='text' class="form-control" name="nro_cae" value="<?= $empresa->getNro_cae() ?>" maxlength="20">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Vencimiento CAE</label>
+                    <div class='input-group date' id='datetimepicker2'>
+                        <input type='text' class="form-control" name="vencimiento_cae" value="<?php if(!is_null($empresa->getVencimiento_cae())) {echo ($empresa->getVencimiento_cae()->format('d/m/Y'));}?>"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label>Vencimiento CAI</label>
-                    <div class='input-group date' id='datetimepicker2'>
-                        <input type='text' class="form-control" name="vencimiento_cai" value="<?php if(!is_null($empresa->getVencimiento_cai())) {echo ($empresa->getVencimiento_cai()->format('d/m/Y'));}?>"/>
+                    <label>Fecha de Inicio de Actividades</label>
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' class="form-control" name="inicio_actividades" value="<?php if(!is_null($empresa->getFecha_inicio_actividades())) {echo ($empresa->getFecha_inicio_actividades()->format('d/m/Y'));}?>"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>

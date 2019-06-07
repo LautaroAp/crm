@@ -79,7 +79,7 @@ class ComprobanteController extends HuellaController {
     public function procesarRemoveAction() {
         $id = (int) $this->params()->fromRoute('id', -1);
         $comprobante = $this->comprobanteManager->getComprobante($id);
-        $this->personaManager->eliminarComprobante($id);
+        // $this->personaManager->eliminarComprobante($id);
         $this->comprobanteManager->removeComprobante($comprobante);
         return $this->redirect()->toRoute('herramientas/comprobante');
     }

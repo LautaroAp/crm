@@ -93,8 +93,9 @@ class EmpresaManager {
         $empresa->setCuit_cuil($data['cuit_cuil']);
         $empresa->setIngresos_brutos($data['ingresos_brutos']);
 
-        $vencimiento_cai = \DateTime::createFromFormat('d/m/Y', $data['vencimiento_cai']);
-        $empresa->setVencimiento_cai($vencimiento_cai);
+        $empresa->setNro_cae($data['nro_cae']);
+        $vencimiento_cae = \DateTime::createFromFormat('d/m/Y', $data['vencimiento_cae']);
+        $empresa->setVencimiento_cae($vencimiento_cae);
         if (!is_null($data['inicio_actividades']) &&  ($data['inicio_actividades']!="")){
             $inicio_actividades = \DateTime::createFromFormat('d/m/Y', $data['inicio_actividades']);
             $empresa->setFecha_inicio_actividades($inicio_actividades);
