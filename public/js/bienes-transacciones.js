@@ -376,7 +376,7 @@ function getItems() {
 // }
 
 function calcularSubcampos() {
-    if (tipoTransaccion!="nota de credito"){
+    if ((tipoTransaccion!="nota de credito") && (tipoTransaccion!="nota de debito")){
         var table = document.getElementById("table_bienes");
         var sumBonificacion = 0;
         var sumSubtotal = 0;

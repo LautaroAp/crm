@@ -279,16 +279,48 @@ function borrarCampos(){
 
 }
 
-function calcularTotal(){
+// function calcularTotal(){
+//     var sumTotal = 0;
+//     for (var i = 0; i < items.length; i++) {
+//         subtotal = items[i]["Totales"];
+//         console.log(subtotal);
+//         sumTotal = sumTotal + parseFloat(subtotal);
+//     }
+//     $("#total_general").val((parseFloat(sumTotal)).toFixed(2));
+// }
+
+
+function calcularTotal() {
+    var bonificacion_general = 0;
+    var recargo_general = 0;
     var sumTotal = 0;
+
     for (var i = 0; i < items.length; i++) {
         subtotal = items[i]["Totales"];
         console.log(subtotal);
         sumTotal = sumTotal + parseFloat(subtotal);
     }
-    $("#total_general").val((parseFloat(sumTotal)).toFixed(2));
-    // $("#total_letras").val(intToChar(sumTotal));
 
+    bonificacion_general = $("#bonificacion_general").val();
+    recargo_general = $("#recargo_general").val();
+
+    console.log("Bonif / Recargo");
+    console.log(bonificacion_general);
+    console.log(recargo_general);
+
+    var total_general = sumTotal - (sumTotal * bonificacion_general / 100) + (sumTotal * recargo_general / 100);
+    var bonificacion_importe = sumTotal * bonificacion_general / 100;
+    var recargo_importe = sumTotal * recargo_general / 100;
+
+    console.log("Total");
+    console.log(bonificacion_importe);
+    console.log(recargo_importe);
+    console.log(total_general);
+
+    $("#bonificacion_importe").val((parseFloat(bonificacion_importe).toFixed(2)));
+    $("#recargo_importe").val((parseFloat(recargo_importe).toFixed(2)));
+    $("#total_general").val((parseFloat(total_general).toFixed(2)));
+    $("#jsonitems").val(JSON.stringify(items));
 }
 
 ///////////////////////////////////////////////////////////////
