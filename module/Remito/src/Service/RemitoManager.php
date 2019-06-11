@@ -43,9 +43,9 @@ class RemitoManager extends TransaccionManager{
         $formaPagoManager,
         $formaEnvioManager,
         $bienesManager, 
-        $cuentaCorrienteManager) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, 
-                            $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager);
+        $cuentaCorrienteManager,
+        $comprobanteManager) {
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager,$formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager, $comprobanteManager);
         $this->entityManager = $entityManager;
         $this->tipo = "REMITO";
     }

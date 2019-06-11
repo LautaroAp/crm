@@ -40,6 +40,9 @@ class CobroController extends TransaccionController
         return "cobro";
     }
 
+    public function getIdComprobante(){
+        return 5;
+    }
     public function addAction()
     {
         $json="[]";
@@ -62,6 +65,7 @@ class CobroController extends TransaccionController
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
             $data['tipo_persona'] = $tipoPersona;
+            $data['idComprobante'] = $this->getIdComprobante();
             $this->cobroManager->add($data);
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);

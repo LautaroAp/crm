@@ -46,11 +46,12 @@ class FacturaManager extends TransaccionManager
         $formaEnvioManager, 
         $bienesManager,
         $cuentaCorrienteManager,
-        $tipoComprobanteManager
+        $tipoComprobanteManager,
+        $comprobanteManager
     ) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager);
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager, $comprobanteManager);
         $this->entityManager = $entityManager;
-        $this->tipo = "COBRO";
+        $this->tipo = "Factura";
         $this->tipoComprobanteManager = $tipoComprobanteManager;
     }
 

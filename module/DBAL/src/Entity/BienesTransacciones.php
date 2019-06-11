@@ -83,6 +83,26 @@ class BienesTransacciones {
     private $transaccionPrevia;
 
     /**
+     * @ORM\Column(name="IMPORTE_TOTAL", nullable=true, type="decimal")
+     */
+    protected $importeTotal;
+
+
+        /**
+     * @ORM\Column(name="IMPORTE_IVA", nullable=true, type="decimal")
+     */
+    protected $importeIva;
+
+
+        /**
+     * @ORM\Column(name="IMPORTE_BONIFICACION", nullable=true, type="decimal")
+     */
+    protected $importeBonificacion;
+
+
+
+
+    /**
      * Get the value of id
      */ 
     public function getId()
@@ -253,7 +273,8 @@ class BienesTransacciones {
             $output .= '"IVA": ' . $this->getIva()->getJSON() .', ';
         }else{
             $output .= '"IVA": "' . "" .'", ';
-        }       
+        }
+
         $output .= '"ImpIVA": "' . $this->getIvaPeso() .'", ';
         $output .= '"Cantidad": "' . $this->getCantidad() .'", ';
         $output .= '"Dto": "' . $this->getDescuento() .'", ';
@@ -265,46 +286,55 @@ class BienesTransacciones {
         if (!is_null($this->getestadoEntrega())){
             $output .= '"Estado Entrega": "' . $this->getestadoEntrega() .'", ';
         }
+        if (!is_null($this->getSubtotal())){
+            $output .= '"Subtotal": "' . $this->getSubtotal() .'", ';
+        }
+        if (!is_null($this->getImporteBonificacion())){
+            $output .= '"Importe Bonificacion": "' . $this->getImporteBonificacion() .'", ';
+        }
+        if (!is_null($this->getImporteIva())){
+            $output .= '"Importe Iva": "' . $this->getImporteIva() .'", ';
+        }
         if (!is_null($this->getEstadoFactura())){
             $output .= '"Estado Factura": "' . $this->getEstadoFactura() .'", ';
         }
         if (!is_null($this->detalle)){
             $output .= '"Detalle": "' . $this->getDetalle() .'", ';
         }
-        $output .= '"Totales": "' . $this->getSubtotal() .'" ';
+        $output .= '"Totales": "' . $this->getImporteTotal() .'" ';
         
         return  '{'.$output.'}' ;
     }
 
-    public function toArray(){
-        $salida = array();
-        if(!is_null($this->id)){
-            $salida['Id']= $this->id;
-        }
-        else{
-            $salida['Id'] = null;
-        }
-        if (!is_null($this->transaccion)){
-            $salida['Transaccion'] = $this->transaccion->getId();
-        }
-        else{
-            $salida['Transaccion']= null;
-        }
-        if(!is_null($this->transaccionPrevia)){
-            $salida['Transaccion Previa'] = $this->transaccionPrevia->getId();
-        }
-        if(!is_null($this->detalle)){
-            $salida['Detalle']= $this->detalle;
-        }
-        $salida['Bien'] = $this->bien->getId();
-        $salida['Cantidad'] = $this->cantidad;
-        $salida['Dto (%)'] = $this->descuento;
-        $salida['IVA (%)'] = $this->iva->getId();
-        $salida['Totales'] = $this->subtotal;
-        // $salida['Estado Entrega'] = $this->estadoEntrega;
-        // $salida['Estado Factura'] = $this->estadoFactura;
-        return $salida;
-    }
+    // public function toArray(){
+    //     $salida = array();
+    //     if(!is_null($this->id)){
+    //         $salida['Id']= $this->id;
+    //     }
+    //     else{
+    //         $salida['Id'] = null;
+    //     }
+    //     if (!is_null($this->transaccion)){
+    //         $salida['Transaccion'] = $this->transaccion->getId();
+    //     }
+    //     else{
+    //         $salida['Transaccion']= null;
+    //     }
+    //     if(!is_null($this->transaccionPrevia)){
+    //         $salida['Transaccion Previa'] = $this->transaccionPrevia->getId();
+    //     }
+    //     if(!is_null($this->detalle)){
+    //         $salida['Detalle']= $this->detalle;
+    //     }
+    //     $salida['Bien'] = $this->bien->getId();
+    //     $salida['Cantidad'] = $this->cantidad;
+    //     $salida['Dto (%)'] = $this->descuento;
+    //     $salida['IVA (%)'] = $this->iva->getId();
+    //     $salida['Totales'] = $this->subtotal;
+    //     // $salida['Estado Entrega'] = $this->estadoEntrega;
+    //     // $salida['Estado Factura'] = $this->estadoFactura;
+    //     return $salida;
+    // }
 
 
     /**
@@ -403,6 +433,66 @@ class BienesTransacciones {
     public function setTransaccionPrevia($transaccionPrevia)
     {
         $this->transaccionPrevia = $transaccionPrevia;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importeTotal
+     */ 
+    public function getImporteTotal()
+    {
+        return $this->importeTotal;
+    }
+
+    /**
+     * Set the value of importeTotal
+     *
+     * @return  self
+     */ 
+    public function setImporteTotal($importeTotal)
+    {
+        $this->importeTotal = $importeTotal;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importeIva
+     */ 
+    public function getImporteIva()
+    {
+        return $this->importeIva;
+    }
+
+    /**
+     * Set the value of importeIva
+     *
+     * @return  self
+     */ 
+    public function setImporteIva($importeIva)
+    {
+        $this->importeIva = $importeIva;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importeBonificacion
+     */ 
+    public function getImporteBonificacion()
+    {
+        return $this->importeBonificacion;
+    }
+
+    /**
+     * Set the value of importeBonificacion
+     *
+     * @return  self
+     */ 
+    public function setImporteBonificacion($importeBonificacion)
+    {
+        $this->importeBonificacion = $importeBonificacion;
 
         return $this;
     }

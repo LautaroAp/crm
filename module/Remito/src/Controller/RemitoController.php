@@ -44,7 +44,9 @@ class RemitoController extends TransaccionController{
     private function getTipo($tipo_persona=null){
         return "remito";
     }
-
+    private function getIdComprobante(){
+        return 10;
+    }
     public function addAction() {
         $json="[]";
         if (isset($_SESSION['TRANSACCIONES']['REMITO'])) {
@@ -79,6 +81,8 @@ class RemitoController extends TransaccionController{
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
+            $data['idComprobante'] = $this->getIdComprobante();
+
             $this->remitoManager->add($data);
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);

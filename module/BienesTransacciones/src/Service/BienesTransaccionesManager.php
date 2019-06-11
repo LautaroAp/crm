@@ -175,6 +175,7 @@ class BienesTransaccionesManager {
 
     public function bienTransaccionFromArray($array){
         $bienTransaccion = new BienesTransacciones();
+        $precioUnitario = 0; $cantidad=1; $valorIva=0; $valorDto=0;
         if (isset($array['Bien'])){
             if (isset($array['Bien']['Id'])){
                 $bien = $this->bienesManager->getBienId($array['Bien']['Id']);
@@ -186,12 +187,15 @@ class BienesTransaccionesManager {
         }
         if (isset($array['Bien']['Precio']) && $array['Bien']['Precio']!=''){
             $bienTransaccion->setPrecioOriginal($array['Bien']['Precio']);
+            $precioUnitario = $array['Bien']['Precio'];
         }
         if (isset($array['Cantidad'])){
             $bienTransaccion->setCantidad($array['Cantidad']);
+            $cantidad= $array['Cantidad'];
         }
         if (isset($array['Dto']) && $array['Dto']!=''){
             $bienTransaccion->setDescuento($array['Dto']);
+            $valorDto = $array['Dto'];
         }
         if (isset($array['IVA'])){
             if (isset($array['IVA']['Id'])){
@@ -201,19 +205,28 @@ class BienesTransaccionesManager {
                 $iva=$this->ivaManager->getIva($array['IVA']);
             }        
             $bienTransaccion->setIva($iva);
+            $valorIva= $iva->getValor();
         }
         if (isset($array['Totales'])){
-            $subtotal = $array['Totales'];
-            $bienTransaccion->setSubtotal($subtotal);
+            $importeTotal = $array['Totales'];
+            $bienTransaccion->setImporteTotal($importeTotal);
         }
         if (isset($array['Transaccion Previa'])){
             $subtotal = $array['Transaccion Previa']['Subtotal'];
             $bienTransaccion->setSubtotal($subtotal);
+            $precioUnitario = $subtotal;
         }
         if (isset($array['Detalle'])){
             $detalle = $array['Detalle'];
             $bienTransaccion->setDetalle($detalle);
         }
+        $totalDto = $precioUnitario*$cantidad * $valorDto/100;
+        $subtotal = ($precioUnitario * $cantidad) * $totalDto;
+        $totalIva = $subtotal * $valorIva /100;
+
+        $bienTransaccion->setSubtotal($subtotal);
+        $bienTransaccion->setImporteBonificacion($totalDto);
+        $bienTransaccion->setImporteIva($totalIva);
         return $bienTransaccion;
     }
 

@@ -57,6 +57,10 @@ class PresupuestoController extends TransaccionController{
     }
     
 
+    private function getIdComprobante(){
+        return 9;
+    }
+
     public function addAction() {
         $json="[]";
         if (isset($_SESSION['TRANSACCIONES']['PRESUPUESTO'])) {
@@ -91,6 +95,8 @@ class PresupuestoController extends TransaccionController{
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo($persona->getTipo());
             $data['persona'] = $persona;
+            $data['idComprobante'] = $this->getIdComprobante();
+
             $this->presupuestoManager->add($data);
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
@@ -167,6 +173,8 @@ class PresupuestoController extends TransaccionController{
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo($persona->getTipo());
             $data['persona'] = $persona;
+            $data['idComprobante'] = $this->getIdComprobante();
+
             $this->presupuestoManager->edit($presupuesto, $data);
             $url = $data['url'];
             if ($persona->getTipo() == "CLIENTE") {

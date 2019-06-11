@@ -12,7 +12,7 @@ use FormaPago\Service\FormaPagoManager;
 use FormaEnvio\Service\FormaEnvioManager;
 use Bienes\Service\BienesManager;
 use CuentaCorriente\Service\CuentaCorrienteManager;
-
+use Comprobante\Service\ComprobanteManager;
 /**
  * This is the factory class for RemitoManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
@@ -33,7 +33,8 @@ class RemitoManagerFactory
         $formaEnvioManager = $container->get(FormaEnvioManager::class); 
         $bienesManager = $container->get(BienesManager::class);  
         $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);            
+        $comprobanteManager = $container->get(ComprobanteManager::class);            
 
-        return new RemitoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $bienesManager, $cuentaCorrienteManager);
+        return new RemitoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $bienesManager, $cuentaCorrienteManager, $comprobanteManager);
     }
 }

@@ -40,6 +40,10 @@ class NotaDebitoController extends TransaccionController
         return "nota de debito";
     }
 
+    private function getIdComprobante(){
+        return 3;
+    }
+
     public function addAction()
     {
         $json="[]";
@@ -62,6 +66,7 @@ class NotaDebitoController extends TransaccionController
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
             $data['tipo_persona'] = $tipoPersona;
+            $data['idComprobante'] = $this->getIdComprobante();
             $this->notaDebitoManager->add($data);
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
@@ -83,7 +88,7 @@ class NotaDebitoController extends TransaccionController
         $remitosConformados = $this->getRemitosConformados($persona);
         $remitosConformadosJson = $this->getJsonFromObjectList($remitosConformados);
 
-        $tiposFactura= $this->tipoComprobanteManager->getTipoComprobantes();
+        $tiposFactura= $this->tipoComprobanteManager->getTipoComprobantes($this->getIdComprobante());
         $tiposFacturaJson =$this->getJsonFromObjectList($tiposFactura);
         $tipoComprobantePersona = $persona->getTipo_comprobante();
         $tipoComprobantePersonaJson ="";

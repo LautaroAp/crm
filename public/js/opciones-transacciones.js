@@ -97,7 +97,7 @@ function completarTiposFactura (tiposFactura, tipoComprobantePersona){
     }
     else{
         option.value = tipoComprobantePersona['Id'];
-        option.text = tipoComprobantePersona['Nombre'];
+        option.text = tipoComprobantePersona['Tipo'];
     }
     option.setAttribute("hidden","");
     selectList.appendChild(option);

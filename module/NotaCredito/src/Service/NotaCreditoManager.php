@@ -47,9 +47,10 @@ class NotaCreditoManager extends TransaccionManager
         $formaEnvioManager, 
         $bienesManager,
         $cuentaCorrienteManager,
-        $tipoComprobanteManager
+        $tipoComprobanteManager,
+        $comprobanteManager
     ) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager);
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager, $comprobanteManager);
         $this->entityManager = $entityManager;
         $this->tipoComprobanteManager = $tipoComprobanteManager;
         $this->tipo = "NOTA DE CREDITO";

@@ -454,7 +454,13 @@ function calcularSubcampos() {
     $("#venta_bruta").val((parseFloat(sumVentaBruta).toFixed(2)));
     $("#descuento_total").val((parseFloat(sumBonificacion).toFixed(2)));
     $("#iva_total").val((parseFloat(sumIva).toFixed(2)));
-    $("#total_general").val((parseFloat(total_general).toFixed(2)));
+    if (total_general){
+        $("#total_general").val((parseFloat(total_general).toFixed(2)));
+    }
+    else{
+        total_general=0;
+        $("#total_general").val((parseFloat(total_general).toFixed(2)));
+    }
     $("#jsonitems").val(JSON.stringify(items));
     }    
 }

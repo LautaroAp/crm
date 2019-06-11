@@ -153,6 +153,11 @@ class Transaccion {
     protected $oficial;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Comprobante")
+     * @ORM\JoinColumn(name="ID_COMPROBANTE", referencedColumnName="ID")
+     */
+    protected $comprobante;
+    /**
      * Get the value of id
      */ 
     public function getId()
@@ -611,6 +616,9 @@ class Transaccion {
         if (!(is_null($this->numeroTransaccionTipo))){
             $output .= '"Numero Tipo Transaccion": ' . $this->getNumeroTransaccionTipo().', ';
         }
+        if (!(is_null($this->comprobante))){
+            $output .= '"Comprobante": ' . $this->getComprobante()->getJSON().', ';
+        }
         $output .= '"Importe Total": ' . $this->getMonto() .', ';
         $output .= '"Importe Bonificacion": ' . $this->getBonificacionImporte() .', ';
         $output .= '"Importe Recargo": ' . $this->getRecargoImporte() .', ';
@@ -738,6 +746,26 @@ class Transaccion {
     public function setOficial($oficial)
     {
         $this->oficial = $oficial;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of comprobante
+     */ 
+    public function getComprobante()
+    {
+        return $this->comprobante;
+    }
+
+    /**
+     * Set the value of comprobante
+     *
+     * @return  self
+     */ 
+    public function setComprobante($comprobante)
+    {
+        $this->comprobante = $comprobante;
 
         return $this;
     }

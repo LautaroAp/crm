@@ -122,6 +122,11 @@ class Bienes {
     protected $unidad_medida;
 
     /**
+     * @ORM\Column(name="EXENTO", nullable=true, type="boolean")
+     */
+    protected $exento;
+
+    /**
      * Get the value of id
      */ 
     public function getId()
@@ -489,6 +494,11 @@ class Bienes {
         $output .= '"Dto": "' . $this->getDescuento() .'", ';
         $output .= '"PrecioDto": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"IVA": "' . $this->getValorIva() .'", ';
+        if (!is_null($this->getExento())){
+            $output .= '"Exento": "' . $this->getExento() .'", ';
+        }else{
+            $output .= '"Exento": "' . false .'", ';
+        }      
         $output .= '"ImpIVA": "' . $this->getIvaPeso() .'", ';
         $output .= '"UnidadMedida": "' . $this->getUnidad_medida() .'", ';
         $output .= '"Tipo": "' . $this->getTipo() .'", ';
@@ -593,4 +603,24 @@ class Bienes {
     }
 
     
+
+    /**
+     * Get the value of exento
+     */ 
+    public function getExento()
+    {
+        return $this->exento;
+    }
+
+    /**
+     * Set the value of exento
+     *
+     * @return  self
+     */ 
+    public function setExento($exento)
+    {
+        $this->exento = $exento;
+
+        return $this;
+    }
 }

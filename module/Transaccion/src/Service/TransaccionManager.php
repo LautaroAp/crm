@@ -32,12 +32,13 @@ class TransaccionManager {
     protected $formaEnvioManager;
     protected $bienesManager;
     protected $cuentaCorrienteManager;
+    protected $comprobanteManager;
     
     /**
      * Constructs the service.
      */
     public function __construct($entityManager, $personaManager, $bienesTransaccionesManager, $ivaManager,
-    $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager) {
+    $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager, $comprobanteManager) {
         $this->entityManager = $entityManager;
         $this->personaManager= $personaManager;
         $this->bienesTransaccionesManager = $bienesTransaccionesManager;
@@ -47,6 +48,7 @@ class TransaccionManager {
         $this->monedaManager = $monedaManager;
         $this->bienesManager = $bienesManager;
         $this->cuentaCorrienteManager = $cuentaCorrienteManager;
+        $this->comprobanteManager = $comprobanteManager;
 
  
     }
@@ -124,6 +126,10 @@ class TransaccionManager {
                 $moneda = $this->monedaManager->getMonedaId($data['moneda']);
             }
             $transaccion->setMoneda($moneda);
+        }
+        if (isset($data['idComprobante'])){
+            $comprobante = $this->comprobanteManager->getComprobante($data['idComprobante']);
+            $transaccion->setComprobante($comprobante);
         }
         $transaccion->setEstado("ACTIVO");
         $transaccion->setMonto($data['total_general']);

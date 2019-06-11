@@ -12,6 +12,7 @@ use Iva\Service\IvaManager;
 use FormaPago\Service\FormaPagoManager;
 use FormaEnvio\Service\FormaEnvioManager;
 use CuentaCorriente\Service\CuentaCorrienteManager;
+use Comprobante\Service\ComprobanteManager;
 
 /**
  * This is the factory class for PedidoManager service. The purpose of the factory
@@ -33,7 +34,7 @@ class PedidoManagerFactory
         $formaEnvioManager = $container->get(FormaEnvioManager::class);
         $bienesManager = $container->get(BienesManager::class);  
         $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);  
-
-        return new PedidoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager,$formaEnvioManager, $bienesManager, $cuentaCorrienteManager);
+        $comprobanteManager = $container->get(ComprobanteManager::class);  
+        return new PedidoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager,$formaEnvioManager, $bienesManager, $cuentaCorrienteManager, $comprobanteManager);
     }
 }

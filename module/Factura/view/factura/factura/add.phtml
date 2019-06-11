@@ -92,6 +92,7 @@ var itemsTransaccionPrevia = null;
 var transaccionJson = null;
 var empresa = <?= $empresaJson ?>;
 var tipoPersona = "<?= $tipoPersona ?>";
+var tiposFactura = <?= $tiposFacturaJson ?>;
 </script>
 
 <!-- Document -->
@@ -166,8 +167,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
                         <div class="form-group col-md-2" id="tipos_factura" >
                             <label>Tipo de Factura</label>
                             <script>
-                                var tiposFactura = <?php echo ($tiposFacturaJson); ?>;
-                                var tipoComprobantePersona = "<?= $tipoComprobantePersonaJson ?>";
+                                var tipoComprobantePersona = <?= $tipoComprobantePersonaJson ?>;
                                 completarTiposFactura(tiposFactura, tipoComprobantePersona);
                             </script>        
                         </div>

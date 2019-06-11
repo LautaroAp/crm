@@ -26,8 +26,13 @@ class TipoComprobanteManager {
         $this->comprobanteManager = $comprobanteManager;
     }
 
-    public function getTipoComprobantes() {
-        $tipoComprobante = $this->entityManager->getRepository(TipoComprobante::class)->findAll();
+    public function getTipoComprobantes($idComprobante=null) {
+        if (isset($idComprobante)){
+            $tipoComprobante = $this->entityManager->getRepository(TipoComprobante::class)->findBy(['comprobante'=>$idComprobante]); 
+        }
+        else{
+            $tipoComprobante = $this->entityManager->getRepository(TipoComprobante::class)->findAll(); 
+        }
         return $tipoComprobante;
     }
 

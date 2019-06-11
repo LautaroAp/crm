@@ -34,6 +34,10 @@ class PedidoController extends TransaccionController
 
     }
 
+    private function getIdComprobante(){
+        return 8;
+    }
+
     public function getTipo(){
         return "pedido";
     }
@@ -72,6 +76,8 @@ class PedidoController extends TransaccionController
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
             $data['persona'] = $persona;
+            $data['idComprobante'] = $this->getIdComprobante();
+
             $this->pedidoManager->add($data);
             if ($persona->getTipo() == "CLIENTE") {
                 $this->redirect()->toRoute('clientes/ficha', ['action' => 'ficha', 'id' => $persona->getId()]);
@@ -156,6 +162,8 @@ class PedidoController extends TransaccionController
 
             $data['tipo'] = $this->getTipo($persona->getTipo());
             $data['persona'] = $persona;
+            $data['idComprobante'] = $this->getIdComprobante();
+
             // $data['items'] = $_SESSION['TRANSACCIONES']['PEDIDO'];
             $this->pedidoManager->edit($pedido, $data);
             $url = $data['url'];

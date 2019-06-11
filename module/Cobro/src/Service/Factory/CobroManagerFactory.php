@@ -12,6 +12,8 @@ use Iva\Service\IvaManager;
 use FormaPago\Service\FormaPagoManager;
 use FormaEnvio\Service\FormaEnvioManager;
 use CuentaCorriente\Service\CuentaCorrienteManager;
+use Comprobante\Service\ComprobanteManager;
+
 /**
  * This is the factory class for CobroManager service. The purpose of the factory
  * is to instantiate the service and pass it dependencies (inject dependencies).
@@ -31,7 +33,9 @@ class CobroManagerFactory
         $formaPagoManager = $container->get(FormaPagoManager::class);
         $formaEnvioManager = $container->get(FormaEnvioManager::class);
         $bienesManager = $container->get(BienesManager::class); 
-        $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);   
-        return new CobroManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager,$formaEnvioManager, $bienesManager, $cuentaCorrienteManager);
+        $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class); 
+        $comprobanteManager = $container->get(ComprobanteManager::class);  
+  
+        return new CobroManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager,$formaEnvioManager, $bienesManager, $cuentaCorrienteManager, $comprobanteManager);
     }
 }

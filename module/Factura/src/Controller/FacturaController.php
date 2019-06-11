@@ -40,6 +40,10 @@ class FacturaController extends TransaccionController
         return "factura";
     }
 
+    private function getIdComprobante(){
+        return 1;
+    }
+
     public function addAction()
     {
         $json="[]";
@@ -73,6 +77,7 @@ class FacturaController extends TransaccionController
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             $data['tipo'] = $this->getTipo();
+            $data['idComprobante'] = $this->getIdComprobante();
             $data['persona'] = $persona;
             $data['tipo_persona'] = $tipoPersona;
             $this->facturaManager->add($data);
@@ -104,7 +109,7 @@ class FacturaController extends TransaccionController
         
         $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
         
-        $tiposFactura= $this->tipoComprobanteManager->getTipoComprobantes();
+        $tiposFactura= $this->tipoComprobanteManager->getTipoComprobantes($this->getIdComprobante());
         $tiposFacturaJson =$this->getJsonFromObjectList($tiposFactura);
         
         $this->reiniciarParams();

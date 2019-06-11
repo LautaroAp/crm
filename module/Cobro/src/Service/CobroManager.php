@@ -44,9 +44,10 @@ class CobroManager extends TransaccionManager
         $formaPagoManager,
         $formaEnvioManager, 
         $bienesManager,
-        $cuentaCorrienteManager
+        $cuentaCorrienteManager,
+        $comprobanteManager
     ) {
-        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager);
+        parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager, $comprobanteManager);
         $this->entityManager = $entityManager;
         $this->tipo = "COBRO";
     }
@@ -56,6 +57,7 @@ class CobroManager extends TransaccionManager
         $cobros = $this->entityManager->getRepository(Cobro::class)->findAll();
         return $cobros;
     }
+
 
     public function getCobroId($id)
     {
