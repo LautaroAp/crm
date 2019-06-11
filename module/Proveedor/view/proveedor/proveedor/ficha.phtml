@@ -309,20 +309,6 @@ $tipo_persona = strtolower($persona->getTipo());
             <div class="panel-body padding-top-cero">
                 <div class="collapse in" id="collapseActividades">
                     <div class="row padding-bot-md">
-                        <!-- Todos -->
-                        <div class="btn-group padding-md">
-                            <button type="button" class="btn btn-default" style="font-weight: bold;"
-                                onclick="mostrarTodo(<?= $id_persona ?>)">Todos</button>
-                        </div>
-                        <!-- Transacciones -->
-                        <div class="btn-group padding-md">
-                            <button type="button" class="btn btn-default" style="font-weight: bold;"
-                                onclick="mostrarTransacciones(<?= $id_persona ?>)">Transacciones</button>
-                            <a role="button" class="btn btn-default" data-toggle="collapse" 
-                                data-parent="#accordion" href="#drop" aria-expanded="true" aria-controls="drop">
-                                <span class="glyphicon glyphicon-plus" ></span>
-                            </a>
-                        </div>
                         <!-- Acción Comercial -->
                         <div class="btn-group padding-md">
                         <button role="button" class="btn btn-default" style="font-weight: bold;"
@@ -334,6 +320,20 @@ $tipo_persona = strtolower($persona->getTipo());
                             <a role="button" id="eliminar_evento" class="btn btn-default" data-toggle="modal" data-target="#eventoModal">
                                 <span class="glyphicon glyphicon-minus" ></span>
                             </a>
+                        </div>
+                        <!-- Transacciones -->
+                        <div class="btn-group padding-md">
+                            <button type="button" class="btn btn-default" style="font-weight: bold;"
+                                onclick="mostrarTransacciones(<?= $id_persona ?>)">Transacciones</button>
+                            <a role="button" class="btn btn-default" data-toggle="collapse" 
+                                data-parent="#accordion" href="#drop" aria-expanded="true" aria-controls="drop">
+                                <span class="glyphicon glyphicon-plus" ></span>
+                            </a>
+                        </div>
+                        <!-- Todos -->
+                        <div class="btn-group padding-md">
+                            <button type="button" class="btn btn-default" style="font-weight: bold;"
+                                onclick="mostrarTodo(<?= $id_persona ?>)">Todos</button>
                         </div>
                         <!-- Cuenta Corriente -->
                         <div class="btn-group padding-md pull-right">

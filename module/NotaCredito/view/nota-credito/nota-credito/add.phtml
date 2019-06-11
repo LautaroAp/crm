@@ -4,7 +4,6 @@
 <script src="/js/item.js"></script>
 <script src="/js/opciones-transacciones.js"></script>
 
-
 <!-- jQuery UI -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -221,9 +220,9 @@ var tipoPersona = "<?= $tipoPersona ?>";
                                     placeholder="Cantidad"  onkeypress="return justNumbers(event);">
                             </div>
                             <div class="form-group col-sm-2 margin-padding-xs">
-                                <label>Bonificacion</label>
+                                <label>Descuento</label>
                                 <input type="text" class="form-control" name="nota_dto" id="nota_dto"
-                                    placeholder="Bonificacion"  onkeypress="return justNumbers(event);">
+                                    placeholder="% Descuento"  onkeypress="return justNumbers(event);">
                             </div>
                             <div class="form-group col-md-2 margin-padding-xs" id="ivas">
                                 <label>IVA</label>
@@ -265,59 +264,57 @@ var tipoPersona = "<?= $tipoPersona ?>";
             </div>
         </div>
         
-     
-
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Agregar Nota de Crédito</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="msjModal">¿Está seguro que desea agregar esta transacción?</p>
-                </div>
-                <div class="modal-footer">
-                    <button id="btnModalAceptar" type="submit" class="btn btn-default">Aceptar</button>
-                    <button id="btnModalCancelar" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- MODAL TRANSACCIONES -->
-    <div id="modalTransacciones" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Seleccionar Transacción</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="panel panel-body" id="contenido_transacciones">
-                    <div id="div_table_transacciones">
-                        <script>
-                        completarTransacciones(jsonModalTransaccion);
-                        </script>
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Agregar Nota de Crédito</h4>
                     </div>
-                    <br>                     
-                </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                    <div class="modal-body">
+                        <p id="msjModal">¿Está seguro que desea agregar esta transacción?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnModalAceptar" type="submit" class="btn btn-default">Aceptar</button>
+                        <button id="btnModalCancelar" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <!-- MODAL TRANSACCIONES -->
+        <div id="modalTransacciones" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Seleccionar Transacción</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel panel-body" id="contenido_transacciones">
+                        <div id="div_table_transacciones">
+                            <script>
+                            completarTransacciones(jsonModalTransaccion);
+                            </script>
+                        </div>
+                        <br>                     
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
       
-            <!-- Datos Economicos -->
-            <div class="row form-row">
+        <!-- Datos Economicos -->
+        <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
                     TOTAL
                 </div>
                 <div class="panel-body">
-                    <!-- Totales -->
+                    <!--  -->
                     <div class="row form-row">
                         <div class="form-group col-md-3" id="monedas">
                             <label>Moneda</label>
@@ -326,7 +323,45 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             completarMonedas(monedas);
                             </script>
                         </div>
+                        <div class="form-group col-md-3" id="formasPago">
+                            <label>Forma de Pago</label>
+                            <script>
+                            var formasPago = <?php echo ($formasPagoJson); ?>;
+                            completarFormasPago(formasPago);
+                            </script>
+                        </div>
+                        <div id="div_bonificacion" class="form-group col-md-3">
+                            <label>% Bonificación</label>
+                            <input type="text" class="form-control" name="bonificacion_general"
+                                id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
+                                onkeyup="calcularTotal()">
+                        </div>
+                        <div id="div_recargo" class="form-group col-md-3">
+                            <label>% Recargo</label>
+                            <input type="text" class="form-control" name="recargo_general" id="recargo_general"
+                                value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularTotal()">
+                        </div>
+                        <script>
+                        setBonificacionRecargo();
+                        </script>
+                    </div>
+                    <!--  -->
+                    <div class="row form-row">
                         <div class="form-group col-md-3">
+                            <label>Importe de Bonificación ($)</label>
+                            <input type="text" class="form-control" name="bonificacion_importe" id="bonificacion_importe" value="0"
+                                readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Importe de Recargo ($)</label>
+                            <input type="text" class="form-control" name="recargo_importe" id="recargo_importe" value="0" readonly>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Importe Total ($)</label>
+                            <input type="text" class="form-control" name="total_general" id="total_general"
+                                value="0" readonly>
+                        </div>
+                        <div class="form-group col-md-2">
                             <label>Fecha de Vencimiento</label>
                             <div class='input-group date' id='datetimepicker2'>
                                 <input type='text' class="form-control" name="fecha_vencimiento" value="<?= $date ?>" />
@@ -335,12 +370,8 @@ var tipoPersona = "<?= $tipoPersona ?>";
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group col-md-3">
-                            <label>Total ($)</label>
-                            <input type="text" class="form-control" name="total_general" id="total_general"
-                                value="0" readonly>
-                        </div>                   
                     </div>
+                    <!--  -->
                     <div class="row form-row">
                         <div class="form-group col-md-9">
                             <label>En concepto de</label>
