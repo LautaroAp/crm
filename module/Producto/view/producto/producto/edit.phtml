@@ -247,11 +247,12 @@ $proveedor = $bien->getProveedor();
                         <label>Impuesto</label>
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <input type="checkbox" name="cbox_impuesto" id="cbox_impuesto">
+                                <input type="checkbox" name="cbox_impuesto" id="cbox_impuesto"
+                                    <?php if($bien->getImpuesto()!="GRAVADO"){echo "checked";} ?>>
                             </span>
-                            <select class="form-control" name="tipo_impuesto" id="tipo_impuesto">
-                                <option value="1">No Gravado</option>
-                                <option value="2">Exento</option>
+                            <select class="form-control" name="impuesto" id="impuesto">
+                                <option value="NO_GRAVADO" <?php if($bien->getImpuesto() == "NO_GRAVADO"){echo "selected";} ?>>No Gravado</option>
+                                <option value="EXENTO" <?php if($bien->getImpuesto() == "EXENTO"){echo "selected";} ?>>Exento</option>
                             </select>
                         </div>
                     </div>

@@ -122,9 +122,26 @@ class Bienes {
     protected $unidad_medida;
 
     /**
-     * @ORM\Column(name="EXENTO", nullable=true, type="boolean")
+     * @ORM\Column(name="IMPUESTO", nullable=true, type="string")
      */
-    protected $exento;
+    protected $impuesto;
+
+    /**
+     * @ORM\Column(name="IMPORTE_GRAVADO", nullable=true, type="decimal")
+     */
+    protected $importe_gravado;
+
+    /**
+     * @ORM\Column(name="IMPORTE_NO_GRAVADO", nullable=true, type="decimal")
+     */
+    protected $importe_no_gravado;
+
+    /**
+     * @ORM\Column(name="IMPORTE_EXENTO", nullable=true, type="decimal")
+     */
+    protected $importe_exento;
+
+    
 
     /**
      * Get the value of id
@@ -494,15 +511,16 @@ class Bienes {
         $output .= '"Dto": "' . $this->getDescuento() .'", ';
         $output .= '"PrecioDto": "' . $this->getPrecio_final_dto() .'", ';
         $output .= '"IVA": "' . $this->getValorIva() .'", ';
-        if (!is_null($this->getExento())){
-            $output .= '"Exento": "' . $this->getExento() .'", ';
-        }else{
-            $output .= '"Exento": "' . false .'", ';
-        }      
         $output .= '"ImpIVA": "' . $this->getIvaPeso() .'", ';
+        $output .= '"Impuesto": "' . $this->getImpuesto() .'", ';
         $output .= '"UnidadMedida": "' . $this->getUnidad_medida() .'", ';
         $output .= '"Tipo": "' . $this->getTipo() .'", ';
         $output .= '"Stock": "' . $this->getStock() .'", ';
+
+        $output .= '"ImporteGravado": "' . $this->getImporte_gravado() .'", ';
+        $output .= '"ImporteNoGravado": "' . $this->getImporte_no_gravado() .'", ';
+        $output .= '"ImporteExento": "' . $this->getImporte_exento() .'", ';
+
         $output .= '"Totales": "' . $this->getPrecio_final_iva_dto() .'" ';
         return  '{'.$output.'}' ;
     }
@@ -538,6 +556,10 @@ class Bienes {
         $output .= '"iva_precio": "' . $this->getPrecio_final_iva() .'", ';
         $output .= '"tipo": "' . $this->getTipo() .'", ';
         $output .= '"stock": "' . $this->getStock() .'", ';
+
+        $output .= '"importe_gravado": "' . $this->getImporte_gravado() .'", ';
+        $output .= '"importe_no_gravado": "' . $this->getImporte_no_gravado() .'", ';
+        $output .= '"importe_exento": "' . $this->getImporte_exento() .'", ';
 
         $output .= '"totales": "' . $this->getPrecio_final_iva_dto() .'" ';
         
@@ -602,24 +624,83 @@ class Bienes {
         return $this;
     }
 
-    
 
     /**
-     * Get the value of exento
+     * Get the value of impuesto
      */ 
-    public function getExento()
+    public function getImpuesto()
     {
-        return $this->exento;
+        return $this->impuesto;
     }
 
     /**
-     * Set the value of exento
+     * Set the value of impuesto
      *
      * @return  self
      */ 
-    public function setExento($exento)
+    public function setImpuesto($impuesto)
     {
-        $this->exento = $exento;
+        $this->impuesto = $impuesto;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_gravado
+     */ 
+    public function getImporte_gravado()
+    {
+        return $this->importe_gravado;
+    }
+
+    /**
+     * Set the value of importe_gravado
+     *
+     * @return  self
+     */ 
+    public function setImporte_gravado($importe_gravado)
+    {
+        $this->importe_gravado = $importe_gravado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_no_gravado
+     */ 
+    public function getImporte_no_gravado()
+    {
+        return $this->importe_no_gravado;
+    }
+
+    /**
+     * Set the value of importe_no_gravado
+     *
+     * @return  self
+     */ 
+    public function setImporte_no_gravado($importe_no_gravado)
+    {
+        $this->importe_no_gravado = $importe_no_gravado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_exento
+     */ 
+    public function getImporte_exento()
+    {
+        return $this->importe_exento;
+    }
+
+    /**
+     * Set the value of importe_exento
+     *
+     * @return  self
+     */ 
+    public function setImporte_exento($importe_exento)
+    {
+        $this->importe_exento = $importe_exento;
 
         return $this;
     }
