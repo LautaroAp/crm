@@ -115,78 +115,130 @@
                 <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>Precio de Compra</label>
-                        <input type="text" class="form-control"  name="precio_compra" id="precio_compra" 
-                            value=0 onkeypress="return justNumbers(event);" onkeyup="calculaCostoTotalCompra()">
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control"  name="precio_compra" id="precio_compra" 
+                                value=0 onkeypress="return justNumbers(event);" onkeyup="calculaCostoTotalCompra()">
+                        </div>
                     </div>
                     <div class="form-group col-md-2">
                         <label>Costos Directos</label>
-                        <input type="text" class="form-control" name="costos_directos" id="costos_directos"
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="costos_directos" id="costos_directos"
                             value=0 onkeypress="return justNumbers(event);" onkeyup="calculaCostoTotalCompra()">
+                        </div>
                     </div>
                     <div class="form-group col-md-2">
                         <label>Gastos Directos</label>
-                        <input type="text" class="form-control" name="gastos_directos" id="gastos_directos"
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="gastos_directos" id="gastos_directos"
                             value=0 onkeypress="return justNumbers(event);" onkeyup="calculaCostoTotalCompra()">
+                        </div>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Costo Total de Compra</label>
-                        <input type="text" class="form-control" name="precio_compra_total" id="precio_compra_total"
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="precio_compra_total" id="precio_compra_total"
                             value=0 readonly>
+                        </div>
                     </div>
                 </div>
                 <!-- 2da fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-2">
-                        <label>Contrib. Marginal ($)</label>
-                        <input type="text" class="form-control" name="cm_valor" id="cm_valor" value=0
+                        <label>Contrib. Marginal</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="cm_valor" id="cm_valor" value=0
                             onkeypress="return justNumbers(event);" onkeyup="calculaCMValor()">
+                        </div>
                     </div>
                     <div class="form-group col-md-2">
-                        <label>Contrib. Marginal (%)</label>
-                        <input type="text" class="form-control" name="cm_porcentual" id="cm_porcentual" value=0
+                        <label>Contrib. Marginal</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">%</span>
+                            <input type="text" class="form-control" name="cm_porcentual" id="cm_porcentual" value=0
                             onkeypress="return justNumbers(event);" onkeyup="calculaCMPorcentual()">
+                        </div>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Precio de Venta</label>
-                        <input type="text" class="form-control" name="precio_venta" id="precio_venta" value=0
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="precio_venta" id="precio_venta" value=0
                             onkeypress="return justNumbers(event);" onkeyup="calculaPrecioVenta()">
+                        </div>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Precio Venta con Dto.</label>
-                        <input type="text" class="form-control" name="precio_publico_dto" id="precio_publico_dto" value=0 readonly>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="precio_publico_dto" id="precio_publico_dto" value=0 readonly>
+                        </div>
                     </div>
                 </div>
                 <!-- 3ra fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-2">
-                        <label>% Descuento</label>
-                        <input type="text" class="form-control" name="descuento" id="descuento" value=0
+                        <label>Descuento</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">%</span>
+                            <input type="text" class="form-control" name="descuento" id="descuento" value=0
                             onkeypress="return justNumbers(event);" onkeyup="calculaDescuentoIVA()">
+                        </div>
                     </div>
                     <div class="form-group col-md-2">
-                        <label>% IVA</label>
-                        <select class="form-control" name="iva" id="iva"
-                        onkeypress="return justNumbers(event);" onchange="calculaDescuentoIVA()">
-                        <?php foreach ($ivas as $iva) : ?>
-                            <option value="<?php  echo  ($iva->getId()); ?>">
-                            <?php echo ($iva->getValor()) ?></option>
-                        <?php endforeach; ?>
-                        </select>
+                        <label>IVA</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">%</span>
+                            <select class="form-control" name="iva" id="iva"
+                                onkeypress="return justNumbers(event);" onchange="calculaDescuentoIVA()">
+                                <?php foreach ($ivas as $iva) : ?>
+                                    <option value="<?php  echo  ($iva->getId()); ?>">
+                                    <?php echo ($iva->getValor()) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label>Total IVA $</label>
-                        <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
+                    <div class="form-group col-md-2">
+                        <label>Importe IVA</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Impuesto</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="cbox_impuesto" id="cbox_impuesto">
+                            </span>
+                            <select class="form-control" name="tipo_impuesto" id="tipo_impuesto">
+                                <option value="1">No Gravado</option>
+                                <option value="2">Exento</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <!-- 4ta fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>Precio Publico + IVA</label>
-                        <input type="text" class="form-control" name="precio_publico_iva" id="precio_publico_iva" value=0 readonly>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="precio_publico_iva" id="precio_publico_iva" value=0 readonly>
+                        </div>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Precio Publico +IVA con Dto.</label>
-                        <input type="text" class="form-control" name="precio_publico_iva_dto" id="precio_publico_iva_dto" value=0 readonly>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="precio_publico_iva_dto" id="precio_publico_iva_dto"
+                            value=0 readonly>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -214,9 +266,7 @@
     </div>
     <!-- Fin Modal -->
 </div>
-
 <!-- Fin: Cliente Nuevo -->
-
 </form>
 
 <!-- Inicio: Panel Botones -->
@@ -243,5 +293,3 @@
     </div>       
 </div>
 <!-- Fin: Panel Botones -->
-
-

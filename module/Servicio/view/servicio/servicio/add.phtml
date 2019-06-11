@@ -104,42 +104,75 @@
                 <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>Precio</label>
-                        <input type="text" class="form-control" name="precio_venta" id="precio_venta" 
-                            value=0 onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="precio_venta" id="precio_venta" 
+                                value=0 onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
+                        </div>
                     </div>
                     <div class="form-group col-md-2">
-                        <label>% Descuento</label>
-                        <input type="text" class="form-control" name="descuento" id="descuento" value=0
-                            onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
+                        <label>Descuento</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">%</span>
+                            <input type="text" class="form-control" name="descuento" id="descuento" value=0
+                                onkeypress="return justNumbers(event);" onkeyup="calcularPrecios()">
+                        </div>
                     </div>
                     <div class="form-group col-md-2">
-                    <label>% IVA</label>
-                        <select class="form-control" name="iva" id="iva"
-                        onkeypress="return justNumbers(event);" onchange="calcularPrecios()">
-                        <?php foreach ($ivas as $iva) : ?>
-                            <option value="<?php  echo  ($iva->getId()); ?>">
-                            <?php echo ($iva->getValor()) ?></option>
-                        <?php endforeach; ?>
-                        </select>
+                        <label>IVA</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">%</span>
+                            <select class="form-control" name="iva" id="iva"
+                                onkeypress="return justNumbers(event);" onchange="calcularPrecios()">
+                                <?php foreach ($ivas as $iva) : ?>
+                                    <option value="<?php  echo  ($iva->getId()); ?>">
+                                    <?php echo ($iva->getValor()) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label>Total IVA $</label>
-                        <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
+                    <div class="form-group col-md-2">
+                        <label>Importe IVA</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="iva_total" id="iva_total" value=0 readonly>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Impuesto</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name="cbox_impuesto" id="cbox_impuesto">
+                            </span>
+                            <select class="form-control" name="tipo_impuesto" id="tipo_impuesto">
+                                <option value="1">No Gravado</option>
+                                <option value="2">Exento</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <!-- 2da fila -->
                 <div class="row form-row">
                     <div class="form-group col-md-4">
                         <label>Precio Público con Dto.</label>
-                        <input type="text" class="form-control" name="precio_publico_dto" id="precio_publico_dto" value=0 readonly>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="precio_publico_dto" id="precio_publico_dto" value=0 readonly>
+                        </div>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Precio Público + IVA</label>
-                        <input type="text" class="form-control" name="precio_publico_iva" id="precio_publico_iva" value=0 readonly>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="precio_publico_iva" id="precio_publico_iva" value=0 readonly>
+                        </div>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Precio Público +IVA con Dto.</label>
-                        <input type="text" class="form-control" name="precio_publico_iva_dto" id="precio_publico_iva_dto" value=0 readonly>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="precio_publico_iva_dto" id="precio_publico_iva_dto" value=0 readonly>
+                        </div>
                     </div>
                 </div>
             </div>

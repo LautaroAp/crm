@@ -304,22 +304,34 @@ $responsable = $this->identity();
                     <!-- Totales -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Venta Bruta ($)</label>
-                            <input type="text" class="form-control" name="venta_bruta" id="venta_bruta"
-                                value="Precio x Cantidad" readonly>
+                            <label>Venta Bruta</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="venta_bruta" id="venta_bruta"
+                                    value="Precio x Cantidad" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Descuento Global ($)</label>
-                            <input type="text" class="form-control" name="descuento_total" id="descuento_total" value="0" readonly>
+                            <label>Importe Descuento Global</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="descuento_total" id="descuento_total" value="0" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>IVA Total ($)</label>
-                            <input type="text" class="form-control" name="iva_total" id="iva_total" value="0" readonly>
+                            <label>Importe IVA Global</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="iva_total" id="iva_total" value="0" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Total ($)</label>
-                            <input type="text" class="form-control" name="subtotal_general" id="subtotal_general"
-                                value="0" readonly>
+                            <label>Subtotal</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="subtotal_general" id="subtotal_general"
+                                    value="0" readonly>
+                            </div>
                         </div>
                     </div>
                     <!-- Forma de Pago + Fecha -->
@@ -339,15 +351,21 @@ $responsable = $this->identity();
                             </script>
                         </div>
                         <div id="div_bonificacion" class="form-group col-md-3">
-                            <label>% Bonificación</label>
-                            <input type="text" class="form-control" name="bonificacion_general"
-                                id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
-                                onkeyup="calcularSubcampos()">
+                            <label>Bonificación</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">%</span>
+                                <input type="text" class="form-control" name="bonificacion_general"
+                                    id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
+                                    onkeyup="calcularSubcampos()">
+                            </div>
                         </div>
                         <div id="div_recargo" class="form-group col-md-3">
-                            <label>% Recargo</label>
-                            <input type="text" class="form-control" name="recargo_general" id="recargo_general"
-                                value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()">
+                            <label>Recargo</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">%</span>
+                                <input type="text" class="form-control" name="recargo_general" id="recargo_general"
+                                    value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()">
+                            </div>
                         </div>
                         <script>
                         setBonificacionRecargo();
@@ -356,18 +374,27 @@ $responsable = $this->identity();
                     <!-- Total -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Importe de Bonificación ($)</label>
-                            <input type="text" class="form-control" name="bonificacion_importe" id="bonificacion_importe" value="0"
-                                readonly>
+                            <label>Importe de Bonificación</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="bonificacion_importe" id="bonificacion_importe" 
+                                    value="0" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Importe de Recargo ($)</label>
-                            <input type="text" class="form-control" name="recargo_importe" id="recargo_importe" value="0" readonly>
+                            <label>Importe de Recargo</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="recargo_importe" id="recargo_importe" value="0" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Importe Total ($)</label>
-                            <input type="text" class="form-control" name="total_general" id="total_general" value="0"
-                                readonly>
+                            <label>Importe Total</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="total_general" id="total_general" 
+                                    value="0" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-2">
                             <label>Fecha de Vencimiento</label>

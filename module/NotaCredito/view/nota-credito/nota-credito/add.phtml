@@ -221,19 +221,28 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             </div>
                             <div class="form-group col-sm-2 margin-padding-xs">
                                 <label>Descuento</label>
-                                <input type="text" class="form-control" name="nota_dto" id="nota_dto"
-                                    placeholder="% Descuento"  onkeypress="return justNumbers(event);">
+                                <div class="input-group">
+                                    <span class="input-group-addon">%</span>
+                                    <input type="text" class="form-control" name="nota_dto" id="nota_dto"
+                                        placeholder="Descuento"  onkeypress="return justNumbers(event);">
+                                </div>
                             </div>
-                            <div class="form-group col-md-2 margin-padding-xs" id="ivas">
+                            <div class="form-group col-md-2 margin-padding-xs">
                                 <label>IVA</label>
-                                <script>
-                                    completarIvas(ivas);
-                                </script>
+                                <div class="input-group" id="ivas">
+                                    <span class="input-group-addon">%</span>
+                                    <script>
+                                        completarIvas(ivas);
+                                    </script>
+                                </div>
                             </div>
                             <div class="form-group col-sm-2 margin-padding-xs">
                                 <label>Monto</label>
-                                <input type="text" class="form-control" name="nota_monto" id="nota_monto"
-                                    placeholder="Monto"  onkeypress="return justNumbers(event);">
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" name="nota_monto" id="nota_monto"
+                                        placeholder="Monto"  onkeypress="return justNumbers(event);">
+                                </div>
                             </div>
                             <div class="form-group col-sm-1 margin-padding-xs">
                                 <label>&nbsp;</label>
@@ -331,15 +340,21 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             </script>
                         </div>
                         <div id="div_bonificacion" class="form-group col-md-3">
-                            <label>% Bonificación</label>
-                            <input type="text" class="form-control" name="bonificacion_general"
-                                id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
-                                onkeyup="calcularTotal()">
+                            <label>Bonificación</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">%</span>
+                                <input type="text" class="form-control" name="bonificacion_general"
+                                    id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
+                                    onkeyup="calcularTotal()">
+                            </div>
                         </div>
                         <div id="div_recargo" class="form-group col-md-3">
-                            <label>% Recargo</label>
-                            <input type="text" class="form-control" name="recargo_general" id="recargo_general"
-                                value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularTotal()">
+                            <label>Recargo</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">%</span>
+                                <input type="text" class="form-control" name="recargo_general" id="recargo_general"
+                                    value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularTotal()">
+                            </div>
                         </div>
                         <script>
                         setBonificacionRecargo();
@@ -348,18 +363,29 @@ var tipoPersona = "<?= $tipoPersona ?>";
                     <!--  -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Importe de Bonificación ($)</label>
-                            <input type="text" class="form-control" name="bonificacion_importe" id="bonificacion_importe" value="0"
-                                readonly>
+                            <label>Importe de Bonificación</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="bonificacion_importe" id="bonificacion_importe" 
+                                    value="0" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Importe de Recargo ($)</label>
-                            <input type="text" class="form-control" name="recargo_importe" id="recargo_importe" value="0" readonly>
+                            <label>Importe de Recargo</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="recargo_importe" id="recargo_importe" value="0" readonly>
+                            </div>
+                            
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Importe Total ($)</label>
-                            <input type="text" class="form-control" name="total_general" id="total_general"
-                                value="0" readonly>
+                            <label>Importe Total</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="total_general" id="total_general"
+                                    value="0" readonly>
+                            </div>
+                            
                         </div>
                         <div class="form-group col-md-2">
                             <label>Fecha de Vencimiento</label>

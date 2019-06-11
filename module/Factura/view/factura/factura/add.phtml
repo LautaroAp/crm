@@ -209,13 +209,10 @@ var tiposFactura = <?= $tiposFacturaJson ?>;
                 <div class="panel-heading titulo-espaciado">
                     DETALLES DE LA FACTURA
                 </div>
-
                 <!-- Form Autocompletado -->
                 <div class="container" style="padding-top:10px;">
                     <form method="post" autocomplete="off">
-
                         <input type="hidden" class="form-control" name="item_id" id="item_id">
-
                         <div class="autocomplete form-group col-sm-2 margin-padding-xs">
                             <label>Código</label>
                             <input type="text" class="form-control" name="item_codigo" id="item_codigo"
@@ -313,22 +310,34 @@ var tiposFactura = <?= $tiposFacturaJson ?>;
                     <!-- Totales -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Venta Bruta ($)</label>
-                            <input type="text" class="form-control" name="venta_bruta" id="venta_bruta"
-                                value="Precio x Cantidad" readonly>
+                            <label>Venta Bruta</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="venta_bruta" id="venta_bruta"
+                                    value="Precio x Cantidad" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Descuento Global ($)</label>
-                            <input type="text" class="form-control" name="descuento_total" id="descuento_total" value="0" readonly>
+                            <label>Importe Descuento Global</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="descuento_total" id="descuento_total" value="0" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>IVA Total ($)</label>
-                            <input type="text" class="form-control" name="iva_total" id="iva_total" value="0" readonly>
+                            <label>Importe IVA Global</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="iva_total" id="iva_total" value="0" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Total ($)</label>
-                            <input type="text" class="form-control" name="subtotal_general" id="subtotal_general"
-                                value="0" readonly>
+                            <label>Subtotal</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="subtotal_general" id="subtotal_general"
+                                    value="0" readonly>
+                            </div>
                         </div>
                     </div>
                     <!-- Forma de Pago + Fecha -->
@@ -349,15 +358,21 @@ var tiposFactura = <?= $tiposFacturaJson ?>;
                             <!-- <input type="text" class="form-control" name="input_forma_pago" id="input_forma_pago" value="" readonly> -->
                         </div>
                         <div id="div_bonificacion" class="form-group col-md-3">
-                            <label>% Bonificación</label>
-                            <input type="text" class="form-control" name="bonificacion_general"
-                                id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
-                                onkeyup="calcularSubcampos()" readonly>
+                            <label>Bonificación</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">%</span>
+                                <input type="text" class="form-control" name="bonificacion_general"
+                                    id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
+                                    onkeyup="calcularSubcampos()" readonly>
+                            </div>
                         </div>
                         <div id="div_recargo" class="form-group col-md-3">
-                            <label>% Recargo</label>
-                            <input type="text" class="form-control" name="recargo_general" id="recargo_general"
-                                value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" readonly>
+                            <label>Recargo</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="recargo_general" id="recargo_general"
+                                    value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularSubcampos()" readonly>
+                            </div>
                         </div>
                         <script>
                             setBonificacionRecargo();
@@ -366,18 +381,27 @@ var tiposFactura = <?= $tiposFacturaJson ?>;
                     <!-- Total -->
                     <div class="row form-row">
                         <div class="form-group col-md-3">
-                            <label>Importe de Bonificación ($)</label>
-                            <input type="text" class="form-control" name="bonificacion_importe" id="bonificacion_importe" value="0"
-                                readonly>
+                            <label>Importe de Bonificación</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="bonificacion_importe" id="bonificacion_importe" 
+                                    value="0" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Importe de Recargo ($)</label>
-                            <input type="text" class="form-control" name="recargo_importe" id="recargo_importe" value="0" readonly>
+                            <label>Importe de Recargo</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="recargo_importe" id="recargo_importe" value="0" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label>Importe Total ($)</label>
-                            <input type="text" class="form-control" name="total_general" id="total_general" value="0"
-                                readonly>
+                            <label>Importe Total</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="total_general" id="total_general" 
+                                    value="0" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-2" hidden>
                             <label>Fecha de Vencimiento</label>
