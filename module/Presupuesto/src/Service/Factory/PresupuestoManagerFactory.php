@@ -35,6 +35,6 @@ class PresupuestoManagerFactory
         $cuentaCorrienteManager = $container->get(CuentaCorrienteManager::class);  
         $comprobanteManager = $container->get(ComprobanteManager::class);  
 
-        return new PresupuestoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $bienesManager, $cuentaCorrienteManage, $comprobanteManager);
+        return new PresupuestoManager($entityManager, $monedaManager,$personaManager, $bienesTransaccionesManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $bienesManager, $cuentaCorrienteManager, $comprobanteManager);
     }
 }
