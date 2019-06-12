@@ -55,4 +55,5 @@ return [
     'Factura',
     'NotaDebito',
     'NotaCredito',
+    'Banco'
 ];

@@ -643,6 +643,16 @@ return [
                             ],
                         ],
                     ],
+                    'banco' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/banco',
+                            'defaults' => [
+                                'controller' => \Banco\Controller\BancoController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
                     'tipocomprobante' => [
                         'type' => Segment::class,
                         'options' => [
