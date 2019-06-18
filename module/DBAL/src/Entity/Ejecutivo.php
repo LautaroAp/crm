@@ -10,68 +10,85 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="EJECUTIVO")
  */
-class Ejecutivo {
-    //put your code here
-    
+class Ejecutivo
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
+
     /**
      * @ORM\Id
      * @ORM\Column(name="ID_EJECUTIVO", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;   
+    protected $id;
 
-         /**
+    /**
      * @ORM\Column(name="NOMUSR", nullable=true, type="string", length=255)
      */
     protected $usuario;
-    
-         /**
+
+    /**
      * @ORM\Column(name="PASSUSR", nullable=true, type="string", length=255)
      */
     protected $clave;
-    
-     /**
+
+    /**
      * @ORM\Column(name="ACTIVO", nullable=true, type="string", length=1)
      */
     protected $activo;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Persona")
      * @ORM\JoinColumn(name="ID_PERSONA", referencedColumnName="ID")
      */
     private $persona;
-    
-    function getId() {
+
+    //================================================================================
+    // Methods
+    //================================================================================
+
+    function getId()
+    {
         return $this->id;
     }
 
-    function getUsuario() {
+    function getUsuario()
+    {
         return $this->usuario;
     }
 
-    function getClave() {
+    function getClave()
+    {
         return $this->clave;
     }
 
-    function setUsuario($usuario) {
+    function setUsuario($usuario)
+    {
         $this->usuario = $usuario;
     }
 
-    function setClave($clave) {
+    function setClave($clave)
+    {
         $this->clave = $clave;
     }
 
-    function setActivo($activo){
-        $this->activo=$activo;
+    function setActivo($activo)
+    {
+        $this->activo = $activo;
     }
-    function inactivar(){
-        $this->activo="N";
+    function inactivar()
+    {
+        $this->activo = "N";
     }
-    function activar(){
-        $this->activo="S";
+    function activar()
+    {
+        $this->activo = "S";
     }
-    function isActivo(){
-        return $this->activo=="S";
+    function isActivo()
+    {
+        return $this->activo == "S";
     }
 
     public function getPersona()

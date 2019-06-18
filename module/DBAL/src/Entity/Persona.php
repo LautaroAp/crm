@@ -10,34 +10,38 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="PERSONA")
  */
-class Persona {
-    //put your code here
-    
+class Persona
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
+
     /**
      * @ORM\Id
      * @ORM\Column(name="ID", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;   
-    
+    protected $id;
+
 
     /**
      * @ORM\Column(name="NOMBRE", nullable=true, type="string", length=255)
      */
     protected $nombre;
 
-     /**
+    /**
      * @ORM\Column(name="TELEFONO", nullable=true, type="string", length=255)
      */
     protected $telefono;
-    
-    
+
+
     /**
      * @ORM\Column(name="MAIL", nullable=true, type="string", length=255)
      */
     protected $email;
-    
-    
+
+
 
     /**
      * @ORM\Column(name="ESTADO", nullable=true, type="string", length=1)
@@ -97,19 +101,21 @@ class Persona {
      */
     private $cbu;
 
-   
     /**
      * @ORM\Column(name="DIRECCION_FACTURACION", nullable=true, type="string", length=255)
      */
     private $direccion_facturacion;
 
-    
     /**
      * Many Personas have One TipoComprobante.
      * @ORM\ManyToOne(targetEntity="TipoComprobante")
      * @ORM\JoinColumn(name="ID_TIPO_COMPROBANTE", referencedColumnName="ID")
      */
     private $tipo_comprobante;
+
+    //================================================================================
+    // Methods
+    //================================================================================
 
     public function getId()
     {
@@ -118,7 +124,7 @@ class Persona {
 
     /**
      * Get the value of nombre
-     */ 
+     */
     public function getNombre()
     {
         return (($this->nombre));
@@ -128,7 +134,7 @@ class Persona {
      * Set the value of nombre
      *
      * @return  self
-     */ 
+     */
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
@@ -138,7 +144,7 @@ class Persona {
 
     /**
      * Get the value of telefono
-     */ 
+     */
     public function getTelefono()
     {
         return $this->telefono;
@@ -148,7 +154,7 @@ class Persona {
      * Set the value of telefono
      *
      * @return  self
-     */ 
+     */
     public function setTelefono($telefono)
     {
         $this->telefono = $telefono;
@@ -158,7 +164,7 @@ class Persona {
 
     /**
      * Get the value of email
-     */ 
+     */
     public function getEmail()
     {
         return strtolower($this->email);
@@ -168,7 +174,7 @@ class Persona {
      * Set the value of email
      *
      * @return  self
-     */ 
+     */
     public function setEmail($email)
     {
         $this->email = $email;
@@ -176,11 +182,13 @@ class Persona {
         return $this;
     }
 
-    public function getEstado() {
+    public function getEstado()
+    {
         return $this->estado;
     }
 
-    public function getEstadoNombre() {
+    public function getEstadoNombre()
+    {
         if ($this->estado == "S") {
             return "Activo";
         } else {
@@ -188,14 +196,15 @@ class Persona {
         }
     }
 
-    public function setEstado($estado) {
+    public function setEstado($estado)
+    {
         $this->estado = $estado;
     }
 
 
     /**
      * Get the value of cuit_cuil
-     */ 
+     */
     public function getCuit_cuil()
     {
         return $this->cuit_cuil;
@@ -205,7 +214,7 @@ class Persona {
      * Set the value of cuit_cuil
      *
      * @return  self
-     */ 
+     */
     public function setCuit_cuil($cuit_cuil)
     {
         $this->cuit_cuil = $cuit_cuil;
@@ -215,7 +224,7 @@ class Persona {
 
     /**
      * Get the value of razon_social
-     */ 
+     */
     public function getRazon_social()
     {
         return (($this->razon_social));
@@ -225,7 +234,7 @@ class Persona {
      * Set the value of razon_social
      *
      * @return  self
-     */ 
+     */
     public function setRazon_social($razon_social)
     {
         $this->razon_social = $razon_social;
@@ -235,9 +244,10 @@ class Persona {
 
     /**
      * Get the value of condicion_iva
-     */ 
-    public function getCondicion_iva() {
-        if (is_null($this->condicion_iva)){
+     */
+    public function getCondicion_iva()
+    {
+        if (is_null($this->condicion_iva)) {
             return null;
         }
         return $this->condicion_iva;
@@ -247,13 +257,15 @@ class Persona {
      * Set the value of condicion_iva
      *
      * @return  self
-     */ 
-    public function setCondicion_iva($condicion_iva) {
+     */
+    public function setCondicion_iva($condicion_iva)
+    {
         $this->condicion_iva = $condicion_iva;
         return $this;
     }
 
-    public function getNombreCondicionIva() {
+    public function getNombreCondicionIva()
+    {
         if (is_null($this->condicion_iva)) {
             return null;
         } else {
@@ -263,7 +275,7 @@ class Persona {
 
     /**
      * Get the value of direccion_facturacion
-     */ 
+     */
     public function getDireccion_facturacion()
     {
         return $this->direccion_facturacion;
@@ -273,7 +285,7 @@ class Persona {
      * Set the value of direccion_facturacion
      *
      * @return  self
-     */ 
+     */
     public function setDireccion_facturacion($direccion_facturacion)
     {
         $this->direccion_facturacion = $direccion_facturacion;
@@ -283,7 +295,7 @@ class Persona {
 
     /**
      * Get the value of banco
-     */ 
+     */
     public function getBanco()
     {
         return $this->banco;
@@ -293,7 +305,7 @@ class Persona {
      * Set the value of banco
      *
      * @return  self
-     */ 
+     */
     public function setBanco($banco)
     {
         $this->banco = $banco;
@@ -303,7 +315,7 @@ class Persona {
 
     /**
      * Get the value of cbu
-     */ 
+     */
     public function getCbu()
     {
         return $this->cbu;
@@ -313,7 +325,7 @@ class Persona {
      * Set the value of cbu
      *
      * @return  self
-     */ 
+     */
     public function setCbu($cbu)
     {
         $this->cbu = $cbu;
@@ -323,7 +335,7 @@ class Persona {
 
     /**
      * Get the value of tipo
-     */ 
+     */
     public function getTipo()
     {
         return $this->tipo;
@@ -332,7 +344,7 @@ class Persona {
     /**
      * Set the value of tipo
      * @return  self
-     */ 
+     */
     public function setTipo($tipo)
     {
         $this->tipo = $tipo;
@@ -340,41 +352,27 @@ class Persona {
         return $this;
     }
 
-    public function getEventos() {
+    public function getEventos()
+    {
         return $this->eventos;
     }
 
-    public function getTransacciones(){
+    public function getTransacciones()
+    {
         return $this->transacciones;
     }
 
     /**
      * Get the value of datos_adicionales
-     */ 
+     */
     public function getDatos_adicionales()
     {
         return $this->datos_adicionales;
     }
 
-    public function getJson($autocompletar = true){
-        $output = "";
-        if ($autocompletar){
-            $output .= '"value": "' . $this->getId() .'", ';
-            $output .= '"label": "' . $this->getNombre() .'", ';
-            $output .= '"nro": "' . $this->getId() .'", ';        
-            $output .= '"nombre": "' . $this->getNombre() .'" ';
-        }else{
-            $output .= '"Id": "' . $this->getId() .'", ';
-            $output .= '"Nombre": "' . $this->getNombre() .'", ';
-            $output .= '"Email": "' . $this->getEmail() .'", ';        
-            $output .= '"Estado": "' . $this->getEstado() .'" ';
-        }
-        return  '{'.$output.'}' ;
-    }
-
     /**
      * Get many Personas have One TipoComprobante.
-     */ 
+     */
     public function getTipo_comprobante()
     {
         return $this->tipo_comprobante;
@@ -384,7 +382,7 @@ class Persona {
      * Set many Personas have One TipoComprobante.
      *
      * @return  self
-     */ 
+     */
     public function setTipo_comprobante($tipo_comprobante)
     {
         $this->tipo_comprobante = $tipo_comprobante;
@@ -392,11 +390,33 @@ class Persona {
         return $this;
     }
 
-    public function getNombreTipoComprobante() {
+    public function getNombreTipoComprobante()
+    {
         if (is_null($this->tipo_comprobante)) {
             return null;
         } else {
             return (($this->tipo_comprobante->getTipo()));
         }
+    }
+
+    //================================================================================
+    // JSON
+    //================================================================================
+
+    public function getJson($autocompletar = true)
+    {
+        $output = "";
+        if ($autocompletar) {
+            $output .= '"value": "' . $this->getId() . '", ';
+            $output .= '"label": "' . $this->getNombre() . '", ';
+            $output .= '"nro": "' . $this->getId() . '", ';
+            $output .= '"nombre": "' . $this->getNombre() . '" ';
+        } else {
+            $output .= '"Id": "' . $this->getId() . '", ';
+            $output .= '"Nombre": "' . $this->getNombre() . '", ';
+            $output .= '"Email": "' . $this->getEmail() . '", ';
+            $output .= '"Estado": "' . $this->getEstado() . '" ';
+        }
+        return  '{' . $output . '}';
     }
 }

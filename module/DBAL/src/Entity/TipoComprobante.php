@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TipoComprobante
 {
+    //================================================================================
+    // Properties
+    //================================================================================
+
     /**
      * @ORM\Id
      * @ORM\Column(name="ID", type="integer")
@@ -41,10 +45,15 @@ class TipoComprobante
      */
     protected $tipo;
 
+    //================================================================================
+    // Methods
+    //================================================================================
+
     /**
      * Get the value of id
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -53,15 +62,15 @@ class TipoComprobante
      *
      * @return self
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
 
-
     /**
      * Get the value of descripcion
-     */ 
+     */
     public function getDescripcion()
     {
         return $this->descripcion;
@@ -71,7 +80,7 @@ class TipoComprobante
      * Set the value of descripcion
      *
      * @return  self
-     */ 
+     */
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
@@ -79,22 +88,9 @@ class TipoComprobante
         return $this;
     }
 
-    public function getJSON(){
-
-        $output = "";
-        $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Comprobante": ' . $this->getComprobante()->getJSON() .', ';
-        $output .= '"Tipo": "' . $this->getTipo() .'", ';
-        $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
-        $output .= '"Codigo": "' . $this->getCodigo() .'" ';
-
-    
-        return  '{'.$output.'}' ;
-    }
-
     /**
      * Get the value of codigo
-     */ 
+     */
     public function getCodigo()
     {
         return $this->codigo;
@@ -104,7 +100,7 @@ class TipoComprobante
      * Set the value of codigo
      *
      * @return  self
-     */ 
+     */
     public function setCodigo($codigo)
     {
         $this->codigo = $codigo;
@@ -114,7 +110,7 @@ class TipoComprobante
 
     /**
      * Get the value of tipo
-     */ 
+     */
     public function getTipo()
     {
         return $this->tipo;
@@ -124,7 +120,7 @@ class TipoComprobante
      * Set the value of tipo
      *
      * @return  self
-     */ 
+     */
     public function setTipo($tipo)
     {
         $this->tipo = $tipo;
@@ -136,7 +132,7 @@ class TipoComprobante
      * Set many Services have One Transaccion.
      *
      * @return  self
-     */ 
+     */
     public function setComprobante($comprobante)
     {
         $this->comprobante = $comprobante;
@@ -146,9 +142,36 @@ class TipoComprobante
 
     /**
      * Get many Services have One Transaccion.
-     */ 
+     */
     public function getComprobante()
     {
         return $this->comprobante;
+    }
+
+    public function getNombre()
+    {
+        if ($this->comprobante) {
+            return $this->comprobante->getNombre();
+        } else {
+            return null;
+        }
+    }
+
+    //================================================================================
+    // JSON
+    //================================================================================
+
+    public function getJSON()
+    {
+
+        $output = "";
+        $output .= '"Id": "' . $this->getId() . '", ';
+        $output .= '"Comprobante": ' . $this->getComprobante()->getJSON() . ', ';
+        $output .= '"Tipo": "' . $this->getTipo() . '", ';
+        $output .= '"Descripcion": "' . $this->getDescripcion() . '", ';
+        $output .= '"Codigo": "' . $this->getCodigo() . '" ';
+
+
+        return  '{' . $output . '}';
     }
 }

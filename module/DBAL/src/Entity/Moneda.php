@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Moneda
 {
+    //================================================================================
+    // Properties
+    //================================================================================
+
     /**
      * @ORM\Id
      * @ORM\Column(name="ID", type="integer")
@@ -24,10 +28,15 @@ class Moneda
      */
     protected $nombre;
 
+    //================================================================================
+    // Methods
+    //================================================================================
+
     /**
      * Get the value of id
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -36,7 +45,8 @@ class Moneda
      *
      * @return self
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -44,7 +54,8 @@ class Moneda
     /**
      * Get the value of nombre
      */
-    public function getNombre() {
+    public function getNombre()
+    {
         return $this->nombre;
     }
 
@@ -53,17 +64,23 @@ class Moneda
      *
      * @return self
      */
-    public function setNombre($nombre) {
+    public function setNombre($nombre)
+    {
         $this->nombre = $nombre;
         return $this;
     }
 
-    public function getJSON(){
+    //================================================================================
+    // JSON
+    //================================================================================
+
+    public function getJSON()
+    {
 
         $output = "";
-        $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Nombre": "' . $this->getNombre() .'" ';
-    
-        return  '{'.$output.'}' ;
+        $output .= '"Id": "' . $this->getId() . '", ';
+        $output .= '"Nombre": "' . $this->getNombre() . '" ';
+
+        return  '{' . $output . '}';
     }
 }

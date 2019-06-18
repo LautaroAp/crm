@@ -12,69 +12,79 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="USUARIO")
  */
-class Usuario {
-    //put your code here
-    
+class Usuario
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
+
     /**
      * @ORM\Id
      * @ORM\Column(name="ID_USUARIO", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id_usuario;   
-    
+    protected $id_usuario;
+
     /**
      * Many Usuario have One Cliente.
      * @ORM\ManyToOne(targetEntity="Cliente")
      * @ORM\JoinColumn(name="ID_CLIENTE", referencedColumnName="ID_CLIENTE")
-     */ 
+     */
     protected $id_cliente;
-        
+
     /**
      * @ORM\Column(name="SKYPE", nullable=true, type="string", length=255)
      */
     protected $skype;
-    
-     /**
+
+    /**
      * Many Usuario have One Persona.
      * @ORM\ManyToOne(targetEntity="Persona")
      * @ORM\JoinColumn(name="ID_PERSONA", referencedColumnName="ID")
-     */ 
+     */
     protected $persona;
 
-    
-    function getId() {
+    //================================================================================
+    // Methods
+    //================================================================================
+
+    function getId()
+    {
         return $this->id_usuario;
     }
 
-    function getCliente() {
+    function getCliente()
+    {
         return $this->id_cliente;
     }
-    function getSkype(){
+    function getSkype()
+    {
         return $this->skype;
     }
-    
-    function setId_usuario($id_usuario) {
+
+    function setId_usuario($id_usuario)
+    {
         $this->id_usuario = $id_usuario;
         return $this;
     }
 
 
-    function setId_cliente($id_cliente) {
+    function setId_cliente($id_cliente)
+    {
         $this->id_cliente = $id_cliente;
-//        $clientes->addUsuario($this);
+        //        $clientes->addUsuario($this);
     }
 
-    function setSkype($skype) {
+    function setSkype($skype)
+    {
         $this->skype = $skype;
         return $this;
     }
 
-
-
-
     /**
      * Get the value of persona
-     */ 
+     */
     public function getPersona()
     {
         return $this->persona;
@@ -84,7 +94,7 @@ class Usuario {
      * Set the value of persona
      *
      * @return  self
-     */ 
+     */
     public function setPersona($persona)
     {
         $this->persona = $persona;

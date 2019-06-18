@@ -1,5 +1,6 @@
 <?php
 namespace DBAL\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,7 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="PRESUPUESTO")
  */
-class Presupuesto {
+class Presupuesto
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
 
     /**
      * @ORM\Id
@@ -17,7 +23,7 @@ class Presupuesto {
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
-    
+
     /**
      * @ORM\Column(name="NUMERO", nullable=true, type="string", length=255)
      */
@@ -29,12 +35,14 @@ class Presupuesto {
      * @ORM\JoinColumn(name="ID_TRANSACCION", referencedColumnName="ID")
      */
     private $transaccion;
- 
 
+    //================================================================================
+    // Methods
+    //================================================================================
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -44,7 +52,7 @@ class Presupuesto {
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -54,7 +62,7 @@ class Presupuesto {
 
     /**
      * Get the value of numero
-     */ 
+     */
     public function getNumero()
     {
         return $this->numero;
@@ -64,7 +72,7 @@ class Presupuesto {
      * Set the value of numero
      *
      * @return  self
-     */ 
+     */
     public function setNumero($numero)
     {
         $this->numero = $numero;
@@ -74,7 +82,7 @@ class Presupuesto {
 
     /**
      * Get many Presupuestos have One Transaccion.
-     */ 
+     */
     public function getTransaccion()
     {
         return $this->transaccion;
@@ -84,14 +92,11 @@ class Presupuesto {
      * Set many Presupuestos have One Transaccion.
      *
      * @return  self
-     */ 
+     */
     public function setTransaccion($transaccion)
     {
         $this->transaccion = $transaccion;
 
         return $this;
     }
-
-
-
 }

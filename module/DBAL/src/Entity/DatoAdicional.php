@@ -12,14 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class DatoAdicional
 {
-    //put your code here
+
+    //================================================================================
+    // Properties
+    //================================================================================
 
     /**
      * @ORM\Id
      * @ORM\Column(name="ID", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id; 
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Persona")
@@ -33,12 +36,12 @@ class DatoAdicional
      */
     protected $id_referencia_persona;
 
-     /**
+    /**
      * @ORM\Column(name="DATO_ADICIONAL", nullable=true, type="string")
      */
     private $dato_adicional;
 
-      /**
+    /**
      * @ORM\Column(name="DESCRIPCION", nullable=true, type="string")
      */
     private $descripcion;
@@ -48,22 +51,13 @@ class DatoAdicional
      */
     protected $tipo;
 
-
-    public function getJSON(){
-        $output = "";
-        $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Ficha Persona": "' . $this->getId_ficha_persona() .'", ';
-        $output .= '"Referencia Persona": "' . $this->getId_referencia_persona() .'", ';
-        $output .= '"Dato Adicional": "' . $this->getDato_adicional() .'", ';
-        $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
-        $output .= '"Tipo": "' . $this->getTipo() .'" ';
-
-        return  '{'.$output.'}' ;
-    }
+    //================================================================================
+    // Methods
+    //================================================================================
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -73,7 +67,7 @@ class DatoAdicional
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -83,7 +77,7 @@ class DatoAdicional
 
     /**
      * Get the value of id_ficha_persona
-     */ 
+     */
     public function getId_ficha_persona()
     {
         return $this->id_ficha_persona;
@@ -93,7 +87,7 @@ class DatoAdicional
      * Set the value of id_ficha_persona
      *
      * @return  self
-     */ 
+     */
     public function setId_ficha_persona($id_ficha_persona)
     {
         $this->id_ficha_persona = $id_ficha_persona;
@@ -103,7 +97,7 @@ class DatoAdicional
 
     /**
      * Get the value of id_referencia_persona
-     */ 
+     */
     public function getId_referencia_persona()
     {
         return $this->id_referencia_persona;
@@ -113,7 +107,7 @@ class DatoAdicional
      * Set the value of id_referencia_persona
      *
      * @return  self
-     */ 
+     */
     public function setId_referencia_persona($id_referencia_persona)
     {
         $this->id_referencia_persona = $id_referencia_persona;
@@ -123,7 +117,7 @@ class DatoAdicional
 
     /**
      * Get the value of dato_adicional
-     */ 
+     */
     public function getDato_adicional()
     {
         return $this->dato_adicional;
@@ -133,7 +127,7 @@ class DatoAdicional
      * Set the value of dato_adicional
      *
      * @return  self
-     */ 
+     */
     public function setDato_adicional($dato_adicional)
     {
         $this->dato_adicional = $dato_adicional;
@@ -143,7 +137,7 @@ class DatoAdicional
 
     /**
      * Get the value of descripcion
-     */ 
+     */
     public function getDescripcion()
     {
         return $this->descripcion;
@@ -153,7 +147,7 @@ class DatoAdicional
      * Set the value of descripcion
      *
      * @return  self
-     */ 
+     */
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
@@ -163,7 +157,7 @@ class DatoAdicional
 
     /**
      * Get the value of tipo
-     */ 
+     */
     public function getTipo()
     {
         return $this->tipo;
@@ -173,11 +167,28 @@ class DatoAdicional
      * Set the value of tipo
      *
      * @return  self
-     */ 
+     */
     public function setTipo($tipo)
     {
         $this->tipo = $tipo;
 
         return $this;
+    }
+
+    //================================================================================
+    // JSON
+    //================================================================================
+
+    public function getJSON()
+    {
+        $output = "";
+        $output .= '"Id": "' . $this->getId() . '", ';
+        $output .= '"Ficha Persona": "' . $this->getId_ficha_persona() . '", ';
+        $output .= '"Referencia Persona": "' . $this->getId_referencia_persona() . '", ';
+        $output .= '"Dato Adicional": "' . $this->getDato_adicional() . '", ';
+        $output .= '"Descripcion": "' . $this->getDescripcion() . '", ';
+        $output .= '"Tipo": "' . $this->getTipo() . '" ';
+
+        return  '{' . $output . '}';
     }
 }

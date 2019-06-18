@@ -1,5 +1,6 @@
 <?php
 namespace DBAL\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,7 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="COBRO")
  */
-class Cobro {
+class Cobro
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
 
     /**
      * @ORM\Id
@@ -17,19 +23,18 @@ class Cobro {
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
-    
+
     /**
      * @ORM\Column(name="NUMERO", nullable=true, type="integer", length=255)
      */
     protected $numero;
-    
+
     /**
      * Many Services have One Transaccion.
      * @ORM\ManyToOne(targetEntity="Transaccion")
      * @ORM\JoinColumn(name="ID_TRANSACCION", referencedColumnName="ID")
      */
     private $transaccion;
-
 
     /**
      * @ORM\Column(name="CONCEPTO", nullable=true, type="string")
@@ -48,9 +53,13 @@ class Cobro {
      */
     private $transaccion_cobro;
 
+    //================================================================================
+    // Methods
+    //================================================================================
+
     /**
      * Get the value of id_cobro
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -60,7 +69,7 @@ class Cobro {
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -70,7 +79,7 @@ class Cobro {
 
     /**
      * Get the value of numero
-     */ 
+     */
     public function getNumero()
     {
         return $this->numero;
@@ -80,7 +89,7 @@ class Cobro {
      * Set the value of numero
      *
      * @return  self
-     */ 
+     */
     public function setNumero($numero)
     {
         $this->numero = $numero;
@@ -90,7 +99,7 @@ class Cobro {
 
     /**
      * Get many Services have One Transaccion.
-     */ 
+     */
     public function getTransaccion()
     {
         return $this->transaccion;
@@ -100,7 +109,7 @@ class Cobro {
      * Set many Services have One Transaccion.
      *
      * @return  self
-     */ 
+     */
     public function setTransaccion($transaccion)
     {
         $this->transaccion = $transaccion;
@@ -108,10 +117,9 @@ class Cobro {
         return $this;
     }
 
-
     /**
      * Get many Services have One Transaccion.
-     */ 
+     */
     public function getTipo_comprobante()
     {
         return $this->tipo_comprobante;
@@ -121,7 +129,7 @@ class Cobro {
      * Set many Services have One Transaccion.
      *
      * @return  self
-     */ 
+     */
     public function setTipo_comprobante($tipo_comprobante)
     {
         $this->tipo_comprobante = $tipo_comprobante;
@@ -131,7 +139,7 @@ class Cobro {
 
     /**
      * Get the value of concepto
-     */ 
+     */
     public function getConcepto()
     {
         return $this->concepto;
@@ -141,7 +149,7 @@ class Cobro {
      * Set the value of concepto
      *
      * @return  self
-     */ 
+     */
     public function setConcepto($concepto)
     {
         $this->concepto = $concepto;
@@ -151,7 +159,7 @@ class Cobro {
 
     /**
      * Get many Services have One Transaccion.
-     */ 
+     */
     public function getTransaccion_cobro()
     {
         return $this->transaccion_cobro;
@@ -161,7 +169,7 @@ class Cobro {
      * Set many Services have One Transaccion.
      *
      * @return  self
-     */ 
+     */
     public function setTransaccion_cobro($transaccion_cobro)
     {
         $this->transaccion_cobro = $transaccion_cobro;
@@ -171,7 +179,7 @@ class Cobro {
 
     /**
      * Get the value of importe_letras
-     */ 
+     */
     public function getImporte_letras()
     {
         return $this->importe_letras;
@@ -181,7 +189,7 @@ class Cobro {
      * Set the value of importe_letras
      *
      * @return  self
-     */ 
+     */
     public function setImporte_letras($importe_letras)
     {
         $this->importe_letras = $importe_letras;

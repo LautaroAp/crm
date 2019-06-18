@@ -12,7 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FormaEnvio
 {
-    //put your code here
+    //================================================================================
+    // Properties
+    //================================================================================
 
     /**
      * @ORM\Id
@@ -32,10 +34,13 @@ class FormaEnvio
      */
     protected $descripcion;
 
+    //================================================================================
+    // Methods
+    //================================================================================
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -45,7 +50,7 @@ class FormaEnvio
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -55,7 +60,7 @@ class FormaEnvio
 
     /**
      * Get the value of nombre
-     */ 
+     */
     public function getNombre()
     {
         return (($this->nombre));
@@ -65,17 +70,17 @@ class FormaEnvio
      * Set the value of nombre
      *
      * @return  self
-     */ 
+     */
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
 
         return $this;
     }
-  
+
     /**
      * Get the value of descripcion
-     */ 
+     */
     public function getDescripcion()
     {
         return $this->descripcion;
@@ -85,7 +90,7 @@ class FormaEnvio
      * Set the value of descripcion
      *
      * @return  self
-     */ 
+     */
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
@@ -93,16 +98,18 @@ class FormaEnvio
         return $this;
     }
 
+    //================================================================================
+    // JSON
+    //================================================================================
 
-
-    public function getJSON(){
+    public function getJSON()
+    {
 
         $output = "";
-        $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Nombre": "' . $this->getNombre() .'", ';
-        $output .= '"Descripcion": "' . $this->getDescripcion() .'" ';
+        $output .= '"Id": "' . $this->getId() . '", ';
+        $output .= '"Nombre": "' . $this->getNombre() . '", ';
+        $output .= '"Descripcion": "' . $this->getDescripcion() . '" ';
 
-        return  '{'.$output.'}' ;
+        return  '{' . $output . '}';
     }
-
 }

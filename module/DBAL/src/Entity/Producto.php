@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Producto
 {
+    //================================================================================
+    // Properties
+    //================================================================================
 
     /**
      * @ORM\Id
@@ -60,7 +63,7 @@ class Producto
      */
     protected $reposicion;
 
-  
+
     /**
      * @ORM\Column(name="PRECIO_COMPRA", nullable=true, type="decimal")
      */
@@ -106,7 +109,7 @@ class Producto
      */
     protected $descuento;
 
-     /**
+    /**
      * Many Products have One Product.
      * @ORM\ManyToOne(targetEntity="Iva")
      * @ORM\JoinColumn(name="ID_IVA", referencedColumnName="ID")
@@ -139,14 +142,20 @@ class Producto
      */
     private $bien;
 
-    public function getId(){
+    //================================================================================
+    // Methods
+    //================================================================================
+
+    public function getId()
+    {
         return $this->id_producto;
     }
 
     /**
      * Get the value of id_evento
      */
-    public function getEvento(){
+    public function getEvento()
+    {
         return $this->id_evento;
     }
 
@@ -155,7 +164,8 @@ class Producto
      *
      * @return self
      */
-    public function setEvento($evento){
+    public function setEvento($evento)
+    {
         $this->evento = $evento;
         return $this;
     }
@@ -163,7 +173,8 @@ class Producto
     /**
      * Get the value of nombre
      */
-    public function getNombre(){
+    public function getNombre()
+    {
         return (($this->nombre));
     }
 
@@ -172,7 +183,8 @@ class Producto
      *
      * @return self
      */
-    public function setNombre($nombre){
+    public function setNombre($nombre)
+    {
         $this->nombre = $nombre;
         return $this;
     }
@@ -180,7 +192,8 @@ class Producto
     /**
      * Get the value of descripcion
      */
-    public function getDescripcion(){
+    public function getDescripcion()
+    {
         return $this->descripcion;
     }
 
@@ -189,7 +202,8 @@ class Producto
      *
      * @return self
      */
-    public function setDescripcion($descripcion){
+    public function setDescripcion($descripcion)
+    {
         $this->descripcion = $descripcion;
         return $this;
     }
@@ -197,7 +211,8 @@ class Producto
     /**
      * Get the value of categoria
      */
-    public function getCategoria(){
+    public function getCategoria()
+    {
         return $this->categoria;
     }
 
@@ -206,7 +221,8 @@ class Producto
      *
      * @return self
      */
-    public function setCategoria($categoria){
+    public function setCategoria($categoria)
+    {
         $this->categoria = $categoria;
         return $this;
     }
@@ -214,7 +230,8 @@ class Producto
     /**
      * Get the value of proveedor
      */
-    public function getProveedor(){
+    public function getProveedor()
+    {
         return $this->proveedor;
     }
 
@@ -223,7 +240,8 @@ class Producto
      *
      * @return self
      */
-    public function setProveedor($proveedor){
+    public function setProveedor($proveedor)
+    {
         $this->proveedor = $proveedor;
         return $this;
     }
@@ -232,7 +250,8 @@ class Producto
     /**
      * Get the value of presentacion
      */
-    public function getPresentacion(){
+    public function getPresentacion()
+    {
         return $this->presentacion;
     }
 
@@ -241,7 +260,8 @@ class Producto
      *
      * @return self
      */
-    public function setPresentacion($presentacion){
+    public function setPresentacion($presentacion)
+    {
         $this->presentacion = $presentacion;
         return $this;
     }
@@ -249,7 +269,8 @@ class Producto
     /**
      * Get the value of reposicion
      */
-    public function getReposicion(){
+    public function getReposicion()
+    {
         return $this->reposicion;
     }
 
@@ -258,14 +279,16 @@ class Producto
      *
      * @return self
      */
-    public function setReposicion($reposicion){
+    public function setReposicion($reposicion)
+    {
         $this->reposicion = $reposicion;
         return $this;
     }
     /**
      * Get the value of precio_compra
      */
-    public function getPrecio_compra(){
+    public function getPrecio_compra()
+    {
         return $this->precio_compra;
     }
 
@@ -274,7 +297,8 @@ class Producto
      *
      * @return self
      */
-    public function setPrecio_compra($precio_compra){
+    public function setPrecio_compra($precio_compra)
+    {
         $this->precio_compra = $precio_compra;
         return $this;
     }
@@ -282,7 +306,8 @@ class Producto
     /**
      * Get the value of costos_directos
      */
-    public function getCostos_directos() {
+    public function getCostos_directos()
+    {
         return $this->costos_directos;
     }
 
@@ -291,7 +316,8 @@ class Producto
      *
      * @return self
      */
-    public function setCostos_directos($costos_directos) {
+    public function setCostos_directos($costos_directos)
+    {
         $this->costos_directos = $costos_directos;
         return $this;
     }
@@ -299,7 +325,8 @@ class Producto
     /**
      * Get the value of gastos_directos
      */
-    public function getGastos_directos() {
+    public function getGastos_directos()
+    {
         return $this->gastos_directos;
     }
 
@@ -308,7 +335,8 @@ class Producto
      *
      * @return self
      */
-    public function setGastos_directos($gastos_directos) {
+    public function setGastos_directos($gastos_directos)
+    {
         $this->gastos_directos = $gastos_directos;
         return $this;
     }
@@ -316,7 +344,8 @@ class Producto
     /**
      * Get the value of precio_compra_total
      */
-    public function getPrecio_compra_total() {
+    public function getPrecio_compra_total()
+    {
         return $this->precio_compra_total;
     }
 
@@ -325,7 +354,8 @@ class Producto
      *
      * @return self
      */
-    public function setPrecio_compra_total($precio_compra_total) {
+    public function setPrecio_compra_total($precio_compra_total)
+    {
         $this->precio_compra_total = $precio_compra_total;
         return $this;
     }
@@ -333,7 +363,8 @@ class Producto
     /**
      * Get the value of contribucion_marginal_valor
      */
-    public function getContribucion_marginal_valor() {
+    public function getContribucion_marginal_valor()
+    {
         return $this->contribucion_marginal_valor;
     }
 
@@ -342,7 +373,8 @@ class Producto
      *
      * @return self
      */
-    public function setContribucion_marginal_valor($contribucion_marginal_valor) {
+    public function setContribucion_marginal_valor($contribucion_marginal_valor)
+    {
         $this->contribucion_marginal_valor = $contribucion_marginal_valor;
         return $this;
     }
@@ -350,7 +382,8 @@ class Producto
     /**
      * Get the value of contribucion_marginal_porcentual
      */
-    public function getContribucion_marginal_porcentual() {
+    public function getContribucion_marginal_porcentual()
+    {
         return $this->contribucion_marginal_porcentual;
     }
 
@@ -359,15 +392,17 @@ class Producto
      *
      * @return self
      */
-    public function setContribucion_marginal_porcentual($contribucion_marginal_porcentual) {
+    public function setContribucion_marginal_porcentual($contribucion_marginal_porcentual)
+    {
         $this->contribucion_marginal_porcentual = $contribucion_marginal_porcentual;
         return $this;
     }
 
     /**
      * Get the value of precio_venta
-     */ 
-    public function getPrecio_venta() {
+     */
+    public function getPrecio_venta()
+    {
         return $this->precio_venta;
     }
 
@@ -376,15 +411,17 @@ class Producto
      *
      * @return self
      */
-    public function setPrecio_venta($precio_venta){
+    public function setPrecio_venta($precio_venta)
+    {
         $this->precio_venta = $precio_venta;
         return $this;
     }
 
     /**
      * Get the value of precio_venta_dto
-     */ 
-    public function getPrecio_venta_dto() {
+     */
+    public function getPrecio_venta_dto()
+    {
         return $this->precio_venta_dto;
     }
 
@@ -392,16 +429,18 @@ class Producto
      * Set the value of precio_venta_dto
      *
      * @return self
-     */ 
-    public function setPrecio_venta_dto($precio_venta_dto) {
+     */
+    public function setPrecio_venta_dto($precio_venta_dto)
+    {
         $this->precio_venta_dto = $precio_venta_dto;
         return $this;
     }
 
     /**
      * Get the value of descuento
-     */ 
-    public function getDescuento() {
+     */
+    public function getDescuento()
+    {
         return $this->descuento;
     }
 
@@ -409,21 +448,24 @@ class Producto
      * Set the value of descuento
      *
      * @return  self
-     */ 
-    public function setDescuento($descuento) {
+     */
+    public function setDescuento($descuento)
+    {
         $this->descuento = $descuento;
         return $this;
     }
 
     /**
      * Get the value of iva
-     */ 
-    public function getIva() {
+     */
+    public function getIva()
+    {
         return $this->iva;
     }
 
-    public function getValorIva(){
-        if (is_null($this->iva)){
+    public function getValorIva()
+    {
+        if (is_null($this->iva)) {
             return null;
         }
         return $this->iva->getValor();
@@ -432,16 +474,18 @@ class Producto
      * Set the value of iva
      *
      * @return self
-     */ 
-    public function setIva($iva) {
+     */
+    public function setIva($iva)
+    {
         $this->iva = $iva;
         return $this;
     }
 
     /**
      * Get the value of iva_gravado
-     */ 
-    public function getIva_gravado() {
+     */
+    public function getIva_gravado()
+    {
         return $this->iva_gravado;
     }
 
@@ -449,16 +493,18 @@ class Producto
      * Set the value of iva_gravado
      *
      * @return self
-     */ 
-    public function setIva_gravado($iva_gravado) {
+     */
+    public function setIva_gravado($iva_gravado)
+    {
         $this->iva_gravado = $iva_gravado;
         return $this;
     }
 
     /**
      * Get the value of precio_final_iva
-     */ 
-    public function getPrecio_final_iva() {
+     */
+    public function getPrecio_final_iva()
+    {
         return $this->precio_final_iva;
     }
 
@@ -466,16 +512,18 @@ class Producto
      * Set the value of precio_final_iva
      *
      * @return self
-     */ 
-    public function setPrecio_final_iva($precio_final_iva) {
+     */
+    public function setPrecio_final_iva($precio_final_iva)
+    {
         $this->precio_final_iva = $precio_final_iva;
         return $this;
     }
 
     /**
      * Get the value of precio_final_iva_dto
-     */ 
-    public function getPrecio_final_iva_dto() {
+     */
+    public function getPrecio_final_iva_dto()
+    {
         return $this->precio_final_iva_dto;
     }
 
@@ -483,16 +531,18 @@ class Producto
      * Set the value of precio_final_iva_dto
      *
      * @return self
-     */ 
-    public function setPrecio_final_iva_dto($precio_final_iva_dto) {
+     */
+    public function setPrecio_final_iva_dto($precio_final_iva_dto)
+    {
         $this->precio_final_iva_dto = $precio_final_iva_dto;
         return $this;
     }
 
     /**
      * Get the value of moneda
-     */ 
-    public function getMoneda() {
+     */
+    public function getMoneda()
+    {
         return $this->moneda;
     }
 
@@ -500,25 +550,25 @@ class Producto
      * Set the value of id_moneda
      *
      * @return self
-     */ 
-    public function setMoneda($moneda) {
+     */
+    public function setMoneda($moneda)
+    {
         $this->moneda = $moneda;
         return $this;
     }
 
-    public function getCategoriaNombre(){
-        if (is_null($this->categoria)){
+    public function getCategoriaNombre()
+    {
+        if (is_null($this->categoria)) {
             return null;
-        }
-        else{
+        } else {
             return $this->categoria->getNombre();
         }
-
     }
 
     /**
      * Get the value of bien
-     */ 
+     */
     public function getBien()
     {
         return $this->bien;
@@ -528,7 +578,7 @@ class Producto
      * Set the value of bien
      *
      * @return  self
-     */ 
+     */
     public function setBien($bien)
     {
         $this->bien = $bien;

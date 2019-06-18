@@ -1,5 +1,6 @@
 <?php
 namespace DBAL\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,63 +12,71 @@ use Doctrine\ORM\Mapping as ORM;
  */
 
 
-class Provincia {
-    //put your code here
-    
-       /**
+class Provincia
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
+
+    /**
      * Many Features have One Product.
      * @ORM\ManyToOne(targetEntity="Pais")
      * @ORM\JoinColumn(name="ID_PAIS", referencedColumnName="ID_PAIS")
-     */ 
-    protected $pais;   
-  
+     */
+    protected $pais;
+
     /**
      * @ORM\Id
      * @ORM\Column(name="ID_PROVINCIA", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id_provincia;
-    
-     /**
+
+    /**
      * @ORM\Column(name="NOMBRE_PROVINCIA", nullable=true, type="string", length=255)
      */
     protected $nombre_provincia;
-    
-    
-    function getPais() {
+
+    //================================================================================
+    // Methods
+    //================================================================================
+
+    function getPais()
+    {
         return $this->pais;
     }
 
-    function getNombre_pais(){
-        if (is_null($this->pais)){
+    function getNombre_pais()
+    {
+        if (is_null($this->pais)) {
             return 'No definido';
-        }
-        else{
+        } else {
             return $this->pais->getNombre();
         }
     }
-    function getId() {
+    function getId()
+    {
         return $this->id_provincia;
     }
 
-    function getNombre_provincia() {
+    function getNombre_provincia()
+    {
         return $this->nombre_provincia;
     }
 
-    function setId_pais($id_pais) {
+    function setId_pais($id_pais)
+    {
         $this->id_pais = $id_pais;
     }
 
-    function setId_provincia($id_provincia) {
+    function setId_provincia($id_provincia)
+    {
         $this->id_provincia = $id_provincia;
     }
 
-    function setNombre_provincia($nombre_provincia) {
+    function setNombre_provincia($nombre_provincia)
+    {
         $this->nombre_provincia = $nombre_provincia;
     }
-    
-
-
-
-    
 }

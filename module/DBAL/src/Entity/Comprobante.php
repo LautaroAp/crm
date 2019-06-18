@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comprobante
 {
+    //================================================================================
+    // Properties
+    //================================================================================
+
     /**
      * @ORM\Id
      * @ORM\Column(name="ID", type="integer")
@@ -29,19 +33,13 @@ class Comprobante
      */
     protected $descripcion;
 
-    public function getJSON(){
-
-        $output = "";
-        $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Nombre": "' . $this->getNombre() .'", ';
-        $output .= '"Descripcion": "' . $this->getDescripcion() .'" ';
-    
-        return  '{'.$output.'}' ;
-    }
+    //================================================================================
+    // Methods
+    //================================================================================
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -51,7 +49,7 @@ class Comprobante
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -61,7 +59,7 @@ class Comprobante
 
     /**
      * Get the value of nombre
-     */ 
+     */
     public function getNombre()
     {
         return $this->nombre;
@@ -71,7 +69,7 @@ class Comprobante
      * Set the value of nombre
      *
      * @return  self
-     */ 
+     */
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
@@ -81,7 +79,7 @@ class Comprobante
 
     /**
      * Get the value of descripcion
-     */ 
+     */
     public function getDescripcion()
     {
         return $this->descripcion;
@@ -91,11 +89,26 @@ class Comprobante
      * Set the value of descripcion
      *
      * @return  self
-     */ 
+     */
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
 
         return $this;
+    }
+
+    //================================================================================
+    // JSON
+    //================================================================================
+
+    public function getJSON()
+    {
+
+        $output = "";
+        $output .= '"Id": "' . $this->getId() . '", ';
+        $output .= '"Nombre": "' . $this->getNombre() . '", ';
+        $output .= '"Descripcion": "' . $this->getDescripcion() . '" ';
+
+        return  '{' . $output . '}';
     }
 }

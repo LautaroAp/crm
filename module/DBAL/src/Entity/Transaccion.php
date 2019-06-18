@@ -1,5 +1,6 @@
 <?php
 namespace DBAL\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,16 +10,20 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="TRANSACCION")
  */
-class Transaccion {
-    //put your code here
-    
+class Transaccion
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
+
     /**
      * @ORM\Id
      * @ORM\Column(name="ID", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
-    
+
     /**
      * @ORM\Column(name="NUMERO", nullable=true, type="integer")
      */
@@ -34,7 +39,6 @@ class Transaccion {
      */
     protected $detalle;
 
-
     /**
      * @ORM\Column(name="FECHA_CREACION", type="datetime")
      */
@@ -45,13 +49,11 @@ class Transaccion {
      */
     protected $fecha_vencimiento;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="Persona")
      * @ORM\JoinColumn(name="ID_PERSONA", referencedColumnName="ID")
      */
     protected $persona;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="Ejecutivo")
@@ -59,13 +61,12 @@ class Transaccion {
      */
     protected $responsable;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="Moneda")
      * @ORM\JoinColumn(name="ID_MONEDA", referencedColumnName="ID")
      */
     private $moneda;
-    
+
     /**
      * @ORM\Column(name="TIPO", nullable=true, type="string", length=255)
      */
@@ -138,18 +139,17 @@ class Transaccion {
 
     /**
      * @ORM\Column(name="NUMERO_TIPO_TRANSACCION", nullable=true, type="integer")
-    */
+     */
     protected $numeroTransaccionTipo;
 
-      /**
+    /**
      * @ORM\Column(name="FACTURADO", nullable=true, type="boolean")
-    */
+     */
     protected $facturado;
 
-
-      /**
+    /**
      * @ORM\Column(name="OFICIAL", nullable=true, type="boolean")
-    */
+     */
     protected $oficial;
 
     /**
@@ -157,9 +157,14 @@ class Transaccion {
      * @ORM\JoinColumn(name="ID_COMPROBANTE", referencedColumnName="ID")
      */
     protected $comprobante;
+
+    //================================================================================
+    // Methods
+    //================================================================================
+
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -169,7 +174,7 @@ class Transaccion {
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -179,7 +184,7 @@ class Transaccion {
 
     /**
      * Get the value of numero_transaccion
-     */ 
+     */
     public function getNumero()
     {
         return $this->numero_transaccion;
@@ -189,7 +194,7 @@ class Transaccion {
      * Set the value of numero_transaccion
      *
      * @return  self
-     */ 
+     */
     public function setNumero($numero_transaccion)
     {
         $this->numero_transaccion = $numero_transaccion;
@@ -199,7 +204,7 @@ class Transaccion {
 
     /**
      * Get the value of fecha_transaccion
-     */ 
+     */
     public function getFecha_transaccion()
     {
         return $this->fecha_transaccion;
@@ -209,7 +214,7 @@ class Transaccion {
      * Set the value of fecha_transaccion
      *
      * @return  self
-     */ 
+     */
     public function setFecha_transaccion($fecha_transaccion)
     {
         $this->fecha_transaccion = $fecha_transaccion;
@@ -219,7 +224,7 @@ class Transaccion {
 
     /**
      * Get the value of persona
-     */ 
+     */
     public function getPersona()
     {
         return $this->persona;
@@ -229,7 +234,7 @@ class Transaccion {
      * Set the value of persona
      *
      * @return  self
-     */ 
+     */
     public function setPersona($persona)
     {
         $this->persona = $persona;
@@ -239,7 +244,7 @@ class Transaccion {
 
     /**
      * Get the value of tipo_transaccion
-     */ 
+     */
     public function getTipo()
     {
         return $this->tipo_transaccion;
@@ -249,7 +254,7 @@ class Transaccion {
      * Set the value of tipo_transaccion
      *
      * @return  self
-     */ 
+     */
     public function setTipo($tipo_transaccion)
     {
         $this->tipo_transaccion = $tipo_transaccion;
@@ -261,7 +266,7 @@ class Transaccion {
 
     /**
      * Get the value of fecha_vencimiento
-     */ 
+     */
     public function getFecha_vencimiento()
     {
         return $this->fecha_vencimiento;
@@ -271,7 +276,7 @@ class Transaccion {
      * Set the value of fecha_vencimiento
      *
      * @return  self
-     */ 
+     */
     public function setFecha_vencimiento($fecha_vencimiento)
     {
         $this->fecha_vencimiento = $fecha_vencimiento;
@@ -281,21 +286,22 @@ class Transaccion {
 
     /**
      * Get the value of bienes_transacciones
-     */ 
+     */
     public function getBienesTransacciones()
     {
         return $this->bienesTransacciones;
     }
 
-    public function addBienesTransacciones($bienesTransacciones) {
+    public function addBienesTransacciones($bienesTransacciones)
+    {
         $this->bienesTransacciones[] = $bienesTransacciones;
     }
 
-  
+
 
     /**
      * Get the value of nombre
-     */ 
+     */
     public function getNombre()
     {
         return $this->nombre;
@@ -305,7 +311,7 @@ class Transaccion {
      * Set the value of nombre
      *
      * @return  self
-     */ 
+     */
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
@@ -316,7 +322,7 @@ class Transaccion {
 
     /**
      * Get the value of responsable
-     */ 
+     */
     public function getResponsable()
     {
         return $this->responsable;
@@ -326,7 +332,7 @@ class Transaccion {
      * Set the value of responsable
      *
      * @return  self
-     */ 
+     */
     public function setResponsable($responsable)
     {
         $this->responsable = $responsable;
@@ -336,7 +342,7 @@ class Transaccion {
 
     /**
      * Get the value of estado
-     */ 
+     */
     public function getEstado()
     {
         return $this->estado;
@@ -346,7 +352,7 @@ class Transaccion {
      * Set the value of estado
      *
      * @return  self
-     */ 
+     */
     public function setEstado($estado)
     {
         $this->estado = $estado;
@@ -356,7 +362,7 @@ class Transaccion {
 
     /**
      * Get the value of importe_total
-     */ 
+     */
     public function getMonto()
     {
         return $this->importe_total;
@@ -366,7 +372,7 @@ class Transaccion {
      * Set the value of importe_total
      *
      * @return  self
-     */ 
+     */
     public function setMonto($importe_total)
     {
         $this->importe_total = $importe_total;
@@ -376,7 +382,7 @@ class Transaccion {
 
     /**
      * Get the value of detalle
-     */ 
+     */
     public function getDetalle()
     {
         return $this->detalle;
@@ -386,7 +392,7 @@ class Transaccion {
      * Set the value of detalle
      *
      * @return  self
-     */ 
+     */
     public function setDetalle($detalle)
     {
         $this->detalle = $detalle;
@@ -394,13 +400,13 @@ class Transaccion {
         return $this;
     }
 
-    
+
     /**
      * Get the value of bonificacionGeneral
-     */ 
+     */
     public function getBonificacionGeneral()
     {
-        if (!is_null($this->bonificacionGeneral)){
+        if (!is_null($this->bonificacionGeneral)) {
             return $this->bonificacionGeneral;
         }
         return "0.00";
@@ -410,7 +416,7 @@ class Transaccion {
      * Set the value of bonificacionGeneral
      *
      * @return  self
-     */ 
+     */
     public function setBonificacionGeneral($bonificacionGeneral)
     {
         $this->bonificacionGeneral = $bonificacionGeneral;
@@ -420,7 +426,7 @@ class Transaccion {
 
     /**
      * Get the value of bonificacionImporte
-     */ 
+     */
     public function getBonificacionImporte()
     {
         return $this->bonificacionImporte;
@@ -430,7 +436,7 @@ class Transaccion {
      * Set the value of bonificacionImporte
      *
      * @return  self
-     */ 
+     */
     public function setBonificacionImporte($bonificacionImporte)
     {
         $this->bonificacionImporte = $bonificacionImporte;
@@ -440,7 +446,7 @@ class Transaccion {
 
     /**
      * Get the value of ivaGeneral
-     */ 
+     */
     public function getIvaGeneral()
     {
         return $this->ivaGeneral;
@@ -450,7 +456,7 @@ class Transaccion {
      * Set the value of ivaGeneral
      *
      * @return  self
-     */ 
+     */
     public function setIvaGeneral($ivaGeneral)
     {
         $this->ivaGeneral = $ivaGeneral;
@@ -460,13 +466,14 @@ class Transaccion {
 
     /**
      * Get the value of formaPago
-     */ 
+     */
     public function getFormaPago()
     {
         return $this->formaPago;
     }
 
-    public function getNombreFormaPago(){
+    public function getNombreFormaPago()
+    {
         if (is_null($this->formaPago)) {
             return "No definido";
         } else {
@@ -478,7 +485,7 @@ class Transaccion {
      * Set the value of formaPago
      *
      * @return  self
-     */ 
+     */
     public function setFormaPago($formaPago)
     {
         $this->formaPago = $formaPago;
@@ -487,7 +494,7 @@ class Transaccion {
     }
     /**
      * Get the value of moneda
-     */ 
+     */
     public function getMoneda()
     {
         return $this->moneda;
@@ -497,34 +504,33 @@ class Transaccion {
      * Set the value of moneda
      *
      * @return  self
-     */ 
+     */
     public function setMoneda($moneda)
     {
         $this->moneda = $moneda;
 
         return $this;
     }
-    
+
 
     /**
      * Get the value of recargoGeneral
-     */ 
+     */
     public function getRecargoGeneral()
     {
-        if (!is_null($this->recargoGeneral)){
+        if (!is_null($this->recargoGeneral)) {
             return $this->recargoGeneral;
-        }
-        else return "0.00";
+        } else return "0.00";
     }
 
     /**
      * Set the value of recargoGeneral
      *
      * @return  self
-     */ 
+     */
     public function setRecargoGeneral($recargoGeneral)
     {
-       
+
         $this->recargoGeneral = $recargoGeneral;
 
         return $this;
@@ -532,7 +538,7 @@ class Transaccion {
 
     /**
      * Get the value of recargoImporte
-     */ 
+     */
     public function getRecargoImporte()
     {
         return $this->recargoImporte;
@@ -542,7 +548,7 @@ class Transaccion {
      * Set the value of recargoImporte
      *
      * @return  self
-     */ 
+     */
     public function setRecargoImporte($recargoImporte)
     {
         $this->recargoImporte = $recargoImporte;
@@ -552,7 +558,7 @@ class Transaccion {
 
     /**
      * Get the value of formaEnvio
-     */ 
+     */
     public function getFormaEnvio()
     {
         return $this->formaEnvio;
@@ -562,7 +568,7 @@ class Transaccion {
      * Set the value of formaEnvio
      *
      * @return  self
-     */ 
+     */
     public function setFormaEnvio($formaEnvio)
     {
         $this->formaEnvio = $formaEnvio;
@@ -570,7 +576,8 @@ class Transaccion {
         return $this;
     }
 
-    public function getNombreFormaEnvio(){
+    public function getNombreFormaEnvio()
+    {
         if (is_null($this->formaEnvio)) {
             return "NO DEFINIDO";
         } else {
@@ -578,60 +585,9 @@ class Transaccion {
         }
     }
 
-    public function getJSON(){
-
-        $output = "";
-        $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Numero": "' . $this->getNumero() .'", ';
-        $output .= '"Detalle": "' . $this->getDetalle() .'", ';
-        if (!(is_null($this->fecha_transaccion))){
-            $output .= '"Fecha Transaccion": "' . $this->getFecha_transaccion()->format('d/m/Y') .'", ';
-        }
-        if (!(is_null($this->fecha_vencimiento))){
-            $output .= '"Fecha Vencimiento": "' . $this->getFecha_vencimiento()->format('d/m/Y') .'", ';
-        }
-        $output .= '"Persona": "' . $this->getPersona()->getId() .'", ';
-        $output .= '"Responsable": "' . $this->getResponsable()->getId() .'", ';
-        $output .= '"Tipo Transaccion": "' . $this->getTipo() .'", ';
-        if (!(is_null($this->ivaGeneral))){
-            $output .= '"IVA General": ' . $this->getIvaGeneral()->getJSON() .', ';
-        }
-        if (!(is_null($this->formaPago))){
-            $output .= '"Forma de Pago": ' . $this->getFormaPago()->getJSON() .', ';
-        }
-        if (!(is_null($this->formaEnvio))){
-            $output .= '"Forma de Envio": ' . $this->getFormaEnvio()->getJSON() .', ';
-        }
-        $output .= '"Recargo general": ' . $this->getRecargoGeneral() .', ';
-        $output .= '"Bonificacion general": ' . $this->getBonificacionGeneral() .', ';
-        if (!(is_null($this->moneda))){
-            $output .= '"Moneda": ' . $this->getMoneda()->getJSON() .', ';
-        }
-        $output .= '"Estado": "' . $this->getEstado() .'", ';
-        $output .= '"Monto": "' . $this->getMonto() .'", ';
-        $output .= '"Oficial": "' . $this->getOficial() .'", ';
-        if (!(is_null($this->transaccionPrevia))){
-            $output .= '"Transaccion Previa": ' . $this->getTransaccionPrevia()->getId() .', ';
-        }
-        if (!(is_null($this->numeroTransaccionTipo))){
-            $output .= '"Numero Tipo Transaccion": ' . $this->getNumeroTransaccionTipo().', ';
-        }
-        if (!(is_null($this->comprobante))){
-            $output .= '"Comprobante": ' . $this->getComprobante()->getJSON().', ';
-        }
-        $output .= '"Importe Total": ' . $this->getMonto() .', ';
-        $output .= '"Importe Bonificacion": ' . $this->getBonificacionImporte() .', ';
-        $output .= '"Importe Recargo": ' . $this->getRecargoImporte() .', ';
-        $output .= '"Subtotal": "' . $this->getSubtotal() .'" ';
-
-
-
-        return  '{'.$output.'}' ;
-    }
-
     /**
      * Get the value of transaccionPrevia
-     */ 
+     */
     public function getTransaccionPrevia()
     {
         return $this->transaccionPrevia;
@@ -641,7 +597,7 @@ class Transaccion {
      * Set the value of transaccionPrevia
      *
      * @return  self
-     */ 
+     */
     public function setTransaccionPrevia($transaccionPrevia)
     {
         $this->transaccionPrevia = $transaccionPrevia;
@@ -651,7 +607,7 @@ class Transaccion {
 
     /**
      * Get the value of numeroTransaccionTipo
-     */ 
+     */
     public function getNumeroTransaccionTipo()
     {
         return $this->numeroTransaccionTipo;
@@ -661,7 +617,7 @@ class Transaccion {
      * Set the value of numeroTransaccionTipo
      *
      * @return  self
-     */ 
+     */
     public function setNumeroTransaccionTipo($numeroTransaccionTipo)
     {
         $this->numeroTransaccionTipo = $numeroTransaccionTipo;
@@ -671,7 +627,7 @@ class Transaccion {
 
     /**
      * Get the value of subtotal
-     */ 
+     */
     public function getSubtotal()
     {
         return $this->subtotal;
@@ -681,7 +637,7 @@ class Transaccion {
      * Set the value of subtotal
      *
      * @return  self
-     */ 
+     */
     public function setSubtotal($subtotal)
     {
         $this->subtotal = $subtotal;
@@ -691,7 +647,7 @@ class Transaccion {
 
     /**
      * Get the value of facturado
-     */ 
+     */
     public function getFacturado()
     {
         return $this->facturado;
@@ -701,38 +657,39 @@ class Transaccion {
      * Set the value of facturado
      *
      * @return  self
-     */ 
+     */
     public function setFacturado($facturado)
     {
         $this->facturado = $facturado;
-        if (($facturado==true) && (strtoupper($this->tipo_transaccion)!="FACTURA")){
-            $this->estado="FACTURADO";
+        if (($facturado == true) && (strtoupper($this->tipo_transaccion) != "FACTURA")) {
+            $this->estado = "FACTURADO";
         }
         return $this;
     }
 
-    public function getDescripcion(){
-    
+    public function getDescripcion()
+    {
+
         $descripcion = "";
-        if (!is_null($this->nombre)){
+        if (!is_null($this->nombre)) {
             $descripcion .= $this->nombre;
         }
-        if (!is_null($this->bienesTransacciones)){
-            $descripcion.= " por ". COUNT($this->bienesTransacciones) ." items ";
+        if (!is_null($this->bienesTransacciones)) {
+            $descripcion .= " por " . COUNT($this->bienesTransacciones) . " items ";
         }
-        if (!is_null($this->importe_total)){
-            $descripcion.= " por un monto de $ ". $this->importe_total;
+        if (!is_null($this->importe_total)) {
+            $descripcion .= " por un monto de $ " . $this->importe_total;
         }
-        if (!is_null($this->detalle)){
-            $descripcion.= " en concepto de: ".$this->detalle;
+        if (!is_null($this->detalle)) {
+            $descripcion .= " en concepto de: " . $this->detalle;
         }
         return $descripcion;
     }
- 
+
 
     /**
      * Get the value of oficial
-     */ 
+     */
     public function getOficial()
     {
         return $this->oficial;
@@ -742,7 +699,7 @@ class Transaccion {
      * Set the value of oficial
      *
      * @return  self
-     */ 
+     */
     public function setOficial($oficial)
     {
         $this->oficial = $oficial;
@@ -752,7 +709,7 @@ class Transaccion {
 
     /**
      * Get the value of comprobante
-     */ 
+     */
     public function getComprobante()
     {
         return $this->comprobante;
@@ -762,11 +719,67 @@ class Transaccion {
      * Set the value of comprobante
      *
      * @return  self
-     */ 
+     */
     public function setComprobante($comprobante)
     {
         $this->comprobante = $comprobante;
 
         return $this;
+    }
+
+    //================================================================================
+    // JSON
+    //================================================================================
+
+    public function getJSON()
+    {
+
+        $output = "";
+        $output .= '"Id": "' . $this->getId() . '", ';
+        $output .= '"Numero": "' . $this->getNumero() . '", ';
+        $output .= '"Detalle": "' . $this->getDetalle() . '", ';
+        if (!(is_null($this->fecha_transaccion))) {
+            $output .= '"Fecha Transaccion": "' . $this->getFecha_transaccion()->format('d/m/Y') . '", ';
+        }
+        if (!(is_null($this->fecha_vencimiento))) {
+            $output .= '"Fecha Vencimiento": "' . $this->getFecha_vencimiento()->format('d/m/Y') . '", ';
+        }
+        $output .= '"Persona": "' . $this->getPersona()->getId() . '", ';
+        $output .= '"Responsable": "' . $this->getResponsable()->getId() . '", ';
+        $output .= '"Tipo Transaccion": "' . $this->getTipo() . '", ';
+        if (!(is_null($this->ivaGeneral))) {
+            $output .= '"IVA General": ' . $this->getIvaGeneral()->getJSON() . ', ';
+        }
+        if (!(is_null($this->formaPago))) {
+            $output .= '"Forma de Pago": ' . $this->getFormaPago()->getJSON() . ', ';
+        }
+        if (!(is_null($this->formaEnvio))) {
+            $output .= '"Forma de Envio": ' . $this->getFormaEnvio()->getJSON() . ', ';
+        }
+        $output .= '"Recargo general": ' . $this->getRecargoGeneral() . ', ';
+        $output .= '"Bonificacion general": ' . $this->getBonificacionGeneral() . ', ';
+        if (!(is_null($this->moneda))) {
+            $output .= '"Moneda": ' . $this->getMoneda()->getJSON() . ', ';
+        }
+        $output .= '"Estado": "' . $this->getEstado() . '", ';
+        $output .= '"Monto": "' . $this->getMonto() . '", ';
+        $output .= '"Oficial": "' . $this->getOficial() . '", ';
+        if (!(is_null($this->transaccionPrevia))) {
+            $output .= '"Transaccion Previa": ' . $this->getTransaccionPrevia()->getId() . ', ';
+        }
+        if (!(is_null($this->numeroTransaccionTipo))) {
+            $output .= '"Numero Tipo Transaccion": ' . $this->getNumeroTransaccionTipo() . ', ';
+        }
+        if (!(is_null($this->comprobante))) {
+            $output .= '"Comprobante": ' . $this->getComprobante()->getJSON() . ', ';
+        }
+        $output .= '"Importe Total": ' . $this->getMonto() . ', ';
+        $output .= '"Importe Bonificacion": ' . $this->getBonificacionImporte() . ', ';
+        $output .= '"Importe Recargo": ' . $this->getRecargoImporte() . ', ';
+        $output .= '"Subtotal": "' . $this->getSubtotal() . '" ';
+
+
+
+        return  '{' . $output . '}';
     }
 }

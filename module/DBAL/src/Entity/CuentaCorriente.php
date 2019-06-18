@@ -1,5 +1,6 @@
 <?php
 namespace DBAL\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -8,9 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="CUENTA_CORRIENTE")
  */
-class CuentaCorriente {
-    //put your code here
-    
+class CuentaCorriente
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
+
     /**
      * @ORM\Id
      * @ORM\Column(name="ID", type="integer")
@@ -18,12 +23,12 @@ class CuentaCorriente {
      */
     protected $id;
 
-     /**
+    /**
      * Many CuentaCorriente have One Persona.
      * @ORM\ManyToOne(targetEntity="Persona")
      * @ORM\JoinColumn(name="ID_PERSONA", referencedColumnName="ID")
      */
-  
+
     private $persona;
 
     /**
@@ -42,7 +47,7 @@ class CuentaCorriente {
      */
     protected $tipoActividad;
 
-   
+
     /**
      * @ORM\Column(name="MONTO", nullable=true, type="decimal")
      */
@@ -52,39 +57,21 @@ class CuentaCorriente {
     /**
      * @ORM\Column(name="NRO_TIPO_TRANSACCION", nullable=true, type="integer")
      */
-    
+
     protected $nroTipoTransaccion;
 
-      /**
+    /**
      * @ORM\Column(name="FACTURADO", nullable=true, type="boolean")
-    */
+     */
     protected $facturado;
 
+    //================================================================================
+    // Methods
+    //================================================================================
 
-    
-    public function getJSON(){
-        $output = "";
-        $output .= '"Id": "' . $this->getId() .'", ';
-        if (!is_null($this->getPersona())){
-            $output .= '"Persona": ' . $this->getPersona()->getJSON(false) .', ';
-        }
-        if (!is_null($this->getTransaccion())){
-            $output .= '"Transaccion": ' . $this->getTransaccion()->getJSON() .', ';
-        }else{
-            $output .= '"Transaccion": "' . "" .'", ';
-        }       
-        $output .= '"Fecha": "' . $this->getFecha() .'", ';
-        $output .= '"Tipo Actividad": "' . $this->getTipoActividad() .'", ';
-        $output .= '"Nro Actividad": "' . $this->getNroTipoTransaccion() .'", ';
-        $output .= '"Monto": "' . $this->getMonto() .'" ';
-        
-        return  '{'.$output.'}' ;
-    }
-
-   
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -94,7 +81,7 @@ class CuentaCorriente {
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -104,7 +91,7 @@ class CuentaCorriente {
 
     /**
      * Get the value of persona
-     */ 
+     */
     public function getPersona()
     {
         return $this->persona;
@@ -114,7 +101,7 @@ class CuentaCorriente {
      * Set the value of persona
      *
      * @return  self
-     */ 
+     */
     public function setPersona($persona)
     {
         $this->persona = $persona;
@@ -124,7 +111,7 @@ class CuentaCorriente {
 
     /**
      * Get the value of transaccion
-     */ 
+     */
     public function getTransaccion()
     {
         return $this->transaccion;
@@ -134,7 +121,7 @@ class CuentaCorriente {
      * Set the value of transaccion
      *
      * @return  self
-     */ 
+     */
     public function setTransaccion($transaccion)
     {
         $this->transaccion = $transaccion;
@@ -144,7 +131,7 @@ class CuentaCorriente {
 
     /**
      * Get the value of fecha
-     */ 
+     */
     public function getFecha()
     {
         return $this->fecha;
@@ -154,7 +141,7 @@ class CuentaCorriente {
      * Set the value of fecha
      *
      * @return  self
-     */ 
+     */
     public function setFecha($fecha)
     {
         $this->fecha = $fecha;
@@ -164,7 +151,7 @@ class CuentaCorriente {
 
     /**
      * Get the value of tipoActividad
-     */ 
+     */
     public function getTipoActividad()
     {
         return $this->tipoActividad;
@@ -174,7 +161,7 @@ class CuentaCorriente {
      * Set the value of tipoActividad
      *
      * @return  self
-     */ 
+     */
     public function setTipoActividad($tipoActividad)
     {
         $this->tipoActividad = $tipoActividad;
@@ -184,7 +171,7 @@ class CuentaCorriente {
 
     /**
      * Get the value of monto
-     */ 
+     */
     public function getMonto()
     {
         return $this->monto;
@@ -194,7 +181,7 @@ class CuentaCorriente {
      * Set the value of monto
      *
      * @return  self
-     */ 
+     */
     public function setMonto($monto)
     {
         $this->monto = $monto;
@@ -204,7 +191,7 @@ class CuentaCorriente {
 
     /**
      * Get the value of nroTipoTransaccion
-     */ 
+     */
     public function getNroTipoTransaccion()
     {
         return $this->nroTipoTransaccion;
@@ -214,7 +201,7 @@ class CuentaCorriente {
      * Set the value of nroTipoTransaccion
      *
      * @return  self
-     */ 
+     */
     public function setNroTipoTransaccion($nroTipoTransaccion)
     {
         $this->nroTipoTransaccion = $nroTipoTransaccion;
@@ -224,7 +211,7 @@ class CuentaCorriente {
 
     /**
      * Get the value of facturadp
-     */ 
+     */
     public function getFacturado()
     {
         return $this->facturado;
@@ -234,11 +221,35 @@ class CuentaCorriente {
      * Set the value of facturadp
      *
      * @return  self
-     */ 
+     */
     public function setFacturado($facturado)
     {
         $this->facturado = $facturado;
 
         return $this;
+    }
+
+    //================================================================================
+    // JSON
+    //================================================================================
+
+    public function getJSON()
+    {
+        $output = "";
+        $output .= '"Id": "' . $this->getId() . '", ';
+        if (!is_null($this->getPersona())) {
+            $output .= '"Persona": ' . $this->getPersona()->getJSON(false) . ', ';
+        }
+        if (!is_null($this->getTransaccion())) {
+            $output .= '"Transaccion": ' . $this->getTransaccion()->getJSON() . ', ';
+        } else {
+            $output .= '"Transaccion": "' . "" . '", ';
+        }
+        $output .= '"Fecha": "' . $this->getFecha() . '", ';
+        $output .= '"Tipo Actividad": "' . $this->getTipoActividad() . '", ';
+        $output .= '"Nro Actividad": "' . $this->getNroTipoTransaccion() . '", ';
+        $output .= '"Monto": "' . $this->getMonto() . '" ';
+
+        return  '{' . $output . '}';
     }
 }

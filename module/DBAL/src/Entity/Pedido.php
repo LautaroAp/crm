@@ -1,5 +1,6 @@
 <?php
 namespace DBAL\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,7 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="PEDIDO")
  */
-class Pedido {
+class Pedido
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
 
     /**
      * @ORM\Id
@@ -17,12 +23,12 @@ class Pedido {
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id_pedido;
-    
+
     /**
      * @ORM\Column(name="NUMERO", nullable=true, type="integer", length=255)
      */
     protected $numero;
-    
+
     /**
      * Many Services have One Transaccion.
      * @ORM\ManyToOne(targetEntity="Transaccion")
@@ -45,7 +51,7 @@ class Pedido {
      * @ORM\Column(name="LUGAR_ENTREGA", nullable=true, type="string")
      */
     protected $lugar_entrega;
-    
+
     /**
      * @ORM\Column(name="ID_FACTURA", nullable=true, type="integer", length=255)
      */
@@ -56,10 +62,13 @@ class Pedido {
      */
     protected $ingresos_brutos;
 
+    //================================================================================
+    // Methods
+    //================================================================================
 
     /**
      * Get the value of id_pedido
-     */ 
+     */
     public function getId_pedido()
     {
         return $this->id_pedido;
@@ -69,7 +78,7 @@ class Pedido {
      * Set the value of id_pedido
      *
      * @return  self
-     */ 
+     */
     public function setId_pedido($id_pedido)
     {
         $this->id_pedido = $id_pedido;
@@ -79,7 +88,7 @@ class Pedido {
 
     /**
      * Get the value of numero
-     */ 
+     */
     public function getNumero()
     {
         return $this->numero;
@@ -89,7 +98,7 @@ class Pedido {
      * Set the value of numero
      *
      * @return  self
-     */ 
+     */
     public function setNumero($numero)
     {
         $this->numero = $numero;
@@ -99,7 +108,7 @@ class Pedido {
 
     /**
      * Get many Services have One Transaccion.
-     */ 
+     */
     public function getTransaccion()
     {
         return $this->transaccion;
@@ -109,7 +118,7 @@ class Pedido {
      * Set many Services have One Transaccion.
      *
      * @return  self
-     */ 
+     */
     public function setTransaccion($transaccion)
     {
         $this->transaccion = $transaccion;
@@ -120,7 +129,7 @@ class Pedido {
 
     /**
      * Get the value of fecha_entrega
-     */ 
+     */
     public function getFecha_entrega()
     {
         return $this->fecha_entrega;
@@ -130,7 +139,7 @@ class Pedido {
      * Set the value of fecha_entrega
      *
      * @return  self
-     */ 
+     */
     public function setFecha_entrega($fecha_entrega)
     {
         $this->fecha_entrega = $fecha_entrega;
@@ -141,7 +150,7 @@ class Pedido {
 
     /**
      * Get the value of lugar_entrega
-     */ 
+     */
     public function getLugar_entrega()
     {
         return $this->lugar_entrega;
@@ -151,7 +160,7 @@ class Pedido {
      * Set the value of lugar_entrega
      *
      * @return  self
-     */ 
+     */
     public function setLugar_entrega($lugar_entrega)
     {
         $this->lugar_entrega = $lugar_entrega;
@@ -161,7 +170,7 @@ class Pedido {
 
     /**
      * Get the value of factura
-     */ 
+     */
     public function getFactura()
     {
         return $this->factura;
@@ -171,7 +180,7 @@ class Pedido {
      * Set the value of factura
      *
      * @return  self
-     */ 
+     */
     public function setFactura($factura)
     {
         $this->factura = $factura;
@@ -181,7 +190,7 @@ class Pedido {
 
     /**
      * Get the value of ingresos_brutos
-     */ 
+     */
     public function getIngresos_brutos()
     {
         return $this->ingresos_brutos;
@@ -191,7 +200,7 @@ class Pedido {
      * Set the value of ingresos_brutos
      *
      * @return  self
-     */ 
+     */
     public function setIngresos_brutos($ingresos_brutos)
     {
         $this->ingresos_brutos = $ingresos_brutos;
@@ -201,7 +210,7 @@ class Pedido {
 
     /**
      * Get the value of forma_envio
-     */ 
+     */
     public function getForma_envio()
     {
         return $this->forma_envio;
@@ -211,7 +220,7 @@ class Pedido {
      * Set the value of forma_envio
      *
      * @return  self
-     */ 
+     */
     public function setForma_envio($forma_envio)
     {
         $this->forma_envio = $forma_envio;

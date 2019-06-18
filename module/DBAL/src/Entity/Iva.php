@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Iva
 {
+    //================================================================================
+    // Properties
+    //================================================================================
+
     /**
      * @ORM\Id
      * @ORM\Column(name="ID", type="integer")
@@ -34,10 +38,15 @@ class Iva
      */
     protected $descripcion;
 
+    //================================================================================
+    // Methods
+    //================================================================================
+
     /**
      * Get the value of id
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -46,7 +55,8 @@ class Iva
      *
      * @return self
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -54,7 +64,7 @@ class Iva
 
     /**
      * Get the value of valor
-     */ 
+     */
     public function getValor()
     {
         return $this->valor;
@@ -64,7 +74,7 @@ class Iva
      * Set the value of valor
      *
      * @return  self
-     */ 
+     */
     public function setValor($valor)
     {
         $this->valor = $valor;
@@ -74,7 +84,7 @@ class Iva
 
     /**
      * Get the value of nombre
-     */ 
+     */
     public function getNombre()
     {
         return (($this->nombre));
@@ -84,7 +94,7 @@ class Iva
      * Set the value of nombre
      *
      * @return  self
-     */ 
+     */
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
@@ -94,7 +104,7 @@ class Iva
 
     /**
      * Get the value of descripcion
-     */ 
+     */
     public function getDescripcion()
     {
         return $this->descripcion;
@@ -104,7 +114,7 @@ class Iva
      * Set the value of descripcion
      *
      * @return  self
-     */ 
+     */
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
@@ -112,15 +122,20 @@ class Iva
         return $this;
     }
 
-    public function getJSON(){
+    //================================================================================
+    // JSON
+    //================================================================================
+
+    public function getJSON()
+    {
 
         $output = "";
-        $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Nombre": "' . $this->getNombre() .'", ';
-        $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
-        $output .= '"Valor": "' . $this->getValor() .'" ';
+        $output .= '"Id": "' . $this->getId() . '", ';
+        $output .= '"Nombre": "' . $this->getNombre() . '", ';
+        $output .= '"Descripcion": "' . $this->getDescripcion() . '", ';
+        $output .= '"Valor": "' . $this->getValor() . '" ';
         // $output = '"bien": {'.$output.'}';
 
-        return  '{'.$output.'}' ;
+        return  '{' . $output . '}';
     }
 }

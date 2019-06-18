@@ -10,7 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="CLIENTE")
  */
-class Cliente {
+class Cliente
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
 
     /**
      * @ORM\Id
@@ -39,7 +44,7 @@ class Cliente {
      */
     private $ciudad;
 
-   
+
     /**
      * @ORM\Column(name="CUENTA_SKYPE_CLIENTE", nullable=true, type="string", length=255)
      */
@@ -88,7 +93,7 @@ class Cliente {
      * @ORM\JoinColumn(name="ID_CATEGORIA_CLIENTE", referencedColumnName="ID")
      */
     private $categoria;
-    
+
     /**
      * Many Clientes have One Categoria.
      * @ORM\ManyToOne(targetEntity="Servicio")
@@ -138,21 +143,29 @@ class Cliente {
      */
     private $persona;
 
-    public function getId() {
+    //================================================================================
+    // Methods
+    //================================================================================
+
+    public function getId()
+    {
         return $this->Id;
     }
 
-    
-    public function getPais() {
+
+    public function getPais()
+    {
         return $this->pais;
     }
 
-    public function setPais($pais) {
+    public function setPais($pais)
+    {
         $this->pais = $pais;
         return $this;
     }
 
-    public function getNombrePaisCliente() {
+    public function getNombrePaisCliente()
+    {
         if (is_null($this->provincia)) {
             if (!is_null($this->pais)) {
                 return $this->pais->getNombre();
@@ -168,16 +181,19 @@ class Cliente {
         }
     }
 
-    public function getProvincia() {
+    public function getProvincia()
+    {
         return $this->provincia;
     }
 
-    public function setProvincia($provincia) {
+    public function setProvincia($provincia)
+    {
         $this->provincia = $provincia;
         return $this;
     }
 
-    public function getNombreProvinciaCliente() {
+    public function getNombreProvinciaCliente()
+    {
         $provincia = $this->getProvincia();
         if (is_null($provincia)) {
             return null;
@@ -186,162 +202,195 @@ class Cliente {
         }
     }
 
-    public function getCiudad() {
+    public function getCiudad()
+    {
         return (($this->ciudad));
     }
 
-    public function setCiudad($ciudad) {
+    public function setCiudad($ciudad)
+    {
         $this->ciudad = $ciudad;
         return $this;
     }
 
-    public function getProfesion() {
+    public function getProfesion()
+    {
         return  $this->profesion;
     }
 
-    public function setProfesion($profesion) {
+    public function setProfesion($profesion)
+    {
         $this->profesion = $profesion;
         return $this;
     }
 
-    public function getNombreProfesion() {
+    public function getNombreProfesion()
+    {
         $profesion = $this->getProfesion();
         if (is_null($profesion)) {
             return null;
         } else {
-            return  (($this->getProfesion()->getNombre()));
+            return (($this->getProfesion()->getNombre()));
         }
     }
 
-    public function getEmpresa() {
-        return  (($this->empresa));
+    public function getEmpresa()
+    {
+        return (($this->empresa));
     }
 
-    public function setEmpresa($empresa) {
+    public function setEmpresa($empresa)
+    {
         $this->empresa = $empresa;
         return $this;
     }
 
-    public function getActividad() {
-        return  (($this->actividad));
+    public function getActividad()
+    {
+        return (($this->actividad));
     }
 
-    public function setActividad($actividad) {
+    public function setActividad($actividad)
+    {
         $this->actividad = $actividad;
         return $this;
     }
 
-    public function getAnimales() {
+    public function getAnimales()
+    {
         return $this->animales;
     }
 
-    public function setAnimales($animales) {
+    public function setAnimales($animales)
+    {
         $this->animales = $animales;
         return $this;
     }
 
-    public function getEstablecimientos() {
+    public function getEstablecimientos()
+    {
         return $this->establecimientos;
     }
 
-    public function setEstablecimientos($establecimientos) {
+    public function setEstablecimientos($establecimientos)
+    {
         $this->establecimientos = $establecimientos;
         return $this;
     }
 
-    public function getRazaManejo() {
+    public function getRazaManejo()
+    {
         return $this->raza_manejo;
     }
 
-    public function setRazaManejo($raza_manejo) {
+    public function setRazaManejo($raza_manejo)
+    {
         $this->raza_manejo = $raza_manejo;
         return $this;
     }
 
-   
-    public function getSkype() {
+
+    public function getSkype()
+    {
         return  strtolower($this->skype);
     }
 
-    public function setSkype($skype) {
+    public function setSkype($skype)
+    {
         $this->skype = $skype;
         return $this;
     }
 
-   
-    public function getCategoria() {
+
+    public function getCategoria()
+    {
         return $this->categoria;
     }
 
-    public function setCategoria($categoria) {
+    public function setCategoria($categoria)
+    {
         $this->categoria = $categoria;
         return $this;
     }
 
-    public function getNombreCategoriaCliente() {
+    public function getNombreCategoriaCliente()
+    {
         $categoria = $this->getCategoria();
         if (is_null($categoria)) {
             return null;
         } else {
-            return  (($categoria->getNombre()));
+            return (($categoria->getNombre()));
         }
     }
 
-    public function getFechaCompra() {
+    public function getFechaCompra()
+    {
         return $this->fecha_compra;
     }
 
-    public function setFechaCompra($fecha_compra) {
+    public function setFechaCompra($fecha_compra)
+    {
         $this->fecha_compra = $fecha_compra;
         return $this;
     }
 
-    public function getVencimiento() {
+    public function getVencimiento()
+    {
         return $this->vencimiento;
     }
 
-    public function setVencimiento($vencimiento) {
+    public function setVencimiento($vencimiento)
+    {
         $this->vencimiento = $vencimiento;
         return $this;
     }
 
-    function getFechaUltimoContacto() {
+    function getFechaUltimoContacto()
+    {
         return $this->fecha_ultimo_contacto;
     }
 
-    function setFechaUltimoContacto($fecha_ultimo_contacto) {
+    function setFechaUltimoContacto($fecha_ultimo_contacto)
+    {
         $this->fecha_ultimo_contacto = $fecha_ultimo_contacto;
         return $this;
     }
 
-    function getFechaUltimoPago() {
+    function getFechaUltimoPago()
+    {
         return $this->fecha_ultimo_pago;
     }
 
-    function setFechaUltimoPago($fecha_ultimo_pago) {
+    function setFechaUltimoPago($fecha_ultimo_pago)
+    {
         $this->fecha_ultimo_pago = $fecha_ultimo_pago;
         return $this;
     }
 
-    public function getVersion() {
+    public function getVersion()
+    {
         return $this->version;
     }
 
-    public function setVersion($version) {
+    public function setVersion($version)
+    {
         $this->version = $version;
         return $this;
     }
 
-   
-    public function addUsuario($usuario) {
+
+    public function addUsuario($usuario)
+    {
         $this->usuarios[] = $usuario;
     }
 
-    public function getUsuarios() {
+    public function getUsuarios()
+    {
         return $this->usuarios;
     }
 
-    public function isPrimeraVenta() {
+    public function isPrimeraVenta()
+    {
         $array_eventos = $this->persona->getEventos();
         if (is_null($this->fecha_compra)) {
             return true;
@@ -358,7 +407,7 @@ class Cliente {
 
     /**
      * Get the value of persona
-     */ 
+     */
     public function getPersona()
     {
         return $this->persona;
@@ -368,7 +417,7 @@ class Cliente {
      * Set the value of persona
      *
      * @return  self
-     */ 
+     */
     public function setPersona($persona)
     {
         $this->persona = $persona;
@@ -377,7 +426,7 @@ class Cliente {
 
     /**
      * Get the value of dni
-     */ 
+     */
     public function getDni()
     {
         return $this->dni;
@@ -387,7 +436,7 @@ class Cliente {
      * Set the value of dni
      *
      * @return  self
-     */ 
+     */
     public function setDni($dni)
     {
         $this->dni = $dni;
@@ -397,7 +446,7 @@ class Cliente {
 
     /**
      * Get the value of cargo
-     */ 
+     */
     public function getCargo()
     {
         return $this->cargo;
@@ -407,7 +456,7 @@ class Cliente {
      * Set the value of cargo
      *
      * @return  self
-     */ 
+     */
     public function setCargo($cargo)
     {
         $this->cargo = $cargo;
@@ -417,7 +466,7 @@ class Cliente {
 
     /**
      * Get many Clientes have One Categoria.
-     */ 
+     */
     public function getServicio()
     {
         return $this->servicio;
@@ -427,7 +476,7 @@ class Cliente {
      * Set many Clientes have One Categoria.
      *
      * @return  self
-     */ 
+     */
     public function setServicio($servicio)
     {
         $this->servicio = $servicio;
@@ -435,12 +484,12 @@ class Cliente {
         return $this;
     }
 
-    public function getNombreServicioCliente(){
+    public function getNombreServicioCliente()
+    {
         if (is_null($this->servicio)) {
             return null;
         } else {
-            return  (($this->servicio->getBien()->getNombre()));
+            return (($this->servicio->getBien()->getNombre()));
         }
     }
-    
 }

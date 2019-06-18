@@ -12,7 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FormaPago
 {
-    //put your code here
+    //================================================================================
+    // Properties
+    //================================================================================
 
     /**
      * @ORM\Id
@@ -32,11 +34,11 @@ class FormaPago
      */
     protected $descripcion;
 
-     /**
+    /**
      * @ORM\Column(name="BONIFICACION", nullable=true, type="decimal")
      */
     private $bonificacion;
-      /**
+    /**
      * @ORM\Column(name="RECARGO", nullable=true, type="decimal")
      */
     private $recargo;
@@ -46,45 +48,47 @@ class FormaPago
      */
     protected $tipo;
 
-        /**
+    /**
      * @ORM\Column(name="FECHA_EMISION", nullable=true, type="date")
      */
     protected $fechaEmision;
 
-        /**
+    /**
      * @ORM\Column(name="FECHA_ACREDITACION", nullable=true, type="date")
      */
     protected $fechaAcreditacion;
 
-        /**
+    /**
      * @ORM\Column(name="NRO", nullable=true, type="string")
      */
     protected $numero;
 
 
-        /**
+    /**
      * @ORM\Column(name="MONTO", nullable=true, type="decimal")
      */
     protected $monto;
 
-        /**
+    /**
      * @ORM\Column(name="DEBITO_CREDITO", nullable=true, type="string")
      */
     protected $debitoCredito;
 
-        
+
     /**
      * Many Services have One Proveedor.
      * @ORM\ManyToOne(targetEntity="Banco")
      * @ORM\JoinColumn(name="ID_BANCO", referencedColumnName="ID")
      */
     private $banco;
-    
 
+    //================================================================================
+    // Methods
+    //================================================================================
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -94,7 +98,7 @@ class FormaPago
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -102,10 +106,10 @@ class FormaPago
         return $this;
     }
 
-  
+
     /**
      * Get the value of descripcion
-     */ 
+     */
     public function getDescripcion()
     {
         return $this->descripcion;
@@ -115,7 +119,7 @@ class FormaPago
      * Set the value of descripcion
      *
      * @return  self
-     */ 
+     */
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
@@ -126,7 +130,7 @@ class FormaPago
 
     /**
      * Get the value of bonificacion
-     */ 
+     */
     public function getBonificacion()
     {
         return $this->bonificacion;
@@ -136,7 +140,7 @@ class FormaPago
      * Set the value of bonificacion
      *
      * @return  self
-     */ 
+     */
     public function setBonificacion($bonificacion)
     {
         $this->bonificacion = $bonificacion;
@@ -146,7 +150,7 @@ class FormaPago
 
     /**
      * Get the value of recargo
-     */ 
+     */
     public function getRecargo()
     {
         return $this->recargo;
@@ -156,7 +160,7 @@ class FormaPago
      * Set the value of recargo
      *
      * @return  self
-     */ 
+     */
     public function setRecargo($recargo)
     {
         $this->recargo = $recargo;
@@ -166,7 +170,7 @@ class FormaPago
 
     /**
      * Get the value of nombre
-     */ 
+     */
     public function getNombre()
     {
         return ($this->nombre);
@@ -176,7 +180,7 @@ class FormaPago
      * Set the value of nombre
      *
      * @return  self
-     */ 
+     */
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
@@ -184,21 +188,11 @@ class FormaPago
         return $this;
     }
 
-    public function getJSON(){
 
-        $output = "";
-        $output .= '"Id": "' . $this->getId() .'", ';
-        $output .= '"Nombre": "' . $this->getNombre() .'", ';
-        $output .= '"Descripcion": "' . $this->getDescripcion() .'", ';
-        $output .= '"Recargo": "' . $this->getRecargo() .'", ';
-        $output .= '"Bonificacion": "' . $this->getBonificacion() .'" ';
-
-        return  '{'.$output.'}' ;
-    }
 
     /**
      * Get the value of fechaEmision
-     */ 
+     */
     public function getFechaEmision()
     {
         return $this->fechaEmision;
@@ -208,7 +202,7 @@ class FormaPago
      * Set the value of fechaEmision
      *
      * @return  self
-     */ 
+     */
     public function setFechaEmision($fechaEmision)
     {
         $this->fechaEmision = $fechaEmision;
@@ -218,7 +212,7 @@ class FormaPago
 
     /**
      * Get the value of fechaAcreditacion
-     */ 
+     */
     public function getFechaAcreditacion()
     {
         return $this->fechaAcreditacion;
@@ -228,7 +222,7 @@ class FormaPago
      * Set the value of fechaAcreditacion
      *
      * @return  self
-     */ 
+     */
     public function setFechaAcreditacion($fechaAcreditacion)
     {
         $this->fechaAcreditacion = $fechaAcreditacion;
@@ -238,7 +232,7 @@ class FormaPago
 
     /**
      * Get the value of numero
-     */ 
+     */
     public function getNumero()
     {
         return $this->numero;
@@ -248,7 +242,7 @@ class FormaPago
      * Set the value of numero
      *
      * @return  self
-     */ 
+     */
     public function setNumero($numero)
     {
         $this->numero = $numero;
@@ -258,7 +252,7 @@ class FormaPago
 
     /**
      * Get the value of monto
-     */ 
+     */
     public function getMonto()
     {
         return $this->monto;
@@ -268,7 +262,7 @@ class FormaPago
      * Set the value of monto
      *
      * @return  self
-     */ 
+     */
     public function setMonto($monto)
     {
         $this->monto = $monto;
@@ -278,7 +272,7 @@ class FormaPago
 
     /**
      * Get the value of debitoCredito
-     */ 
+     */
     public function getDebitoCredito()
     {
         return $this->debitoCredito;
@@ -288,7 +282,7 @@ class FormaPago
      * Set the value of debitoCredito
      *
      * @return  self
-     */ 
+     */
     public function setDebitoCredito($debitoCredito)
     {
         $this->debitoCredito = $debitoCredito;
@@ -298,7 +292,7 @@ class FormaPago
 
     /**
      * Get many Services have One Proveedor.
-     */ 
+     */
     public function getBanco()
     {
         return $this->banco;
@@ -308,11 +302,28 @@ class FormaPago
      * Set many Services have One Proveedor.
      *
      * @return  self
-     */ 
+     */
     public function setBanco($banco)
     {
         $this->banco = $banco;
 
         return $this;
+    }
+
+    //================================================================================
+    // JSON
+    //================================================================================
+
+    public function getJSON()
+    {
+
+        $output = "";
+        $output .= '"Id": "' . $this->getId() . '", ';
+        $output .= '"Nombre": "' . $this->getNombre() . '", ';
+        $output .= '"Descripcion": "' . $this->getDescripcion() . '", ';
+        $output .= '"Recargo": "' . $this->getRecargo() . '", ';
+        $output .= '"Bonificacion": "' . $this->getBonificacion() . '" ';
+
+        return  '{' . $output . '}';
     }
 }

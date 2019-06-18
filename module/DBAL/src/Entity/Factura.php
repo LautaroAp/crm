@@ -1,5 +1,6 @@
 <?php
 namespace DBAL\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,7 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="FACTURA")
  */
-class Factura {
+class Factura
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
 
     /**
      * @ORM\Id
@@ -17,12 +23,12 @@ class Factura {
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
-    
+
     /**
      * @ORM\Column(name="NUMERO", nullable=true, type="integer", length=255)
      */
     protected $numero;
-    
+
     /**
      * Many Services have One Transaccion.
      * @ORM\ManyToOne(targetEntity="Transaccion")
@@ -43,11 +49,14 @@ class Factura {
      * @ORM\JoinColumn(name="ID_TIPO_COMPROBANTE", referencedColumnName="ID")
      */
     private $tipo_comprobante;
-   
+
+    //================================================================================
+    // Methods
+    //================================================================================
 
     /**
      * Get the value of id_cobro
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -57,7 +66,7 @@ class Factura {
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -67,7 +76,7 @@ class Factura {
 
     /**
      * Get the value of numero
-     */ 
+     */
     public function getNumero()
     {
         return $this->numero;
@@ -77,7 +86,7 @@ class Factura {
      * Set the value of numero
      *
      * @return  self
-     */ 
+     */
     public function setNumero($numero)
     {
         $this->numero = $numero;
@@ -87,7 +96,7 @@ class Factura {
 
     /**
      * Get many Services have One Transaccion.
-     */ 
+     */
     public function getTransaccion()
     {
         return $this->transaccion;
@@ -97,7 +106,7 @@ class Factura {
      * Set many Services have One Transaccion.
      *
      * @return  self
-     */ 
+     */
     public function setTransaccion($transaccion)
     {
         $this->transaccion = $transaccion;
@@ -107,7 +116,7 @@ class Factura {
 
     /**
      * Get many Services have One Transaccion.
-     */ 
+     */
     public function getTransaccion_factura()
     {
         return $this->transaccion_factura;
@@ -117,7 +126,7 @@ class Factura {
      * Set many Services have One Transaccion.
      *
      * @return  self
-     */ 
+     */
     public function setTransaccion_factura($transaccion_factura)
     {
         $this->transaccion_factura = $transaccion_factura;
@@ -127,7 +136,7 @@ class Factura {
 
     /**
      * Get many Services have One Transaccion.
-     */ 
+     */
     public function getTipo_comprobante()
     {
         return $this->tipo_comprobante;
@@ -137,7 +146,7 @@ class Factura {
      * Set many Services have One Transaccion.
      *
      * @return  self
-     */ 
+     */
     public function setTipo_comprobante($tipo_comprobante)
     {
         $this->tipo_comprobante = $tipo_comprobante;

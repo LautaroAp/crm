@@ -12,7 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TipoEvento
 {
-    //put your code here
+    //================================================================================
+    // Properties
+    //================================================================================
 
     /**
      * @ORM\Id
@@ -43,6 +45,10 @@ class TipoEvento
      * @ORM\Column(name="TIPO_PERSONA", nullable=true, type="string")
      */
     protected $tipoPersona;
+
+    //================================================================================
+    // Methods
+    //================================================================================
 
     function getId()
     {
@@ -115,7 +121,8 @@ class TipoEvento
         }
     }
 
-    function getCategoriaId() {
+    function getCategoriaId()
+    {
         if (!is_null($this->categoria_evento)) {
             return $this->categoria_evento->getId();
         } else {
@@ -126,7 +133,7 @@ class TipoEvento
 
     /**
      * Get the value of tipoPersona
-     */ 
+     */
     public function getTipoPersona()
     {
         return $this->tipoPersona;
@@ -136,7 +143,7 @@ class TipoEvento
      * Set the value of tipoPersona
      *
      * @return  self
-     */ 
+     */
     public function setTipoPersona($tipoPersona)
     {
         $this->tipoPersona = $tipoPersona;

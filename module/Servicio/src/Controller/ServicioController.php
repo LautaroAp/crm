@@ -17,6 +17,12 @@ class ServicioController extends HuellaController {
     protected $entityManager;
 
     /**
+     * Doctrine entity manager.
+     * @var Doctrine\ORM\EntityManager
+     */
+    protected $clientesManager;
+
+    /**
      * Servicio manager.
      * @var User\Service\ServicioManager 
      */
@@ -26,12 +32,13 @@ class ServicioController extends HuellaController {
     private $bienesManager;
 
     public function __construct($entityManager, $servicioManager, $ivaManager,
-    $categoriaManager, $bienesManager) {
+    $categoriaManager, $bienesManager, $clientesManager) {
         $this->entityManager = $entityManager;
         $this->servicioManager = $servicioManager;
         $this->ivaManager= $ivaManager;
         $this->categoriaManager = $categoriaManager;
         $this->bienesManager = $bienesManager;
+        $this->clientesManager = $clientesManager;
     }
 
     public function indexAction() {
@@ -116,6 +123,7 @@ class ServicioController extends HuellaController {
             $this->getResponse()->setStatusCode(404);
             return;
         } else {
+            $this->clientesManager->eliminarServicioClientes($id);
             $this->servicioManager->removeServicio($servicio);
             return $this->redirect()->toRoute('gestionProductosServicios/gestionServicios/listado');
         }

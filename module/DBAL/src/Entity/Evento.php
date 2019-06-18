@@ -11,8 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="EVENTO")
  */
-class Evento {
-    //put your code here
+class Evento
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
 
     /**
      * @ORM\Id
@@ -52,19 +56,24 @@ class Evento {
      */
     protected $descripcion;
 
-     /**
+    /**
      * @ORM\Column(name="TIPO_PERSONA", nullable=true, type="string")
      */
     protected $tipo_persona;
     protected $nombre_persona;
     protected $usuario_ejecutivo;
 
-    public function __construct() {
+    //================================================================================
+    // Methods
+    //================================================================================
+
+    public function __construct()
+    {
         $persona = $this->persona;
         if (!is_null($persona)) {
             $this->nombre_persona = $persona->getNombre();
         } else {
-            $this->nombre_persona= null;
+            $this->nombre_persona = null;
         }
 
         $ejecutivo = $this->ejecutivo;
@@ -75,15 +84,18 @@ class Evento {
         }
     }
 
-    function getId() {
+    function getId()
+    {
         return $this->id;
     }
 
-    function getFecha() {
+    function getFecha()
+    {
         return $this->fecha;
     }
 
-    function getTipo() {
+    function getTipo()
+    {
         if (!is_null($this->tipo)) {
             return $this->tipo->getNombre();
         } else {
@@ -91,7 +103,8 @@ class Evento {
         }
     }
 
-    function getTipoId() {
+    function getTipoId()
+    {
         if (!is_null($this->tipo)) {
             return $this->tipo->getId();
         } else {
@@ -99,48 +112,57 @@ class Evento {
         }
     }
 
-    function getPersona() {
+    function getPersona()
+    {
         return $this->persona;
     }
 
-    function getId_ejecutivo() {
+    function getId_ejecutivo()
+    {
         return $this->ejecutivo;
     }
 
-    function setId($id_evento) {
+    function setId($id_evento)
+    {
         $this->id_evento = $id_evento;
         return $this;
     }
 
-    function setFecha($fecha_evento) {
+    function setFecha($fecha_evento)
+    {
         $this->fecha = $fecha_evento;
         return $this;
     }
 
-    function setTipo($tipo_evento) {
+    function setTipo($tipo_evento)
+    {
         $this->tipo = $tipo_evento;
         return $this;
     }
 
-    function setId_persona($id_persona) {
+    function setId_persona($id_persona)
+    {
         $this->persona = $id_persona;
         return $this;
     }
 
-    function setId_ejecutivo($id_ejecutivo) {
+    function setId_ejecutivo($id_ejecutivo)
+    {
         $this->ejecutivo = $id_ejecutivo;
         return $this;
     }
 
-    public function getNombrePersona() {
+    public function getNombrePersona()
+    {
         if (is_null($this->persona)) {
             return null;
         } else {
-            return $this->persona->getNombre();      
+            return $this->persona->getNombre();
         }
     }
 
-    public function getUsuarioEjecutivo() {
+    public function getUsuarioEjecutivo()
+    {
         if (is_null($this->ejecutivo)) {
             return null;
         } else {
@@ -148,18 +170,20 @@ class Evento {
         }
     }
 
-    function getDescripcion() {
+    function getDescripcion()
+    {
         return $this->descripcion;
     }
 
-    function setDescripcion($descripcion) {
+    function setDescripcion($descripcion)
+    {
         $this->descripcion = $descripcion;
         return $this;
     }
 
     /**
      * Get the value of tipo_persona
-     */ 
+     */
     public function getTipo_persona()
     {
         return (($this->tipo_persona));
@@ -169,7 +193,7 @@ class Evento {
      * Set the value of tipo_persona
      *
      * @return  self
-     */ 
+     */
     public function setTipo_persona($tipo_persona)
     {
         $this->tipo_persona = $tipo_persona;

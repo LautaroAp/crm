@@ -1,5 +1,6 @@
 <?php
 namespace DBAL\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,42 +10,52 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="PROFESION")
  */
-class Profesion {
-    //put your code here
-    
+class Profesion
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
+
     /**
      * @ORM\Id
      * @ORM\Column(name="ID", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-   
-    
-    protected $id_profesion;   
-    
+
+    protected $id_profesion;
+
     /**
      * @ORM\Column(name="NOMBRE", nullable=true, type="string", length=255)
      */
     protected $nombre;
- 
+
     /**
      * @ORM\Column(name="DESCRIPCION", nullable=true, type="string", length=255)
      */
     protected $descripcion;
 
-     
-    function getId() {
+    //================================================================================
+    // Methods
+    //================================================================================
+
+    function getId()
+    {
         return $this->id_profesion;
     }
 
-    function getNombre() {
+    function getNombre()
+    {
         return (($this->nombre));
     }
 
-    function setId($id_profesion) {
+    function setId($id_profesion)
+    {
         $this->id_profesion = $id_profesion;
     }
 
-    function setNombre($nombre) {
+    function setNombre($nombre)
+    {
         $this->nombre = $nombre;
     }
 
@@ -52,7 +63,7 @@ class Profesion {
 
     /**
      * Get the value of descripcion
-     */ 
+     */
     public function getDescripcion()
     {
         return $this->descripcion;
@@ -62,7 +73,7 @@ class Profesion {
      * Set the value of descripcion
      *
      * @return  self
-     */ 
+     */
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;

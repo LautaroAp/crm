@@ -10,7 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="PROVEEDOR")
  */
-class Proveedor {
+class Proveedor
+{
+
+    //================================================================================
+    // Properties
+    //================================================================================
 
     /**
      * @ORM\Id
@@ -18,7 +23,6 @@ class Proveedor {
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $Id;
-
 
     /**
      * Many Proveedors have One Pais.
@@ -53,7 +57,6 @@ class Proveedor {
      */
     private $cargo;
 
-
     /**
      * Many Proveedors have One Categoria.
      * @ORM\ManyToOne(targetEntity="Categoria")
@@ -71,7 +74,7 @@ class Proveedor {
      */
     private $fecha_ultimo_pago;
 
-       /**
+    /**
      * @ORM\Column(name="FECHA_COMPRA", type="datetime")
      */
     private $fecha_compra;
@@ -80,7 +83,7 @@ class Proveedor {
      * @ORM\Column(name="DNI", nullable=true, type="string")
      */
     private $dni;
-   
+
     /**
      * @ORM\Column(name="SKYPE", nullable=true, type="string")
      */
@@ -99,21 +102,29 @@ class Proveedor {
      */
     private $persona;
 
-    public function getId() {
+    //================================================================================
+    // Methods
+    //================================================================================
+
+    public function getId()
+    {
         return $this->Id;
     }
 
-    
-    public function getPais() {
+
+    public function getPais()
+    {
         return $this->pais;
     }
 
-    public function setPais($pais) {
+    public function setPais($pais)
+    {
         $this->pais = $pais;
         return $this;
     }
 
-    public function getNombrePaisProveedor() {
+    public function getNombrePaisProveedor()
+    {
         if (is_null($this->provincia)) {
             if (!is_null($this->pais)) {
                 return $this->pais->getNombre();
@@ -129,16 +140,19 @@ class Proveedor {
         }
     }
 
-    public function getProvincia() {
+    public function getProvincia()
+    {
         return $this->provincia;
     }
 
-    public function setProvincia($provincia) {
+    public function setProvincia($provincia)
+    {
         $this->provincia = $provincia;
         return $this;
     }
 
-    public function getNombreProvinciaProveedor() {
+    public function getNombreProvinciaProveedor()
+    {
         $provincia = $this->getProvincia();
         if (is_null($provincia)) {
             return null;
@@ -147,60 +161,73 @@ class Proveedor {
         }
     }
 
-    public function getCiudad() {
+    public function getCiudad()
+    {
         return (($this->ciudad));
     }
 
-    public function setCiudad($ciudad) {
+    public function setCiudad($ciudad)
+    {
         $this->ciudad = $ciudad;
         return $this;
     }
 
-    public function getEmpresa() {
+    public function getEmpresa()
+    {
         return (($this->empresa));
     }
 
-    public function setEmpresa($empresa) {
+    public function setEmpresa($empresa)
+    {
         $this->empresa = $empresa;
         return $this;
     }
-    public function getAnimales() {
+    public function getAnimales()
+    {
         return $this->animales;
     }
 
-    public function setAnimales($animales) {
+    public function setAnimales($animales)
+    {
         $this->animales = $animales;
         return $this;
     }
 
-    public function getEstablecimientos() {
+    public function getEstablecimientos()
+    {
         return $this->establecimientos;
     }
 
-    public function setEstablecimientos($establecimientos) {
+    public function setEstablecimientos($establecimientos)
+    {
         $this->establecimientos = $establecimientos;
         return $this;
     }
 
-    public function getRazaManejo() {
+    public function getRazaManejo()
+    {
         return $this->raza_manejo;
     }
 
-    public function setRazaManejo($raza_manejo) {
+    public function setRazaManejo($raza_manejo)
+    {
         $this->raza_manejo = $raza_manejo;
         return $this;
     }
-   
-    public function getCategoria() {
+
+    public function getCategoria()
+    {
         return $this->categoria;
     }
 
-    public function setCategoria($categoria) {
+    public function setCategoria($categoria)
+    {
         $this->categoria = $categoria;
         return $this;
     }
 
-    public function getNombreCategoriaProveedor() {
+    public function getNombreCategoriaProveedor()
+    {
         $categoria = $this->getCategoria();
         if (is_null($categoria)) {
             return null;
@@ -209,47 +236,57 @@ class Proveedor {
         }
     }
 
-    public function getFechaCompra() {
+    public function getFechaCompra()
+    {
         return $this->fecha_compra;
     }
 
-    public function setFechaCompra($fecha_compra) {
+    public function setFechaCompra($fecha_compra)
+    {
         $this->fecha_compra = $fecha_compra;
         return $this;
     }
 
-    function getFechaUltimoContacto() {
+    function getFechaUltimoContacto()
+    {
         return $this->fecha_ultimo_contacto;
     }
 
-    function setFechaUltimoContacto($fecha_ultimo_contacto) {
+    function setFechaUltimoContacto($fecha_ultimo_contacto)
+    {
         $this->fecha_ultimo_contacto = $fecha_ultimo_contacto;
         return $this;
     }
 
-    function getFechaUltimoPago() {
+    function getFechaUltimoPago()
+    {
         return $this->fecha_ultimo_pago;
     }
 
-    function setFechaUltimoPago($fecha_ultimo_pago) {
+    function setFechaUltimoPago($fecha_ultimo_pago)
+    {
         $this->fecha_ultimo_pago = $fecha_ultimo_pago;
         return $this;
     }
 
-       
-    public function addUsuario($usuario) {
+
+    public function addUsuario($usuario)
+    {
         $this->usuarios[] = $usuario;
     }
 
-    public function getUsuarios() {
+    public function getUsuarios()
+    {
         return $this->usuarios;
     }
 
-    public function getEventos() {
+    public function getEventos()
+    {
         return null;
     }
 
-    public function isPrimeraVenta() {
+    public function isPrimeraVenta()
+    {
         $array_eventos = $this->getEventos();
         if (is_null($this->fecha_compra)) {
             return true;
@@ -266,7 +303,7 @@ class Proveedor {
 
     /**
      * Get the value of persona
-     */ 
+     */
     public function getPersona()
     {
         return $this->persona;
@@ -276,7 +313,7 @@ class Proveedor {
      * Set the value of persona
      *
      * @return  self
-     */ 
+     */
     public function setPersona($persona)
     {
         $this->persona = $persona;
@@ -285,7 +322,7 @@ class Proveedor {
 
     /**
      * Get the value of dni
-     */ 
+     */
     public function getDni()
     {
         return $this->dni;
@@ -295,7 +332,7 @@ class Proveedor {
      * Set the value of dni
      *
      * @return  self
-     */ 
+     */
     public function setDni($dni)
     {
         $this->dni = $dni;
@@ -303,10 +340,10 @@ class Proveedor {
         return $this;
     }
 
-   
+
     /**
      * Get the value of actividad
-     */ 
+     */
     public function getActividad()
     {
         return (($this->actividad));
@@ -316,7 +353,7 @@ class Proveedor {
      * Set the value of actividad
      *
      * @return  self
-     */ 
+     */
     public function setActividad($actividad)
     {
         $this->actividad = $actividad;
@@ -326,7 +363,7 @@ class Proveedor {
 
     /**
      * Get the value of cargo
-     */ 
+     */
     public function getCargo()
     {
         return (($this->cargo));
@@ -336,7 +373,7 @@ class Proveedor {
      * Set the value of cargo
      *
      * @return  self
-     */ 
+     */
     public function setCargo($cargo)
     {
         $this->cargo = $cargo;
@@ -344,11 +381,9 @@ class Proveedor {
         return $this;
     }
 
-
-
     /**
      * Get the value of skype
-     */ 
+     */
     public function getSkype()
     {
         return $this->skype;
@@ -358,7 +393,7 @@ class Proveedor {
      * Set the value of skype
      *
      * @return  self
-     */ 
+     */
     public function setSkype($skype)
     {
         $this->skype = $skype;
