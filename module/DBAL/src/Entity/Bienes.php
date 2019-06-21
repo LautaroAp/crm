@@ -704,6 +704,7 @@ class Bienes
         $output .= '"tipo": "' . $this->getTipo() . '", ';
         $output .= '"stock": "' . $this->getStock() . '", ';
 
+        $output .= '"impuesto": "' . $this->getImpuesto() . '", ';
         $output .= '"importe_gravado": "' . $this->getImporte_gravado() . '", ';
         $output .= '"importe_no_gravado": "' . $this->getImporte_no_gravado() . '", ';
         $output .= '"importe_exento": "' . $this->getImporte_exento() . '", ';

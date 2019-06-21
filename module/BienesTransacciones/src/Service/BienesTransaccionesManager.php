@@ -193,10 +193,16 @@ class BienesTransaccionesManager {
             $bienTransaccion->setCantidad($array['Cantidad']);
             $cantidad= $array['Cantidad'];
         }
+
         if (isset($array['Dto']) && $array['Dto']!=''){
             $bienTransaccion->setDescuento($array['Dto']);
             $valorDto = $array['Dto'];
         }
+        if (isset($array['ImpDto'])){
+            $importeTotal = $array['ImpDto'];
+            $bienTransaccion->setImporteBonificacion($importeTotal);
+        }
+
         if (isset($array['IVA'])){
             if (isset($array['IVA']['Id'])){
             $iva = $this->ivaManager->getIva($array['IVA']['Id']);
@@ -206,6 +212,29 @@ class BienesTransaccionesManager {
             }        
             $bienTransaccion->setIva($iva);
             $valorIva= $iva->getValor();
+        }
+        if (isset($array['ImpIva'])){
+            $importeTotal = $array['ImpIva'];
+            $bienTransaccion->setImporteIva($importeTotal);
+        }
+
+
+        if (isset($array['ImporteGravado'])){
+            $importeTotal = $array['ImporteGravado'];
+            $bienTransaccion->setImporte_gravado($importeTotal);
+        }
+        if (isset($array['ImporteNoGravado'])){
+            $importeTotal = $array['ImporteNoGravado'];
+            $bienTransaccion->setSubsetImporte_no_gravadototal($importeTotal);
+        }
+        if (isset($array['ImporteExento'])){
+            $importeTotal = $array['ImporteExento'];
+            $bienTransaccion->setImporte_exento($importeTotal);
+        }
+
+        if (isset($array['Subtotal'])){
+            $importeTotal = $array['Subtotal'];
+            $bienTransaccion->setSubtotal($importeTotal);
         }
         if (isset($array['Totales'])){
             $importeTotal = $array['Totales'];
@@ -220,13 +249,15 @@ class BienesTransaccionesManager {
             $detalle = $array['Detalle'];
             $bienTransaccion->setDetalle($detalle);
         }
-        $totalDto = $precioUnitario*$cantidad * $valorDto/100;
-        $subtotal = ($precioUnitario * $cantidad) * $totalDto;
-        $totalIva = $subtotal * $valorIva /100;
 
-        $bienTransaccion->setSubtotal($subtotal);
-        $bienTransaccion->setImporteBonificacion($totalDto);
-        $bienTransaccion->setImporteIva($totalIva);
+        // $totalDto = $precioUnitario*$cantidad * $valorDto/100;
+        // $subtotal = ($precioUnitario * $cantidad) * $totalDto;
+        // $totalIva = $subtotal * $valorIva /100;
+
+        // $bienTransaccion->setSubtotal($subtotal);
+        // $bienTransaccion->setImporteBonificacion($totalDto);
+        // $bienTransaccion->setImporteIva($totalIva);
+
         return $bienTransaccion;
     }
 

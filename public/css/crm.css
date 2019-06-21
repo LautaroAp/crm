@@ -155,6 +155,18 @@ option{
     overflow-y:auto;
 }
 
+.cant-width{
+    width: 40px !important;
+}
+
+.dto-width{
+    width: 70px !important;
+}
+
+.select-iva-width{
+    width: 80px !important;
+}
+
 .detalle-width{
     width: 50% !important;
 }

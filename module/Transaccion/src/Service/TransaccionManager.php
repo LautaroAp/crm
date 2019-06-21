@@ -203,7 +203,6 @@ class TransaccionManager {
         }
         foreach($items as $array ){
             $item = $this->bienesTransaccionesManager->bienTransaccionFromArray($array);
-            // $item = $this->bienesTransaccionesManager->getBienTransaccionFromJson($json);
             $item->setTransaccion($transaccion);
             if (isset($array["Transaccion Previa"])){
                 $transaccionPrevia = $this->getTransaccionId($array["Transaccion Previa"]["Id"]);
@@ -279,8 +278,8 @@ class TransaccionManager {
         $this->entityManager->persist($transaccion); 
         $items = json_decode($data['jsonitems'], true);
         $this->setItems($transaccion,$items);
-    
         $this->entityManager->flush();
+
         return $transaccion;
     }
 

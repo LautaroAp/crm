@@ -104,6 +104,21 @@ class BienesTransacciones
      */
     protected $importeBonificacion;
 
+    /**
+     * @ORM\Column(name="IMPORTE_GRAVADO", nullable=true, type="decimal")
+     */
+    protected $importe_gravado;
+
+    /**
+     * @ORM\Column(name="IMPORTE_NO_GRAVADO", nullable=true, type="decimal")
+     */
+    protected $importe_no_gravado;
+
+    /**
+     * @ORM\Column(name="IMPORTE_EXENTO", nullable=true, type="decimal")
+     */
+    protected $importe_exento;
+
     //================================================================================
     // Methods
     //================================================================================
@@ -427,6 +442,66 @@ class BienesTransacciones
     public function setImporteBonificacion($importeBonificacion)
     {
         $this->importeBonificacion = $importeBonificacion;
+
+        return $this;
+    }
+    
+    /**
+     * Get the value of importe_gravado
+     */ 
+    public function getImporte_gravado()
+    {
+        return $this->importe_gravado;
+    }
+
+    /**
+     * Set the value of importe_gravado
+     *
+     * @return  self
+     */ 
+    public function setImporte_gravado($importe_gravado)
+    {
+        $this->importe_gravado = $importe_gravado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_no_gravado
+     */ 
+    public function getImporte_no_gravado()
+    {
+        return $this->importe_no_gravado;
+    }
+
+    /**
+     * Set the value of importe_no_gravado
+     *
+     * @return  self
+     */ 
+    public function setImporte_no_gravado($importe_no_gravado)
+    {
+        $this->importe_no_gravado = $importe_no_gravado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_exento
+     */ 
+    public function getImporte_exento()
+    {
+        return $this->importe_exento;
+    }
+
+    /**
+     * Set the value of importe_exento
+     *
+     * @return  self
+     */ 
+    public function setImporte_exento($importe_exento)
+    {
+        $this->importe_exento = $importe_exento;
 
         return $this;
     }

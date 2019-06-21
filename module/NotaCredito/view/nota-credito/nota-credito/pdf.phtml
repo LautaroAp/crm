@@ -1,9 +1,11 @@
 <?php
-var_dump(json_decode($json), true);
+// var_dump(json_decode($json), true);
 // Extend the TCPDF class to create custom Header and Footer
-class MYPDF extends TCPDF {
+class MYPDF extends TCPDF
+{
     // Page footer
-    public function Footer() {
+    public function Footer()
+    {
         // Position at 15 mm from bottom
         $this->SetY(-15);
         // Set font
@@ -22,6 +24,13 @@ $pdf->setPrintHeader(false);
 
 // set auto page breaks
 $pdf->SetAutoPageBreak(TRUE, 20);
+
+$tipo_comprobante = "";
+$codigo_comprobante = "";
+if ($notaCredito->getTipo_comprobante()) {
+    $tipo_comprobante = $notaCredito->getTipo_comprobante()->getTipo();
+    $codigo_comprobante = $notaCredito->getTipo_comprobante()->getCodigo();
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * COPIA * * * * * * * * * * * * * * * * * * * * * */
 
@@ -77,17 +86,13 @@ for ($i = 1; $i <= 3; $i++) {
 
     /* * * * * * * * * * * * * * * * * * * * * * DATOS EMPRESA * * * * * * * * * * * * * * * * * * * * * */
 
-    if ($notaCredito->getTipo_comprobante()) {
-        $tipo_notaCredito = $notaCredito->getTipo_comprobante()->getTipo();
-    }
-
     $html = '
         <table border="0" cellspacing="0" cellpadding="3">
             <thead>
                 <tr style="font-size: 14px; font-weight: bold;">
                     <th align="center" width="45%">' . $empresa->getNombre() . '</th>
                     <th width="1%"></th>
-                    <th align="center" width="8%" border="0.5"><h3 style="font-size: 18px; line-height: 12px;">&nbsp;'.$tipo_notaCredito.'</h3><h4 style="font-size: 6px; line-height: -10px;">&nbsp;'."COD. 006".'</h4></th>
+                    <th align="center" width="8%" border="0.5"><h3 style="font-size: 18px; line-height: 12px;">&nbsp;'.$tipo_comprobante.'</h3><h4 style="font-size: 6px; line-height: -10px;">&nbsp;&nbsp;'.str_pad($codigo_comprobante, 3, "0", STR_PAD_LEFT).'</h4></th>
                     <th width="1%"></th>
                     <th align="left" width="45%">' . strtoupper($transaccion->getNombre()) . '</th>
                 </tr>
@@ -189,8 +194,6 @@ for ($i = 1; $i <= 3; $i++) {
 
     /* * * * * * * * * * * * * * * * * * * * * * TABLA ITEMS * * * * * * * * * * * * * * * * * * * * * */
 
-    $tipo_comprobante = "A";
-
     // make the table items
     switch ($tipo_comprobante) {
         case "A":
@@ -233,7 +236,6 @@ for ($i = 1; $i <= 3; $i++) {
         default:
             break;
     }
-
 
     // load json data
     $data = json_decode($json);
@@ -295,7 +297,7 @@ for ($i = 1; $i <= 3; $i++) {
 
     // $pdf->writeHTML($pdf->getY(), true, false, true, false, '');
     // Position in mm from bottom
-    if($pdf->getY() > 180){
+    if ($pdf->getY() > 180) {
         $pdf->AddPage();
     }
 
@@ -358,7 +360,7 @@ for ($i = 1; $i <= 3; $i++) {
 
     /* * * * * * * * * * * * * * * * * * * * * * INFO COMPROBANTE * * * * * * * * * * * * * * * * * * * * * */
 
-    $x = $pdf->GetX() +5;
+    $x = $pdf->GetX() + 5;
     $pdf->Image('public/img/crm/logo_afip.png', $x, '', 30, 8, '', '', 'T', true, 300, '', false, false, 0, true, false, false);
     $pdf->Ln(1);
 

@@ -65,18 +65,10 @@ class PresupuestoManager extends TransaccionManager{
     /**
      * This method adds a new presupuesto.
      */
-    // public function addPresupuesto($data, $items) {
-    //     //llamo a add de la transaccion, retorna una transaccion que se le setea al presupuesto
-    //     $transaccion = parent::add($data, $items);
-    //     $presupuesto = new Presupuesto();
-    //     $presupuesto=$this->setData($presupuesto, $data, $transaccion);
-    //     $this->entityManager->persist($presupuesto);
-    //     $this->entityManager->flush();
-    //     return $presupuesto;
-    // }
 
     public function add($data)
     {
+        // var_dump($data, true); die();
         $transaccion = parent::add($data);
         $presupuesto = new Presupuesto();
         $presupuesto = $this->setData($presupuesto, $data, $transaccion);

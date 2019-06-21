@@ -115,17 +115,15 @@ class BienesManager {
         $bien->setImporte_gravado(null);
         $bien->setImporte_no_gravado(null);
         $bien->setImporte_exento(null);
-
-        if (isset($data['cbox_impuesto'])){
-            $bien->setImpuesto($data['impuesto']);
-            switch ($data['impuesto']) {
-                case 'NO_GRAVADO':
-                    $bien->setImporte_no_gravado($data['precio_publico_dto']);
-                    break;
-                case 'EXENTO':
-                    $bien->setImporte_exento($data['precio_publico_dto']);
+        if ($iva){
+            switch ($iva->getValor()) {
+                case 0.00:
+                 $bien->setImpuesto("EXENTO");
+                    $bien->setImporte_exento($data['precio_publico_dto']);;
                     break;
                 default:
+                    $bien->setImpuesto("GRAVADO");
+                    $bien->setImporte_gravado($data['precio_publico_dto']);
                     break;
             }
         } else {
