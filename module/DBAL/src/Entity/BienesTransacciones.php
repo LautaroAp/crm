@@ -522,11 +522,10 @@ class BienesTransacciones
         } else {
             $output .= '"IVA": "' . "" . '", ';
         }
-
-        $output .= '"ImpIVA": "' . $this->getIvaPeso() . '", ';
+        $output .= '"ImpIVA": "' . $this->getImporteIva() . '", '; // $output .= '"ImpIVA": "' . $this->getIvaPeso() . '", ';
         $output .= '"Cantidad": "' . $this->getCantidad() . '", ';
         $output .= '"Dto": "' . $this->getDescuento() . '", ';
-        $output .= '"ImpDto": "' . $this->getPrecioDto() . '", ';
+        $output .= '"ImpDto": "' . $this->getImporteBonificacion() . '", '; // $output .= '"ImpDto": "' . $this->getPrecioDto() . '", ';
         $output .= '"Precio Original": "' . $this->getPrecioOriginal() . '", ';
         if (!is_null($this->getTransaccion())) {
             $output .= '"Numero Transaccion": "' . $this->getTransaccion()->getId() . '", ';
@@ -537,12 +536,12 @@ class BienesTransacciones
         if (!is_null($this->getSubtotal())) {
             $output .= '"Subtotal": "' . $this->getSubtotal() . '", ';
         }
-        if (!is_null($this->getImporteBonificacion())) {
-            $output .= '"Importe Bonificacion": "' . $this->getImporteBonificacion() . '", ';
-        }
-        if (!is_null($this->getImporteIva())) {
-            $output .= '"Importe Iva": "' . $this->getImporteIva() . '", ';
-        }
+        // if (!is_null($this->getImporteBonificacion())) {
+        //     $output .= '"Importe Bonificacion": "' . $this->getImporteBonificacion() . '", ';
+        // }
+        // if (!is_null($this->getImporteIva())) {
+        //     $output .= '"Importe Iva": "' . $this->getImporteIva() . '", ';
+        // }
         if (!is_null($this->getEstadoFactura())) {
             $output .= '"Estado Factura": "' . $this->getEstadoFactura() . '", ';
         }

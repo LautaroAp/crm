@@ -1,6 +1,6 @@
 var tipoTransaccion;
 var idPersona;
-var precioActualizado;
+var precioActualizado = false;
 var transaccion = null;
 var transaccion_ant = null;
 
@@ -20,6 +20,7 @@ $(document).ready(function () {
 
     // ACTUALZIAR VALORES ITEM
     $("body").on("change", ".item-update", function(e){
+        console.log("--> JQuery body change");
         // console.log(e.target.id);
         var pos = e.target.id.split("", 1);
 
@@ -56,28 +57,97 @@ $(document).ready(function () {
         item_importe_iva = (parseFloat(item_importe_iva).toFixed(2));
         item_subtotal = (parseFloat(item_subtotal).toFixed(2));
         item_total = (parseFloat(item_total).toFixed(2));
-
-        console.log("Finalizando calculos...");
-        console.log("Actualizando items[pos]...");
-
+        
+        // Actualizando item[pos]
         items[pos]["Cantidad"] = item_cantidad;
         items[pos]["Dto"] = item_descuento;
-        items[pos]["IVA"] = item_iva;
-        items[pos]["ImpIva"] = item_importe_iva;
+        items[pos]["IVA"] = ivas[getIvaFromValue(item_iva)];
+        items[pos]["ImpIVA"] = item_importe_iva; //items[pos]["ImpIva"] = item_importe_iva;
         items[pos]["Subtotal"] = item_subtotal;
         items[pos]["ImpDto"] = item_importe_descuento;
-        // "Precio Original": item_subtotal,
+        // "Precio Original": item_subtotal;
         items[pos]["ImporteGravado"] = item_gravado;
         items[pos]["ImporteNoGravado"] = item_no_gravado;
         items[pos]["ImporteExento"] = item_exento;
         items[pos]["Totales"] = item_total;
 
+        // Actualizando valores de fila
+        $('#'+pos+'_ImpDto').html(item_importe_descuento);
+        $('#'+pos+'_ImpIVA').html(item_importe_iva);
+        $('#'+pos+'_Totales').html(item_total);
+
+        // Recalcular
+        calcularSubcampos();
+
       });
       
 });
 
+function actualizarItems(){
+    console.log("--> actualizarItems()");
+    for(var i = 0; i < items.length; i++){
+        var item_precio = items[i]["Bien"]["Precio"];
+        var item_cantidad = $('#'+i+'_item_Cantidad').val();
+        var item_subtotal = item_precio * item_cantidad;
+        var item_total = null;
+
+        var item_descuento = $('#'+i+'_item_Dto').val();
+        var item_importe_descuento = item_subtotal * (item_descuento/100);
+        item_subtotal = item_subtotal - item_importe_descuento;
+
+        var item_iva = $('#'+i+'_item_IVA option:selected').text();
+        var item_importe_iva = item_subtotal * (item_iva/100);
+        item_total = item_subtotal + item_importe_iva;
+
+        var item_gravado = null;
+        var item_no_gravado = null;
+        var item_exento = null;
+        switch (item_iva["Valor"]) {
+            case "0.00":
+                // EXENTO
+                item_exento = item_subtotal;
+                item_exento = (parseFloat(item_exento).toFixed(2));
+                break;
+            default:
+                // GRAVADO
+                item_gravado = item_subtotal;
+                item_gravado = (parseFloat(item_gravado).toFixed(2));
+                break;
+        }
+
+        item_importe_descuento = (parseFloat(item_importe_descuento).toFixed(2));
+        item_importe_iva = (parseFloat(item_importe_iva).toFixed(2));
+        item_subtotal = (parseFloat(item_subtotal).toFixed(2));
+        item_total = (parseFloat(item_total).toFixed(2));
+        
+        // Actualizando item[i]
+        items[i]["Cantidad"] = item_cantidad;
+        items[i]["Dto"] = item_descuento;
+        items[i]["IVA"] = ivas[getIvaFromValue(item_iva)];
+        items[i]["ImpIVA"] = item_importe_iva; //items[i]["ImpIva"] = item_importe_iva;
+        items[i]["Subtotal"] = item_subtotal;
+        items[i]["ImpDto"] = item_importe_descuento;
+        // "Precio Original": item_subtotal;
+        items[i]["ImporteGravado"] = item_gravado;
+        items[i]["ImporteNoGravado"] = item_no_gravado;
+        items[i]["ImporteExento"] = item_exento;
+        items[i]["Totales"] = item_total;
+
+        // Actualizando valores de fila
+        $('#'+i+'_Precio').html(item_precio); console.log("*********** " + '#'+i+'_Precio');
+        $('#'+i+'_ImpDto').html(item_importe_descuento);
+        $('#'+i+'_ImpIVA').html(item_importe_iva);
+        $('#'+i+'_Totales').html(item_total);
+    }
+
+};
 
 function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
+    console.log("--> addItems()");
+
+    console.log("* * * precioActualizado = " + precioActualizado);
+    console.log("* * * actualizarPrecio = " + actualizarPrecio);
+
     precioActualizado = actualizarPrecio;
     if (bienesTransacciones==null){
         bienesTransacciones = [];
@@ -156,33 +226,19 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
         for (var j = 0; j < col.length - 1; j++) {
             var tabCell = tr.insertCell(-1);
             tabCell.setAttribute("id", i + "_" + col[j]);
-            var precio;
+
+            var dto, cantidad, dtoPeso, precioDto, iva, precio;
             if(precioActualizado){
                 precio = item["Bien"]["Precio"];
-            }
-            else{
+            } else {
                 precio = item["Precio Original"];
             }
-            if(!precio){
-                precio = 0;
-            }
-            ////////////////////VALORES SI EL PRECIO ESTA ACTUALIZADO O NO/////////////////////
-            var dto, cantidad, dtoPeso, precioDto, iva, precio;
-            if (precioActualizado){
-                precio = item["Bien"]["Precio"];
-                dto = item["Bien"]["Dto"];
-                cantidad = item["Cantidad"];
-                dtoPeso = (precio * dto / 100) * cantidad;
-                precioDto = (cantidad * precio) - dtoPeso;  
-                iva = item["Bien"]["IVA"];
-            }else{
-                precio = item["Precio Original"];
-                dto= item["Dto"];
-                cantidad = item["Cantidad"];
-                dtoPeso = (precio * dto / 100) * cantidad;
-                precioDto = (cantidad * precio) - dtoPeso;  
-                iva = item["IVA"]["Valor"];
-            }
+
+            dto= item["Dto"];
+            cantidad = item["Cantidad"];
+            dtoPeso = (precio * dto / 100) * cantidad;
+            precioDto = (cantidad * precio) - dtoPeso;  
+            iva = item["IVA"]["Valor"];
 
             //////////////////////////////////////////////////////////////////////////////////
 
@@ -237,7 +293,7 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
                     value = item[col[j]];
             }
             
-            var myHtml = '<input type="text" role="button" class="form-control item-update" name="" id="'+i+'_item_'+col[j]+'" value="'+ value+'" onkeypress="return justNumbers(event);"';
+            var myHtml = '<input type="text" role="button" class="form-control item-update" name="" id="'+i+'_item_'+col[j]+'" value="'+ value+'" onkeypress="return justNumbersEnter(event);"';
             if(readonly){
                 myHtml += ' readonly';
             };
@@ -284,7 +340,10 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
 
 // ADD TRANSACCION PARA MODO PAGO
 function addTransaccion(bienesTransacciones, tipo, id) {
-    precioActualizado = true;
+    console.log("--> addTransaccion()");
+    
+    // precioActualizado = true;
+    
     if (bienesTransacciones==null){
         bienesTransacciones = [];
     }
@@ -451,15 +510,8 @@ function getItems() {
     return items;
 }
 
-// function formatMoney(number) {
-//     return '$ ' + number.toLocaleString('en-US');
-// }
-
-// function formatPercent(number) {
-//     return number.toLocaleString('en-US') + ' %';
-// }
-
-function calcularSubcampos() {
+function calcularSubcampos( precioActualizado = null) {
+    console.log("--> calcularSubcampos()");
     if ((tipoTransaccion!="nota de credito") && (tipoTransaccion!="nota de debito")){
         var table = document.getElementById("table_bienes");
         var sumBonificacion = 0;
@@ -473,7 +525,7 @@ function calcularSubcampos() {
         var subtotal = 0;
         var sumVentaBruta = 0;
 
-        if (actualizarPrecios){
+        if (precioActualizado){
             for (var i = 0; i < items.length; i++) {
                 // CANTIDAD
                 cantidad = items[i]["Cantidad"];
@@ -566,6 +618,7 @@ var item = null;
 var item_ant = null;
 // obtengo ID de eventos
 function selectItem(e, pos) {
+    console.log("--> selectItem()");
     $('#' + pos).toggleClass('item-seleccion');
     if ($('#' + pos).hasClass('item-seleccion')) {
         item_ant = item;
@@ -655,6 +708,20 @@ function justNumbers(event) {
     return /\d/.test(String.fromCharCode(keynum));
 }
 
+function justNumbersEnter(event) {
+    var keynum = window.event ? window.event.keyCode : event.which;
+    if (keynum == 13){
+        $("#"+event.target.id).blur();
+        return (keynum != 13);
+    }
+    if ( ((keynum == 0) || (keynum == 8) || (keynum == 46)) && (keynum != 13)) {
+        return true;
+    }
+    return /\d/.test(String.fromCharCode(keynum));
+}
+
+// return (tecla != 13);
+
 /////////////////////////// TODO LO QUE SIGUE ES PARA EDITAR LA TABLA DINAMICAMENTE ////////////////////
 var selectedAnt = null;
 var selectedNow = null;
@@ -725,6 +792,7 @@ function controlStock(attribute, inputValue){
 }
 
 function saveValueInJson(tdId, inputValue) {
+    console.log("--> saveValueInJson");
     //recibo "0_Cantidad" separo en indice 0 y atributo Cantidad
     index = tdId.substring(0, tdId.indexOf('_'));
     attribute = tdId.substring(tdId.indexOf('_') + 1, tdId.length);
@@ -748,11 +816,13 @@ function saveValueInJson(tdId, inputValue) {
 }
 //esta funcion es llamada cuando se modifica el valor de un input
 function saveValue(inputId) {
+    console.log("--> saveValue()");
     tdId = inputId.substring(5);
     saveTd(tdId);
 }
 
 function actualizarJson(fila) {
+    console.log("--> actualizarJson()");
     var col = ["Cantidad", "Dto", "ImpDto", "IVA", "Precio","Totales"];
     var index = fila + "_";
 
@@ -773,6 +843,7 @@ function actualizarJson(fila) {
 }
 
 function actualizarFila(tdId) {
+    console.log("--> actualizarFila()");
     index = getIndex(tdId);
     attribute = getAttribute(tdId);
     cant = document.getElementById(index + "_Cantidad").innerText;
@@ -802,6 +873,7 @@ function actualizarFila(tdId) {
 
 //esta funcion es llamada para guardar el input anterior al generarse un nuevo input
 function saveTd(tdId) {
+    console.log("--> saveTd()");
     inputId = "input" + tdId;
     var inputValue;
     if (getAttribute(tdId) == "IVA") {
@@ -849,6 +921,7 @@ function getIvaFromValue(valor) {
 
 //PARA EL IVA VA A TENER QUE SER DISTINTO, ESTO SIRVE PARA BONIFICACION Y CANTIDAD NOMAS
 function makeEditable(event) {
+    console.log("--> makeEditable()");
     elementId = event.target.id;
     element = document.getElementById(elementId);
     if (selectedNow != null) {
@@ -918,6 +991,7 @@ function persistItemsInSession() {
 
 
 function addItemToTable() {
+    console.log("--> addItemToTable()");
     // Compara el Stock Disponible con la Cantidad ingresada
     updateOutputSelect();
     if (verificaStockDisponible(output)) {
@@ -975,13 +1049,6 @@ function updateOutputSelect() {
     item_subtotal = (parseFloat(item_subtotal).toFixed(2));
     item_total = (parseFloat(item_total).toFixed(2));
 
-    // var item_cantidad = $('#item_cantidad').val();
-    // var item_descuento = result[0]["descuento"];
-    // var item_iva = result[0]["iva"];
-    // var item_iva = ivas[getIvaFromValue(item_iva)];
-    // var item_subtotal = result[0]["totales"] * item_cantidad;
-    // item_subtotal = (parseFloat(item_subtotal).toFixed(2));
-
     output = null;
     output = {
         "Bien": {
@@ -1004,10 +1071,10 @@ function updateOutputSelect() {
         "Cantidad": item_cantidad,
         "Dto": item_descuento,
         "IVA": item_iva,
-        "ImpIva": item_importe_iva,
+        "ImpIVA": item_importe_iva, // "ImpIva": item_importe_iva,
         "Subtotal": item_subtotal,
         "ImpDto": item_importe_descuento,
-        "Precio Original": item_subtotal,
+        "Precio Original": item_precio, //"Precio Original": item_subtotal
         "Id": "",
         "ImporteGravado": item_gravado,
         "ImporteNoGravado": item_no_gravado,
@@ -1066,30 +1133,40 @@ function verificaStockDisponible(output) {
     
 }
 
-function actualizarPrecios(){
-    precioActualizado=true;
-    for (var i = 0; i < items.length; i++) {
-        // CANTIDAD
-        cantidad = items[i]["Cantidad"];
-        //PRECIO UNITARIO ACTUALIZADO
-        precio_unitario = items[i]["Bien"]["Precio"];
-        //DESCUENTO
-        descuento = items[i]["Bien"]["Dto"];
-        descuento = (parseFloat(descuento) * precio_unitario / 100);
-        precio_unitario_dto = precio_unitario - descuento;
-        //IVA
-        iva = items[i]["Bien"]["IVA"];
-        //SUBTOTAL
-        subtotal = precio_unitario_dto + (precio_unitario_dto * (iva/100));
-        // items[i]["Totales"] = parseFloat(subtotal)
-        items[i]["Totales"] = String(parseFloat(subtotal));
+// function actualizarPrecios(){
+//     console.log("--> actualizarPrecios()");
+//     precioActualizado=true;
+//     for (var i = 0; i < items.length; i++) {
+//         // CANTIDAD
+//         cantidad = items[i]["Cantidad"];
+//         //PRECIO UNITARIO ACTUALIZADO
+//         precio_unitario = items[i]["Bien"]["Precio"];
+//         //DESCUENTO
+//         descuento = items[i]["Bien"]["Dto"];
+//         descuento = (parseFloat(descuento) * precio_unitario / 100);
+//         precio_unitario_dto = precio_unitario - descuento;
+//         //IVA
+//         iva = items[i]["Bien"]["IVA"];
+//         //SUBTOTAL
+//         subtotal = precio_unitario_dto + (precio_unitario_dto * (iva/100));
+//         // items[i]["Totales"] = parseFloat(subtotal)
+//         items[i]["Totales"] = String(parseFloat(subtotal));
 
-    }
+//     }
+//     addItems(items, tipoTransaccion, idPersona, precioActualizado);
+//     calcularSubcampos();
+// }
+
+function actualizarPrecios(){
+    console.log("--> actualizarPrecios()");
+    precioActualizado = true;
+    actualizarItems();
     addItems(items, tipoTransaccion, idPersona, precioActualizado);
-    calcularSubcampos();
+    calcularSubcampos(true);
 }
 
 function borrarItems(){
+    console.log("--> borrarItems()");
     items = [];
     $('#' + transaccion).toggleClass('item-');
 

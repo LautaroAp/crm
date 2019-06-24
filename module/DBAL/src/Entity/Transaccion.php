@@ -669,13 +669,17 @@ class Transaccion
 
     public function getDescripcion()
     {
-
         $descripcion = "";
         if (!is_null($this->nombre)) {
             $descripcion .= $this->nombre;
         }
         if (!is_null($this->bienesTransacciones)) {
-            $descripcion .= " por " . COUNT($this->bienesTransacciones) . " items ";
+            // $descripcion .= " por " . COUNT($this->bienesTransacciones) . " items ";
+            $items = 0;
+            for ($i=0; $i < COUNT($this->bienesTransacciones); $i++) { 
+                $items = $items + $this->bienesTransacciones[$i]->getCantidad();
+            }
+            $descripcion .= " por " . $items . " items ";
         }
         if (!is_null($this->importe_total)) {
             $descripcion .= " por un monto de $ " . $this->importe_total;

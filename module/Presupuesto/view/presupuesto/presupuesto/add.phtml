@@ -241,7 +241,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             var items = <?php echo ($json); ?>;
                             var idPersona = <?php echo ($persona->getId()); ?>;
                             // Crear Tabla
-                            addItems(items, "presupuesto", idPersona, true);
+                            addItems(items, "presupuesto", idPersona, false);
                             </script>
                         </div>
                         <br>                     
@@ -458,5 +458,3 @@ var tipoPersona = "<?= $tipoPersona ?>";
     </div>
 </div>
 <!-- Fin: Panel Botones --> 
-
-<input type="text" class="form-control item-update" name="" id="i1_Cantidad" value="1">

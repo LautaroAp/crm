@@ -120,6 +120,9 @@ class TransaccionManager {
         else{
             $transaccion->setNombre(ucfirst($data['tipo']));
         }
+        if (isset($data['concepto'])){
+            $transaccion->setDetalle($data['concepto']);
+        }
         $moneda = null;
         if (isset($data['moneda'])) {
             if ($data['moneda'] != '-1') {

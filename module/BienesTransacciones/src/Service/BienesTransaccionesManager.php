@@ -213,12 +213,14 @@ class BienesTransaccionesManager {
             $bienTransaccion->setIva($iva);
             $valorIva= $iva->getValor();
         }
-        if (isset($array['ImpIva'])){
-            $importeTotal = $array['ImpIva'];
+        // if (isset($array['ImpIva'])){
+        //     $importeTotal = $array['ImpIva'];
+        //     $bienTransaccion->setImporteIva($importeTotal);
+        // }
+        if (isset($array['ImpIVA'])){
+            $importeTotal = $array['ImpIVA'];
             $bienTransaccion->setImporteIva($importeTotal);
         }
-
-
         if (isset($array['ImporteGravado'])){
             $importeTotal = $array['ImporteGravado'];
             $bienTransaccion->setImporte_gravado($importeTotal);
