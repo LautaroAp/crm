@@ -27,7 +27,6 @@ function addItems(bienes) {
         tr.setAttribute("id", i);
         tr.setAttribute("class", "click");
         tr.setAttribute("onclick","selectItem(event,id)");
-        // console.log(item);
         for (var j = 0; j < col.length; j++) {
             var tabCell = tr.insertCell(-1);
             tabCell.setAttribute("id", i);
@@ -93,7 +92,6 @@ function selectItem(e, pos) {
 
 // TODA UNA TARDE TRATANDO DE HACER ESTA PUTA FUNCION!!!! FALTA VERIFICAR
 function seleccionaIva(iva_select) {
-    // console.log(iva_select);
     tabla_ivas = $("#iva option");
     for (var i = 0; i < tabla_ivas.length; i++) {
         var opt = tabla_ivas[i];
@@ -102,6 +100,5 @@ function seleccionaIva(iva_select) {
         } else {
             opt.removeAttribute("selected");
         }
-        // console.log("value = " + opt.value + " text = " + opt.innerHTML.trim());
     }
 }

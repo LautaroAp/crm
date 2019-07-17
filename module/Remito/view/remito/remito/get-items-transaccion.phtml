@@ -7,4 +7,8 @@
     addTransaccionItems();
     completarFormasPago(formasPago, transaccionJson);
     completarMonedas(monedas,transaccionJson);
+
+    bonificacion = transaccionJson["Bonificacion general"];
+    recargo = transaccionJson["Recargo general"];
+    setBonificacionRecargo();
 </script>

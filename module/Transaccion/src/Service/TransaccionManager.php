@@ -156,18 +156,18 @@ class TransaccionManager {
             $transaccion->setBonificacionGeneral($data['bonificacion_general']);
         }
         if (isset($data['bonificacion_importe'])){
-            $transaccion->setBonificacionImporte(substr($data['bonificacion_importe'],2));
+            $transaccion->setBonificacionImporte($data['bonificacion_importe']);
 
         }
         if (isset($data['recargo_general']) and $data['recargo_general']!=''){
             $transaccion->setRecargoGeneral($data['recargo_general']);
         }
         if (isset($data['recargo_importe'])){
-            $transaccion->setRecargoImporte(substr($data['recargo_importe'],2));
+            $transaccion->setRecargoImporte($data['recargo_importe']);
         }
-        if (isset($data['iva_general'])){
-            $iva = $this->ivaManager->getIvaId($data['iva_general']);
-        }
+        // if (isset($data['iva_general'])){
+        //     $iva = $this->ivaManager->getIvaId($data['iva_general']);
+        // }
         if(isset($data['forma_pago'])){
             $formaPago = $this->formaPagoManager->getFormaPagoId($data['forma_pago']);
             $transaccion->setFormaPago($formaPago);
@@ -176,11 +176,42 @@ class TransaccionManager {
             $formaEnvio = $this->formaEnvioManager->getFormaEnvioId($data['forma_envio']);
             $transaccion->setFormaEnvio($formaEnvio);
         }
+
+        if (isset($data['importe_gravado'])){
+            $transaccion->setImporte_gravado($data['importe_gravado']);
+        }
+        if (isset($data['importe_no_gravado'])){
+            $transaccion->setImporte_no_gravado($data['importe_no_gravado']);
+        }
+        if (isset($data['importe_exento'])){
+            $transaccion->setImporte_exento($data['importe_exento']);
+        }
+
+        if (isset($data['importe_iva_27'])){
+            $transaccion->setImporte_iva_27($data['importe_iva_27']);
+        }
+        if (isset($data['importe_iva_21'])){
+            $transaccion->setImporte_iva_21($data['importe_iva_21']);
+        }
+        if (isset($data['importe_iva_10'])){
+            $transaccion->setImporte_iva_10($data['importe_iva_10']);
+        }
+        if (isset($data['importe_iva_5'])){
+            $transaccion->setImporte_iva_5($data['importe_iva_5']);
+        }
+        if (isset($data['importe_iva_2'])){
+            $transaccion->setImporte_iva_2($data['importe_iva_2']);
+        }
+        if (isset($data['importe_iva_0'])){
+            $transaccion->setImporte_iva_0($data['importe_iva_0']);
+        }
+
         if (isset($data['oficial'])){
             $transaccion->setOficial($data['oficial']);
         }else{
             $transaccion->setOficial(false);
         }
+        
         $transaccionPrevia = null;
         if(isset($data['id_transaccion_previa'])){           
             $transaccionPrevia = $this->getTransaccionId($data['id_transaccion_previa']);

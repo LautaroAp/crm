@@ -222,12 +222,15 @@ class BienesTransaccionesManager {
             $bienTransaccion->setImporteIva($importeTotal);
         }
         if (isset($array['ImporteGravado'])){
+            // if(($importeTotal != null) && ($importeTotal !='')){
+                
+            // }
             $importeTotal = $array['ImporteGravado'];
             $bienTransaccion->setImporte_gravado($importeTotal);
         }
         if (isset($array['ImporteNoGravado'])){
             $importeTotal = $array['ImporteNoGravado'];
-            $bienTransaccion->setSubsetImporte_no_gravadototal($importeTotal);
+            $bienTransaccion->setImporte_no_gravado($importeTotal);
         }
         if (isset($array['ImporteExento'])){
             $importeTotal = $array['ImporteExento'];

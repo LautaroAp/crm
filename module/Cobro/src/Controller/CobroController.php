@@ -40,9 +40,10 @@ class CobroController extends TransaccionController
         return "cobro";
     }
 
-    public function getIdComprobante(){
-        return 5;
+    private function getIdComprobante(){
+        return 4;
     }
+
     public function addAction()
     {
         $json="[]";
@@ -87,6 +88,10 @@ class CobroController extends TransaccionController
         $remitosConformados = $this->getRemitosConformados($persona);
         $remitosConformadosJson = $this->getJsonFromObjectList($remitosConformados);
 
+        $tiposFactura= $this->tipoComprobanteManager->getTipoComprobantes($this->getIdComprobante());
+        $tiposFacturaJson =$this->getJsonFromObjectList($tiposFactura);
+        $tipoComprobantePersona = $persona->getTipo_comprobante();
+        $tipoComprobantePersonaJson ="";
         $empresaJson = $this->empresaManager->getEmpresa()->getJSON();
 
         $this->reiniciarParams();
@@ -104,6 +109,8 @@ class CobroController extends TransaccionController
             'facturasJson' => $facturasJson,
             'remitosConformadosJson'=>$remitosConformadosJson,
             'empresaJson' => $empresaJson,
+            'tiposFacturaJson'=>$tiposFacturaJson,
+            'tipoComprobantePersonaJson' => $tipoComprobantePersonaJson,
             'itemsTransaccionJson' =>"[]",
         ]);
     }
@@ -160,25 +167,20 @@ class CobroController extends TransaccionController
         return $view;
    }
 
-    // PDF
+    // PDF TIPO A
     public function pdfAction() {
         $this->layout()->setTemplate('layout/nulo');
         $id_transaccion = $this->params()->fromRoute('id');
         $cobro = $this->cobroManager->getCobroFromTransaccionId($id_transaccion);
         $items = array();
-
         if (!is_null($cobro)) {
             $items = $cobro->getTransaccion()->getBienesTransacciones();
         }
-       
         $json = "";
         $json = $this->getJsonFromObjectList($items);
-       
         $persona = $cobro->getTransaccion()->getPersona();
         $tipoPersona = null;
-
         $empresa = $this->empresaManager->getEmpresa();
-
         $numTransacciones = $cobro->getTransaccion()->getNumero();
         $numCobro = $cobro->getNumero();
         $monedasJson = $this->getJsonMonedas();
@@ -210,7 +212,6 @@ class CobroController extends TransaccionController
         ]);
     }
 
-   
    public function getItemsPreviosAction(){
         $this->layout()->setTemplate('layout/nulo');
         $numPresupuesto = $this->params()->fromRoute('id');

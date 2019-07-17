@@ -241,6 +241,7 @@ class PedidoController extends TransaccionController
         $items = $transaccion->getBienesTransacciones();
         $itemsTransaccionJson = $this->getJsonFromObjectList($items);
         $view = new ViewModel([
+            'transaccion' => $transaccion,
             'itemsTransaccionJson'=>$itemsTransaccionJson,
             'transaccionJson' => $transaccionJson,
         ]);

@@ -407,6 +407,17 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             </div>
                         </div>
                     </div>
+                    <!-- Hidden Importe Grabado/NoGravado/Exento -->
+                    <input type='text' class="form-control hidden" name="importe_gravado" id="importe_gravado" value="0">
+                    <input type='text' class="form-control hidden" name="importe_no_gravado" id="importe_no_gravado" value="0">
+                    <input type='text' class="form-control hidden" name="importe_exento" id="importe_exento"  value="0">
+                    <!-- Hidden Importe IVA 27/21/10/5/2/0 -->
+                    <input type='text' class="form-control hidden" name="importe_iva_27" id="importe_iva_27" value="0">
+                    <input type='text' class="form-control hidden" name="importe_iva_21" id="importe_iva_21" value="0">
+                    <input type='text' class="form-control hidden" name="importe_iva_10" id="importe_iva_10" value="0">
+                    <input type='text' class="form-control hidden" name="importe_iva_5" id="importe_iva_5" value="0">
+                    <input type='text' class="form-control hidden" name="importe_iva_2" id="importe_iva_2" value="0">
+                    <input type='text' class="form-control hidden" name="importe_iva_0" id="importe_iva_0" value="0">
                     <script>
                     calcularSubcampos();
                     </script>

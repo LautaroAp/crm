@@ -258,25 +258,9 @@ for ($i=1; $i <= 1; $i++) {
     $pdf->Ln(1);
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-    // Observaciones
-    $html = '
-        <table border="0" cellspacing="0" cellpadding="3">
-            <tbody>
-                <tr>
-                    <td><p>'. "" .'</p></td>
-                </tr>
-            </tbody>
-        </table>
-    ';
-    // output the HTML content
-    $pdf->writeHTMLCell(0, 0, '', '', $html, 'LRTB', 1, 0, true, '', true);
-    $pdf->Ln(1);
-
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-    // Info
-    $html = '<strong style="font-size: 12px;">DOCUMENTO NO VÁLIDO COMO FACTURA</strong>';
+    
+    // DOCUMENTO NO OFICIAL
+    $html = '<i style="font-size: 8px;">Documento no Oficial</i>';
     // output the HTML content
     $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, 'C', true);
     $pdf->Ln(1);
@@ -292,6 +276,6 @@ for ($i=1; $i <= 1; $i++) {
 } // foreach end
 
 //Close and output PDF document
-$pdf->Output('example_006.pdf', 'I');
+$pdf->Output($transaccion->getNombre().'-'.$nombre_razonsocial.'-'.$transaccion->getFecha_transaccion()->format('d_m_Y').'.pdf', 'I');
 
 ?>

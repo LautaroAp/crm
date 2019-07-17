@@ -387,7 +387,7 @@ class ClientesManager {
         }
         return $this->entityManager
                         ->getRepository(Pais::class)
-                        ->findAll();
+                        ->findBy([], ['nombre' => 'ASC']); // ->findAll();
     }
 
     public function getProvincia($id = null) {
@@ -398,7 +398,7 @@ class ClientesManager {
         }
         return $this->entityManager
                         ->getRepository(Provincia::class)
-                        ->findAll();
+                        ->findBy([], ['nombre_provincia' => 'ASC']); // ->findAll();
     }
 
   

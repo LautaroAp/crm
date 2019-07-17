@@ -20,14 +20,12 @@ $(document).ready(function () {
 
     // ACTUALZIAR VALORES ITEM
     $("body").on("change", ".item-update", function(e){
-        console.log("--> JQuery body change");
-        // console.log(e.target.id);
+        console.log("--> item-update");
         var pos = e.target.id.split("", 1);
-
         var item_precio = items[pos]["Bien"]["Precio"];
         var item_cantidad = $('#'+pos+'_item_Cantidad').val();
         var item_subtotal = item_precio * item_cantidad;
-        var item_total = null;
+        var item_total = "0";
 
         var item_descuento = $('#'+pos+'_item_Dto').val();
         var item_importe_descuento = item_subtotal * (item_descuento/100);
@@ -37,9 +35,9 @@ $(document).ready(function () {
         var item_importe_iva = item_subtotal * (item_iva/100);
         item_total = item_subtotal + item_importe_iva;
 
-        var item_gravado = null;
-        var item_no_gravado = null;
-        var item_exento = null;
+        var item_gravado = "0";
+        var item_no_gravado = "0";
+        var item_exento = "0";
         switch (item_iva["Valor"]) {
             case "0.00":
                 // EXENTO
@@ -83,13 +81,12 @@ $(document).ready(function () {
       
 });
 
-function actualizarItems(){
-    console.log("--> actualizarItems()");
+function actualizarItems(precioActualizado = null){
     for(var i = 0; i < items.length; i++){
         var item_precio = items[i]["Bien"]["Precio"];
         var item_cantidad = $('#'+i+'_item_Cantidad').val();
         var item_subtotal = item_precio * item_cantidad;
-        var item_total = null;
+        var item_total = "0";
 
         var item_descuento = $('#'+i+'_item_Dto').val();
         var item_importe_descuento = item_subtotal * (item_descuento/100);
@@ -99,9 +96,9 @@ function actualizarItems(){
         var item_importe_iva = item_subtotal * (item_iva/100);
         item_total = item_subtotal + item_importe_iva;
 
-        var item_gravado = null;
-        var item_no_gravado = null;
-        var item_exento = null;
+        var item_gravado = "0";
+        var item_no_gravado = "0";
+        var item_exento = "0";
         switch (item_iva["Valor"]) {
             case "0.00":
                 // EXENTO
@@ -134,7 +131,7 @@ function actualizarItems(){
         items[i]["Totales"] = item_total;
 
         // Actualizando valores de fila
-        $('#'+i+'_Precio').html(item_precio); console.log("*********** " + '#'+i+'_Precio');
+        $('#'+i+'_Precio').html(item_precio);
         $('#'+i+'_ImpDto').html(item_importe_descuento);
         $('#'+i+'_ImpIVA').html(item_importe_iva);
         $('#'+i+'_Totales').html(item_total);
@@ -142,12 +139,98 @@ function actualizarItems(){
 
 };
 
+function actualizarImporteImpuesto(){
+    var sumImpGravado = 0; 
+    var sumImpNoGravado = 0;
+    var sumImpExento = 0;
+
+    var sumIva = {
+        iva_27: 0,
+        iva_21: 0,
+        iva_10: 0,
+        iva_5: 0,
+        iva_2: 0,
+        iva_0: 0
+    };
+
+    var bonificacion = parseFloat($("#bonificacion_general").val());
+    if(!bonificacion){
+        bonificacion = 0;
+        parseFloat($("#bonificacion_general").val("0"));
+    }
+    var recargo = parseFloat($("#recargo_general").val());
+    if(!recargo){
+        recargo = 0;
+        parseFloat($("#recargo_general").val("0"));
+    }
+
+    for(var i = 0; i < items.length; i++){
+        if(items[i]["ImporteGravado"]){
+            sumImpGravado = sumImpGravado + parseFloat(items[i]["ImporteGravado"]);
+        }
+        if(items[i]["ImporteNoGravado"]){
+            sumImpNoGravado = sumImpNoGravado + parseFloat(items[i]["ImporteNoGravado"]);
+        }
+        if(items[i]["ImporteExento"]){
+            sumImpExento = sumImpExento + parseFloat(items[i]["ImporteExento"]);
+        }
+
+        if(items[i]["Transaccion Previa"]){
+            sumIva.iva_27 = sumIva.iva_27 + parseFloat(items[i]["Transaccion Previa"]["ImporteIVA27"]);
+            sumIva.iva_21 = sumIva.iva_21 + parseFloat(items[i]["Transaccion Previa"]["ImporteIVA21"]);
+            sumIva.iva_10 = sumIva.iva_10 + parseFloat(items[i]["Transaccion Previa"]["ImporteIVA10"]);
+            sumIva.iva_5 = sumIva.iva_5 + parseFloat(items[i]["Transaccion Previa"]["ImporteIVA5"]);
+            sumIva.iva_2 = sumIva.iva_2 + parseFloat(items[i]["Transaccion Previa"]["ImporteIVA2"]);
+            sumIva.iva_0 = sumIva.iva_0 + parseFloat(items[i]["Transaccion Previa"]["ImporteIVA0"]);
+        } else {
+            switch (items[i]["IVA"]["Valor"]) {
+                case "27.00":
+                    sumIva.iva_27 = sumIva.iva_27 + parseFloat(items[i]["ImpIVA"]);
+                    break;
+                case "21.00":
+                    sumIva.iva_21 = sumIva.iva_21 + parseFloat(items[i]["ImpIVA"]);
+                    break;
+                case "10.50":
+                    sumIva.iva_10 = sumIva.iva_10 + parseFloat(items[i]["ImpIVA"]);
+                    break;
+                case "5.00":
+                    sumIva.iva_5 = sumIva.iva_5 + parseFloat(items[i]["ImpIVA"]);
+                    break;
+                case "2.50":
+                    sumIva.iva_2 = sumIva.iva_2 + parseFloat(items[i]["ImpIVA"]);
+                    break;
+                case "0.00":
+                    sumIva.iva_0 = sumIva.iva_0 + parseFloat(items[i]["ImpIVA"]);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    // GRAVADO
+    sumImpGravado = sumImpGravado - (sumImpGravado * bonificacion/100);
+    sumImpGravado = sumImpGravado + (sumImpGravado * recargo/100);
+    // NO GRAVADO
+    sumImpNoGravado = sumImpNoGravado - (sumImpNoGravado * bonificacion/100);
+    sumImpNoGravado = sumImpNoGravado + (sumImpNoGravado * recargo/100);
+    // EXCENTO
+    sumImpExento = sumImpExento - (sumImpExento * bonificacion/100);
+    sumImpExento = sumImpExento + (sumImpExento * recargo/100);
+
+    $('#importe_gravado').val(parseFloat(sumImpGravado).toFixed(2));
+    $('#importe_no_gravado').val(parseFloat(sumImpNoGravado).toFixed(2));
+    $('#importe_exento').val(parseFloat(sumImpExento).toFixed(2));
+
+    $('#importe_iva_27').val(parseFloat(sumIva.iva_27).toFixed(2));
+    $('#importe_iva_21').val(parseFloat(sumIva.iva_21).toFixed(2));
+    $('#importe_iva_10').val(parseFloat(sumIva.iva_10).toFixed(2));
+    $('#importe_iva_5').val(parseFloat(sumIva.iva_5).toFixed(2));
+    $('#importe_iva_2').val(parseFloat(sumIva.iva_2).toFixed(2));
+    $('#importe_iva_0').val(parseFloat(sumIva.iva_0).toFixed(2));
+};
+
 function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
-    console.log("--> addItems()");
-
-    console.log("* * * precioActualizado = " + precioActualizado);
-    console.log("* * * actualizarPrecio = " + actualizarPrecio);
-
     precioActualizado = actualizarPrecio;
     if (bienesTransacciones==null){
         bienesTransacciones = [];
@@ -193,19 +276,19 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
                 th.innerHTML = "Cant."; 
             break;
             case 'Dto':
-                th.innerHTML = "Dto (%)";
+                th.innerHTML = "% Dto.";
                 break;
             case 'ImpDto':
-                th.innerHTML = "Dto ($)";
+                th.innerHTML = "Imp. Dto.";
                 break;
             case 'IVA':
-                th.innerHTML = "IVA (%)"; 
+                th.innerHTML = "% IVA"; 
                 break;
             case 'ImpIVA':
-                th.innerHTML = "IVA ($)";
+                th.innerHTML = "Imp. IVA";
                 break;
             case 'Totales':
-                th.innerHTML = "Totales ($)";
+                th.innerHTML = "Subtotal";
                 break;
             default:
                 th.innerHTML = col[i];
@@ -340,9 +423,7 @@ function addItems(bienesTransacciones, tipo, id, actualizarPrecio) {
 
 // ADD TRANSACCION PARA MODO PAGO
 function addTransaccion(bienesTransacciones, tipo, id) {
-    console.log("--> addTransaccion()");
-    
-    // precioActualizado = true;
+    console.log("--> addTransaccion()");    
     
     if (bienesTransacciones==null){
         bienesTransacciones = [];
@@ -511,94 +592,146 @@ function getItems() {
 }
 
 function calcularSubcampos( precioActualizado = null) {
-    console.log("--> calcularSubcampos()");
     if ((tipoTransaccion!="nota de credito") && (tipoTransaccion!="nota de debito")){
         var table = document.getElementById("table_bienes");
-        var sumBonificacion = 0;
         var sumSubtotal = 0;
+        var sumDto = 0;
         var sumIva = 0;
-        var bonificacion_general = 0;
         var descuento = 0;
         var cantidad = 0;
         var precio_unitario_dto = 0;
         var iva = 0;
         var subtotal = 0;
         var sumVentaBruta = 0;
-
+        var bonificacion = 0;
+        var recargo = 0;
+        var sumBonificacion = 0;
+        var sumRecargo = 0;
+        
         if (precioActualizado){
             for (var i = 0; i < items.length; i++) {
                 // CANTIDAD
-                cantidad = items[i]["Cantidad"];
-                //PRECIO UNITARIO
-                precio_unitario = items[i]["Bien"]["Precio"];
-                if (!precio_unitario){precio_unitario=0;}
-                //DESCUENTO
-                descuento = items[i]["Bien"]["Dto"];
-                if (!descuento){descuento =0;}
-                descuento = parseFloat(descuento) * precio_unitario / 100;
+                cantidad = (items[i]["Cantidad"]);
+                // PRECIO UNITARIO
+                precio_unitario = (items[i]["Bien"]["Precio"]);
+                if (!precio_unitario){
+                    precio_unitario = 0;
+                }
+                // DESCUENTO
+                descuento = (items[i]["Bien"]["Dto"]);
+                if (!descuento){
+                    descuento = 0;
+                }
+                descuento = descuento * (precio_unitario / 100);
+                sumDto = sumDto + (descuento * cantidad);
                 precio_unitario_dto = precio_unitario - descuento;
-                sumBonificacion = sumBonificacion + descuento * cantidad;
-                //IVA
-                iva = items[i]["Bien"]["IVA"];
-                if (!iva){iva =0;}
-                sumIva = sumIva + (parseFloat(iva) * precio_unitario_dto / 100) * cantidad;
-                //SUBTOTAL
-                subtotal = items[i]["Totales"];
-                if (!subtotal){subtotal = 0;}
-                sumSubtotal = sumSubtotal + parseFloat(subtotal);
-                sumVentaBruta = sumVentaBruta + cantidad * precio_unitario;       
+                // BONIFICACION
+                bonificacion = parseFloat($("#bonificacion_general").val());
+                if(!bonificacion){
+                    bonificacion = 0;
+                    parseFloat($("#bonificacion_general").val("0"));
+                }
+                bonificacion = precio_unitario_dto * (bonificacion / 100);
+                sumBonificacion = sumBonificacion + (bonificacion * cantidad);
+                precio_unitario_dto = precio_unitario_dto - bonificacion; // applico al subtotal
+                // RECARGO
+                recargo = parseFloat($("#recargo_general").val());
+                if(!recargo){
+                    recargo = 0;
+                    parseFloat($("#recargo_general").val("0"));
+                }
+                recargo = precio_unitario_dto * (recargo / 100);
+                sumRecargo = sumRecargo + (recargo * cantidad);
+                precio_unitario_dto = precio_unitario_dto + recargo; // applico al subtotal
+                // SUBTOTAL
+                // subtotal = subtotal - sumBonificacion + sumRecargo; // CASO #2 - aplico al subtotal desde precio base
+                subtotal = cantidad * precio_unitario_dto;
+                if (!subtotal){
+                    subtotal = 0;
+                }
+                sumSubtotal = sumSubtotal + subtotal;
+                sumVentaBruta = sumVentaBruta + (cantidad * precio_unitario); 
+                // IVA
+                iva = (items[i]["Bien"]["IVA"]);
+                if (!iva){
+                    iva = 0;
+                }
+                sumIva = sumIva + ((subtotal * (iva / 100)) * cantidad);
             }
         }
         else{
             for (var i = 0; i < items.length; i++) {
                 // CANTIDAD
-                cantidad = items[i]["Cantidad"];
-                //PRECIO UNITARIO
-                precio_unitario = items[i]["Precio Original"];
-                if (!precio_unitario){precio_unitario=0;}
-                //DESCUENTO
-                descuento = items[i]["Dto"];
-                if (!descuento){descuento =0;}
-                descuento = (parseFloat(descuento) * precio_unitario / 100);
+                cantidad = (items[i]["Cantidad"]);
+                // PRECIO UNITARIO
+                precio_unitario = (items[i]["Precio Original"]);
+                if (!precio_unitario){
+                    precio_unitario = 0;
+                }
+                // DESCUENTO
+                descuento = (items[i]["Dto"]);
+                if (!descuento){
+                    descuento = 0;
+                }
+                descuento = descuento * (precio_unitario / 100);
+                sumDto = sumDto + (descuento * cantidad);
                 precio_unitario_dto = precio_unitario - descuento;
-                sumBonificacion = sumBonificacion + descuento * cantidad;
-                //IVA
-                iva = items[i]["IVA"]["Valor"];
-                if (!iva){iva =0;}
-                sumIva = sumIva + (parseFloat(iva) * precio_unitario_dto / 100) * cantidad;
-                //SUBTOTAL
-                subtotal = items[i]["Totales"];
-                if (!subtotal){subtotal = 0;}
-                sumSubtotal = sumSubtotal + parseFloat(subtotal);
-                sumVentaBruta = sumVentaBruta + cantidad * precio_unitario;       
+                // BONIFICACION
+                bonificacion = parseFloat($("#bonificacion_general").val());
+                if(!bonificacion){
+                    bonificacion = 0;
+                    parseFloat($("#bonificacion_general").val("0"));
+                }
+                bonificacion = precio_unitario_dto * (bonificacion / 100);
+                sumBonificacion = sumBonificacion + parseFloat(bonificacion * cantidad);
+                precio_unitario_dto = precio_unitario_dto - bonificacion; // applico al subtotal
+                // RECARGO
+                recargo = parseFloat($("#recargo_general").val());
+                if(!recargo){
+                    recargo = 0;
+                    parseFloat($("#recargo_general").val("0"));
+                }
+                recargo = precio_unitario_dto * (recargo / 100);
+                sumRecargo = sumRecargo + parseFloat(recargo * cantidad);
+                precio_unitario_dto = precio_unitario_dto + recargo; // applico al subtotal
+                // SUBTOTAL
+                // subtotal = subtotal - sumBonificacion + sumRecargo; // CASO #2 - aplico al subtotal desde precio base
+                subtotal = cantidad * precio_unitario_dto;
+                if (!subtotal){
+                    subtotal = 0;
+                }
+                sumSubtotal = sumSubtotal + subtotal;
+                sumVentaBruta = sumVentaBruta + (cantidad * precio_unitario); 
+                // IVA
+                iva = (items[i]["IVA"]["Valor"]);
+                if (!iva){
+                    iva = 0;
+                }
+                sumIva = sumIva + ((subtotal * (iva / 100)) * cantidad); 
             }
         }
-    bonificacion_general = $("#bonificacion_general").val();
-    recargo_general = $("#recargo_general").val();
 
-    if (!recargo_general) {
-        recargo_general = 0;
+        // var total_general = sumSubtotal - (sumSubtotal * bonificacion / 100) + (sumSubtotal * recargo / 100);
+        var total_general = sumSubtotal + sumIva;
+
+        $("#subtotal_general").val((parseFloat(sumSubtotal).toFixed(2)));
+        $("#bonificacion_importe").val((parseFloat(sumBonificacion).toFixed(2)));
+        $("#recargo_importe").val((parseFloat(sumRecargo).toFixed(2)));
+        $("#venta_bruta").val((parseFloat(sumVentaBruta).toFixed(2)));
+        $("#descuento_total").val((parseFloat(sumDto).toFixed(2)));
+        $("#iva_total").val((parseFloat(sumIva).toFixed(2)));
+        if (total_general){
+            $("#total_general").val((parseFloat(total_general).toFixed(2)));
+        }
+        else{
+            total_general=0;
+            $("#total_general").val((parseFloat(total_general).toFixed(2)));
+        }
+        $("#jsonitems").val(JSON.stringify(items));
     }
 
-    var total_general = sumSubtotal - (sumSubtotal * bonificacion_general / 100) + (sumSubtotal * recargo_general / 100);
-    var bonificacion_importe = sumSubtotal * bonificacion_general / 100;
-    var recargo_importe = sumSubtotal * recargo_general / 100;
-
-    $("#subtotal_general").val((parseFloat(sumSubtotal).toFixed(2)));
-    $("#bonificacion_importe").val((parseFloat(bonificacion_importe).toFixed(2)));
-    $("#recargo_importe").val((parseFloat(recargo_importe).toFixed(2)));
-    $("#venta_bruta").val((parseFloat(sumVentaBruta).toFixed(2)));
-    $("#descuento_total").val((parseFloat(sumBonificacion).toFixed(2)));
-    $("#iva_total").val((parseFloat(sumIva).toFixed(2)));
-    if (total_general){
-        $("#total_general").val((parseFloat(total_general).toFixed(2)));
-    }
-    else{
-        total_general=0;
-        $("#total_general").val((parseFloat(total_general).toFixed(2)));
-    }
-    $("#jsonitems").val(JSON.stringify(items));
-    }    
+    // Calcular Importes Gravado/NoGravado/Exento + IVA
+    actualizarImporteImpuesto();
 }
 
 function reiniciarSubcampos(){
@@ -611,14 +744,13 @@ function reiniciarSubcampos(){
     $("#iva_total").val("0.00");
     $("#total_general").val("0.00");
     $("#jsonitems").val(JSON.stringify(items));
-    console.log("reinicio");
 }
 
 var item = null;
 var item_ant = null;
+
 // obtengo ID de eventos
 function selectItem(e, pos) {
-    console.log("--> selectItem()");
     $('#' + pos).toggleClass('item-seleccion');
     if ($('#' + pos).hasClass('item-seleccion')) {
         item_ant = item;
@@ -771,7 +903,6 @@ function controlStock(attribute, inputValue){
                 if (attribute=="Cantidad"){
                     var stock = parseFloat(items[index]["Bien"]["Stock"]);
                     if(stock<=inputValue){
-                        console.log(tipoTransaccion);
                         if (tipoTransaccion=="remito"){
                             alert("No se puede agregar el item dado que la cantidad sobrepasa el stock disponible");
                             return false;
@@ -792,11 +923,9 @@ function controlStock(attribute, inputValue){
 }
 
 function saveValueInJson(tdId, inputValue) {
-    console.log("--> saveValueInJson");
     //recibo "0_Cantidad" separo en indice 0 y atributo Cantidad
     index = tdId.substring(0, tdId.indexOf('_'));
     attribute = tdId.substring(tdId.indexOf('_') + 1, tdId.length);
-    console.log(attribute);
     if (inputValue != null) {
         if (controlStock(attribute, inputValue)){
             if (attribute == "IVA") {
@@ -816,13 +945,11 @@ function saveValueInJson(tdId, inputValue) {
 }
 //esta funcion es llamada cuando se modifica el valor de un input
 function saveValue(inputId) {
-    console.log("--> saveValue()");
     tdId = inputId.substring(5);
     saveTd(tdId);
 }
 
 function actualizarJson(fila) {
-    console.log("--> actualizarJson()");
     var col = ["Cantidad", "Dto", "ImpDto", "IVA", "Precio","Totales"];
     var index = fila + "_";
 
@@ -843,7 +970,6 @@ function actualizarJson(fila) {
 }
 
 function actualizarFila(tdId) {
-    console.log("--> actualizarFila()");
     index = getIndex(tdId);
     attribute = getAttribute(tdId);
     cant = document.getElementById(index + "_Cantidad").innerText;
@@ -873,7 +999,6 @@ function actualizarFila(tdId) {
 
 //esta funcion es llamada para guardar el input anterior al generarse un nuevo input
 function saveTd(tdId) {
-    console.log("--> saveTd()");
     inputId = "input" + tdId;
     var inputValue;
     if (getAttribute(tdId) == "IVA") {
@@ -882,7 +1007,6 @@ function saveTd(tdId) {
     }
     else {
         inputValue = document.getElementById(inputId).value;
-        console.log(inputValue);
     }
     numValue = getNumberValue(inputValue);
     inputElement = document.getElementById(inputId);
@@ -921,7 +1045,6 @@ function getIvaFromValue(valor) {
 
 //PARA EL IVA VA A TENER QUE SER DISTINTO, ESTO SIRVE PARA BONIFICACION Y CANTIDAD NOMAS
 function makeEditable(event) {
-    console.log("--> makeEditable()");
     elementId = event.target.id;
     element = document.getElementById(elementId);
     if (selectedNow != null) {
@@ -991,7 +1114,6 @@ function persistItemsInSession() {
 
 
 function addItemToTable() {
-    console.log("--> addItemToTable()");
     // Compara el Stock Disponible con la Cantidad ingresada
     updateOutputSelect();
     if (verificaStockDisponible(output)) {
@@ -1017,7 +1139,7 @@ function updateOutputSelect() {
     var item_precio = result[0]["precio"];
     var item_cantidad = $('#item_cantidad').val();
     var item_subtotal = item_precio * item_cantidad;
-    var item_total = null;
+    var item_total = "0";
 
     var item_descuento = result[0]["descuento"];
     var item_importe_descuento = item_subtotal * (item_descuento/100);
@@ -1028,9 +1150,9 @@ function updateOutputSelect() {
     var item_importe_iva = item_subtotal * (item_iva["Valor"]/100);
     item_total = item_subtotal + item_importe_iva;
 
-    var item_gravado = null;
-    var item_no_gravado = null;
-    var item_exento = null;
+    var item_gravado = "0";
+    var item_no_gravado = "0";
+    var item_exento = "0";
     switch (item_iva["Valor"]) {
         case "0.00":
             // EXENTO
@@ -1113,7 +1235,6 @@ function verificaStockDisponible(output) {
             var cant = parseFloat(output["Cantidad"]);
             if (cant > 0) {
                 if (cant > parseFloat(output["Bien"]["Stock"])) {
-                    console.log(tipoTransaccion);
                     if (tipoTransaccion=="remito"){
                         alert("No se puede agregar el item dado que la cantidad sobrepasa el stock disponible");
                         return false;
@@ -1133,32 +1254,7 @@ function verificaStockDisponible(output) {
     
 }
 
-// function actualizarPrecios(){
-//     console.log("--> actualizarPrecios()");
-//     precioActualizado=true;
-//     for (var i = 0; i < items.length; i++) {
-//         // CANTIDAD
-//         cantidad = items[i]["Cantidad"];
-//         //PRECIO UNITARIO ACTUALIZADO
-//         precio_unitario = items[i]["Bien"]["Precio"];
-//         //DESCUENTO
-//         descuento = items[i]["Bien"]["Dto"];
-//         descuento = (parseFloat(descuento) * precio_unitario / 100);
-//         precio_unitario_dto = precio_unitario - descuento;
-//         //IVA
-//         iva = items[i]["Bien"]["IVA"];
-//         //SUBTOTAL
-//         subtotal = precio_unitario_dto + (precio_unitario_dto * (iva/100));
-//         // items[i]["Totales"] = parseFloat(subtotal)
-//         items[i]["Totales"] = String(parseFloat(subtotal));
-
-//     }
-//     addItems(items, tipoTransaccion, idPersona, precioActualizado);
-//     calcularSubcampos();
-// }
-
 function actualizarPrecios(){
-    console.log("--> actualizarPrecios()");
     precioActualizado = true;
     actualizarItems();
     addItems(items, tipoTransaccion, idPersona, precioActualizado);
@@ -1166,7 +1262,6 @@ function actualizarPrecios(){
 }
 
 function borrarItems(){
-    console.log("--> borrarItems()");
     items = [];
     $('#' + transaccion).toggleClass('item-');
 

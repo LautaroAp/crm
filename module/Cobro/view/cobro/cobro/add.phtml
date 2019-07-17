@@ -5,7 +5,6 @@
 <script src="/js/item.js"></script>
 <script src="/js/opciones-transacciones.js"></script>
 
-
 <!-- jQuery UI -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -62,6 +61,9 @@ if ($persona->getTipo() =="PROVEEDOR"){
 }
 $responsable = $this->identity();
 $tipoPersona = strtoupper($persona->getTipo());
+if ($tipoComprobantePersonaJson==""){
+    $tipoComprobantePersonaJson="-1";
+}
 
 ?>
 
@@ -71,6 +73,8 @@ var tipoTransaccion ="cobro";
 var items = [];
 var output;
 var ivas = <?= $ivasJson ?>;
+ivas = ivas.reverse();
+
 var idPersona = <?php echo ($persona->getId()); ?>;
 
 var jsonModalTransaccion = <?= $facturasJson ?>;
@@ -82,6 +86,7 @@ var transaccionPreviaId = null;
 var transaccionJson = null;
 var empresa = <?= $empresaJson ?>;
 var tipoPersona = "<?= $tipoPersona ?>";
+
 </script>
 
 <!-- Document -->
@@ -107,7 +112,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
         <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
-                    NOTA DE CRÉDITO
+                    COBRO
                 </div>
                 <div class="panel-body">
                     <!-- Fecha + Datos de Persona -->
@@ -153,6 +158,14 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             <input type="text" class="form-control" name="numero_cobro" id="numero_cobro"
                                 value="<?= str_pad($numCobro, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
+                        <div class="form-group col-md-2" id="tipos_factura" >
+                            <label>Tipo de Cobro</label>
+                            <script>
+                                var tiposFactura = <?php echo ($tiposFacturaJson); ?>;
+                                var tipoComprobantePersona = "<?= $tipoComprobantePersonaJson ?>";
+                                completarTiposFactura(tiposFactura, tipoComprobantePersona);
+                            </script>        
+                        </div>
                         <div class="form-group col-md-2" id="tipos_cobro">
                             <label>Validez del documento</label>
                             <select class="form-control" name="oficial" id="oficial" require>
@@ -197,15 +210,40 @@ var tipoPersona = "<?= $tipoPersona ?>";
                         <!-- <br> -->
                         <div class="container row">
                             <input type="hidden" class="form-control" name="item_id" id="item_id">
-                            <div class="form-group col-sm-8 margin-padding-xs">
+                            <div class="form-group col-sm-3 margin-padding-xs">
                                 <label>Detalle</label>
                                 <input type="text" class="form-control" name="nota_detalle" id="nota_detalle"
                                     placeholder="Detalle" >
                             </div>
+                            <div class="form-group col-sm-1 margin-padding-xs">
+                                <label>Cantidad</label>
+                                <input type="text" class="form-control" name="cantidad" id="cantidad"
+                                    placeholder="Cantidad"  onkeypress="return justNumbers(event);">
+                            </div>
+                            <div class="form-group col-sm-2 margin-padding-xs">
+                                <label>Descuento</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">%</span>
+                                    <input type="text" class="form-control" name="nota_dto" id="nota_dto"
+                                        placeholder="Descuento"  onkeypress="return justNumbers(event);">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2 margin-padding-xs">
+                                <label>IVA</label>
+                                <div class="input-group" id="ivas">
+                                    <span class="input-group-addon">%</span>
+                                    <script>
+                                        completarIvas(ivas);
+                                    </script>
+                                </div>
+                            </div>
                             <div class="form-group col-sm-2 margin-padding-xs">
                                 <label>Monto</label>
-                                <input type="text" class="form-control" name="nota_monto" id="nota_monto"
-                                    placeholder="Monto"  onkeypress="return justNumbers(event);">
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" name="nota_monto" id="nota_monto"
+                                        placeholder="Monto"  onkeypress="return justNumbers(event);">
+                                </div>
                             </div>
                             <div class="form-group col-sm-1 margin-padding-xs">
                                 <label>&nbsp;</label>
@@ -236,59 +274,57 @@ var tipoPersona = "<?= $tipoPersona ?>";
             </div>
         </div>
         
-     
-
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Agregar Cobro</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="msjModal">¿Está seguro que desea agregar esta transacción?</p>
-                </div>
-                <div class="modal-footer">
-                    <button id="btnModalAceptar" type="submit" class="btn btn-default">Aceptar</button>
-                    <button id="btnModalCancelar" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- MODAL TRANSACCIONES -->
-    <div id="modalTransacciones" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Seleccionar Transacción</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="panel panel-body" id="contenido_transacciones">
-                    <div id="div_table_transacciones">
-                        <script>
-                        completarTransacciones(jsonModalTransaccion);
-                        </script>
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Agregar Cobro</h4>
                     </div>
-                    <br>                     
-                </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                    <div class="modal-body">
+                        <p id="msjModal">¿Está seguro que desea agregar esta transacción?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnModalAceptar" type="submit" class="btn btn-default">Aceptar</button>
+                        <button id="btnModalCancelar" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <!-- MODAL TRANSACCIONES -->
+        <div id="modalTransacciones" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Seleccionar Transacción</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel panel-body" id="contenido_transacciones">
+                        <div id="div_table_transacciones">
+                            <script>
+                            completarTransacciones(jsonModalTransaccion);
+                            </script>
+                        </div>
+                        <br>                     
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
       
-            <!-- Datos Economicos -->
-            <div class="row form-row">
+        <!-- Datos Economicos -->
+        <div class="row form-row">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading titulo-espaciado">
                     TOTAL
                 </div>
                 <div class="panel-body">
-                    <!-- Totales -->
+                    <!--  -->
                     <div class="row form-row">
                         <div class="form-group col-md-3" id="monedas">
                             <label>Moneda</label>
@@ -297,7 +333,62 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             completarMonedas(monedas);
                             </script>
                         </div>
+                        <div class="form-group col-md-3" id="formasPago">
+                            <label>Forma de Pago</label>
+                            <script>
+                            var formasPago = <?php echo ($formasPagoJson); ?>;
+                            completarFormasPago(formasPago);
+                            </script>
+                        </div>
+                        <div id="div_bonificacion" class="form-group col-md-3">
+                            <label>Bonificación</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">%</span>
+                                <input type="text" class="form-control" name="bonificacion_general"
+                                    id="bonificacion_general" value="0.00" onkeypress="return justNumbers(event);"
+                                    onkeyup="calcularTotal()">
+                            </div>
+                        </div>
+                        <div id="div_recargo" class="form-group col-md-3">
+                            <label>Recargo</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">%</span>
+                                <input type="text" class="form-control" name="recargo_general" id="recargo_general"
+                                    value="0.00" onkeypress="return justNumbers(event);" onkeyup="calcularTotal()">
+                            </div>
+                        </div>
+                        <script>
+                            setBonificacionRecargo();
+                        </script>
+                    </div>
+                    <!--  -->
+                    <div class="row form-row">
                         <div class="form-group col-md-3">
+                            <label>Importe de Bonificación</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="bonificacion_importe" id="bonificacion_importe" 
+                                    value="0" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Importe de Recargo</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="recargo_importe" id="recargo_importe" value="0" readonly>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Importe Total</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" name="total_general" id="total_general"
+                                    value="0" readonly>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group col-md-2">
                             <label>Fecha de Vencimiento</label>
                             <div class='input-group date' id='datetimepicker2'>
                                 <input type='text' class="form-control" name="fecha_vencimiento" value="<?= $date ?>" />
@@ -306,26 +397,33 @@ var tipoPersona = "<?= $tipoPersona ?>";
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group col-md-3">
-                            <label>Total ($)</label>
-                            <input type="text" class="form-control" name="total_general" id="total_general"
-                                value="0" readonly>
-                        </div>                   
                     </div>
+                    <!--  -->
                     <div class="row form-row">
                         <div class="form-group col-md-9">
                             <label>Recibí/mos la suma:</label>
-                            <textarea name="total_letras" id ="total_letras" class="form-control" rows="2" placeholder="Ingresar importe total en letras" required=""></textarea>
+                            <textarea name="total_letras" id ="total_letras" class="form-control" rows="2" placeholder="Importe total en letras" required=""></textarea>
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="form-group col-md-9">
-                            <label>En concepto de:</label>
+                            <label>En concepto de</label>
                             <textarea name="concepto" id ="concepto" class="form-control" rows="2" placeholder="Ingresar concepto de la transacción" required=""></textarea>
                         </div>
                     </div>
+                    <!-- Hidden Importe Grabado/NoGravado/Exento -->
+                    <input type='text' class="form-control hidden" name="importe_gravado" id="importe_gravado" value="0">
+                    <input type='text' class="form-control hidden" name="importe_no_gravado" id="importe_no_gravado" value="0">
+                    <input type='text' class="form-control hidden" name="importe_exento" id="importe_exento"  value="0">
+                    <!-- Hidden Importe IVA 27/21/10/5/2/0 -->
+                    <input type='text' class="form-control hidden" name="importe_iva_27" id="importe_iva_27" value="0">
+                    <input type='text' class="form-control hidden" name="importe_iva_21" id="importe_iva_21" value="0">
+                    <input type='text' class="form-control hidden" name="importe_iva_10" id="importe_iva_10" value="0">
+                    <input type='text' class="form-control hidden" name="importe_iva_5" id="importe_iva_5" value="0">
+                    <input type='text' class="form-control hidden" name="importe_iva_2" id="importe_iva_2" value="0">
+                    <input type='text' class="form-control hidden" name="importe_iva_0" id="importe_iva_0" value="0">
                     <script>
-                    calcularSubcampos();
+                        calcularTotal();
                     </script>
                 </div>
             </div>
@@ -345,7 +443,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
                 <a id="btnModalGuardar" data-toggle="modal" data-target="#myModal">
                     <img src="<?= $this->basePath('img/crm/aceptar.png') ?>"
                         class="img-rounded img-responsive img-texto-derecha img-submenu-sm zoom" role="button">
-                </a>
+                </a> 
             </div>
             <div class="ficha-cliente-label">
                 <label>Guardar</label>

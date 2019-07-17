@@ -5,7 +5,6 @@ $(document).ready(function(){
     
     $("#btn-modal").click(function(){
         optionSelected= $("#tipoTransaccion option:selected").val();
-        console.log(optionSelected);
         jsonModalTransaccion=[];
         switch (optionSelected) {
             case 'Presupuesto':
@@ -98,7 +97,6 @@ function completarTransacciones(transacciones_anteriores){
         btn.setAttribute('type', 'button');
 
         if (transaccionPreviaNum!=null && transaccionPreviaNum==transacciones[i]["Numero Tipo Transaccion"]){
-            console.log("lo pone como chequeado");
             btn.setAttribute('class', 'btn btn-default btn-sm  glyphicon glyphicon-check ');
             transaccion = i+"button";
         }
@@ -124,18 +122,14 @@ function getTransaccion(buttonId){
 
 function selectTransaccion(id){
     if ($('#' + id).hasClass('glyphicon-unchecked')){
-        // console.log("uncheked");
         $('#' + id).removeClass('glyphicon-unchecked');
         $('#' + id).addClass('glyphicon-check');
-        // console.log("cheked");
 
         var indexTransaccion = getTransaccion(id);
         transaccion_ant = transaccion;
-        console.log("transaccion ant es "+ transaccion);
         if (transaccion_ant!=null) {
             $('#' + transaccion_ant).removeClass('glyphicon-check');
             $('#' + transaccion_ant).addClass('glyphicon-unchecked');
-            console.log("uncheked");
         }
         //Guardo id de la fila seleccionada
         transaccion = id;
@@ -160,7 +154,6 @@ function addTransaccionItems(){
 }
 
 function completeItems(id){
-
     if (id!=null){
         var transaccion_selected = transacciones[id];
         var idTransaccion = transaccion_selected["Id"];

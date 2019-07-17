@@ -140,11 +140,6 @@ function mostrarCuentaCorriente(id_persona){
 
 //Permite cambiar el estado de una transaccion
 function cambiarEstado(estado, event, tipoTransaccion, idPersona){
-    console.log("* * * * INICIO -> CAMBIAR ESTADO * * * *");
-    console.log("estado = " + estado);
-    console.log("tipoTransaccion = " + tipoTransaccion);
-
-
     var idTransaccion = event.target.id;
     var edo = estado.replace("_", " ");
     if (confirm("Se cambiará el estado de la transacción a "+ edo +" ¿Desea continuar?")) {

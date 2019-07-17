@@ -1,4 +1,3 @@
-<!-- <input type="text" id="itemsPresupuesto" hidden="true" value="<?= $itemsTransaccionJson ?>" > -->
 <script src="/js/transacciones.js"></script>
 <script>
     itemsAnteriores = itemsTransaccion;
@@ -7,4 +6,8 @@
     addTransaccionItems();
     completarFormasPago(formasPago, transaccionJson);
     completarMonedas(monedas, transaccionJson);
+
+    bonificacion = transaccionJson["Bonificacion general"];
+    recargo = transaccionJson["Recargo general"];
+    setBonificacionRecargo();
 </script>

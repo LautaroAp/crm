@@ -112,9 +112,9 @@ class BienesManager {
             $bien->setMarca($data['marca']);
         }
         // IMPUESTO
-        $bien->setImporte_gravado(null);
-        $bien->setImporte_no_gravado(null);
-        $bien->setImporte_exento(null);
+        $bien->setImporte_gravado(0);
+        $bien->setImporte_no_gravado(0);
+        $bien->setImporte_exento(0);
         if ($iva){
             switch ($iva->getValor()) {
                 case 0.00:

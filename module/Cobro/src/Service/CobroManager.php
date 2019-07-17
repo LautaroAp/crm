@@ -31,6 +31,8 @@ class CobroManager extends TransaccionManager
     protected $personaManager;
     protected $bienesTransaccionManager;
     protected $ivaManager;
+    private $tipoComprobanteManager;
+
     private $tipo;
     /**
      * Constructs the service.
@@ -45,10 +47,12 @@ class CobroManager extends TransaccionManager
         $formaEnvioManager, 
         $bienesManager,
         $cuentaCorrienteManager,
+        $tipoComprobanteManager,
         $comprobanteManager
     ) {
         parent::__construct($entityManager, $personaManager, $bienesTransaccionManager, $ivaManager, $formaPagoManager, $formaEnvioManager, $monedaManager, $bienesManager, $cuentaCorrienteManager, $comprobanteManager);
         $this->entityManager = $entityManager;
+        $this->tipoComprobanteManager = $tipoComprobanteManager;
         $this->tipo = "COBRO";
     }
 
@@ -57,7 +61,6 @@ class CobroManager extends TransaccionManager
         $cobros = $this->entityManager->getRepository(Cobro::class)->findAll();
         return $cobros;
     }
-
 
     public function getCobroId($id)
     {
@@ -93,6 +96,13 @@ class CobroManager extends TransaccionManager
         }
         if (isset($data['total_letras'])) {
             $cobro->setImporte_letras($data['total_letras']);
+        }
+        if (isset($data['tipo_comprobante'])){
+            if ($data['tipo']!=-1){
+                $idTipo = $data['tipo_comprobante'];
+                $tipo = $this->tipoComprobanteManager->getTipoComprobante($idTipo);
+                $cobro->setTipo_comprobante($tipo);
+            }
         }
         return $cobro;
     }

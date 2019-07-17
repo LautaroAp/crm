@@ -158,6 +158,51 @@ class Transaccion
      */
     protected $comprobante;
 
+    /**
+     * @ORM\Column(name="IMPORTE_GRAVADO", nullable=true, type="decimal")
+     */
+    protected $importe_gravado;
+
+    /**
+     * @ORM\Column(name="IMPORTE_NO_GRAVADO", nullable=true, type="decimal")
+     */
+    protected $importe_no_gravado;
+
+    /**
+     * @ORM\Column(name="IMPORTE_EXENTO", nullable=true, type="decimal")
+     */
+    protected $importe_exento;
+
+    /**
+     * @ORM\Column(name="IMPORTE_IVA_27", nullable=true, type="decimal")
+     */
+    protected $importe_iva_27;
+
+    /**
+     * @ORM\Column(name="IMPORTE_IVA_21", nullable=true, type="decimal")
+     */
+    protected $importe_iva_21;
+
+    /**
+     * @ORM\Column(name="IMPORTE_IVA_10", nullable=true, type="decimal")
+     */
+    protected $importe_iva_10;
+
+    /**
+     * @ORM\Column(name="IMPORTE_IVA_5", nullable=true, type="decimal")
+     */
+    protected $importe_iva_5;
+
+    /**
+     * @ORM\Column(name="IMPORTE_IVA_2", nullable=true, type="decimal")
+     */
+    protected $importe_iva_2;
+
+    /**
+     * @ORM\Column(name="IMPORTE_IVA_0", nullable=true, type="decimal")
+     */
+    protected $importe_iva_0;
+
     //================================================================================
     // Methods
     //================================================================================
@@ -731,6 +776,186 @@ class Transaccion
         return $this;
     }
 
+    /**
+     * Get the value of importe_gravado
+     */ 
+    public function getImporte_gravado()
+    {
+        return $this->importe_gravado;
+    }
+
+    /**
+     * Set the value of importe_gravado
+     *
+     * @return  self
+     */ 
+    public function setImporte_gravado($importe_gravado)
+    {
+        $this->importe_gravado = $importe_gravado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_no_gravado
+     */ 
+    public function getImporte_no_gravado()
+    {
+        return $this->importe_no_gravado;
+    }
+
+    /**
+     * Set the value of importe_no_gravado
+     *
+     * @return  self
+     */ 
+    public function setImporte_no_gravado($importe_no_gravado)
+    {
+        $this->importe_no_gravado = $importe_no_gravado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_exento
+     */ 
+    public function getImporte_exento()
+    {
+        return $this->importe_exento;
+    }
+
+    /**
+     * Set the value of importe_exento
+     *
+     * @return  self
+     */ 
+    public function setImporte_exento($importe_exento)
+    {
+        $this->importe_exento = $importe_exento;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_iva_27
+     */ 
+    public function getImporte_iva_27()
+    {
+        return $this->importe_iva_27;
+    }
+
+    /**
+     * Set the value of importe_iva_27
+     *
+     * @return  self
+     */ 
+    public function setImporte_iva_27($importe_iva_27)
+    {
+        $this->importe_iva_27 = $importe_iva_27;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_iva_21
+     */ 
+    public function getImporte_iva_21()
+    {
+        return $this->importe_iva_21;
+    }
+
+    /**
+     * Set the value of importe_iva_21
+     *
+     * @return  self
+     */ 
+    public function setImporte_iva_21($importe_iva_21)
+    {
+        $this->importe_iva_21 = $importe_iva_21;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_iva_10
+     */ 
+    public function getImporte_iva_10()
+    {
+        return $this->importe_iva_10;
+    }
+
+    /**
+     * Set the value of importe_iva_10
+     *
+     * @return  self
+     */ 
+    public function setImporte_iva_10($importe_iva_10)
+    {
+        $this->importe_iva_10 = $importe_iva_10;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_iva_5
+     */ 
+    public function getImporte_iva_5()
+    {
+        return $this->importe_iva_5;
+    }
+
+    /**
+     * Set the value of importe_iva_5
+     *
+     * @return  self
+     */ 
+    public function setImporte_iva_5($importe_iva_5)
+    {
+        $this->importe_iva_5 = $importe_iva_5;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_iva_2
+     */ 
+    public function getImporte_iva_2()
+    {
+        return $this->importe_iva_2;
+    }
+
+    /**
+     * Set the value of importe_iva_2
+     *
+     * @return  self
+     */ 
+    public function setImporte_iva_2($importe_iva_2)
+    {
+        $this->importe_iva_2 = $importe_iva_2;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of importe_iva_0
+     */ 
+    public function getImporte_iva_0()
+    {
+        return $this->importe_iva_0;
+    }
+
+    /**
+     * Set the value of importe_iva_0
+     *
+     * @return  self
+     */ 
+    public function setImporte_iva_0($importe_iva_0)
+    {
+        $this->importe_iva_0 = $importe_iva_0;
+
+        return $this;
+    }
+
     //================================================================================
     // JSON
     //================================================================================
@@ -777,12 +1002,22 @@ class Transaccion
         if (!(is_null($this->comprobante))) {
             $output .= '"Comprobante": ' . $this->getComprobante()->getJSON() . ', ';
         }
+
+        $output .= '"ImporteGravado": "' . $this->getImporte_gravado() . '", ';
+        $output .= '"ImporteNoGravado": "' . $this->getImporte_no_gravado() . '", ';
+        $output .= '"ImporteExento": "' . $this->getImporte_exento() . '", ';
+
+        $output .= '"ImporteIVA27": "' . $this->getImporte_iva_27() . '", ';
+        $output .= '"ImporteIVA21": "' . $this->getImporte_iva_21() . '", ';
+        $output .= '"ImporteIVA10": "' . $this->getImporte_iva_10() . '", ';
+        $output .= '"ImporteIVA5": "' . $this->getImporte_iva_5() . '", ';
+        $output .= '"ImporteIVA2": "' . $this->getImporte_iva_2() . '", ';
+        $output .= '"ImporteIVA0": "' . $this->getImporte_iva_0() . '", ';
+
         $output .= '"Importe Total": ' . $this->getMonto() . ', ';
         $output .= '"Importe Bonificacion": ' . $this->getBonificacionImporte() . ', ';
         $output .= '"Importe Recargo": ' . $this->getRecargoImporte() . ', ';
         $output .= '"Subtotal": "' . $this->getSubtotal() . '" ';
-
-
 
         return  '{' . $output . '}';
     }

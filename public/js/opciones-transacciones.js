@@ -5,7 +5,6 @@ var recargo=null;
 var bonificacion = null;
 
 function completarMonedas(monedas, transaccion=null){
-    console.log(empresa);
     arrayMonedas=monedas;
     var myDiv = document.getElementById("monedas");
     var selectList = document.getElementById("select_monedas");
@@ -208,18 +207,20 @@ function completarFormasEnvio(formasEnvio, transaccion=null){
 }
 
 function setBonificacionRecargo(){
-    if (recargo!=null){
+    if ((recargo!=null) && (recargo!="")){
         $("#recargo_general").val(recargo);
     }
     else{
         $("#recargo_general").val("0.00");
     }
-    if (bonificacion!=null){
+    if ((bonificacion!=null) && (bonificacion!="")){
         $("#bonificacion_general").val(bonificacion);
     }
     else{
         $("#bonificacion_general").val("0.00")
     }
+    
+    calcularSubcampos()
 }
 
 function getPosId(array, id){
