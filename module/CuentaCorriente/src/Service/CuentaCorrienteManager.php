@@ -64,9 +64,8 @@ class CuentaCorrienteManager {
                         // ->findAll();
                         ->findBy(['tipoActividad' => ['remito']]);
         }
-        
     }
-    
+
     public function getCobros($idPersona = null){
         if(isset($idPersona)){
             $persona = $this->personaManager->getPersona($idPersona);
@@ -82,9 +81,39 @@ class CuentaCorrienteManager {
             return $this->entityManager
                         ->getRepository(CuentaCorriente::class)
                         ->findBy(['tipoActividad' => ['cobro']]);
-        }
+        }        
+    }
 
-        
+    public function getVentasCC($tipo = null){
+        $cCorrientes = $this->entityManager
+                            ->getRepository(CuentaCorriente::class)
+                            ->findBy(['tipoActividad' => ['remito','factura','nota de credito','nota de debito']]);
+
+        $result = [];
+        foreach ($cCorrientes as $cc) {
+            $idPersona = $cc->getPersona()->getId();
+            $persona = $this->personaManager->getPersona($idPersona);
+            if($persona->getTipo() == $tipo){
+                array_push($result,$cc);
+            }
+        }
+        return $result;
+    }
+    
+    public function getCobrosCC($tipo = null){
+        $cCorrientes = $this->entityManager
+                            ->getRepository(CuentaCorriente::class)
+                            ->findBy(['tipoActividad' => ['cobro']]);
+
+        $result = [];
+        foreach ($cCorrientes as $cc) {
+            $idPersona = $cc->getPersona()->getId();
+            $persona = $this->personaManager->getPersona($idPersona);
+            if($persona->getTipo() == $tipo){
+                array_push($result,$cc);
+            }
+        }
+        return $result;
     }
 
     /**

@@ -256,7 +256,12 @@ function changeBonificacionRecargo(){
         $("#recargo_general").val("0.00");
         $("#bonificacion_general").val("0.00");
     }
-    calcularSubcampos();
-    
+    if((tipoTransaccion == "nota de debito") || (tipoTransaccion == "nota de credito") || (tipoTransaccion == "cobro")){
+        console.log("calcularTotal");
+        calcularTotal();
+    } else {
+        console.log("calcularSubcampos");
+        calcularSubcampos();
+    }
 
 }

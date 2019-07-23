@@ -110,6 +110,10 @@ option{
     font-weight: bold;
 }
 
+.texto-subrayado{
+    text-decoration: underline !important;
+}
+
 .titulo-espaciado {
     letter-spacing: 0.3em;
     font-weight: bold;
@@ -198,6 +202,19 @@ option{
     font-weight: bold;
     background-color: rgb(235, 235, 235) !important;
     color: rgb(18, 93, 155) !important;
+}
+
+.table-oficial{
+    font-weight: bold;
+    color: rgb(18, 93, 155) !important;
+}
+
+a.table-no-oficial{
+    color: #555555 !important;
+}
+
+a.table-no-oficial:hover{
+    color: #808080 !important;
 }
 
 /* <table> con clase "dataTable" + <tr> con clase "table-seleccion" y que contengan la clase "sorting_1" */

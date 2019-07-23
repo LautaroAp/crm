@@ -115,6 +115,19 @@ var idPersona = <?= $id_persona ?>;
                                     <span class="glyphicon glyphicon-check"></span></button>
                                     <ul class="dropdown-menu"  aria-labelledby="dropdownRemito">
                                         <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('A_ENTREGAR', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        A entregar</a></li>
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('CONFORMADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        Conformado</a></li>
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('ENTREGADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        Entregado</a></li>
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
+                                        onclick="cambiarEstado('FACTURADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
+                                        Facturado</a></li>
+                                        <li class="divider"></li>
+                                        <li><a type="button" role="button" id="<?= $transaccion->getId() ?>" 
                                         onclick="cambiarEstado('ANULADO', event, '<?= $transaccion->getTipo() ?>', idPersona)">
                                         Anulado</a></li>
                                     </ul>

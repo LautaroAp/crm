@@ -158,14 +158,6 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             <input type="text" class="form-control" name="numero_cobro" id="numero_cobro"
                                 value="<?= str_pad($numCobro, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
-                        <div class="form-group col-md-2" id="tipos_factura" >
-                            <label>Tipo de Cobro</label>
-                            <script>
-                                var tiposFactura = <?php echo ($tiposFacturaJson); ?>;
-                                var tipoComprobantePersona = "<?= $tipoComprobantePersonaJson ?>";
-                                completarTiposFactura(tiposFactura, tipoComprobantePersona);
-                            </script>        
-                        </div>
                         <div class="form-group col-md-2" id="tipos_cobro">
                             <label>Validez del documento</label>
                             <select class="form-control" name="oficial" id="oficial" require>

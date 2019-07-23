@@ -38,6 +38,58 @@ return [
                     ],
                 ],
             ],
+            'ccCliente' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route' =>'/ccCliente',
+                    'defaults' => [
+                        'controller' => Controller\CuentaCorrienteController::class, 
+                        'action' => 'ccCliente',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'ajax' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '/ajax[/:action[/:id]]',
+                            'defaults' => [
+                                'controller' => Controller\CuentaCorrienteController::class,                               
+                            ],
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[a-zA-Z0-9_-]*',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'ccProveedor' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route' =>'/ccProveedor',
+                    'defaults' => [
+                        'controller' => Controller\CuentaCorrienteController::class, 
+                        'action' => 'ccProveedor',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'ajax' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '/ajax[/:action[/:id]]',
+                            'defaults' => [
+                                'controller' => Controller\CuentaCorrienteController::class,                               
+                            ],
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[a-zA-Z0-9_-]*',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => array(

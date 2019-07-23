@@ -341,7 +341,8 @@ function addDetallesNota(bienesTransacciones, tipo, id, actualizarPrecio) {
     // var divContainer = document.getElementById("div_table_bienes");
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
-    calcularSubcampos();
+    // calcularSubcampos();
+    calcularTotal();
 }
 
 function removerDetalle(id) {

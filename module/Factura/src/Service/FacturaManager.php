@@ -121,7 +121,7 @@ class FacturaManager extends TransaccionManager
         $transaccion = parent::add($data);
         $factura = new Factura();
         $factura = $this->setData($factura, $data, $transaccion);
-        $this->actualizaFechas($data);
+        // $this->actualizaFechas($data);
         $this->cuentaCorrienteManager->add($transaccion);
         $transaccionPrevia = $transaccion->getTransaccionPrevia();
         $this->cuentaCorrienteManager->setFacturado($transaccionPrevia);
@@ -175,6 +175,7 @@ class FacturaManager extends TransaccionManager
             $this->cuentaCorrienteManager->remove($transaccion);
         }
         $transaccion->setEstado($estado);
+        // $this->revierteFechas($transaccion);
         $this->entityManager->flush();
     }
 

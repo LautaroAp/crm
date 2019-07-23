@@ -274,6 +274,7 @@ class TransaccionManager {
                     $transaccion_tipo = $transaccion_facturar->getNombre();
                 }
 
+                // print_r(strtoupper($transaccion_tipo)); die();
                 if (strtoupper($transaccion_tipo) != "REMITO"){
                     $bien= $item->getBien();
                     $tipoPersona = $transaccion->getPersona()->getTipo();

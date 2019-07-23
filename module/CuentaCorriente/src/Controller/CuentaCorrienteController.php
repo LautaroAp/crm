@@ -39,4 +39,26 @@ class CuentaCorrienteController extends HuellaController
         return $view;
     }
 
+    public function ccClienteAction() {
+        $ventas = $this->cuentaCorrienteManager->getVentasCC("CLIENTE");
+        $cobros = $this->cuentaCorrienteManager->getCobrosCC("CLIENTE");
+        $view = new ViewModel([
+            'cobros' => $cobros,
+            'ventas'=>$ventas,
+            // 'id_persona'=>$id_persona
+        ]);
+        return $view;
+    }
+
+    public function ccProveedorAction() {
+        $ventas = $this->cuentaCorrienteManager->getVentasCC("PROVEEDOR");
+        $cobros = $this->cuentaCorrienteManager->getCobrosCC("PROVEEDOR");
+        $view = new ViewModel([
+            'cobros' => $cobros,
+            'ventas'=>$ventas,
+            // 'id_persona'=>$id_persona
+        ]);
+        return $view;
+    }
+
 }

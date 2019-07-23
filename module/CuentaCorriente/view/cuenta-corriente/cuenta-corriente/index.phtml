@@ -1,11 +1,11 @@
 <!-- scripts -->
 <script src="/js/item.js"></script>
+<script src="/js/cuenta-corriente.js"></script>
 
-<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css"
-    rel="stylesheet" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js">
-</script>
+<!-- Datetime Picker -->
+<script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
+<script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
@@ -14,147 +14,240 @@
 <link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
 
 
-<script>
-$(document).ready(function() {
-    $('#tabla_ventas').DataTable({
-        "order": [0, 'desc'],
-
-        "language": {
-            "url": "/json/spanish.json"
-        }
-    });
-
-    $('#tabla_cobros').DataTable({
-        "order": [0, 'desc'],
-
-        "language": {
-            "url": "/json/spanish.json"
-        }
-    });
-});
-</script>
 
 <script type="text/javascript">
-$(function() {
-    $('#datetimepicker1').datetimepicker({
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+        $('#datetimepicker2').datetimepicker({
         format: 'DD/MM/YYYY'
-    });
-    $('#datetimepicker2').datetimepicker({
+        });
+        $('#datetimepicker3').datetimepicker({
         format: 'DD/MM/YYYY'
-    });
-    $('#datetimepicker3').datetimepicker({
+        });
+        $('#datetimepicker4').datetimepicker({
         format: 'DD/MM/YYYY'
-    });
-});
+        });
+    }); 
 </script>
-<!-- php -->
 
-<!-- Document -->
-<div class="container padding-cero">
-    <nav aria-label="breadcrumb">
-        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/clientes">Clientes</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Cuenta Corriente</li>
-        </ol>
-        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
-            <li class="pull-right"><a href="/productosservicios/servicios" id="volver">Volver</a></li>
-        </ol>
-    </nav>
-</div>
+<script>
+   $.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = $("#min").val();
+        var min_date = moment(min, "DD-MM-YYYY");
+        var max = $("#max").val();
+        var max_date = moment(max, "DD-MM-YYYY");
+        var min2 = $("#min2").val();
+        var min2_date = moment(min2, "DD-MM-YYYY");
+        var max2 = $("#max2").val();
+        var max2_date = moment(max2, "DD-MM-YYYY");
+        
+        var date = data[0]; // use data for the date column
+        date = moment(date, "YYYY-MM-DD");
 
-<div class="container margen">
+        var tipoTransaccion = data[1];
+        if (tipoTransaccion=="Remito"|| tipoTransaccion=="Factura"){
+            if ( ( isNaN( min_date ) && isNaN( max_date ) ) ||
+             ( isNaN( min_date ) && date <= max_date ) ||
+             ( min_date <= date   && isNaN( max_date ) ) ||
+             ( min_date <= date   && date <= max_date )){
+                return true;
+            }
+            return false;
+        }else{
+            if ( ( isNaN( min2_date ) && isNaN( max2_date ) ) ||
+             ( isNaN( min2_date ) && date <= max2_date ) ||
+             ( min2_date <= date   && isNaN( max2_date ) ) ||
+             ( min2_date <= date   && date <= max2_date )){
+                return true;
+            }
+            return false;
+        }
+        
+        return false;        
+    }
+);
 
-    <div class="row">
-        <!-- * * * * * * * * * * * * * * * DATATABLE VENTAS * * * * * * * * * * * * * * * -->
-        <div class="col-lg-6">
-            <div class="panel panel-default sombra-ficha">
-                <div class="panel-heading text-center titulo-espaciado">
-                    VENTAS
+$(document).ready(function() {
+    var table1 = $('#tabla_ventas').DataTable({
+        lengthMenu: [[5,10,25,50,-1],[5,10,25,50,"Todos"]],
+        "order": [0, 'desc'],
+        "language": {
+            "url": "/json/spanish.json"
+        }
+    });
+
+    $('#filtroFecha1').click( function() {
+        table1.draw();
+        var div_resumen = document.getElementById("titulo_resumen");
+        div_resumen.innerHTML="RESUMEN DEL PERÍODO SELECCIONADO";
+        calcularCuentaCorriente("CLIENTE");
+
+    } );
+
+    var table2 = $('#tabla_cobros').DataTable({
+        lengthMenu: [[5,10,25,50,-1],[5,10,25,50,"Todos"]],
+        "order": [0, 'desc'],
+        "language": {
+            "url": "/json/spanish.json"
+        }
+    });
+    $('#filtroFecha2').click( function() {
+        table2.draw();
+        var div_resumen = document.getElementById("titulo_resumen");
+        div_resumen.innerHTML="RESUMEN DEL PERÍODO SELECCIONADO";
+        calcularCuentaCorriente("CLIENTE");
+    } );
+});
+
+</script>
+
+<div class="row">
+    <!-- * * * * * * * * * * * * * * * DATATABLE VENTAS * * * * * * * * * * * * * * * -->
+    <div class="col-lg-6">
+        <div class="panel panel-default sombra-ficha">
+            <div class="panel-heading text-center titulo-espaciado">
+                VENTAS
+            </div>
+            <div class="panel-body">
+                <div class="row form-row">
+                    <div class="form-inline col-sm-12">
+                        <div class="form-group">
+                            <label>Filtrar desde:&nbsp;</label>
+                            <div class='input-group date width-fecha' id='datetimepicker1'>
+                            <input type='text' class="form-control min" name="min" id="min" value="" placeholder="DD/MM/YYYY"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                            <label>&nbsp;hasta:&nbsp;</label>
+                            <div class='input-group date width-fecha' id='datetimepicker2'>
+                                <input type='text' class="form-control max" name="max" id="max" value="" placeholder="DD/MM/YYYY"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="form-control btn btn-default" name="filtroFecha1" id="filtroFecha1" value="">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <table id="tabla_ventas" class="display">
-                        <thead>
-                            <tr>
-                                <th class="">Fecha</th>
-                                <th class="">Tipo</th>
-                                <th class="">Nro</th>
-                                <th class="">Importe</th>
-                            </tr>
-                        </thead>
-                        <tbody id="cuerpo_eventos" role="button" class="">
-                            <?php foreach ($ventas as $venta) :
-                                        $idTransaccion = $venta->getId();
-                                        $tipoTransaccion = $venta->getTipoActividad();
-                                        ?>
-                            <tr id="<?= $venta->getId() ?>" class="vpEvento">
-                                <!-- FECHA -->
-                                <td id="<?= $venta->getId() ?>">
-                                    <?php
-                                                if (!is_null($venta->getFecha())) {
-                                                    echo ($venta->getFecha()->format('Y/m/d'));
-                                                }
-                                                ?></td>
-                                <!-- TIPO -->
-                                <td id="<?= $venta->getId() ?>" class="">
-                                    <?php
-                                                if (!is_null($venta->getTipoActividad())) {
-                                                    echo (ucfirst($venta->getTipoActividad()));
-                                                } else {
-                                                    echo ('No definido');
-                                                }
-                                                ?>
-                                </td>
-                                <!-- NRO -->
-                                <td><?= str_pad($venta->getNroTipoTransaccion(), 4, "0", STR_PAD_LEFT) ?></td>
-                                <!-- IMPORTE -->
-                                <td><?= ("$ " . number_format($venta->getMonto(), 2, ",", ".")); ?></td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
+                <br>
+                <!-- * * * * * * * DATATABLE * * * * * * * -->
+                <table id="tabla_ventas" class="display">
+                    <thead>
+                        <tr>
+                            <th class="">Fecha</th>
+                            <th class="">Tipo</th>
+                            <th class="">Nro</th>
+                            <th class="">Oficial</th>
+                            <th class="">Importe</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo_eventos" role="button" class="">
+                        <?php foreach ($ventas as $venta) :
+                            $idTransaccion = $venta->getId();
+                            $tipoTransaccion = $venta->getTipoActividad();
+                        ?>
+                        <tr id="<?= $venta->getId() ?>" class="vpEvento">
+                            <!-- FECHA -->
+                            <td id="<?= $venta->getId() ?>">
+                                <?php
+                                if (!is_null($venta->getFecha())) {
+                                    echo ($venta->getFecha()->format('Y/m/d'));
+                                }
+                                ?></td>
+                            <!-- TIPO -->
+                            <td><?= ucfirst($venta->getTipoActividad()) ?></td>
+                            <!-- NRO -->
+                            <td><?= str_pad($venta->getNroTipoTransaccion(), 4, "0", STR_PAD_LEFT) ?></td>
+                            <!-- OFICIAL -->
+                            <td>
+                                <?php if($venta->getOficial()){
+                                    echo "Si";
+                                } else {
+                                    echo "No";
+                                } ?>
+                            </td>
+                            <!-- IMPORTE -->
+                            <td><?= ("$ " . number_format($venta->getMonto(), 2, ",", ".")); ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
-
-        <!-- * * * * * * * * * * * * * * * DATATABLE COBROS * * * * * * * * * * * * * * * -->
-        <div class="col-lg-6">
-            <div class="panel panel-default sombra-ficha">
-                <div class="panel-heading text-center titulo-espaciado">
-                    COBROS
+    </div>
+    <!-- * * * * * * * * * * * * * * * DATATABLE COBROS * * * * * * * * * * * * * * * -->
+    <div class="col-lg-6">
+        <div class="panel panel-default sombra-ficha">
+            <div class="panel-heading text-center titulo-espaciado">
+                COBROS
+            </div>
+            <div class="panel-body">
+                <div class="row form-row">
+                    <div class="form-inline col-sm-12">
+                        <div class="form-group">
+                            <label>Filtrar desde:&nbsp;</label>
+                            <div class='input-group date width-fecha' id='datetimepicker3'>
+                            <input type='text' class="form-control min" name="min2" id="min2" value="" placeholder="DD/MM/YYYY"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                            <label>&nbsp;hasta:&nbsp;</label>
+                            <div class='input-group date width-fecha' id='datetimepicker4'>
+                                <input type='text' class="form-control max" name="max2" id="max2" value="" placeholder="DD/MM/YYYY"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="form-control btn btn-default" name="filtroFecha2" id="filtroFecha2" value="">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <table id="tabla_cobros" class="display">
-                        <thead>
-                            <tr>
-                                <th class="">Fecha</th>
-                                <th class="">Tipo</th>
-                                <th class="">Nro</th>
-                                <th class="">Importe</th>
-                            </tr>
-                        </thead>
-                        <?php foreach ($cobros as $cobro) :
-                                    $idTransaccion = $cobro->getId();
-                                    $tipoTransaccion = $cobro->getTipoActividad();
-                                    ?>
+                <br>
+                <!-- * * * * * * * DATATABLE * * * * * * * -->
+                <table id="tabla_cobros" class="display">
+                    <thead>
+                        <tr>
+                            <th class="">Fecha</th>
+                            <th class="">Tipo</th>
+                            <th class="">Nro</th> 
+                            <th class="">Importe</th>
+                        </tr>
+                    </thead>
+                    <?php foreach ($cobros as $cobro) :
+                            $idTransaccion = $cobro->getId();
+                            $tipoTransaccion = $cobro->getTipoActividad();
+                        ?>
                         <tr id="<?= $cobro->getId() ?>" class="vpEvento">
                             <!-- FECHA -->
                             <td id="<?= $cobro->getId() ?>">
                                 <?php
-                                            if (!is_null($cobro->getFecha())) {
-                                                echo ($cobro->getFecha()->format('Y/m/d'));
-                                            }
-                                            ?>
+                                if (!is_null($cobro->getFecha())) {
+                                    echo ($cobro->getFecha()->format('Y/m/d'));
+                                }
+                                ?>
                             </td>
                             <!-- TIPO -->
                             <td id="<?= $cobro->getId() ?>" class="">
                                 <?php
-                                            if (!is_null($cobro->getTipoActividad())) {
-                                                echo (ucfirst($cobro->getTipoActividad()));
-                                            } else {
-                                                echo ('No definido');
-                                            }
-                                            ?>
+                                    if (!is_null($cobro->getTipoActividad())) {
+                                        echo (ucfirst($cobro->getTipoActividad()));
+                                    } else {
+                                        echo ('No definido');
+                                    }
+                                ?>
                             </td>
                             <!-- NRO -->
                             <td><?= str_pad($cobro->getNroTipoTransaccion(), 4, "0", STR_PAD_LEFT) ?></td>
@@ -162,83 +255,135 @@ $(function() {
                             <td><?= ("$ " . number_format($cobro->getMonto(), 2, ",", ".")); ?></td>
                         </tr>
                         <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-
-    <!-- * * * * * * * * * * * * * * * RESUMEN * * * * * * * * * * * * * * * -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default sombra-ficha">
-                <div class="panel-heading text-center titulo-espaciado">
-                    RESUMEN
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- TOTAL VENTAS -->
-        <div class="col-md-4">
-            <div class="panel panel-default sombra-ficha">
-                <div class="panel-body">
-                    <div class="row form-row">
-                        <div class="form-group col-md-12">
-                            <label>Total en Ventas</label>
-                            <input type="text" class="form-control" name="" id="" value="" readonly>
-                        </div>
-                    </div>
-                    <div class="row form-row">
-                        <div class="form-group col-md-12">
-                            <label>Total Facturado</label>
-                            <input type="text" class="form-control" name="" id="" value="" readonly>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- TOTAL CC -->
-        <div class="col-md-4">
-            <div class="panel panel-default sombra-ficha">
-                <div class="panel-body">
-                    <div class="row form-row">
-                        <div class="form-group col-md-12">
-                            <label>Saldo pendiente de Cobro</label>
-                            <input type="text" class="form-control" name="" id="" value="" readonly>
-                        </div>
-                    </div>
-                    <div class="row form-row">
-                        <div class="form-group col-md-12">
-                            <label>Pendiente a Facturar</label>
-                            <input type="text" class="form-control" name="" id="" value="" readonly>
-                        </div>
-                    </div>
-                    <div class="row form-row">
-                        <div class="form-group col-md-12">
-                            <label>Cuenta Corriente Global</label>
-                            <input type="text" class="form-control" name="" id="" value="" readonly>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TOTAL COBROS -->
-        <div class="col-md-4">
-            <div class="panel panel-default sombra-ficha">
-                <div class="panel-body">
-                    <div class="row form-row">
-                        <div class="form-group col-md-12">
-                            <label>Total en Cobros</label>
-                            <input type="text" class="form-control" name="" id="" value="" readonly>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
+
+<!-- * * * * * * * * * * * * * * * RESUMEN * * * * * * * * * * * * * * * -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default sombra-ficha">
+            <div class="panel-heading text-center titulo-espaciado" id="titulo_resumen">
+                RESUMEN
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- TOTAL VENTAS -->
+    <div class="col-md-4">
+        <!-- OFICIAL -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default sombra-ficha">
+                    <div class="panel-body">
+                        <div class="row form-row">
+                            <div class="form-group col-md-12">
+                                <label>Total en Ventas Oficial</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" name="total_ventas" id="total_ventas" value="0.00" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-row">
+                            <div class="form-group col-md-12">
+                                <label>Total Facturado Oficial</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" name="total_facturado" id="total_facturado" value="0.00" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- NO OFICIAL -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default sombra-ficha">
+                    <div class="panel-body">
+                        <div class="row form-row">
+                            <div class="form-group col-md-12">
+                                <label>Total en Ventas No Oficial</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" name="total_ventas_no_oficial" id="total_ventas_no_oficial" value="0.00" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-row">
+                            <div class="form-group col-md-12">
+                                <label>Total Facturado No Oficial</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" name="total_facturado_no_oficial" id="total_facturado_no_oficial" value="0.00" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TOTAL CC -->
+    <div class="col-md-4">
+        <div class="panel panel-default sombra-ficha">
+            <div class="panel-body">
+                <div class="row form-row">
+                    <div class="form-group col-md-12">
+                        <label id="titulo_saldo">Saldo de Cuenta Corriente</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="saldo_pendiente_cobro" id="saldo_pendiente_cobro" value="0.00" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="form-group col-md-12">
+                        <label>Pendiente a Facturar</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="saldo_pendiente_factura" id="saldo_pendiente_factura" value="0.00" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="form-group col-md-12">
+                        <label id="titulo_gral">Cuenta Corriente General</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="cuenta_corriente_global" id="cuenta_corriente_global" value="0.00" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TOTAL COBROS -->
+    <div class="col-md-4">
+        <div class="panel panel-default sombra-ficha">
+            <div class="panel-body">
+                <div class="row form-row">
+                    <div class="form-group col-md-12">
+                        <label>Total en Cobros</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="total_cobros" id="total_cobros" value="0.00" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<script>
+    calcularCuentaCorriente("CLIENTE");
+</script>
+

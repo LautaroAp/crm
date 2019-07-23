@@ -229,6 +229,18 @@ class CuentaCorriente
         return $this;
     }
 
+    /**
+     * Get oficial
+     */
+    public function getOficial()
+    {
+        if($this->transaccion){
+            return $this->transaccion->getOficial();
+        } else {
+            return null;
+        }
+    }
+
     //================================================================================
     // JSON
     //================================================================================

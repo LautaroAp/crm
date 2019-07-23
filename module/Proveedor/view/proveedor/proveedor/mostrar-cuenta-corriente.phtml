@@ -131,7 +131,8 @@ var idPersona = <?= $id_persona ?>;
                         <tr>
                             <th class="">Fecha</th>
                             <th class="">Tipo</th>
-                            <th class="">Nro</th> 
+                            <th class="">Nro</th>
+                            <th class="">Oficial</th>
                             <th class="">Importe</th>
                         </tr>
                     </thead>
@@ -148,11 +149,18 @@ var idPersona = <?= $id_persona ?>;
                                     echo ($venta->getFecha()->format('Y/m/d'));
                                 }
                                 ?></td>
-                            <!-- TIPO -->
                              <!-- TIPO -->
                              <td><?= ucfirst($venta->getTipoActividad()) ?></td>
                             <!-- NRO -->
                             <td><?= str_pad($tipoTransaccion, 4, "0", STR_PAD_LEFT) ?></td>
+                            <!-- OFICIAL -->
+                            <td>
+                                <?php if($venta->getOficial()){
+                                    echo "Si";
+                                } else {
+                                    echo "No";
+                                } ?>
+                            </td>
                             <!-- IMPORTE -->
                             <td><?= ("$ " . number_format($venta->getMonto(), 2, ",", ".")); ?></td>
                         </tr>
@@ -251,18 +259,56 @@ var idPersona = <?= $id_persona ?>;
 <div class="row">
     <!-- TOTAL VENTAS -->
     <div class="col-md-4">
-        <div class="panel panel-default sombra-ficha">
-            <div class="panel-body">
-                <div class="row form-row">
-                    <div class="form-group col-md-12">
-                        <label>Total en Compras</label>
-                        <input type="text" class="form-control" name="total_ventas" id="total_ventas" value="$ 0.00" readonly>
+        <!-- OFICIAL -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default sombra-ficha">
+                    <div class="panel-body">
+                        <div class="row form-row">
+                            <div class="form-group col-md-12">
+                                <label>Total en Compras Oficial</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" name="total_ventas" id="total_ventas" value="0.00" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-row">
+                            <div class="form-group col-md-12">
+                                <label>Total Facturado Oficial</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" name="total_facturado" id="total_facturado" value="0.00" readonly>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row form-row">
-                    <div class="form-group col-md-12">
-                        <label>Total Facturado</label>
-                        <input type="text" class="form-control" name="total_facturado" id="total_facturado" value="$ 0.00" readonly>
+            </div>
+        </div>
+        <!-- NO OFICIAL -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default sombra-ficha">
+                    <div class="panel-body">
+                        <div class="row form-row">
+                            <div class="form-group col-md-12">
+                                <label>Total en Compras No Oficial</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" name="total_ventas_no_oficial" id="total_ventas_no_oficial" value="0.00" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-row">
+                            <div class="form-group col-md-12">
+                                <label>Total Facturado No Oficial</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" name="total_facturado_no_oficial" id="total_facturado_no_oficial" value="0.00" readonly>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -275,19 +321,28 @@ var idPersona = <?= $id_persona ?>;
                 <div class="row form-row">
                     <div class="form-group col-md-12">
                         <label id="titulo_saldo">Saldo de Cuenta Corriente</label>
-                        <input type="text" class="form-control" name="saldo_pendiente_cobro" id="saldo_pendiente_cobro" value="$ 0.00" readonly>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="saldo_pendiente_cobro" id="saldo_pendiente_cobro" value="0.00" readonly>
+                        </div>
                     </div>
                 </div>
                 <div class="row form-row">
                     <div class="form-group col-md-12">
                         <label>Pendiente a Facturar</label>
-                        <input type="text" class="form-control" name="saldo_pendiente_factura" id="saldo_pendiente_factura" value="$ 0.00" readonly>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="saldo_pendiente_factura" id="saldo_pendiente_factura" value="0.00" readonly>
+                        </div>
                     </div>
                 </div>
                 <div class="row form-row">
                     <div class="form-group col-md-12">
                         <label id="titulo_gral">Cuenta Corriente General</label>
-                        <input type="text" class="form-control" name="cuenta_corriente_global" id="cuenta_corriente_global" value="$ 0.00" readonly>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="cuenta_corriente_global" id="cuenta_corriente_global" value="0.00" readonly>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -300,7 +355,10 @@ var idPersona = <?= $id_persona ?>;
                 <div class="row form-row">
                     <div class="form-group col-md-12">
                         <label>Total en Cobros</label>
-                        <input type="text" class="form-control" name="total_cobros" id="total_cobros" value="$ 0.00" readonly>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" name="total_cobros" id="total_cobros" value="0.00" readonly>
+                        </div>
                     </div>
                 </div>
             </div>
