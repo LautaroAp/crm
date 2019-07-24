@@ -134,6 +134,10 @@ class TransaccionManager {
             $comprobante = $this->comprobanteManager->getComprobante($data['idComprobante']);
             $transaccion->setComprobante($comprobante);
         }
+        if (isset($data['tipo_comprobante'])){
+            $tipo_comprobante = $this->comprobanteManager->getComprobanteTipo($data['tipo_comprobante']);
+            $transaccion->setTipo_Comprobante($tipo_comprobante);
+        }
         $transaccion->setEstado("ACTIVO");
         $transaccion->setMonto($data['total_general']);
         if (isset($data['subtotal_general'])){

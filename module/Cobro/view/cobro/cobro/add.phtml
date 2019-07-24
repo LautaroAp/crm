@@ -158,7 +158,7 @@ var tipoPersona = "<?= $tipoPersona ?>";
                             <input type="text" class="form-control" name="numero_cobro" id="numero_cobro"
                                 value="<?= str_pad($numCobro, 5, "0", STR_PAD_LEFT) ?>" style="max-width: 250px;" readonly>
                         </div>
-                        <div class="form-group col-md-2" id="tipos_cobro">
+                        <div class="form-group col-md-2 hidden" id="tipos_cobro">
                             <label>Validez del documento</label>
                             <select class="form-control" name="oficial" id="oficial" require>
                                 <option value="0" selected>No Oficial</option>

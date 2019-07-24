@@ -3,6 +3,7 @@
 namespace Comprobante\Service;
 
 use DBAL\Entity\Comprobante;
+use DBAL\Entity\TipoComprobante;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable as SelectableAdapter;
 
@@ -32,6 +33,12 @@ class ComprobanteManager {
 
     public function getComprobante($id) {
         return $this->entityManager->getRepository(Comprobante::class)
+                        ->find($id);
+    }
+
+
+    public function getComprobanteTipo($id) {
+        return $this->entityManager->getRepository(TipoComprobante::class)
                         ->find($id);
     }
 

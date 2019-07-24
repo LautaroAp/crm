@@ -187,7 +187,7 @@ $(document).ready(function() {
                                 <!-- TIPO -->
                                 <td><?= ucfirst($venta->getTipoActividad()) ?></td>
                                 <!-- NRO -->
-                                <td><?= str_pad($tipoTransaccion, 6, "0", STR_PAD_LEFT) ?></td>
+                                <td><?= str_pad($venta->getNroTipoTransaccion(), 6, "0", STR_PAD_LEFT) ?></td>
                                 <!-- OFICIAL -->
                                 <td class="aling-center">
                                     <?php if($venta->getOficial()){
@@ -267,7 +267,7 @@ $(document).ready(function() {
                                 <!-- PROVEEDOR -->
                                 <td>
                                     <!-- Referencia -->
-                                    <a class="texto-subrayado <?php if(!$venta->getOficial()){ echo "table-no-oficial";} ?>" href="<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $venta->getPersona()->getId()]); ?>" target="_blank">
+                                    <a class="texto-subrayado table-no-oficial" href="<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $venta->getPersona()->getId()]); ?>" target="_blank">
                                         <!-- <span class="glyphicon glyphicon-share"></span> -->
                                         <?= $venta->getPersona()->getNombre() ?>
                                     </a>
@@ -413,5 +413,5 @@ $(document).ready(function() {
 </div>
 
 <script>
-    calcularCuentaCorriente("PROVEEDOR");
+    calcularCuentaCorriente("PROVEEDOR", true);
 </script>

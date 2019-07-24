@@ -141,7 +141,7 @@ var idPersona = <?= $id_persona ?>;
                             $idTransaccion = $venta->getId();
                             $tipoTransaccion = $venta->getTipoActividad();
                         ?>
-                        <tr id="<?= $venta->getId() ?>" class="vpEvento">
+                        <tr id="<?= $venta->getId() ?>" class="vpEvento <?php if($venta->getOficial()){ echo "table-oficial";} ?>">
                             <!-- FECHA -->
                             <td id="<?= $venta->getId() ?>">
                                 <?php
@@ -154,7 +154,7 @@ var idPersona = <?= $id_persona ?>;
                             <!-- NRO -->
                             <td><?= str_pad($tipoTransaccion, 4, "0", STR_PAD_LEFT) ?></td>
                             <!-- OFICIAL -->
-                            <td>
+                            <td class="aling-center">
                                 <?php if($venta->getOficial()){
                                     echo "Si";
                                 } else {

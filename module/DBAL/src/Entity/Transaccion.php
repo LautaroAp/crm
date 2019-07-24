@@ -159,6 +159,12 @@ class Transaccion
     protected $comprobante;
 
     /**
+     * @ORM\ManyToOne(targetEntity="TipoComprobante")
+     * @ORM\JoinColumn(name="ID_TIPO_COMPROBANTE", referencedColumnName="ID")
+     */
+    protected $tipo_comprobante;
+
+    /**
      * @ORM\Column(name="IMPORTE_GRAVADO", nullable=true, type="decimal")
      */
     protected $importe_gravado;
@@ -718,23 +724,33 @@ class Transaccion
         if (!is_null($this->nombre)) {
             $descripcion .= $this->nombre;
         }
+        if (!is_null($this->tipo_comprobante)) {
+            $descripcion .= " " . $this->tipo_comprobante->getTipo();
+        }
+
+        if ((strtoupper($this->tipo_transaccion) == "FACTURA") 
+                || (strtoupper($this->tipo_transaccion) == "NOTA DE CREDITO")
+                || (strtoupper($this->tipo_transaccion) == "NOTA DE DEBITO")) {
+            if (!$this->oficial) {
+                $descripcion .= " " . "no oficial";
+            } 
+        }
+
         if (!is_null($this->bienesTransacciones)) {
-            // $descripcion .= " por " . COUNT($this->bienesTransacciones) . " items ";
             $items = 0;
             for ($i=0; $i < COUNT($this->bienesTransacciones); $i++) { 
                 $items = $items + $this->bienesTransacciones[$i]->getCantidad();
             }
-            $descripcion .= " por " . $items . " items ";
+            $descripcion .= " por " . $items . " item/s ";
         }
         if (!is_null($this->importe_total)) {
-            $descripcion .= " por un monto de $ " . $this->importe_total;
+            $descripcion .= " por un monto de $ " . number_format($this->importe_total, 2, ",", ".");
         }
         if (!is_null($this->detalle)) {
             $descripcion .= " en concepto de: " . $this->detalle;
         }
         return $descripcion;
     }
-
 
     /**
      * Get the value of oficial
@@ -772,6 +788,26 @@ class Transaccion
     public function setComprobante($comprobante)
     {
         $this->comprobante = $comprobante;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tipo_comprobante
+     */ 
+    public function getTipo_comprobante()
+    {
+        return $this->tipo_comprobante;
+    }
+
+    /**
+     * Set the value of tipo_comprobante
+     *
+     * @return  self
+     */ 
+    public function setTipo_comprobante($tipo_comprobante)
+    {
+        $this->tipo_comprobante = $tipo_comprobante;
 
         return $this;
     }
