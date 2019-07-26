@@ -72,10 +72,10 @@ for ($i=1; $i <= 1; $i++) {
 
     // Titulo
     $html = '
-        <table border="0" cellspacing="0" cellpadding="3">
+        <table border="0" cellspacing="0" cellpadding="0">
             <tbody>
                 <tr>
-                    <td><strong style="font-size: 12px; text-align: center;">&nbsp;'. $copia .'</strong></td>
+                    <td><strong style="font-size: 12px; text-align: center;">&nbsp;'. "" .'</strong></td>
                 </tr>
             </tbody>
         </table>
@@ -276,6 +276,7 @@ for ($i=1; $i <= 1; $i++) {
 } // foreach end
 
 //Close and output PDF document
-$pdf->Output($transaccion->getNombre().'-'.$nombre_razonsocial.'-'.$transaccion->getFecha_transaccion()->format('d_m_Y').'.pdf', 'I');
+$pdf->Output($transaccion->getNombre().'-'.str_pad($numRemito, 6, "0", STR_PAD_LEFT)
+.'-'.$nombre_razonsocial.'-'.$transaccion->getFecha_transaccion()->format('d_m_Y').'.pdf', 'I');
 
 ?>

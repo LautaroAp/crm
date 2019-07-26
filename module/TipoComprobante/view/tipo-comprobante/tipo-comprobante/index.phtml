@@ -40,16 +40,16 @@ $(document).ready(function() {
                 TIPOS DE COMPROBANTE
                 <a data-toggle="collapse" data-parent="#accordion" href="#add_tipo_evento" aria-expanded="true"
                     aria-controls="add_tipo_evento">
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-plus btn-collapse"></i></span>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-menu-hamburger btn-collapse"></i></span>
                 </a>
             </div>
             <div class="panel panel-body">
                 <div class="collapse" id="add_tipo_evento">
                     <form method="post">
-                        <div class="row form-row">
+                        <div class="form-row">
                             <div class="form-group col-md-3">
                                 <label>Comprobante</label>
-                                <select class="form-control" id="comprobante" name="comprobante">
+                                <select class="form-control" id="comprobante" name="comprobante" required>
                                     <option value="" hidden="">Seleccionar Comprobante</option>
                                     <?php foreach ($comprobantes as $comprobante) : ?>
                                         <option value="<?php echo ($comprobante->getId()); ?>"><?php echo ($comprobante->getNombre()); ?></option>
@@ -58,7 +58,13 @@ $(document).ready(function() {
                             </div>
                             <div class="form-group col-md-2">
                                 <label>Tipo</label>
-                                <input type="text" class="form-control" name="tipo" placeholder="Tipo" maxlength="1">
+                                <select class="form-control" name="tipo">
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="X">X</option>
+                                </select>
+                                <!-- <input type="text" class="form-control" name="tipo" placeholder="Tipo" maxlength="1"> -->
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Descripción</label>

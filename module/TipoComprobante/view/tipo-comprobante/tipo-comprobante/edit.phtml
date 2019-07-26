@@ -44,8 +44,15 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label>Tipo</label>
-                        <input type="text" class="form-control" name="tipo"
-                            maxlength="1" value="<?= $tipoComprobante->getTipo(); ?>">
+                        <select class="form-control" name="tipo">
+                            <option value="<?= $tipoComprobante->getTipo(); ?>" hidden><?= $tipoComprobante->getTipo(); ?></option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="X">X</option>
+                        </select>
+                        <!-- <input type="text" class="form-control" name="tipo"
+                            maxlength="1" value="php"> -->
                     </div>
                     <div class="form-group col-md-3">
                         <label>Descripción</label>

@@ -109,8 +109,8 @@ if (isset($_SESSION['MENSAJES']['listado_clientes'])) {
                             echo ('</td>'); 
                 ?>
                 <td class="table-items-right">
-                    <a class="btn btn-default" href="<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $persona->getId()]); ?>">
-                        <span class="glyphicon glyphicon-share-alt" ></span>
+                    <a class="btn btn-default btn-smshare-alt" href="<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $persona->getId()]); ?>">
+                        Ficha <span class="glyphicon glyphicon-share-alt" ></span>
                     </a>
                 </td>
                 <?php 

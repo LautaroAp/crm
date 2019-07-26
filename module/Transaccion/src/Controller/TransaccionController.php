@@ -35,8 +35,21 @@ abstract class TransaccionController extends HuellaController {
         $this->empresaManager = $empresaManager;
     }
 
-    public function indexAction(){
+    // public function indexAction(){
+    // }
+
+    public function indexAction() {
+       
+        // $ventas = $this->cuentaCorrienteManager->getVentas();
+        // $cobros = $this->cuentaCorrienteManager->getCobros();
+        $view = new ViewModel([
+            // 'cobros' => $cobros,
+            // 'ventas'=>$ventas,
+            // 'id_persona'=>$id_persona
+        ]);
+        return $view;
     }
+
     public abstract function addAction();
     public abstract function editAction();
 

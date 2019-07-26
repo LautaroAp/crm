@@ -1,0 +1,178 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<link href="http://twitter.github.com/bootstrap/assets/css/docs.css" rel="stylesheet">
+<link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
+
+<!-- <script src="js/functions.js"></script> -->
+<script>
+$(document).ready(function() {
+    $('#tabla_resumen').DataTable({
+        "order": [0, 'desc'],
+
+        "language": {
+            "url": "/json/spanish.json"
+        }
+    });
+});
+</script>
+
+<?php
+$meses = [
+    'N/A', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+    'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+];
+ 
+$url =""; $label="";
+if ($persona == "cliente"){
+    $url = "/clientes";
+    $url2= "/clientes/actividades";
+    $label = "Clientes";
+    $label2 = "Eventos";
+}
+elseif ($persona == "proveedor"){
+    $url = "/proveedores";
+    $url2 = "/proveedores/actividades";
+    $label = "Proveedores";
+    $label2 = "Eventos";
+}
+else{
+    $url = "/empresa";
+    $label = "Empresa";
+}
+
+?>
+
+<div class="container padding-cero">
+    <nav aria-label="breadcrumb">
+    <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10"
+    style="margin:0px;">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?php echo ($url);?>"><?php echo ($label);?></a></li>
+            <li class="breadcrumb-item <?php if(!$persona){echo 'hidden';} ?> "><a href="<?php echo ($url2);?>"><?php echo ($label2);?></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Transacciones</li>
+        </ol>
+        <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
+                    style="margin:0px;">
+            <li class="pull-right"><a href="<?php echo ($url);?>" id="volver">Volver</a></li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container margen">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default sombra-ficha">
+                <div class="panel-heading text-center titulo-espaciado">
+                    TRANSACCIONES <?php if(!$persona){echo ' GENERALES';} ?>
+                </div>
+                <div class="panel-body">
+                    <!-- <table id="tabla_evento" class="table table-bordred table-striped"> -->
+                    <table id="tabla_resumen" class="display">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Responsable</th>
+                                <th>Evento</th>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $transacciones_filtrado = [];
+                                if($persona){
+                                    foreach ($transacciones as $transaccion) :
+                                            
+                                        if($transaccion->getTipoPersona() == strtoupper($persona)){
+                                            array_push($transacciones_filtrado, $transaccion);
+                                        };
+                                    endforeach;
+                                } else {
+                                    $transacciones_filtrado = $transacciones;
+                                }
+
+                            ?>
+                            <?php foreach ($transacciones_filtrado as $evento) : ?>
+                            <tr>
+                                <td>
+                                    <?php 
+                                        if (!is_null($evento->getFecha_transaccion())) {
+                                            echo ($evento->getFecha_transaccion()->format('Y/m/d'));
+                                        } 
+                                    ?>
+                                </td>
+                                <td><?= $evento->getNombreResponsable(); ?></td>
+                                <td>
+                                    <?php
+                                        switch (strtoupper($persona)) {
+                                            case 'CLIENTE':
+                                                $urlPDF = 'gestionClientes/transacciones';
+                                                break;
+                                            
+                                            case 'PROVEEDOR':
+                                                $urlPDF = 'gestionProveedores/transacciones';
+                                                break;                                            
+                                            default:
+                                                $urlPDF = 'gestionEmpresa/transacciones';
+                                                break;
+                                        } 
+                                        if($evento->getUrl() != ""){
+                                            $urlPDF = $evento->getUrl().'/pdf';
+                                        };
+                                    ?>
+                                    <a href="<?= $this->url($urlPDF, ['id' => $evento->getId()]) ?>"
+                                        type="text" class="texto-subrayado table-no-oficial" target="blank">
+                                        <?= ucfirst($evento->getTipo()); ?>
+                                    </a>
+                                </td>
+                                <td><?= $evento->getNombrePersona(); ?></td>
+                                <td><?php 
+                                        if(!is_null($evento->getPersona())){echo ucwords(strtolower(($evento->getPersona()->getTipo())));}
+                                    ?>
+                                </td>
+                                <td>
+                                    <div class="pull-right">
+                                        <a class="btn btn-default btn-sm" 
+                                        <?php
+                                            if(!is_null($evento->getPersona())){
+
+                                            if (strtoupper($evento->getPersona()->getTipo()) == "CLIENTE") { ?>
+                                                href=<?= $this->url('clientes/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?> 
+                                        <?php 
+                                            } elseif (strtoupper($evento->getPersona()->getTipo()) == "PROVEEDOR") { ?>
+                                                href=<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?>
+                                        <?php 
+                                            }} ?>>
+                                        Ficha <span class="glyphicon glyphicon-share-alt" ></span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>      
+</div>
+
+<!-- Inicio: Panel Botones -->
+<div class="container margen">
+    <div class="row img-centrar">
+        <div class="col ficha-cliente-p img-centrar">
+            <div>
+                <a href="<?= $volver ?>">
+                <img src="<?= $this->basePath('img/crm/volver_b.png') ?>"
+                    class="img-rounded img-responsive img-texto-derecha zoom">
+                </a>
+            </div>
+            <div class="ficha-cliente-label">
+                <label>Volver</label>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin: Panel Botones -->

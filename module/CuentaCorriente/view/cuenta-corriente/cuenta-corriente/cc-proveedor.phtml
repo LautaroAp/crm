@@ -109,7 +109,7 @@ $(document).ready(function() {
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-10" style="margin:0px;">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="/proveedores">Proveedores</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Cuenta Corriente Proveedores</li>
+            <li class="breadcrumb-item active" aria-current="page">Cuenta Corriente</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2" style="margin:0px;">
             <li class="pull-right"><a href="/proveedores" id="volver">Volver</a></li>
@@ -185,7 +185,12 @@ $(document).ready(function() {
                                     </a>
                                 </td>
                                 <!-- TIPO -->
-                                <td><?= ucfirst($venta->getTipoActividad()) ?></td>
+                                <td>
+                                    <a href="<?= $this->url($venta->getUrl().'/pdf', ['id' => $venta->getTransaccion()->getId()]) ?>"
+                                        type="text" class="texto-subrayado <?php if(!$venta->getOficial()){ echo "table-no-oficial";} ?>" target="blank">
+                                        <?= ucfirst($venta->getTipoActividad()) ?>
+                                    </a>
+                                </td>
                                 <!-- NRO -->
                                 <td><?= str_pad($venta->getNroTipoTransaccion(), 6, "0", STR_PAD_LEFT) ?></td>
                                 <!-- OFICIAL -->
@@ -267,14 +272,17 @@ $(document).ready(function() {
                                 <!-- PROVEEDOR -->
                                 <td>
                                     <!-- Referencia -->
-                                    <a class="texto-subrayado table-no-oficial" href="<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $venta->getPersona()->getId()]); ?>" target="_blank">
+                                    <a class="texto-subrayado table-no-oficial" href="<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $cobro->getPersona()->getId()]); ?>" target="_blank">
                                         <!-- <span class="glyphicon glyphicon-share"></span> -->
-                                        <?= $venta->getPersona()->getNombre() ?>
+                                        <?= $cobro->getPersona()->getNombre() ?>
                                     </a>
                                 </td>
                                 <!-- TIPO -->
                                 <td id="<?= $cobro->getId() ?>" class="">
-                                <?= $tipoTransaccion ?>
+                                    <a href="<?= $this->url($cobro->getUrl().'/pdf', ['id' => $cobro->getTransaccion()->getId()]) ?>"
+                                        type="text" class="texto-subrayado table-no-oficial" target="blank">
+                                        <?= ucfirst($cobro->getTipoActividad()) ?>
+                                    </a>
                                 </td>
                                 <!-- NRO -->
                                 <td><?= str_pad($cobro->getNroTipoTransaccion(), 6, "0", STR_PAD_LEFT) ?></td>

@@ -293,6 +293,24 @@ class Transaccion
         return $this;
     }
 
+    public function getNombrePersona()
+    {
+        if (is_null($this->persona)) {
+            return null;
+        } else {
+            return $this->persona->getNombre();
+        }
+    }
+
+    public function getTipoPersona()
+    {
+        if (is_null($this->persona)) {
+            return null;
+        } else {
+            return $this->persona->getTipo();
+        }
+    }
+
     /**
      * Get the value of tipo_transaccion
      */
@@ -389,6 +407,15 @@ class Transaccion
         $this->responsable = $responsable;
 
         return $this;
+    }
+
+    public function getNombreResponsable()
+    {
+        if (is_null($this->responsable)) {
+            return null;
+        } else {
+            return $this->responsable->getUsuario();
+        }
     }
 
     /**
@@ -728,7 +755,8 @@ class Transaccion
             $descripcion .= " " . $this->tipo_comprobante->getTipo();
         }
 
-        if ((strtoupper($this->tipo_transaccion) == "FACTURA") 
+        if ((strtoupper($this->tipo_transaccion) == "REMITO")
+                || (strtoupper($this->tipo_transaccion) == "FACTURA")
                 || (strtoupper($this->tipo_transaccion) == "NOTA DE CREDITO")
                 || (strtoupper($this->tipo_transaccion) == "NOTA DE DEBITO")) {
             if (!$this->oficial) {
@@ -990,6 +1018,26 @@ class Transaccion
         $this->importe_iva_0 = $importe_iva_0;
 
         return $this;
+    }
+
+
+    /**
+     * Get the value of URL
+     */
+    public function getUrl()
+    {
+        switch ($this->tipo_transaccion) {
+            case 'nota de debito':
+                return "notaDebito";
+                break;
+            case 'nota de credito':
+                return "notaCredito";
+                break;
+            default:
+                return $this->tipo_transaccion;
+                break;
+        }
+        ;
     }
 
     //================================================================================

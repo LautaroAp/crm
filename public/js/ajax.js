@@ -142,6 +142,17 @@ function mostrarCuentaCorriente(id_persona){
 function cambiarEstado(estado, event, tipoTransaccion, idPersona){
     var idTransaccion = event.target.id;
     var edo = estado.replace("_", " ");
+    switch (tipoTransaccion.toUpperCase()) {
+        case "NOTA DE CREDITO":
+            tipoTransaccion = "notaCredito";
+            break;
+    
+        case "NOTA DE DEBITO":
+            tipoTransaccion = "notaDebito";
+            break;
+        default:
+            break;
+    }
     if (confirm("Se cambiará el estado de la transacción a "+ edo +" ¿Desea continuar?")) {
         $.ajax({
             "dataType": "text",

@@ -27,13 +27,18 @@ $url =""; $label="";
 if ($persona == "cliente"){
     $url = "/clientes";
     $label = "Clientes";
+    $label2 = "Eventos";
+    $url2= "/clientes/actividades";
 }
 elseif ($persona == "proveedor"){
     $url = "/proveedores";
+    $url2 = "/proveedores/actividades";
     $label = "Proveedores";
+    $label2 = "Eventos";
 }
 else{
     $url = "/empresa";
+    $url2= "/empresa/actividades";
     $label = "Empresa";
 }
 
@@ -45,7 +50,8 @@ else{
     style="margin:0px;">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="<?php echo ($url);?>"><?php echo ($label);?></a></li>
-            <li class="breadcrumb-item active" aria-current="page">Resumen de eventos</li>
+            <li class="breadcrumb-item <?php if(!$persona){echo 'hidden';} ?> "><a href="<?php echo ($url2);?>"><?php echo ($label2);?></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Acciones Comerciales</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
                     style="margin:0px;">
@@ -58,7 +64,7 @@ else{
         <div class="col-md-12">
             <div class="panel panel-default sombra-ficha">
                 <div class="panel-heading text-center titulo-espaciado">
-                    RESUMEN <?php if($label == "Empresa"){echo "GENERAL";} ?> DE EVENTOS
+                    ACCIONES COMERCIALES <?php if(!$persona){echo ' GENERALES';} ?>
                 </div>
                 <div class="panel-body">
                     <form method="post">
@@ -189,7 +195,7 @@ else{
                                                 href=<?= $this->url('proveedores/ficha', ['action' => 'ficha', 'id' => $evento->getPersona()->getId()]); ?>
                                         <?php 
                                             }} ?>>
-                                        <span class="glyphicon glyphicon-share-alt" ></span>
+                                        Ficha <span class="glyphicon glyphicon-share-alt" ></span>
                                         </a>
                                     </div>
                                 </td>

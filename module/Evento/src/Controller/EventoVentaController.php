@@ -30,6 +30,7 @@ class EventoVentaController extends EventoController
         $this->tipoEventoManager= $tipoEventoManager;
     }
     
+// EVENTOS
     
     public function indexAction()
     {
@@ -104,6 +105,7 @@ class EventoVentaController extends EventoController
             $page = $this->params()->fromRoute('id');
         }
         $volver = $this->getUltimaUrl();
+        $transacciones = $this->eventoVentaManager->getTransacciones();
 
         return new ViewModel([
             'eventos' => $eventos,
@@ -114,6 +116,28 @@ class EventoVentaController extends EventoController
             'total' => $total,
             'tipos' => $tipoEventos,
             'volver' => $volver,
+            'transacciones' => $transacciones,
+        ]);
+    }
+
+// TRASACCIONES
+
+    public function eveTransaccionesAction()
+    {
+        return $this->procesarEveTransaccionesAction();
+    }
+
+    private function procesarEveTransaccionesAction() {
+        $request = $this->getRequest();
+        //SE OBTIENE LA PERSONA DE LA RUTA POR SI SE LO LLAMA DE CLIENTE/PROVEEDOR
+        $persona= $this->params()->fromRoute('tipo');
+        $volver = $this->getUltimaUrl();
+        $transacciones = $this->eventoVentaManager->getTransacciones();
+
+        return new ViewModel([
+            'persona' => $persona,
+            'volver' => $volver,
+            'transacciones' => $transacciones,
         ]);
     }
 

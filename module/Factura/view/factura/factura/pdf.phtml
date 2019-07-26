@@ -26,13 +26,12 @@ $pdf->setPrintHeader(false);
 // set auto page breaks
 $pdf->SetAutoPageBreak(TRUE, 20);
 
-$tipo_comprobante = "";
-$codigo_comprobante = "";
+$tipo_comprobante = "X";
+$codigo_comprobante = "000";
 if ($factura->getTipo_comprobante()) {
     $tipo_comprobante = $factura->getTipo_comprobante()->getTipo();
     $codigo_comprobante = $factura->getTipo_comprobante()->getCodigo();
-}
-
+} 
 /* * * * * * * * * * * * * * * * * * * * * * COPIA * * * * * * * * * * * * * * * * * * * * * */
 
 // Generates Original / Duplicate / Triplicate
@@ -197,25 +196,6 @@ for ($i = 1; $i <= 3; $i++) {
 
     // make the table items
     switch ($tipo_comprobante) {
-        case "A":
-            $html = '
-                <table border="0" cellspacing="0" cellpadding="3">
-                    <thead>
-                        <tr bgcolor="silver" style="font-weight: bold;" nobr="true">
-                            <th border="0.5" align="center" width="8%">Código</th>
-                            <th border="0.5" align="center" width="23%">Producto / Servicio</th>
-                            <th border="0.5" align="center" width="9%">Cantidad</th>
-                            <th border="0.5" align="center" width="10%">U. Medida</th>
-                            <th border="0.5" align="center" width="11%">Precio Unit.</th>
-                            <th border="0.5" align="center" width="8%">% Bonif.</th>
-                            <th border="0.5" align="center" width="11%">Subtotal</th>
-                            <th border="0.5" align="center" width="9%" style="line-height:10px;">Alicuota IVA</th>
-                            <th border="0.5" align="center" width="11%" style="line-height:10px;">Subtotal c/IVA</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            ';
-            break;
         case "B":
             $html = '
                 <table border="0" cellspacing="0" cellpadding="3">
@@ -235,6 +215,24 @@ for ($i = 1; $i <= 3; $i++) {
             ';
             break;
         default:
+            // case "A":
+            $html = '
+                <table border="0" cellspacing="0" cellpadding="3">
+                    <thead>
+                        <tr bgcolor="silver" style="font-weight: bold;" nobr="true">
+                            <th border="0.5" align="center" width="8%">Código</th>
+                            <th border="0.5" align="center" width="23%">Producto / Servicio</th>
+                            <th border="0.5" align="center" width="9%">Cantidad</th>
+                            <th border="0.5" align="center" width="10%">U. Medida</th>
+                            <th border="0.5" align="center" width="11%">Precio Unit.</th>
+                            <th border="0.5" align="center" width="8%">% Bonif.</th>
+                            <th border="0.5" align="center" width="11%">Subtotal</th>
+                            <th border="0.5" align="center" width="9%" style="line-height:10px;">Alicuota IVA</th>
+                            <th border="0.5" align="center" width="11%" style="line-height:10px;">Subtotal c/IVA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            ';
             break;
     }
 
@@ -246,7 +244,25 @@ for ($i = 1; $i <= 3; $i++) {
 
     $count = 0;
     switch ($tipo_comprobante) {
-        case "A":
+        case "B":
+            foreach ($data as $item) {
+                $subtotal = $subtotal + $item->Totales;
+                $html .= '
+                        <tr nobr="true">
+                            <td align="left" width="10%">' . "" . '</td>
+                            <td align="left" width="28%">' . $item->Detalle . '</td>
+                            <td align="right" width="9%">' . "1,0" . '</td>
+                            <td align="center" width="10%">' . "unidades" . '</td>
+                            <td align="right" width="11%">' . number_format($transaccion->getBonificacionGeneral(), 2, ",", ".") . '</td>
+                            <td align="center" width="10%">' . number_format($transaccion->getBonificacionImporte(), 2, ",", ".") . '</td>
+                            <td align="right" width="11%">' . number_format($item->IVA->Valor, 2, ",", ".") . '</td>
+                            <td align="right" width="11%">' . number_format($item->Totales, 2, ",", ".") . '</td>
+                        </tr>
+                ';
+            };
+            break;
+        default:
+            // case "A":
             foreach ($data as $item) {
                 $subtotal = $subtotal + $item->Totales;
                 switch ($item->IVA->Valor) {
@@ -283,25 +299,6 @@ for ($i = 1; $i <= 3; $i++) {
                         </tr>
                 ';
             };
-            break;
-        case "B":
-            foreach ($data as $item) {
-                $subtotal = $subtotal + $item->Totales;
-                $html .= '
-                        <tr nobr="true">
-                            <td align="left" width="10%">' . "" . '</td>
-                            <td align="left" width="28%">' . $item->Detalle . '</td>
-                            <td align="right" width="9%">' . "1,0" . '</td>
-                            <td align="center" width="10%">' . "unidades" . '</td>
-                            <td align="right" width="11%">' . number_format($transaccion->getBonificacionGeneral(), 2, ",", ".") . '</td>
-                            <td align="center" width="10%">' . number_format($transaccion->getBonificacionImporte(), 2, ",", ".") . '</td>
-                            <td align="right" width="11%">' . number_format($item->IVA->Valor, 2, ",", ".") . '</td>
-                            <td align="right" width="11%">' . number_format($item->Totales, 2, ",", ".") . '</td>
-                        </tr>
-                ';
-            };
-            break;
-        default:
             break;
     }
 
@@ -382,43 +379,47 @@ for ($i = 1; $i <= 3; $i++) {
 
     /* * * * * * * * * * * * * * * * * * * * * * INFO COMPROBANTE * * * * * * * * * * * * * * * * * * * * * */
 
-    $x = $pdf->GetX() + 5;
-    $pdf->Image('public/img/crm/logo_afip.png', $x, '', 30, 8, '', '', 'T', true, 300, '', false, false, 0, true, false, false);
-    $pdf->Ln(1);
-
-    $html = '
-        <table border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-                <tr>
+    if ($transaccion->getOficial()) {
+        $x = $pdf->GetX() + 5;
+        $pdf->Image('public/img/crm/logo_afip.png', $x, '', 30, 8, '', '', 'T', true, 300, '', false, false, 0, true, false, false);
+        $pdf->Ln(1);
+    }
+ 
+    if ($transaccion->getOficial()) {
+        $html = '
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <td width="20%"></td>
+                        <td width="40%"><strong><i>' . "Comprobante Autorizado" . '</i></strong></td>
+                        <td align="right" width="20%"><strong>' . "CAE Nº: " . '</strong></td>
+                        <td width="20%"><strong>' . "" . '</strong></td>
+                    </tr>
+                    <tr>
+                    <td width="60%"></td>
+                    <td align="right" width="20%"><strong>' . "Fecha de vto. de CAE: " . '</strong></td>
                     <td width="20%"></td>
-                    <td width="40%"><strong><i>' . "Comprobante Autorizado" . '</i></strong></td>
-                    <td align="right" width="20%"><strong>' . "CAE Nº: " . '</strong></td>
-                    <td width="20%"><strong>' . "" . '</strong></td>
-                </tr>
-                <tr>
-                <td width="60%"></td>
-                <td align="right" width="20%"><strong>' . "Fecha de vto. de CAE: " . '</strong></td>
-                <td width="20%"></td>
-                </tr>
-                <tr>
-                    <td width="60%">
-                        <small><i>' . "Esta Administración Federal no se responsabiliza por los datos ingresados en el detalle de la operación" . '</i></small>
-                    </td>
-                    <td align="right" width="20%"></td>
-                    <td width="20%"><strong>' . "" . '</strong></td>
-                </tr>
-                <tr>
-                    <td width="60%">
-                        <strong>' . "BARCODE_IMG" . '</strong>
-                    </td>
-                    <td width="40%"></td>
-                </tr>
-            </tbody>
-        </table>
-    ';
-    // output the HTML content
-    $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, '', true);
-    $pdf->Ln(5);
+                    </tr>
+                    <tr>
+                        <td width="60%">
+                            <small><i>' . "Esta Administración Federal no se responsabiliza por los datos ingresados en el detalle de la operación" . '</i></small>
+                        </td>
+                        <td align="right" width="20%"></td>
+                        <td width="20%"><strong>' . "" . '</strong></td>
+                    </tr>
+                    <tr>
+                        <td width="60%">
+                            <strong>' . "BARCODE_IMG" . '</strong>
+                        </td>
+                        <td width="40%"></td>
+                    </tr>
+                </tbody>
+            </table>
+        ';
+        // output the HTML content
+        $pdf->writeHTMLCell(0, 0, '', '', $html, '', 1, 0, true, '', true);
+        $pdf->Ln(5);
+    }
 
     /* * * * * * * * * * * * * * * * * * * * * * VALIDEZ DOCUMENTO * * * * * * * * * * * * * * * * * * * * * */
 
@@ -435,9 +436,11 @@ for ($i = 1; $i <= 3; $i++) {
 
     // reset pointer to the last page
     $pdf->lastPage();
+
 } // end foreach
 
 //Close and output PDF document
-$pdf->Output($transaccion->getNombre().'-'.$nombre_razonsocial.'-'.$transaccion->getFecha_transaccion()->format('d_m_Y').'.pdf', 'I');
+$pdf->Output($transaccion->getNombre().'-'.str_pad($numFactura, 6, "0", STR_PAD_LEFT)
+.'-'.$nombre_razonsocial.'-'.$transaccion->getFecha_transaccion()->format('d_m_Y').'.pdf', 'I');
 
 ?>

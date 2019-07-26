@@ -5,6 +5,7 @@ use DBAL\Entity\Evento;
 use DBAL\Entity\Cliente;
 use DBAL\Entity\Ejecutivo;
 use DBAL\Entity\TipoEvento;
+use DBAL\Entity\Transaccion;
 use Zend\Paginator\Paginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
@@ -143,6 +144,12 @@ class EventoVentaManager extends EventoManager
         }
         return $this->entityManager
                 ->getRepository(TipoEvento::class)
+                ->findAll();
+    }
+
+    public function getTransacciones(){
+        return $this->entityManager
+                ->getRepository(Transaccion::class)
                 ->findAll();
     }
  

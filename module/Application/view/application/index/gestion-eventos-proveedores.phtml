@@ -4,7 +4,7 @@
     style="margin:0px;">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="/proveedores">Proveedores</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Eventos</li>
+            <li class="breadcrumb-item active" aria-current="page">Resumen de Eventos</li>
         </ol>
         <ol id="breadcrumb_contenido" class="breadcrumb secondary-color navbar-menu-font col-xs-2"
                     style="margin:0px;">
@@ -15,7 +15,7 @@
 <div class="container margen">
     <div class="panel panel-default sombra-ficha">
         <div class="panel-heading text-center titulo-espaciado">
-            GESTIÓN DE EVENTOS
+            RESUMEN DE EVENTOS
         </div>
         <div class="panel-body">
             <div class="container margen text-center" >         
@@ -23,29 +23,29 @@
                     <ul>
                         <li>
                             <figure>
+                                <a href="<?= $this->url('gestionProveedores/eventos', ['tipo'=>'proveedor']); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/consulta_v.png') ?>" 
+                                    class="img-rounded img-responsive img-menu img-centrar zoom">
+                                </a>
+                                <figcaption>Acciones Comerciales</figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure>
                                 <a href="<?= $this->url('gestionProveedores/gestionEventosProveedores/tipoeventoProveedor', ['tipo'=>'proveedor']); ?>" > 
                                     <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
                                     class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
-                                <figcaption>Listado de Eventos</figcaption>
+                                <figcaption>Categorias Acc. Comerciales</figcaption>
                             </figure>
                         </li>
-                        <!-- <li>
-                            <figure>
-                                <a href="<?php // $this->url('gestionProveedores/gestionEventosProveedores/categorias', ['tipo'=>'evento']); ?>" > 
-                                    <img src="<?php  //$this->basePath('img/crm/carrito_v.png') ?>" 
-                                    class="img-rounded img-responsive img-menu img-centrar zoom">
-                                </a>
-                                <figcaption>Categorias de Eventos</figcaption>
-                            </figure>
-                        </li> -->
                         <li>
                             <figure>
-                                <a href="<?= $this->url('gestionProveedores'); ?>" > 
-                                    <img src="<?= $this->basePath('img/crm/carrito_excel_v.png') ?>" 
+                                <a href="<?= $this->url('gestionProveedores/transacciones', ['tipo'=>'proveedor']); ?>" > 
+                                    <img src="<?= $this->basePath('img/crm/carrito_v.png') ?>" 
                                     class="img-rounded img-responsive img-menu img-centrar zoom">
                                 </a>
-                                <figcaption>Exportar a Excel</figcaption>
+                                <figcaption>Transacciones</figcaption>
                             </figure>
                         </li>
                     </ul>

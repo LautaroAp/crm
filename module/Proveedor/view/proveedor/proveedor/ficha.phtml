@@ -7,22 +7,10 @@
 
 <?php
 $this->headTitle('Detalles del Proveedor');
-// if (isset($_SESSION['MENSAJES']['ficha_cliente'])) {
-//     if ($_SESSION['MENSAJES']['ficha_cliente']) {
-//         echo "<script>jQuery(function(){swal('OK!', '" . $_SESSION['MENSAJES']['ficha_cliente_msj'] . "', 'success');});</script>";
-//     } else {
-//         echo "<script>jQuery(function(){swal('ERROR!', '" . $_SESSION['MENSAJES']['ficha_cliente_msj'] . "', 'error');});</script>";
-//     }
-//     $_SESSION['MENSAJES']['ficha_cliente'] = null;
-//     $_SESSION['MENSAJES']['ficha_cliente_msj'] = null;
-// }
-
 $id_persona = $persona->getId();
 $tipo_persona = strtolower($persona->getTipo());
 ?>
 
-<!-- <link rel="stylesheet" type="text/css" href="public/DataTables/datatables.min.css"/>
-<script type="text/javascript" charset="utf8" src="DataTables/datatables.min.js"></script> -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
@@ -326,7 +314,7 @@ $tipo_persona = strtolower($persona->getTipo());
                                 onclick="mostrarTransacciones(<?= $id_persona ?>)">Transacciones</button>
                             <a role="button" class="btn btn-default" data-toggle="collapse" 
                                 data-parent="#accordion" href="#drop" aria-expanded="true" aria-controls="drop">
-                                <span class="glyphicon glyphicon-plus" ></span>
+                                <span class="glyphicon glyphicon-menu-hamburger" ></span>
                             </a>
                         </div>
                         <!-- Todos -->

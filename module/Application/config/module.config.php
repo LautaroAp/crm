@@ -85,6 +85,16 @@ return [
                             ],
                         ],
                     ],
+                    'transacciones' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/transacciones[/:tipo]',
+                            'defaults' => [
+                                'controller' => \Evento\Controller\EventoVentaController::class,
+                                'action' => 'eveTransacciones',
+                            ],
+                        ],
+                    ],
                     //  Gestion Actividades
                     'gestionEventosClientes' => [
                         'type' => Literal::class,
@@ -216,6 +226,16 @@ return [
                             ],
                         ],
                     ],
+                    'transacciones' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/transacciones[/:tipo]',
+                            'defaults' => [
+                                'controller' => \Evento\Controller\EventoVentaController::class,
+                                'action' => 'eveTransacciones',
+                            ],
+                        ],
+                    ],
                     'backup' => [
                         'type' => Segment::class,
                         'options' => [
@@ -327,6 +347,16 @@ return [
                             'defaults' => [
                                 'controller' => \Evento\Controller\EventoVentaController::class,
                                 'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'transacciones' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/transacciones',
+                            'defaults' => [
+                                'controller' => \Evento\Controller\EventoVentaController::class,
+                                'action' => 'eveTransacciones',
                             ],
                         ],
                     ],

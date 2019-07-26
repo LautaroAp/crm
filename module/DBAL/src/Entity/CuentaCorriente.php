@@ -170,6 +170,33 @@ class CuentaCorriente
     }
 
     /**
+     * Get the value of URL
+     */
+    public function getUrl()
+    {
+        switch ($this->tipoActividad) {
+            case 'remito':
+                return "remito";
+                break;
+            case 'factura':
+                return "factura";
+                break;
+            case 'nota de debito':
+                return "notaDebito";
+                break;
+            case 'nota de credito':
+                return "notaCredito";
+                break;
+            case 'cobro':
+                return "cobro";
+                break;
+            default:
+                break;
+        }
+        ;
+    }
+
+    /**
      * Get the value of monto
      */
     public function getMonto()
