@@ -332,7 +332,7 @@ class ClientesController extends HuellaController
         $data = [];
         $data['id_cliente'] = '';
         $data['ejecutivo'] = $_SESSION['EJECUTIVO'];
-        $data['fecha_evento'] = date('d/m/Y');;
+        $data['fecha_evento'] = date('d/m/Y');
         $data['accion_comercial'] = '40';
         $data['detalle'] = 'Registro de Alta';
         return $data;

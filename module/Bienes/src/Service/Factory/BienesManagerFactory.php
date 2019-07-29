@@ -6,6 +6,7 @@ use Bienes\Service\BienesManager;
 use Iva\Service\IvaManager;
 use Categoria\Service\CategoriaManager;
 use Proveedor\Service\ProveedorManager;
+use RegistroMovimiento\Service\RegistroMovimientoManager;
 
 
 /**
@@ -22,7 +23,8 @@ class BienesManagerFactory
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $ivaManager = $container->get(IvaManager::class);   
         $categoriaManager = $container->get(CategoriaManager::class);         
-        $proveedorManager = $container->get(ProveedorManager::class);         
-        return new BienesManager($entityManager, $ivaManager, $categoriaManager, $proveedorManager);
+        $proveedorManager = $container->get(ProveedorManager::class);        
+        $registroMovimientoManager = $container->get(RegistroMovimientoManager::class);        
+        return new BienesManager($entityManager, $ivaManager, $categoriaManager, $proveedorManager, $registroMovimientoManager);
     }
 }

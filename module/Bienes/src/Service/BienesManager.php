@@ -21,15 +21,17 @@ class BienesManager {
     private $categoriaManager;
     private $proveedorManager;
     private $ivaManager;
+    private $registroMovimientoManager;
 
     /**
      * Constructs the service.
      */
-    public function __construct($entityManager, $ivaManager, $categoriaManager, $proveedorManager) {
+    public function __construct($entityManager, $ivaManager, $categoriaManager, $proveedorManager, $registroMovimientoManager) {
         $this->entityManager = $entityManager;
         $this->categoriaManager= $categoriaManager;
         $this->ivaManager= $ivaManager;
         $this->proveedorManager = $proveedorManager;
+        $this->registroMovimientoManager = $registroMovimientoManager;
      
     }
 
@@ -68,6 +70,8 @@ class BienesManager {
         $bien=$this->setData($bien, $data);
         $this->entityManager->persist($bien);
         $this->entityManager->flush();
+        // Registro Movimiento
+        $this->registroMovimientoManager->addRegistroMovimiento($bien, $data, "Modificación de datos");
         return $bien;
     }
 
@@ -142,10 +146,17 @@ class BienesManager {
         $bien=$this->setData($bien, $data);
         // Apply changes to database.
         $this->entityManager->flush();
+        // Registro Movimiento
+        $this->registroMovimientoManager->addRegistroMovimiento($bien, $data, "Modificación de datos");
         return $bien;
     }
 
-    public function remove($bien) {
+    public function remove($bien) { 
+        // VERIFICAR BIENES_TRANSACCIONES, TRANSACCIONES, CC, etc..
+
+        // Elimina "Bien" de la tabla REGISTRO_MOVIMIENTO
+        $this->registroMovimientoManager->removeBienRegistroMovimiento($bien);
+        // Elimina Bien
         $this->entityManager->remove($bien);
         $this->entityManager->flush();
     }
