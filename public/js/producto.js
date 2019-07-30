@@ -145,6 +145,13 @@ function calculaDescuentoIVA() {
         calculaDescuentoIVA();
     }
     $descuento = parseFloat($('#descuento').val()) / 100;
+    $dto_total = ($p_venta * $descuento).toFixed(2);
+    // Total DTO.
+    if ($dto_total) {
+        $("#dto_total").val($dto_total);
+    } else {
+        $("#dto_total").val("0");
+    }
     $iva = ((parseFloat($("#iva option:selected").html())) / 100);
     // Precio Venta con Dto.
     $p_venta_dto = ($p_venta - ($p_venta * $descuento)).toFixed(2);
