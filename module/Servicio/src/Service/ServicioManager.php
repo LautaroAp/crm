@@ -82,6 +82,9 @@ class ServicioManager {
     }
 
     public function removeServicio($servicio) {
+        // Borrar SOLO SI "NO ESTA" en USO
+        // ...
+        
         $bien = $servicio->getBien();
         $this->entityManager->remove($servicio); 
         $this->bienesManager->remove($bien);

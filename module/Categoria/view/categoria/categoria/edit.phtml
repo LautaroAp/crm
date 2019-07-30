@@ -28,13 +28,7 @@ if ($tipo== "producto"){
     $label3="Servicios";
     $url2= "/productosservicios/servicios/categorias/servicio";
 }
-// if ($tipo== "licencia"){
-//     $url1 ="/productosservicios";
-//     $label = "Productos y Servicios";
-//     $url3= "/productosservicios/licencias";
-//     $label3="Licencias";
-//     $url2= "/productosservicios/licencias/categorias/licencia";
-// }
+
 ?>
 <div class="container padding-cero">
     <nav aria-label="breadcrumb">
@@ -68,7 +62,7 @@ if ($tipo== "producto"){
                             <input type="text" class="form-control" name="nombre"
                                 value="<?= $categoriaevento->getNombre(); ?>">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label>Descripción</label>
                             <input type="text" class="form-control" name="descripcion"
                                 value="<?= $categoriaevento->getDescripcion(); ?>">

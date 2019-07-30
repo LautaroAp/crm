@@ -135,6 +135,9 @@ class ProductoManager
     }
 
     public function removeProducto($producto) {
+        // Borrar SOLO SI "NO ESTA" en USO
+        // ...
+
         $bien = $producto->getBien();
         $this->entityManager->remove($producto);
         $this->bienesManager->remove($bien);

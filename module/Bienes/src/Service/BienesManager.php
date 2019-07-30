@@ -151,11 +151,10 @@ class BienesManager {
         return $bien;
     }
 
-    public function remove($bien) { 
-        // VERIFICAR BIENES_TRANSACCIONES, TRANSACCIONES, CC, etc..
-
+    public function remove($bien) {
         // Elimina "Bien" de la tabla REGISTRO_MOVIMIENTO
         $this->registroMovimientoManager->removeBienRegistroMovimiento($bien);
+
         // Elimina Bien
         $this->entityManager->remove($bien);
         $this->entityManager->flush();
